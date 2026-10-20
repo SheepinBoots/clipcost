@@ -1,0 +1,81 @@
+{
+ "run": "2026-10-20T08:44:30",
+ "sources": {
+  "hf_plans": {
+   "status": "fetched",
+   "chars": 16285
+  },
+  "hf_api": {
+   "status": "fetched",
+   "chars": 6018
+  },
+  "hf_api_wan": {
+   "status": "fetched",
+   "chars": 3006
+  },
+  "fal_wan3": {
+   "status": "fetched",
+   "chars": 3626
+  },
+  "fal_wan3p": {
+   "status": "fetched",
+   "chars": 6978
+  },
+  "fal_kling3": {
+   "status": "fetched",
+   "chars": 3787
+  },
+  "fal_seed25": {
+   "status": "fetched",
+   "chars": 12148
+  },
+  "fal_veo31": {
+   "status": "fetched",
+   "chars": 13558
+  },
+  "fal_pricing": {
+   "status": "fetched",
+   "chars": 7740
+  },
+  "rep_wan3": {
+   "status": "fetched",
+   "chars": 1510
+  },
+  "runway": {
+   "status": "fetched",
+   "chars": 14943
+  },
+  "kling_api": {
+   "status": "fetched",
+   "chars": 2761
+  },
+  "gemini": {
+   "status": "fetched",
+   "chars": 64662
+  },
+  "atlas": {
+   "status": "fetched",
+   "chars": 20483
+  },
+  "krea": {
+   "status": "fetched",
+   "chars": 33481
+  },
+  "magnific": {
+   "status": "fetched",
+   "chars": 9077
+  },
+  "kling_app": {
+   "status": "manual",
+   "url": "https://kling.ai/pricing",
+   "note": "Pricing renders client-side behind region/login; not captured. Check by hand."
+  }
+ },
+ "findings": [],
+ "counts": {
+  "ok": 197,
+  "changed": 0,
+  "missing": 0,
+  "skipped": 0
+ }
+}

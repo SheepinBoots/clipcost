@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Regenerable fetch caches from price research (large HTML snapshots)
+raw/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local crawl screenshots
+home.png
+home-mobile.png
+
+# OS / editor
+.DS_Store
+*.log

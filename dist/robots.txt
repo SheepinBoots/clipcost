@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /clipcost/
+Sitemap: https://sheepinboots.github.io/clipcost/sitemap.xml

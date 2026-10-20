@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Video Credit Calculator (Oct 2026): Higgsfield, Krea, Magnific | ClipCost</title><meta name="description" content="How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.">
+<link rel="canonical" href="https://sheepinboots.github.io/clipcost/calculator/"><meta name="robots" content="index,follow">
+<meta property="og:type" content="website"><meta property="og:title" content="AI Video Credit Calculator (Oct 2026): Higgsfield, Krea, Magnific | ClipCost"><meta property="og:description" content="How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.">
+<meta property="og:url" content="https://sheepinboots.github.io/clipcost/calculator/"><meta property="og:site_name" content="ClipCost"><meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0b0d12"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235ce1a8'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' font-family='sans-serif' font-weight='800' fill='%2306281b'%3E$%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/clipcost/style.css"></head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/clipcost/">Clip<span>Cost</span></a><nav><a href="/clipcost/">Prices</a><a href="/clipcost/calculator/" class=on>Credit calculator</a><a href="/clipcost/changes/">Price changes</a><a href="/clipcost/newsletter/">Newsletter</a><a href="/clipcost/about/">About</a></nav></div></header>
+<main class="wrap"><h1>AI video credit calculator</h1>
+<p class="lead">Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page.</p>
+<div class="calc"><div class="card">
+<label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px"><optgroup label="Higgsfield"><option value="hf-starter">Starter: $19/mo</option><option value="hf-plus-annual">Plus (annual): $47/mo</option><option value="hf-plus-monthly">Plus (monthly): $59/mo</option><option value="hf-ultra-annual">Ultra (annual): $99/mo</option><option value="hf-ultra-monthly">Ultra (monthly): $129/mo</option></optgroup><optgroup label="Krea"><option value="krea-basic-yearly">Basic (yearly): $5/mo</option><option value="krea-pro-monthly">Pro (monthly): $35/mo</option><option value="krea-pro-yearly">Pro (yearly): $21/mo</option></optgroup><optgroup label="Magnific"><option value="mag-premium">Premium (annual): $14.5/mo</option><option value="mag-premium-plus">Premium+ (annual): $33.75/mo</option><option value="mag-pro">Pro (annual): $82.5/mo</option></optgroup></select>
+<label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" min="1" max="100" value="100" style="width:100px"> %
+<div style="margin-top:14px"><div class="small">Plan price</div><div class="kpi" id="kPrice"></div>
+<div class="small" style="margin-top:8px">Credits per month</div><div class="kpi" id="kCred"></div>
+<div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer"></div></div>
+<p class="small" id="pNote"></p><p id="pLink"></p></div>
+<div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Res.</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody></tbody></table></div>
+<p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
+<script>
+const BASE="/clipcost";const AFF={"Higgsfield": "https://higgsfield.ai/pricing?ref=TODO_HIGGSFIELD_AFFILIATE_ID", "Higgsfield API": "https://open.higgsfield.ai/pricing?ref=TODO_HIGGSFIELD_AFFILIATE_ID", "Krea": "https://www.krea.ai/pricing?via=TODO_KREA_AFFILIATE_ID", "Magnific": "https://www.magnific.com/pricing?ref=TODO_MAGNIFIC_AFFILIATE_ID"};const MODELS={"wan-3-0-prime": "Wan 3.0 Prime", "wan-3-0": "Wan 3.0", "kling-3-0": "Kling 3.0", "seedance-2-5": "Seedance 2.5", "veo-3-1": "Veo 3.1", "gemini-omni-flash": "Gemini Omni Flash 1.1", "minimax-hailuo": "MiniMax Hailuo / H3", "runway-gen-4": "Runway Gen-4.x", "grok-imagine": "Grok Imagine Video 1.5"};
+fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
+ const $=id=>document.getElementById(id);
+ const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+ const pk=new URLSearchParams(location.search).get('plan');if(pk&&d.plans[pk])$('plan').value=pk;
+ function go(){const k=$('plan').value,p=d.plans[k],u=Math.max(1,Math.min(100,+$('used').value||100))/100;
+  const per=p.usd_month/p.credits_month;
+  $('kPrice').textContent='$'+p.usd_month+'/mo';$('kCred').textContent=p.credits_month.toLocaleString();$('kPer').textContent='$'+per.toFixed(5);
+  $('pNote').textContent=(p.credits_note||'')+' Billing: '+p.billing+'. Checked '+p.checked+'.';
+  $('pLink').innerHTML=`<a class="btn" href="${AFF[p.platform]||p.source_url}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">See ${esc(p.platform)} plans</a> <a class="small" href="${p.source_url}" rel="nofollow noopener" target="_blank">source</a>`;
+  const rs=d.rows.filter(r=>r.plan==k).sort((a,b)=>a.usd_per_second-b.usd_per_second);
+  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{const clips=Math.floor(p.credits_month*u/r.credits_per_clip);const pc=r.usd_per_clip/u;
+   return `<tr><td><a href="${BASE}/models/${r.model}/">${esc(r.variant)}</a></td><td>${esc(r.resolution)}</td><td>${r.clip_seconds}s</td><td>${r.status=='estimate'?'~':''}${(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}</td><td class="num">${clips.toLocaleString()}</td><td class="num">$${pc.toFixed(3)}</td><td class="num">$${(pc/r.clip_seconds).toFixed(4)}</td></tr>`}).join('');
+  history.replaceState(null,'','?plan='+k);}
+ $('plan').addEventListener('input',go);$('used').addEventListener('input',go);go();});
+</script><section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
+<p class="small" style="margin:0">Every Monday: price changes, new models, and the cheapest way to run each one. Free, unsubscribe any time.</p>
+<form action="#TODO-newsletter-endpoint" method="post" onsubmit="event.preventDefault();this.querySelector('button').textContent='Thanks! (signup not connected yet)';">
+<!-- TODO: point action at the newsletter provider (Beehiiv/Buttondown/ConvertKit) -->
+<input type="email" name="email" required placeholder="you@email.com" aria-label="Email address"><button class="btn" type="submit">Subscribe</button></form></section></main>
+<footer><div class="wrap"><p><b>Models:</b> <a href="/clipcost/models/wan-3-0-prime/">Wan 3.0 Prime</a> · <a href="/clipcost/models/wan-3-0/">Wan 3.0</a> · <a href="/clipcost/models/kling-3-0/">Kling 3.0</a> · <a href="/clipcost/models/seedance-2-5/">Seedance 2.5</a> · <a href="/clipcost/models/veo-3-1/">Veo 3.1</a> · <a href="/clipcost/models/gemini-omni-flash/">Gemini Omni Flash 1.1</a> · <a href="/clipcost/models/minimax-hailuo/">MiniMax Hailuo / H3</a> · <a href="/clipcost/models/runway-gen-4/">Runway Gen-4.x</a> · <a href="/clipcost/models/grok-imagine/">Grok Imagine Video 1.5</a></p>
+<p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="/clipcost/about/#disclosure">disclosure</a>).</p>
+<p>© 2026 ClipCost · Data last checked 2026-10-20</p></div></footer></body></html>

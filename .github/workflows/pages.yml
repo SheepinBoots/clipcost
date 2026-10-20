@@ -1,0 +1,72 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Daily price refresh, about 14:00 UTC.
+    - cron: "0 14 * * *"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install price-check dependencies
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        run: |
+          python3 -m pip install -r requirements.txt
+          npm ci
+          if [ ! -x /usr/bin/google-chrome ] && [ ! -x /usr/bin/google-chrome-stable ]; then
+            wget -q -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo apt-get update
+            sudo apt-get install -y /tmp/google-chrome.deb
+          fi
+
+      - name: Refresh prices and commit data changes
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        run: |
+          # A failed source fetch must not block deploying the data we already have.
+          python3 scripts/update_prices.py --apply || echo "update_prices.py failed ($?); deploying existing data"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/prices.json data/changes.json data/check_report.json
+          if git diff --cached --quiet; then
+            echo "No price data changes to commit"
+          else
+            git commit -m "Update prices from daily source check"
+            git push origin HEAD:main
+          fi
+
+      - name: Build site
+        run: python3 scripts/build_site.py
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

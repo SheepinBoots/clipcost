@@ -1,0 +1,31 @@
+[
+ {
+  "date": "2026-10-20",
+  "type": "baseline",
+  "text": "Tracker baseline captured: all prices first recorded on this date. Future rows show real changes detected by the daily check."
+ },
+ {
+  "date": "2026-10-20",
+  "type": "notice",
+  "model": "veo-3-1",
+  "platform": "Google Gemini API",
+  "text": "Google's pricing page says the Veo 3.1 preview endpoints (standard, fast, lite) shut down on Oct 22, 2026; Google points users to Gemini Omni Flash.",
+  "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+ },
+ {
+  "date": "2026-10-20",
+  "type": "notice",
+  "model": "wan-3-0-prime",
+  "platform": "Higgsfield API",
+  "text": "Higgsfield API Wan 3.0 / Wan 3.0 Prime rates are 60% off until Nov 1, 2026 (Prime 480p $0.0272/s vs $0.068/s list).",
+  "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+ },
+ {
+  "date": "2026-10-20",
+  "type": "notice",
+  "model": "wan-3-0",
+  "platform": "Replicate",
+  "text": "Replicate's pricing page banner says 'Wan 3.0 is 30% off this week'; the model page still lists $0.05-$0.20/s, so ClipCost shows list prices.",
+  "source_url": "https://replicate.com/pricing"
+ }
+]
