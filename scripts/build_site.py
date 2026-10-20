@@ -70,6 +70,7 @@ def page(path, title, desc, body, active=""):
     nav = "".join(f'<a href="{root(h)}"{" class=on" if h==active else ""}>{t}</a>' for h, t in navs)
     modlinks = " · ".join(f'<a href="{root(f"/models/{s}/")}">{e(m["name"])}</a>' for s, m in models.items())
     doc = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="google-site-verification" content="nlx0gVcAU_holiR5TLbIUc0ECk-VPLUPKHiVqlGNCIM" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(title)}</title><meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{canon}"><meta name="robots" content="index,follow">
@@ -115,6 +116,7 @@ def news_box():
 
 shutil.rmtree(DIST, ignore_errors=True); os.makedirs(DIST)
 shutil.copy(os.path.join(ROOT, "src", "style.css"), DIST)
+shutil.copy(os.path.join(ROOT, "src", "google43692aaea77cfb47.html"), DIST)
 os.makedirs(os.path.join(DIST, "data")); shutil.copy(os.path.join(ROOT, "data", "prices.json"), os.path.join(DIST, "data"))
 
 # ---------- Home ----------
