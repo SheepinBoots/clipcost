@@ -59,6 +59,40 @@ def check(text, chk):
     v = parse(m.group(1))
     return ("ok" if abs(v - float(chk["expect"])) <= 1e-9 * max(1, abs(v)) else "changed"), v
 
+def stamp_checked(db, texts, findings, today):
+    """Re-date rows whose own checks passed. A plan-price finding blocks rows derived from that plan."""
+    bad = {f["id"] for f in findings}
+    bad_plans = {f["id"] for f in findings if f.get("kind") == "plan"}
+    for r in db["rows"]:
+        if r.get("source") not in texts or r["id"] in bad: continue
+        if r.get("kind") == "plan" and r.get("plan") in bad_plans: continue
+        r["checked"] = today
+    for pid, p in db["plans"].items():
+        if p.get("source") in texts and pid not in bad_plans:
+            p["checked"] = today
+
+def expire_promos(db, today, log):
+    """Remove promo rows whose end date has passed and record that in the change log."""
+    kept, expired = [], []
+    for r in db["rows"]:
+        if r.get("promo_until") and r["promo_until"] < today:
+            expired.append(r)
+            log.append({"date": today, "row": r["id"], "model": r.get("model"), "platform": r.get("platform"),
+                        "variant": r.get("variant"), "resolution": r.get("resolution"), "source_url": r.get("source_url"),
+                        "promo_until": r["promo_until"], "type": "promo_expired",
+                        "text": f"{r.get('variant')} promo ended {r['promo_until']}."})
+        else:
+            kept.append(r)
+    db["rows"] = kept
+    return expired
+
+def full_check_succeeded(db, report, only):
+    if only: return False
+    for sid, src in db["sources"].items():
+        if src.get("fetch") == "manual": continue
+        if report["sources"].get(sid, {}).get("status") != "fetched": return False
+    return True
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--apply", action="store_true"); ap.add_argument("--only")
     a = ap.parse_args()
@@ -97,12 +131,13 @@ def main():
                 log.append({"date": today, "row": row["id"], "model": row["model"], "platform": row["platform"],
                             "variant": row["variant"], "resolution": row["resolution"], "old_usd_per_second": old_usd,
                             "new_usd_per_second": row["usd_per_second"], "source_url": row["source_url"], "type": "price"})
-    # mark rows of fetched sources whose checks all passed as re-checked today
-    bad = {f["id"] for f in report["findings"]}
-    for r in db["rows"]:
-        if r["source"] in texts and r["id"] not in bad: r["checked"] = today
-        if r.get("promo_until") and r["promo_until"] < today:
-            report["findings"].append({"kind": "row", "id": r["id"], "status": "promo_expired", "promo_until": r["promo_until"]})
+    # Re-date only rows whose own checks passed. Plan rows stay stale when the plan price itself changed.
+    stamp_checked(db, texts, report["findings"], today)
+    expired = expire_promos(db, today, log)
+    for r in expired:
+        report["findings"].append({"kind": "row", "id": r["id"], "status": "promo_expired", "promo_until": r["promo_until"]})
+    if full_check_succeeded(db, report, only):
+        db["last_full_check"] = today
     report["counts"] = counts
     json.dump(report, open(REPORT, "w"), indent=1, ensure_ascii=False)
     json.dump(db, open(DATA, "w"), indent=1, ensure_ascii=False)

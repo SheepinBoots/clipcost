@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build the static ClipCost site from data/*.json into dist/."""
 import json, os, shutil, html, datetime
+from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
@@ -18,19 +19,24 @@ def root(path):
     return BASE + path
 db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 changes = json.load(open(os.path.join(ROOT, "data", "changes.json")))
-rows, models, plans, sources = db["rows"], db["models"], db["plans"], db["sources"]
+models, plans, sources = db["models"], db["plans"], db["sources"]
 today = datetime.date.today()
+TODAY = today.isoformat()
 MONTH = today.strftime("%b %Y")
-LAST = max(r["checked"] for r in rows)
+def current(r):
+    """Drop expired promos and rows discontinued on or before yesterday."""
+    if r.get("promo_until") and r["promo_until"] < TODAY: return False
+    if r.get("discontinued_on") and r["discontinued_on"] < TODAY: return False
+    return True
+rows = [r for r in db["rows"] if current(r)]
+LAST = db.get("last_full_check") or min(r["checked"] for r in db["rows"])
 
-# Higgsfield referral is approved. Krea and Magnific stay placeholders until approval.
+# Higgsfield referral is approved. Krea and Magnific use their official URLs until affiliate IDs exist.
 HF_FPR = "emmanuel-bbfe0e"
 HF_BASE = "https://higgsfield.ai?fpr=" + HF_FPR
 AFF = {
  "Higgsfield": HF_BASE,
  "Higgsfield API": "https://open.higgsfield.ai?fpr=" + HF_FPR,
- "Krea": "https://www.krea.ai/pricing?via=TODO_KREA_AFFILIATE_ID",
- "Magnific": "https://www.magnific.com/pricing?ref=TODO_MAGNIFIC_AFFILIATE_ID",
 }
 def is_higgsfield(url):
     host = (urlsplit(url or "").hostname or "").lower()
@@ -62,7 +68,15 @@ def plat_link(p, url):
     return f'<a href="{html.escape(url)}" rel="nofollow noopener" target="_blank">{html.escape(p)}</a>'
 e = html.escape
 def money(v):
-    return f"${v:.3f}" if v >= 0.01 else f"${v:.4f}"
+    """Shared with the page scripts: up to 5 decimals, half up, trailing zeros trimmed to 2."""
+    n = int((Decimal(str(v)) * Decimal(100000)).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+    neg = n < 0
+    n = abs(n)
+    whole, frac = divmod(n, 100000)
+    digits = f"{frac:05d}".rstrip("0")
+    if len(digits) < 2:
+        digits = f"{frac:05d}"[:2]
+    return f"{'-' if neg else ''}${whole}.{digits}"
 
 def page(path, title, desc, body, active=""):
     canon = SITE_URL + path
@@ -96,9 +110,10 @@ def row_html(r):
     extra = e(r["math"]) if r.get("math") else ""
     if r.get("note"): extra += (" " if extra else "") + e(r["note"])
     promo = f' <span class="small">until {r["promo_until"]}</span>' if r.get("promo_until") else ""
+    disc = f' <span class="small">discontinued {e(r["discontinued_on"])}</span>' if r.get("discontinued_on") else ""
     return (f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(m)}</a></td><td>{plat_link(r["platform"], r["source_url"])}</td>'
             f'<td>{what}</td><td>{e(r["resolution"])}{aud}</td><td class="num">{money(r["usd_per_second"])}</td>'
-            f'<td>{tag(r["status"])}{promo}</td><td class="math">{extra}</td>'
+            f'<td>{tag(r["status"])}{promo}{disc}</td><td class="math">{extra}</td>'
             f'<td class="small"><a href="{html.escape(outbound(r["source_url"])[0])}" rel="{outbound(r["source_url"])[1]}" target="_blank">source</a><br>{r["checked"]}</td></tr>')
 
 THEAD = '<thead><tr><th data-k="model">Model</th><th data-k="platform">Where</th><th data-k="variant">Variant / plan</th><th data-k="resolution">Res.</th><th data-k="usd_per_second">$ / sec</th><th data-k="status">Status</th><th>How we got it</th><th data-k="checked">Source</th></tr></thead>'
@@ -157,21 +172,23 @@ let DATA=[];fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{DATA=d.r
 let sortK='usd_per_second',dir=1;
 const $=id=>document.getElementById(id);
 function esc(s){{return String(s??'').replace(/[&<>"]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c]))}}
-function money(v){{return '$'+(v>=0.01?v.toFixed(3):v.toFixed(4))}}
+function money(v){{const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
 function tag(s){{return `<span class="tag ${{s}}">${{{{verified:'vendor-stated',estimate:'approx.',promo:'promo'}}[s]}}</span>`}}
+function current(r){{const today=new Date().toISOString().slice(0,10);if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
 function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
 function plat(r){{const tracked=hf(r.source_url);if(tracked)return `<a href="${{esc(tracked)}}" rel="sponsored nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`;const a=AFF[r.platform];return a?`<a href="${{esc(a)}}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">${{esc(r.platform)}}</a>`:`<a href="${{esc(r.source_url)}}" rel="nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`}}
 function render(){{
  const fm=$('fModel').value,fp=$('fPlat').value,fk=$('fKind').value,fr=$('fRes').value.trim().toLowerCase();
- let rs=DATA.filter(r=>(!fm||r.model==fm)&&(!fp||r.platform==fp)&&(!fk||r.kind==fk)&&(!fr||String(r.resolution).toLowerCase().includes(fr))&&!($('fPromo').checked&&r.status=='promo')&&!($('fEst').checked&&r.status=='estimate'));
+ let rs=DATA.filter(r=>current(r)&&(!fm||r.model==fm)&&(!fp||r.platform==fp)&&(!fk||r.kind==fk)&&(!fr||String(r.resolution).toLowerCase().includes(fr))&&!($('fPromo').checked&&r.status=='promo')&&!($('fEst').checked&&r.status=='estimate'));
  rs.sort((a,b)=>{{let x=a[sortK],y=b[sortK];if(sortK=='model'){{x=MODELS[x];y=MODELS[y]}}return (x>y?1:x<y?-1:0)*dir}});
  document.querySelector('#prices tbody').innerHTML=rs.map(r=>{{
   const what=esc(r.variant)+(r.kind=='plan'?` · <span class="small">${{esc(r.plan_name)}}</span>`:'');
   const aud=r.audio==null?'':(r.audio?' · audio':' · no audio');
   const extra=[r.math,r.note].filter(Boolean).map(esc).join(' ');
   const promo=r.promo_until?` <span class="small">until ${{r.promo_until}}</span>`:'';
+  const disc=r.discontinued_on?` <span class="small">discontinued ${{esc(r.discontinued_on)}}</span>`:'';
   const src=hf(r.source_url),srcHref=src||r.source_url,srcRel=src?'sponsored nofollow noopener':'nofollow noopener';
-  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{what}}</td><td>${{esc(r.resolution)}}${{aud}}</td><td class="num">${{money(r.usd_per_second)}}</td><td>${{tag(r.status)}}${{promo}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
+  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{what}}</td><td>${{esc(r.resolution)}}${{aud}}</td><td class="num">${{money(r.usd_per_second)}}</td><td>${{tag(r.status)}}${{promo}}${{disc}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
  $('count').textContent=rs.length+' rows';
  document.querySelectorAll('#prices th').forEach(th=>{{th.classList.remove('sorted-asc','sorted-desc');if(th.dataset.k==sortK)th.classList.add(dir>0?'sorted-asc':'sorted-desc')}});
 }}
@@ -221,7 +238,8 @@ calc = f"""<h1>AI video credit calculator</h1>
 <p class="lead">Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page.</p>
 <div class="calc"><div class="card">
 <label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px">{plan_opts}</select>
-<label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" min="1" max="100" value="100" style="width:100px"> %
+<label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %
+<p class="small" id="usedMsg" role="status"></p>
 <div style="margin-top:14px"><div class="small">Plan price</div><div class="kpi" id="kPrice"></div>
 <div class="small" style="margin-top:8px">Credits per month</div><div class="kpi" id="kCred"></div>
 <div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer"></div></div>
@@ -235,16 +253,29 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  const esc=s=>String(s??'').replace(/[&<>]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;'}}[c]));
  const pk=new URLSearchParams(location.search).get('plan');if(pk&&d.plans[pk])$('plan').value=pk;
  function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
- function go(){{const k=$('plan').value,p=d.plans[k],u=Math.max(1,Math.min(100,+$('used').value||100))/100;
+ function money(v){{const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
+ function clipCount(credits, per){{const raw=credits/per, nearest=Math.round(raw);return Math.abs(raw-nearest)<0.005?nearest:Math.floor(raw)}}
+ function current(r){{const today=new Date().toISOString().slice(0,10);if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
+ function readUsed(){{const el=$('used'), raw=String(el.value).trim();
+  if(raw===''||!Number.isFinite(Number(raw))){{$('usedMsg').textContent='Enter a whole number from 1 to 100.';return null}}
+  const n=Number(raw);
+  if(Number.isInteger(n)&&n>=1&&n<=100){{$('usedMsg').textContent='';return n/100}}
+  const use=Math.min(100,Math.max(1,Math.round(n)||1));
+  el.value=String(use);
+  $('usedMsg').textContent='Enter a whole number from 1 to 100. Using '+use+'%.';
+  return use/100}}
+ function go(){{const k=$('plan').value,p=d.plans[k],u=readUsed();
   const per=p.usd_month/p.credits_month;
   $('kPrice').textContent='$'+p.usd_month+'/mo';$('kCred').textContent=p.credits_month.toLocaleString();$('kPer').textContent='$'+per.toFixed(5);
   $('pNote').textContent=(p.credits_note||'')+' Billing: '+p.billing+'. Checked '+p.checked+'.';
-  const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener',mark=tracked?'':(AFF[p.platform]?' data-affiliate="TODO"':'');
+  const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener';
   const srcRel=tracked?'sponsored nofollow noopener':'nofollow noopener';
-  $('pLink').innerHTML=`<a class="btn" href="${{esc(href)}}" rel="${{rel}}" target="_blank"${{mark}}>See ${{esc(p.platform)}} plans</a> <a class="small" href="${{esc(tracked||p.source_url)}}" rel="${{srcRel}}" target="_blank">source</a>`;
-  const rs=d.rows.filter(r=>r.plan==k).sort((a,b)=>a.usd_per_second-b.usd_per_second);
-  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{{const clips=Math.floor(p.credits_month*u/r.credits_per_clip);const pc=r.usd_per_clip/u;
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{esc(r.resolution)}}</td><td>${{r.clip_seconds}}s</td><td>${{r.status=='estimate'?'~':''}}${{(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}}</td><td class="num">${{clips.toLocaleString()}}</td><td class="num">$${{pc.toFixed(3)}}</td><td class="num">$${{(pc/r.clip_seconds).toFixed(4)}}</td></tr>`}}).join('');
+  $('pLink').innerHTML=`<a class="btn" href="${{esc(href)}}" rel="${{rel}}" target="_blank">See ${{esc(p.platform)}} plans</a> <a class="small" href="${{esc(tracked||p.source_url)}}" rel="${{srcRel}}" target="_blank">source</a>`;
+  if(u==null){{$('ct').querySelector('tbody').innerHTML='<tr><td colspan="7">Enter a whole number from 1 to 100.</td></tr>';return}}
+  const rs=d.rows.filter(r=>r.plan==k&&current(r)).sort((a,b)=>a.usd_per_second-b.usd_per_second);
+  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{{const clips=clipCount(p.credits_month*u,r.credits_per_clip);const pc=r.usd_per_clip/u;
+   const price=clips>0?money(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{esc(r.resolution)}}</td><td>${{r.clip_seconds}}s</td><td>${{r.status=='estimate'?'~':''}}${{(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}}</td><td class="num">${{clips.toLocaleString()}}</td><td class="num">${{price}}</td><td class="num">${{perSec}}</td></tr>`}}).join('');
   history.replaceState(null,'','?plan='+k);}}
  $('plan').addEventListener('input',go);$('used').addEventListener('input',go);go();}});
 </script>{news_box()}"""

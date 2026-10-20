@@ -24,6 +24,6 @@ Live at https://sheepinboots.github.io/clipcost/
 
 ## TODO before launch
 - NEWSLETTER_ACTION in scripts/build_site.py
-- AFF dict in build_site.py (affiliate IDs still open: Krea, Magnific)
+- Krea and Magnific affiliate IDs (links are the official pricing pages until then)
 - Contact email on /about/
 - Manual sources: Kling app subscriptions (kling.ai/pricing)

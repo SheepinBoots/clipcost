@@ -87,6 +87,21 @@
    "url": "https://kling.ai/pricing",
    "fetch": "manual",
    "note": "Pricing renders client-side behind region/login; not captured. Check by hand."
+  },
+  "fal_h3max": {
+   "name": "fal: MiniMax H3 Max",
+   "url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "fetch": "static"
+  },
+  "fal_h3turbo": {
+   "name": "fal: MiniMax H3 Max Turbo",
+   "url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "fetch": "static"
+  },
+  "fal_grok15": {
+   "name": "fal: Grok Imagine Video 1.5",
+   "url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
+   "fetch": "static"
   }
  },
  "models": {
@@ -829,69 +844,345 @@
    "variant": "MiniMax H3 Max",
    "platform": "fal",
    "kind": "api",
-   "resolution": "default",
+   "resolution": "480p",
    "audio": null,
    "usd_per_second": 0.05,
    "status": "verified",
    "promo_until": null,
-   "source": "fal_pricing",
+   "source": "fal_h3max",
    "math": null,
    "checks": [
     {
-     "needle": "MiniMax H3 Max seconds ${N}",
+     "needle": "after which 480p is ${N} /second, 768p",
      "expect": 0.05
     }
    ],
-   "note": "From fal's pricing table (default settings).",
+   "note": "List price after the Oct 31, 2026 promo. 480p list rate (the model page's default tier during the promo is 768p).",
    "id": "r022",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/pricing"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
   },
   {
    "model": "minimax-hailuo",
    "variant": "MiniMax H3 Max Turbo",
    "platform": "fal",
    "kind": "api",
-   "resolution": "default",
+   "resolution": "480p",
    "audio": null,
    "usd_per_second": 0.025,
    "status": "verified",
    "promo_until": null,
-   "source": "fal_pricing",
+   "source": "fal_h3turbo",
    "math": null,
    "checks": [
     {
-     "needle": "H3 Max Turbo seconds ${N}",
+     "needle": "after which 480p is ${N} /second, 768p",
      "expect": 0.025
     }
    ],
-   "note": "From fal's pricing table (default settings).",
+   "note": "List price after the Oct 31, 2026 promo.",
    "id": "r023",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/pricing"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
   },
   {
    "model": "grok-imagine",
-   "variant": "Grok Imagine Video",
+   "variant": "Grok Imagine Video 1.5",
    "platform": "fal",
    "kind": "api",
-   "resolution": "default",
+   "resolution": "480p",
    "audio": null,
-   "usd_per_second": 0.05,
+   "usd_per_second": 0.08,
    "status": "verified",
    "promo_until": null,
-   "source": "fal_pricing",
+   "source": "fal_grok15",
    "math": null,
    "checks": [
     {
-     "needle": "Grok Imagine Video seconds ${N}",
-     "expect": 0.05
+     "needle": "480p at ${N} /sec, 720p",
+     "expect": 0.08
     }
    ],
-   "note": "From fal's pricing table (default settings).",
+   "note": "Grok Imagine Video 1.5. The older Grok Imagine Video (v1) is $0.05/s at 480p and is not this model.",
    "id": "r024",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/pricing"
+   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "768p",
+   "audio": null,
+   "usd_per_second": 0.08,
+   "status": "verified",
+   "promo_until": null,
+   "source": "fal_h3max",
+   "math": null,
+   "checks": [
+    {
+     "needle": "768p is ${N} /second, and 1080p",
+     "expect": 0.08
+    }
+   ],
+   "note": "List price after the Oct 31, 2026 promo.",
+   "id": "r179",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.16,
+   "status": "verified",
+   "promo_until": null,
+   "source": "fal_h3max",
+   "math": null,
+   "checks": [
+    {
+     "needle": "and 1080p is ${N} /second",
+     "expect": 0.16
+    }
+   ],
+   "note": "List price after the Oct 31, 2026 promo.",
+   "id": "r180",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "480p",
+   "audio": null,
+   "usd_per_second": 0.0325,
+   "status": "promo",
+   "promo_until": "2026-10-31",
+   "source": "fal_h3max",
+   "math": null,
+   "checks": [
+    {
+     "needle": "Video costs ${N} per second at 480p",
+     "expect": 0.0325
+    }
+   ],
+   "note": "35% off until Oct 31, 2026.",
+   "id": "r181",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "768p",
+   "audio": null,
+   "usd_per_second": 0.052,
+   "status": "promo",
+   "promo_until": "2026-10-31",
+   "source": "fal_h3max",
+   "math": null,
+   "checks": [
+    {
+     "needle": "at 480p , ${N} per second at 768p",
+     "expect": 0.052
+    }
+   ],
+   "note": "35% off until Oct 31, 2026.",
+   "id": "r182",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.104,
+   "status": "promo",
+   "promo_until": "2026-10-31",
+   "source": "fal_h3max",
+   "math": null,
+   "checks": [
+    {
+     "needle": "at 768p , and ${N} per second at 1080p",
+     "expect": 0.104
+    }
+   ],
+   "note": "35% off until Oct 31, 2026.",
+   "id": "r183",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max Turbo",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "768p",
+   "audio": null,
+   "usd_per_second": 0.04,
+   "status": "verified",
+   "promo_until": null,
+   "source": "fal_h3turbo",
+   "math": null,
+   "checks": [
+    {
+     "needle": "768p is ${N} /second, and 1080p",
+     "expect": 0.04
+    }
+   ],
+   "note": "List price after the Oct 31, 2026 promo.",
+   "id": "r184",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max Turbo",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.08,
+   "status": "verified",
+   "promo_until": null,
+   "source": "fal_h3turbo",
+   "math": null,
+   "checks": [
+    {
+     "needle": "and 1080p is ${N} /second",
+     "expect": 0.08
+    }
+   ],
+   "note": "List price after the Oct 31, 2026 promo.",
+   "id": "r185",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max Turbo",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "480p",
+   "audio": null,
+   "usd_per_second": 0.01625,
+   "status": "promo",
+   "promo_until": "2026-10-31",
+   "source": "fal_h3turbo",
+   "math": null,
+   "checks": [
+    {
+     "needle": "Video costs ${N} per second at 480p",
+     "expect": 0.01625
+    }
+   ],
+   "note": "35% off until Oct 31, 2026.",
+   "id": "r186",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max Turbo",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "768p",
+   "audio": null,
+   "usd_per_second": 0.026,
+   "status": "promo",
+   "promo_until": "2026-10-31",
+   "source": "fal_h3turbo",
+   "math": null,
+   "checks": [
+    {
+     "needle": "at 480p , ${N} per second at 768p",
+     "expect": 0.026
+    }
+   ],
+   "note": "35% off until Oct 31, 2026.",
+   "id": "r187",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+  },
+  {
+   "model": "minimax-hailuo",
+   "variant": "MiniMax H3 Max Turbo",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.052,
+   "status": "promo",
+   "promo_until": "2026-10-31",
+   "source": "fal_h3turbo",
+   "math": null,
+   "checks": [
+    {
+     "needle": "at 768p , and ${N} per second at 1080p",
+     "expect": 0.052
+    }
+   ],
+   "note": "35% off until Oct 31, 2026.",
+   "id": "r188",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "Grok Imagine Video 1.5",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "720p",
+   "audio": null,
+   "usd_per_second": 0.14,
+   "status": "verified",
+   "promo_until": null,
+   "source": "fal_grok15",
+   "math": null,
+   "checks": [
+    {
+     "needle": "720p at ${N} /sec, 1080p",
+     "expect": 0.14
+    }
+   ],
+   "note": "Grok Imagine Video 1.5.",
+   "id": "r189",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video"
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "Grok Imagine Video 1.5",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.25,
+   "status": "verified",
+   "promo_until": null,
+   "source": "fal_grok15",
+   "math": null,
+   "checks": [
+    {
+     "needle": "1080p at ${N} /sec",
+     "expect": 0.25
+    }
+   ],
+   "note": "Grok Imagine Video 1.5.",
+   "id": "r190",
+   "checked": "2026-10-20",
+   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video"
   },
   {
    "model": "wan-3-0",
@@ -1854,10 +2145,11 @@
      "expect": 0.4
     }
    ],
-   "note": "Preview endpoints deprecated - Google says they shut down Oct 22, 2026.",
+   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
    "id": "r066",
    "checked": "2026-10-20",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "discontinued_on": "2026-10-22"
   },
   {
    "model": "veo-3-1",
@@ -1877,10 +2169,11 @@
      "expect": 0.6
     }
    ],
-   "note": "Preview endpoints deprecated - Google says they shut down Oct 22, 2026.",
+   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
    "id": "r067",
    "checked": "2026-10-20",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "discontinued_on": "2026-10-22"
   },
   {
    "model": "veo-3-1",
@@ -1900,10 +2193,11 @@
      "expect": 0.1
     }
    ],
-   "note": "Preview endpoints deprecated - Google says they shut down Oct 22, 2026.",
+   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
    "id": "r068",
    "checked": "2026-10-20",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "discontinued_on": "2026-10-22"
   },
   {
    "model": "veo-3-1",
@@ -1923,10 +2217,11 @@
      "expect": 0.12
     }
    ],
-   "note": "Preview endpoints deprecated - Google says they shut down Oct 22, 2026.",
+   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
    "id": "r069",
    "checked": "2026-10-20",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "discontinued_on": "2026-10-22"
   },
   {
    "model": "veo-3-1",
@@ -1946,10 +2241,11 @@
      "expect": 0.05
     }
    ],
-   "note": "Preview endpoints deprecated - Google says they shut down Oct 22, 2026.",
+   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
    "id": "r070",
    "checked": "2026-10-20",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "discontinued_on": "2026-10-22"
   },
   {
    "model": "veo-3-1",
@@ -1969,10 +2265,11 @@
      "expect": 0.08
     }
    ],
-   "note": "Preview endpoints deprecated - Google says they shut down Oct 22, 2026.",
+   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
    "id": "r071",
    "checked": "2026-10-20",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "discontinued_on": "2026-10-22"
   },
   {
    "model": "gemini-omni-flash",
@@ -3690,7 +3987,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 101.01,
+   "credits_per_clip": 101.01010101010101,
    "usd_per_clip": 0.101,
    "usd_per_second": 0.05051,
    "status": "estimate",
@@ -3718,7 +4015,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 101.01,
+   "credits_per_clip": 101.01010101010101,
    "usd_per_clip": 0.1768,
    "usd_per_second": 0.08838,
    "status": "estimate",
@@ -3746,7 +4043,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 101.01,
+   "credits_per_clip": 101.01010101010101,
    "usd_per_clip": 0.1061,
    "usd_per_second": 0.05303,
    "status": "estimate",
@@ -3774,7 +4071,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 111.11,
+   "credits_per_clip": 111.11111111111111,
    "usd_per_clip": 0.1111,
    "usd_per_second": 0.05556,
    "status": "estimate",
@@ -3802,7 +4099,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 111.11,
+   "credits_per_clip": 111.11111111111111,
    "usd_per_clip": 0.1944,
    "usd_per_second": 0.09722,
    "status": "estimate",
@@ -3830,7 +4127,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 111.11,
+   "credits_per_clip": 111.11111111111111,
    "usd_per_clip": 0.1167,
    "usd_per_second": 0.05833,
    "status": "estimate",
@@ -3858,7 +4155,7 @@
    "resolution": "—",
    "audio": false,
    "clip_seconds": 3,
-   "credits_per_clip": 186.92,
+   "credits_per_clip": 186.9158878504673,
    "usd_per_clip": 0.1869,
    "usd_per_second": 0.06231,
    "status": "estimate",
@@ -3886,7 +4183,7 @@
    "resolution": "—",
    "audio": false,
    "clip_seconds": 3,
-   "credits_per_clip": 186.92,
+   "credits_per_clip": 186.9158878504673,
    "usd_per_clip": 0.3271,
    "usd_per_second": 0.10903,
    "status": "estimate",
@@ -3914,7 +4211,7 @@
    "resolution": "—",
    "audio": false,
    "clip_seconds": 3,
-   "credits_per_clip": 186.92,
+   "credits_per_clip": 186.9158878504673,
    "usd_per_clip": 0.1963,
    "usd_per_second": 0.06542,
    "status": "estimate",
@@ -3942,7 +4239,7 @@
    "resolution": "720p",
    "audio": false,
    "clip_seconds": 4,
-   "credits_per_clip": 238.1,
+   "credits_per_clip": 238.0952380952381,
    "usd_per_clip": 0.2381,
    "usd_per_second": 0.05952,
    "status": "estimate",
@@ -3970,7 +4267,7 @@
    "resolution": "720p",
    "audio": false,
    "clip_seconds": 4,
-   "credits_per_clip": 238.1,
+   "credits_per_clip": 238.0952380952381,
    "usd_per_clip": 0.4167,
    "usd_per_second": 0.10417,
    "status": "estimate",
@@ -3998,7 +4295,7 @@
    "resolution": "720p",
    "audio": false,
    "clip_seconds": 4,
-   "credits_per_clip": 238.1,
+   "credits_per_clip": 238.0952380952381,
    "usd_per_clip": 0.25,
    "usd_per_second": 0.0625,
    "status": "estimate",
@@ -4026,7 +4323,7 @@
    "resolution": "720p",
    "audio": null,
    "clip_seconds": 4,
-   "credits_per_clip": 88.89,
+   "credits_per_clip": 88.88888888888889,
    "usd_per_clip": 0.0889,
    "usd_per_second": 0.02222,
    "status": "estimate",
@@ -4054,7 +4351,7 @@
    "resolution": "720p",
    "audio": null,
    "clip_seconds": 4,
-   "credits_per_clip": 88.89,
+   "credits_per_clip": 88.88888888888889,
    "usd_per_clip": 0.1556,
    "usd_per_second": 0.03889,
    "status": "estimate",
@@ -4082,7 +4379,7 @@
    "resolution": "720p",
    "audio": null,
    "clip_seconds": 4,
-   "credits_per_clip": 88.89,
+   "credits_per_clip": 88.88888888888889,
    "usd_per_clip": 0.0933,
    "usd_per_second": 0.02333,
    "status": "estimate",
@@ -4110,7 +4407,7 @@
    "resolution": "768p",
    "audio": null,
    "clip_seconds": 6,
-   "credits_per_clip": 208.33,
+   "credits_per_clip": 208.33333333333334,
    "usd_per_clip": 0.2083,
    "usd_per_second": 0.03472,
    "status": "estimate",
@@ -4138,7 +4435,7 @@
    "resolution": "768p",
    "audio": null,
    "clip_seconds": 6,
-   "credits_per_clip": 208.33,
+   "credits_per_clip": 208.33333333333334,
    "usd_per_clip": 0.3646,
    "usd_per_second": 0.06076,
    "status": "estimate",
@@ -4166,7 +4463,7 @@
    "resolution": "768p",
    "audio": null,
    "clip_seconds": 6,
-   "credits_per_clip": 208.33,
+   "credits_per_clip": 208.33333333333334,
    "usd_per_clip": 0.2188,
    "usd_per_second": 0.03646,
    "status": "estimate",
@@ -4194,7 +4491,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 5,
-   "credits_per_clip": 129.87,
+   "credits_per_clip": 129.87012987012986,
    "usd_per_clip": 0.1299,
    "usd_per_second": 0.02597,
    "status": "estimate",
@@ -4222,7 +4519,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 5,
-   "credits_per_clip": 129.87,
+   "credits_per_clip": 129.87012987012986,
    "usd_per_clip": 0.2273,
    "usd_per_second": 0.04545,
    "status": "estimate",
@@ -4250,7 +4547,7 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 5,
-   "credits_per_clip": 129.87,
+   "credits_per_clip": 129.87012987012986,
    "usd_per_clip": 0.1364,
    "usd_per_second": 0.02727,
    "status": "estimate",
@@ -4278,7 +4575,7 @@
    "resolution": "—",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 178.57,
+   "credits_per_clip": 178.57142857142858,
    "usd_per_clip": 0.1786,
    "usd_per_second": 0.08929,
    "status": "estimate",
@@ -4306,7 +4603,7 @@
    "resolution": "—",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 178.57,
+   "credits_per_clip": 178.57142857142858,
    "usd_per_clip": 0.3125,
    "usd_per_second": 0.15625,
    "status": "estimate",
@@ -4334,7 +4631,7 @@
    "resolution": "—",
    "audio": null,
    "clip_seconds": 2,
-   "credits_per_clip": 178.57,
+   "credits_per_clip": 178.57142857142858,
    "usd_per_clip": 0.1875,
    "usd_per_second": 0.09375,
    "status": "estimate",
@@ -4970,5 +5267,6 @@
    "item": "Kling 4.0",
    "reason": "announced on kling.ai, no per-second price found on the official API pricing page"
   }
- ]
+ ],
+ "last_full_check": "2026-10-20"
 }

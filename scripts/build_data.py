@@ -235,7 +235,7 @@ for platform, clips in CLIPS.items():
             if dnote: note=(dnote+" "+note).strip()
             checks=[{"needle":needle,"expect":cnt if cnt else label_cred}]
             rows.append(dict(model=m,variant=var,platform=platform,kind="plan",plan=pk,plan_name=p["plan"],
-                resolution=res,audio=aud,clip_seconds=secs,credits_per_clip=round(cred,2),usd_per_clip=round(clip_usd,4),
+                resolution=res,audio=aud,clip_seconds=secs,credits_per_clip=cred,usd_per_clip=round(clip_usd,4),
                 usd_per_second=round(ups,5),status=st,promo_until=None,source=CLIP_SRC[platform],math=math,checks=checks,note=note))
 
 for i,r in enumerate(rows):

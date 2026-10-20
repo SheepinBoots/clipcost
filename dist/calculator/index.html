@@ -12,7 +12,8 @@
 <p class="lead">Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page.</p>
 <div class="calc"><div class="card">
 <label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px"><optgroup label="Higgsfield"><option value="hf-starter">Starter: $19/mo</option><option value="hf-plus-annual">Plus (annual): $47/mo</option><option value="hf-plus-monthly">Plus (monthly): $59/mo</option><option value="hf-ultra-annual">Ultra (annual): $99/mo</option><option value="hf-ultra-monthly">Ultra (monthly): $129/mo</option></optgroup><optgroup label="Krea"><option value="krea-basic-yearly">Basic (yearly): $5/mo</option><option value="krea-pro-monthly">Pro (monthly): $35/mo</option><option value="krea-pro-yearly">Pro (yearly): $21/mo</option></optgroup><optgroup label="Magnific"><option value="mag-premium">Premium (annual): $14.5/mo</option><option value="mag-premium-plus">Premium+ (annual): $33.75/mo</option><option value="mag-pro">Pro (annual): $82.5/mo</option></optgroup></select>
-<label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" min="1" max="100" value="100" style="width:100px"> %
+<label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %
+<p class="small" id="usedMsg" role="status"></p>
 <div style="margin-top:14px"><div class="small">Plan price</div><div class="kpi" id="kPrice"></div>
 <div class="small" style="margin-top:8px">Credits per month</div><div class="kpi" id="kCred"></div>
 <div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer"></div></div>
@@ -20,22 +21,35 @@
 <div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Res.</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody></tbody></table></div>
 <p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
 <script>
-const BASE="/clipcost";const AFF={"Higgsfield": "https://higgsfield.ai?fpr=emmanuel-bbfe0e", "Higgsfield API": "https://open.higgsfield.ai?fpr=emmanuel-bbfe0e", "Krea": "https://www.krea.ai/pricing?via=TODO_KREA_AFFILIATE_ID", "Magnific": "https://www.magnific.com/pricing?ref=TODO_MAGNIFIC_AFFILIATE_ID"};const MODELS={"wan-3-0-prime": "Wan 3.0 Prime", "wan-3-0": "Wan 3.0", "kling-3-0": "Kling 3.0", "seedance-2-5": "Seedance 2.5", "veo-3-1": "Veo 3.1", "gemini-omni-flash": "Gemini Omni Flash 1.1", "minimax-hailuo": "MiniMax Hailuo / H3", "runway-gen-4": "Runway Gen-4.x", "grok-imagine": "Grok Imagine Video 1.5"};
+const BASE="/clipcost";const AFF={"Higgsfield": "https://higgsfield.ai?fpr=emmanuel-bbfe0e", "Higgsfield API": "https://open.higgsfield.ai?fpr=emmanuel-bbfe0e"};const MODELS={"wan-3-0-prime": "Wan 3.0 Prime", "wan-3-0": "Wan 3.0", "kling-3-0": "Kling 3.0", "seedance-2-5": "Seedance 2.5", "veo-3-1": "Veo 3.1", "gemini-omni-flash": "Gemini Omni Flash 1.1", "minimax-hailuo": "MiniMax Hailuo / H3", "runway-gen-4": "Runway Gen-4.x", "grok-imagine": "Grok Imagine Video 1.5"};
 fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
  const pk=new URLSearchParams(location.search).get('plan');if(pk&&d.plans[pk])$('plan').value=pk;
  function hf(url){try{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return "https://higgsfield.ai?fpr=emmanuel-bbfe0e";u.searchParams.delete('ref');u.searchParams.set('fpr',"emmanuel-bbfe0e");return u.toString()}catch(e){return null}}
- function go(){const k=$('plan').value,p=d.plans[k],u=Math.max(1,Math.min(100,+$('used').value||100))/100;
+ function money(v){const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}
+ function clipCount(credits, per){const raw=credits/per, nearest=Math.round(raw);return Math.abs(raw-nearest)<0.005?nearest:Math.floor(raw)}
+ function current(r){const today=new Date().toISOString().slice(0,10);if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}
+ function readUsed(){const el=$('used'), raw=String(el.value).trim();
+  if(raw===''||!Number.isFinite(Number(raw))){$('usedMsg').textContent='Enter a whole number from 1 to 100.';return null}
+  const n=Number(raw);
+  if(Number.isInteger(n)&&n>=1&&n<=100){$('usedMsg').textContent='';return n/100}
+  const use=Math.min(100,Math.max(1,Math.round(n)||1));
+  el.value=String(use);
+  $('usedMsg').textContent='Enter a whole number from 1 to 100. Using '+use+'%.';
+  return use/100}
+ function go(){const k=$('plan').value,p=d.plans[k],u=readUsed();
   const per=p.usd_month/p.credits_month;
   $('kPrice').textContent='$'+p.usd_month+'/mo';$('kCred').textContent=p.credits_month.toLocaleString();$('kPer').textContent='$'+per.toFixed(5);
   $('pNote').textContent=(p.credits_note||'')+' Billing: '+p.billing+'. Checked '+p.checked+'.';
-  const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener',mark=tracked?'':(AFF[p.platform]?' data-affiliate="TODO"':'');
+  const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener';
   const srcRel=tracked?'sponsored nofollow noopener':'nofollow noopener';
-  $('pLink').innerHTML=`<a class="btn" href="${esc(href)}" rel="${rel}" target="_blank"${mark}>See ${esc(p.platform)} plans</a> <a class="small" href="${esc(tracked||p.source_url)}" rel="${srcRel}" target="_blank">source</a>`;
-  const rs=d.rows.filter(r=>r.plan==k).sort((a,b)=>a.usd_per_second-b.usd_per_second);
-  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{const clips=Math.floor(p.credits_month*u/r.credits_per_clip);const pc=r.usd_per_clip/u;
-   return `<tr><td><a href="${BASE}/models/${r.model}/">${esc(r.variant)}</a></td><td>${esc(r.resolution)}</td><td>${r.clip_seconds}s</td><td>${r.status=='estimate'?'~':''}${(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}</td><td class="num">${clips.toLocaleString()}</td><td class="num">$${pc.toFixed(3)}</td><td class="num">$${(pc/r.clip_seconds).toFixed(4)}</td></tr>`}).join('');
+  $('pLink').innerHTML=`<a class="btn" href="${esc(href)}" rel="${rel}" target="_blank">See ${esc(p.platform)} plans</a> <a class="small" href="${esc(tracked||p.source_url)}" rel="${srcRel}" target="_blank">source</a>`;
+  if(u==null){$('ct').querySelector('tbody').innerHTML='<tr><td colspan="7">Enter a whole number from 1 to 100.</td></tr>';return}
+  const rs=d.rows.filter(r=>r.plan==k&&current(r)).sort((a,b)=>a.usd_per_second-b.usd_per_second);
+  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{const clips=clipCount(p.credits_month*u,r.credits_per_clip);const pc=r.usd_per_clip/u;
+   const price=clips>0?money(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
+   return `<tr><td><a href="${BASE}/models/${r.model}/">${esc(r.variant)}</a></td><td>${esc(r.resolution)}</td><td>${r.clip_seconds}s</td><td>${r.status=='estimate'?'~':''}${(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}</td><td class="num">${clips.toLocaleString()}</td><td class="num">${price}</td><td class="num">${perSec}</td></tr>`}).join('');
   history.replaceState(null,'','?plan='+k);}
  $('plan').addEventListener('input',go);$('used').addEventListener('input',go);go();});
 </script><section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
