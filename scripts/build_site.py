@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the static ClipCost site from data/*.json into dist/."""
 import json, os, shutil, html, datetime
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
 SITE_URL = "https://sheepinboots.github.io/clipcost"
@@ -23,16 +23,43 @@ today = datetime.date.today()
 MONTH = today.strftime("%b %Y")
 LAST = max(r["checked"] for r in rows)
 
-# TODO(affiliate): swap placeholder params for real tracking links after approval.
+# Higgsfield referral is approved. Krea and Magnific stay placeholders until approval.
+HF_FPR = "emmanuel-bbfe0e"
+HF_BASE = "https://higgsfield.ai?fpr=" + HF_FPR
 AFF = {
- "Higgsfield": "https://higgsfield.ai/pricing?ref=TODO_HIGGSFIELD_AFFILIATE_ID",
- "Higgsfield API": "https://open.higgsfield.ai/pricing?ref=TODO_HIGGSFIELD_AFFILIATE_ID",
+ "Higgsfield": HF_BASE,
+ "Higgsfield API": "https://open.higgsfield.ai?fpr=" + HF_FPR,
  "Krea": "https://www.krea.ai/pricing?via=TODO_KREA_AFFILIATE_ID",
  "Magnific": "https://www.magnific.com/pricing?ref=TODO_MAGNIFIC_AFFILIATE_ID",
 }
+def is_higgsfield(url):
+    host = (urlsplit(url or "").hostname or "").lower()
+    return host == "higgsfield.ai" or host.endswith(".higgsfield.ai")
+
+def with_fpr(url):
+    """Higgsfield affiliate URL: homepage uses the approved base; other pages keep their path."""
+    if not url or not is_higgsfield(url):
+        return url
+    parts = urlsplit(url)
+    host = (parts.hostname or "").lower()
+    if host == "higgsfield.ai" and parts.path in ("", "/"):
+        return HF_BASE
+    pairs = [(k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if k not in ("fpr", "ref")]
+    pairs.append(("fpr", HF_FPR))
+    return urlunsplit((parts.scheme or "https", parts.netloc, parts.path, urlencode(pairs), parts.fragment))
+
+def outbound(url):
+    """Return (href, rel) for an external link, tagging approved Higgsfield URLs as affiliate."""
+    if is_higgsfield(url):
+        return with_fpr(url), "sponsored nofollow noopener"
+    return url, "nofollow noopener"
+
 def plat_link(p, url):
+    if p in ("Higgsfield", "Higgsfield API") or is_higgsfield(url):
+        href = with_fpr(url) if is_higgsfield(url) else AFF.get(p, HF_BASE)
+        return f'<a href="{html.escape(href)}" rel="sponsored nofollow noopener" target="_blank">{html.escape(p)}</a>'
     if p in AFF: return f'<a href="{AFF[p]}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">{html.escape(p)}</a>'
-    return f'<a href="{url}" rel="nofollow noopener" target="_blank">{html.escape(p)}</a>'
+    return f'<a href="{html.escape(url)}" rel="nofollow noopener" target="_blank">{html.escape(p)}</a>'
 e = html.escape
 def money(v):
     return f"${v:.3f}" if v >= 0.01 else f"${v:.4f}"
@@ -71,7 +98,7 @@ def row_html(r):
     return (f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(m)}</a></td><td>{plat_link(r["platform"], r["source_url"])}</td>'
             f'<td>{what}</td><td>{e(r["resolution"])}{aud}</td><td class="num">{money(r["usd_per_second"])}</td>'
             f'<td>{tag(r["status"])}{promo}</td><td class="math">{extra}</td>'
-            f'<td class="small"><a href="{r["source_url"]}" rel="nofollow noopener" target="_blank">source</a><br>{r["checked"]}</td></tr>')
+            f'<td class="small"><a href="{html.escape(outbound(r["source_url"])[0])}" rel="{outbound(r["source_url"])[1]}" target="_blank">source</a><br>{r["checked"]}</td></tr>')
 
 THEAD = '<thead><tr><th data-k="model">Model</th><th data-k="platform">Where</th><th data-k="variant">Variant / plan</th><th data-k="resolution">Res.</th><th data-k="usd_per_second">$ / sec</th><th data-k="status">Status</th><th>How we got it</th><th data-k="checked">Source</th></tr></thead>'
 
@@ -130,7 +157,8 @@ const $=id=>document.getElementById(id);
 function esc(s){{return String(s??'').replace(/[&<>"]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c]))}}
 function money(v){{return '$'+(v>=0.01?v.toFixed(3):v.toFixed(4))}}
 function tag(s){{return `<span class="tag ${{s}}">${{{{verified:'vendor-stated',estimate:'approx.',promo:'promo'}}[s]}}</span>`}}
-function plat(r){{const a=AFF[r.platform];return a?`<a href="${{a}}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">${{esc(r.platform)}}</a>`:`<a href="${{r.source_url}}" rel="nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`}}
+function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
+function plat(r){{const tracked=hf(r.source_url);if(tracked)return `<a href="${{esc(tracked)}}" rel="sponsored nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`;const a=AFF[r.platform];return a?`<a href="${{esc(a)}}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">${{esc(r.platform)}}</a>`:`<a href="${{esc(r.source_url)}}" rel="nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`}}
 function render(){{
  const fm=$('fModel').value,fp=$('fPlat').value,fk=$('fKind').value,fr=$('fRes').value.trim().toLowerCase();
  let rs=DATA.filter(r=>(!fm||r.model==fm)&&(!fp||r.platform==fp)&&(!fk||r.kind==fk)&&(!fr||String(r.resolution).toLowerCase().includes(fr))&&!($('fPromo').checked&&r.status=='promo')&&!($('fEst').checked&&r.status=='estimate'));
@@ -140,7 +168,8 @@ function render(){{
   const aud=r.audio==null?'':(r.audio?' · audio':' · no audio');
   const extra=[r.math,r.note].filter(Boolean).map(esc).join(' ');
   const promo=r.promo_until?` <span class="small">until ${{r.promo_until}}</span>`:'';
-  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{what}}</td><td>${{esc(r.resolution)}}${{aud}}</td><td class="num">${{money(r.usd_per_second)}}</td><td>${{tag(r.status)}}${{promo}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{r.source_url}}" rel="nofollow noopener" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
+  const src=hf(r.source_url),srcHref=src||r.source_url,srcRel=src?'sponsored nofollow noopener':'nofollow noopener';
+  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{what}}</td><td>${{esc(r.resolution)}}${{aud}}</td><td class="num">${{money(r.usd_per_second)}}</td><td>${{tag(r.status)}}${{promo}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
  $('count').textContent=rs.length+' rows';
  document.querySelectorAll('#prices th').forEach(th=>{{th.classList.remove('sorted-asc','sorted-desc');if(th.dataset.k==sortK)th.classList.add(dir>0?'sorted-asc':'sorted-desc')}});
 }}
@@ -203,11 +232,14 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;'}}[c]));
  const pk=new URLSearchParams(location.search).get('plan');if(pk&&d.plans[pk])$('plan').value=pk;
+ function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
  function go(){{const k=$('plan').value,p=d.plans[k],u=Math.max(1,Math.min(100,+$('used').value||100))/100;
   const per=p.usd_month/p.credits_month;
   $('kPrice').textContent='$'+p.usd_month+'/mo';$('kCred').textContent=p.credits_month.toLocaleString();$('kPer').textContent='$'+per.toFixed(5);
   $('pNote').textContent=(p.credits_note||'')+' Billing: '+p.billing+'. Checked '+p.checked+'.';
-  $('pLink').innerHTML=`<a class="btn" href="${{AFF[p.platform]||p.source_url}}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">See ${{esc(p.platform)}} plans</a> <a class="small" href="${{p.source_url}}" rel="nofollow noopener" target="_blank">source</a>`;
+  const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener',mark=tracked?'':(AFF[p.platform]?' data-affiliate="TODO"':'');
+  const srcRel=tracked?'sponsored nofollow noopener':'nofollow noopener';
+  $('pLink').innerHTML=`<a class="btn" href="${{esc(href)}}" rel="${{rel}}" target="_blank"${{mark}}>See ${{esc(p.platform)}} plans</a> <a class="small" href="${{esc(tracked||p.source_url)}}" rel="${{srcRel}}" target="_blank">source</a>`;
   const rs=d.rows.filter(r=>r.plan==k).sort((a,b)=>a.usd_per_second-b.usd_per_second);
   $('ct').querySelector('tbody').innerHTML=rs.map(r=>{{const clips=Math.floor(p.credits_month*u/r.credits_per_clip);const pc=r.usd_per_clip/u;
    return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{esc(r.resolution)}}</td><td>${{r.clip_seconds}}s</td><td>${{r.status=='estimate'?'~':''}}${{(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}}</td><td class="num">${{clips.toLocaleString()}}</td><td class="num">$${{pc.toFixed(3)}}</td><td class="num">$${{(pc/r.clip_seconds).toFixed(4)}}</td></tr>`}}).join('');
@@ -224,7 +256,11 @@ for c in sorted(changes, key=lambda c: c["date"], reverse=True):
         txt = f'{e(models[c["model"]]["name"])} on {e(c["platform"])} ({e(c["variant"])}, {e(c["resolution"])}): {money(c["old_usd_per_second"])} → <b>{money(c["new_usd_per_second"])}</b>/s'
     else:
         txt = e(c["text"])
-    src = f' <a class="small" href="{c["source_url"]}" rel="nofollow noopener" target="_blank">source</a>' if c.get("source_url") else ""
+    if c.get("source_url"):
+        href, rel = outbound(c["source_url"])
+        src = f' <a class="small" href="{e(href)}" rel="{rel}" target="_blank">source</a>'
+    else:
+        src = ""
     items += f'<li><span class="pill">{c["date"]}</span> <span class="pill">{e(c.get("type","")).upper()}</span> {txt}{src}</li>'
 page("/changes/", f"AI Video Price Changes Log ({MONTH}) | ClipCost",
      "Every AI video price change we detect, with dates and sources: Wan, Kling, Veo, Seedance, Runway, Higgsfield and more.",
@@ -236,7 +272,7 @@ page("/newsletter/", "ClipCost Weekly: AI video price drops & new models", "One 
      f"""<h1>ClipCost Weekly</h1><p class="lead">One short email every Monday: which AI video prices changed, which new models launched, and the cheapest way to run each one right now. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
 
 # ---------- About ----------
-srcl = "".join(f'<li><a href="{s["url"]}" rel="nofollow noopener" target="_blank">{e(s["name"])}</a>{" (checked by hand)" if s["fetch"]=="manual" else ""}</li>' for s in sources.values())
+srcl = "".join(f'<li><a href="{e(outbound(s["url"])[0])}" rel="{outbound(s["url"])[1]}" target="_blank">{e(s["name"])}</a>{" (checked by hand)" if s["fetch"]=="manual" else ""}</li>' for s in sources.values())
 unv = "".join(f'<li>{e(u["item"])}: <span class="small">{e(u["reason"])}</span></li>' for u in db["unverified"])
 page("/about/", "About ClipCost: methodology & affiliate disclosure", "How ClipCost collects and normalizes AI video prices, and how the site is funded.",
      f"""<h1>About ClipCost</h1>
