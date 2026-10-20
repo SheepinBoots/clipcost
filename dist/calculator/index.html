@@ -7,13 +7,19 @@
 <meta property="og:url" content="https://sheepinboots.github.io/clipcost/calculator/"><meta property="og:site_name" content="ClipCost"><meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0b0d12"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235ce1a8'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' font-family='sans-serif' font-weight='800' fill='%2306281b'%3E$%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/clipcost/style.css"></head><body>
-<header class="top"><div class="wrap"><a class="logo" href="/clipcost/">Clip<span>Cost</span></a><nav><a href="/clipcost/">Prices</a><a href="/clipcost/calculator/" class=on>Credit calculator</a><a href="/clipcost/changes/">Price changes</a><a href="/clipcost/newsletter/">Newsletter</a><a href="/clipcost/about/">About</a></nav></div></header>
+<header class="top"><div class="wrap"><a class="logo" href="/clipcost/">Clip<span>Cost</span></a><nav><a href="/clipcost/">Prices</a><a href="/clipcost/deals/">Deals</a><a href="/clipcost/calculator/" class=on>Credit calculator</a><a href="/clipcost/changes/">Price changes</a><a href="/clipcost/newsletter/">Newsletter</a><a href="/clipcost/about/">About</a></nav></div></header>
 <main class="wrap"><h1>AI video credit calculator</h1>
 <p class="lead">Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page.</p>
 <div class="calc"><div class="card">
 <label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px"><optgroup label="Higgsfield"><option value="hf-starter">Starter: $19/mo</option><option value="hf-plus-annual">Plus (annual): $47/mo</option><option value="hf-plus-monthly">Plus (monthly): $59/mo</option><option value="hf-ultra-annual">Ultra (annual): $99/mo</option><option value="hf-ultra-monthly">Ultra (monthly): $129/mo</option></optgroup><optgroup label="Krea"><option value="krea-basic-yearly">Basic (yearly): $5/mo</option><option value="krea-pro-monthly">Pro (monthly): $35/mo</option><option value="krea-pro-yearly">Pro (yearly): $21/mo</option></optgroup><optgroup label="Magnific"><option value="mag-premium">Premium (annual): $14.5/mo</option><option value="mag-premium-plus">Premium+ (annual): $33.75/mo</option><option value="mag-pro">Pro (annual): $82.5/mo</option></optgroup></select>
 <label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %
 <p class="small" id="usedMsg" role="status"></p>
+<label class="chk" style="margin-top:8px"><input type="checkbox" id="applyDeals"> apply today's deals</label>
+<div id="dealBox" hidden>
+<label class="small" for="windowSecs">Seconds you'll make during an unlimited window</label><br>
+<input id="windowSecs" type="number" min="1" value="60" style="width:100px">
+<p class="small" id="dealEff"></p>
+</div>
 <div style="margin-top:14px"><div class="small">Plan price</div><div class="kpi" id="kPrice"></div>
 <div class="small" style="margin-top:8px">Credits per month</div><div class="kpi" id="kCred"></div>
 <div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer"></div></div>
@@ -22,6 +28,7 @@
 <p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
 <script>
 const BASE="/clipcost";const AFF={"Higgsfield": "https://higgsfield.ai?fpr=emmanuel-bbfe0e", "Higgsfield API": "https://open.higgsfield.ai?fpr=emmanuel-bbfe0e"};const MODELS={"wan-3-0-prime": "Wan 3.0 Prime", "wan-3-0": "Wan 3.0", "kling-3-0": "Kling 3.0", "seedance-2-5": "Seedance 2.5", "veo-3-1": "Veo 3.1", "gemini-omni-flash": "Gemini Omni Flash 1.1", "minimax-hailuo": "MiniMax Hailuo / H3", "runway-gen-4": "Runway Gen-4.x", "grok-imagine": "Grok Imagine Video 1.5"};
+const DEALMAP={"hf-starter": {"price": null, "bonus_credits": 0, "blended_price": null, "notes": [], "unlimited": [{"id": "hf-wan3-unlimited-7d", "title": "Wan 3.0 unlimited for 7 days", "models": ["wan-3-0", "wan-3-0-prime"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": "2026-10-20", "end_is_estimate": true}]}, "hf-plus-annual": {"price": null, "bonus_credits": 0, "blended_price": null, "notes": ["Plus annual billing, $59 to $47/mo is already the price of this plan."], "unlimited": [{"id": "hf-wan3-unlimited-7d", "title": "Wan 3.0 unlimited for 7 days", "models": ["wan-3-0", "wan-3-0-prime"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": "2026-10-20", "end_is_estimate": true}, {"id": "hf-kling3-unlimited-7d", "title": "Kling 3.0 unlimited for 7 days on Plus and Ultra", "models": ["kling-3-0"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": null, "end_is_estimate": false}]}, "hf-plus-monthly": {"price": 47, "bonus_credits": 0, "blended_price": null, "notes": ["Plus annual billing, $59 to $47/mo: $47/mo instead of $59/mo"], "unlimited": [{"id": "hf-wan3-unlimited-7d", "title": "Wan 3.0 unlimited for 7 days", "models": ["wan-3-0", "wan-3-0-prime"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": "2026-10-20", "end_is_estimate": true}, {"id": "hf-kling3-unlimited-7d", "title": "Kling 3.0 unlimited for 7 days on Plus and Ultra", "models": ["kling-3-0"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": null, "end_is_estimate": false}]}, "hf-ultra-annual": {"price": null, "bonus_credits": 0, "blended_price": null, "notes": ["Ultra annual billing, $129 to $99/mo is already the price of this plan."], "unlimited": [{"id": "hf-wan3-unlimited-7d", "title": "Wan 3.0 unlimited for 7 days", "models": ["wan-3-0", "wan-3-0-prime"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": "2026-10-20", "end_is_estimate": true}, {"id": "hf-kling3-unlimited-7d", "title": "Kling 3.0 unlimited for 7 days on Plus and Ultra", "models": ["kling-3-0"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": null, "end_is_estimate": false}]}, "hf-ultra-monthly": {"price": 99, "bonus_credits": 0, "blended_price": null, "notes": ["Ultra annual billing, $129 to $99/mo: $99/mo instead of $129/mo"], "unlimited": [{"id": "hf-wan3-unlimited-7d", "title": "Wan 3.0 unlimited for 7 days", "models": ["wan-3-0", "wan-3-0-prime"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": "2026-10-20", "end_is_estimate": true}, {"id": "hf-kling3-unlimited-7d", "title": "Kling 3.0 unlimited for 7 days on Plus and Ultra", "models": ["kling-3-0"], "variants": [], "max_resolution": null, "days": 7, "web_only": true, "end": null, "end_is_estimate": false}]}, "krea-pro-monthly": {"price": 21, "bonus_credits": 0, "blended_price": null, "notes": ["Yearly plans 40% off: $21/mo instead of $35/mo"], "unlimited": []}, "krea-pro-yearly": {"price": null, "bonus_credits": 0, "blended_price": null, "notes": ["Yearly plans 40% off is already the price of this plan."], "unlimited": []}, "mag-premium-plus": {"price": null, "bonus_credits": 0, "blended_price": null, "notes": [], "unlimited": [{"id": "mag-kling25-unlimited", "title": "Kling 2.5 720p unlimited all year", "models": [], "variants": [], "max_resolution": "720p", "days": null, "web_only": false, "end": null, "end_is_estimate": false}, {"id": "mag-hailuo-fast-unlimited", "title": "Hailuo 2.3 Fast 768p unlimited all year", "models": ["minimax-hailuo"], "variants": ["Hailuo 2.3 Fast"], "max_resolution": "768p", "days": null, "web_only": false, "end": null, "end_is_estimate": false}]}, "mag-pro": {"price": null, "bonus_credits": 0, "blended_price": null, "notes": [], "unlimited": [{"id": "mag-kling25-unlimited", "title": "Kling 2.5 720p unlimited all year", "models": [], "variants": [], "max_resolution": "720p", "days": null, "web_only": false, "end": null, "end_is_estimate": false}, {"id": "mag-hailuo-fast-unlimited", "title": "Hailuo 2.3 Fast 768p unlimited all year", "models": ["minimax-hailuo"], "variants": ["Hailuo 2.3 Fast"], "max_resolution": "768p", "days": null, "web_only": false, "end": null, "end_is_estimate": false}]}};
 fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
@@ -38,20 +45,52 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
   el.value=String(use);
   $('usedMsg').textContent='Enter a whole number from 1 to 100. Using '+use+'%.';
   return use/100}
+ function unlimitedHit(map, r){
+  if(!map||!map.unlimited) return null;
+  return map.unlimited.find(un=>{
+    if(un.models&&un.models.length&&un.models.indexOf(r.model)<0) return false;
+    if(un.variants&&un.variants.length&&un.variants.indexOf(r.variant)<0) return false;
+    if(un.max_resolution&&String(r.resolution).toLowerCase()!==String(un.max_resolution).toLowerCase()) return false;
+    if((!un.models||!un.models.length)&&(!un.variants||!un.variants.length)) return false;
+    return true;
+  })||null;
+ }
  function go(){const k=$('plan').value,p=d.plans[k],u=readUsed();
-  const per=p.usd_month/p.credits_month;
-  $('kPrice').textContent='$'+p.usd_month+'/mo';$('kCred').textContent=p.credits_month.toLocaleString();$('kPer').textContent='$'+per.toFixed(5);
-  $('pNote').textContent=(p.credits_note||'')+' Billing: '+p.billing+'. Checked '+p.checked+'.';
+  const map=$('applyDeals').checked?DEALMAP[k]:null;
+  const price=map&&map.price!=null?map.price:p.usd_month;
+  const credits=p.credits_month+(map&&map.bonus_credits?map.bonus_credits:0);
+  const per=price/credits;
+  const scale=(price/p.usd_month)*(p.credits_month/credits);
+  $('kPrice').textContent='$'+price+'/mo';$('kCred').textContent=credits.toLocaleString();$('kPer').textContent='$'+per.toFixed(5);
+  let note=(p.credits_note||'')+' Billing: '+p.billing+'. Checked '+p.checked+'.';
+  if(map&&map.notes&&map.notes.length) note+=' '+map.notes.join(' ');
+  $('pNote').textContent=note;
+  const hasUn=!!(map&&map.unlimited&&map.unlimited.length);
+  $('dealBox').hidden=!hasUn;
   const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener';
   const srcRel=tracked?'sponsored nofollow noopener':'nofollow noopener';
   $('pLink').innerHTML=`<a class="btn" href="${esc(href)}" rel="${rel}" target="_blank">See ${esc(p.platform)} plans</a> <a class="small" href="${esc(tracked||p.source_url)}" rel="${srcRel}" target="_blank">source</a>`;
   if(u==null){$('ct').querySelector('tbody').innerHTML='<tr><td colspan="7">Enter a whole number from 1 to 100.</td></tr>';return}
+  const secs=Math.max(1, Number($('windowSecs').value)||1);
   const rs=d.rows.filter(r=>r.plan==k&&current(r)).sort((a,b)=>a.usd_per_second-b.usd_per_second);
-  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{const clips=clipCount(p.credits_month*u,r.credits_per_clip);const pc=r.usd_per_clip/u;
-   const price=clips>0?money(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
-   return `<tr><td><a href="${BASE}/models/${r.model}/">${esc(r.variant)}</a></td><td>${esc(r.resolution)}</td><td>${r.clip_seconds}s</td><td>${r.status=='estimate'?'~':''}${(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}</td><td class="num">${clips.toLocaleString()}</td><td class="num">${price}</td><td class="num">${perSec}</td></tr>`}).join('');
+  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{const clips=clipCount(credits*u,r.credits_per_clip);const pc=(r.usd_per_clip*scale)/u;
+   const priceCell=clips>0?money(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
+   let extra='';
+   const hit=unlimitedHit(map, r);
+   if(hit&&r.usd_per_second>0){
+     const normal=r.usd_per_second*scale;
+     const be=Math.round(price/normal);
+     extra=`<div class="small">Unlimited: worth it after ${be}s. At ${secs}s in the window, ${money(price/secs)}/s effective.</div>`;
+   }
+   if(map&&map.blended_price!=null&&clips>0){
+     const bscale=(map.blended_price/p.usd_month)*(p.credits_month/credits);
+     extra+=`<div class="small">12-month blended ${money((r.usd_per_clip*bscale)/u/r.clip_seconds)}/s</div>`;
+   }
+   return `<tr><td><a href="${BASE}/models/${r.model}/">${esc(r.variant)}</a></td><td>${esc(r.resolution)}</td><td>${r.clip_seconds}s</td><td>${r.status=='estimate'?'~':''}${(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}</td><td class="num">${clips.toLocaleString()}</td><td class="num">${priceCell}</td><td class="num">${perSec}${extra}</td></tr>`}).join('');
+  if(hasUn) $('dealEff').textContent='Effective $/s for an unlimited window is the plan price divided by the seconds you make. It is not $0.';
   history.replaceState(null,'','?plan='+k);}
- $('plan').addEventListener('input',go);$('used').addEventListener('input',go);go();});
+ $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
+ $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);go();});
 </script><section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
 <p class="small" style="margin:0">Every Monday: price changes, new models, and the cheapest way to run each one. Free, unsubscribe any time.</p>
 <form action="#TODO-newsletter-endpoint" method="post" onsubmit="event.preventDefault();this.querySelector('button').textContent='Thanks! (signup not connected yet)';">

@@ -48,7 +48,7 @@ jobs:
           python3 scripts/update_prices.py --apply || echo "update_prices.py failed ($?); deploying existing data"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/prices.json data/changes.json data/check_report.json
+          git add data/prices.json data/changes.json data/check_report.json data/deals.json data/deal_candidates.json data/deal_snapshots
           if git diff --cached --quiet; then
             echo "No price data changes to commit"
           else

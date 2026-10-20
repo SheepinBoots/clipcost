@@ -377,7 +377,11 @@
    "note": "60% launch discount until Nov 1. Page ties 480p rate to 1-2s clips and 720p/1080p rates to 30s clips.",
    "id": "r001",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.068,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -400,7 +404,11 @@
    "note": "60% launch discount until Nov 1. Page ties 480p rate to 1-2s clips and 720p/1080p rates to 30s clips.",
    "id": "r002",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.14,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -423,7 +431,11 @@
    "note": "60% launch discount until Nov 1. Page ties 480p rate to 1-2s clips and 720p/1080p rates to 30s clips.",
    "id": "r003",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.28,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -469,7 +481,11 @@
    "note": "60% launch discount; low end of the stated 480p–1080p range.",
    "id": "r005",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.05,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -492,7 +508,11 @@
    "note": "60% launch discount; high end of the stated range.",
    "id": "r006",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.2,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -975,7 +995,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r181",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "list_usd_per_second": 0.05,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -998,7 +1022,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r182",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "list_usd_per_second": 0.08,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -1021,7 +1049,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r183",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "list_usd_per_second": 0.16,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -1090,7 +1122,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r186",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "list_usd_per_second": 0.025,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -1113,7 +1149,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r187",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "list_usd_per_second": 0.04,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -1136,7 +1176,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r188",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "list_usd_per_second": 0.08,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "grok-imagine",
@@ -2435,7 +2479,10 @@
    "note": "",
    "id": "r078",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2463,7 +2510,11 @@
    "note": "",
    "id": "r079",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2491,7 +2542,11 @@
    "note": "",
    "id": "r080",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2519,7 +2574,11 @@
    "note": "",
    "id": "r081",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2547,7 +2606,11 @@
    "note": "",
    "id": "r082",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2575,7 +2638,10 @@
    "note": "",
    "id": "r083",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2603,7 +2669,11 @@
    "note": "",
    "id": "r084",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2631,7 +2701,11 @@
    "note": "",
    "id": "r085",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2659,7 +2733,11 @@
    "note": "",
    "id": "r086",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2687,7 +2765,11 @@
    "note": "",
    "id": "r087",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2715,7 +2797,10 @@
    "note": "",
    "id": "r088",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2743,7 +2828,11 @@
    "note": "",
    "id": "r089",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2771,7 +2860,11 @@
    "note": "",
    "id": "r090",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2799,7 +2892,11 @@
    "note": "",
    "id": "r091",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -2827,7 +2924,11 @@
    "note": "",
    "id": "r092",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -2855,7 +2956,10 @@
    "note": "",
    "id": "r093",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -2883,7 +2987,11 @@
    "note": "",
    "id": "r094",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -2911,7 +3019,11 @@
    "note": "",
    "id": "r095",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -2939,7 +3051,11 @@
    "note": "",
    "id": "r096",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -2967,7 +3083,11 @@
    "note": "",
    "id": "r097",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -2995,7 +3115,10 @@
    "note": "",
    "id": "r098",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3023,7 +3146,11 @@
    "note": "",
    "id": "r099",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3051,7 +3178,11 @@
    "note": "",
    "id": "r100",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3079,7 +3210,11 @@
    "note": "",
    "id": "r101",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3107,7 +3242,11 @@
    "note": "",
    "id": "r102",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3135,7 +3274,10 @@
    "note": "",
    "id": "r103",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3163,7 +3305,11 @@
    "note": "",
    "id": "r104",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3191,7 +3337,11 @@
    "note": "",
    "id": "r105",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3219,7 +3369,11 @@
    "note": "",
    "id": "r106",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -3247,7 +3401,11 @@
    "note": "",
    "id": "r107",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-wan3-unlimited-7d",
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3303,7 +3461,11 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r109",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3331,7 +3493,11 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r110",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3359,7 +3525,11 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r111",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3387,7 +3557,11 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r112",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3415,7 +3589,11 @@
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r113",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3443,7 +3621,11 @@
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r114",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3471,7 +3653,11 @@
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r115",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3499,7 +3685,11 @@
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r116",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3527,7 +3717,11 @@
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r117",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3555,7 +3749,11 @@
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r118",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3583,7 +3781,11 @@
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r119",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -3611,7 +3813,11 @@
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r120",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-kling3-unlimited-7d"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -3639,7 +3845,10 @@
    "note": "",
    "id": "r121",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -3667,7 +3876,10 @@
    "note": "",
    "id": "r122",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -3695,7 +3907,10 @@
    "note": "",
    "id": "r123",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -3723,7 +3938,10 @@
    "note": "",
    "id": "r124",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -3751,7 +3969,10 @@
    "note": "",
    "id": "r125",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -3779,7 +4000,10 @@
    "note": "",
    "id": "r126",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -3807,7 +4031,10 @@
    "note": "",
    "id": "r127",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -3835,7 +4062,10 @@
    "note": "",
    "id": "r128",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -3891,7 +4121,10 @@
    "note": "",
    "id": "r130",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -3919,7 +4152,10 @@
    "note": "",
    "id": "r131",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -3947,7 +4183,10 @@
    "note": "",
    "id": "r132",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -3975,7 +4214,10 @@
    "note": "",
    "id": "r133",
    "checked": "2026-10-20",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -4031,7 +4273,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r135",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -4059,7 +4304,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r136",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -4115,7 +4363,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r138",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -4143,7 +4394,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r139",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -4199,7 +4453,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r141",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -4227,7 +4484,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r142",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -4283,7 +4543,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r144",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -4311,7 +4574,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r145",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -4367,7 +4633,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r147",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "veo-3-1",
@@ -4395,7 +4664,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r148",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -4451,7 +4723,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r150",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -4479,7 +4754,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r151",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -4535,7 +4813,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r153",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -4563,7 +4844,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r154",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "runway-gen-4",
@@ -4619,7 +4903,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r156",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "runway-gen-4",
@@ -4647,7 +4934,10 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r157",
    "checked": "2026-10-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "deal_ids": [
+    "krea-yearly-40"
+   ]
   },
   {
    "model": "kling-3-0",

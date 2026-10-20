@@ -377,7 +377,11 @@
    "note": "60% launch discount until Nov 1. Page ties 480p rate to 1-2s clips and 720p/1080p rates to 30s clips.",
    "id": "r001",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.068,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -400,7 +404,11 @@
    "note": "60% launch discount until Nov 1. Page ties 480p rate to 1-2s clips and 720p/1080p rates to 30s clips.",
    "id": "r002",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.14,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -423,7 +431,11 @@
    "note": "60% launch discount until Nov 1. Page ties 480p rate to 1-2s clips and 720p/1080p rates to 30s clips.",
    "id": "r003",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.28,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "wan-3-0-prime",
@@ -469,7 +481,11 @@
    "note": "60% launch discount; low end of the stated 480p–1080p range.",
    "id": "r005",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.05,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "wan-3-0",
@@ -492,7 +508,11 @@
    "note": "60% launch discount; high end of the stated range.",
    "id": "r006",
    "checked": "2026-10-20",
-   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "list_usd_per_second": 0.2,
+   "deal_ids": [
+    "hf-api-wan-60"
+   ]
   },
   {
    "model": "kling-3-0",
@@ -975,7 +995,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r181",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "list_usd_per_second": 0.05,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -998,7 +1022,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r182",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "list_usd_per_second": 0.08,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -1021,7 +1049,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r183",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "list_usd_per_second": 0.16,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -1090,7 +1122,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r186",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "list_usd_per_second": 0.025,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -1113,7 +1149,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r187",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "list_usd_per_second": 0.04,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "minimax-hailuo",
@@ -1136,7 +1176,11 @@
    "note": "35% off until Oct 31, 2026.",
    "id": "r188",
    "checked": "2026-10-20",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "list_usd_per_second": 0.08,
+   "deal_ids": [
+    "fal-minimax-35"
+   ]
   },
   {
    "model": "grok-imagine",

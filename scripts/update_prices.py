@@ -14,6 +14,8 @@ Exit code: 0 = nothing changed, 1 = changes or missing numbers found (review!), 
 import json, re, sys, os, subprocess, datetime, argparse
 import requests
 from bs4 import BeautifulSoup
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import deals as dealmod
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data", "prices.json")
@@ -136,6 +138,23 @@ def main():
     expired = expire_promos(db, today, log)
     for r in expired:
         report["findings"].append({"kind": "row", "id": r["id"], "status": "promo_expired", "promo_until": r["promo_until"]})
+    deal_doc = dealmod.load()
+    ended = dealmod.expire_deals(deal_doc, today, log)
+    for deal in ended:
+        report["findings"].append({"kind": "deal", "id": deal["id"], "status": "deal_ended", "end": deal.get("end")})
+    if ended:
+        dealmod.save(deal_doc)
+    if not only:
+        try:
+            scan = dealmod.scan_pricing_pages(fetch, deal_doc, today)
+        except Exception as exc:
+            scan = {"pages": [], "candidates": [], "error": str(exc)[:200]}
+        report["deal_scan"] = {"pages": scan.get("pages", []), "candidates": len(scan.get("candidates") or [])}
+        if scan.get("error"):
+            report["deal_scan"]["error"] = scan["error"]
+        for cand in scan.get("candidates") or []:
+            report["findings"].append({"kind": "deal_candidate", "status": cand["status"], "vendor": cand.get("vendor"),
+                                       "url": cand.get("url"), "snippet": cand.get("snippet")})
     if full_check_succeeded(db, report, only):
         db["last_full_check"] = today
     report["counts"] = counts
