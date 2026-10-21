@@ -86,17 +86,27 @@ def main():
     # Force a match via models + plan name.
     adj = deals.adjustment(bonus, plus, plans)
     close(adj["usd"], 59 / (1200 + 300) * 7.5 / 5)
-    # Unlimited is break-even seconds, never $0.
+    # Unlimited is break-even seconds, never $0. The Wan window is archived after the page check.
     starter = next(r for r in db["rows"] if r["id"] == "r078")
-    adj = deals.adjustment(by_id(live, "hf-wan3-unlimited-7d"), starter, plans)
+    wan_un = next(d for d in doc["deals"] if d["id"] == "hf-wan3-unlimited-7d")
+    if wan_un["status"] != "ended" or deals.is_current(wan_un, "2026-10-21"):
+        raise SystemExit("wan unlimited window should be archived")
+    adj = deals.adjustment(dict(wan_un, status="live"), starter, plans)
     if adj["usd"] == 0 or adj["usd"] is not None:
         raise SystemExit(f"unlimited leaked a $/s: {adj['usd']}")
     close(adj["breakeven_seconds"], 19 / starter["usd_per_second"])
     # Expiry archives by end date and the next day hides the estimated window.
-    if not deals.is_current(by_id(live, "hf-wan3-unlimited-7d"), "2026-10-20"):
+    window = dict(wan_un, status="live", end="2026-10-20")
+    if not deals.is_current(window, "2026-10-20"):
         raise SystemExit("window should still be live on the estimated end date")
-    if deals.is_current(by_id(live, "hf-wan3-unlimited-7d"), "2026-10-21"):
+    if deals.is_current(window, "2026-10-21"):
         raise SystemExit("window should archive after the end date")
+    for rid in ("runway-kling4-unlimited-3d", "runway-kling4-25"):
+        deal = by_id(live, rid)
+        if deal.get("math") != "none" or deal.get("show_on_rows") is not False or deal.get("end") is not None:
+            raise SystemExit(f"{rid} should not invent a rate or an end date")
+        if any(deals.adjustment(deal, row, plans) for row in db["rows"]):
+            raise SystemExit(f"{rid} matched a catalog row")
     sample = json.loads(json.dumps(doc))
     sample["deals"] = [dict(by_id(live, "fal-minimax-35"))]
     log = []

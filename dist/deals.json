@@ -1,47 +1,6 @@
 {
- "updated": "2026-10-20",
+ "updated": "2026-10-21",
  "deals": [
-  {
-   "id": "hf-wan3-unlimited-7d",
-   "vendor": "Higgsfield",
-   "type": "unlimited_window",
-   "title": "Wan 3.0 unlimited for 7 days",
-   "models": [
-    "wan-3-0",
-    "wan-3-0-prime"
-   ],
-   "plans": [],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": true,
-    "code": null,
-    "standing": false,
-    "signup_window_days": 7
-   },
-   "percent": null,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "start": "2026-10-13",
-   "end": "2026-10-20",
-   "end_is_estimate": true,
-   "status": "live",
-   "source_url": "https://x.com/higgsfield_ai/status/2110074247569924489",
-   "source_quote": "Wan 3.0 is now UNLIMITED on Higgsfield for 7 days.",
-   "verified_date": "2026-10-20",
-   "notes": "The post does not give an end clock. Seven days from Oct 13 lands on Oct 20, so the end date is an estimate. Unlimited generations on Higgsfield work on higgsfield.ai only, not on MCP, CLI, Canvas, or Supercomputer.",
-   "examples": [
-    "Unlimited on Starter ($19) versus Wan 3.0 480p at $0.07037/s. Worth it after 270 seconds.",
-    "Unlimited on Plus (annual) ($47) versus Wan 3.0 480p at $0.03917/s. Worth it after 1200 seconds.",
-    "Unlimited on Plus (monthly) ($59) versus Wan 3.0 480p at $0.04917/s. Worth it after 1200 seconds.",
-    "Unlimited on Ultra (annual) ($99) versus Wan 3.0 480p at $0.033/s. Worth it after 3000 seconds.",
-    "Unlimited on Ultra (monthly) ($129) versus Wan 3.0 480p at $0.043/s. Worth it after 3000 seconds."
-   ]
-  },
   {
    "id": "hf-genjutsu-api-50",
    "vendor": "Higgsfield API",
@@ -712,6 +671,72 @@
    ]
   },
   {
+   "id": "runway-kling4-25",
+   "vendor": "Runway",
+   "type": "percent_off",
+   "title": "Kling 4 25% off on all Runway plans",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 25,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-10-21",
+   "end": null,
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://x.com/runwayml/status/2112925874144030784",
+   "source_quote": "Plus 25% off Kling 4 on all plans.",
+   "verified_date": "2026-10-21",
+   "notes": "The post gives no end date. Kling 4 is not in the price catalog, so the 25% is not turned into a $/s.",
+   "examples": []
+  },
+  {
+   "id": "runway-kling4-unlimited-3d",
+   "vendor": "Runway",
+   "type": "unlimited_window",
+   "title": "Kling 4 unlimited for 3 days on new Max or Team plans",
+   "models": [],
+   "plans": [
+    "Max",
+    "Team"
+   ],
+   "conditions": {
+    "new_users_only": true,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false,
+    "signup_window_days": 3
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-10-21",
+   "end": null,
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://x.com/runwayml/status/2112925874144030784",
+   "source_quote": "Sign up for a new Max or Team plan to get 3 days of unlimited access.",
+   "verified_date": "2026-10-21",
+   "notes": "Kling 4 is not in the price catalog, so there is no $/s. New Max or Team plan signups only. The 3 days start at signup. The post gives no calendar end date.",
+   "examples": []
+  },
+  {
    "id": "runway-seedance-unlimited",
    "vendor": "Runway",
    "type": "unlimited_window",
@@ -748,7 +773,43 @@
    "examples": []
   }
  ],
- "archive": [],
+ "archive": [
+  {
+   "id": "hf-wan3-unlimited-7d",
+   "vendor": "Higgsfield",
+   "type": "unlimited_window",
+   "title": "Wan 3.0 unlimited for 7 days",
+   "models": [
+    "wan-3-0",
+    "wan-3-0-prime"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": true,
+    "code": null,
+    "standing": false,
+    "signup_window_days": 7
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-10-13",
+   "end": "2026-10-20",
+   "end_is_estimate": true,
+   "status": "ended",
+   "source_url": "https://x.com/higgsfield_ai/status/2110074247569924489",
+   "source_quote": "Wan 3.0 is now UNLIMITED on Higgsfield for 7 days.",
+   "verified_date": "2026-10-21",
+   "notes": "Checked 2026-10-21. higgsfield.ai/pricing lists Wan 3.0 only at credit rates, and the Wan 3.0 Prime model page does not say unlimited. The Oct 20 end was an estimate. Archived. Unlimited generations on Higgsfield work on higgsfield.ai only, not on MCP, CLI, Canvas, or Supercomputer.",
+   "examples": []
+  }
+ ],
  "history": [
   {
    "id": "hist-mag-2025-bf",
