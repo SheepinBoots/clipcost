@@ -1,6 +1,47 @@
 {
- "generated": null,
+ "generated": "2026-10-21",
  "note": "Unconfirmed. These snippets are not published as deals.",
- "pages": [],
+ "pages": [
+  {
+   "id": "hf_plans",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "status": "fetched",
+   "snippets": 22,
+   "baseline": true
+  },
+  {
+   "id": "krea",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "status": "fetched",
+   "snippets": 23,
+   "baseline": true
+  },
+  {
+   "id": "magnific",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "status": "fetched",
+   "snippets": 12,
+   "baseline": true
+  },
+  {
+   "id": "runway_plans",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "status": "fetched",
+   "snippets": 4,
+   "baseline": true
+  },
+  {
+   "id": "fal_pricing",
+   "vendor": "fal",
+   "url": "https://fal.ai/pricing",
+   "status": "fetched",
+   "snippets": 0,
+   "baseline": true
+  }
+ ],
  "candidates": []
 }

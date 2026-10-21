@@ -1,13 +1,13 @@
 {
- "run": "2026-10-20T08:44:30",
+ "run": "2026-10-21T18:18:34",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 16285
+   "chars": 16544
   },
   "hf_api": {
    "status": "fetched",
-   "chars": 6018
+   "chars": 6054
   },
   "hf_api_wan": {
    "status": "fetched",
@@ -15,11 +15,11 @@
   },
   "fal_wan3": {
    "status": "fetched",
-   "chars": 3626
+   "chars": 3618
   },
   "fal_wan3p": {
    "status": "fetched",
-   "chars": 6978
+   "chars": 6968
   },
   "fal_kling3": {
    "status": "fetched",
@@ -27,7 +27,7 @@
   },
   "fal_seed25": {
    "status": "fetched",
-   "chars": 12148
+   "chars": 12152
   },
   "fal_veo31": {
    "status": "fetched",
@@ -35,7 +35,7 @@
   },
   "fal_pricing": {
    "status": "fetched",
-   "chars": 7740
+   "chars": 8006
   },
   "rep_wan3": {
    "status": "fetched",
@@ -47,7 +47,7 @@
   },
   "kling_api": {
    "status": "fetched",
-   "chars": 2761
+   "chars": 4222
   },
   "gemini": {
    "status": "fetched",
@@ -55,27 +55,193 @@
   },
   "atlas": {
    "status": "fetched",
-   "chars": 20483
+   "chars": 20491
   },
   "krea": {
    "status": "fetched",
-   "chars": 33481
+   "chars": 45755
   },
   "magnific": {
    "status": "fetched",
-   "chars": 9077
+   "chars": 9158
   },
   "kling_app": {
    "status": "manual",
    "url": "https://kling.ai/pricing",
    "note": "Pricing renders client-side behind region/login; not captured. Check by hand."
+  },
+  "fal_h3max": {
+   "status": "fetched",
+   "chars": 7083
+  },
+  "fal_h3turbo": {
+   "status": "fetched",
+   "chars": 7861
+  },
+  "fal_grok15": {
+   "status": "fetched",
+   "chars": 3655
   }
  },
- "findings": [],
+ "findings": [
+  {
+   "kind": "row",
+   "id": "r059",
+   "source": "kling_api",
+   "status": "missing",
+   "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${N}) /s",
+   "old": 0.084,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Kling API",
+   "variant": "Kling 3.0, no audio"
+  },
+  {
+   "kind": "row",
+   "id": "r060",
+   "source": "kling_api",
+   "status": "missing",
+   "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${X}) /s | {X} Units (${N}) /s",
+   "old": 0.112,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Kling API",
+   "variant": "Kling 3.0, no audio"
+  },
+  {
+   "kind": "row",
+   "id": "r061",
+   "source": "kling_api",
+   "status": "missing",
+   "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${X}) /s | {X} Units (${X}) /s | {X} Units (${N}) /s",
+   "old": 0.42,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Kling API",
+   "variant": "Kling 3.0, no audio"
+  },
+  {
+   "kind": "row",
+   "id": "r062",
+   "source": "kling_api",
+   "status": "missing",
+   "needle": "Kling 3.0 | Per second | With Native Audio x No Voice Control | {X} Units (${N}) /s",
+   "old": 0.126,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Kling API",
+   "variant": "Kling 3.0, audio"
+  },
+  {
+   "kind": "row",
+   "id": "r063",
+   "source": "kling_api",
+   "status": "missing",
+   "needle": "Kling 3.0 | Per second | With Native Audio x No Voice Control | {X} Units (${X}) /s | {X} Units (${N}) /s",
+   "old": 0.168,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Kling API",
+   "variant": "Kling 3.0, audio"
+  },
+  {
+   "kind": "row",
+   "id": "r064",
+   "source": "kling_api",
+   "status": "missing",
+   "needle": "Kling 3.0 Turbo | Per second | With Native Audio | {X} Units (${N}) /s",
+   "old": 0.112,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Kling API",
+   "variant": "Kling 3.0 Turbo, audio"
+  },
+  {
+   "kind": "row",
+   "id": "r065",
+   "source": "kling_api",
+   "status": "missing",
+   "needle": "Kling 3.0 Turbo | Per second | With Native Audio | {X} Units (${X}) /s | {X} Unit (${N}) /s",
+   "old": 0.14,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Kling API",
+   "variant": "Kling 3.0 Turbo, audio"
+  },
+  {
+   "kind": "plan",
+   "id": "krea-basic-yearly",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Basic {N} units /month",
+   "old": 5000,
+   "new": null,
+   "model": null,
+   "platform": "Krea",
+   "variant": "Basic (yearly)"
+  },
+  {
+   "kind": "plan",
+   "id": "krea-pro-monthly",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Pro {N} units /month",
+   "old": 20000,
+   "new": null,
+   "model": null,
+   "platform": "Krea",
+   "variant": "Pro (monthly)"
+  }
+ ],
+ "deal_scan": {
+  "pages": [
+   {
+    "id": "hf_plans",
+    "vendor": "Higgsfield",
+    "url": "https://higgsfield.ai/pricing",
+    "status": "fetched",
+    "snippets": 22,
+    "baseline": true
+   },
+   {
+    "id": "krea",
+    "vendor": "Krea",
+    "url": "https://www.krea.ai/pricing",
+    "status": "fetched",
+    "snippets": 23,
+    "baseline": true
+   },
+   {
+    "id": "magnific",
+    "vendor": "Magnific",
+    "url": "https://www.magnific.com/pricing",
+    "status": "fetched",
+    "snippets": 12,
+    "baseline": true
+   },
+   {
+    "id": "runway_plans",
+    "vendor": "Runway",
+    "url": "https://runwayml.com/pricing",
+    "status": "fetched",
+    "snippets": 4,
+    "baseline": true
+   },
+   {
+    "id": "fal_pricing",
+    "vendor": "fal",
+    "url": "https://fal.ai/pricing",
+    "status": "fetched",
+    "snippets": 0,
+    "baseline": true
+   }
+  ],
+  "candidates": 0
+ },
  "counts": {
-  "ok": 197,
+  "ok": 200,
   "changed": 0,
-  "missing": 0,
+  "missing": 9,
   "skipped": 0
  }
 }
