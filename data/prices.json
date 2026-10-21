@@ -248,11 +248,11 @@
      "expect": 5
     },
     {
-     "needle": "Basic {N} units /month",
+     "needle": "Basic {N} units / month",
      "expect": 5000
     }
    ],
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   "krea-pro-monthly": {
@@ -268,11 +268,11 @@
      "expect": 35
     },
     {
-     "needle": "Pro {N} units /month",
+     "needle": "Pro {N} units / month",
      "expect": 20000
     }
    ],
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   "krea-pro-yearly": {
@@ -2024,13 +2024,13 @@
    "math": null,
    "checks": [
     {
-     "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${N}) /s",
+     "needle": "Kling 3.0 | No Native Audio | Per second (Total duration = Output duration) | {X} Units (${N}) /s",
      "expect": 0.084
     }
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r059",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md"
   },
   {
@@ -2047,13 +2047,13 @@
    "math": null,
    "checks": [
     {
-     "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${X}) /s | {X} Units (${N}) /s",
+     "needle": "Kling 3.0 | No Native Audio | Per second (Total duration = Output duration) | {X} Units (${X}) /s | {X} Units (${N}) /s",
      "expect": 0.112
     }
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r060",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md"
   },
   {
@@ -2070,13 +2070,13 @@
    "math": null,
    "checks": [
     {
-     "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${X}) /s | {X} Units (${X}) /s | {X} Units (${N}) /s",
+     "needle": "Kling 3.0 | No Native Audio | Per second (Total duration = Output duration) | {X} Units (${X}) /s | {X} Units (${X}) /s | {X} Units (${N}) /s",
      "expect": 0.42
     }
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r061",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md"
   },
   {
@@ -2093,13 +2093,13 @@
    "math": null,
    "checks": [
     {
-     "needle": "Kling 3.0 | Per second | With Native Audio x No Voice Control | {X} Units (${N}) /s",
+     "needle": "Kling 3.0 | With Native Audio | Per second (Total duration = Output duration) | {X} Units (${N}) /s",
      "expect": 0.126
     }
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r062",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md"
   },
   {
@@ -2116,13 +2116,13 @@
    "math": null,
    "checks": [
     {
-     "needle": "Kling 3.0 | Per second | With Native Audio x No Voice Control | {X} Units (${X}) /s | {X} Units (${N}) /s",
+     "needle": "Kling 3.0 | With Native Audio | Per second (Total duration = Output duration) | {X} Units (${X}) /s | {X} Units (${N}) /s",
      "expect": 0.168
     }
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r063",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md"
   },
   {
@@ -2139,13 +2139,13 @@
    "math": null,
    "checks": [
     {
-     "needle": "Kling 3.0 Turbo | Per second | With Native Audio | {X} Units (${N}) /s",
+     "needle": "Kling 3.0 Turbo | With Native Audio | Per second (Total duration = Output duration) | {X} Units (${N}) /s",
      "expect": 0.112
     }
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r064",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md"
   },
   {
@@ -2162,13 +2162,13 @@
    "math": null,
    "checks": [
     {
-     "needle": "Kling 3.0 Turbo | Per second | With Native Audio | {X} Units (${X}) /s | {X} Unit (${N}) /s",
+     "needle": "Kling 3.0 Turbo | With Native Audio | Per second (Total duration = Output duration) | {X} Units (${X}) /s | {X} Unit (${N}) /s",
      "expect": 0.14
     }
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r065",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md"
   },
   {
@@ -4046,7 +4046,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r134",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4074,7 +4074,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r135",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4130,7 +4130,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r137",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4158,7 +4158,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r138",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4214,7 +4214,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r140",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4242,7 +4242,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r141",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4298,7 +4298,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r143",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4326,7 +4326,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r144",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4382,7 +4382,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r146",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4410,7 +4410,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r147",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4466,7 +4466,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r149",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4494,7 +4494,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r150",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4550,7 +4550,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r152",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4578,7 +4578,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r153",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4634,7 +4634,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r155",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -4662,7 +4662,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r156",
-   "checked": "2026-10-20",
+   "checked": "2026-10-21",
    "source_url": "https://www.krea.ai/pricing"
   },
   {
@@ -5309,7 +5309,7 @@
   },
   {
    "item": "Kling 4.0",
-   "reason": "announced on kling.ai, no per-second price found on the official API pricing page"
+   "reason": "official API page lists per-second rates, but input video changes the billed duration, so no single $/s is in the table"
   }
  ],
  "last_full_check": "2026-10-21"

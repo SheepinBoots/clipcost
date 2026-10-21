@@ -45,8 +45,13 @@ jobs:
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         continue-on-error: true
         run: |
-          # A failed source fetch must not block deploying the data we already have.
-          python3 scripts/update_prices.py --apply || echo "update_prices.py failed ($?); deploying existing data"
+          # Exit 0 includes API price changes this run applied. Exit 1 is a missing
+          # number or a change that was not applied. Exit 2 is a source fetch error.
+          # Fetch errors must not fail this step. Missing checks do, after the data commit.
+          set +e
+          python3 scripts/update_prices.py --apply
+          code=$?
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/prices.json data/changes.json data/check_report.json data/deals.json data/deal_candidates.json data/deal_snapshots
@@ -55,6 +60,12 @@ jobs:
           else
             git commit -m "Update prices from daily source check"
             git push origin HEAD:main
+          fi
+          if [ "$code" -eq 2 ]; then
+            echo "update_prices.py fetch error; deploying existing data"
+          elif [ "$code" -ne 0 ]; then
+            echo "::warning::Price check needs review (exit $code). See data/check_report.json."
+            exit "$code"
           fi
 
       - name: Build site

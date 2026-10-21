@@ -102,13 +102,13 @@ for m,key,res,cr,aud in R:
     rows[-1]["math"]=f"{cr} credits/s × $0.01 = ${cr*0.01:.3f}/s"
 
 # ---------- Kling official API ----------
-K=[("Kling 3.0, no audio","720p",False,0.084,"Kling 3.0 | Per second | No Native Audio | {X} Units (${N}) /s"),
-   ("Kling 3.0, no audio","1080p",False,0.112,"Kling 3.0 | Per second | No Native Audio | {X} Units (${X}) /s | {X} Units (${N}) /s"),
-   ("Kling 3.0, no audio","4K",False,0.42,"Kling 3.0 | Per second | No Native Audio | {X} Units (${X}) /s | {X} Units (${X}) /s | {X} Units (${N}) /s"),
-   ("Kling 3.0, audio","720p",True,0.126,"Kling 3.0 | Per second | With Native Audio x No Voice Control | {X} Units (${N}) /s"),
-   ("Kling 3.0, audio","1080p",True,0.168,"Kling 3.0 | Per second | With Native Audio x No Voice Control | {X} Units (${X}) /s | {X} Units (${N}) /s"),
-   ("Kling 3.0 Turbo, audio","720p",True,0.112,"Kling 3.0 Turbo | Per second | With Native Audio | {X} Units (${N}) /s"),
-   ("Kling 3.0 Turbo, audio","1080p",True,0.14,"Kling 3.0 Turbo | Per second | With Native Audio | {X} Units (${X}) /s | {X} Unit (${N}) /s")]
+K=[("Kling 3.0, no audio","720p",False,0.084,"Kling 3.0 | No Native Audio | Per second (Total duration = Output duration) | {X} Units (${N}) /s"),
+   ("Kling 3.0, no audio","1080p",False,0.112,"Kling 3.0 | No Native Audio | Per second (Total duration = Output duration) | {X} Units (${X}) /s | {X} Units (${N}) /s"),
+   ("Kling 3.0, no audio","4K",False,0.42,"Kling 3.0 | No Native Audio | Per second (Total duration = Output duration) | {X} Units (${X}) /s | {X} Units (${X}) /s | {X} Units (${N}) /s"),
+   ("Kling 3.0, audio","720p",True,0.126,"Kling 3.0 | With Native Audio | Per second (Total duration = Output duration) | {X} Units (${N}) /s"),
+   ("Kling 3.0, audio","1080p",True,0.168,"Kling 3.0 | With Native Audio | Per second (Total duration = Output duration) | {X} Units (${X}) /s | {X} Units (${N}) /s"),
+   ("Kling 3.0 Turbo, audio","720p",True,0.112,"Kling 3.0 Turbo | With Native Audio | Per second (Total duration = Output duration) | {X} Units (${N}) /s"),
+   ("Kling 3.0 Turbo, audio","1080p",True,0.14,"Kling 3.0 Turbo | With Native Audio | Per second (Total duration = Output duration) | {X} Units (${X}) /s | {X} Unit (${N}) /s")]
 for v,res,aud,usd,nd in K: api("kling-3-0",v,"Kling API","kling_api",usd,res,nd,audio=aud,note="Official Kling resource-package rate.")
 
 # ---------- Google Gemini API ----------
@@ -145,9 +145,9 @@ PLANS = {
    "checks":[{"needle":"${N} $99 per month, billed annually","expect":129}]},
  # Krea: units per month
  "krea-basic-yearly":{"platform":"Krea","plan":"Basic (yearly)","usd_month":5,"billing":"yearly","credits_month":5000,"source":"krea",
-   "checks":[{"needle":"Seedance 2.0 Fast videos ${X} ${N} /month","expect":5},{"needle":"Basic {N} units /month","expect":5000}]},
+   "checks":[{"needle":"Seedance 2.0 Fast videos ${X} ${N} /month","expect":5},{"needle":"Basic {N} units / month","expect":5000}]},
  "krea-pro-monthly":{"platform":"Krea","plan":"Pro (monthly)","usd_month":35,"billing":"monthly","credits_month":20000,"source":"krea",
-   "checks":[{"needle":"~65 Seedance 2.5 videos ${N} ${X} /month","expect":35},{"needle":"Pro {N} units /month","expect":20000}]},
+   "checks":[{"needle":"~65 Seedance 2.5 videos ${N} ${X} /month","expect":35},{"needle":"Pro {N} units / month","expect":20000}]},
  "krea-pro-yearly":{"platform":"Krea","plan":"Pro (yearly)","usd_month":21,"billing":"yearly","credits_month":20000,"source":"krea",
    "checks":[{"needle":"~65 Seedance 2.5 videos ${X} ${N} /month","expect":21}]},
  # Magnific: credits per YEAR, annual billing
@@ -250,7 +250,7 @@ out={"generated":CHECKED,"currency":"USD","sources":SOURCES,"models":MODELS,"pla
        {"item":"Higgsfield Seedance 2.5 per-clip credits","reason":"plan page only says '~80 Seedance 2.5 videos' for 1,200 credits without clip length/resolution"},
        {"item":"Higgsfield Kling 3.0 credits","reason":"compare table says ~7 credits/5s at 720p, plan quiz says ≈14 credits per 8s 720p; both approximate"},
        {"item":"Krea Max plan per-clip counts","reason":"count column appears to assume a 40k pack, price for that pack not shown; Max omitted"},
-       {"item":"Kling 4.0","reason":"announced on kling.ai, no per-second price found on the official API pricing page"}]}
+       {"item":"Kling 4.0","reason":"official API page lists per-second rates, but input video changes the billed duration, so no single $/s is in the table"}]}
 os.makedirs(os.path.join(ROOT,"data"),exist_ok=True)
 json.dump(out,open(os.path.join(ROOT,"data","prices.json"),"w"),indent=1,ensure_ascii=False)
 print(len(rows),"rows")

@@ -8,7 +8,8 @@ the row's 'needle' pattern and compares it with the stored value.
   python3 scripts/update_prices.py --apply    # also update API rows that changed and log them
   python3 scripts/update_prices.py --only fal_wan3,runway
 
-Exit code: 0 = nothing changed, 1 = changes or missing numbers found (review!), 2 = fetch errors.
+Exit code: 0 = nothing left to review, including API price changes this run applied.
+1 = a number is missing, or a change was not applied. 2 = fetch errors.
 'render' sources need Chrome + node (scripts/render.mjs, puppeteer-core). 'manual' sources are listed for a human.
 """
 import json, re, sys, os, subprocess, datetime, argparse
@@ -88,6 +89,16 @@ def expire_promos(db, today, log):
     db["rows"] = kept
     return expired
 
+def exit_code(findings, fetch_errors):
+    """Applied API price changes are a normal result. Missing numbers still need review."""
+    if fetch_errors:
+        return 2
+    for finding in findings:
+        if finding.get("status") == "changed" and finding.get("applied"):
+            continue
+        return 1
+    return 0
+
 def full_check_succeeded(db, report, only):
     if only: return False
     for sid, src in db["sources"].items():
@@ -125,6 +136,7 @@ def main():
                  "old": chk["expect"], "new": v, "model": it.get("model"), "platform": it.get("platform"), "variant": it.get("variant", it.get("plan"))}
             report["findings"].append(f)
             if st == "changed" and a.apply and kind == "row" and it["kind"] == "api":
+                f["applied"] = True
                 row = next(r for r in db["rows"] if r["id"] == it["id"])
                 old_usd = row["usd_per_second"]
                 factor = old_usd / chk["expect"] if chk["expect"] else 1
@@ -164,6 +176,6 @@ def main():
     print(json.dumps(counts), file=sys.stderr)
     for f in report["findings"]: print("FLAG", json.dumps(f, ensure_ascii=False), file=sys.stderr)
     errs = any(s["status"] == "error" for s in report["sources"].values())
-    sys.exit(2 if errs else (1 if report["findings"] else 0))
+    sys.exit(exit_code(report["findings"], errs))
 
 if __name__ == "__main__": main()

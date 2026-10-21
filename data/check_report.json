@@ -83,116 +83,7 @@
    "chars": 3655
   }
  },
- "findings": [
-  {
-   "kind": "row",
-   "id": "r059",
-   "source": "kling_api",
-   "status": "missing",
-   "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${N}) /s",
-   "old": 0.084,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Kling API",
-   "variant": "Kling 3.0, no audio"
-  },
-  {
-   "kind": "row",
-   "id": "r060",
-   "source": "kling_api",
-   "status": "missing",
-   "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${X}) /s | {X} Units (${N}) /s",
-   "old": 0.112,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Kling API",
-   "variant": "Kling 3.0, no audio"
-  },
-  {
-   "kind": "row",
-   "id": "r061",
-   "source": "kling_api",
-   "status": "missing",
-   "needle": "Kling 3.0 | Per second | No Native Audio | {X} Units (${X}) /s | {X} Units (${X}) /s | {X} Units (${N}) /s",
-   "old": 0.42,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Kling API",
-   "variant": "Kling 3.0, no audio"
-  },
-  {
-   "kind": "row",
-   "id": "r062",
-   "source": "kling_api",
-   "status": "missing",
-   "needle": "Kling 3.0 | Per second | With Native Audio x No Voice Control | {X} Units (${N}) /s",
-   "old": 0.126,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Kling API",
-   "variant": "Kling 3.0, audio"
-  },
-  {
-   "kind": "row",
-   "id": "r063",
-   "source": "kling_api",
-   "status": "missing",
-   "needle": "Kling 3.0 | Per second | With Native Audio x No Voice Control | {X} Units (${X}) /s | {X} Units (${N}) /s",
-   "old": 0.168,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Kling API",
-   "variant": "Kling 3.0, audio"
-  },
-  {
-   "kind": "row",
-   "id": "r064",
-   "source": "kling_api",
-   "status": "missing",
-   "needle": "Kling 3.0 Turbo | Per second | With Native Audio | {X} Units (${N}) /s",
-   "old": 0.112,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Kling API",
-   "variant": "Kling 3.0 Turbo, audio"
-  },
-  {
-   "kind": "row",
-   "id": "r065",
-   "source": "kling_api",
-   "status": "missing",
-   "needle": "Kling 3.0 Turbo | Per second | With Native Audio | {X} Units (${X}) /s | {X} Unit (${N}) /s",
-   "old": 0.14,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Kling API",
-   "variant": "Kling 3.0 Turbo, audio"
-  },
-  {
-   "kind": "plan",
-   "id": "krea-basic-yearly",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Basic {N} units /month",
-   "old": 5000,
-   "new": null,
-   "model": null,
-   "platform": "Krea",
-   "variant": "Basic (yearly)"
-  },
-  {
-   "kind": "plan",
-   "id": "krea-pro-monthly",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Pro {N} units /month",
-   "old": 20000,
-   "new": null,
-   "model": null,
-   "platform": "Krea",
-   "variant": "Pro (monthly)"
-  }
- ],
+ "findings": [],
  "deal_scan": {
   "pages": [
    {
@@ -239,9 +130,9 @@
   "candidates": 0
  },
  "counts": {
-  "ok": 200,
+  "ok": 209,
   "changed": 0,
-  "missing": 9,
+  "missing": 0,
   "skipped": 0
  }
 }
