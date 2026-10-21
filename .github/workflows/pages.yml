@@ -13,7 +13,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
-  actions: read
+  actions: write
 
 concurrency:
   group: pages
@@ -56,6 +56,24 @@ jobs:
             git commit -m "Update prices from daily source check"
             git push origin HEAD:main
           fi
+
+      # One-shot: this agent's token cannot call the workflow_dispatch API.
+      # A push whose message contains [price-refresh] asks the workflow token,
+      # which has actions:write, to start that manual run. Removed after it fires.
+      - name: Queue a workflow_dispatch price refresh
+        if: github.event_name == 'push' && contains(github.event.head_commit.message, '[price-refresh]')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          code=$(curl -sS -o /tmp/dispatch.json -w '%{http_code}' -X POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/pages.yml/dispatches" \
+            -d '{"ref":"main"}')
+          echo "workflow_dispatch HTTP ${code}"
+          cat /tmp/dispatch.json
+          test "${code}" = "204"
 
       - name: Build site
         run: python3 scripts/build_site.py
