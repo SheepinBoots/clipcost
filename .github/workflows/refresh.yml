@@ -9,11 +9,6 @@ on:
     # a schedule run. Stay off minute 0, which GitHub drops most often.
     - cron: "17 15 * * *"
   workflow_dispatch:
-  # This token cannot call the workflow_dispatch API. A push whose message
-  # contains [price-refresh] runs the same path once; that trigger is removed
-  # after the manual run.
-  push:
-    branches: [main]
 
 permissions:
   contents: write
@@ -26,7 +21,6 @@ concurrency:
 
 jobs:
   refresh:
-    if: ${{ github.event_name != 'push' || contains(github.event.head_commit.message, '[price-refresh]') }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
