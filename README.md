@@ -24,7 +24,9 @@ Live at https://sheepinboots.github.io/clipcost/
     cd dist && python3 -m http.server 8077
 
 ## Deploy
-`.github/workflows/pages.yml` builds `dist/` and deploys it with GitHub Pages on every push to `main`, on manual dispatch, and daily at 13:17 UTC. Manual dispatch and the daily run install the price-check dependencies (Python packages and Chrome for headless-rendered sources), run `update_prices.py --apply`, commit any data changes to `main`, then build and deploy. A push only deploys the data already in the repo. A failed source fetch does not block the deploy. The price check also diffs vendor pricing pages for new "% off" or sale text and writes `data/deal_candidates.json`. That report is not published as a deal. Deals past their end date move to the archive.
+`.github/workflows/refresh.yml` refreshes prices daily at 15:17 UTC and when run by hand (`workflow_dispatch`). It installs the price-check dependencies (Python packages and Chrome for headless-rendered sources), runs `update_prices.py --apply`, and commits any data changes to `main`. A push made with the workflow `GITHUB_TOKEN` does not start other workflows, so this job builds and deploys the site itself after the commit.
+
+`.github/workflows/pages.yml` builds `dist/` and deploys it with GitHub Pages on every other push to `main`, and when that workflow is run by hand. A push only deploys the data already in the repo. A failed source fetch does not block the deploy. The price check also diffs vendor pricing pages for new "% off" or sale text and writes `data/deal_candidates.json`. That report is not published as a deal. Deals past their end date move to the archive.
 
 ## TODO before launch
 - NEWSLETTER_ACTION in scripts/build_site.py
