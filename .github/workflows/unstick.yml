@@ -1,0 +1,34 @@
+name: Release stuck Pages concurrency
+
+# One-shot. The 14:14 UTC refresh finished its deploy but the workflow run
+# stayed in progress and held the pages concurrency group. Removed after it runs.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  actions: write
+
+jobs:
+  release:
+    if: contains(github.event.head_commit.message, '[unstick]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel the refresh run if its job already finished
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          id=39793954786
+          status=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${id}" --jq .status)
+          job=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${id}/jobs" --jq '.jobs[0].status')
+          echo "run ${id} status=${status} job=${job}"
+          if [ "${job}" = "completed" ] && [ "${status}" != "completed" ]; then
+            code=$(curl -sS -o /tmp/cancel.json -w '%{http_code}' -X POST \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${id}/cancel")
+            echo "cancel HTTP ${code}"
+            cat /tmp/cancel.json
+          fi

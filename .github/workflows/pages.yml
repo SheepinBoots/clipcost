@@ -16,9 +16,6 @@ concurrency:
 
 jobs:
   deploy:
-    # A [price-refresh] push is published by the refresh workflow in the same
-    # job. Skipping here keeps the two deploys from racing.
-    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[price-refresh]') }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
