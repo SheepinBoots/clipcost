@@ -1,0 +1,91 @@
+name: Refresh prices
+
+# The daily refresh deploys in this job. A commit pushed with the workflow
+# GITHUB_TOKEN does not start Deploy to GitHub Pages, so publishing has to
+# happen here after the data commit.
+on:
+  schedule:
+    # 15:17 UTC. The 14:00 and 13:17 crons on the Pages workflow never created
+    # a schedule run. Stay off minute 0, which GitHub drops most often.
+    - cron: "17 15 * * *"
+  workflow_dispatch:
+  # This token cannot call the workflow_dispatch API. A push whose message
+  # contains [price-refresh] runs the same path once; that trigger is removed
+  # after the manual run.
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: ${{ github.event_name != 'push' || contains(github.event.head_commit.message, '[price-refresh]') }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Install price-check dependencies
+        continue-on-error: true
+        run: |
+          python3 -m pip install -r requirements.txt
+          npm ci
+          if [ ! -x /usr/bin/google-chrome ] && [ ! -x /usr/bin/google-chrome-stable ]; then
+            wget -q -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo apt-get update
+            sudo apt-get install -y /tmp/google-chrome.deb
+          fi
+
+      - name: Refresh prices and commit data changes
+        continue-on-error: true
+        run: |
+          # Exit 0 includes API price changes this run applied. Exit 1 is a missing
+          # number or a change that was not applied. Exit 2 is a source fetch error.
+          # Fetch errors must not fail this step. Missing checks do, after the data commit.
+          set +e
+          python3 scripts/update_prices.py --apply
+          code=$?
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/prices.json data/changes.json data/check_report.json data/deals.json data/deal_candidates.json data/deal_snapshots
+          if git diff --cached --quiet; then
+            echo "No price data changes to commit"
+          else
+            git commit -m "Update prices from daily source check"
+            git push origin HEAD:main
+          fi
+          if [ "$code" -eq 2 ]; then
+            echo "update_prices.py fetch error; deploying existing data"
+          elif [ "$code" -ne 0 ]; then
+            echo "::warning::Price check needs review (exit $code). See data/check_report.json."
+            exit "$code"
+          fi
+
+      - name: Build site
+        run: python3 scripts/build_site.py
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
