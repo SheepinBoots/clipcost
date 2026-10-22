@@ -24,7 +24,7 @@ Live at https://sheepinboots.github.io/clipcost/
     cd dist && python3 -m http.server 8077
 
 ## Deploy
-`.github/workflows/refresh.yml` refreshes prices daily at 15:17 UTC and when run by hand (`workflow_dispatch`). It installs the price-check dependencies (Python packages and Chrome for headless-rendered sources), runs `update_prices.py --apply`, and commits any data changes to `main`. A push made with the workflow `GITHUB_TOKEN` does not start other workflows, so this job builds and deploys the site itself after the commit.
+`.github/workflows/refresh.yml` refreshes prices daily at 15:17 UTC and when run by hand (`workflow_dispatch`). It installs the price-check dependencies (Python packages and Chrome for headless-rendered sources), runs `update_prices.py --apply`, and commits any data changes to `main`. A push made with the workflow `GITHUB_TOKEN` does not start other workflows, so this job builds and deploys the site itself after the commit. Crons last edited by the Cursor app have not produced a schedule run. If 15:17 UTC does not appear under Actions, disable and re-enable **Refresh prices** in the Actions tab, or commit a cron edit from an account with write access. That makes the schedule actor a user GitHub will actually run.
 
 `.github/workflows/pages.yml` builds `dist/` and deploys it with GitHub Pages on every other push to `main`, and when that workflow is run by hand. A push only deploys the data already in the repo. A failed source fetch does not block the deploy. The price check also diffs vendor pricing pages for new "% off" or sale text and writes `data/deal_candidates.json`. That report is not published as a deal. Deals past their end date move to the archive.
 
