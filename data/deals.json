@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-10-21",
+ "updated": "2026-10-23",
  "watch": [
   {
    "id": "hf_plans",
@@ -433,10 +433,43 @@
    "notes": "Krea 3 is an image model, so this does not change video $/s. The 14 days follow a qualifying purchase. No calendar end date was given."
   },
   {
+   "id": "mag-premium-annual-50",
+   "vendor": "Magnific",
+   "type": "plan_sale",
+   "title": "Premium annual extra 50% off, $20 to $7.25/mo, ends Oct 26",
+   "models": [],
+   "plans": ["Premium"],
+   "full_plan_id": "mag-premium",
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": true,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 50,
+   "bonus_credits": null,
+   "price_before": 20,
+   "price_after": 7.25,
+   "start": null,
+   "end": "2026-10-26",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://www.magnific.com/pricing",
+   "source_kind": "pricing_page",
+   "source_quote": "Save 50% off on Premium annual. Offer ends October 26.",
+   "verified_date": "2026-10-23",
+   "link_url": "https://www.magnific.com/pricing",
+   "math": "plan_price",
+   "notes": "Catalog Premium annual is $14.50/mo for the same 240K credits/year. The pricing page checkout for that yearly plan is $7.25/mo (50% off the $174/year price), shown as $20 struck and $7.25/mo billed annually. $/s uses $7.25 divided by those credits. The end date is the one printed on the page, so the daily check archives this after Oct 26."
+  },
+  {
    "id": "mag-annual-25",
    "vendor": "Magnific",
    "type": "plan_sale",
-   "title": "Annual billing saves 25%",
+   "title": "Save up to 63% with annual",
    "models": [],
    "plans": ["Premium", "Premium+", "Pro"],
    "conditions": {
@@ -448,7 +481,7 @@
     "code": null,
     "standing": true
    },
-   "percent": 25,
+   "percent": null,
    "bonus_credits": null,
    "start": null,
    "end": null,
@@ -456,12 +489,12 @@
    "status": "live",
    "source_url": "https://www.magnific.com/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Annual billing saves 25%.",
-   "verified_date": "2026-10-20",
+   "source_quote": "Save up to 63% with annual.",
+   "verified_date": "2026-10-23",
    "link_url": "https://www.magnific.com/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Catalog Magnific rows are already the annual rates. Monthly prices are not listed separately, so this 25% is not applied a second time."
+   "notes": "Checked 2026-10-23. The page does not say annual billing saves 25%. The annual toggle says \"Save up to 63% with annual.\" Premium+ is still $45 to $33.75/mo and Pro Starter is $110 to $82.50/mo, which are the catalog annual rates, so this line is not applied to $/s. The Premium extra cut is mag-premium-annual-50."
   },
   {
    "id": "mag-kling25-unlimited",
