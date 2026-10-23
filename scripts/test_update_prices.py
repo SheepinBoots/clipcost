@@ -17,6 +17,9 @@ def main():
     assert up.exit_code([{"status": "deal_candidate"}], False) == 1
     assert up.exit_code([], True) == 2
     assert up.exit_code([{"status": "missing"}], True) == 2
+    assert up.retired({"discontinued_on": "2026-10-22"}, "2026-10-23") is True
+    assert up.retired({"discontinued_on": "2026-10-23"}, "2026-10-23") is False
+    assert up.retired({}, "2026-10-23") is False
     print("ok")
 
 

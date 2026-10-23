@@ -1,9 +1,9 @@
 {
- "run": "2026-10-22T14:20:33",
+ "run": "2026-10-23T17:32:28",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 16116
+   "chars": 16675
   },
   "hf_api": {
    "status": "fetched",
@@ -35,7 +35,7 @@
   },
   "fal_pricing": {
    "status": "fetched",
-   "chars": 8006
+   "chars": 7882
   },
   "rep_wan3": {
    "status": "fetched",
@@ -51,19 +51,19 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 64662
+   "chars": 62861
   },
   "atlas": {
    "status": "fetched",
-   "chars": 20491
+   "chars": 20446
   },
   "krea": {
    "status": "fetched",
-   "chars": 32863
+   "chars": 32387
   },
   "magnific": {
    "status": "fetched",
-   "chars": 9238
+   "chars": 9130
   },
   "kling_app": {
    "status": "manual",
@@ -83,386 +83,7 @@
    "chars": 3655
   }
  },
- "findings": [
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "0 free gens Higgsfield Genjutsu No free gens Higgsfield Ads Studio 10 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 No unlimited Kling 3.0 No unlimited Nano B"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ee gens Higgsfield Genjutsu 720p 3 free gens Higgsfield Ads Studio 10 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 2K 7-day unlimited Kling 3.0 7-day unlimit"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "0 free gens Higgsfield Ads Studio 10 free gens Higgsfield Genjutsu No free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 No unlimited Kling 3.0 No unlimited Nano B"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ee gens Higgsfield Ads Studio 10 free gens Higgsfield Genjutsu 720p 3 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 2K 7-day unlimited Kling 3.0 7-day unlimit"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Unlimited Krea 3 for 14 days Unlimited"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "Model training Train LoRA models with up to 50 images. Plan usage limits apply. Unlimited relaxed generations Continue generating with supported in-house image models af"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Most popular Pro 20,000 units / month 450 Nano Banana 2 generations"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "~65 Seedance 2.5 videos $35 $21 /month Get Pro Unlimited 14-Day KreaÂ 3 Unlimited Learn more Krea 3 Generate and edit images with Krea 3. Krea 3 Ultra requires M"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Max 60,000 units / month 1,350 Nano Banana 2 generations ~197 Seeda"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "nce 2.5 videos 40k 60k 80k 100k $105 $63 /month Get Max Unlimited 14-Day KreaÂ 3 Unlimited Learn more Krea 3 Generate and edit images with Krea 3"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "el training Train LoRA models with up to 2,000 images. Plan usage limits apply. Unlimited relaxed generations Continue generating with supported in-house image models af"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder See all features For Teams and Enterprises Business 80k units /mont"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Custom pricing Cont"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "ts. Model training Train LoRA models with limits tailored to your organization. Unlimited relaxed generations Continue generating with supported in-house image models af"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free 100 units / day $0 /mon"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "th Get Free Unlimited 14-Day KreaÂ 3 Not included in this offer Learn more Krea 3 Generate and edit i"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder See all features For Teams and Enterprises Business Secure and coll"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Enterprise-grade se"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Need More Compute? Purchase"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "inetuning Video LoRA Finetuning LoRA Sharing File Management Krea Asset Manager Unlimited Krea 3 for 14 days Unlimited Fast generations for 14 days with a qualifying Pro"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s when purchasing additional compute unit packs beyond your monthly allocation. Unlimited relaxed generations Continue generating with supported in-house image models af"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Most popular Pro 20,000 units / month 450 Nano Banana 2 generations"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "~65 Seedance 2.5 videos $35 $21 /month Get Pro Unlimited 14-Day KreaÂ 3 Unlimited Learn more Krea 3 Generate and edit images with our latest in-house model. NEW"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Max 60,000 units / month 1,350 Nano Banana 2 generations ~197 Seeda"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "nce 2.5 videos 40k 60k 80k 100k $105 $63 /month Get Max Unlimited 14-Day KreaÂ 3 Unlimited Learn more Krea 3 Generate and edit images with our la"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "video models including Veo3, Seedance, Kling, and more. All 3D & lipsync models Unlimited LoRA training (2,000 images) Train LoRA models using up to 2,000 images to pers"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder See all features For Teams and Enterprises Business 80k units /mont"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "content for commercial purposes including marketing, products, and client work. Unlimited relaxed generations Continue generating with supported in-house image models af"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "ter exhausting your compute units. Unlimited LoRA training (2,000 images) Train LoRA models using up to 2,000 images to pers"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "AI-generated content, when usage follows the agreement terms. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Custom pricing Cont"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "and tracking all user actions across your organization. SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Unlimited Krea 3 for 14 days"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "Unlimited Fast generations for 14 days with a qualifying Pro or Max annual purchase. Ends"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s -- minutes -- seconds Get Pro Get Max Free 100 units / day $0 /month Get Free Unlimited 14-Day KreaÂ 3 Not included in this offer Learn more Krea 3 Generate and edit i"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder See all features For Teams and Enterprises Business Secure and coll"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "AI-generated content, when usage follows the agreement terms. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Enterprise-grade se"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "and tracking all user actions across your organization. SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Need More Compute? Purchase"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "ideo input New 990 credits/3s 242 videos 606 videos 1,515 videos Kling 2.5 720p Unlimited 140 credits/5s 1,714 videos Kling 3.0 Pro 1080p 450 credits/5s 533 videos 1,333"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "940 credits/4s 255 videos 638 videos 1,595 videos MiniMax Hailuo 2.3 Fast 768p Unlimited 150 credits/6s 1,600 videos Seedance 2.0 4K 1080p 5,600 credits/4s 42 videos 10"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "250 credits/image 960 images 2,400 images 6,000 images Google Nano Banana 2 2K Unlimited 75 credits/image 3,200 images 8,000 images Google Nano Banana Pro (1K/2K) Unlim"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "ited 75 credits/image 3,200 images 8,000 images Google Nano Banana 2 1K Unlimited 75 credits/image 3,200 images Google Nano Banana 2 4K 150 credits/image 1,600 i"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "mages 4,000 images 10,000 images Google Nano Banana 2 Lite 1K Unlimited 60 credits/image 4,000 images Google Nano Banana Pro 4K 150 credits/image 1,600"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "edium 2K 180 credits/image 1,333 images 3,333 images 8,333 images Flux.2 Pro 1K Unlimited 50 credits/image 4,800 images Recraft V4.1 Mid Unlimited 60 credits/image 4,000"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "images Flux.2 Max 1K Unlimited 130 credits/image 1,846 images 4,615 images Grok Unlimited 70 credits/image 3,4"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "local taxes Compare plans: AI video, image, and audio plus stock Kling 2.5 720p Unlimited 140 credits/5s 1,714 videos Seedance 2.5 720p 1,760 credits/4s 136 videos 340 v"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "720 credits/3s 333 videos 833 videos 2,083 videos MiniMax Hailuo 2.3 Fast 768p Unlimited 150 credits/6s 1,600 videos MiniMax H3 Max Turbo 768p New 200 credits/5s 1,200"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "1,000 credits/image 240 images 600 images 1,500 images Google Nano Banana 2 2K Unlimited 75 credits/image 3,200 images 8,000 images Google Nano Banana 2 1K Unlimited 75"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "ts/image 1,600 images 4,000 images 10,000 images Google Nano Banana Pro (1K/2K) Unlimited 75 credits/image 3,200 images 8,000 images Google Nano Banana Pro 4K 150 credit"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "s/image 1,600 images 4,000 images 10,000 images Google Nano Banana 2 Lite 1K Unlimited 60 credits/image 4,000 images Magnific Precision 90 credits/2K image 2,666 imag"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "GPT 2.5 Medium 2K 180 credits/image 1,333 images 3,333 images 8,333 images Grok Unlimited 70 credits/image 3,428 images Flux.2 Pro 1K Unlimited 50 credits/image 4,800 im"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "ages Recraft V4.1 Mid Unlimited 60 credits/image 4,000 images Flux.2 Max 1K Unlimited 130 credits/image 1,846 images 4,615 images P-image Ideogram 2K High New 44 cre"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Runway",
-   "url": "https://runwayml.com/pricing",
-   "snippet": "eators and leading enterprises Individual Team & Enterprise API Monthly Yearly -20% off Free Free forever. For people looking to explore Runway's AI Tools $0 /month 12"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Runway",
-   "url": "https://runwayml.com/pricing",
-   "snippet": "Kling 3.0 Nano Banana Pro and more Compare models across plans Monthly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2"
-  }
- ],
+ "findings": [],
  "deal_scan": {
   "pages": [
    {
@@ -477,14 +98,14 @@
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 21
+    "snippets": 17
    },
    {
     "id": "magnific",
     "vendor": "Magnific",
     "url": "https://www.magnific.com/pricing",
     "status": "fetched",
-    "snippets": 12
+    "snippets": 14
    },
    {
     "id": "runway_plans",
@@ -501,12 +122,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 54
+  "candidates": 0
  },
  "counts": {
-  "ok": 209,
+  "ok": 203,
   "changed": 0,
   "missing": 0,
-  "skipped": 0
+  "skipped": 6
  }
 }

@@ -62,11 +62,17 @@ def check(text, chk):
     v = parse(m.group(1))
     return ("ok" if abs(v - float(chk["expect"])) <= 1e-9 * max(1, abs(v)) else "changed"), v
 
+def retired(it, today):
+    """Rows discontinued before today are off the vendor page, so they are not re-checked."""
+    end = it.get("discontinued_on")
+    return bool(end and end < today)
+
 def stamp_checked(db, texts, findings, today):
     """Re-date rows whose own checks passed. A plan-price finding blocks rows derived from that plan."""
     bad = {f["id"] for f in findings}
     bad_plans = {f["id"] for f in findings if f.get("kind") == "plan"}
     for r in db["rows"]:
+        if retired(r, today): continue
         if r.get("source") not in texts or r["id"] in bad: continue
         if r.get("kind") == "plan" and r.get("plan") in bad_plans: continue
         r["checked"] = today
@@ -127,7 +133,7 @@ def main():
     items = [("row", r) for r in db["rows"]] + [("plan", dict(p, id=k)) for k, p in db["plans"].items()]
     counts = {"ok": 0, "changed": 0, "missing": 0, "skipped": 0}
     for kind, it in items:
-        if it["source"] not in texts: counts["skipped"] += 1; continue
+        if it["source"] not in texts or retired(it, today): counts["skipped"] += 1; continue
         for chk in it["checks"]:
             st, v = check(texts[it["source"]], chk)
             counts[st] += 1

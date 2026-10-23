@@ -1,6 +1,41 @@
 {
- "updated": "2026-10-21",
+ "updated": "2026-10-23",
  "deals": [
+  {
+   "id": "mag-premium-annual-50",
+   "vendor": "Magnific",
+   "type": "plan_sale",
+   "title": "Premium annual extra 50% off, $20 to $7.25/mo, ends Oct 26",
+   "models": [],
+   "plans": [
+    "Premium"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": true,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 50,
+   "bonus_credits": null,
+   "price_before": 20,
+   "price_after": 7.25,
+   "price_pairs": null,
+   "start": null,
+   "end": "2026-10-26",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://www.magnific.com/pricing",
+   "source_quote": "Save 50% off on Premium annual. Offer ends October 26.",
+   "verified_date": "2026-10-23",
+   "notes": "Catalog Premium annual is $14.50/mo for the same 240K credits/year. The pricing page checkout for that yearly plan is $7.25/mo (50% off the $174/year price), shown as $20 struck and $7.25/mo billed annually. $/s uses $7.25 divided by those credits. The end date is the one printed on the page, so the daily check archives this after Oct 26.",
+   "examples": [
+    "Premium: $20 → $7.25/mo · MiniMax Hailuo / H3 768p $0.0145/s vs $0.04/s"
+   ]
+  },
   {
    "id": "hf-genjutsu-api-50",
    "vendor": "Higgsfield API",
@@ -508,41 +543,6 @@
    ]
   },
   {
-   "id": "mag-annual-25",
-   "vendor": "Magnific",
-   "type": "plan_sale",
-   "title": "Annual billing saves 25%",
-   "models": [],
-   "plans": [
-    "Premium",
-    "Premium+",
-    "Pro"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": true,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": true
-   },
-   "percent": 25,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://www.magnific.com/pricing",
-   "source_quote": "Annual billing saves 25%.",
-   "verified_date": "2026-10-20",
-   "notes": "Catalog Magnific rows are already the annual rates. Monthly prices are not listed separately, so this 25% is not applied a second time.",
-   "examples": []
-  },
-  {
    "id": "mag-hailuo-fast-unlimited",
    "vendor": "Magnific",
    "type": "unlimited_window",
@@ -610,6 +610,41 @@
    "source_quote": "Unlimited, all year on Kling 2.5 720p for Premium+ and Pro.",
    "verified_date": "2026-10-20",
    "notes": "Standing plan feature, capped at 720p. Kling 2.5 is not in the catalog (ClipCost tracks Kling 3.0), so there is no break-even against a Kling 2.5 credit price.",
+   "examples": []
+  },
+  {
+   "id": "mag-annual-25",
+   "vendor": "Magnific",
+   "type": "plan_sale",
+   "title": "Save up to 63% with annual",
+   "models": [],
+   "plans": [
+    "Premium",
+    "Premium+",
+    "Pro"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": true,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": true
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": null,
+   "end": null,
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://www.magnific.com/pricing",
+   "source_quote": "Save up to 63% with annual.",
+   "verified_date": "2026-10-23",
+   "notes": "Checked 2026-10-23. The page does not say annual billing saves 25%. The annual toggle says \"Save up to 63% with annual.\" Premium+ is still $45 to $33.75/mo and Pro Starter is $110 to $82.50/mo, which are the catalog annual rates, so this line is not applied to $/s. The Premium extra cut is mag-premium-annual-50.",
    "examples": []
   },
   {
