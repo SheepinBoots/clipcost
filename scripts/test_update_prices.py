@@ -20,6 +20,8 @@ def main():
     assert up.retired({"discontinued_on": "2026-10-22"}, "2026-10-23") is True
     assert up.retired({"discontinued_on": "2026-10-23"}, "2026-10-23") is False
     assert up.retired({}, "2026-10-23") is False
+    assert up.retired({"status": "discontinued"}, "2026-10-23") is True
+    assert up.retired({"status": "verified"}, "2026-10-23") is False
     print("ok")
 
 

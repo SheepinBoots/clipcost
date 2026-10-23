@@ -118,8 +118,12 @@ G=[("veo-3-1","Veo 3.1 Standard (audio)","720p/1080p",0.40,"Veo 3.1 Standard vid
    ("veo-3-1","Veo 3.1 Fast (audio)","1080p",0.12,"Veo 3.1 Fast video with audio price (default) Not available ${X} (720p) ${N} (1080p)"),
    ("veo-3-1","Veo 3.1 Lite (audio)","720p",0.05,"Veo 3.1 Lite video with audio price (default) Not available ${N} (720p)"),
    ("veo-3-1","Veo 3.1 Lite (audio)","1080p",0.08,"Veo 3.1 Lite video with audio price (default) Not available ${X} (720p) ${N} (1080p)")]
+VEO_DOCS = "https://ai.google.dev/gemini-api/docs/veo"
 for m,v,res,usd,nd in G:
-    api(m,v,"Google Gemini API","gemini",usd,res,nd,audio=True,note="Preview endpoints deprecated - Google says they shut down Oct 22, 2026.")
+    api(m,v,"Google Gemini API","gemini",usd,res,nd,audio=True,status="discontinued",
+        note="Shut down on October 22, 2026. veo-3.1-generate-preview, veo-3.1-fast-generate-preview, and veo-3.1-lite-generate-preview are off. "+VEO_DOCS)
+    rows[-1]["discontinued_on"] = "2026-10-22"
+    rows[-1]["source_url"] = VEO_DOCS
 api("gemini-omni-flash","gemini-omni-1.1-flash","Google Gemini API","gemini",0.10,"720p","effective price of approximately ${N} per second",status="estimate",note="Token-billed; Google states 'approximately $0.10 per second' of 720p.")
 
 # ---------- Atlas Cloud ----------
@@ -239,7 +243,7 @@ for platform, clips in CLIPS.items():
                 usd_per_second=round(ups,5),status=st,promo_until=None,source=CLIP_SRC[platform],math=math,checks=checks,note=note))
 
 for i,r in enumerate(rows):
-    r["id"]=f"r{i+1:03d}"; r["checked"]=CHECKED; r["source_url"]=SOURCES[r["source"]]["url"]
+    r["id"]=f"r{i+1:03d}"; r["checked"]=CHECKED; r["source_url"]=r.get("source_url") or SOURCES[r["source"]]["url"]
 for p in PLANS.values(): p["checked"]=CHECKED; p["source_url"]=SOURCES[p["source"]]["url"]
 
 out={"generated":CHECKED,"currency":"USD","sources":SOURCES,"models":MODELS,"plans":PLANS,"rows":rows,

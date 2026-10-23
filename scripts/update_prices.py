@@ -63,7 +63,9 @@ def check(text, chk):
     return ("ok" if abs(v - float(chk["expect"])) <= 1e-9 * max(1, abs(v)) else "changed"), v
 
 def retired(it, today):
-    """Rows discontinued before today are off the vendor page, so they are not re-checked."""
+    """Discontinued rows are off the vendor page, so they are not re-checked."""
+    if it.get("status") == "discontinued":
+        return True
     end = it.get("discontinued_on")
     return bool(end and end < today)
 

@@ -25,7 +25,8 @@ th.sorted-asc::after{content:" ▲"}th.sorted-desc::after{content:" ▼"}
 td.num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
 tr:hover td{background:#121725}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:99px;border:1px solid var(--line);color:var(--mut);white-space:nowrap}
-.tag.verified{color:var(--acc);border-color:#2a5a47}.tag.estimate{color:var(--warn);border-color:#5a4a2a}.tag.promo{color:var(--promo);border-color:#5a2a46}
+.tag.verified{color:var(--acc);border-color:#2a5a47}.tag.estimate{color:var(--warn);border-color:#5a4a2a}.tag.promo{color:var(--promo);border-color:#5a2a46}.tag.discontinued{color:var(--mut);border-color:#4a4158}
+#retired td.num{color:var(--mut)}
 .tag.deal{color:#ffd0e6;border-color:#5a2a46;text-decoration:none;margin:0 0 0 4px}
 a.tag.deal:hover{color:#fff}
 .dealgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}

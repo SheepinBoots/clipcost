@@ -25,12 +25,18 @@ models, plans, sources = db["models"], db["plans"], db["sources"]
 today = datetime.date.today()
 TODAY = today.isoformat()
 MONTH = today.strftime("%b %Y")
+def discontinued(r):
+    """A row is off sale once its status says so, or its shutdown date is before today."""
+    if r.get("status") == "discontinued": return True
+    end = r.get("discontinued_on")
+    return bool(end and end < TODAY)
 def current(r):
-    """Drop expired promos and rows discontinued on or before yesterday."""
+    """Drop expired promos and discontinued rows from rankings and the live table."""
+    if discontinued(r): return False
     if r.get("promo_until") and r["promo_until"] < TODAY: return False
-    if r.get("discontinued_on") and r["discontinued_on"] < TODAY: return False
     return True
 rows = [r for r in db["rows"] if current(r)]
+retired_rows = [r for r in db["rows"] if discontinued(r)]
 LAST = db.get("last_full_check") or min(r["checked"] for r in db["rows"])
 deal_doc = dealmod.load()
 LIVE_DEALS = [d for d in deal_doc["deals"] if dealmod.is_current(d, TODAY)]
@@ -109,7 +115,7 @@ def page(path, title, desc, body, active="", extra_head=""):
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w").write(doc)
 
-def tag(st): return f'<span class="tag {st}">{ {"verified":"vendor-stated","estimate":"approx.","promo":"promo"}[st] }</span>'
+def tag(st): return f'<span class="tag {st}">{ {"verified":"vendor-stated","estimate":"approx.","promo":"promo","discontinued":"discontinued"}[st] }</span>'
 
 def ends_fallback(deal):
     cond = dealmod.conditions(deal)
@@ -202,8 +208,17 @@ def row_html(r):
 THEAD = '<thead><tr><th data-k="model">Model</th><th data-k="platform">Where</th><th data-k="variant">Variant / plan</th><th data-k="resolution">Res.</th><th data-k="usd_per_second">$ / sec</th><th data-k="status">Status</th><th>How we got it</th><th data-k="checked">Source</th></tr></thead>'
 
 def cheapest(rs, allow_promo=True):
-    rs = [r for r in rs if allow_promo or r["status"] != "promo"]
+    rs = [r for r in rs if not discontinued(r) and (allow_promo or r["status"] != "promo")]
     return min(rs, key=lambda r: r["usd_per_second"]) if rs else None
+
+def retired_table(rs, thead=None):
+    """Record of rates that are off sale. Not used for cheapest picks."""
+    if not rs: return ""
+    head = thead or THEAD
+    body = "".join(row_html(r) for r in sorted(rs, key=lambda r: (r["model"], r["usd_per_second"])))
+    return (f'<h2>Discontinued</h2>'
+            f'<p class="small">These rates are off sale. The last price we recorded stays here, and these rows are left out of cheapest picks and the live table.</p>'
+            f'<div class="tblwrap"><table id="retired">{head}<tbody>{body}</tbody></table></div>')
 
 def news_box():
     return f"""<section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
@@ -288,7 +303,8 @@ home = f"""<h1>AI video cost per second, compared</h1>
 <label class="chk"><input type="checkbox" id="fEst"> hide approximations</label>
 <span class="small" id="count"></span></div>
 <div class="tblwrap"><table id="prices">{THEAD}<tbody>{"".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"]))}</tbody></table></div>
-<p class="small"><span class="tag verified">vendor-stated</span> = the number is on the vendor's page (plan rows: plan price ÷ credits × credits per clip, all vendor-stated). <span class="tag estimate">approx.</span> = the vendor itself says "~", "roughly" or "estimated". <span class="tag promo">promo</span> = temporary discount with an end date. {ver} of {len(rows)} rows are vendor-stated.</p>
+<p class="small"><span class="tag verified">vendor-stated</span> = the number is on the vendor's page (plan rows: plan price ÷ credits × credits per clip, all vendor-stated). <span class="tag estimate">approx.</span> = the vendor itself says "~", "roughly" or "estimated". <span class="tag promo">promo</span> = temporary discount with an end date. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. {ver} of {len(rows)} live rows are vendor-stated.</p>
+{retired_table(retired_rows)}
 {news_box()}
 <script>
 {TICK_JS}
@@ -305,8 +321,8 @@ let sortK='usd_per_second',dir=1;
 const $=id=>document.getElementById(id);
 function esc(s){{return String(s??'').replace(/[&<>"]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c]))}}
 function money(v){{const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
-function tag(s){{return `<span class="tag ${{s}}">${{{{verified:'vendor-stated',estimate:'approx.',promo:'promo'}}[s]}}</span>`}}
-function current(r){{const today=new Date().toISOString().slice(0,10);if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
+function tag(s){{return `<span class="tag ${{s}}">${{{{verified:'vendor-stated',estimate:'approx.',promo:'promo',discontinued:'discontinued'}}[s]||esc(s)}}</span>`}}
+function current(r){{const today=new Date().toISOString().slice(0,10);if(r.status==='discontinued')return false;if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
 function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
 function plat(r){{const tracked=hf(r.source_url);if(tracked)return `<a href="${{esc(tracked)}}" rel="sponsored nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`;const a=AFF[r.platform];return a?`<a href="${{esc(a)}}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">${{esc(r.platform)}}</a>`:`<a href="${{esc(r.source_url)}}" rel="nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`}}
 function render(){{
@@ -456,6 +472,7 @@ for slug, m in models.items():
 <h2>All {e(m['name'])} prices</h2>
 <div class="tblwrap"><table>{THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=')}<tbody>{"".join(row_html(r) for r in rs)}</tbody></table></div>
 <p class="small">Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root("/calculator/")}">credit calculator</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
+{retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {news_box()}
 {tick_script()}
 <script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@type":"FAQPage","mainEntity":faq})}</script>"""
@@ -494,7 +511,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
  function money(v){{const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
  function clipCount(credits, per){{const raw=credits/per, nearest=Math.round(raw);return Math.abs(raw-nearest)<0.005?nearest:Math.floor(raw)}}
- function current(r){{const today=new Date().toISOString().slice(0,10);if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
+ function current(r){{const today=new Date().toISOString().slice(0,10);if(r.status==='discontinued')return false;if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
  function readUsed(){{const el=$('used'), raw=String(el.value).trim();
   if(raw===''||!Number.isFinite(Number(raw))){{$('usedMsg').textContent='Enter a whole number from 1 to 100.';return null}}
   const n=Number(raw);
@@ -586,6 +603,7 @@ page("/about/", "About ClipCost: methodology & affiliate disclosure", "How ClipC
 <li><b>APIs</b>: we use the vendor's stated $ per second. Runway credits are $0.01 each.</li>
 <li><b>Credit plans</b>: plan price ÷ credits = $ per credit; × credits per clip ÷ clip length = $ per second. That assumes you use all your credits.</li>
 <li>If a vendor says "~", "roughly" or "estimated", we label the row <i>approx.</i> If we can't confirm a price, we leave it out rather than guess.</li>
+<li>When a vendor shuts an endpoint down, that row is marked <i>discontinued</i> and kept under Discontinued with the last recorded rate. It is not used for cheapest picks.</li>
 <li>Prices exclude VAT/sales tax and change often. Always confirm on the vendor's page before paying.</li>
 <li><b>Deals</b> are a separate list. A discounted $/s uses the vendor's stated rate or the checkout plan price ÷ credits. A code that lasts the first N months also shows a 12-month blended rate. Unlimited windows show how many seconds of video cover the plan price. They are not listed at $0/s.</li></ul>
 <h2>Sources we check</h2><ul class="small">{srcl}</ul>

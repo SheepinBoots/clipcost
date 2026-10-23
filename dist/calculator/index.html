@@ -36,7 +36,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
  function hf(url){try{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return "https://higgsfield.ai?fpr=emmanuel-bbfe0e";u.searchParams.delete('ref');u.searchParams.set('fpr',"emmanuel-bbfe0e");return u.toString()}catch(e){return null}}
  function money(v){const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}
  function clipCount(credits, per){const raw=credits/per, nearest=Math.round(raw);return Math.abs(raw-nearest)<0.005?nearest:Math.floor(raw)}
- function current(r){const today=new Date().toISOString().slice(0,10);if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}
+ function current(r){const today=new Date().toISOString().slice(0,10);if(r.status==='discontinued')return false;if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}
  function readUsed(){const el=$('used'), raw=String(el.value).trim();
   if(raw===''||!Number.isFinite(Number(raw))){$('usedMsg').textContent='Enter a whole number from 1 to 100.';return null}
   const n=Number(raw);

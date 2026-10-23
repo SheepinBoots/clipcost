@@ -2179,7 +2179,7 @@
    "resolution": "720p/1080p",
    "audio": true,
    "usd_per_second": 0.4,
-   "status": "verified",
+   "status": "discontinued",
    "promo_until": null,
    "source": "gemini",
    "math": null,
@@ -2189,10 +2189,10 @@
      "expect": 0.4
     }
    ],
-   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
+   "note": "Shut down on October 22, 2026. veo-3.1-generate-preview, veo-3.1-fast-generate-preview, and veo-3.1-lite-generate-preview are off. https://ai.google.dev/gemini-api/docs/veo",
    "id": "r066",
-   "checked": "2026-10-22",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "checked": "2026-10-23",
+   "source_url": "https://ai.google.dev/gemini-api/docs/veo",
    "discontinued_on": "2026-10-22"
   },
   {
@@ -2203,7 +2203,7 @@
    "resolution": "4K",
    "audio": true,
    "usd_per_second": 0.6,
-   "status": "verified",
+   "status": "discontinued",
    "promo_until": null,
    "source": "gemini",
    "math": null,
@@ -2213,10 +2213,10 @@
      "expect": 0.6
     }
    ],
-   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
+   "note": "Shut down on October 22, 2026. veo-3.1-generate-preview, veo-3.1-fast-generate-preview, and veo-3.1-lite-generate-preview are off. https://ai.google.dev/gemini-api/docs/veo",
    "id": "r067",
-   "checked": "2026-10-22",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "checked": "2026-10-23",
+   "source_url": "https://ai.google.dev/gemini-api/docs/veo",
    "discontinued_on": "2026-10-22"
   },
   {
@@ -2227,7 +2227,7 @@
    "resolution": "720p",
    "audio": true,
    "usd_per_second": 0.1,
-   "status": "verified",
+   "status": "discontinued",
    "promo_until": null,
    "source": "gemini",
    "math": null,
@@ -2237,10 +2237,10 @@
      "expect": 0.1
     }
    ],
-   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
+   "note": "Shut down on October 22, 2026. veo-3.1-generate-preview, veo-3.1-fast-generate-preview, and veo-3.1-lite-generate-preview are off. https://ai.google.dev/gemini-api/docs/veo",
    "id": "r068",
-   "checked": "2026-10-22",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "checked": "2026-10-23",
+   "source_url": "https://ai.google.dev/gemini-api/docs/veo",
    "discontinued_on": "2026-10-22"
   },
   {
@@ -2251,7 +2251,7 @@
    "resolution": "1080p",
    "audio": true,
    "usd_per_second": 0.12,
-   "status": "verified",
+   "status": "discontinued",
    "promo_until": null,
    "source": "gemini",
    "math": null,
@@ -2261,10 +2261,10 @@
      "expect": 0.12
     }
    ],
-   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
+   "note": "Shut down on October 22, 2026. veo-3.1-generate-preview, veo-3.1-fast-generate-preview, and veo-3.1-lite-generate-preview are off. https://ai.google.dev/gemini-api/docs/veo",
    "id": "r069",
-   "checked": "2026-10-22",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "checked": "2026-10-23",
+   "source_url": "https://ai.google.dev/gemini-api/docs/veo",
    "discontinued_on": "2026-10-22"
   },
   {
@@ -2275,7 +2275,7 @@
    "resolution": "720p",
    "audio": true,
    "usd_per_second": 0.05,
-   "status": "verified",
+   "status": "discontinued",
    "promo_until": null,
    "source": "gemini",
    "math": null,
@@ -2285,10 +2285,10 @@
      "expect": 0.05
     }
    ],
-   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
+   "note": "Shut down on October 22, 2026. veo-3.1-generate-preview, veo-3.1-fast-generate-preview, and veo-3.1-lite-generate-preview are off. https://ai.google.dev/gemini-api/docs/veo",
    "id": "r070",
-   "checked": "2026-10-22",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "checked": "2026-10-23",
+   "source_url": "https://ai.google.dev/gemini-api/docs/veo",
    "discontinued_on": "2026-10-22"
   },
   {
@@ -2299,7 +2299,7 @@
    "resolution": "1080p",
    "audio": true,
    "usd_per_second": 0.08,
-   "status": "verified",
+   "status": "discontinued",
    "promo_until": null,
    "source": "gemini",
    "math": null,
@@ -2309,10 +2309,10 @@
      "expect": 0.08
     }
    ],
-   "note": "Discontinued Oct 22, 2026: Google shuts down these Veo 3.1 preview endpoints. Hidden from the tables after that date.",
+   "note": "Shut down on October 22, 2026. veo-3.1-generate-preview, veo-3.1-fast-generate-preview, and veo-3.1-lite-generate-preview are off. https://ai.google.dev/gemini-api/docs/veo",
    "id": "r071",
-   "checked": "2026-10-22",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "checked": "2026-10-23",
+   "source_url": "https://ai.google.dev/gemini-api/docs/veo",
    "discontinued_on": "2026-10-22"
   },
   {

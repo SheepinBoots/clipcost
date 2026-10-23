@@ -1,5 +1,13 @@
 [
  {
+  "date": "2026-10-23",
+  "type": "notice",
+  "model": "veo-3-1",
+  "platform": "Google Gemini API",
+  "text": "Veo 3.1 Standard, Fast, and Lite on the Gemini API are discontinued. Google shut those preview endpoints down on October 22, 2026. The last recorded rates stay in the discontinued table and are not used for cheapest picks.",
+  "source_url": "https://ai.google.dev/gemini-api/docs/veo"
+ },
+ {
   "date": "2026-10-20",
   "type": "baseline",
   "text": "Tracker baseline captured: all prices first recorded on this date. Future rows show real changes detected by the daily check."
