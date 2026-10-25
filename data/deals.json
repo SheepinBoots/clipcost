@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-10-23",
+ "updated": "2026-10-25",
  "watch": [
   {
    "id": "hf_plans",
@@ -716,6 +716,37 @@
    "math": "none",
    "show_on_rows": false,
    "notes": "The post gives no end date. Kling 4 is not in the price catalog, so the 25% is not turned into a $/s."
+  },
+  {
+   "id": "runway-api-kling4-20",
+   "vendor": "Runway API",
+   "type": "api_promo",
+   "title": "Runway API: Kling 4 20% off through Nov 30",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 20,
+   "bonus_credits": null,
+   "start": "2026-10-23",
+   "end": "2026-11-30",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://x.com/RunwayMLDevs/status/2113711678399668463",
+   "source_kind": "x_post",
+   "source_quote": "Build with Kling 4.0 on Runway Dev. ... Get 20% off Kling 4 through November 30.",
+   "verified_date": "2026-10-25",
+   "link_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "math": "none",
+   "show_on_rows": false,
+   "notes": "The 20% discount is from the official Runway Dev post. The pricing page at docs.dev.runwayml.com/guides/pricing/ does not list a Kling 4 rate or this discount yet. Kling 4 is not in the price catalog, so the 20% is not turned into a $/s."
   },
   {
    "id": "fal-minimax-35",
