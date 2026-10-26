@@ -21,7 +21,7 @@ SOURCES = {
  "runway":     {"name":"Runway API pricing","url":"https://docs.dev.runwayml.com/guides/pricing/","fetch":"static"},
  "kling_api":  {"name":"Kling official API pricing","url":"https://kling.ai/document-api/pricing/base/video.md","fetch":"static"},
  "gemini":     {"name":"Google Gemini API pricing","url":"https://ai.google.dev/gemini-api/docs/pricing","fetch":"static"},
- "atlas":      {"name":"Atlas Cloud pricing","url":"https://www.atlascloud.ai/pricing","fetch":"static"},
+ "atlas":      {"name":"Atlas Cloud pricing","url":"https://www.atlascloud.ai/pricing","fetch":"static","next_flight":True},
  "krea":       {"name":"Krea plans","url":"https://www.krea.ai/pricing","fetch":"static"},
  "magnific":   {"name":"Magnific (ex-Freepik) plans","url":"https://www.magnific.com/pricing","fetch":"static"},
  "kling_app":  {"name":"Kling app subscriptions","url":"https://kling.ai/pricing","fetch":"manual",
@@ -132,7 +132,7 @@ A=[("seedance-2-5","Seedance 2.5 T2V","480p",0.1397,"480p Estimated → /s (esti
    ("seedance-2-5","Seedance 2.5 T2V","1080p",0.5914,"1080p Estimated → /s (estimated) ${N}")]
 for m,v,res,usd,nd in A: api(m,v,"Atlas Cloud","atlas",usd,res,nd,status="estimate",note="Atlas labels these '(estimated)': billed on actual video tokens.")
 api("minimax-hailuo","MiniMax H3 Fast T2V","Atlas Cloud","atlas",0.0437,"480P","MiniMax H3 Fast Text-to-Video Video 1 Price Our Price (USD) Start from ${N}/s")
-api("gemini-omni-flash","Gemini Omni 1.1 Flash T2V","Atlas Cloud","atlas",0.099,"720p","Gemini Omni 1.1 Flash Text-to-Video Video 3 Prices Our Price (USD) Start from ${N}/s")
+api("gemini-omni-flash","Gemini Omni 1.1 Flash T2V","Atlas Cloud","atlas",0.099,"720p","Gemini Omni 1.1 Flash Text-to-Video\",\"tags\":[\"video\",\"google\",\"text\",\"text-to-video\",\"text to video\",\"gemini\",\"omni\",\"flash\",\"to\"],\"discount\":\"0.9\",\"billing_category\":\"output_duration\",\"billing_label\":\"Billed by output duration\",\"lowest_price_text\":\"720P as low as ${N} /s")
 
 # ---------- Subscription plans ----------
 PLANS = {

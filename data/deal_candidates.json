@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-25",
+ "generated": "2026-10-26",
  "note": "Unconfirmed. These snippets are not published as deals.",
  "pages": [
   {
@@ -14,7 +14,7 @@
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "status": "fetched",
-   "snippets": 18
+   "snippets": 17
   },
   {
    "id": "magnific",
@@ -28,7 +28,7 @@
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "status": "fetched",
-   "snippets": 4
+   "snippets": 8
   },
   {
    "id": "fal_pricing",
@@ -41,11 +41,155 @@
  "candidates": [
   {
    "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "76d4b5e24da1c620",
+   "snippet": "0 free gens Higgsfield Ads Studio 10 free gens Higgsfield Genjutsu No free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 No unlimited Kling 3.0 No unlimited Nano B",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "ce1476f879dafc45",
+   "snippet": "ee gens Higgsfield Ads Studio 10 free gens Higgsfield Genjutsu 720p 3 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 2K 7-day unlimited Kling 3.0 7-day unlimit",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "b7f0829a8dcaf8fd",
+   "snippet": "0 free gens Higgsfield Genjutsu No free gens Higgsfield Ads Studio 10 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 No unlimited Kling 3.0 No unlimited Nano B",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "c04264ef6aca3d6b",
+   "snippet": "ee gens Higgsfield Genjutsu 720p 3 free gens Higgsfield Ads Studio 10 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 2K 7-day unlimited Kling 3.0 7-day unlimit",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "sha": "0c5882ed7cc97ab9",
    "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator",
-   "seen": "2026-10-25"
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "sha": "d362763910d714ea",
+   "snippet": "Trusted by 1M+ subscribers : creatives, enterprises, agencies, and studios Save 50% off on Premium annual Offer ends October 26. Claim offer Deal ending in Deal ending",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "sha": "b28c2ac501766698",
+   "snippet": "econds Individual Teams monthly Annual Save up to 63% with annual Premium Extra 50% OFF For individuals exploring AI tools and stock content $20 $7 .25 /month Billed a",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "sha": "4bc50582c336cd42",
+   "snippet": "Trusted by 1M+ subscribers : creatives, enterprises, agencies, and studios Save 50% off on Premium annual Offer ends October 26. Claim offer Individual Teams monthly A",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "sha": "e2222c4c8fa0c71d",
+   "snippet": "nnual Save up to 63% with annual Premium Extra 50% OFF For individuals exploring AI tools and stock content $20 $7 .25 /month Billed a",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "a850f7f3046265bb",
+   "snippet": "s generation Up to 3 projects No watermarks 4K upscaling 20GB storage Kling 4.0 25% off 25% off Kling 4.0 generations until November 30. Gen-4.5 Nano Banana Pro and mo",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "1931abb32a06d62e",
+   "snippet": "o 5 projects 1 Brand Kit 1 custom voice clone Top-up credits anytime Runway MCP Unlimited 4K video upscaling 100GB storage Kling 4.0 25% off 25% off Kling 4.0 generation",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "17d88bd5ece50b61",
+   "snippet": "s until November 30. Topaz AI Upscale Unlimited Seedance 2.5 Gen-4.5 Nano Banana Pro and more Best value Max Credits roll over",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "446656bbe9800bc3",
+   "snippet": "lones Runway MCP Studio-grade quality generations: HDR, ProRes, image sequences Unlimited 4K video upscaling 500GB storage Kling 4.0 25% off 25% off Kling 4.0 generation",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "475807739abbd202",
+   "snippet": "s until November 30. Topaz AI Upscale Unlimited Seedance 2.5 Gen-4.5 Nano Banana Pro and more Compare models across plans Month",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "4bca5dbaa3f4f2b1",
+   "snippet": "ly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "bf995456acb12900",
+   "snippet": "/5s 53 videos 192 videos 814 videos Kling 4.01080p 118 credits/5s 89 credits/5s 25% off 25% off Kling 4.0 generations until November 30. 84 videos 303 videos 1,280 vid",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "1549193803222f6e",
+   "snippet": "o 5 projects 1 Brand Kit 1 custom voice clone Top-up credits anytime Runway MCP Unlimited 4K video upscaling 100GB storage Topaz AI Upscale Unlimited Seedance 2.5 Gen-4.",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "1a98c67ec1f8264b",
+   "snippet": "lones Runway MCP Studio-grade quality generations: HDR, ProRes, image sequences Unlimited 4K video upscaling 500GB storage Topaz AI Upscale Unlimited Seedance 2.5 Gen-4.",
+   "seen": "2026-10-26"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "3e4d42bf4ab3169b",
+   "snippet": "Kling 3.0 Nano Banana Pro and more Compare models across plans Monthly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2",
+   "seen": "2026-10-26"
   }
  ]
 }

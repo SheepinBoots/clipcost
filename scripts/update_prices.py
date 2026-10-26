@@ -28,11 +28,31 @@ XNUM = r"\d[\d,]*(?:\s?\.\s?\d+)?\s?[KM]?"
 
 def collapse(t): return re.sub(r"\s+", " ", t)
 
+def next_flight_text(html):
+    """Decode Next.js flight payloads (self.__next_f.push) into searchable text.
+
+    BeautifulSoup's visible text drops these script blocks. Atlas keeps some
+    model prices only in the payload, after the card leaves the server HTML.
+    """
+    parts = []
+    for raw in re.findall(r'self\.__next_f\.push\(\[1,("(?:\\.|[^"\\])*")\]\)', html):
+        try:
+            parts.append(json.loads(raw))
+        except json.JSONDecodeError:
+            continue
+    return collapse(" ".join(parts)) if parts else ""
+
 def fetch(src):
     if src["fetch"] == "static":
         r = requests.get(src["url"], headers={"User-Agent": UA}, timeout=40)
         r.raise_for_status()
-        return collapse(BeautifulSoup(r.text, "html.parser").get_text(" ", strip=True))
+        text = collapse(BeautifulSoup(r.text, "html.parser").get_text(" ", strip=True))
+        # Visible text stays first so existing needles keep the same match.
+        if src.get("next_flight"):
+            extra = next_flight_text(r.text)
+            if extra:
+                text = text + " " + extra
+        return text
     if src["fetch"] == "render":
         out = subprocess.run(["node", os.path.join(ROOT, "scripts", "render.mjs"), src["url"], "5000"],
                              capture_output=True, text=True, timeout=150)

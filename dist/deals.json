@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-25",
+ "updated": "2026-10-26",
  "deals": [
   {
    "id": "mag-premium-annual-50",
@@ -207,6 +207,37 @@
    "source_quote": "75% off for the next three weeks.",
    "verified_date": "2026-10-20",
    "notes": "Official fal post on Oct 19, 2026. Three weeks from that date is about Nov 9, so the end is an estimate. FLUX 3 Max is not in the catalog, so the 75% is not turned into a $/s.",
+   "examples": []
+  },
+  {
+   "id": "runway-api-kling4-20",
+   "vendor": "Runway API",
+   "type": "api_promo",
+   "title": "Runway API: Kling 4 20% off through Nov 30",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 20,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-10-23",
+   "end": "2026-11-30",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://x.com/RunwayMLDevs/status/2113711678399668463",
+   "source_quote": "Build with Kling 4.0 on Runway Dev. ... Get 20% off Kling 4 through November 30.",
+   "verified_date": "2026-10-25",
+   "notes": "The 20% discount is from the official Runway Dev post. The pricing page at docs.dev.runwayml.com/guides/pricing/ does not list a Kling 4 rate or this discount yet. Kling 4 is not in the price catalog, so the 20% is not turned into a $/s.",
    "examples": []
   },
   {
