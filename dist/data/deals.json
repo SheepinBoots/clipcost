@@ -210,6 +210,37 @@
    "examples": []
   },
   {
+   "id": "runway-kling4-25",
+   "vendor": "Runway",
+   "type": "percent_off",
+   "title": "Kling 4 25% off on all Runway plans",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 25,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-10-21",
+   "end": "2026-11-30",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://x.com/runwayml/status/2112925874144030784",
+   "source_quote": "Plus 25% off Kling 4 on all plans.",
+   "verified_date": "2026-10-26",
+   "notes": "The end date comes from runwayml.com/pricing, which says \"25% off Kling 4.0 generations until November 30.\" Kling 4 is not in the price catalog, so the 25% is not turned into a $/s.",
+   "examples": []
+  },
+  {
    "id": "runway-api-kling4-20",
    "vendor": "Runway API",
    "type": "api_promo",
@@ -735,37 +766,6 @@
     "Pro: $35 → $28/mo",
     "Max: $95 → $76/mo"
    ]
-  },
-  {
-   "id": "runway-kling4-25",
-   "vendor": "Runway",
-   "type": "percent_off",
-   "title": "Kling 4 25% off on all Runway plans",
-   "models": [],
-   "plans": [],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 25,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "start": "2026-10-21",
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://x.com/runwayml/status/2112925874144030784",
-   "source_quote": "Plus 25% off Kling 4 on all plans.",
-   "verified_date": "2026-10-21",
-   "notes": "The post gives no end date. Kling 4 is not in the price catalog, so the 25% is not turned into a $/s.",
-   "examples": []
   },
   {
    "id": "runway-kling4-unlimited-3d",

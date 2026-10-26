@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-10-25",
+ "updated": "2026-10-26",
  "watch": [
   {
    "id": "hf_plans",
@@ -705,17 +705,17 @@
    "percent": 25,
    "bonus_credits": null,
    "start": "2026-10-21",
-   "end": null,
+   "end": "2026-11-30",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://x.com/runwayml/status/2112925874144030784",
    "source_kind": "x_post",
    "source_quote": "Plus 25% off Kling 4 on all plans.",
-   "verified_date": "2026-10-21",
+   "verified_date": "2026-10-26",
    "link_url": "https://runwayml.com/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "The post gives no end date. Kling 4 is not in the price catalog, so the 25% is not turned into a $/s."
+   "notes": "The end date comes from runwayml.com/pricing, which says \"25% off Kling 4.0 generations until November 30.\" Kling 4 is not in the price catalog, so the 25% is not turned into a $/s."
   },
   {
    "id": "runway-api-kling4-20",

@@ -101,12 +101,18 @@ def main():
         raise SystemExit("window should still be live on the estimated end date")
     if deals.is_current(window, "2026-10-21"):
         raise SystemExit("window should archive after the end date")
-    for rid in ("runway-kling4-unlimited-3d", "runway-kling4-25"):
-        deal = by_id(live, rid)
-        if deal.get("math") != "none" or deal.get("show_on_rows") is not False or deal.get("end") is not None:
-            raise SystemExit(f"{rid} should not invent a rate or an end date")
-        if any(deals.adjustment(deal, row, plans) for row in db["rows"]):
-            raise SystemExit(f"{rid} matched a catalog row")
+    unlimited = by_id(live, "runway-kling4-unlimited-3d")
+    if unlimited.get("math") != "none" or unlimited.get("show_on_rows") is not False or unlimited.get("end") is not None:
+        raise SystemExit("runway-kling4-unlimited-3d should not invent a rate or an end date")
+    if any(deals.adjustment(unlimited, row, plans) for row in db["rows"]):
+        raise SystemExit("runway-kling4-unlimited-3d matched a catalog row")
+    runway25 = by_id(live, "runway-kling4-25")
+    if runway25.get("math") != "none" or runway25.get("show_on_rows") is not False:
+        raise SystemExit("runway-kling4-25 should not invent a rate")
+    if runway25.get("end") != "2026-11-30" or runway25.get("end_is_estimate"):
+        raise SystemExit("runway-kling4-25 end date should be the pricing-page date 2026-11-30")
+    if any(deals.adjustment(runway25, row, plans) for row in db["rows"]):
+        raise SystemExit("runway-kling4-25 matched a catalog row")
     sample = json.loads(json.dumps(doc))
     sample["deals"] = [dict(by_id(live, "fal-minimax-35"))]
     log = []
