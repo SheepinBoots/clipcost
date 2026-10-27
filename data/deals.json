@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-10-26",
+ "updated": "2026-10-27",
  "watch": [
   {
    "id": "hf_plans",
@@ -39,7 +39,10 @@
    "vendor": "Higgsfield API",
    "type": "api_promo",
    "title": "Wan 3.0 API 60% off until Nov 1",
-   "models": ["wan-3-0", "wan-3-0-prime"],
+   "models": [
+    "wan-3-0",
+    "wan-3-0-prime"
+   ],
    "plans": [],
    "conditions": {
     "new_users_only": false,
@@ -71,7 +74,10 @@
    "vendor": "Higgsfield",
    "type": "unlimited_window",
    "title": "Wan 3.0 unlimited for 7 days",
-   "models": ["wan-3-0", "wan-3-0-prime"],
+   "models": [
+    "wan-3-0",
+    "wan-3-0-prime"
+   ],
    "plans": [],
    "conditions": {
     "new_users_only": false,
@@ -134,7 +140,9 @@
    "type": "plan_sale",
    "title": "Plus annual billing, $59 to $47/mo",
    "models": [],
-   "plans": ["Plus"],
+   "plans": [
+    "Plus"
+   ],
    "full_plan_id": "hf-plus-monthly",
    "deal_plan_id": "hf-plus-annual",
    "conditions": {
@@ -168,7 +176,9 @@
    "type": "plan_sale",
    "title": "Ultra annual billing, $129 to $99/mo",
    "models": [],
-   "plans": ["Ultra"],
+   "plans": [
+    "Ultra"
+   ],
    "full_plan_id": "hf-ultra-monthly",
    "deal_plan_id": "hf-ultra-annual",
    "conditions": {
@@ -202,7 +212,9 @@
    "type": "plan_sale",
    "title": "Starter annual discount listed at 30%",
    "models": [],
-   "plans": ["Starter"],
+   "plans": [
+    "Starter"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": true,
@@ -234,8 +246,13 @@
    "vendor": "Higgsfield",
    "type": "unlimited_window",
    "title": "Kling 3.0 unlimited for 7 days on Plus and Ultra",
-   "models": ["kling-3-0"],
-   "plans": ["Plus", "Ultra"],
+   "models": [
+    "kling-3-0"
+   ],
+   "plans": [
+    "Plus",
+    "Ultra"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": false,
@@ -266,7 +283,9 @@
    "type": "unlimited_window",
    "title": "Nano Banana 2 and Pro unlimited for 7 days on Ultra",
    "models": [],
-   "plans": ["Ultra"],
+   "plans": [
+    "Ultra"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": false,
@@ -297,8 +316,12 @@
    "vendor": "Higgsfield",
    "type": "unlimited_window",
    "title": "Seedance 2.5 unlimited for 30 days on Business",
-   "models": ["seedance-2-5"],
-   "plans": ["Business"],
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [
+    "Business"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": false,
@@ -360,7 +383,10 @@
    "type": "plan_sale",
    "title": "Yearly plans 40% off",
    "models": [],
-   "plans": ["Pro", "Max"],
+   "plans": [
+    "Pro",
+    "Max"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": true,
@@ -406,7 +432,10 @@
    "type": "unlimited_window",
    "title": "Unlimited Krea 3 for 14 days with Pro or Max annual",
    "models": [],
-   "plans": ["Pro", "Max"],
+   "plans": [
+    "Pro",
+    "Max"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": true,
@@ -438,7 +467,9 @@
    "type": "plan_sale",
    "title": "Premium annual extra 50% off, $20 to $7.25/mo, ends Oct 26",
    "models": [],
-   "plans": ["Premium"],
+   "plans": [
+    "Premium"
+   ],
    "full_plan_id": "mag-premium",
    "conditions": {
     "new_users_only": false,
@@ -456,7 +487,7 @@
    "start": null,
    "end": "2026-10-26",
    "end_is_estimate": false,
-   "status": "live",
+   "status": "ended",
    "source_url": "https://www.magnific.com/pricing",
    "source_kind": "pricing_page",
    "source_quote": "Save 50% off on Premium annual. Offer ends October 26.",
@@ -469,9 +500,13 @@
    "id": "mag-annual-25",
    "vendor": "Magnific",
    "type": "plan_sale",
-   "title": "Save up to 63% with annual",
+   "title": "Save 25% with annual",
    "models": [],
-   "plans": ["Premium", "Premium+", "Pro"],
+   "plans": [
+    "Premium",
+    "Premium+",
+    "Pro"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": true,
@@ -489,12 +524,12 @@
    "status": "live",
    "source_url": "https://www.magnific.com/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Save up to 63% with annual.",
-   "verified_date": "2026-10-23",
+   "source_quote": "Save 25% with annual.",
+   "verified_date": "2026-10-27",
    "link_url": "https://www.magnific.com/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Checked 2026-10-23. The page does not say annual billing saves 25%. The annual toggle says \"Save up to 63% with annual.\" Premium+ is still $45 to $33.75/mo and Pro Starter is $110 to $82.50/mo, which are the catalog annual rates, so this line is not applied to $/s. The Premium extra cut is mag-premium-annual-50."
+   "notes": "Checked 2026-10-27. The annual toggle says \"Save 25% with annual.\" Premium+ is $45 to $33.75/mo and Pro Starter is $110 to $82.50/mo, exactly 25% off the struck monthly prices and the stored annual rates. Premium is $20 to $14.50/mo, the catalog annual rate for 240K credits/year. Those rates are already the plan prices, so this line is not an extra discount on $/s. The Oct 26 extra 50% off has ended."
   },
   {
    "id": "mag-kling25-unlimited",
@@ -502,7 +537,10 @@
    "type": "unlimited_window",
    "title": "Kling 2.5 720p unlimited all year",
    "models": [],
-   "plans": ["Premium+", "Pro"],
+   "plans": [
+    "Premium+",
+    "Pro"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": false,
@@ -531,9 +569,16 @@
    "vendor": "Magnific",
    "type": "unlimited_window",
    "title": "Hailuo 2.3 Fast 768p unlimited all year",
-   "models": ["minimax-hailuo"],
-   "variants": ["Hailuo 2.3 Fast"],
-   "plans": ["Premium+", "Pro"],
+   "models": [
+    "minimax-hailuo"
+   ],
+   "variants": [
+    "Hailuo 2.3 Fast"
+   ],
+   "plans": [
+    "Premium+",
+    "Pro"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": false,
@@ -563,7 +608,9 @@
    "type": "plan_sale",
    "title": "Enterprise: 2 months of usage free if you sign by Oct 31",
    "models": [],
-   "plans": ["Enterprise"],
+   "plans": [
+    "Enterprise"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": false,
@@ -595,7 +642,11 @@
    "type": "plan_sale",
    "title": "Annual billing saves 20%",
    "models": [],
-   "plans": ["Standard", "Pro", "Max"],
+   "plans": [
+    "Standard",
+    "Pro",
+    "Max"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": true,
@@ -608,9 +659,24 @@
    "percent": 20,
    "bonus_credits": null,
    "price_pairs": [
-    {"plan": "Standard", "price_before": 15, "price_after": 12, "percent": 20},
-    {"plan": "Pro", "price_before": 35, "price_after": 28, "percent": 20},
-    {"plan": "Max", "price_before": 95, "price_after": 76, "percent": 20}
+    {
+     "plan": "Standard",
+     "price_before": 15,
+     "price_after": 12,
+     "percent": 20
+    },
+    {
+     "plan": "Pro",
+     "price_before": 35,
+     "price_after": 28,
+     "percent": 20
+    },
+    {
+     "plan": "Max",
+     "price_before": 95,
+     "price_after": 76,
+     "percent": 20
+    }
    ],
    "start": null,
    "end": null,
@@ -629,8 +695,13 @@
    "vendor": "Runway",
    "type": "unlimited_window",
    "title": "Unlimited Seedance 2.5 on Pro and Max",
-   "models": ["seedance-2-5"],
-   "plans": ["Pro", "Max"],
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [
+    "Pro",
+    "Max"
+   ],
    "conditions": {
     "new_users_only": false,
     "annual_only": false,
@@ -660,7 +731,10 @@
    "type": "unlimited_window",
    "title": "Kling 4 unlimited for 3 days on new Max or Team plans",
    "models": [],
-   "plans": ["Max", "Team"],
+   "plans": [
+    "Max",
+    "Team"
+   ],
    "conditions": {
     "new_users_only": true,
     "annual_only": false,
@@ -753,7 +827,9 @@
    "vendor": "fal",
    "type": "api_promo",
    "title": "MiniMax H3 35% off until Oct 31",
-   "models": ["minimax-hailuo"],
+   "models": [
+    "minimax-hailuo"
+   ],
    "plans": [],
    "conditions": {
     "new_users_only": false,
@@ -818,7 +894,15 @@
    "title": "Cyber Week, 70% off",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": false, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 70,
    "bonus_credits": null,
    "start": "2025-12-03",
@@ -841,7 +925,15 @@
    "title": "Cyber Weekend final call, 70% off",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": false, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 70,
    "bonus_credits": null,
    "start": "2025-12-08",
@@ -864,7 +956,15 @@
    "title": "Holiday sale finale, 67% off",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": false, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 67,
    "bonus_credits": null,
    "start": "2025-12-10",
@@ -887,7 +987,15 @@
    "title": "Unlimited Wan 2.6 at 67% off",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": false, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 67,
    "bonus_credits": null,
    "start": "2025-12-16",
@@ -910,7 +1018,15 @@
    "title": "80% off, 3 days only",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": false, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 80,
    "bonus_credits": null,
    "start": "2025-12-23",
@@ -933,7 +1049,15 @@
    "title": "85% off for 2 years unlimited",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": false, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 85,
    "bonus_credits": null,
    "start": "2025-12-29",
@@ -956,7 +1080,15 @@
    "title": "Black Friday: 40% off yearly plans",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": true, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": true,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 40,
    "bonus_credits": null,
    "start": "2025-11-28",
@@ -979,7 +1111,15 @@
    "title": "Cyber Monday: 40% off yearly plans",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": true, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": true,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 40,
    "bonus_credits": null,
    "start": "2025-12-01",
@@ -1001,8 +1141,19 @@
    "type": "plan_sale",
    "title": "Christmas: up to 40% off Pro and Max",
    "models": [],
-   "plans": ["Pro", "Max"],
-   "conditions": {"new_users_only": false, "annual_only": false, "first_months": null, "max_resolution": null, "web_only": false, "code": null, "standing": false},
+   "plans": [
+    "Pro",
+    "Max"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
    "percent": 40,
    "bonus_credits": null,
    "start": "2025-12-24",
@@ -1025,7 +1176,15 @@
    "title": "Black Friday: 50% off with code BFMAGNIFIC",
    "models": [],
    "plans": [],
-   "conditions": {"new_users_only": false, "annual_only": false, "first_months": null, "max_resolution": null, "web_only": false, "code": "BFMAGNIFIC", "standing": false},
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": "BFMAGNIFIC",
+    "standing": false
+   },
    "percent": 50,
    "bonus_credits": null,
    "start": "2025-11-24",

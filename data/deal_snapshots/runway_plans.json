@@ -1,8 +1,12 @@
 {
  "id": "runway_plans",
  "url": "https://runwayml.com/pricing",
- "saved": "2026-10-26",
+ "saved": "2026-10-27",
  "snippets": [
+  {
+   "sha": "e06947adfb829873",
+   "text": "eators and leading enterprises Individual Team & Enterprise API Monthly Yearly -20% off Free Free forever. For people looking to explore Runway's AI Tools $0 /month 12"
+  },
   {
    "sha": "a850f7f3046265bb",
    "text": "s generation Up to 3 projects No watermarks 4K upscaling 20GB storage Kling 4.0 25% off 25% off Kling 4.0 generations until November 30. Gen-4.5 Nano Banana Pro and mo"
@@ -22,6 +26,10 @@
   {
    "sha": "475807739abbd202",
    "text": "s until November 30. Topaz AI Upscale Unlimited Seedance 2.5 Gen-4.5 Nano Banana Pro and more Compare models across plans Month"
+  },
+  {
+   "sha": "4bca5dbaa3f4f2b1",
+   "text": "ly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2"
   },
   {
    "sha": "bf995456acb12900",

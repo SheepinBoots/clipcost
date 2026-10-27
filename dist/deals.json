@@ -1,41 +1,6 @@
 {
- "updated": "2026-10-26",
+ "updated": "2026-10-27",
  "deals": [
-  {
-   "id": "mag-premium-annual-50",
-   "vendor": "Magnific",
-   "type": "plan_sale",
-   "title": "Premium annual extra 50% off, $20 to $7.25/mo, ends Oct 26",
-   "models": [],
-   "plans": [
-    "Premium"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": true,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 50,
-   "bonus_credits": null,
-   "price_before": 20,
-   "price_after": 7.25,
-   "price_pairs": null,
-   "start": null,
-   "end": "2026-10-26",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://www.magnific.com/pricing",
-   "source_quote": "Save 50% off on Premium annual. Offer ends October 26.",
-   "verified_date": "2026-10-23",
-   "notes": "Catalog Premium annual is $14.50/mo for the same 240K credits/year. The pricing page checkout for that yearly plan is $7.25/mo (50% off the $174/year price), shown as $20 struck and $7.25/mo billed annually. $/s uses $7.25 divided by those credits. The end date is the one printed on the page, so the daily check archives this after Oct 26.",
-   "examples": [
-    "Premium: $20 → $7.25/mo · MiniMax Hailuo / H3 768p $0.0145/s vs $0.04/s"
-   ]
-  },
   {
    "id": "hf-genjutsu-api-50",
    "vendor": "Higgsfield API",
@@ -678,7 +643,7 @@
    "id": "mag-annual-25",
    "vendor": "Magnific",
    "type": "plan_sale",
-   "title": "Save up to 63% with annual",
+   "title": "Save 25% with annual",
    "models": [],
    "plans": [
     "Premium",
@@ -704,9 +669,9 @@
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://www.magnific.com/pricing",
-   "source_quote": "Save up to 63% with annual.",
-   "verified_date": "2026-10-23",
-   "notes": "Checked 2026-10-23. The page does not say annual billing saves 25%. The annual toggle says \"Save up to 63% with annual.\" Premium+ is still $45 to $33.75/mo and Pro Starter is $110 to $82.50/mo, which are the catalog annual rates, so this line is not applied to $/s. The Premium extra cut is mag-premium-annual-50.",
+   "source_quote": "Save 25% with annual.",
+   "verified_date": "2026-10-27",
+   "notes": "Checked 2026-10-27. The annual toggle says \"Save 25% with annual.\" Premium+ is $45 to $33.75/mo and Pro Starter is $110 to $82.50/mo, exactly 25% off the struck monthly prices and the stored annual rates. Premium is $20 to $14.50/mo, the catalog annual rate for 240K credits/year. Those rates are already the plan prices, so this line is not an extra discount on $/s. The Oct 26 extra 50% off has ended.",
    "examples": []
   },
   {
@@ -840,6 +805,39 @@
   }
  ],
  "archive": [
+  {
+   "id": "mag-premium-annual-50",
+   "vendor": "Magnific",
+   "type": "plan_sale",
+   "title": "Premium annual extra 50% off, $20 to $7.25/mo, ends Oct 26",
+   "models": [],
+   "plans": [
+    "Premium"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": true,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 50,
+   "bonus_credits": null,
+   "price_before": 20,
+   "price_after": 7.25,
+   "price_pairs": null,
+   "start": null,
+   "end": "2026-10-26",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://www.magnific.com/pricing",
+   "source_quote": "Save 50% off on Premium annual. Offer ends October 26.",
+   "verified_date": "2026-10-23",
+   "notes": "Catalog Premium annual is $14.50/mo for the same 240K credits/year. The pricing page checkout for that yearly plan is $7.25/mo (50% off the $174/year price), shown as $20 struck and $7.25/mo billed annually. $/s uses $7.25 divided by those credits. The end date is the one printed on the page, so the daily check archives this after Oct 26.",
+   "examples": []
+  },
   {
    "id": "hf-wan3-unlimited-7d",
    "vendor": "Higgsfield",

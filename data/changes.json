@@ -35,5 +35,21 @@
   "platform": "Replicate",
   "text": "Replicate's pricing page banner says 'Wan 3.0 is 30% off this week'; the model page still lists $0.05-$0.20/s, so ClipCost shows list prices.",
   "source_url": "https://replicate.com/pricing"
+ },
+ {
+  "date": "2026-10-27",
+  "type": "deal_ended",
+  "deal": "mag-premium-annual-50",
+  "vendor": "Magnific",
+  "source_url": "https://www.magnific.com/pricing",
+  "text": "Premium annual extra 50% off, $20 to $7.25/mo, ends Oct 26 ended 2026-10-26."
+ },
+ {
+  "date": "2026-10-27",
+  "type": "notice",
+  "platform": "Magnific",
+  "variant": "Premium (annual)",
+  "source_url": "https://www.magnific.com/pricing",
+  "text": "Magnific Premium annual on the pricing page is $20 struck and $14.50/mo (240K credits/year). The extra 50% off at $7.25/mo ended October 26. List $/s was already calculated from the $14.50 catalog rate."
  }
 ]
