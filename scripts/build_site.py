@@ -438,6 +438,7 @@ home_ld = {
             "name": BRAND,
             "url": SITE_URL + "/",
             "logo": LOGO_URL,
+            "founder": {"@type": "Person", "name": "Emmanuel Gonzalez"},
         },
         {
             "@type": "WebSite",
@@ -724,9 +725,16 @@ page("/newsletter/", f"{BRAND} Weekly: AI video price drops & new models", "One 
 # ---------- About ----------
 srcl = "".join(f'<li><a href="{e(outbound(s["url"])[0])}" rel="{outbound(s["url"])[1]}" target="_blank">{e(s["name"])}</a>{" (checked by hand)" if s["fetch"]=="manual" else ""}</li>' for s in sources.values())
 unv = "".join(f'<li>{e(u["item"])}: <span class="small">{e(u["reason"])}</span></li>' for u in db["unverified"])
+about_ld = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "url": SITE_URL + "/about/",
+    "author": {"@type": "Person", "name": "Emmanuel Gonzalez"},
+}
 page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRAND} collects and normalizes AI video prices, and how the site is funded.",
      f"""<h1>About {BRAND}</h1>
 <p class="lead">{BRAND} tracks what AI video generation actually costs, per second of finished video, across every place you can run a model. {e(TAGLINE)}</p>
+<p>Made by Emmanuel Gonzalez.</p>
 <h2>How the numbers work</h2>
 <ul><li>Every price comes from the vendor's own pricing or model page, saved with a source link and the date we checked it.</li>
 <li><b>APIs</b>: we use the vendor's stated $ per second. Runway credits are $0.01 each.</li>
@@ -739,7 +747,7 @@ page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRA
 <h2>Not included yet (unconfirmed)</h2><ul class="small">{unv}</ul>
 <h2 id="disclosure">Affiliate disclosure</h2>
 <div class="disclose">Some links on {BRAND} are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price.</div>
-<p class="small">Contact: TODO-add-contact-email</p>""", "/about/")
+<p class="small">Contact: TODO-add-contact-email</p>""", "/about/", ld_script(about_ld))
 
 # ---------- Deals ----------
 def deal_sort(deal):
