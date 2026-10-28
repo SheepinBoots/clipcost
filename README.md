@@ -38,3 +38,7 @@ Open a [GitHub issue](https://github.com/SheepinBoots/clipcost/issues/new).
 ## Build
 
 `python3 scripts/build_site.py` writes the static site into `dist/`.
+
+## License
+
+MIT (see LICENSE)
