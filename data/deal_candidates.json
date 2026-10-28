@@ -38,46 +38,5 @@
    "snippets": 0
   }
  ],
- "candidates": [
-  {
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "b7f0829a8dcaf8fd",
-   "snippet": "0 free gens Higgsfield Genjutsu No free gens Higgsfield Ads Studio 10 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 No unlimited Kling 3.0 No unlimited Nano B",
-   "seen": "2026-10-28"
-  },
-  {
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "c04264ef6aca3d6b",
-   "snippet": "ee gens Higgsfield Genjutsu 720p 3 free gens Higgsfield Ads Studio 10 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 2K 7-day unlimited Kling 3.0 7-day unlimit",
-   "seen": "2026-10-28"
-  },
-  {
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "76d4b5e24da1c620",
-   "snippet": "0 free gens Higgsfield Ads Studio 10 free gens Higgsfield Genjutsu No free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 No unlimited Kling 3.0 No unlimited Nano B",
-   "seen": "2026-10-28"
-  },
-  {
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "ce1476f879dafc45",
-   "snippet": "ee gens Higgsfield Ads Studio 10 free gens Higgsfield Genjutsu 720p 3 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 2K 7-day unlimited Kling 3.0 7-day unlimit",
-   "seen": "2026-10-28"
-  },
-  {
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "sha": "0c5882ed7cc97ab9",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator",
-   "seen": "2026-10-28"
-  }
- ]
+ "candidates": []
 }

@@ -1,9 +1,9 @@
 {
- "run": "2026-10-28T15:13:05",
+ "run": "2026-10-28T20:21:40",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 16118
+   "chars": 15555
   },
   "hf_api": {
    "status": "fetched",
@@ -43,7 +43,7 @@
   },
   "runway": {
    "status": "fetched",
-   "chars": 18444
+   "chars": 18482
   },
   "kling_api": {
    "status": "fetched",
@@ -59,7 +59,7 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 42730
+   "chars": 32259
   },
   "magnific": {
    "status": "fetched",
@@ -83,43 +83,7 @@
    "chars": 3489
   }
  },
- "findings": [
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "0 free gens Higgsfield Genjutsu No free gens Higgsfield Ads Studio 10 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 No unlimited Kling 3.0 No unlimited Nano B"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ee gens Higgsfield Genjutsu 720p 3 free gens Higgsfield Ads Studio 10 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 2K 7-day unlimited Kling 3.0 7-day unlimit"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "0 free gens Higgsfield Ads Studio 10 free gens Higgsfield Genjutsu No free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 No unlimited Kling 3.0 No unlimited Nano B"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ee gens Higgsfield Ads Studio 10 free gens Higgsfield Genjutsu 720p 3 free gens UNLIMITED & FREE GENS Learn more Nano Banana 2 2K 7-day unlimited Kling 3.0 7-day unlimit"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
-  }
- ],
+ "findings": [],
  "deal_scan": {
   "pages": [
    {
@@ -158,7 +122,7 @@
     "snippets": 0
    }
   ],
-  "candidates": 5
+  "candidates": 0
  },
  "counts": {
   "ok": 203,
