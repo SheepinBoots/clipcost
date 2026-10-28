@@ -1,0 +1,20 @@
+{
+ "home": {
+  "name": "",
+  "url": "",
+  "tagline": "",
+  "active": false
+ },
+ "deals": {
+  "name": "",
+  "url": "",
+  "tagline": "",
+  "active": false
+ },
+ "model:default": {
+  "name": "",
+  "url": "",
+  "tagline": "",
+  "active": false
+ }
+}

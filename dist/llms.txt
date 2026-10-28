@@ -92,3 +92,5 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 
 - [prices.json](https://sheepinboots.github.io/clipcost/data/prices.json): the price catalog this page is built from.
 - [deals.json](https://sheepinboots.github.io/clipcost/deals.json): the live and archived deals.
+
+Advertise: https://sheepinboots.github.io/clipcost/advertise/ — labelled sponsor placements. They never change the price order.

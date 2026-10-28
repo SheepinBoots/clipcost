@@ -48,6 +48,16 @@ code{font-size:.92em}
 .news form{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.news input{flex:1;min-width:220px}
 footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0;color:var(--mut);font-size:14px}
 .disclose{font-size:13px;color:var(--mut);border-left:3px solid var(--warn);padding:6px 10px;margin:14px 0;background:#15130e}
+.sponsor{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;max-width:720px;margin:0 0 18px;padding:7px 12px;border:1px solid var(--line);border-left:2px solid #234a3a;border-radius:10px;background:#10141c;color:var(--mut);font-size:13.5px;line-height:1.45}
+.sponsor.is-open{border-style:dashed}
+.sponsor-featured{max-width:none;margin:16px 0 22px}
+.sponsor-label{flex:none;font-size:11px;font-weight:700;letter-spacing:.02em;color:var(--acc);border:1px solid #234a3a;border-radius:99px;padding:0 6px}
+.sponsor-kicker{flex:none;font-size:13px;font-weight:650;color:var(--txt)}
+.sponsor a{color:var(--txt);text-decoration:none}
+.sponsor a:hover{color:var(--acc)}
+.sponsor a.sponsor-open{color:var(--mut);font-weight:500}
+.sponsor a.sponsor-open:hover{color:var(--acc)}
+.sponsor-line{color:var(--mut)}
 .log li{margin:0 0 12px}.pill{font-size:12px;background:#1b2130;border-radius:6px;padding:1px 6px;color:var(--mut)}
 .calc{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:18px}@media(max-width:800px){.calc{grid-template-columns:1fr}}
 .kpi{font-size:22px;font-weight:800;color:var(--acc)}

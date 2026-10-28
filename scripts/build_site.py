@@ -4,7 +4,7 @@ import json, os, shutil, html, datetime, sys, email.utils
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
 from decimal import Decimal, ROUND_HALF_UP
-from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode
+from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
 SITE_URL = "https://sheepinboots.github.io/clipcost"
@@ -27,6 +27,7 @@ def root(path):
     return BASE + path
 db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 changes = json.load(open(os.path.join(ROOT, "data", "changes.json")))
+sponsors = json.load(open(os.path.join(ROOT, "data", "sponsors.json")))
 models, plans, sources = db["models"], db["plans"], db["sources"]
 today = datetime.date.today()
 TODAY = today.isoformat()
@@ -87,6 +88,41 @@ def plat_link(p, url):
     if p in AFF: return f'<a href="{AFF[p]}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">{html.escape(p)}</a>'
     return f'<a href="{html.escape(url)}" rel="nofollow noopener" target="_blank">{html.escape(p)}</a>'
 e = html.escape
+HOUSE_LINE = "Your tool here: sponsor this spot"
+SPONSOR_REL = "sponsored nofollow noopener"
+
+def sponsor_record(slot_id):
+    """home, deals, or model:<slug>. A missing model slot uses model:default."""
+    rec = sponsors.get(slot_id)
+    if rec is None and slot_id.startswith("model:"):
+        rec = sponsors.get("model:default")
+    return rec or {}
+
+def sponsor_filled(rec):
+    return bool(rec.get("active") and (rec.get("name") or "").strip() and (rec.get("url") or "").strip())
+
+def render_sponsor(slot_id, rec, featured=False):
+    cls = "sponsor"
+    if featured:
+        cls += " sponsor-featured"
+    if not sponsor_filled(rec):
+        cls += " is-open"
+    bits = ['<span class="sponsor-label">Sponsor</span>']
+    if featured:
+        bits.append('<span class="sponsor-kicker">Featured</span>')
+    if sponsor_filled(rec):
+        bits.append(
+            f'<a href="{e(rec["url"].strip())}" rel="{SPONSOR_REL}" target="_blank">{e(rec["name"].strip())}</a>'
+        )
+        tagline = (rec.get("tagline") or "").strip()
+        if tagline:
+            bits.append(f'<span class="sponsor-line">{e(tagline)}</span>')
+    else:
+        bits.append(f'<a class="sponsor-open" href="{root("/advertise/")}">{HOUSE_LINE}</a>')
+    return f'<aside class="{cls}" data-sponsor="{e(slot_id)}">{"".join(bits)}</aside>'
+
+def sponsor_slot(slot_id, featured=False):
+    return render_sponsor(slot_id, sponsor_record(slot_id), featured)
 def money(v):
     """Shared with the page scripts: up to 5 decimals, half up, trailing zeros trimmed to 2."""
     n = int((Decimal(str(v)) * Decimal(100000)).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
@@ -122,7 +158,7 @@ def page(path, title, desc, body, active="", extra_head=""):
 <main class="wrap">{body}</main>
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="{root("/about/#disclosure")}">disclosure</a>).</p>
-<p>© {today.year} {BRAND} · Data last checked {LAST}</p></div></footer>
+<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/advertise/")}">Advertise</a></p></div></footer>
 <script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </body></html>"""
@@ -368,6 +404,7 @@ def ending_strip():
 home = f"""<h1>AI video cost per second, compared</h1>
 <p class="tagline">{e(TAGLINE)}</p>
 <p class="lead">{len(rows)} prices for {len(models)} video models on {len(platforms)} platforms, from Higgsfield plans to the fal, Runway and Kling APIs. Everything is converted to <b>dollars per second of video</b>, and the math is shown for credit plans. Checked {LAST}.</p>
+{sponsor_slot("home")}
 {ending_strip()}
 <h2>Cheapest way to run each model today</h2><div class="cards">{cards}</div>
 <p class="small">The lowest $/s for each model at any resolution, including temporary promos (labelled). Low-res tiers are usually the cheapest, so check the resolution.</p>
@@ -586,6 +623,7 @@ for slug, m in models.items():
 <div class="cards"><div class="card"><h3>Cheapest today</h3><div class="big">{money(c['usd_per_second'])}<span class="small">/s</span></div><div class="sub">{e(c['platform'])} · {e(c['resolution'])} {tag(c['status'])}</div><div class="sub">≈ {clip5} for a 5s clip</div>{deal_price_line(rs)}</div>
 <div class="card"><h3>Cheapest by resolution</h3><ul class="small" style="padding-left:18px;margin:6px 0">{resl}</ul></div></div>
 {summary}
+{sponsor_slot("model:" + slug)}
 {deals_html}
 <h2>All {e(m['name'])} prices</h2>
 <div class="tblwrap"><table>{THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=')}<tbody>{"".join(row_html(r) for r in rs)}</tbody></table></div>
@@ -746,7 +784,7 @@ page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRA
 <h2>Sources we check</h2><ul class="small">{srcl}</ul>
 <h2>Not included yet (unconfirmed)</h2><ul class="small">{unv}</ul>
 <h2 id="disclosure">Affiliate disclosure</h2>
-<div class="disclose">Some links on {BRAND} are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price.</div>
+<div class="disclose">Some links on {BRAND} are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price. Sponsored placements are labelled "Sponsor" and never affect the price order.</div>
 <p class="small">Contact: TODO-add-contact-email</p>""", "/about/", ld_script(about_ld))
 
 # ---------- Deals ----------
@@ -761,6 +799,7 @@ archive_sorted = sorted(ARCHIVED, key=lambda d: d.get("end") or "", reverse=True
 archive_html = "".join(deal_card(d, archive=True) for d in archive_sorted) or "<p class='small'>No tracked deal has expired yet. Older holiday sales are on the Black Friday page, labeled 2025.</p>"
 deals_body = f"""<h1>AI video deals</h1>
 <p class="lead">Offers copied from vendor pricing pages and official accounts. Countdowns use your clock, so they stay right between daily builds. A deal with no end date is not given a guessed one.</p>
+{sponsor_slot("deals", featured=True)}
 <div class="disclose"><b>Disclosure.</b> Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you sign up through them, {BRAND} may earn a commission, at no extra cost to you. Links to Krea, Magnific, Runway, fal, and other vendors are the official URLs, with no affiliate tag. Deals are listed only when the vendor's own page or official account is the source. Order is the end date, not who pays us. See the <a href="{root("/about/#disclosure")}">full disclosure</a>.</div>
 <div class="filters">
 <select id="dVendor" aria-label="Vendor"><option value="">All vendors</option>{"".join(f'<option value="{e(v)}">{e(v)}</option>' for v in vendors)}</select>
@@ -904,6 +943,42 @@ def write_feeds():
 
 write_feeds()
 
+# ---------- Advertise ----------
+AD_MAIL = "mailto:emmanueldevgonzalez@gmail.com?subject=" + quote("VidFare sponsorship")
+ad_desc = (
+    "Sponsor a labelled spot on VidFare, where people compare where to generate AI video. "
+    "Home banner, model page box, and the deals featured spot. Rates on request."
+)
+ad_body = f"""<h1>Advertise on VidFare</h1>
+<p class="lead">Labelled placements next to the price comparison. They stay out of the price tables and the deals list.</p>
+<h2>Who visits</h2>
+<p>People comparing where to generate AI video: which model, which platform, and what a second of finished video costs.</p>
+<h2>Available spots</h2>
+<ul>
+<li><b>Home banner.</b> Under the intro on the homepage, above the price table.</li>
+<li><b>Model page box.</b> On each model page, after the cheapest-today summary and before the price table.</li>
+<li><b>Deals featured spot.</b> At the top of the deals page, separate from the real deals.</li>
+<li><b>Newsletter sponsor line.</b> Coming soon.</li>
+</ul>
+<h2>Rules</h2>
+<ul>
+<li>Placements are clearly labelled "Sponsor".</li>
+<li>A placement never changes the price order or the rankings.</li>
+<li>Relevant AI video and creator tools only.</li>
+<li>VidFare may decline a placement.</li>
+</ul>
+<p>Rates on request. Email <a href="{e(AD_MAIL)}">emmanueldevgonzalez@gmail.com</a>.</p>"""
+ad_ld = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Advertise on VidFare",
+    "description": ad_desc,
+    "url": SITE_URL + "/advertise/",
+    "isPartOf": {"@type": "WebSite", "name": BRAND, "url": SITE_URL + "/"},
+    "publisher": {"@id": ORG_ID},
+}
+page("/advertise/", f"Advertise on VidFare | {BRAND}", ad_desc, ad_body, "", ld_script(ad_ld))
+
 # ---------- 404, robots, sitemap ----------
 page("/404.html", f"Page not found | {BRAND}", "Page not found.", f'<h1>Page not found</h1><p><a href="{root("/")}">Back to the price table</a></p>')
 
@@ -952,12 +1027,247 @@ def write_llms():
         f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog this page is built from.",
         f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals.",
         "",
+        f"Advertise: {SITE_URL}/advertise/ — labelled sponsor placements. They never change the price order.",
+        "",
     ]
     open(os.path.join(DIST, "llms.txt"), "w").write("\n".join(lines))
 
 write_llms()
 open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: {root('/')}\nSitemap: {SITE_URL}/sitemap.xml\n")
-urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/changes/", "/newsletter/", "/about/"] + [f"/models/{s}/" for s in models]
+urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/changes/", "/newsletter/", "/about/", "/advertise/"] + [f"/models/{s}/" for s in models]
 open(os.path.join(DIST, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     "".join(f"  <url><loc>{SITE_URL}{u}</loc><lastmod>{LAST}</lastmod></url>\n" for u in urls) + "</urlset>\n")
+def check_sponsor_renderer():
+    live = render_sponsor(
+        "home",
+        {"name": "Example Tool", "url": "https://example.com/tool", "tagline": "A short line", "active": True},
+    )
+    if f'rel="{SPONSOR_REL}"' not in live or "Example Tool" not in live or "A short line" not in live:
+        raise SystemExit("active sponsor markup missing rel, name, or tagline")
+    if ">Sponsor<" not in live and "Sponsor</span>" not in live:
+        raise SystemExit("active sponsor markup is not labelled Sponsor")
+    if "<table" in live or "dealgrid" in live or "data-deal-card" in live:
+        raise SystemExit("sponsor markup must not be a table or a deal card")
+    empty = render_sponsor("deals", {"name": "", "url": "", "tagline": "", "active": False}, featured=True)
+    if HOUSE_LINE not in empty or f'href="{root("/advertise/")}"' not in empty or "Featured" not in empty:
+        raise SystemExit("empty sponsor slot should link to the advertise page")
+    if "sponsored" in empty:
+        raise SystemExit("the house placeholder is not an outbound sponsor link")
+    blank = render_sponsor("home", {"name": " ", "url": "https://example.com", "tagline": "", "active": True})
+    if HOUSE_LINE not in blank:
+        raise SystemExit("an active slot with an empty name is treated as empty")
+    if sponsor_record("model:not-a-real-model") is not sponsors.get("model:default"):
+        raise SystemExit("model pages should fall back to model:default")
+
+def audit_site():
+    """Fail the build if a page breaks the HTML or sponsor rules."""
+    from html.parser import HTMLParser
+
+    check_sponsor_renderer()
+    errors = []
+    required = ("name", "url", "tagline", "active")
+    if not isinstance(sponsors, dict) or not sponsors:
+        errors.append("data/sponsors.json must be a non-empty object of slots")
+    for slot_id, rec in sponsors.items():
+        if slot_id not in ("home", "deals") and not str(slot_id).startswith("model:"):
+            errors.append(f"unknown sponsor slot id {slot_id}")
+            continue
+        if not isinstance(rec, dict) or any(key not in rec for key in required):
+            errors.append(f"sponsor slot {slot_id} needs name, url, tagline, and active")
+            continue
+        if not isinstance(rec.get("active"), bool):
+            errors.append(f"sponsor slot {slot_id} active must be true or false")
+
+    class PageAudit(HTMLParser):
+        void = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.stack = []
+            self.h1 = 0
+            self.title_parts = []
+            self.in_title = False
+            self.desc = None
+            self.robots = None
+            self.canonical = None
+            self.bad_sponsor = []
+            self.sponsor_ids = []
+            self.sponsor_chunks = []
+            self.sponsor_links = []
+            self.in_sponsor = False
+            self.jsonld = []
+            self.in_jsonld = False
+            self.jsonld_buf = []
+            self.in_footer = False
+            self.footer_advertise = False
+            self._link = None
+
+        def handle_starttag(self, tag, attrs):
+            ad = {k: ("" if v is None else v) for k, v in attrs}
+            if tag == "h1":
+                self.h1 += 1
+            if tag == "title":
+                self.in_title = True
+            if tag == "footer":
+                self.in_footer = True
+            if tag == "meta" and ad.get("name", "").lower() == "description":
+                self.desc = ad.get("content", "")
+            if tag == "meta" and ad.get("name", "").lower() == "robots":
+                self.robots = ad.get("content", "")
+            if tag == "link" and ad.get("rel", "").lower() == "canonical":
+                self.canonical = ad.get("href", "")
+            if tag == "script" and ad.get("type", "").lower() == "application/ld+json":
+                self.in_jsonld = True
+                self.jsonld_buf = []
+            href = ad.get("href", "")
+            if tag == "a" and self.in_footer and href.rstrip("/").endswith("/advertise"):
+                self.footer_advertise = True
+            classes = ad.get("class", "").split()
+            if tag == "aside" and "sponsor" in classes:
+                for parent, pattrs in self.stack:
+                    pclass = pattrs.get("class", "").split()
+                    if (
+                        parent in ("table", "tbody", "thead")
+                        or "dealgrid" in pclass
+                        or "data-deal-card" in pattrs
+                        or pattrs.get("id") in ("liveDeals", "archive", "prices", "retired")
+                    ):
+                        self.bad_sponsor.append(ad.get("data-sponsor", "sponsor"))
+                self.in_sponsor = True
+                self.sponsor_ids.append(ad.get("data-sponsor", ""))
+                self.sponsor_chunks.append([])
+                self.sponsor_links.append([])
+            if tag == "a" and self.in_sponsor:
+                self._link = {"href": href, "rel": ad.get("rel", ""), "text": []}
+            if tag not in self.void:
+                self.stack.append((tag, ad))
+
+        def handle_endtag(self, tag):
+            if tag == "title":
+                self.in_title = False
+            if tag == "footer":
+                self.in_footer = False
+            if tag == "script" and self.in_jsonld:
+                self.in_jsonld = False
+                self.jsonld.append("".join(self.jsonld_buf))
+            if tag == "a" and self._link is not None:
+                self.sponsor_links[-1].append(self._link)
+                self._link = None
+            if tag == "aside" and self.in_sponsor:
+                self.in_sponsor = False
+            if tag in self.void:
+                return
+            for i in range(len(self.stack) - 1, -1, -1):
+                if self.stack[i][0] == tag:
+                    del self.stack[i:]
+                    break
+
+        def handle_data(self, data):
+            if self.in_title:
+                self.title_parts.append(data)
+            if self.in_jsonld:
+                self.jsonld_buf.append(data)
+            if self.in_sponsor and self.sponsor_chunks:
+                self.sponsor_chunks[-1].append(data)
+            if self._link is not None:
+                self._link["text"].append(data)
+
+    def expected_slots(rel):
+        if rel == "index.html":
+            return ["home"]
+        if rel == "deals/index.html":
+            return ["deals"]
+        prefix = "models/"
+        if rel.startswith(prefix) and rel.endswith("/index.html"):
+            slug = rel[len(prefix):].split("/", 1)[0]
+            return ["model:" + slug]
+        return []
+
+    for dirpath, _, filenames in os.walk(DIST):
+        for name in filenames:
+            if not name.endswith(".html"):
+                continue
+            path = os.path.join(dirpath, name)
+            raw = open(path, encoding="utf-8").read()
+            if "<html" not in raw.lower():
+                continue
+            rel = os.path.relpath(path, DIST).replace(os.sep, "/")
+            low = raw.lower()
+            if "noindex" in low or "nosnippet" in low:
+                errors.append(f"{rel} contains noindex or nosnippet")
+            parser = PageAudit()
+            parser.feed(raw)
+            if parser.h1 != 1:
+                errors.append(f"{rel} has {parser.h1} h1 elements")
+            if not "".join(parser.title_parts).strip():
+                errors.append(f"{rel} is missing a title")
+            if not parser.desc:
+                errors.append(f"{rel} is missing a meta description")
+            if not parser.canonical or not parser.canonical.startswith(SITE_URL):
+                errors.append(f"{rel} is missing a canonical")
+            if parser.robots != "index,follow":
+                errors.append(f"{rel} robots must be index,follow")
+            if not parser.footer_advertise:
+                errors.append(f"{rel} footer is missing Advertise")
+            if parser.bad_sponsor:
+                errors.append(f"{rel} has a sponsor inside a table or deals list: {parser.bad_sponsor}")
+            want = expected_slots(rel)
+            if parser.sponsor_ids != want:
+                errors.append(f"{rel} sponsor slots {parser.sponsor_ids} != {want}")
+            for slot_id, chunks, links in zip(parser.sponsor_ids, parser.sponsor_chunks, parser.sponsor_links):
+                text = "".join(chunks)
+                if "Sponsor" not in text:
+                    errors.append(f"{rel} slot {slot_id} is not labelled Sponsor")
+                if slot_id == "deals" and "Featured" not in text:
+                    errors.append(f"{rel} deals slot is missing Featured")
+                if not links:
+                    errors.append(f"{rel} slot {slot_id} has no link")
+                for link in links:
+                    href = link["href"]
+                    ltext = "".join(link["text"]).strip()
+                    if href.rstrip("/").endswith("/advertise"):
+                        if ltext != HOUSE_LINE:
+                            errors.append(f"{rel} slot {slot_id} placeholder text is {ltext!r}")
+                        if href != root("/advertise/"):
+                            errors.append(f"{rel} slot {slot_id} placeholder href is {href}")
+                        if "sponsored" in link["rel"]:
+                            errors.append(f"{rel} slot {slot_id} placeholder must not be rel=sponsored")
+                    else:
+                        if link["rel"] != SPONSOR_REL:
+                            errors.append(f"{rel} slot {slot_id} sponsor link rel is {link['rel']!r}")
+                        if not ltext:
+                            errors.append(f"{rel} slot {slot_id} sponsor link has no name")
+
+    ad_path = os.path.join(DIST, "advertise", "index.html")
+    if not os.path.isfile(ad_path):
+        errors.append("advertise page was not built")
+    else:
+        ad = open(ad_path, encoding="utf-8").read()
+        if "<h1>Advertise on VidFare</h1>" not in ad:
+            errors.append("advertise page h1")
+        if AD_MAIL not in ad or "emmanueldevgonzalez@gmail.com" not in ad:
+            errors.append("advertise page mailto")
+        if "Rates on request." not in ad:
+            errors.append("advertise page rates line")
+        if '"@type": "WebPage"' not in ad:
+            errors.append("advertise page JSON-LD WebPage")
+        if f'<link rel="canonical" href="{SITE_URL}/advertise/">' not in ad:
+            errors.append("advertise page canonical")
+    sitemap = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
+    if f"<loc>{SITE_URL}/advertise/</loc>" not in sitemap:
+        errors.append("sitemap is missing /advertise/")
+    llms = open(os.path.join(DIST, "llms.txt"), encoding="utf-8").read()
+    if f"{SITE_URL}/advertise/" not in llms:
+        errors.append("llms.txt does not mention /advertise/")
+    about = open(os.path.join(DIST, "about", "index.html"), encoding="utf-8").read()
+    if 'Sponsored placements are labelled "Sponsor" and never affect the price order.' not in about:
+        errors.append("about disclosure is missing the sponsor sentence")
+    for rel in ("deals.json", os.path.join("data", "deals.json")):
+        feed = open(os.path.join(DIST, rel), encoding="utf-8").read()
+        if "data-sponsor" in feed or "Your tool here" in feed or "sponsor this spot" in feed:
+            errors.append(f"{rel} contains sponsor placement markup")
+    if errors:
+        raise SystemExit("site audit failed:\n- " + "\n- ".join(errors))
+
+audit_site()
 print("built", len(urls), "pages into", DIST)
