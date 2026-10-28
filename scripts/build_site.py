@@ -12,6 +12,7 @@ BRAND = "VidFare"
 TAGLINE = "What every AI video second costs, everywhere."
 OG_IMAGE = SITE_URL + "/og.png"
 LOGO_URL = SITE_URL + "/logo-512.png"
+ORG_ID = SITE_URL + "/#organization"
 OG_ALT = BRAND + ". " + TAGLINE
 NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Beehiiv/Buttondown/ConvertKit form action
 # GitHub project Pages serves this site under the path in SITE_URL ("" for a bare domain).
@@ -432,12 +433,19 @@ home_ld = {
     "@context": "https://schema.org",
     "@graph": [
         {
+            "@type": "Organization",
+            "@id": ORG_ID,
+            "name": BRAND,
+            "url": SITE_URL + "/",
+            "logo": LOGO_URL,
+        },
+        {
             "@type": "WebSite",
             "name": BRAND,
             "url": SITE_URL + "/",
             "description": TAGLINE,
             "image": LOGO_URL,
-            "publisher": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/", "logo": LOGO_URL},
+            "publisher": {"@id": ORG_ID},
         },
         {
             "@type": "Dataset",
@@ -448,7 +456,7 @@ home_ld = {
             ),
             "url": SITE_URL + "/",
             "dateModified": LAST,
-            "creator": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/", "logo": LOGO_URL},
+            "creator": {"@id": ORG_ID},
             "distribution": {
                 "@type": "DataDownload",
                 "encodingFormat": "application/json",
@@ -593,8 +601,19 @@ for slug, m in models.items():
 plan_opts = ""
 for plat in sorted({p["platform"] for p in plans.values()}):
     plan_opts += f'<optgroup label="{e(plat)}">' + "".join(f'<option value="{k}">{e(p["plan"])}: ${p["usd_month"]:g}/mo</option>' for k, p in plans.items() if p["platform"] == plat) + "</optgroup>"
+calc_lead = "Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page."
+calc_ld = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": f"{BRAND} credit-plan calculator",
+    "description": calc_lead,
+    "url": SITE_URL + "/calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+}
 calc = f"""<h1>AI video credit calculator</h1>
-<p class="lead">Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page.</p>
+<p class="lead">{calc_lead}</p>
 <div class="calc"><div class="card">
 <label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px">{plan_opts}</select>
 <label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %
@@ -678,7 +697,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);go();}});
 </script>{news_box()}"""
 page("/calculator/", f"AI Video Credit Calculator ({MONTH}): Higgsfield, Krea, Magnific | {BRAND}",
-     "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/")
+     "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/", ld_script(calc_ld))
 
 # ---------- Changes ----------
 items = ""
