@@ -11,6 +11,7 @@ SITE_URL = "https://sheepinboots.github.io/clipcost"
 BRAND = "VidFare"
 TAGLINE = "What every AI video second costs, everywhere."
 OG_IMAGE = SITE_URL + "/og.png"
+LOGO_URL = SITE_URL + "/logo-512.png"
 OG_ALT = BRAND + ". " + TAGLINE
 NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Beehiiv/Buttondown/ConvertKit form action
 # GitHub project Pages serves this site under the path in SITE_URL ("" for a bare domain).
@@ -114,7 +115,7 @@ def page(path, title, desc, body, active="", extra_head=""):
 <meta property="og:url" content="{canon}"><meta property="og:site_name" content="{BRAND}">
 <meta property="og:image" content="{OG_IMAGE}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{e(OG_ALT)}">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{e(title)}"><meta name="twitter:description" content="{e(desc)}"><meta name="twitter:image" content="{OG_IMAGE}">
-<meta name="theme-color" content="#0b0d12"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235ce1a8'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' font-family='sans-serif' font-weight='800' fill='%2306281b'%3E$%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#0b0d12"><link rel="icon" type="image/png" sizes="32x32" href="{root("/favicon-32.png")}"><link rel="icon" type="image/svg+xml" href="{root("/logo.svg")}"><link rel="apple-touch-icon" href="{root("/logo-512.png")}">
 <link rel="stylesheet" href="{root("/style.css")}">{extra_head}</head><body>
 <header class="top"><div class="wrap"><a class="logo" href="{root("/")}">Vid<span>Fare</span></a><nav>{nav}</nav></div></header>
 <main class="wrap">{body}</main>
@@ -276,7 +277,7 @@ def faq_ld(slug, faqs):
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "url": f"{SITE_URL}/models/{slug}/",
-        "publisher": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/"},
+        "publisher": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/", "logo": LOGO_URL},
         "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
             for q, a in faqs
@@ -302,6 +303,8 @@ def news_box():
 shutil.rmtree(DIST, ignore_errors=True); os.makedirs(DIST)
 shutil.copy(os.path.join(ROOT, "src", "style.css"), DIST)
 shutil.copy(os.path.join(ROOT, "src", "og.png"), os.path.join(DIST, "og.png"))
+for _f in ("favicon-32.png", "logo.svg", "logo-512.png", "logo-240.png"):
+    shutil.copy(os.path.join(ROOT, "src", _f), os.path.join(DIST, _f))
 shutil.copy(os.path.join(ROOT, "src", "google43692aaea77cfb47.html"), DIST)
 os.makedirs(os.path.join(DIST, "data")); shutil.copy(os.path.join(ROOT, "data", "prices.json"), os.path.join(DIST, "data"))
 
@@ -433,6 +436,8 @@ home_ld = {
             "name": BRAND,
             "url": SITE_URL + "/",
             "description": TAGLINE,
+            "image": LOGO_URL,
+            "publisher": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/", "logo": LOGO_URL},
         },
         {
             "@type": "Dataset",
@@ -443,7 +448,7 @@ home_ld = {
             ),
             "url": SITE_URL + "/",
             "dateModified": LAST,
-            "creator": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/"},
+            "creator": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/", "logo": LOGO_URL},
             "distribution": {
                 "@type": "DataDownload",
                 "encodingFormat": "application/json",
