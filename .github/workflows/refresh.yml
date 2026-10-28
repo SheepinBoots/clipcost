@@ -83,3 +83,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      # The daily data push uses GITHUB_TOKEN, so it does not start the Pages
+      # workflow. Ping from this deploy too. A non-2xx response only warns.
+      - name: Notify IndexNow
+        if: success()
+        continue-on-error: true
+        run: python3 scripts/notify_indexnow.py

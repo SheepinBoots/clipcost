@@ -38,3 +38,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      # About 16 sitemap URLs. A non-2xx IndexNow response warns and does not fail the deploy.
+      - name: Notify IndexNow
+        if: success()
+        continue-on-error: true
+        run: python3 scripts/notify_indexnow.py
