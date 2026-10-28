@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the static ClipCost site from data/*.json into dist/."""
+"""Build the static VidFare site from data/*.json into dist/."""
 import json, os, shutil, html, datetime, sys, email.utils
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
@@ -8,6 +8,10 @@ from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
 SITE_URL = "https://sheepinboots.github.io/clipcost"
+BRAND = "VidFare"
+TAGLINE = "What every AI video second costs, everywhere."
+OG_IMAGE = SITE_URL + "/og.png"
+OG_ALT = BRAND + ". " + TAGLINE
 NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Beehiiv/Buttondown/ConvertKit form action
 # GitHub project Pages serves this site under the path in SITE_URL ("" for a bare domain).
 BASE = urlparse(SITE_URL).path.rstrip("/")
@@ -92,6 +96,10 @@ def money(v):
         digits = f"{frac:05d}"[:2]
     return f"{'-' if neg else ''}${whole}.{digits}"
 
+def ld_script(obj):
+    raw = json.dumps(obj, ensure_ascii=False).replace("<", "\\u003c")
+    return f'<script type="application/ld+json">{raw}</script>'
+
 def page(path, title, desc, body, active="", extra_head=""):
     canon = SITE_URL + path
     navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/changes/", "Price changes"), ("/newsletter/", "Newsletter"), ("/about/", "About")]
@@ -103,14 +111,16 @@ def page(path, title, desc, body, active="", extra_head=""):
 <title>{e(title)}</title><meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{canon}"><meta name="robots" content="index,follow">
 <meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">
-<meta property="og:url" content="{canon}"><meta property="og:site_name" content="ClipCost"><meta name="twitter:card" content="summary">
+<meta property="og:url" content="{canon}"><meta property="og:site_name" content="{BRAND}">
+<meta property="og:image" content="{OG_IMAGE}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{e(OG_ALT)}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{e(title)}"><meta name="twitter:description" content="{e(desc)}"><meta name="twitter:image" content="{OG_IMAGE}">
 <meta name="theme-color" content="#0b0d12"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235ce1a8'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' font-family='sans-serif' font-weight='800' fill='%2306281b'%3E$%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="{root("/style.css")}">{extra_head}</head><body>
-<header class="top"><div class="wrap"><a class="logo" href="{root("/")}">Clip<span>Cost</span></a><nav>{nav}</nav></div></header>
+<header class="top"><div class="wrap"><a class="logo" href="{root("/")}">Vid<span>Fare</span></a><nav>{nav}</nav></div></header>
 <main class="wrap">{body}</main>
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="{root("/about/#disclosure")}">disclosure</a>).</p>
-<p>© {today.year} ClipCost · Data last checked {LAST}</p></div></footer></body></html>"""
+<p>© {today.year} {BRAND} · Data last checked {LAST}</p></div></footer></body></html>"""
     out = os.path.join(DIST, path.strip("/"), "index.html") if path.endswith("/") else os.path.join(DIST, path.strip("/"))
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w").write(doc)
@@ -211,6 +221,65 @@ def cheapest(rs, allow_promo=True):
     rs = [r for r in rs if not discontinued(r) and (allow_promo or r["status"] != "promo")]
     return min(rs, key=lambda r: r["usd_per_second"]) if rs else None
 
+def price_fact(r, platform=True):
+    """One price sentence. The dollar amount is the same money() string as the table."""
+    where = f" on {r['platform']}" if platform else ""
+    text = f"{money(r['usd_per_second'])}/s{where} at {r['resolution']} (checked {r['checked']})"
+    if r.get("status") == "promo" and r.get("promo_until"):
+        text += f", promo until {r['promo_until']}"
+    return text
+
+def model_faqs(m, rs, clip5):
+    """2–4 Q&As from current rows. Visible text and FAQPage JSON-LD share these strings."""
+    name = m["name"]
+    c = cheapest(rs)
+    faqs = [(
+        f"What's the cheapest way to run {name} per second?",
+        price_fact(c) + ".",
+    )]
+    p720 = cheapest([r for r in rs if str(r.get("resolution") or "").strip().lower() == "720p"])
+    if p720 and len(faqs) < 4:
+        faqs.append((
+            f"What's the cheapest 720p option for {name}?",
+            price_fact(p720) + ".",
+        ))
+    if len(faqs) < 4:
+        faqs.append((
+            f"How much does {name} cost per second?",
+            f"As of {LAST}, from {money(c['usd_per_second'])}/s ({c['platform']}, {c['resolution']}). A 5-second clip at that rate costs about {clip5}.",
+        ))
+    if len(faqs) < 4:
+        c2 = cheapest(rs, False)
+        if c2 and c2 is not c:
+            faqs.append((
+                f"What's the cheapest non-promo price for {name}?",
+                price_fact(c2) + ".",
+            ))
+        else:
+            api = cheapest([r for r in rs if r["kind"] == "api"], False)
+            if api and api is not c:
+                faqs.append((
+                    f"What's the cheapest pay-as-you-go API price for {name}?",
+                    price_fact(api) + ".",
+                ))
+    return faqs
+
+def faq_html(faqs):
+    blocks = "".join(f"<h3>{e(q)}</h3><p>{e(a)}</p>" for q, a in faqs)
+    return f'<h2>FAQ</h2><div class="faq">{blocks}</div>'
+
+def faq_ld(slug, faqs):
+    return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "url": f"{SITE_URL}/models/{slug}/",
+        "publisher": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/"},
+        "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in faqs
+        ],
+    }
+
 def retired_table(rs, thead=None):
     """Record of rates that are off sale. Not used for cheapest picks."""
     if not rs: return ""
@@ -229,6 +298,7 @@ def news_box():
 
 shutil.rmtree(DIST, ignore_errors=True); os.makedirs(DIST)
 shutil.copy(os.path.join(ROOT, "src", "style.css"), DIST)
+shutil.copy(os.path.join(ROOT, "src", "og.png"), os.path.join(DIST, "og.png"))
 shutil.copy(os.path.join(ROOT, "src", "google43692aaea77cfb47.html"), DIST)
 os.makedirs(os.path.join(DIST, "data")); shutil.copy(os.path.join(ROOT, "data", "prices.json"), os.path.join(DIST, "data"))
 
@@ -289,6 +359,7 @@ def ending_strip():
     return f'<section class="strip" id="ending"><h2>Deals ending this week</h2><div class="dealgrid">{cards_html}</div><p class="small"><a href="{root("/deals/")}">All deals</a></p></section>'
 
 home = f"""<h1>AI video cost per second, compared</h1>
+<p class="tagline">{e(TAGLINE)}</p>
 <p class="lead">{len(rows)} prices for {len(models)} video models on {len(platforms)} platforms, from Higgsfield plans to the fal, Runway and Kling APIs. Everything is converted to <b>dollars per second of video</b>, and the math is shown for credit plans. Checked {LAST}.</p>
 {ending_strip()}
 <h2>Cheapest way to run each model today</h2><div class="cards">{cards}</div>
@@ -351,8 +422,39 @@ function render(){{
 document.querySelectorAll('#prices th[data-k]').forEach(th=>th.addEventListener('click',()=>{{const k=th.dataset.k;dir=(sortK==k)?-dir:1;sortK=k;render()}}));
 </script>
 {tick_script()}"""
-page("/", f"AI Video Cost Per Second ({MONTH}): Wan 3.0, Kling 3.0, Veo 3.1, Seedance 2.5 | ClipCost",
-     f"Compare what AI video costs per second across Higgsfield, fal, Runway, Kling, Krea, Magnific, Replicate and Atlas Cloud. {len(rows)} sourced prices, checked {LAST}.", home, "/")
+home_ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            "name": BRAND,
+            "url": SITE_URL + "/",
+            "description": TAGLINE,
+        },
+        {
+            "@type": "Dataset",
+            "name": f"{BRAND} AI video prices",
+            "description": (
+                f"{len(rows)} current prices in USD per second of finished video, "
+                f"for {len(models)} models on {len(platforms)} platforms. Last full check {LAST}."
+            ),
+            "url": SITE_URL + "/",
+            "dateModified": LAST,
+            "creator": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/"},
+            "distribution": {
+                "@type": "DataDownload",
+                "encodingFormat": "application/json",
+                "contentUrl": SITE_URL + "/data/prices.json",
+            },
+            "temporalCoverage": LAST,
+            "isAccessibleForFree": True,
+            "keywords": [m["name"] for m in models.values()],
+        },
+    ],
+}
+page("/", f"AI Video Cost Per Second ({MONTH}): Wan 3.0, Kling 3.0, Veo 3.1, Seedance 2.5 | {BRAND}",
+     f"Compare what AI video costs per second across Higgsfield, fal, Runway, Kling, Krea, Magnific, Replicate and Atlas Cloud. Checked {LAST}.",
+     home, "/", ld_script(home_ld))
 
 def cond_bits(deal):
     c = dealmod.conditions(deal)
@@ -456,8 +558,7 @@ for slug, m in models.items():
     if ca: summary += f"<p>Cheapest pay-as-you-go API: {money(ca['usd_per_second'])}/s on {e(ca['platform'])} ({e(ca['variant'])}, {e(ca['resolution'])}). "
     if cp: summary += f"Cheapest subscription: {money(cp['usd_per_second'])}/s on {e(cp['platform'])} {e(cp['plan_name'])} ({e(cp['resolution'])}), which only holds if you use all your credits.</p>"
     clip5 = money(c["usd_per_second"] * 5)
-    faq = [{"@type": "Question", "name": f"How much does {m['name']} cost per second?",
-            "acceptedAnswer": {"@type": "Answer", "text": f"As of {LAST}, from ${c['usd_per_second']:.4f}/s ({c['platform']}, {c['resolution']}). A 5-second clip at that rate costs about {clip5}."}}]
+    faqs = model_faqs(m, rs, clip5)
     model_deals = deals_for_model(slug, rs)
     deals_html = ""
     if model_deals:
@@ -473,10 +574,11 @@ for slug, m in models.items():
 <div class="tblwrap"><table>{THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=')}<tbody>{"".join(row_html(r) for r in rs)}</tbody></table></div>
 <p class="small">Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root("/calculator/")}">credit calculator</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
+{faq_html(faqs)}
 {news_box()}
 {tick_script()}
-<script type="application/ld+json">{json.dumps({"@context":"https://schema.org","@type":"FAQPage","mainEntity":faq})}</script>"""
-    page(f"/models/{slug}/", f"{m['name']} price per second ({MONTH}): cheapest way to run it | ClipCost",
+{ld_script(faq_ld(slug, faqs))}"""
+    page(f"/models/{slug}/", f"{m['name']} price per second ({MONTH}): cheapest way to run it | {BRAND}",
          f"{m['name']} costs from {money(c['usd_per_second'])}/s ({c['platform']}, {c['resolution']}). Compare {len(rs)} sourced prices across APIs and credit plans.", body)
 
 # ---------- Calculator ----------
@@ -567,7 +669,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
  $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);go();}});
 </script>{news_box()}"""
-page("/calculator/", f"AI Video Credit Calculator ({MONTH}): Higgsfield, Krea, Magnific | ClipCost",
+page("/calculator/", f"AI Video Credit Calculator ({MONTH}): Higgsfield, Krea, Magnific | {BRAND}",
      "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/")
 
 # ---------- Changes ----------
@@ -583,21 +685,21 @@ for c in sorted(changes, key=lambda c: c["date"], reverse=True):
     else:
         src = ""
     items += f'<li><span class="pill">{c["date"]}</span> <span class="pill">{e(c.get("type","")).upper()}</span> {txt}{src}</li>'
-page("/changes/", f"AI Video Price Changes Log ({MONTH}) | ClipCost",
+page("/changes/", f"AI Video Price Changes Log ({MONTH}) | {BRAND}",
      "Every AI video price change we detect, with dates and sources: Wan, Kling, Veo, Seedance, Runway, Higgsfield and more.",
      f"""<h1>Price changes log</h1><p class="lead">A daily script re-checks every source and logs each price change here with the date and a link to the source.</p>
 <ul class="log" style="padding-left:0;list-style:none">{items}</ul>{news_box()}""", "/changes/")
 
 # ---------- Newsletter ----------
-page("/newsletter/", "ClipCost Weekly: AI video price drops & new models", "One short email a week: AI video price changes, new models and the cheapest way to run them.",
-     f"""<h1>ClipCost Weekly</h1><p class="lead">One short email every Monday: which AI video prices changed, which new models launched, and the cheapest way to run each one right now. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
+page("/newsletter/", f"{BRAND} Weekly: AI video price drops & new models", "One short email a week: AI video price changes, new models and the cheapest way to run them.",
+     f"""<h1>{BRAND} Weekly</h1><p class="lead">One short email every Monday: which AI video prices changed, which new models launched, and the cheapest way to run each one right now. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
 
 # ---------- About ----------
 srcl = "".join(f'<li><a href="{e(outbound(s["url"])[0])}" rel="{outbound(s["url"])[1]}" target="_blank">{e(s["name"])}</a>{" (checked by hand)" if s["fetch"]=="manual" else ""}</li>' for s in sources.values())
 unv = "".join(f'<li>{e(u["item"])}: <span class="small">{e(u["reason"])}</span></li>' for u in db["unverified"])
-page("/about/", "About ClipCost: methodology & affiliate disclosure", "How ClipCost collects and normalizes AI video prices, and how the site is funded.",
-     f"""<h1>About ClipCost</h1>
-<p class="lead">ClipCost tracks what AI video generation actually costs, per second of finished video, across every place you can run a model.</p>
+page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRAND} collects and normalizes AI video prices, and how the site is funded.",
+     f"""<h1>About {BRAND}</h1>
+<p class="lead">{BRAND} tracks what AI video generation actually costs, per second of finished video, across every place you can run a model. {e(TAGLINE)}</p>
 <h2>How the numbers work</h2>
 <ul><li>Every price comes from the vendor's own pricing or model page, saved with a source link and the date we checked it.</li>
 <li><b>APIs</b>: we use the vendor's stated $ per second. Runway credits are $0.01 each.</li>
@@ -609,7 +711,7 @@ page("/about/", "About ClipCost: methodology & affiliate disclosure", "How ClipC
 <h2>Sources we check</h2><ul class="small">{srcl}</ul>
 <h2>Not included yet (unconfirmed)</h2><ul class="small">{unv}</ul>
 <h2 id="disclosure">Affiliate disclosure</h2>
-<div class="disclose">Some links on ClipCost are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price.</div>
+<div class="disclose">Some links on {BRAND} are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price.</div>
 <p class="small">Contact: TODO-add-contact-email</p>""", "/about/")
 
 # ---------- Deals ----------
@@ -624,7 +726,7 @@ archive_sorted = sorted(ARCHIVED, key=lambda d: d.get("end") or "", reverse=True
 archive_html = "".join(deal_card(d, archive=True) for d in archive_sorted) or "<p class='small'>No tracked deal has expired yet. Older holiday sales are on the Black Friday page, labeled 2025.</p>"
 deals_body = f"""<h1>AI video deals</h1>
 <p class="lead">Offers copied from vendor pricing pages and official accounts. Countdowns use your clock, so they stay right between daily builds. A deal with no end date is not given a guessed one.</p>
-<div class="disclose"><b>Disclosure.</b> Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you sign up through them, ClipCost may earn a commission, at no extra cost to you. Links to Krea, Magnific, Runway, fal, and other vendors are the official URLs, with no affiliate tag. Deals are listed only when the vendor's own page or official account is the source. Order is the end date, not who pays us. See the <a href="{root("/about/#disclosure")}">full disclosure</a>.</div>
+<div class="disclose"><b>Disclosure.</b> Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you sign up through them, {BRAND} may earn a commission, at no extra cost to you. Links to Krea, Magnific, Runway, fal, and other vendors are the official URLs, with no affiliate tag. Deals are listed only when the vendor's own page or official account is the source. Order is the end date, not who pays us. See the <a href="{root("/about/#disclosure")}">full disclosure</a>.</div>
 <div class="filters">
 <select id="dVendor" aria-label="Vendor"><option value="">All vendors</option>{"".join(f'<option value="{e(v)}">{e(v)}</option>' for v in vendors)}</select>
 <select id="dType" aria-label="Deal type"><option value="">All types</option>{"".join(f'<option value="{e(t)}">{e(t.replace("_", " "))}</option>' for t in types)}</select>
@@ -655,10 +757,46 @@ document.getElementById('dType').addEventListener('input', filterDeals);
 document.addEventListener('DOMContentLoaded', filterDeals);
 filterDeals();
 </script>"""
-page("/deals/", f"AI video deals ({MONTH}): Higgsfield, Krea, fal, Runway, Magnific | ClipCost",
+def deals_item_list(deals):
+    elements = []
+    for i, deal in enumerate(deals, 1):
+        bits = [deal.get("vendor") or "", (deal.get("type") or "").replace("_", " ")]
+        if deal.get("percent") is not None:
+            bits.append(f"{deal['percent']:g}% off")
+        if deal.get("end"):
+            est = " (estimated)" if deal.get("end_is_estimate") else ""
+            bits.append(f"ends {deal['end']}{est}")
+        else:
+            bits.append("no end date given")
+        offer = {
+            "@type": "Offer",
+            "name": deal.get("title") or deal["id"],
+            "url": f"{SITE_URL}/deals/#{deal['id']}",
+            "description": " · ".join(bit for bit in bits if bit),
+            "seller": {"@type": "Organization", "name": deal.get("vendor") or ""},
+        }
+        if deal.get("end"):
+            offer["priceValidUntil"] = deal["end"]
+        elements.append({
+            "@type": "ListItem",
+            "position": i,
+            "name": deal.get("title") or deal["id"],
+            "url": f"{SITE_URL}/deals/#{deal['id']}",
+            "item": offer,
+        })
+    return {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Live AI video deals",
+        "numberOfItems": len(elements),
+        "itemListElement": elements,
+    }
+
+page("/deals/", f"AI video deals ({MONTH}): Higgsfield, Krea, fal, Runway, Magnific | {BRAND}",
      "Live AI video discounts, plan sales, promo codes, and unlimited windows, with end dates and the $/s math.",
      deals_body, "/deals/",
-     extra_head=f'<link rel="alternate" type="application/rss+xml" title="ClipCost deals" href="{root("/deals.xml")}">')
+     extra_head=(f'<link rel="alternate" type="application/rss+xml" title="{BRAND} deals" href="{root("/deals.xml")}">'
+                 + ld_script(deals_item_list(live_sorted))))
 
 hist_sorted = sorted(HISTORY, key=lambda d: d.get("start") or "")
 bf_body = f"""<p class="small"><a href="{root("/deals/")}">Deals</a> › Black Friday</p>
@@ -673,9 +811,9 @@ bf_body = f"""<p class="small"><a href="{root("/deals/")}">Deals</a> › Black F
 <li>Krea posted 40% off yearly plans on Nov 28 (Black Friday, "today only"), Dec 1 (Cyber Monday), and Dec 24 (up to 40% off Pro and Max).</li>
 </ul>
 <p class="small">Those codes and percents are expired. Check the <a href="{root("/deals/")}">live deals</a> page before you pay.</p>
-<div class="disclose">Higgsfield links elsewhere on ClipCost can be affiliate links. The posts linked on this page are the vendors' own X accounts. <a href="{root("/about/#disclosure")}">Disclosure</a>.</div>
+<div class="disclose">Higgsfield links elsewhere on {BRAND} can be affiliate links. The posts linked on this page are the vendors' own X accounts. <a href="{root("/about/#disclosure")}">Disclosure</a>.</div>
 """
-page("/deals/black-friday/", "AI video Black Friday 2026 (stub) and 2025 holiday deals | ClipCost",
+page("/deals/black-friday/", f"AI video Black Friday 2026 (stub) and 2025 holiday deals | {BRAND}",
      "A stub for 2026 AI video holiday sales, plus dated 2025 examples from Higgsfield, Krea, and Magnific.",
      bf_body, "/deals/")
 
@@ -721,7 +859,7 @@ def write_feeds():
     built = email.utils.formatdate(datetime.datetime.now(datetime.timezone.utc).timestamp(), usegmt=True)
     rss = (
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\">\n<channel>\n"
-        "  <title>ClipCost deals</title>\n"
+        f"  <title>{BRAND} deals</title>\n"
         f"  <link>{SITE_URL}/deals/</link>\n"
         "  <description>Live AI video deals from vendor pages and official accounts.</description>\n"
         f"  <lastBuildDate>{built}</lastBuildDate>\n"
@@ -732,7 +870,57 @@ def write_feeds():
 write_feeds()
 
 # ---------- 404, robots, sitemap ----------
-page("/404.html", "Page not found | ClipCost", "Page not found.", f'<h1>Page not found</h1><p><a href="{root("/")}">Back to the price table</a></p>')
+page("/404.html", f"Page not found | {BRAND}", "Page not found.", f'<h1>Page not found</h1><p><a href="{root("/")}">Back to the price table</a></p>')
+
+def write_llms():
+    """Plain summary for AI search. Every price is the cheapest current row for that model and platform."""
+    lines = [
+        f"# {BRAND}",
+        "",
+        f"> {TAGLINE}",
+        "",
+        (
+            f"{BRAND} compares AI video generation prices in dollars per second of finished video, "
+            f"across APIs and credit plans. Figures are copied from each vendor's own pricing page. "
+            f"Last full check: {LAST}. {len(rows)} current prices."
+        ),
+        "",
+        "## Cheapest current price by model and platform",
+        "",
+    ]
+    for slug, m in models.items():
+        rs = [r for r in rows if r["model"] == slug]
+        if not rs:
+            continue
+        best = cheapest(rs)
+        lines.append(f"### {m['name']}")
+        lines.append("")
+        lines.append(
+            f"- [{m['name']} prices]({SITE_URL}/models/{slug}/): cheapest overall "
+            f"{price_fact(best)}."
+        )
+        by_plat = {}
+        for r in rs:
+            cur = by_plat.get(r["platform"])
+            if cur is None or r["usd_per_second"] < cur["usd_per_second"]:
+                by_plat[r["platform"]] = r
+        for plat in sorted(by_plat, key=lambda p: (by_plat[p]["usd_per_second"], p)):
+            lines.append(f"- {plat}: {price_fact(by_plat[plat], platform=False)}.")
+        lines.append("")
+    lines += [
+        "## Deals",
+        "",
+        f"- [AI video deals]({SITE_URL}/deals/): live discounts, plan sales, promo codes, and unlimited windows, with end dates when the vendor gave one.",
+        "",
+        "## Data",
+        "",
+        f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog this page is built from.",
+        f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals.",
+        "",
+    ]
+    open(os.path.join(DIST, "llms.txt"), "w").write("\n".join(lines))
+
+write_llms()
 open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: {root('/')}\nSitemap: {SITE_URL}/sitemap.xml\n")
 urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/changes/", "/newsletter/", "/about/"] + [f"/models/{s}/" for s in models]
 open(os.path.join(DIST, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +

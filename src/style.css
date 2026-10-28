@@ -6,6 +6,8 @@ a{color:var(--acc2)}a:hover{color:#a9c4ff}
 header.top{border-bottom:1px solid var(--line);background:#0e1118;position:sticky;top:0;z-index:5}
 header.top .wrap{display:flex;align-items:center;gap:18px;height:58px}
 .logo{font-weight:800;font-size:20px;color:var(--txt);text-decoration:none;letter-spacing:-.3px}.logo span{color:var(--acc)}
+.tagline{color:var(--acc);font-weight:650;font-size:18px;margin:-2px 0 14px}
+.faq h3{font-size:16px;margin:16px 0 4px}.faq p{margin:0 0 8px}
 nav{display:flex;gap:16px;flex-wrap:wrap;margin-left:auto}nav a{color:var(--mut);text-decoration:none;font-size:15px}nav a:hover,nav a.on{color:var(--txt)}
 @media(max-width:700px){header.top .wrap{height:auto;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}nav{margin-left:0;gap:12px}}
 h1{font-size:clamp(26px,4vw,40px);line-height:1.15;margin:34px 0 10px;letter-spacing:-.6px}

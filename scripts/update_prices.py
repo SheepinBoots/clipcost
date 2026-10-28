@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ClipCost daily price checker.
+"""VidFare daily price checker.
 
 Re-fetches every source in data/prices.json, re-reads each tracked number using
 the row's 'needle' pattern and compares it with the stored value.

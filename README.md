@@ -1,4 +1,4 @@
-# ClipCost
+# VidFare
 
 AI video cost-per-second tracker. Static site in `dist/`, data in `data/`.
 Live at https://sheepinboots.github.io/clipcost/
@@ -14,7 +14,7 @@ Live at https://sheepinboots.github.io/clipcost/
 - `scripts/update_prices.py` – daily checker. `--apply` updates changed API rows and logs them. Exit 0 includes those applied API changes. Exit 1 = a missing number or a change that was not applied. Exit 2 = fetch error.
 - `scripts/render.mjs` – headless Chrome render for JS-only pages (Higgsfield plans).
 - `scripts/deals.py` – deal-adjusted $/s, expiry, and the pricing-page snippet diff.
-- `scripts/build_site.py` – builds dist/ (home, deals, Black Friday stub, 9 model pages, calculator, changes, newsletter, about, 404, sitemap.xml, robots.txt, deals.json, deals.xml). `SITE_URL` is the GitHub Pages URL; internal links, assets, the sitemap and robots.txt use its `/clipcost` path.
+- `scripts/build_site.py` – builds dist/ (home, deals, Black Friday stub, 9 model pages, calculator, changes, newsletter, about, 404, sitemap.xml, robots.txt, llms.txt, og.png, deals.json, deals.xml). `SITE_URL` is the GitHub Pages URL; internal links, assets, the sitemap and robots.txt use its `/clipcost` path. `llms.txt` and the FAQ text are generated from `data/prices.json` at build time.
 - `scripts/daily.sh` – update_prices --apply, then build_site. This is the daily routine.
 - `scripts/check_site.mjs` – crawls http://localhost:8077, checks links and JS errors, saves home.png / home-mobile.png.
 

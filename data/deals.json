@@ -375,7 +375,7 @@
    "link_url": "https://open.higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Genjutsu is not in the ClipCost catalog, so there is no $/s. The end date is the one in the official post."
+   "notes": "Genjutsu is not in the VidFare catalog, so there is no $/s. The end date is the one in the official post."
   },
   {
    "id": "krea-yearly-40",
@@ -562,7 +562,7 @@
    "verified_date": "2026-10-20",
    "link_url": "https://www.magnific.com/pricing",
    "math": "unlimited",
-   "notes": "Standing plan feature, capped at 720p. Kling 2.5 is not in the catalog (ClipCost tracks Kling 3.0), so there is no break-even against a Kling 2.5 credit price."
+   "notes": "Standing plan feature, capped at 720p. Kling 2.5 is not in the catalog (VidFare tracks Kling 3.0), so there is no break-even against a Kling 2.5 credit price."
   },
   {
    "id": "mag-hailuo-fast-unlimited",

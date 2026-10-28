@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ClipCost deals: load, expire, deal-adjusted $/s, and pricing-page diffs.
+"""VidFare deals: load, expire, deal-adjusted $/s, and pricing-page diffs.
 
 Deal-adjusted rates are shown beside list prices. They never replace the
 stored row price. Unlimited windows are a break-even second count, not $0/s.

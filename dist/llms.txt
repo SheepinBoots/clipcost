@@ -1,0 +1,94 @@
+# VidFare
+
+> What every AI video second costs, everywhere.
+
+VidFare compares AI video generation prices in dollars per second of finished video, across APIs and credit plans. Figures are copied from each vendor's own pricing page. Last full check: 2026-10-28. 184 current prices.
+
+## Cheapest current price by model and platform
+
+### Wan 3.0 Prime
+
+- [Wan 3.0 Prime prices](https://sheepinboots.github.io/clipcost/models/wan-3-0-prime/): cheapest overall $0.0272/s on Higgsfield API at 480p (checked 2026-10-28), promo until 2026-11-01.
+- Higgsfield API: $0.0272/s at 480p (checked 2026-10-28), promo until 2026-11-01.
+- Higgsfield: $0.0495/s at 480p (checked 2026-10-28).
+- Krea: $0.05051/s at 480p (checked 2026-10-28).
+- Runway API: $0.068/s at 480p (checked 2026-10-28).
+- fal: $0.068/s at 480p (checked 2026-10-28).
+
+### Wan 3.0
+
+- [Wan 3.0 prices](https://sheepinboots.github.io/clipcost/models/wan-3-0/): cheapest overall $0.02/s on Higgsfield API at 480p (checked 2026-10-28), promo until 2026-11-01.
+- Higgsfield API: $0.02/s at 480p (checked 2026-10-28), promo until 2026-11-01.
+- Higgsfield: $0.033/s at 480p (checked 2026-10-28).
+- Replicate: $0.05/s at 480p (checked 2026-10-28).
+- Runway API: $0.05/s at 480p (checked 2026-10-28).
+- fal: $0.05/s at 480p (checked 2026-10-28).
+- Krea: $0.05556/s at 480p (checked 2026-10-28).
+
+### Kling 3.0
+
+- [Kling 3.0 prices](https://sheepinboots.github.io/clipcost/models/kling-3-0/): cheapest overall $0.0495/s on Higgsfield at 720p (checked 2026-10-28).
+- Higgsfield: $0.0495/s at 720p (checked 2026-10-28).
+- Magnific: $0.0594/s at 1080p (checked 2026-10-28).
+- Krea: $0.06231/s at — (checked 2026-10-28).
+- Higgsfield API: $0.084/s at lowest mode (checked 2026-10-28).
+- Kling API: $0.084/s at 720p (checked 2026-10-28).
+- Runway API: $0.09/s at Standard (checked 2026-10-28).
+- fal: $0.112/s at Pro tier (checked 2026-10-28).
+
+### Seedance 2.5
+
+- [Seedance 2.5 prices](https://sheepinboots.github.io/clipcost/models/seedance-2-5/): cheapest overall $0.132/s on Magnific at 480p (checked 2026-10-28).
+- Magnific: $0.132/s at 480p (checked 2026-10-28).
+- Atlas Cloud: $0.1397/s at 480p (checked 2026-10-28).
+- Runway API: $0.20/s at 480p (checked 2026-10-28).
+- Higgsfield API: $0.206/s at lowest mode (checked 2026-10-28).
+- fal: $0.2205/s at 480p (checked 2026-10-28).
+
+### Veo 3.1
+
+- [Veo 3.1 prices](https://sheepinboots.github.io/clipcost/models/veo-3-1/): cheapest overall $0.02222/s on Krea at 720p (checked 2026-10-28).
+- Krea: $0.02222/s at 720p (checked 2026-10-28).
+- Runway API: $0.10/s at — (checked 2026-10-28).
+- Higgsfield: $0.132/s at 720p (checked 2026-10-28).
+- fal: $0.20/s at 720p/1080p (checked 2026-10-28).
+- Magnific: $0.3432/s at 4K (checked 2026-10-28).
+
+### Gemini Omni Flash 1.1
+
+- [Gemini Omni Flash 1.1 prices](https://sheepinboots.github.io/clipcost/models/gemini-omni-flash/): cheapest overall $0.099/s on Atlas Cloud at 720p (checked 2026-10-28).
+- Atlas Cloud: $0.099/s at 720p (checked 2026-10-28).
+- Google Gemini API: $0.10/s at 720p (checked 2026-10-28).
+- Runway API: $0.10/s at 720p (checked 2026-10-28).
+- Magnific: $0.1584/s at — (checked 2026-10-28).
+
+### MiniMax Hailuo / H3
+
+- [MiniMax Hailuo / H3 prices](https://sheepinboots.github.io/clipcost/models/minimax-hailuo/): cheapest overall $0.01625/s on fal at 480p (checked 2026-10-28), promo until 2026-10-31.
+- fal: $0.01625/s at 480p (checked 2026-10-28), promo until 2026-10-31.
+- Krea: $0.02597/s at 480p (checked 2026-10-28).
+- Magnific: $0.0264/s at 768p (checked 2026-10-28).
+- Higgsfield: $0.033/s at 768p (checked 2026-10-28).
+- Atlas Cloud: $0.0437/s at 480P (checked 2026-10-28).
+- Runway API: $0.05/s at 480p (checked 2026-10-28).
+
+### Runway Gen-4.x
+
+- [Runway Gen-4.x prices](https://sheepinboots.github.io/clipcost/models/runway-gen-4/): cheapest overall $0.05/s on Runway API at — (checked 2026-10-28).
+- Runway API: $0.05/s at — (checked 2026-10-28).
+- Krea: $0.08929/s at — (checked 2026-10-28).
+
+### Grok Imagine Video 1.5
+
+- [Grok Imagine Video 1.5 prices](https://sheepinboots.github.io/clipcost/models/grok-imagine/): cheapest overall $0.02/s on Runway API at 480p (checked 2026-10-28).
+- Runway API: $0.02/s at 480p (checked 2026-10-28).
+- fal: $0.08/s at 480p (checked 2026-10-28).
+
+## Deals
+
+- [AI video deals](https://sheepinboots.github.io/clipcost/deals/): live discounts, plan sales, promo codes, and unlimited windows, with end dates when the vendor gave one.
+
+## Data
+
+- [prices.json](https://sheepinboots.github.io/clipcost/data/prices.json): the price catalog this page is built from.
+- [deals.json](https://sheepinboots.github.io/clipcost/deals.json): the live and archived deals.
