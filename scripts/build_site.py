@@ -120,7 +120,10 @@ def page(path, title, desc, body, active="", extra_head=""):
 <main class="wrap">{body}</main>
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="{root("/about/#disclosure")}">disclosure</a>).</p>
-<p>© {today.year} {BRAND} · Data last checked {LAST}</p></div></footer></body></html>"""
+<p>© {today.year} {BRAND} · Data last checked {LAST}</p></div></footer>
+<script data-goatcounter="https://vidfare.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
+</body></html>"""
     out = os.path.join(DIST, path.strip("/"), "index.html") if path.endswith("/") else os.path.join(DIST, path.strip("/"))
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w").write(doc)
