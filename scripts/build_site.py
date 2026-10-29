@@ -337,7 +337,7 @@ def price_fact(r, platform=True):
         text += f", promo until {r['promo_until']}"
     assump = assumption_text(r)
     if assump:
-        text += ". " + assump
+        text += ". " + assump.rstrip(".")
     return text
 
 def model_faqs(m, rs, clip5):
@@ -684,7 +684,7 @@ for slug, m in models.items():
     for r in rs: byres.setdefault(r["resolution"], r)
     def res_item(k, v):
         heading = k if str(k).strip() not in MISSING_RESOLUTIONS else "not listed"
-        tail = f" {e(assumption_text(v))}." if assumption_text(v) else ""
+        tail = f" {e(assumption_text(v).rstrip('.'))}." if assumption_text(v) else ""
         return (f'<li><b>{e(heading)}</b>: {money(v["usd_per_second"])}/s on {e(v["platform"])} '
                 f'({e(spec_phrase(v))}) {tag(v["status"])}{tail}</li>')
     resl = "".join(res_item(k, v) for k, v in byres.items())
@@ -693,22 +693,22 @@ for slug, m in models.items():
     summary = f"<p>The cheapest price we found today is <b>{money(c['usd_per_second'])} per second</b> on <b>{e(c['platform'])}</b> ({e(spec_phrase(c))})"
     summary += f", a promo that ends {c['promo_until']}." if c["status"] == "promo" else "."
     if assumption_text(c):
-        summary += " " + e(assumption_text(c)) + "."
+        summary += " " + e(assumption_text(c).rstrip(".")) + "."
     if c2 is not c:
         summary += f" Without promos, the cheapest is {money(c2['usd_per_second'])}/s on {e(c2['platform'])} ({e(spec_phrase(c2))})."
         if assumption_text(c2):
-            summary += " " + e(assumption_text(c2)) + "."
+            summary += " " + e(assumption_text(c2).rstrip(".")) + "."
     summary += "</p>"
     more = []
     if ca:
         line = f"Cheapest pay-as-you-go API: {money(ca['usd_per_second'])}/s on {e(ca['platform'])} ({e(spec_phrase(ca))})."
         if assumption_text(ca):
-            line += " " + e(assumption_text(ca)) + "."
+            line += " " + e(assumption_text(ca).rstrip(".")) + "."
         more.append(line)
     if cp:
         line = f"Cheapest subscription: {money(cp['usd_per_second'])}/s on {e(cp['platform'])} ({e(spec_phrase(cp))})."
         if assumption_text(cp):
-            line += " " + e(assumption_text(cp)) + "."
+            line += " " + e(assumption_text(cp).rstrip(".")) + "."
         more.append(line)
     if more:
         summary += "<p>" + " ".join(more) + "</p>"

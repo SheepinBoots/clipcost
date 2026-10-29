@@ -40,10 +40,10 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 
 - [Seedance 2.5 prices](https://sheepinboots.github.io/clipcost/models/seedance-2-5/): cheapest overall $0.132/s on Magnific, plan tier Pro (annual), resolution 480p, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
 - Magnific: $0.132/s, plan tier Pro (annual), resolution 480p, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
-- Atlas Cloud: $0.1397/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28). Estimate: Atlas labels these '(estimated)': billed on actual video tokens..
+- Atlas Cloud: $0.1397/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28). Estimate: Atlas labels these '(estimated)': billed on actual video tokens.
 - Runway API: $0.20/s, plan tier not listed, resolution 480p, audio on (checked 2026-10-28).
 - Higgsfield API: $0.206/s, plan tier not listed, resolution lowest mode, audio not listed (checked 2026-10-28).
-- fal: $0.2205/s, plan tier not listed, resolution 480p, audio on (checked 2026-10-28). Estimate: fal says 'roughly': billed by tokens (16:9, 24fps)..
+- fal: $0.2205/s, plan tier not listed, resolution 480p, audio on (checked 2026-10-28). Estimate: fal says 'roughly': billed by tokens (16:9, 24fps).
 
 ### Veo 3.1
 
@@ -58,7 +58,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 
 - [Gemini Omni Flash 1.1 prices](https://sheepinboots.github.io/clipcost/models/gemini-omni-flash/): cheapest overall $0.099/s on Atlas Cloud, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28).
 - Atlas Cloud: $0.099/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28).
-- Google Gemini API: $0.10/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28). Estimate: Token-billed; Google states 'approximately $0.10 per second' of 720p..
+- Google Gemini API: $0.10/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28). Estimate: Token-billed; Google states 'approximately $0.10 per second' of 720p.
 - Runway API: $0.10/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28).
 - Magnific: $0.1584/s, plan tier Pro (annual), resolution not listed, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
 
