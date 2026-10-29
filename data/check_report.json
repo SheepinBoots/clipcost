@@ -1,13 +1,13 @@
 {
- "run": "2026-10-29T08:08:54",
+ "run": "2026-10-29T20:21:22",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 16118
+   "chars": 15555
   },
   "hf_api": {
    "status": "fetched",
-   "chars": 3676
+   "chars": 6054
   },
   "hf_api_wan": {
    "status": "fetched",
@@ -59,7 +59,7 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 34481
+   "chars": 42466
   },
   "magnific": {
    "status": "fetched",
@@ -86,14 +86,42 @@
  "findings": [
   {
    "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ed Nano Banana Pro No unlimited 6 unlimited & free generation models Unlimited paid parallel generations NEW Access to all Seedance models Access to all model"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ed Nano Banana Pro 2K 7-day unlimited 6 unlimited & free generation models Unlimited paid parallel generations NEW Access to all Seedance models Access to all model"
+  },
+  {
+   "kind": "deal_candidate",
    "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ed Nano Banana Pro No unlimited 7 unlimited & free generation models Unlimited paid parallel generations NEW Access to all Seedance models Access to all model"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ed Nano Banana Pro 2K 7-day unlimited 7 unlimited & free generation models Unlimited paid parallel generations NEW Access to all Seedance models Access to all model"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "snippet": "eators and leading enterprises Individual Team & Enterprise API Monthly Yearly -20% off Free Free forever. For people looking to explore Runway's AI Tools $0 /month 12"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "snippet": "ly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2"
@@ -127,7 +155,7 @@
     "vendor": "Runway",
     "url": "https://runwayml.com/pricing",
     "status": "fetched",
-    "snippets": 6
+    "snippets": 8
    },
    {
     "id": "fal_pricing",
@@ -137,7 +165,7 @@
     "snippets": 0
    }
   ],
-  "candidates": 2
+  "candidates": 6
  },
  "counts": {
   "ok": 203,

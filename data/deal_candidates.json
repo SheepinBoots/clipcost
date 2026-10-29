@@ -28,7 +28,7 @@
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "status": "fetched",
-   "snippets": 6
+   "snippets": 8
   },
   {
    "id": "fal_pricing",
@@ -40,7 +40,39 @@
  ],
  "candidates": [
   {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "2b965681b42739a9",
+   "snippet": "ed Nano Banana Pro No unlimited 6 unlimited & free generation models Unlimited paid parallel generations NEW Access to all Seedance models Access to all model",
+   "seen": "2026-10-29"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "7e2a298b3a150cd9",
+   "snippet": "ed Nano Banana Pro 2K 7-day unlimited 6 unlimited & free generation models Unlimited paid parallel generations NEW Access to all Seedance models Access to all model",
+   "seen": "2026-10-29"
+  },
+  {
    "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "b5af5194820de7ff",
+   "snippet": "ed Nano Banana Pro No unlimited 7 unlimited & free generation models Unlimited paid parallel generations NEW Access to all Seedance models Access to all model",
+   "seen": "2026-10-29"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "1db548ce47e44501",
+   "snippet": "ed Nano Banana Pro 2K 7-day unlimited 7 unlimited & free generation models Unlimited paid parallel generations NEW Access to all Seedance models Access to all model",
+   "seen": "2026-10-29"
+  },
+  {
+   "status": "unconfirmed",
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "sha": "e06947adfb829873",
@@ -48,7 +80,7 @@
    "seen": "2026-10-29"
   },
   {
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "sha": "4bca5dbaa3f4f2b1",
