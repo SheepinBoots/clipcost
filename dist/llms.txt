@@ -34,7 +34,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - Higgsfield API: $0.084/s, plan tier not listed, resolution lowest mode, audio not listed (checked 2026-10-28).
 - Kling API: $0.084/s, plan tier not listed, resolution 720p, audio off (checked 2026-10-28).
 - Runway API: $0.09/s, plan tier Standard, resolution not listed, audio off (checked 2026-10-28).
-- fal: $0.112/s, plan tier Pro tier, resolution not listed, audio off (checked 2026-10-28).
+- fal: $0.112/s, Pro tier, resolution not listed, audio off (checked 2026-10-28).
 
 ### Seedance 2.5
 

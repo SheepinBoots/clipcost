@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build the static VidFare site from data/*.json into dist/."""
-import json, os, shutil, html, datetime, sys, email.utils
+import json, os, shutil, html, datetime, sys, email.utils, struct
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
 from decimal import Decimal, ROUND_HALF_UP
@@ -15,7 +15,8 @@ LOGO_URL = SITE_URL + "/logo-512.png"
 ORG_ID = SITE_URL + "/#organization"
 OG_ALT = BRAND + ". " + TAGLINE
 # TODO: set True once the Buttondown form endpoint is live (see NEWSLETTER_ACTION).
-# While False, the signup, the Newsletter nav link, and the /newsletter/ page are omitted.
+# While False, the signup, the Newsletter nav link, the /newsletter/ page,
+# and the advertise-page newsletter spot are omitted.
 NEWSLETTER_ENABLED = False
 NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Buttondown form action
 # Credit-plan $/s is plan price ÷ credits × credits per clip ÷ seconds (scripts/build_data.py).
@@ -164,7 +165,7 @@ def page(path, title, desc, body, active="", extra_head=""):
 <meta property="og:url" content="{canon}"><meta property="og:site_name" content="{BRAND}">
 <meta property="og:image" content="{OG_IMAGE}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{e(OG_ALT)}">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{e(title)}"><meta name="twitter:description" content="{e(desc)}"><meta name="twitter:image" content="{OG_IMAGE}">
-<meta name="theme-color" content="#0b0d12"><link rel="icon" type="image/png" sizes="32x32" href="{root("/favicon-32.png")}"><link rel="icon" type="image/svg+xml" href="{root("/logo.svg")}"><link rel="apple-touch-icon" href="{root("/logo-512.png")}">
+<meta name="theme-color" content="#0b0d12"><link rel="icon" href="{root("/favicon.ico")}" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="{root("/favicon-32.png")}"><link rel="icon" type="image/svg+xml" href="{root("/logo.svg")}"><link rel="apple-touch-icon" href="{root("/logo-512.png")}">
 <link rel="stylesheet" href="{root("/style.css")}">{extra_head}</head><body>
 <header class="top"><div class="wrap"><a class="logo" href="{root("/")}">Vid<span>Fare</span></a><nav>{nav}</nav></div></header>
 <main class="wrap">{body}</main>
@@ -288,7 +289,10 @@ def audio_phrase(r):
 def spec_phrase(r):
     aud = shown_audio(r)
     aud_bit = "audio not listed" if aud == "not listed" else f"audio {aud}"
-    return f"plan tier {shown_tier(r)}, resolution {shown_resolution(r)}, {aud_bit}"
+    tier = shown_tier(r)
+    # "Pro tier" already ends in tier. Prefixing it reads as "plan tier Pro tier".
+    tier_bit = tier if tier.lower().endswith("tier") else f"plan tier {tier}"
+    return f"{tier_bit}, resolution {shown_resolution(r)}, {aud_bit}"
 
 def assumption_text(r):
     """Usage assumption for a credit plan, or the vendor basis for a flagged estimate. Empty otherwise."""
@@ -415,6 +419,30 @@ shutil.copy(os.path.join(ROOT, "src", "style.css"), DIST)
 shutil.copy(os.path.join(ROOT, "src", "og.png"), os.path.join(DIST, "og.png"))
 for _f in ("favicon-32.png", "logo.svg", "logo-512.png", "logo-240.png"):
     shutil.copy(os.path.join(ROOT, "src", _f), os.path.join(DIST, _f))
+
+def write_favicon_ico(src_png, dest_ico):
+    """Write favicon.ico from the site PNG. The ICO stores that PNG as its image."""
+    png = open(src_png, "rb").read()
+    if png[:8] != b"\x89PNG\r\n\x1a\n" or png[12:16] != b"IHDR":
+        raise SystemExit(f"{src_png} is not a PNG")
+    width, height = struct.unpack(">II", png[16:24])
+    if not width or not height or width > 256 or height > 256:
+        raise SystemExit(f"{src_png} is {width}x{height}; favicon.ico needs a side of 1–256")
+    # A side of 256 is stored as 0 in the directory entry.
+    entry = struct.pack(
+        "<BBBBHHII",
+        width % 256,
+        height % 256,
+        0,
+        0,
+        1,
+        32,
+        len(png),
+        22,
+    )
+    open(dest_ico, "wb").write(struct.pack("<HHH", 0, 1, 1) + entry + png)
+
+write_favicon_ico(os.path.join(ROOT, "src", "favicon-32.png"), os.path.join(DIST, "favicon.ico"))
 shutil.copy(os.path.join(ROOT, "src", "google43692aaea77cfb47.html"), DIST)
 os.makedirs(os.path.join(DIST, "data")); shutil.copy(os.path.join(ROOT, "data", "prices.json"), os.path.join(DIST, "data"))
 
@@ -1058,16 +1086,19 @@ ad_desc = (
     "Sponsor a labelled spot on VidFare, where people compare where to generate AI video. "
     "Home banner, model page box, and the deals featured spot. Rates on request."
 )
+ad_spots = """<li><b>Home banner.</b> Under the intro on the homepage, above the price table.</li>
+<li><b>Model page box.</b> On each model page, after the cheapest-today summary and before the price table.</li>
+<li><b>Deals featured spot.</b> At the top of the deals page, separate from the real deals.</li>"""
+if NEWSLETTER_ENABLED:
+    ad_spots += """
+<li><b>Newsletter sponsor line.</b> Coming soon.</li>"""
 ad_body = f"""<h1>Advertise on VidFare</h1>
 <p class="lead">Labelled placements next to the price comparison. They stay out of the price tables and the deals list.</p>
 <h2>Who visits</h2>
 <p>People comparing where to generate AI video: which model, which platform, and what a second of finished video costs.</p>
 <h2>Available spots</h2>
 <ul>
-<li><b>Home banner.</b> Under the intro on the homepage, above the price table.</li>
-<li><b>Model page box.</b> On each model page, after the cheapest-today summary and before the price table.</li>
-<li><b>Deals featured spot.</b> At the top of the deals page, separate from the real deals.</li>
-<li><b>Newsletter sponsor line.</b> Coming soon.</li>
+{ad_spots}
 </ul>
 <h2>Rules</h2>
 <ul>
@@ -1321,12 +1352,16 @@ def audit_site():
                 errors.append(f"{rel} robots must be index,follow")
             if not NEWSLETTER_ENABLED:
                 if ("TODO-newsletter-endpoint" in raw or "Get the weekly price-drop email" in raw
-                        or ">Newsletter<" in raw or "/newsletter/" in raw):
+                        or ">Newsletter<" in raw or "/newsletter/" in raw or "newsletter" in low):
                     errors.append(f"{rel} still shows a newsletter signup or Newsletter link")
                 for blob in parser.jsonld:
                     lowb = blob.lower()
                     if "newsletter" in lowb or "subscribe" in lowb or "buttondown" in lowb:
                         errors.append(f"{rel} JSON-LD implies a newsletter signup")
+            ico_link = f'<link rel="icon" href="{root("/favicon.ico")}" sizes="any">'
+            png_link = f'<link rel="icon" type="image/png" sizes="32x32" href="{root("/favicon-32.png")}">'
+            if ico_link not in raw or png_link not in raw:
+                errors.append(f"{rel} is missing the favicon.ico link next to the PNG icon")
             if not parser.footer_advertise:
                 errors.append(f"{rel} footer is missing Advertise")
             if parser.bad_sponsor:
@@ -1369,6 +1404,11 @@ def audit_site():
             errors.append("advertise page mailto")
         if "Rates on request." not in ad:
             errors.append("advertise page rates line")
+        if NEWSLETTER_ENABLED:
+            if "Newsletter sponsor line" not in ad:
+                errors.append("advertise page is missing the newsletter spot")
+        elif "newsletter" in ad.lower():
+            errors.append("advertise page mentions the newsletter while it is off")
         if '"@type": "WebPage"' not in ad:
             errors.append("advertise page JSON-LD WebPage")
         if f'<link rel="canonical" href="{SITE_URL}/advertise/">' not in ad:
@@ -1390,8 +1430,10 @@ def audit_site():
             kling_llms = chunk
             break
     fal_line = next((line for line in kling_llms.splitlines() if line.startswith("- fal:")), "")
-    if "plan tier Pro tier" not in fal_line or "audio off" not in fal_line:
+    if "Pro tier, resolution not listed, audio off" not in fal_line or "plan tier Pro tier" in fal_line:
         errors.append("llms.txt Kling fal line does not read as Pro tier with audio off")
+    if "plan tier Standard" not in llms:
+        errors.append("llms.txt dropped the plan tier prefix for a name that does not end in tier")
     estimate_line = "Estimate: " + CREDIT_USE
     for rel in ("index.html", "models/kling-3-0/index.html"):
         page_html = open(os.path.join(DIST, rel), encoding="utf-8").read()
@@ -1402,8 +1444,16 @@ def audit_site():
             errors.append(f"{rel} Kling Pro audio-off row is missing plan tier, resolution, or audio")
         if ">Plan tier</th>" not in page_html or ">Resolution</th>" not in page_html or ">Audio</th>" not in page_html:
             errors.append(f"{rel} price table is missing plan tier, resolution, or audio headings")
-    if "plan tier Pro tier, resolution not listed, audio off" not in open(os.path.join(DIST, "models", "kling-3-0", "index.html"), encoding="utf-8").read():
+    kling_page = open(os.path.join(DIST, "models", "kling-3-0", "index.html"), encoding="utf-8").read()
+    if "Pro tier, resolution not listed, audio off" not in kling_page or "plan tier Pro tier" in kling_page:
         errors.append("Kling model page comparison does not read as Pro tier with audio off")
+    if "plan tier Standard, resolution not listed, audio off" not in kling_page:
+        errors.append("Kling model page dropped the plan tier prefix for Standard")
+    png_bytes = open(os.path.join(ROOT, "src", "favicon-32.png"), "rb").read()
+    ico_path = os.path.join(DIST, "favicon.ico")
+    ico_bytes = open(ico_path, "rb").read() if os.path.isfile(ico_path) else b""
+    if not ico_bytes.startswith(b"\x00\x00\x01\x00") or png_bytes not in ico_bytes:
+        errors.append("favicon.ico was not generated from favicon-32.png")
     about = open(os.path.join(DIST, "about", "index.html"), encoding="utf-8").read()
     if 'Sponsored placements are labelled "Sponsor" and never affect the price order.' not in about:
         errors.append("about disclosure is missing the sponsor sentence")
