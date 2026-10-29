@@ -21,7 +21,8 @@ OG_ALT = BRAND + ". " + TAGLINE
 NEWSLETTER_ENABLED = False
 NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Buttondown form action
 # Weekly /reports/ pages. Leave False until the owner wants them on the live site.
-# A week is still withheld when it has fewer than two real price changes.
+# A week is still withheld when it has fewer than two qualifying changes
+# (per-second price changes, promo starts, and promo ends).
 REPORTS_ENABLED = False
 # Credit-plan $/s is plan price ÷ credits × credits per clip ÷ seconds (scripts/build_data.py).
 # The about page states the assumption that math uses: every credit paid for is used.
@@ -188,7 +189,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
     open(out, "w").write(doc)
 
 def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
-    """Write /reports/ and any week that has at least two real price changes."""
+    """Write /reports/ and any week that has at least two qualifying changes."""
     events = weekly_report.load()
     result = weekly_report.assign(events, as_of)
     paths = ["/reports/"]
@@ -1241,7 +1242,7 @@ def write_llms():
         lines += [
             "## Weekly price reports",
             "",
-            "Published on Friday when at least two real price changes were checked. A shorter week rolls forward.",
+            "Published on Friday when at least two verified changes were checked. A change is a per-second price move, a promo start, or a promo end. A shorter week rolls forward.",
             "",
         ]
         for path in report_paths:

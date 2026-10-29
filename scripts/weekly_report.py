@@ -6,22 +6,25 @@ one JSON object. A later monthly roundup can group lines by calendar month of
 `date` without another data source. This module does not build that page.
 
 Kinds:
-  price          A verified dollars-per-second change. Only these count toward
-                 the two-change minimum. Fields: model, platform, plan_tier,
+  price          A verified dollars-per-second change. Counts toward the
+                 two-change minimum. Fields: model, platform, plan_tier,
                  resolution, audio (on/off/not listed), old_usd_per_second,
                  new_usd_per_second, source_url, date (the date checked).
-  promo_started  A promo the repo recorded as newly started.
-  promo_ended    A promo the repo recorded as ended.
-  added          A model or platform added after the baseline.
+  promo_started  A promo the repo recorded as newly started. Counts.
+  promo_ended    A promo the repo recorded as ended. Counts.
+  added          A model or platform added after the baseline. Does not count.
   note           Backfill notes. Ignored by reports.
 
 Publication:
-  A report covers one ISO week, Monday through that Friday (the week to date
-  when the Friday job runs). It is published only when at least two real price
-  changes fall in that window, including changes rolled forward from weeks
-  that did not qualify. Saturday and Sunday changes stay out of Friday's
-  report and wait for the next one. Weeks that do not qualify are not given
-  a page.
+  A report closes on Friday and covers the ISO week to date (Monday through
+  that Friday), plus verified changes rolled forward from weeks that did not
+  qualify. Per-second price changes, promo starts, and promo ends all count
+  toward the minimum of two. The first report is the week of 2026-10-26
+  (Friday 2026-10-30). Nothing is published before that Friday, so the first
+  edition includes changes recorded since the 2026-10-20 baseline. The page
+  states that covered range. Later reports start the day after the previous
+  report's Friday. Saturday and Sunday after a published Friday wait for the
+  next one. Weeks that do not qualify are not given a page.
 
   python3 scripts/weekly_report.py --status
   python3 scripts/weekly_report.py --status --as-of 2026-10-30
@@ -36,16 +39,21 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PATH = os.path.join(ROOT, "data", "price_changes.jsonl")
 SCHEMA = 1
 MIN_CHANGES = 2
+# Tracker baseline in data/changes.json. The first report starts here.
+BASELINE = datetime.date(2026, 10, 20)
+# First Friday a weekly report may be published. Earlier weeks roll forward.
+FIRST_REPORT_FRIDAY = datetime.date(2026, 10, 30)
 TIER_RESOLUTIONS = {"Pro tier", "Pro", "Standard"}
 MISSING_RESOLUTIONS = {"", "—", "-", "–"}
-PRICE_KINDS = {"price"}
+COUNT_KINDS = {"price", "promo_started", "promo_ended"}
 CATALOG_KINDS = {"promo_started", "promo_ended", "added"}
 INDEX_H1 = "AI video price change reports"
 INDEX_DESCRIPTION = (
-    "Friday reports of AI video price changes for each ISO week. "
-    "A week is published when VidFare has checked at least two real price changes. "
+    "Friday reports of AI video price changes and promo starts and ends for each ISO week. "
+    "A week is published when VidFare has checked at least two of those changes. "
     "A week with fewer changes is skipped, and those changes are included in the next report that reaches two."
 )
+NO_PRICE_NOTE = "No per-second price changes this week"
 
 
 def format_usd(v):
@@ -222,70 +230,94 @@ def prices(events):
     return [event for event in events if event.get("kind") == "price"]
 
 
-def assign(events, as_of):
-    """Published reports and price changes still waiting, as of a calendar date.
+def countable(events):
+    """Price changes and verified promo starts and ends on or after the baseline."""
+    chosen = []
+    for event in events:
+        if event.get("kind") not in COUNT_KINDS or not event.get("date"):
+            continue
+        if parse_date(event["date"]) < BASELINE:
+            continue
+        chosen.append(event)
+    return chosen
 
-    A week closes on its Friday. The report includes price changes dated
+
+def _rolled_from(pending, year, week):
+    rolled = {}
+    for event in pending:
+        rolled_year, rolled_week, _ = parse_date(event["date"]).isocalendar()
+        key = (rolled_year, rolled_week)
+        rolled[key] = rolled.get(key, 0) + 1
+    return [
+        {
+            "iso_year": rolled_year,
+            "iso_week": rolled_week,
+            "week_start": datetime.date.fromisocalendar(rolled_year, rolled_week, 1).isoformat(),
+            "count": count,
+        }
+        for (rolled_year, rolled_week), count in sorted(rolled.items())
+        if (rolled_year, rolled_week) != (year, week)
+    ]
+
+
+def assign(events, as_of):
+    """Published reports and countable changes still waiting, as of a calendar date.
+
+    A week closes on its Friday. The report includes countable changes dated
     Monday through Friday, plus any still-waiting changes from earlier dates.
+    No week is published before FIRST_REPORT_FRIDAY. Those changes roll into
+    the first report, whose covered range starts at the baseline.
     """
     as_of = parse_date(as_of)
     pending = []
     consumed = set()
     reports = []
-    ordered = sorted(prices(events), key=lambda event: (event.get("date") or "", event.get("id") or ""))
+    ordered = sorted(countable(events), key=lambda event: (event.get("date") or "", event.get("id") or ""))
     if ordered:
         cursor, _friday = week_bounds(ordered[0]["date"])
+        prior_through = None
         while True:
             monday, friday = week_bounds(cursor)
             if friday > as_of:
                 break
             fresh = []
             for event in ordered:
-                if event["id"] in consumed:
+                if event["id"] in consumed or event in pending:
                     continue
                 day = parse_date(event["date"])
-                if monday <= day <= friday and event not in pending:
+                if monday <= day <= friday:
                     fresh.append(event)
             chosen = list(pending) + fresh
-            if len(chosen) >= MIN_CHANGES:
-                rolled = {}
-                for event in pending:
-                    year, week, _ = parse_date(event["date"]).isocalendar()
-                    key = (year, week)
-                    rolled[key] = rolled.get(key, 0) + 1
+            if len(chosen) >= MIN_CHANGES and friday >= FIRST_REPORT_FRIDAY:
                 year, week, _ = monday.isocalendar()
+                covered_from = BASELINE if prior_through is None else prior_through + datetime.timedelta(days=1)
+                earliest = min(parse_date(event["date"]) for event in chosen)
+                if earliest < covered_from:
+                    covered_from = earliest
                 reports.append({
                     "id": week_id(year, week),
                     "iso_year": year,
                     "iso_week": week,
                     "week_start": monday.isoformat(),
                     "through": friday.isoformat(),
+                    "covered_from": covered_from.isoformat(),
+                    "covered_through": friday.isoformat(),
+                    "first": prior_through is None,
                     "changes": chosen,
-                    "rolled_from": [
-                        {
-                            "iso_year": rolled_year,
-                            "iso_week": rolled_week,
-                            "week_start": datetime.date.fromisocalendar(rolled_year, rolled_week, 1).isoformat(),
-                            "count": count,
-                        }
-                        for (rolled_year, rolled_week), count in sorted(rolled.items())
-                        if (rolled_year, rolled_week) != (year, week)
-                    ],
+                    "rolled_from": _rolled_from(pending, year, week),
                 })
                 consumed.update(event["id"] for event in chosen)
                 pending = []
+                prior_through = friday
             else:
                 pending = chosen
-            weekend = []
+            weekend_end = min(friday + datetime.timedelta(days=2), as_of)
+            pending_ids = {event["id"] for event in pending}
             for event in ordered:
-                if event["id"] in consumed:
+                if event["id"] in consumed or event["id"] in pending_ids:
                     continue
                 day = parse_date(event["date"])
-                if friday < day <= min(friday + datetime.timedelta(days=2), as_of):
-                    weekend.append(event)
-            pending_ids = {event["id"] for event in pending}
-            for event in weekend:
-                if event["id"] not in pending_ids:
+                if friday < day <= weekend_end:
                     pending.append(event)
                     pending_ids.add(event["id"])
             cursor = monday + datetime.timedelta(days=7)
@@ -321,30 +353,50 @@ def report_h1(report):
     return f"AI video price changes, week of {long_date(report['week_start'])}"
 
 
+def range_phrase(start, end):
+    """'Oct 20 to Oct 30, 2026'. The month is repeated so the span cannot be misread."""
+    start = parse_date(start)
+    end = parse_date(end)
+    if start.year == end.year:
+        return f"{start.strftime('%b')} {start.day} to {end.strftime('%b')} {end.day}, {end.year}"
+    return f"{long_date(start)} to {long_date(end)}"
+
+
+def change_counts(report):
+    changes = report.get("changes") or []
+    return {
+        "price": sum(1 for event in changes if event.get("kind") == "price"),
+        "promo_started": sum(1 for event in changes if event.get("kind") == "promo_started"),
+        "promo_ended": sum(1 for event in changes if event.get("kind") == "promo_ended"),
+    }
+
+
 def report_description(report):
-    count = len(report["changes"])
-    noun = "price change" if count == 1 else "price changes"
-    return (
-        f"{count} real {noun} checked for the week of {long_date(report['week_start'])} "
-        f"({long_date(report['week_start'])} through {long_date(report['through'])})."
+    counts = change_counts(report)
+    sentence = (
+        f"This report covers {range_phrase(report['covered_from'], report['covered_through'])}. "
+        f"Counted changes: {counts['price']} per-second price changes, "
+        f"{counts['promo_started']} promos started, and {counts['promo_ended']} promos ended."
     )
+    if report.get("first"):
+        sentence += (
+            " No earlier weekly report was published, so this first edition includes verified "
+            f"changes recorded since the {long_date(BASELINE)} baseline."
+        )
+    return sentence
 
 
 def report_paragraphs(report):
     paragraphs = []
-    if report.get("rolled_from"):
-        parts = [
-            f"{item['count']} from the week of {long_date(item['week_start'])}"
-            for item in report["rolled_from"]
-        ]
+    if change_counts(report)["price"]:
         paragraphs.append(
-            "This report also includes changes from earlier weeks that had fewer than 2 price changes: "
-            + "; ".join(parts) + "."
+            "Before and after are dollars per second of finished video. "
+            "The percent is the change from the old rate to the new rate. "
+            "The source link is the vendor page the rate was checked against."
         )
     paragraphs.append(
-        "Before and after are dollars per second of finished video. "
-        "The percent is the change from the old rate to the new rate. "
-        "The source link is the vendor page the rate was checked against."
+        "Each promo line links to the vendor page or post it was checked against, "
+        "with the date checked and the start or end date when the vendor gave one."
     )
     return paragraphs
 
@@ -362,30 +414,29 @@ def index_paragraphs(result, events):
         rolled = f" {earlier} of those are from an earlier week." if earlier else ""
         paragraphs.append(
             f"The week of {long_date(monday)} closes on Friday {long_date(friday)}. "
-            f"It is not published before then. Price changes recorded so far: {waiting}.{rolled}"
+            f"It is not published before then. Qualifying changes recorded so far: {waiting}.{rolled}"
         )
     elif this_id not in published:
         if waiting == 0:
-            waiting_text = "No price change is recorded for it."
+            waiting_text = "No qualifying change is recorded for it."
         elif waiting == 1:
-            waiting_text = "1 price change is still waiting."
+            waiting_text = "1 qualifying change is still waiting."
         else:
-            waiting_text = f"{waiting} price changes are still waiting."
+            waiting_text = f"{waiting} qualifying changes are still waiting."
         paragraphs.append(
             f"The week of {long_date(monday)} (through {long_date(friday)}) is not published. "
-            f"{waiting_text} A report needs at least {MIN_CHANGES} price changes."
+            f"{waiting_text} A report needs at least {MIN_CHANGES} changes."
         )
     else:
         noun = "report" if len(result["reports"]) == 1 else "reports"
         paragraphs.append(
             f"{len(result['reports'])} weekly {noun} published through {long_date(as_of)}. "
-            f"Price changes still waiting: {waiting}."
+            f"Qualifying changes still waiting: {waiting}."
         )
-    promos = sum(1 for event in events if event.get("kind") in ("promo_started", "promo_ended"))
     added = sum(1 for event in events if event.get("kind") == "added")
     paragraphs.append(
-        f"Promo starts and ends recorded: {promos}. New models or platforms recorded: {added}. "
-        "Neither counts toward the two-change minimum."
+        "Per-second price changes, promo starts, and promo ends count toward the two-change minimum. "
+        f"New models or platforms recorded: {added}. Those do not count."
     )
     return paragraphs
 
@@ -484,8 +535,18 @@ def render_change_table(changes, link_fn=None):
     return f'<div class="tblwrap"><table>{head}<tbody>{"".join(rows)}</tbody></table></div>'
 
 
+def _of_kind(report, kind):
+    rows = [event for event in report.get("changes") or [] if event.get("kind") == kind]
+    rows.sort(key=lambda event: (event.get("date") or "", event.get("id") or ""))
+    return rows
+
+
 def render_report_body(report, events, prior_through=None, link_fn=None):
     catalog = catalog_for(events, report["through"], prior_through)
+    # Promo sections list only the changes assigned to this report.
+    started = _of_kind(report, "promo_started")
+    ended = _of_kind(report, "promo_ended")
+    price_rows = _of_kind(report, "price")
     parts = [
         f"<h1>{_escape(report_h1(report))}</h1>",
         f'<p class="lead">{_escape(report_description(report))}</p>',
@@ -493,19 +554,26 @@ def render_report_body(report, events, prior_through=None, link_fn=None):
     for paragraph in report_paragraphs(report):
         parts.append(f"<p>{_escape(paragraph)}</p>")
     parts.append("<h2>Price changes</h2>")
-    parts.append(render_change_table(report["changes"], link_fn))
+    if price_rows:
+        parts.append(render_change_table(price_rows, link_fn))
+    else:
+        parts.append(f"<p>{_escape(NO_PRICE_NOTE)}</p>")
     if catalog["added"]:
         parts.append("<h2>New models and platforms</h2>")
         parts.append(_section_note(catalog["added"], report["week_start"]))
         parts.append(_event_list(catalog["added"], _added_sentence, link_fn))
-    if catalog["promo_started"]:
-        parts.append("<h2>Promos started</h2>")
-        parts.append(_section_note(catalog["promo_started"], report["week_start"]))
-        parts.append(_event_list(catalog["promo_started"], _promo_sentence, link_fn))
-    if catalog["promo_ended"]:
-        parts.append("<h2>Promos ended</h2>")
-        parts.append(_section_note(catalog["promo_ended"], report["week_start"]))
-        parts.append(_event_list(catalog["promo_ended"], _promo_sentence, link_fn))
+    parts.append("<h2>Promos started</h2>")
+    if started:
+        parts.append(_section_note(started, report["week_start"]))
+        parts.append(_event_list(started, _promo_sentence, link_fn))
+    else:
+        parts.append("<p>No promo started in this span.</p>")
+    parts.append("<h2>Promos ended</h2>")
+    if ended:
+        parts.append(_section_note(ended, report["week_start"]))
+        parts.append(_event_list(ended, _promo_sentence, link_fn))
+    else:
+        parts.append("<p>No promo ended in this span.</p>")
     return "".join(parts)
 
 

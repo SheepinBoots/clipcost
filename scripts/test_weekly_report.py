@@ -97,9 +97,6 @@ def main():
     higgs = next(event for event in log if event["id"].startswith("promo_ended:deal:hf-wan3"))
     assert higgs["end_is_estimate"] is True
     assert higgs["source_url"].startswith("https://")
-    launch = wr.assign(log, "2026-10-30")
-    assert launch["reports"] == []
-    assert launch["pending"] == []
 
     report = friday["reports"][0]
     body = wr.render_report_body(report, [])
@@ -113,28 +110,72 @@ def main():
     assert "Sponsor" not in body
     assert "<table>" in body
     desc = wr.report_description(report)
-    assert desc.startswith("2 real price changes")
+    assert "2 per-second price changes" in desc
+    assert "Oct 20 to Oct 30, 2026" in desc
     ld = wr.report_jsonld(report, "https://sheepinboots.github.io/clipcost/reports/2026-w44/")
     assert ld["headline"] == wr.report_h1(report)
     assert ld["description"] == desc
     assert ld["@type"] == "Article"
 
+    held = [price("2026-10-21", "a", 0.10, 0.08), price("2026-10-22", "b", 0.20, 0.10)]
+    assert wr.assign(held, "2026-10-23")["reports"] == []
+    first_prices = wr.assign(held, "2026-10-30")
+    assert [item["id"] for item in first_prices["reports"]] == ["2026-w44"]
+    assert first_prices["reports"][0]["covered_from"] == "2026-10-20"
+
+    one_promo = [{
+        "v": 1, "kind": "promo_started", "id": "promo_started:deal:only:2026-10-27",
+        "date": "2026-10-27", "checked": "2026-10-27", "started": "2026-10-27",
+        "title": "Only promo", "vendor": "fal", "source_url": "https://example.com/only", "deal_id": "only",
+    }]
+    assert wr.assign(one_promo, "2026-10-30")["reports"] == []
+    added = [{
+        "v": 1, "kind": "added", "id": "added:1", "date": "2026-10-27", "checked": "2026-10-27",
+        "model": "wan-3-0", "model_name": "Wan 3.0", "platform": "fal", "what": "model",
+        "source_url": "https://example.com/new",
+    }, {
+        "v": 1, "kind": "added", "id": "added:2", "date": "2026-10-28", "checked": "2026-10-28",
+        "model": "kling-3-0", "model_name": "Kling 3.0", "platform": "fal", "what": "model",
+        "source_url": "https://example.com/new2",
+    }]
+    assert wr.assign(added, "2026-10-30")["reports"] == []
+
+    launch = wr.assign(log, "2026-10-30")
+    assert [item["id"] for item in launch["reports"]] == ["2026-w44"]
+    edition = launch["reports"][0]
+    assert edition["covered_from"] == "2026-10-20"
+    assert edition["covered_through"] == "2026-10-30"
+    assert edition["first"] is True
+    assert launch["pending"] == []
+    assert {event["id"] for event in edition["changes"]} == promo_ids
+    assert wr.change_counts(edition) == {"price": 0, "promo_started": 4, "promo_ended": 2}
+    launch_body = wr.render_report_body(edition, log)
+    assert launch_body.count("<h1>") == 1
+    assert "AI video price changes, week of Oct 26, 2026" in launch_body
+    assert "Oct 20 to Oct 30, 2026" in launch_body
+    assert wr.NO_PRICE_NOTE in launch_body
+    assert "<h2>Promos started</h2>" in launch_body
+    assert "<h2>Promos ended</h2>" in launch_body
+    assert "estimated" in launch_body
+    assert "https://www.magnific.com/pricing" in launch_body
+    assert "https://x.com/higgsfield_ai/status/2110074247569924489" in launch_body
+    assert "https://x.com/runwayml/status/2112925874144030784" in launch_body
+    assert "https://x.com/RunwayMLDevs/status/2113711678399668463" in launch_body
+    assert "New models and platforms" not in launch_body
+    assert "newsletter" not in launch_body.lower()
+    launch_desc = wr.report_description(edition)
+    assert launch_desc == wr.report_jsonld(edition, "https://example.com")["description"]
+
     index = wr.render_index_body(launch, log)
     assert "AI video price change reports" in index
     assert wr.INDEX_DESCRIPTION in index
     assert "week of Oct 26, 2026" in index
-    assert "is not published" in index
-    assert "Promo starts and ends recorded: 6" in index
+    assert "/reports/2026-w44/" in index
+    assert "count toward the two-change minimum" in index
     assert "newsletter" not in index.lower()
     index_ld = wr.index_jsonld("https://sheepinboots.github.io/clipcost/reports/")
     assert index_ld["name"] == wr.INDEX_H1
     assert index_ld["description"] == wr.INDEX_DESCRIPTION
-
-    rolled_body = wr.render_report_body(week44["reports"][0], log, None)
-    assert "Promos started" in rolled_body
-    assert "Promos ended" in rolled_body
-    assert "estimated" in rolled_body
-    assert "New models and platforms" not in rolled_body
 
     with tempfile.TemporaryDirectory() as tmp:
         path = os.path.join(tmp, "price_changes.jsonl")
@@ -173,13 +214,27 @@ def main():
     assert 'name="robots" content="index,follow"' in html
     assert "vidfare.goatcounter.com" in html
     assert "week of Oct 26, 2026" in html
-    assert "is not published" in html
+    assert "/reports/2026-w44/" in html
     assert "newsletter" not in html.lower()
     assert '"@type": "CollectionPage"' in html
     assert wr.INDEX_DESCRIPTION in html.split('application/ld+json">', 1)[1]
+    week = os.path.join(preview, "clipcost", "reports", "2026-w44", "index.html")
+    week_html = open(week, encoding="utf-8").read()
+    assert week_html.count("<h1>") == 1
+    assert "<h1>AI video price changes, week of Oct 26, 2026</h1>" in week_html
+    assert "Oct 20 to Oct 30, 2026" in week_html
+    assert wr.NO_PRICE_NOTE in week_html
+    assert "<h2>Promos started</h2>" in week_html
+    assert "<h2>Promos ended</h2>" in week_html
+    assert "https://www.magnific.com/pricing" in week_html
+    assert 'rel="canonical" href="https://sheepinboots.github.io/clipcost/reports/2026-w44/"' in week_html
+    assert 'name="robots" content="index,follow"' in week_html
+    assert "vidfare.goatcounter.com" in week_html
+    assert "newsletter" not in week_html.lower()
+    assert '"@type": "Article"' in week_html
+    assert wr.report_description(wr.assign(wr.load(), "2026-10-30")["reports"][0]) in week_html
     assert not os.path.isdir(os.path.join(ROOT, "dist", "reports"))
-    assert not os.path.exists(os.path.join(preview, "clipcost", "reports", "2026-w44", "index.html"))
-    print("ok", page)
+    print("ok", week)
 
 
 if __name__ == "__main__":

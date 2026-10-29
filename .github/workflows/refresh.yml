@@ -10,7 +10,8 @@ on:
     # On Friday this run is also the backstop for the weekly price report:
     # build_site.py closes the ISO week to date (Monday through Friday) after
     # this price check. Pages stay off until REPORTS_ENABLED is true, and a
-    # week still needs at least two real price changes.
+    # week still needs at least two qualifying changes (a per-second price
+    # move, a promo start, or a promo end).
     - cron: "17 15 * * *"
     # Friday 13:30 UTC weekly report pass. Same job, so the report includes
     # the price check from this run. If this schedule does not fire, the
