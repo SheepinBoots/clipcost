@@ -9,7 +9,7 @@
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI Video Credit Calculator (Oct 2026): Higgsfield, Krea, Magnific | VidFare"><meta name="twitter:description" content="How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second."><meta name="twitter:image" content="https://sheepinboots.github.io/clipcost/og.png">
 <meta name="theme-color" content="#0b0d12"><link rel="icon" type="image/png" sizes="32x32" href="/clipcost/favicon-32.png"><link rel="icon" type="image/svg+xml" href="/clipcost/logo.svg"><link rel="apple-touch-icon" href="/clipcost/logo-512.png">
 <link rel="stylesheet" href="/clipcost/style.css"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "VidFare credit-plan calculator", "description": "Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page.", "url": "https://sheepinboots.github.io/clipcost/calculator/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script></head><body>
-<header class="top"><div class="wrap"><a class="logo" href="/clipcost/">Vid<span>Fare</span></a><nav><a href="/clipcost/">Prices</a><a href="/clipcost/deals/">Deals</a><a href="/clipcost/calculator/" class=on>Credit calculator</a><a href="/clipcost/changes/">Price changes</a><a href="/clipcost/newsletter/">Newsletter</a><a href="/clipcost/about/">About</a></nav></div></header>
+<header class="top"><div class="wrap"><a class="logo" href="/clipcost/">Vid<span>Fare</span></a><nav><a href="/clipcost/">Prices</a><a href="/clipcost/deals/">Deals</a><a href="/clipcost/calculator/" class=on>Credit calculator</a><a href="/clipcost/changes/">Price changes</a><a href="/clipcost/about/">About</a></nav></div></header>
 <main class="wrap"><h1>AI video credit calculator</h1>
 <p class="lead">Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page.</p>
 <div class="calc"><div class="card">
@@ -26,7 +26,7 @@
 <div class="small" style="margin-top:8px">Credits per month</div><div class="kpi" id="kCred"></div>
 <div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer"></div></div>
 <p class="small" id="pNote"></p><p id="pLink"></p></div>
-<div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Res.</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody></tbody></table></div>
+<div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Plan tier</th><th>Resolution</th><th>Audio</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody></tbody></table></div>
 <p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
 <script>
 const BASE="/clipcost";const AFF={"Higgsfield": "https://higgsfield.ai?fpr=emmanuel-bbfe0e", "Higgsfield API": "https://open.higgsfield.ai?fpr=emmanuel-bbfe0e"};const MODELS={"wan-3-0-prime": "Wan 3.0 Prime", "wan-3-0": "Wan 3.0", "kling-3-0": "Kling 3.0", "seedance-2-5": "Seedance 2.5", "veo-3-1": "Veo 3.1", "gemini-omni-flash": "Gemini Omni Flash 1.1", "minimax-hailuo": "MiniMax Hailuo / H3", "runway-gen-4": "Runway Gen-4.x", "grok-imagine": "Grok Imagine Video 1.5"};
@@ -37,6 +37,10 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
  const pk=new URLSearchParams(location.search).get('plan');if(pk&&d.plans[pk])$('plan').value=pk;
  function hf(url){try{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return "https://higgsfield.ai?fpr=emmanuel-bbfe0e";u.searchParams.delete('ref');u.searchParams.set('fpr',"emmanuel-bbfe0e");return u.toString()}catch(e){return null}}
  function money(v){const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}
+ function tierOf(r){const name=String(r.plan_name||'').trim();if(name)return name;const res=String(r.resolution||'').trim();if(res==='Pro tier'||res==='Pro'||res==='Standard')return res;return 'not listed'}
+ function resOf(r){const res=String(r.resolution||'').trim();if(!res||res==='—'||res==='-'||res==='–'||res==='Pro tier'||res==='Pro'||res==='Standard')return 'not listed';return res}
+ function audioOf(r){if(r.audio===true)return 'audio on';if(r.audio===false)return 'audio off';return 'not listed'}
+ function assumptionOf(r){if(r.kind==='plan')return r.status==='estimate'?'Estimate: assumes every credit you pay for is used':'Assumes every credit you pay for is used';if(r.status==='estimate'){const note=String(r.note||'').trim();return note?'Estimate: '+note:'Estimate: the vendor marks this rate as approximate'}return ''}
  function clipCount(credits, per){const raw=credits/per, nearest=Math.round(raw);return Math.abs(raw-nearest)<0.005?nearest:Math.floor(raw)}
  function current(r){const today=new Date().toISOString().slice(0,10);if(r.status==='discontinued')return false;if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}
  function readUsed(){const el=$('used'), raw=String(el.value).trim();
@@ -72,7 +76,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
   const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener';
   const srcRel=tracked?'sponsored nofollow noopener':'nofollow noopener';
   $('pLink').innerHTML=`<a class="btn" href="${esc(href)}" rel="${rel}" target="_blank">See ${esc(p.platform)} plans</a> <a class="small" href="${esc(tracked||p.source_url)}" rel="${srcRel}" target="_blank">source</a>`;
-  if(u==null){$('ct').querySelector('tbody').innerHTML='<tr><td colspan="7">Enter a whole number from 1 to 100.</td></tr>';return}
+  if(u==null){$('ct').querySelector('tbody').innerHTML='<tr><td colspan="9">Enter a whole number from 1 to 100.</td></tr>';return}
   const secs=Math.max(1, Number($('windowSecs').value)||1);
   const rs=d.rows.filter(r=>r.plan==k&&current(r)).sort((a,b)=>a.usd_per_second-b.usd_per_second);
   $('ct').querySelector('tbody').innerHTML=rs.map(r=>{const clips=clipCount(credits*u,r.credits_per_clip);const pc=(r.usd_per_clip*scale)/u;
@@ -88,16 +92,14 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
      const bscale=(map.blended_price/p.usd_month)*(p.credits_month/credits);
      extra+=`<div class="small">12-month blended ${money((r.usd_per_clip*bscale)/u/r.clip_seconds)}/s</div>`;
    }
-   return `<tr><td><a href="${BASE}/models/${r.model}/">${esc(r.variant)}</a></td><td>${esc(r.resolution)}</td><td>${r.clip_seconds}s</td><td>${r.status=='estimate'?'~':''}${(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}</td><td class="num">${clips.toLocaleString()}</td><td class="num">${priceCell}</td><td class="num">${perSec}${extra}</td></tr>`}).join('');
+   const assume=assumptionOf(r);
+   const assumeHtml=assume?`<div class="assume">${esc(assume)}</div>`:'';
+   return `<tr><td><a href="${BASE}/models/${r.model}/">${esc(r.variant)}</a></td><td>${esc(tierOf(r))}</td><td>${esc(resOf(r))}</td><td>${esc(audioOf(r))}</td><td>${r.clip_seconds}s</td><td>${r.status=='estimate'?'~':''}${(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}</td><td class="num">${clips.toLocaleString()}</td><td class="num">${priceCell}</td><td class="num">${perSec}${extra}${assumeHtml}</td></tr>`}).join('');
   if(hasUn) $('dealEff').textContent='Effective $/s for an unlimited window is the plan price divided by the seconds you make. It is not $0.';
   history.replaceState(null,'','?plan='+k);}
  $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
  $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);go();});
-</script><section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
-<p class="small" style="margin:0">Every Monday: price changes, new models, and the cheapest way to run each one. Free, unsubscribe any time.</p>
-<form action="#TODO-newsletter-endpoint" method="post" onsubmit="event.preventDefault();this.querySelector('button').textContent='Thanks! (signup not connected yet)';">
-<!-- TODO: point action at the newsletter provider (Beehiiv/Buttondown/ConvertKit) -->
-<input type="email" name="email" required placeholder="you@email.com" aria-label="Email address"><button class="btn" type="submit">Subscribe</button></form></section></main>
+</script></main>
 <footer><div class="wrap"><p><b>Models:</b> <a href="/clipcost/models/wan-3-0-prime/">Wan 3.0 Prime</a> · <a href="/clipcost/models/wan-3-0/">Wan 3.0</a> · <a href="/clipcost/models/kling-3-0/">Kling 3.0</a> · <a href="/clipcost/models/seedance-2-5/">Seedance 2.5</a> · <a href="/clipcost/models/veo-3-1/">Veo 3.1</a> · <a href="/clipcost/models/gemini-omni-flash/">Gemini Omni Flash 1.1</a> · <a href="/clipcost/models/minimax-hailuo/">MiniMax Hailuo / H3</a> · <a href="/clipcost/models/runway-gen-4/">Runway Gen-4.x</a> · <a href="/clipcost/models/grok-imagine/">Grok Imagine Video 1.5</a></p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="/clipcost/about/#disclosure">disclosure</a>).</p>
 <p>© 2026 VidFare · Data last checked 2026-10-28 · <a href="/clipcost/advertise/">Advertise</a></p></div></footer>

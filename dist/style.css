@@ -25,6 +25,7 @@ th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;verti
 th{background:#111520;position:sticky;top:0;cursor:pointer;white-space:nowrap;user-select:none;color:var(--mut);font-weight:600}
 th.sorted-asc::after{content:" ▲"}th.sorted-desc::after{content:" ▼"}
 td.num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
+td.num .assume,.card .assume{display:block;white-space:normal;font-weight:400;font-variant-numeric:normal;max-width:18rem;margin-top:4px;font-size:12.5px;color:var(--mut);line-height:1.35}
 tr:hover td{background:#121725}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:99px;border:1px solid var(--line);color:var(--mut);white-space:nowrap}
 .tag.verified{color:var(--acc);border-color:#2a5a47}.tag.estimate{color:var(--warn);border-color:#5a4a2a}.tag.promo{color:var(--promo);border-color:#5a2a46}.tag.discontinued{color:var(--mut);border-color:#4a4158}
