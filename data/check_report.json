@@ -1,13 +1,13 @@
 {
- "run": "2026-10-28T20:21:40",
+ "run": "2026-10-29T08:08:54",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 15555
+   "chars": 16118
   },
   "hf_api": {
    "status": "fetched",
-   "chars": 6054
+   "chars": 3676
   },
   "hf_api_wan": {
    "status": "fetched",
@@ -39,7 +39,7 @@
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1510
+   "chars": 1511
   },
   "runway": {
    "status": "fetched",
@@ -51,15 +51,15 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 63036
+   "chars": 65568
   },
   "atlas": {
    "status": "fetched",
-   "chars": 2193142
+   "chars": 2072202
   },
   "krea": {
    "status": "fetched",
-   "chars": 32259
+   "chars": 34481
   },
   "magnific": {
    "status": "fetched",
@@ -83,7 +83,22 @@
    "chars": 3489
   }
  },
- "findings": [],
+ "findings": [
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "snippet": "eators and leading enterprises Individual Team & Enterprise API Monthly Yearly -20% off Free Free forever. For people looking to explore Runway's AI Tools $0 /month 12"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "snippet": "ly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2"
+  }
+ ],
  "deal_scan": {
   "pages": [
    {
@@ -112,7 +127,7 @@
     "vendor": "Runway",
     "url": "https://runwayml.com/pricing",
     "status": "fetched",
-    "snippets": 8
+    "snippets": 6
    },
    {
     "id": "fal_pricing",
@@ -122,7 +137,7 @@
     "snippets": 0
    }
   ],
-  "candidates": 0
+  "candidates": 2
  },
  "counts": {
   "ok": 203,

@@ -2,87 +2,87 @@
 
 > What every AI video second costs, everywhere.
 
-VidFare compares AI video generation prices in dollars per second of finished video, across APIs and credit plans. Figures are copied from each vendor's own pricing page. Last full check: 2026-10-28. 184 current prices.
+VidFare compares AI video generation prices in dollars per second of finished video, across APIs and credit plans. Figures are copied from each vendor's own pricing page. Last full check: 2026-10-29. 184 current prices.
 
 ## Cheapest current price by model and platform
 
 ### Wan 3.0 Prime
 
-- [Wan 3.0 Prime prices](https://sheepinboots.github.io/clipcost/models/wan-3-0-prime/): cheapest overall $0.0272/s on Higgsfield API, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28), promo until 2026-11-01.
-- Higgsfield API: $0.0272/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28), promo until 2026-11-01.
-- Higgsfield: $0.0495/s, plan tier Ultra (annual), resolution 480p, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
-- Krea: $0.05051/s, plan tier Basic (yearly), resolution 480p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- Runway API: $0.068/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
-- fal: $0.068/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
+- [Wan 3.0 Prime prices](https://sheepinboots.github.io/clipcost/models/wan-3-0-prime/): cheapest overall $0.0272/s on Higgsfield API, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29), promo until 2026-11-01.
+- Higgsfield API: $0.0272/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29), promo until 2026-11-01.
+- Higgsfield: $0.0495/s, plan tier Ultra (annual), resolution 480p, audio not listed (checked 2026-10-29). Assumes every credit you pay for is used.
+- Krea: $0.05051/s, plan tier Basic (yearly), resolution 480p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- Runway API: $0.068/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
+- fal: $0.068/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
 
 ### Wan 3.0
 
-- [Wan 3.0 prices](https://sheepinboots.github.io/clipcost/models/wan-3-0/): cheapest overall $0.02/s on Higgsfield API, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28), promo until 2026-11-01.
-- Higgsfield API: $0.02/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28), promo until 2026-11-01.
-- Higgsfield: $0.033/s, plan tier Ultra (annual), resolution 480p, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
-- Replicate: $0.05/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
-- Runway API: $0.05/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
-- fal: $0.05/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
-- Krea: $0.05556/s, plan tier Basic (yearly), resolution 480p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
+- [Wan 3.0 prices](https://sheepinboots.github.io/clipcost/models/wan-3-0/): cheapest overall $0.02/s on Higgsfield API, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29), promo until 2026-11-01.
+- Higgsfield API: $0.02/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29), promo until 2026-11-01.
+- Higgsfield: $0.033/s, plan tier Ultra (annual), resolution 480p, audio not listed (checked 2026-10-29). Assumes every credit you pay for is used.
+- Replicate: $0.05/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
+- Runway API: $0.05/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
+- fal: $0.05/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
+- Krea: $0.05556/s, plan tier Basic (yearly), resolution 480p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
 
 ### Kling 3.0
 
-- [Kling 3.0 prices](https://sheepinboots.github.io/clipcost/models/kling-3-0/): cheapest overall $0.0495/s on Higgsfield, plan tier Ultra (annual), resolution 720p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- Higgsfield: $0.0495/s, plan tier Ultra (annual), resolution 720p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- Magnific: $0.0594/s, plan tier Pro (annual), resolution 1080p, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
-- Krea: $0.06231/s, plan tier Basic (yearly), resolution not listed, audio off (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- Higgsfield API: $0.084/s, plan tier not listed, resolution lowest mode, audio not listed (checked 2026-10-28).
-- Kling API: $0.084/s, plan tier not listed, resolution 720p, audio off (checked 2026-10-28).
-- Runway API: $0.09/s, plan tier Standard, resolution not listed, audio off (checked 2026-10-28).
-- fal: $0.112/s, Pro tier, resolution not listed, audio off (checked 2026-10-28).
+- [Kling 3.0 prices](https://sheepinboots.github.io/clipcost/models/kling-3-0/): cheapest overall $0.0495/s on Higgsfield, plan tier Ultra (annual), resolution 720p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- Higgsfield: $0.0495/s, plan tier Ultra (annual), resolution 720p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- Magnific: $0.0594/s, plan tier Pro (annual), resolution 1080p, audio not listed (checked 2026-10-29). Assumes every credit you pay for is used.
+- Krea: $0.06231/s, plan tier Basic (yearly), resolution not listed, audio off (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- Higgsfield API: $0.084/s, plan tier not listed, resolution lowest mode, audio not listed (checked 2026-10-29).
+- Kling API: $0.084/s, plan tier not listed, resolution 720p, audio off (checked 2026-10-29).
+- Runway API: $0.09/s, plan tier Standard, resolution not listed, audio off (checked 2026-10-29).
+- fal: $0.112/s, Pro tier, resolution not listed, audio off (checked 2026-10-29).
 
 ### Seedance 2.5
 
-- [Seedance 2.5 prices](https://sheepinboots.github.io/clipcost/models/seedance-2-5/): cheapest overall $0.132/s on Magnific, plan tier Pro (annual), resolution 480p, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
-- Magnific: $0.132/s, plan tier Pro (annual), resolution 480p, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
-- Atlas Cloud: $0.1397/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28). Estimate: Atlas labels these '(estimated)': billed on actual video tokens.
-- Runway API: $0.20/s, plan tier not listed, resolution 480p, audio on (checked 2026-10-28).
-- Higgsfield API: $0.206/s, plan tier not listed, resolution lowest mode, audio not listed (checked 2026-10-28).
-- fal: $0.2205/s, plan tier not listed, resolution 480p, audio on (checked 2026-10-28). Estimate: fal says 'roughly': billed by tokens (16:9, 24fps).
+- [Seedance 2.5 prices](https://sheepinboots.github.io/clipcost/models/seedance-2-5/): cheapest overall $0.132/s on Magnific, plan tier Pro (annual), resolution 480p, audio not listed (checked 2026-10-29). Assumes every credit you pay for is used.
+- Magnific: $0.132/s, plan tier Pro (annual), resolution 480p, audio not listed (checked 2026-10-29). Assumes every credit you pay for is used.
+- Atlas Cloud: $0.1397/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29). Estimate: Atlas labels these '(estimated)': billed on actual video tokens.
+- Runway API: $0.20/s, plan tier not listed, resolution 480p, audio on (checked 2026-10-29).
+- Higgsfield API: $0.206/s, plan tier not listed, resolution lowest mode, audio not listed (checked 2026-10-29).
+- fal: $0.2205/s, plan tier not listed, resolution 480p, audio on (checked 2026-10-29). Estimate: fal says 'roughly': billed by tokens (16:9, 24fps).
 
 ### Veo 3.1
 
-- [Veo 3.1 prices](https://sheepinboots.github.io/clipcost/models/veo-3-1/): cheapest overall $0.02222/s on Krea, plan tier Basic (yearly), resolution 720p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- Krea: $0.02222/s, plan tier Basic (yearly), resolution 720p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- Runway API: $0.10/s, plan tier not listed, resolution not listed, audio off (checked 2026-10-28).
-- Higgsfield: $0.132/s, plan tier Ultra (annual), resolution 720p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- fal: $0.20/s, plan tier not listed, resolution 720p/1080p, audio off (checked 2026-10-28).
-- Magnific: $0.3432/s, plan tier Pro (annual), resolution 4K, audio on (checked 2026-10-28). Assumes every credit you pay for is used.
+- [Veo 3.1 prices](https://sheepinboots.github.io/clipcost/models/veo-3-1/): cheapest overall $0.02222/s on Krea, plan tier Basic (yearly), resolution 720p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- Krea: $0.02222/s, plan tier Basic (yearly), resolution 720p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- Runway API: $0.10/s, plan tier not listed, resolution not listed, audio off (checked 2026-10-29).
+- Higgsfield: $0.132/s, plan tier Ultra (annual), resolution 720p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- fal: $0.20/s, plan tier not listed, resolution 720p/1080p, audio off (checked 2026-10-29).
+- Magnific: $0.3432/s, plan tier Pro (annual), resolution 4K, audio on (checked 2026-10-29). Assumes every credit you pay for is used.
 
 ### Gemini Omni Flash 1.1
 
-- [Gemini Omni Flash 1.1 prices](https://sheepinboots.github.io/clipcost/models/gemini-omni-flash/): cheapest overall $0.099/s on Atlas Cloud, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28).
-- Atlas Cloud: $0.099/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28).
-- Google Gemini API: $0.10/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28). Estimate: Token-billed; Google states 'approximately $0.10 per second' of 720p.
-- Runway API: $0.10/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-28).
-- Magnific: $0.1584/s, plan tier Pro (annual), resolution not listed, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
+- [Gemini Omni Flash 1.1 prices](https://sheepinboots.github.io/clipcost/models/gemini-omni-flash/): cheapest overall $0.099/s on Atlas Cloud, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-29).
+- Atlas Cloud: $0.099/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-29).
+- Google Gemini API: $0.10/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-29). Estimate: Token-billed; Google states 'approximately $0.10 per second' of 720p.
+- Runway API: $0.10/s, plan tier not listed, resolution 720p, audio not listed (checked 2026-10-29).
+- Magnific: $0.1584/s, plan tier Pro (annual), resolution not listed, audio not listed (checked 2026-10-29). Assumes every credit you pay for is used.
 
 ### MiniMax Hailuo / H3
 
-- [MiniMax Hailuo / H3 prices](https://sheepinboots.github.io/clipcost/models/minimax-hailuo/): cheapest overall $0.01625/s on fal, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28), promo until 2026-10-31.
-- fal: $0.01625/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28), promo until 2026-10-31.
-- Krea: $0.02597/s, plan tier Basic (yearly), resolution 480p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- Magnific: $0.0264/s, plan tier Pro (annual), resolution 768p, audio not listed (checked 2026-10-28). Assumes every credit you pay for is used.
-- Higgsfield: $0.033/s, plan tier Ultra (annual), resolution 768p, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
-- Atlas Cloud: $0.0437/s, plan tier not listed, resolution 480P, audio not listed (checked 2026-10-28).
-- Runway API: $0.05/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
+- [MiniMax Hailuo / H3 prices](https://sheepinboots.github.io/clipcost/models/minimax-hailuo/): cheapest overall $0.01625/s on fal, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29), promo until 2026-10-31.
+- fal: $0.01625/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29), promo until 2026-10-31.
+- Krea: $0.02597/s, plan tier Basic (yearly), resolution 480p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- Magnific: $0.0264/s, plan tier Pro (annual), resolution 768p, audio not listed (checked 2026-10-29). Assumes every credit you pay for is used.
+- Higgsfield: $0.033/s, plan tier Ultra (annual), resolution 768p, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
+- Atlas Cloud: $0.0437/s, plan tier not listed, resolution 480P, audio not listed (checked 2026-10-29).
+- Runway API: $0.05/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
 
 ### Runway Gen-4.x
 
-- [Runway Gen-4.x prices](https://sheepinboots.github.io/clipcost/models/runway-gen-4/): cheapest overall $0.05/s on Runway API, plan tier not listed, resolution not listed, audio not listed (checked 2026-10-28).
-- Runway API: $0.05/s, plan tier not listed, resolution not listed, audio not listed (checked 2026-10-28).
-- Krea: $0.08929/s, plan tier Basic (yearly), resolution not listed, audio not listed (checked 2026-10-28). Estimate: assumes every credit you pay for is used.
+- [Runway Gen-4.x prices](https://sheepinboots.github.io/clipcost/models/runway-gen-4/): cheapest overall $0.05/s on Runway API, plan tier not listed, resolution not listed, audio not listed (checked 2026-10-29).
+- Runway API: $0.05/s, plan tier not listed, resolution not listed, audio not listed (checked 2026-10-29).
+- Krea: $0.08929/s, plan tier Basic (yearly), resolution not listed, audio not listed (checked 2026-10-29). Estimate: assumes every credit you pay for is used.
 
 ### Grok Imagine Video 1.5
 
-- [Grok Imagine Video 1.5 prices](https://sheepinboots.github.io/clipcost/models/grok-imagine/): cheapest overall $0.02/s on Runway API, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
-- Runway API: $0.02/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
-- fal: $0.08/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-28).
+- [Grok Imagine Video 1.5 prices](https://sheepinboots.github.io/clipcost/models/grok-imagine/): cheapest overall $0.02/s on Runway API, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
+- Runway API: $0.02/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
+- fal: $0.08/s, plan tier not listed, resolution 480p, audio not listed (checked 2026-10-29).
 
 ## Deals
 

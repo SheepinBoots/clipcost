@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-28",
+ "generated": "2026-10-29",
  "note": "Unconfirmed. These snippets are not published as deals.",
  "pages": [
   {
@@ -28,7 +28,7 @@
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "status": "fetched",
-   "snippets": 8
+   "snippets": 6
   },
   {
    "id": "fal_pricing",
@@ -38,5 +38,22 @@
    "snippets": 0
   }
  ],
- "candidates": []
+ "candidates": [
+  {
+   "status": "possible_end",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "e06947adfb829873",
+   "snippet": "eators and leading enterprises Individual Team & Enterprise API Monthly Yearly -20% off Free Free forever. For people looking to explore Runway's AI Tools $0 /month 12",
+   "seen": "2026-10-29"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "4bca5dbaa3f4f2b1",
+   "snippet": "ly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2",
+   "seen": "2026-10-29"
+  }
+ ]
 }
