@@ -3,6 +3,7 @@
 import json, os, shutil, html, datetime, sys, email.utils, struct
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
+import weekly_report
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,6 +20,9 @@ OG_ALT = BRAND + ". " + TAGLINE
 # and the advertise-page newsletter spot are omitted.
 NEWSLETTER_ENABLED = False
 NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Buttondown form action
+# Weekly /reports/ pages. Leave False until the owner wants them on the live site.
+# A week is still withheld when it has fewer than two real price changes.
+REPORTS_ENABLED = False
 # Credit-plan $/s is plan price ÷ credits × credits per clip ÷ seconds (scripts/build_data.py).
 # The about page states the assumption that math uses: every credit paid for is used.
 CREDIT_USE = "assumes every credit you pay for is used"
@@ -148,11 +152,14 @@ def ld_script(obj):
     raw = json.dumps(obj, ensure_ascii=False).replace("<", "\\u003c")
     return f'<script type="application/ld+json">{raw}</script>'
 
-def page(path, title, desc, body, active="", extra_head=""):
+def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None):
     canon = SITE_URL + path
+    show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
     navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/changes/", "Price changes")]
     if NEWSLETTER_ENABLED:
         navs.append(("/newsletter/", "Newsletter"))
+    if show_reports:
+        navs.append(("/reports/", "Reports"))
     navs.append(("/about/", "About"))
     nav = "".join(f'<a href="{root(h)}"{" class=on" if h==active else ""}>{t}</a>' for h, t in navs)
     modlinks = " · ".join(f'<a href="{root(f"/models/{s}/")}">{e(m["name"])}</a>' for s, m in models.items())
@@ -175,9 +182,67 @@ def page(path, title, desc, body, active="", extra_head=""):
 <script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </body></html>"""
-    out = os.path.join(DIST, path.strip("/"), "index.html") if path.endswith("/") else os.path.join(DIST, path.strip("/"))
+    base_dir = DIST if dest is None else dest
+    out = os.path.join(base_dir, path.strip("/"), "index.html") if path.endswith("/") else os.path.join(base_dir, path.strip("/"))
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w").write(doc)
+
+def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
+    """Write /reports/ and any week that has at least two real price changes."""
+    events = weekly_report.load()
+    result = weekly_report.assign(events, as_of)
+    paths = ["/reports/"]
+    page("/reports/", f"{weekly_report.INDEX_H1} | {BRAND}", weekly_report.INDEX_DESCRIPTION,
+         weekly_report.render_index_body(result, events, href_fn=root, public_log=public_log),
+         "/reports/", ld_script(weekly_report.index_jsonld(SITE_URL + "/reports/")),
+         dest=dest, reports_nav=reports_nav)
+    prior = None
+    for report in result["reports"]:
+        path = f"/reports/{report['id']}/"
+        headline = weekly_report.report_h1(report)
+        description = weekly_report.report_description(report)
+        body = weekly_report.render_report_body(
+            report, events, prior, link_fn=lambda url: outbound(url))
+        page(path, f"{headline} | {BRAND}", description, body, "/reports/",
+             ld_script(weekly_report.report_jsonld(report, SITE_URL + path)),
+             dest=dest, reports_nav=reports_nav)
+        paths.append(path)
+        prior = report["through"]
+    if public_log and os.path.isfile(weekly_report.PATH):
+        os.makedirs(os.path.join(dest, "data"), exist_ok=True)
+        shutil.copy(weekly_report.PATH, os.path.join(dest, "data", "price_changes.jsonl"))
+    return paths
+
+def write_report_preview():
+    """Local preview only. Dist stays gated by REPORTS_ENABLED."""
+    if os.environ.get("VIDFARE_REPORT_PREVIEW") != "1":
+        return
+    raw = os.environ.get("VIDFARE_AS_OF")
+    as_of = datetime.date.fromisoformat(raw) if raw else today
+    preview_root = os.environ.get("VIDFARE_PREVIEW_DIR") or os.path.join(ROOT, "preview")
+    site_name = BASE.strip("/")
+    site = os.path.join(preview_root, site_name) if site_name else preview_root
+    if os.path.isdir(site):
+        shutil.rmtree(site)
+    os.makedirs(site, exist_ok=True)
+    for name in ("style.css", "og.png", "favicon-32.png", "logo.svg", "logo-512.png", "logo-240.png", "favicon.ico"):
+        src = os.path.join(DIST, name)
+        if os.path.isfile(src):
+            shutil.copy(src, os.path.join(site, name))
+    paths = write_report_pages(site, as_of, reports_nav=True, public_log=False)
+    events = weekly_report.load()
+    result = weekly_report.assign(events, as_of)
+    lines = [
+        f"as_of: {as_of.isoformat()}",
+        f"published: {', '.join(report['id'] for report in result['reports']) or 'none'}",
+        f"pending_price_changes: {len(result['pending'])}",
+        f"price_changes_in_log: {len(weekly_report.prices(events))}",
+        "pages:",
+    ]
+    for path in paths:
+        lines.append("  " + os.path.join(site, path.strip("/"), "index.html"))
+    os.makedirs(preview_root, exist_ok=True)
+    open(os.path.join(preview_root, "STATUS.txt"), "w", encoding="utf-8").write("\n".join(lines) + "\n")
 
 def tag(st): return f'<span class="tag {st}">{ {"verified":"vendor-stated","estimate":"approx.","promo":"promo","discontinued":"discontinued"}[st] }</span>'
 
@@ -1122,6 +1187,8 @@ page("/advertise/", f"Advertise on VidFare | {BRAND}", ad_desc, ad_body, "", ld_
 # ---------- 404, robots, sitemap ----------
 page("/404.html", f"Page not found | {BRAND}", "Page not found.", f'<h1>Page not found</h1><p><a href="{root("/")}">Back to the price table</a></p>')
 
+report_paths = write_report_pages(DIST, today, public_log=True) if REPORTS_ENABLED else []
+
 def write_llms():
     """Plain summary for AI search. Every price is the cheapest current row for that model and platform."""
     lines = [
@@ -1170,6 +1237,16 @@ def write_llms():
         f"Advertise: {SITE_URL}/advertise/ — labelled sponsor placements. They never change the price order.",
         "",
     ]
+    if report_paths:
+        lines += [
+            "## Weekly price reports",
+            "",
+            "Published on Friday when at least two real price changes were checked. A shorter week rolls forward.",
+            "",
+        ]
+        for path in report_paths:
+            lines.append(f"- {SITE_URL}{path}")
+        lines.append("")
     open(os.path.join(DIST, "llms.txt"), "w").write("\n".join(lines))
 
 write_llms()
@@ -1177,6 +1254,8 @@ open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: {root(
 urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/changes/", "/about/", "/advertise/"]
 if NEWSLETTER_ENABLED:
     urls.insert(5, "/newsletter/")
+if report_paths:
+    urls.extend(report_paths)
 urls += [f"/models/{s}/" for s in models]
 open(os.path.join(DIST, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     "".join(f"  <url><loc>{SITE_URL}{u}</loc><lastmod>{LAST}</lastmod></url>\n" for u in urls) + "</urlset>\n")
@@ -1424,6 +1503,39 @@ def audit_site():
             errors.append("newsletter page is still published")
         if "newsletter" in llms.lower() or "subscribe" in llms.lower():
             errors.append("llms.txt implies a newsletter signup")
+    if weekly_report.format_usd("0.0272") != money("0.0272") or weekly_report.format_usd("0.1") != money("0.1"):
+        errors.append("report dollar format drifted from the price table")
+    if REPORTS_ENABLED:
+        if not report_paths or "/reports/" not in report_paths:
+            errors.append("reports index was not built")
+        index_html = open(os.path.join(DIST, "reports", "index.html"), encoding="utf-8").read()
+        if "<h1>AI video price change reports</h1>" not in index_html:
+            errors.append("reports index h1")
+        if weekly_report.INDEX_DESCRIPTION not in index_html:
+            errors.append("reports index description")
+        if ">Reports<" not in index_html:
+            errors.append("reports nav link missing")
+        published = weekly_report.assign(weekly_report.load(), today)["reports"]
+        for report in published:
+            rel = os.path.join("reports", report["id"], "index.html")
+            report_html = open(os.path.join(DIST, rel), encoding="utf-8").read()
+            headline = weekly_report.report_h1(report)
+            if f"<h1>{headline}</h1>" not in report_html:
+                errors.append(f"{rel} h1")
+            if "<table>" not in report_html or "Before" not in report_html or "After" not in report_html:
+                errors.append(f"{rel} price table")
+            if f'"headline": "{headline}"' not in report_html:
+                errors.append(f"{rel} JSON-LD headline")
+            if "data-sponsor" in report_html:
+                errors.append(f"{rel} must not put a sponsor in the report")
+    else:
+        if os.path.isdir(os.path.join(DIST, "reports")):
+            errors.append("reports pages are published while REPORTS_ENABLED is false")
+        if "/reports/" in sitemap or "/reports/" in llms:
+            errors.append("reports URL is published while REPORTS_ENABLED is false")
+        home = open(os.path.join(DIST, "index.html"), encoding="utf-8").read()
+        if ">Reports<" in home:
+            errors.append("Reports nav link is live while REPORTS_ENABLED is false")
     kling_llms = ""
     for chunk in llms.split("### "):
         if chunk.startswith("Kling 3.0"):
@@ -1465,4 +1577,5 @@ def audit_site():
         raise SystemExit("site audit failed:\n- " + "\n- ".join(errors))
 
 audit_site()
+write_report_preview()
 print("built", len(urls), "pages into", DIST)

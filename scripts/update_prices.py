@@ -17,6 +17,7 @@ import requests
 from bs4 import BeautifulSoup
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
+import weekly_report
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data", "prices.json")
@@ -173,15 +174,18 @@ def main():
                 log.append({"date": today, "row": row["id"], "model": row["model"], "platform": row["platform"],
                             "variant": row["variant"], "resolution": row["resolution"], "old_usd_per_second": old_usd,
                             "new_usd_per_second": row["usd_per_second"], "source_url": row["source_url"], "type": "price"})
+                weekly_report.append_event(weekly_report.price_record(db, row, old_usd, row["usd_per_second"], today))
     # Re-date only rows whose own checks passed. Plan rows stay stale when the plan price itself changed.
     stamp_checked(db, texts, report["findings"], today)
     expired = expire_promos(db, today, log)
     for r in expired:
         report["findings"].append({"kind": "row", "id": r["id"], "status": "promo_expired", "promo_until": r["promo_until"]})
+        weekly_report.append_event(weekly_report.promo_ended_row(r, today))
     deal_doc = dealmod.load()
     ended = dealmod.expire_deals(deal_doc, today, log)
     for deal in ended:
         report["findings"].append({"kind": "deal", "id": deal["id"], "status": "deal_ended", "end": deal.get("end")})
+        weekly_report.append_event(weekly_report.promo_ended_deal(deal, today))
     if ended:
         dealmod.save(deal_doc)
     if not only:

@@ -39,6 +39,8 @@ Open a [GitHub issue](https://github.com/SheepinBoots/clipcost/issues/new).
 
 `python3 scripts/build_site.py` writes the static site into `dist/`.
 
+Weekly price reports live at `/reports/` and `/reports/YYYY-wNN/`. `REPORTS_ENABLED` in `scripts/build_site.py` is off, so those pages are not in the deployed site. A Friday run (13:30 UTC, with the 15:17 UTC refresh as the backstop) covers the ISO week through that Friday. The week is published only when [`data/price_changes.jsonl`](data/price_changes.jsonl) has at least two real price changes; otherwise it is skipped and those changes roll forward. `python3 scripts/preview_report.py` writes the current eligible report into `preview/` without turning the flag on.
+
 ## License
 
 MIT (see LICENSE)

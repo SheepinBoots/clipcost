@@ -5,9 +5,17 @@ name: Refresh prices
 # happen here after the data commit.
 on:
   schedule:
-    # 15:17 UTC. The 14:00 and 13:17 crons on the Pages workflow never created
-    # a schedule run. Stay off minute 0, which GitHub drops most often.
+    # 15:17 UTC every day. The 14:00 and 13:17 crons on the Pages workflow never
+    # created a schedule run. Stay off minute 0, which GitHub drops most often.
+    # On Friday this run is also the backstop for the weekly price report:
+    # build_site.py closes the ISO week to date (Monday through Friday) after
+    # this price check. Pages stay off until REPORTS_ENABLED is true, and a
+    # week still needs at least two real price changes.
     - cron: "17 15 * * *"
+    # Friday 13:30 UTC weekly report pass. Same job, so the report includes
+    # the price check from this run. If this schedule does not fire, the
+    # 15:17 Friday run still closes the week.
+    - cron: "30 13 * * 5"
   workflow_dispatch:
 
 permissions:
@@ -55,7 +63,7 @@ jobs:
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/prices.json data/changes.json data/check_report.json data/deals.json data/deal_candidates.json data/deal_snapshots
+          git add data/prices.json data/changes.json data/check_report.json data/deals.json data/deal_candidates.json data/deal_snapshots data/price_changes.jsonl
           if git diff --cached --quiet; then
             echo "No price data changes to commit"
           else
@@ -68,6 +76,9 @@ jobs:
             echo "::warning::Price check needs review (exit $code). See data/check_report.json."
             exit "$code"
           fi
+
+      - name: Weekly report status
+        run: python3 scripts/weekly_report.py --status
 
       - name: Build site
         run: python3 scripts/build_site.py

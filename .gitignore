@@ -14,6 +14,9 @@ venv/
 home.png
 home-mobile.png
 
+# Local weekly-report preview (scripts/preview_report.py)
+preview/
+
 # OS / editor
 .DS_Store
 *.log
