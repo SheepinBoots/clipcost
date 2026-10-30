@@ -144,6 +144,24 @@ def main():
         third = deals.scan_pricing_pages(fetch, watch_doc, "2026-10-21")
         if not any(c["status"] == "possible_end" for c in third["candidates"]):
             raise SystemExit("removed sale text should be flagged, not deleted from deals")
+    wan60 = next(d for d in doc["deals"] if d["id"] == "hf-api-wan-60")
+    if wan60["end"] != "2026-11-01" or wan60["status"] != "live" or wan60.get("percent") != 60:
+        raise SystemExit("hf-api-wan-60 end, status, or percent changed")
+    reply = "https://x.com/higgsfield_ai/status/2110074252171116649"
+    extra_urls = [s.get("url") for s in wan60.get("sources") or [] if isinstance(s, dict)]
+    if reply not in extra_urls or reply == wan60.get("source_url"):
+        raise SystemExit("hf-api-wan-60 missing the Oct 31 reply as a second source")
+    if "Oct 31" not in wan60.get("notes", "") or "Nov 1" not in wan60.get("notes", ""):
+        raise SystemExit("hf-api-wan-60 missing the Oct 31 / Nov 1 note")
+    kling4 = next(d for d in doc["deals"] if d["id"] == "hf-kling4-launch")
+    if kling4.get("percent") is not None or kling4.get("type") != "percent_off" or kling4.get("status") != "live":
+        raise SystemExit("hf-kling4-launch should be a live percent_off deal with no percent")
+    if kling4.get("models") != ["kling-4-0"] or kling4.get("start") != "2026-10-21" or kling4.get("end") is not None:
+        raise SystemExit("hf-kling4-launch models, start, or end")
+    if kling4.get("source_kind") != "changelog":
+        raise SystemExit("hf-kling4-launch source_kind")
+    if "klingai.com" in json.dumps(doc["deals"]):
+        raise SystemExit("do not add an unverified klingai.com promo")
     # History stays out of the live list.
     if any(d.get("season") == "2025" and deals.is_current(d, TODAY) for d in doc["history"]):
         raise SystemExit("2025 history was treated as live")

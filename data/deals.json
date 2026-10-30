@@ -67,7 +67,14 @@
    "verified_date": "2026-10-20",
    "link_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "math": "stated",
-   "notes": "The model page states the discounted $/s. List rates are that price divided by 0.40, and the 480p Prime list matches the undiscounted $0.068/s row."
+   "notes": "The model page states the discounted $/s. List rates are that price divided by 0.40, and the 480p Prime list matches the undiscounted $0.068/s row. Higgsfield's reply says until October 31, 2026. Higgsfield's sources give the end as Oct 31 or Nov 1, so the last day may be Oct 31.",
+   "sources": [
+    {
+     "url": "https://x.com/higgsfield_ai/status/2110074252171116649",
+     "kind": "x_post",
+     "quote": "until October 31, 2026"
+    }
+   ]
   },
   {
    "id": "hf-wan3-unlimited-7d",
@@ -384,6 +391,39 @@
    "math": "none",
    "show_on_rows": false,
    "notes": "Checked 2026-10-30. New users only. The 7 days start at signup, and the posts give no calendar end date. Annual Pro, Plus, Max and Ultra: Seedance 2.5 up to 20 seconds at 720p (1080p on Ultra); GPT Image 2.5; Nano Banana Pro up to 2K; Seedream 5.0 Pro up to 2K. Monthly Max and Ultra: Seedance 2.5 up to 20 seconds at 480p (Max) or 720p (Ultra); GPT Image 2.5; Nano Banana Pro up to 2K; Seedream 5.0 Pro up to 2K. Monthly Pro and Plus: GPT Image 2.5 and Seedream 5.0 Pro up to 2K. Limited-time offer, terms apply. Plan caps: https://x.com/higgsfield/status/2115929163010064546. Seedance 2.5 on Higgsfield is not in the price catalog, so this is not turned into a $/s."
+  },
+  {
+   "id": "hf-kling4-launch",
+   "vendor": "Higgsfield",
+   "type": "percent_off",
+   "title": "Kling 4.0 limited-time launch discount (amount shown at checkout)",
+   "models": [
+    "kling-4-0"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "start": "2026-10-21",
+   "end": null,
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/creator-hub/changelog#kling-4",
+   "source_kind": "changelog",
+   "source_quote": "A launch discount is applied for a limited time, as of October 21, 2026; the exact price is on the Generate button.",
+   "verified_date": "2026-10-30",
+   "link_url": "https://higgsfield.ai/creator-hub/changelog#kling-4",
+   "math": "none",
+   "show_on_rows": false,
+   "notes": "Kling 4.0 is not in the price catalog, so this is not turned into a $/s. The changelog does not state a percent. The exact price is on the Generate button."
   },
   {
    "id": "hf-genjutsu-api-50",

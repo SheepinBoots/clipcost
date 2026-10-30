@@ -135,12 +135,19 @@
    "source_url": "https://x.com/higgsfield_ai/status/2110074247569924489",
    "source_quote": "Wan 3.0 is now UNLIMITED on Higgsfield for 7 days. 60% OFF on Higgsfield API.",
    "verified_date": "2026-10-20",
-   "notes": "The model page states the discounted $/s. List rates are that price divided by 0.40, and the 480p Prime list matches the undiscounted $0.068/s row.",
+   "notes": "The model page states the discounted $/s. List rates are that price divided by 0.40, and the 480p Prime list matches the undiscounted $0.068/s row. Higgsfield's reply says until October 31, 2026. Higgsfield's sources give the end as Oct 31 or Nov 1, so the last day may be Oct 31.",
    "examples": [
     "Text to video 480p: $0.02/s, list $0.05/s",
     "Text/Image/Reference to video 480p: $0.0272/s, list $0.068/s",
     "Text/Image/Reference to video 720p: $0.056/s, list $0.14/s",
     "Text to video 1080p: $0.08/s, list $0.20/s"
+   ],
+   "sources": [
+    {
+     "url": "https://x.com/higgsfield_ai/status/2110074252171116649",
+     "kind": "x_post",
+     "quote": "until October 31, 2026"
+    }
    ]
   },
   {
@@ -316,6 +323,39 @@
     "Unlimited on Ultra (annual) ($99) versus Kling 3.0 720p at $0.0495/s. Worth it after 2000 seconds.",
     "Unlimited on Ultra (monthly) ($129) versus Kling 3.0 720p at $0.0645/s. Worth it after 2000 seconds."
    ]
+  },
+  {
+   "id": "hf-kling4-launch",
+   "vendor": "Higgsfield",
+   "type": "percent_off",
+   "title": "Kling 4.0 limited-time launch discount (amount shown at checkout)",
+   "models": [
+    "kling-4-0"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-10-21",
+   "end": null,
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/creator-hub/changelog#kling-4",
+   "source_quote": "A launch discount is applied for a limited time, as of October 21, 2026; the exact price is on the Generate button.",
+   "verified_date": "2026-10-30",
+   "notes": "Kling 4.0 is not in the price catalog, so this is not turned into a $/s. The changelog does not state a percent. The exact price is on the Generate button.",
+   "examples": []
   },
   {
    "id": "hf-nanobanana-unlimited-7d",

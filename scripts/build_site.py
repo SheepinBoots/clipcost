@@ -731,9 +731,27 @@ def example_items(deal, rowset):
             )
     return items
 
+def deal_source_urls(deal):
+    """Primary source_url, then any extra citations in sources."""
+    urls = []
+    primary = deal.get("source_url")
+    if primary:
+        urls.append(primary)
+    for extra in deal.get("sources") or []:
+        url = extra.get("url") if isinstance(extra, dict) else extra
+        if url and url not in urls:
+            urls.append(url)
+    return urls
+
+def deal_source_links(deal):
+    links = []
+    for url in deal_source_urls(deal):
+        href, rel = outbound(url)
+        links.append(f'<a class="small" href="{e(href)}" rel="{rel}" target="_blank">source</a>')
+    return " ".join(links)
+
 def deal_card(deal, archive=False, rowset=None):
     href, rel = outbound(deal.get("link_url") or deal["source_url"])
-    src_href, src_rel = outbound(deal["source_url"])
     bits = cond_bits(deal)
     examples = [] if archive else example_items(deal, rows if rowset is None else rowset)
     ex_html = ("<ul class='ex'>" + "".join(f"<li>{e(item)}</li>" for item in examples) + "</ul>") if examples else ""
@@ -760,7 +778,7 @@ def deal_card(deal, archive=False, rowset=None):
         f'<div class="sub">{e(deal["vendor"])} · {e(deal["type"].replace("_", " "))}</div>'
         f'{cond}{quote}{ex_html}{note}'
         f'<p><a class="btn" href="{e(href)}" rel="{rel}" target="_blank">View offer</a> '
-        f'<a class="small" href="{e(src_href)}" rel="{src_rel}" target="_blank">source</a></p>'
+        f'{deal_source_links(deal)}</p>'
         f'</article>'
     )
 
@@ -1114,7 +1132,7 @@ page("/deals/black-friday/", f"AI video Black Friday 2026 (stub) and 2025 holida
 
 def write_feeds():
     def slim(deal, status):
-        return {
+        row = {
             "id": deal["id"], "vendor": deal.get("vendor"), "type": deal.get("type"),
             "title": deal.get("title"), "models": deal.get("models") or [], "plans": deal.get("plans") or [],
             "conditions": dealmod.conditions(deal), "percent": deal.get("percent"),
@@ -1126,6 +1144,9 @@ def write_feeds():
             "verified_date": deal.get("verified_date"), "notes": deal.get("notes"),
             "examples": [] if status != "live" else example_items(deal, rows),
         }
+        if deal.get("sources"):
+            row["sources"] = deal["sources"]
+        return row
     payload = {
         "updated": TODAY,
         "deals": [slim(d, "live") for d in live_sorted],

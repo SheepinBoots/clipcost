@@ -94,6 +94,7 @@ def main():
         "promo_started:deal:runway-api-kling4-20:2026-10-25",
         "promo_ended:deal:mag-premium-annual-50:2026-10-26",
         "promo_started:deal:hf-seedance-unlimited-7d:2026-10-30",
+        "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
     higgs = next(event for event in log if event["id"].startswith("promo_ended:deal:hf-wan3"))
     assert higgs["end_is_estimate"] is True
@@ -149,7 +150,8 @@ def main():
     assert edition["first"] is True
     assert launch["pending"] == []
     assert {event["id"] for event in edition["changes"]} == promo_ids
-    assert wr.change_counts(edition) == {"price": 0, "promo_started": 5, "promo_ended": 2}
+    assert wr.change_counts(edition) == {"price": 0, "promo_started": 6, "promo_ended": 2}
+    assert sum(wr.change_counts(edition).values()) == 8
     launch_body = wr.render_report_body(edition, log)
     assert launch_body.count("<h1>") == 1
     assert "AI video price changes, week of Oct 26, 2026" in launch_body
@@ -164,6 +166,8 @@ def main():
     assert "https://x.com/RunwayMLDevs/status/2113711678399668463" in launch_body
     assert "https://x.com/higgsfield/status/2115929160447393797" in launch_body
     assert "7 days of unlimited Seedance 2.5 (zero credit cost) for new users" in launch_body
+    assert "https://higgsfield.ai/creator-hub/changelog#kling-4" in launch_body
+    assert "Kling 4.0 limited-time launch discount (amount shown at checkout)" in launch_body
     assert "New models and platforms" not in launch_body
     assert "newsletter" not in launch_body.lower()
     launch_desc = wr.report_description(edition)
@@ -237,12 +241,16 @@ def main():
     assert '"@type": "Article"' in week_html
     assert wr.report_description(wr.assign(wr.load(), "2026-10-30")["reports"][0]) in week_html
     assert "https://x.com/higgsfield/status/2115929160447393797" in week_html
-    assert "5 promos started" in week_html
+    assert "6 promos started" in week_html
+    assert "2 promos ended" in week_html
     dist_week = os.path.join(ROOT, "dist", "reports", "2026-w44", "index.html")
     dist_html = open(dist_week, encoding="utf-8").read()
     assert dist_html.count("<h1>") == 1
     assert "<h1>AI video price changes, week of Oct 26, 2026</h1>" in dist_html
     assert "7 days of unlimited Seedance 2.5 (zero credit cost) for new users" in dist_html
+    assert "Kling 4.0 limited-time launch discount (amount shown at checkout)" in dist_html
+    assert "6 promos started" in dist_html
+    assert "2 promos ended" in dist_html
     assert "newsletter" not in dist_html.lower()
     assert "vidfare.goatcounter.com" in dist_html
     print("ok", week)
