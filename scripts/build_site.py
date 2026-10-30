@@ -16,8 +16,9 @@ LOGO_URL = SITE_URL + "/logo-512.png"
 ORG_ID = SITE_URL + "/#organization"
 OG_ALT = BRAND + ". " + TAGLINE
 # TODO: set True once the Buttondown form endpoint is live (see NEWSLETTER_ACTION).
-# While False, the signup, the Newsletter nav link, the /newsletter/ page,
-# and the advertise-page newsletter spot are omitted.
+# While False, the signup form, the Newsletter nav link, and the advertise-page
+# newsletter spot are omitted. /newsletter/ is a noindex coming-soon page and
+# stays out of sitemap.xml.
 NEWSLETTER_ENABLED = False
 NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Buttondown form action
 # Weekly /reports/ pages. On for the live site. A week is still withheld when
@@ -153,7 +154,7 @@ def ld_script(obj):
     raw = json.dumps(obj, ensure_ascii=False).replace("<", "\\u003c")
     return f'<script type="application/ld+json">{raw}</script>'
 
-def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None):
+def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None, robots="index,follow", canonical=True, before_count=""):
     canon = SITE_URL + path
     show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
     navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/changes/", "Price changes")]
@@ -164,13 +165,15 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
     navs.append(("/about/", "About"))
     nav = "".join(f'<a href="{root(h)}"{" class=on" if h==active else ""}>{t}</a>' for h, t in navs)
     modlinks = " · ".join(f'<a href="{root(f"/models/{s}/")}">{e(m["name"])}</a>' for s, m in models.items())
+    canon_html = f'<link rel="canonical" href="{canon}">' if canonical else ""
+    og_url_html = f'<meta property="og:url" content="{canon}">' if canonical else ""
     doc = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="google-site-verification" content="nlx0gVcAU_holiR5TLbIUc0ECk-VPLUPKHiVqlGNCIM" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(title)}</title><meta name="description" content="{e(desc)}">
-<link rel="canonical" href="{canon}"><meta name="robots" content="index,follow">
+{canon_html}<meta name="robots" content="{robots}">
 <meta property="og:type" content="website"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}">
-<meta property="og:url" content="{canon}"><meta property="og:site_name" content="{BRAND}">
+{og_url_html}<meta property="og:site_name" content="{BRAND}">
 <meta property="og:image" content="{OG_IMAGE}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{e(OG_ALT)}">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{e(title)}"><meta name="twitter:description" content="{e(desc)}"><meta name="twitter:image" content="{OG_IMAGE}">
 <meta name="theme-color" content="#0b0d12"><link rel="icon" href="{root("/favicon.ico")}" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="{root("/favicon-32.png")}"><link rel="icon" type="image/svg+xml" href="{root("/logo.svg")}"><link rel="apple-touch-icon" href="{root("/logo-512.png")}">
@@ -180,7 +183,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="{root("/about/#disclosure")}">disclosure</a>).</p>
 <p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/advertise/")}">Advertise</a></p></div></footer>
-<script data-goatcounter="https://vidfare.goatcounter.com/count"
+{before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </body></html>"""
     base_dir = DIST if dest is None else dest
@@ -831,6 +834,14 @@ for slug, m in models.items():
     page(f"/models/{slug}/", f"{m['name']} price per second ({MONTH}): cheapest way to run it | {BRAND}",
          f"{m['name']} costs from {money(c['usd_per_second'])}/s ({c['platform']}, {spec_phrase(c)}). Compare {len(rs)} sourced prices across APIs and credit plans.", body)
 
+model_items = "".join(
+    f'<li><a href="{root(f"/models/{slug}/")}">{e(m["name"])}</a></li>'
+    for slug, m in models.items()
+)
+page("/models/", f"AI video models | {BRAND}",
+     f"Every AI video model {BRAND} prices, with a page of sourced cost-per-second comparisons.",
+     f'<h1>Models</h1><p class="lead">Every model {BRAND} tracks, with sourced prices per second of video.</p><ul class="model-index">{model_items}</ul>')
+
 # ---------- Calculator ----------
 plan_opts = ""
 for plat in sorted({p["platform"] for p in plans.values()}):
@@ -958,10 +969,17 @@ page("/changes/", f"AI Video Price Changes Log ({MONTH}) | {BRAND}",
 <ul class="log" style="padding-left:0;list-style:none">{items}</ul>{news_box()}""", "/changes/")
 
 # ---------- Newsletter ----------
-# TODO: this page comes back with the nav link when NEWSLETTER_ENABLED is True.
+# TODO: the signup page and nav link come back when NEWSLETTER_ENABLED is True.
 if NEWSLETTER_ENABLED:
     page("/newsletter/", f"{BRAND} Weekly: AI video price drops & new models", "One short email a week: AI video price changes, new models and the cheapest way to run them.",
          f"""<h1>{BRAND} Weekly</h1><p class="lead">One short email every Monday: which AI video prices changed, which new models launched, and the cheapest way to run each one right now. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
+else:
+    page("/newsletter/", f"Newsletter coming soon | {BRAND}",
+         "The VidFare newsletter is not open yet.",
+         f"""<h1>Newsletter coming soon</h1>
+<p>The weekly email is not open yet.</p>
+<p><a href="{root("/")}">Home</a> · <a href="{root("/deals/")}">Deals</a> · <a href="{root("/changes/")}">Price changes</a></p>""",
+         robots="noindex")
 
 # ---------- About ----------
 srcl = "".join(f'<li><a href="{e(outbound(s["url"])[0])}" rel="{outbound(s["url"])[1]}" target="_blank">{e(s["name"])}</a>{" (checked by hand)" if s["fetch"]=="manual" else ""}</li>' for s in sources.values())
@@ -1186,7 +1204,38 @@ ad_ld = {
 page("/advertise/", f"Advertise on VidFare | {BRAND}", ad_desc, ad_body, "", ld_script(ad_ld))
 
 # ---------- 404, robots, sitemap ----------
-page("/404.html", f"Page not found | {BRAND}", "Page not found.", f'<h1>Page not found</h1><p><a href="{root("/")}">Back to the price table</a></p>')
+# Count a missing URL as its own path. GoatCounter reads this before count.js.
+GOAT_404 = "<script>window.goatcounter={path:function(){return '404:'+location.pathname+location.search}}</script>\n"
+
+def newsletter_redirect_script():
+    """Send /clipcost/newsletter* (except the coming-soon URL itself) to /newsletter/."""
+    dest = root("/newsletter/")
+    prefix = BASE + "/newsletter"
+    return (
+        "<script>(function(){var p=location.pathname,d="
+        + json.dumps(dest)
+        + ",pre="
+        + json.dumps(prefix)
+        + ";if(p.indexOf(pre)===0&&p!==d)location.replace(d)})();</script>"
+    )
+
+sample_models = list(models.items())[:4]
+model_help = "".join(
+    f'<li><a href="{root(f"/models/{slug}/")}">{e(m["name"])}</a></li>'
+    for slug, m in sample_models
+)
+not_found_body = f"""<h1>Page not found</h1>
+<p>That address is not a page on {BRAND}.</p>
+<ul>
+<li><a href="{root("/")}">Home</a></li>
+<li><a href="{root("/deals/")}">Deals</a></li>
+<li><a href="{root("/calculator/")}">Credit calculator</a></li>
+<li><a href="{root("/changes/")}">Price changes</a></li>
+</ul>
+<h2>A few model pages</h2>
+<ul>{model_help}</ul>"""
+page("/404.html", f"Page not found | {BRAND}", "Page not found.", not_found_body,
+     extra_head=newsletter_redirect_script(), robots="noindex", canonical=False, before_count=GOAT_404)
 
 report_paths = write_report_pages(DIST, today, public_log=True) if REPORTS_ENABLED else []
 
@@ -1257,7 +1306,7 @@ if NEWSLETTER_ENABLED:
     urls.insert(5, "/newsletter/")
 if report_paths:
     urls.extend(report_paths)
-urls += [f"/models/{s}/" for s in models]
+urls += ["/models/"] + [f"/models/{s}/" for s in models]
 open(os.path.join(DIST, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     "".join(f"  <url><loc>{SITE_URL}{u}</loc><lastmod>{LAST}</lastmod></url>\n" for u in urls) + "</urlset>\n")
 def check_sponsor_renderer():
@@ -1402,8 +1451,9 @@ def audit_site():
             return ["deals"]
         prefix = "models/"
         if rel.startswith(prefix) and rel.endswith("/index.html"):
-            slug = rel[len(prefix):].split("/", 1)[0]
-            return ["model:" + slug]
+            rest = rel[len(prefix):-len("index.html")].strip("/")
+            if rest and "/" not in rest:
+                return ["model:" + rest]
         return []
 
     for dirpath, _, filenames in os.walk(DIST):
@@ -1416,7 +1466,9 @@ def audit_site():
                 continue
             rel = os.path.relpath(path, DIST).replace(os.sep, "/")
             low = raw.lower()
-            if "noindex" in low or "nosnippet" in low:
+            coming_soon = rel == "newsletter/index.html" and not NEWSLETTER_ENABLED
+            missing = rel == "404.html"
+            if "nosnippet" in low or ("noindex" in low and not (coming_soon or missing)):
                 errors.append(f"{rel} contains noindex or nosnippet")
             parser = PageAudit()
             parser.feed(raw)
@@ -1426,13 +1478,34 @@ def audit_site():
                 errors.append(f"{rel} is missing a title")
             if not parser.desc:
                 errors.append(f"{rel} is missing a meta description")
-            if not parser.canonical or not parser.canonical.startswith(SITE_URL):
-                errors.append(f"{rel} is missing a canonical")
-            if parser.robots != "index,follow":
-                errors.append(f"{rel} robots must be index,follow")
+            if missing:
+                if parser.robots != "noindex":
+                    errors.append(f"{rel} robots must be noindex")
+                if parser.canonical or 'rel="canonical"' in raw:
+                    errors.append(f"{rel} must not have a canonical link")
+                if 'property="og:url"' in raw:
+                    errors.append(f"{rel} must not have og:url")
+                if "index,follow" in raw:
+                    errors.append(f"{rel} still asks crawlers to index")
+            elif coming_soon:
+                if parser.robots != "noindex":
+                    errors.append(f"{rel} robots must be noindex")
+                if parser.canonical != SITE_URL + "/newsletter/":
+                    errors.append(f"{rel} is missing a canonical")
+            else:
+                if not parser.canonical or not parser.canonical.startswith(SITE_URL):
+                    errors.append(f"{rel} is missing a canonical")
+                if parser.robots != "index,follow":
+                    errors.append(f"{rel} robots must be index,follow")
+            if not missing and "window.goatcounter" in raw:
+                errors.append(f"{rel} overrides the GoatCounter path")
             if not NEWSLETTER_ENABLED:
-                if ("TODO-newsletter-endpoint" in raw or "Get the weekly price-drop email" in raw
-                        or ">Newsletter<" in raw or "/newsletter/" in raw or "newsletter" in low):
+                signup = ("TODO-newsletter-endpoint" in raw or "Get the weekly price-drop email" in raw
+                          or ">Newsletter<" in raw or "<form" in low)
+                if coming_soon or missing:
+                    if signup:
+                        errors.append(f"{rel} still shows a newsletter signup or Newsletter link")
+                elif signup or "/newsletter/" in raw or "newsletter" in low:
                     errors.append(f"{rel} still shows a newsletter signup or Newsletter link")
                 for blob in parser.jsonld:
                     lowb = blob.lower()
@@ -1496,12 +1569,82 @@ def audit_site():
     sitemap = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
     if f"<loc>{SITE_URL}/advertise/</loc>" not in sitemap:
         errors.append("sitemap is missing /advertise/")
+    if f"<loc>{SITE_URL}/models/</loc>" not in sitemap:
+        errors.append("sitemap is missing /models/")
     llms = open(os.path.join(DIST, "llms.txt"), encoding="utf-8").read()
     if f"{SITE_URL}/advertise/" not in llms:
         errors.append("llms.txt does not mention /advertise/")
+    models_index = os.path.join(DIST, "models", "index.html")
+    if not os.path.isfile(models_index):
+        errors.append("models index was not built")
+    else:
+        models_html = open(models_index, encoding="utf-8").read()
+        if models_html.count("<h1") != 1:
+            errors.append("models index must have one h1")
+        if "gc.zgo.at/count.js" not in models_html or '<header class="top">' not in models_html or "<footer>" not in models_html:
+            errors.append("models index is missing the site header, footer, or GoatCounter")
+        try:
+            listed = models_html.split('<ul class="model-index">', 1)[1].split("</ul>", 1)[0]
+        except IndexError:
+            listed = ""
+            errors.append("models index is missing the model list")
+        for slug, m in models.items():
+            needle = f'<a href="{root(f"/models/{slug}/")}">{e(m["name"])}</a>'
+            if needle not in listed:
+                errors.append(f"models index is missing {m['name']}")
+    not_found_html = open(os.path.join(DIST, "404.html"), encoding="utf-8").read()
+    override = "window.goatcounter={path:function(){return '404:'+location.pathname+location.search}}"
+    count_at = not_found_html.find('src="https://gc.zgo.at/count.js"')
+    over_at = not_found_html.find(override)
+    if over_at < 0 or count_at < 0 or over_at > count_at:
+        errors.append("404 GoatCounter path override must come before count.js")
+    if newsletter_redirect_script() not in not_found_html:
+        errors.append("404 is missing the newsletter redirect")
+    dest = root("/newsletter/")
+    prefix = BASE + "/newsletter"
+    for sample, want in (
+        (prefix, True),
+        (prefix + ".html", True),
+        (dest, False),
+        (root("/"), False),
+        (root("/deals/"), False),
+    ):
+        got = sample.startswith(prefix) and sample != dest
+        if got != want:
+            errors.append(f"newsletter redirect for {sample} should be {want}")
+    main404 = not_found_html.split("<main", 1)[-1].split("</main>", 1)[0]
+    for href in (root("/"), root("/deals/"), root("/calculator/"), root("/changes/")):
+        if f'href="{href}"' not in main404:
+            errors.append(f"404 is missing a link to {href}")
+    linked_models = sum(
+        1 for slug, _m in sample_models
+        if f'href="{root(f"/models/{slug}/")}"' in main404
+    )
+    if linked_models < 3:
+        errors.append("404 should link a few model pages in the page body")
     if not NEWSLETTER_ENABLED:
-        if "/newsletter/" in sitemap or os.path.isdir(os.path.join(DIST, "newsletter")):
-            errors.append("newsletter page is still published")
+        if "/newsletter/" in sitemap:
+            errors.append("sitemap includes /newsletter/ while the newsletter is off")
+        news_path = os.path.join(DIST, "newsletter", "index.html")
+        if not os.path.isfile(news_path):
+            errors.append("coming-soon newsletter page was not built")
+        else:
+            news_html = open(news_path, encoding="utf-8").read()
+            if "<h1>Newsletter coming soon</h1>" not in news_html:
+                errors.append("newsletter page is missing the coming soon heading")
+            if "<form" in news_html.lower() or "TODO-newsletter-endpoint" in news_html:
+                errors.append("newsletter page must not include a signup form")
+            if "gc.zgo.at/count.js" not in news_html or "window.goatcounter" in news_html:
+                errors.append("newsletter page should use the normal GoatCounter snippet")
+            if '<header class="top">' not in news_html or "<footer>" not in news_html:
+                errors.append("newsletter page is missing the site header or footer")
+            main_news = news_html.split("<main", 1)[-1].split("</main>", 1)[0]
+            for href in (root("/"), root("/deals/"), root("/changes/")):
+                if f'href="{href}"' not in main_news:
+                    errors.append(f"newsletter page is missing a link to {href}")
+            nav = news_html.split("<nav>", 1)[-1].split("</nav>", 1)[0]
+            if "newsletter" in nav.lower():
+                errors.append("newsletter nav link is present while the newsletter is off")
         if "newsletter" in llms.lower() or "subscribe" in llms.lower():
             errors.append("llms.txt implies a newsletter signup")
     if weekly_report.format_usd("0.0272") != money("0.0272") or weekly_report.format_usd("0.1") != money("0.1"):
