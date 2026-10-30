@@ -39,7 +39,7 @@ Open a [GitHub issue](https://github.com/SheepinBoots/clipcost/issues/new).
 
 `python3 scripts/build_site.py` writes the static site into `dist/`.
 
-Weekly price reports live at `/reports/` and `/reports/YYYY-wNN/`. `REPORTS_ENABLED` in `scripts/build_site.py` is off, so those pages are not in the deployed site. A Friday run (13:30 UTC, with the 15:17 UTC refresh as the backstop) covers the ISO week through that Friday. The week is published only when [`data/price_changes.jsonl`](data/price_changes.jsonl) has at least two qualifying changes. A per-second price change, a promo start, and a promo end each count. A shorter week is skipped and those changes roll forward. The first edition is the week of Oct 26, 2026 and includes verified changes since the Oct 20 baseline. `python3 scripts/preview_report.py` writes the current eligible report into `preview/` without turning the flag on.
+Weekly price reports live at `/reports/` and `/reports/YYYY-wNN/`. `REPORTS_ENABLED` in `scripts/build_site.py` is on, so a qualifying week is included in the deployed site. A Friday run (13:30 UTC, with the 15:17 UTC refresh as the backstop) covers the ISO week through that Friday. The week is published only when [`data/price_changes.jsonl`](data/price_changes.jsonl) has at least two qualifying changes. A per-second price change, a promo start, and a promo end each count. A shorter week is skipped and those changes roll forward. The first edition is the week of Oct 26, 2026 (2026-w44) and includes verified changes since the Oct 20 baseline. `python3 scripts/preview_report.py` writes the current eligible report into `preview/`.
 
 ## License
 

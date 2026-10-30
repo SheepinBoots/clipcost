@@ -20,10 +20,10 @@ OG_ALT = BRAND + ". " + TAGLINE
 # and the advertise-page newsletter spot are omitted.
 NEWSLETTER_ENABLED = False
 NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Buttondown form action
-# Weekly /reports/ pages. Leave False until the owner wants them on the live site.
-# A week is still withheld when it has fewer than two qualifying changes
-# (per-second price changes, promo starts, and promo ends).
-REPORTS_ENABLED = False
+# Weekly /reports/ pages. On for the live site. A week is still withheld when
+# it has fewer than two qualifying changes (per-second price changes, promo
+# starts, and promo ends).
+REPORTS_ENABLED = True
 # Credit-plan $/s is plan price ÷ credits × credits per clip ÷ seconds (scripts/build_data.py).
 # The about page states the assumption that math uses: every credit paid for is used.
 CREDIT_USE = "assumes every credit you pay for is used"
@@ -1521,10 +1521,13 @@ def audit_site():
             rel = os.path.join("reports", report["id"], "index.html")
             report_html = open(os.path.join(DIST, rel), encoding="utf-8").read()
             headline = weekly_report.report_h1(report)
-            if f"<h1>{headline}</h1>" not in report_html:
+            if report_html.count("<h1>") != 1 or f"<h1>{headline}</h1>" not in report_html:
                 errors.append(f"{rel} h1")
-            if "<table>" not in report_html or "Before" not in report_html or "After" not in report_html:
-                errors.append(f"{rel} price table")
+            if weekly_report.change_counts(report)["price"]:
+                if "<table>" not in report_html or "Before" not in report_html or "After" not in report_html:
+                    errors.append(f"{rel} price table")
+            elif weekly_report.NO_PRICE_NOTE not in report_html:
+                errors.append(f"{rel} missing the no-price-changes note")
             if f'"headline": "{headline}"' not in report_html:
                 errors.append(f"{rel} JSON-LD headline")
             if "data-sponsor" in report_html:

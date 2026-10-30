@@ -94,3 +94,10 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [deals.json](https://sheepinboots.github.io/clipcost/deals.json): the live and archived deals.
 
 Advertise: https://sheepinboots.github.io/clipcost/advertise/ — labelled sponsor placements. They never change the price order.
+
+## Weekly price reports
+
+Published on Friday when at least two verified changes were checked. A change is a per-second price move, a promo start, or a promo end. A shorter week rolls forward.
+
+- https://sheepinboots.github.io/clipcost/reports/
+- https://sheepinboots.github.io/clipcost/reports/2026-w44/
