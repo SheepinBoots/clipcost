@@ -1,7 +1,7 @@
 {
  "id": "krea",
  "url": "https://www.krea.ai/pricing",
- "saved": "2026-10-29",
+ "saved": "2026-10-30",
  "snippets": [
   {
    "sha": "0c5882ed7cc97ab9",
@@ -12,52 +12,56 @@
    "text": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Model Licensing Looking for API? Free 100 units / day $0 /month Get Free Krea 3"
   },
   {
-   "sha": "e5036f9434f19a38",
-   "text": "Model training Train LoRA models with up to 50 images. Plan usage limits apply. Unlimited relaxed generations Continue generating with supported in-house image models af"
+   "sha": "af0bf17b8f113721",
+   "text": "s when purchasing additional compute unit packs beyond your monthly allocation. Unlimited relaxed generations Continue generating with supported in-house image models af"
   },
   {
-   "sha": "0becacdf3ad24d7b",
-   "text": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan"
+   "sha": "47e7d4ae84a29cc1",
+   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan"
   },
   {
-   "sha": "cfbd2a816e70ab77",
-   "text": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Most popular Pro 20,000 units / month 450 Nano Banana 2 generations"
+   "sha": "1fe05feef106204a",
+   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Most popular Pro 20,000 units / month 450 Nano Banana 2 generations"
   },
   {
-   "sha": "e168325169eac31a",
-   "text": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Max 60,000 units / month 1,350 Nano Banana 2 generations ~197 Seeda"
+   "sha": "1298ea75e97cfdde",
+   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Max 60,000 units / month 1,350 Nano Banana 2 generations ~197 Seeda"
   },
   {
-   "sha": "9d27dbf011081489",
-   "text": "el training Train LoRA models with up to 2,000 images. Plan usage limits apply. Unlimited relaxed generations Continue generating with supported in-house image models af"
+   "sha": "bfb2d98c5c40a874",
+   "text": "eo models including Veo 3.1, Seedance, Kling, and more. All 3D & lipsync models Unlimited LoRA training (2,000 images) Train LoRA models using up to 2,000 images to pers"
   },
   {
-   "sha": "389af41553d731de",
-   "text": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder See all features For Teams and Enterprises Business 80k units /mont"
+   "sha": "dcfa4b94f032291f",
+   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder See all features For Teams and Enterprises Business 80k units /mont"
   },
   {
-   "sha": "ab9d87000ba20114",
-   "text": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Custom pricing Cont"
+   "sha": "a5dcdabcab87fbb7",
+   "text": "content for commercial purposes including marketing, products, and client work. Unlimited relaxed generations Continue generating with supported in-house image models af"
   },
   {
-   "sha": "b87faf9c57196ace",
-   "text": "ts. Model training Train LoRA models with limits tailored to your organization. Unlimited relaxed generations Continue generating with supported in-house image models af"
+   "sha": "99b720a84b1ccea9",
+   "text": "ter exhausting your compute units. Unlimited LoRA training (2,000 images) Train LoRA models using up to 2,000 images to pers"
   },
   {
-   "sha": "9edc1e36ea71fca3",
-   "text": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free 100 units / day $0 /mon"
+   "sha": "89f6eeacca57a467",
+   "text": "AI-generated content, when usage follows the agreement terms. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Custom pricing Cont"
   },
   {
-   "sha": "2e9fa9f95fb5ef92",
-   "text": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder See all features For Teams and Enterprises Business Secure and coll"
+   "sha": "f848fef097fdc804",
+   "text": "and tracking all user actions across your organization. SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free 100 units / day $0 /mon"
   },
   {
-   "sha": "6357ddba53ad9408",
-   "text": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Enterprise-grade se"
+   "sha": "1238a178898905a7",
+   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder See all features For Teams and Enterprises Business Secure and coll"
   },
   {
-   "sha": "3e3932093245b25e",
-   "text": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Need More Compute? Purchase"
+   "sha": "34034d52bcf7f57a",
+   "text": "AI-generated content, when usage follows the agreement terms. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Enterprise-grade se"
+  },
+  {
+   "sha": "0088e28cc7a50e77",
+   "text": "and tracking all user actions across your organization. SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Need More Compute? Purchase"
   },
   {
    "sha": "247d14334dae006a",
