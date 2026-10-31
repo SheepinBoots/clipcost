@@ -1,9 +1,9 @@
 {
- "run": "2026-10-30T19:56:58",
+ "run": "2026-10-31T08:12:16",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 16151
+   "chars": 16146
   },
   "hf_api": {
    "status": "fetched",
@@ -15,11 +15,11 @@
   },
   "fal_wan3": {
    "status": "fetched",
-   "chars": 3498
+   "chars": 3536
   },
   "fal_wan3p": {
    "status": "fetched",
-   "chars": 6843
+   "chars": 6881
   },
   "fal_kling3": {
    "status": "fetched",
@@ -27,11 +27,11 @@
   },
   "fal_seed25": {
    "status": "fetched",
-   "chars": 11731
+   "chars": 11769
   },
   "fal_veo31": {
    "status": "fetched",
-   "chars": 13358
+   "chars": 13396
   },
   "fal_pricing": {
    "status": "fetched",
@@ -43,7 +43,7 @@
   },
   "runway": {
    "status": "fetched",
-   "chars": 18482
+   "chars": 19002
   },
   "kling_api": {
    "status": "fetched",
@@ -51,7 +51,7 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 65568
+   "chars": 66949
   },
   "atlas": {
    "status": "fetched",
@@ -59,7 +59,7 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 34707
+   "chars": 45368
   },
   "magnific": {
    "status": "fetched",
@@ -85,327 +85,92 @@
  },
  "findings": [
   {
-   "kind": "row",
-   "id": "r022",
-   "source": "fal_h3max",
-   "status": "missing",
-   "needle": "after which 480p is ${N} /second, 768p",
-   "old": 0.05,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r023",
-   "source": "fal_h3turbo",
-   "status": "missing",
-   "needle": "after which 480p is ${N} /second, 768p",
-   "old": 0.025,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max Turbo"
-  },
-  {
-   "kind": "row",
-   "id": "r179",
-   "source": "fal_h3max",
-   "status": "missing",
-   "needle": "768p is ${N} /second, and 1080p",
-   "old": 0.08,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r180",
-   "source": "fal_h3max",
-   "status": "missing",
-   "needle": "and 1080p is ${N} /second",
-   "old": 0.16,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r181",
-   "source": "fal_h3max",
-   "status": "missing",
-   "needle": "Video costs ${N} per second at 480p",
-   "old": 0.0325,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r182",
-   "source": "fal_h3max",
-   "status": "missing",
-   "needle": "at 480p , ${N} per second at 768p",
-   "old": 0.052,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r183",
-   "source": "fal_h3max",
-   "status": "missing",
-   "needle": "at 768p , and ${N} per second at 1080p",
-   "old": 0.104,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r184",
-   "source": "fal_h3turbo",
-   "status": "missing",
-   "needle": "768p is ${N} /second, and 1080p",
-   "old": 0.04,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max Turbo"
-  },
-  {
-   "kind": "row",
-   "id": "r185",
-   "source": "fal_h3turbo",
-   "status": "missing",
-   "needle": "and 1080p is ${N} /second",
-   "old": 0.08,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max Turbo"
-  },
-  {
-   "kind": "row",
-   "id": "r186",
-   "source": "fal_h3turbo",
-   "status": "missing",
-   "needle": "Video costs ${N} per second at 480p",
-   "old": 0.01625,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max Turbo"
-  },
-  {
-   "kind": "row",
-   "id": "r187",
-   "source": "fal_h3turbo",
-   "status": "missing",
-   "needle": "at 480p , ${N} per second at 768p",
-   "old": 0.026,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max Turbo"
-  },
-  {
-   "kind": "row",
-   "id": "r188",
-   "source": "fal_h3turbo",
-   "status": "missing",
-   "needle": "at 768p , and ${N} per second at 1080p",
-   "old": 0.052,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "fal",
-   "variant": "MiniMax H3 Max Turbo"
-  },
-  {
    "kind": "deal_candidate",
    "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "Model training Train LoRA models with up to 50 images. Plan usage limits apply. Unlimited relaxed generations Continue generating with supported in-house image models af"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Most popular Pro 20,000 units / month 450 Nano Banana 2 generations"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Max 60,000 units / month 1,350 Nano Banana 2 generations ~197 Seeda"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "el training Train LoRA models with up to 2,000 images. Plan usage limits apply. Unlimited relaxed generations Continue generating with supported in-house image models af"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder See all features For Teams and Enterprises Business 80k units /mont"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Custom pricing Cont"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "ts. Model training Train LoRA models with limits tailored to your organization. Unlimited relaxed generations Continue generating with supported in-house image models af"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free 100 units / day $0 /mon"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder See all features For Teams and Enterprises Business Secure and coll"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Enterprise-grade se"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Need More Compute? Purchase"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s when purchasing additional compute unit packs beyond your monthly allocation. Unlimited relaxed generations Continue generating with supported in-house image models af"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Most popular Pro 20,000 units / month 450 Nano Banana 2 generations"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Max 60,000 units / month 1,350 Nano Banana 2 generations ~197 Seeda"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "eo models including Veo 3.1, Seedance, Kling, and more. All 3D & lipsync models Unlimited LoRA training (2,000 images) Train LoRA models using up to 2,000 images to pers"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder See all features For Teams and Enterprises Business 80k units /mont"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "content for commercial purposes including marketing, products, and client work. Unlimited relaxed generations Continue generating with supported in-house image models af"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "ter exhausting your compute units. Unlimited LoRA training (2,000 images) Train LoRA models using up to 2,000 images to pers"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "AI-generated content, when usage follows the agreement terms. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Custom pricing Cont"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "and tracking all user actions across your organization. SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free 100 units / day $0 /mon"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder See all features For Teams and Enterprises Business Secure and coll"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "AI-generated content, when usage follows the agreement terms. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Enterprise-grade se"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "and tracking all user actions across your organization. SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Need More Compute? Purchase"
@@ -413,13 +178,97 @@
   {
    "kind": "deal_candidate",
    "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "Model training Train LoRA models with up to 50 images. Plan usage limits apply. Unlimited relaxed generations Continue generating with supported in-house image models af"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Most popular Pro 20,000 units / month 450 Nano Banana 2 generations"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder Max 60,000 units / month 1,350 Nano Banana 2 generations ~197 Seeda"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "el training Train LoRA models with up to 2,000 images. Plan usage limits apply. Unlimited relaxed generations Continue generating with supported in-house image models af"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder See all features For Teams and Enterprises Business 80k units /mont"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Custom pricing Cont"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "ts. Model training Train LoRA models with limits tailored to your organization. Unlimited relaxed generations Continue generating with supported in-house image models af"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free 100 units / day $0 /mon"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "res Be among the first to try new models, tools, and features on Pro and above. Promo placeholder See all features For Teams and Enterprises Business Secure and coll"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA 2000 Enterprise Enterprise-grade se"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "irst to try new models, tools, and features on Pro and above. Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Need More Compute? Purchase"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "snippet": "eators and leading enterprises Individual Team & Enterprise API Monthly Yearly -20% off Free Free forever. For people looking to explore Runway's AI Tools $0 /month 12"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
+   "status": "unconfirmed",
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "snippet": "ly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2"
@@ -439,7 +288,7 @@
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 16
+    "snippets": 17
    },
    {
     "id": "magnific",
@@ -453,7 +302,7 @@
     "vendor": "Runway",
     "url": "https://runwayml.com/pricing",
     "status": "fetched",
-    "snippets": 6
+    "snippets": 8
    },
    {
     "id": "fal_pricing",
@@ -463,12 +312,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 28
+  "candidates": 27
  },
  "counts": {
-  "ok": 191,
+  "ok": 203,
   "changed": 0,
-  "missing": 12,
+  "missing": 0,
   "skipped": 6
  }
 }
