@@ -67,6 +67,9 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0;color:var
 .tblwrap.fit th,.tblwrap.fit td{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
 .tblwrap.fit th{cursor:default}
 .tblwrap.fit td.num{white-space:nowrap;word-break:normal}
+.tblwrap.fit .badges{display:flex;flex-wrap:wrap;gap:4px;align-items:flex-start;margin-top:4px}
+.tblwrap.fit .badges:first-child{margin-top:0}
+.tblwrap.fit .tag{white-space:normal;max-width:100%;margin:0}
 details.src{margin:0}
 details.src summary{cursor:pointer;color:var(--acc2)}
 details.more{margin:10px 0 18px}
