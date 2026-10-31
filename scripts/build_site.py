@@ -160,6 +160,27 @@ def money(v):
         digits = f"{frac:05d}"[:2]
     return f"{'-' if neg else ''}${whole}.{digits}"
 
+def _money_places(v, places, min_digits=2):
+    """Half-up display. Calculations stay at full precision; only the shown text is rounded."""
+    q = Decimal("1").scaleb(-places)
+    n = Decimal(str(v)).quantize(q, rounding=ROUND_HALF_UP)
+    neg = n < 0
+    text = f"{abs(n):.{places}f}"
+    whole, frac = text.split(".")
+    frac = frac.rstrip("0")
+    if len(frac) < min_digits:
+        frac = frac.ljust(min_digits, "0")
+    return f"{'-' if neg else ''}${whole}.{frac}"
+
+def rate_money(v):
+    """$/s on the guides: 4 decimal places under $0.10, otherwise 3. At most 4 decimals."""
+    places = 3 if abs(Decimal(str(v))) >= Decimal("0.1") else 4
+    return _money_places(v, places)
+
+def cost_money(v):
+    """Dollar totals and per-1,000-credit costs: 2 decimal places."""
+    return _money_places(v, 2, min_digits=2)
+
 def ld_script(obj):
     raw = json.dumps(obj, ensure_ascii=False).replace("<", "\\u003c")
     return f'<script type="application/ld+json">{raw}</script>'
@@ -421,7 +442,8 @@ def assumption_html(r):
         return ""
     return f'<div class="assume">{e(text)}</div>'
 
-def row_html(r):
+def row_html(r, fmt=None):
+    show = fmt or money
     m = models[r["model"]]["name"]
     extra = e(r["math"]) if r.get("math") else ""
     if r.get("note"): extra += (" " if extra else "") + e(r["note"])
@@ -429,7 +451,7 @@ def row_html(r):
     disc = f' <span class="small">discontinued {e(r["discontinued_on"])}</span>' if r.get("discontinued_on") else ""
     return (f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(m)}</a></td><td>{plat_link(r["platform"], r["source_url"])}</td>'
             f'<td>{e(r["variant"])}</td><td>{e(shown_tier(r))}</td><td>{e(shown_resolution(r))}</td><td>{e(audio_phrase(r))}</td>'
-            f'<td class="num">{money(r["usd_per_second"])}{assumption_html(r)}</td>'
+            f'<td class="num">{show(r["usd_per_second"])}{assumption_html(r)}</td>'
             f'<td>{tag(r["status"])}{promo}{deal_badges(r)}{disc}</td><td class="math">{extra}</td>'
             f'<td class="small"><a href="{html.escape(outbound(r["source_url"])[0])}" rel="{outbound(r["source_url"])[1]}" target="_blank">source</a><br>{r["checked"]}</td></tr>')
 
@@ -608,15 +630,33 @@ def status_phrase(r):
     return str(st or "a listed rate")
 
 def rate_clause(r):
-    """One plain-text price clause. Dollars come from the row, formatted with money()."""
+    """One plain-text price clause. The shown $/s is display-rounded; the row value is unchanged."""
     bit = (
-        f"{money(r['usd_per_second'])} per second on {r['platform']} "
+        f"{rate_money(r['usd_per_second'])} per second on {r['platform']} "
         f"({spec_phrase(r)}), {status_phrase(r)} (checked {r['checked']})"
     )
     extra = assumption_text(r)
     if extra:
         bit += ". " + extra.rstrip(".")
     return bit
+
+def plan_short_name(name):
+    """'Ultra (annual)' reads as 'Ultra annual' in a short comparison."""
+    return (name or "").strip().replace(" (", " ").replace(")", "")
+
+def credit_use_assumed(r):
+    return "credit you pay for is used" in (assumption_text(r) or "").lower()
+
+def higgsfield_intro(lo, hi):
+    """Two sentences. Rates are display-rounded; plan, model, and resolution come from the rows."""
+    low = f"{rate_money(lo['usd_per_second'])}/s ({plan_short_name(lo.get('plan_name'))}, {shown_resolution(lo)})"
+    high_bits = f"{plan_short_name(hi.get('plan_name'))}, {models[hi['model']]['name']} {shown_resolution(hi)}"
+    if hi.get("status") == "estimate":
+        high_bits += ", approximate"
+    text = f"Higgsfield plan rates we track run from {low} to {rate_money(hi['usd_per_second'])}/s ({high_bits})."
+    if credit_use_assumed(lo) and credit_use_assumed(hi):
+        text += " Both assume every credit you pay for is used."
+    return text
 
 def outside_higgsfield(r):
     return r["platform"] not in HF_PLATFORMS
@@ -682,7 +722,7 @@ def cheap_card(title, r, alt=None):
     alt_html = ""
     if alt is not None and alt is not r:
         alt_html = (
-            f'<div class="sub">Without promos: {money(alt["usd_per_second"])}/s on {e(alt["platform"])} '
+            f'<div class="sub">Without promos: {rate_money(alt["usd_per_second"])}/s on {e(alt["platform"])} '
             f'({e(spec_phrase(alt))})</div>'
         )
         if assumption_text(alt):
@@ -692,7 +732,7 @@ def cheap_card(title, r, alt=None):
         promo = f' <span class="small">until {e(r["promo_until"])}</span>'
     return (
         f'<div class="card"><h3>{e(title)}</h3>'
-        f'<div class="big">{money(r["usd_per_second"])}<span class="small">/s</span></div>'
+        f'<div class="big">{rate_money(r["usd_per_second"])}<span class="small">/s</span></div>'
         f'{assumption_html(r)}'
         f'<div class="sub">{e(r["platform"])} · {e(spec_phrase(r))} {tag(r["status"])}{promo}</div>'
         f'{deal_badges(r)}{alt_html}</div>'
@@ -1854,9 +1894,9 @@ def audit_site():
             errors.append(f"budget page is missing the {label} preset")
     picked = overall_pick()
     if picked is not None:
-        if money(picked["usd_per_second"] * 3 * 60 * 3) not in budget_html:
+        if cost_money(picked["usd_per_second"] * 3 * 60 * 3) not in budget_html:
             errors.append("budget page is missing the 3-minute total at the lowest rate")
-        if money(picked["usd_per_second"] * 1 * 60 * 3) not in budget_html:
+        if cost_money(picked["usd_per_second"] * 1 * 60 * 3) not in budget_html:
             errors.append("budget page is missing the 1-minute total at the lowest rate")
     hf_html = open(os.path.join(DIST, "guides", "is-higgsfield-worth-it", "index.html"), encoding="utf-8").read()
     pro_named = any(
@@ -1865,6 +1905,15 @@ def audit_site():
     )
     if not pro_named and "not in our plan data" not in hf_html:
         errors.append("Higgsfield guide should say Pro is not in the plan data")
+    hf_plan_rows = [r for r in rows if r["platform"] == "Higgsfield"]
+    if hf_plan_rows:
+        lo = min(hf_plan_rows, key=lambda r: (r["usd_per_second"], r["id"]))
+        hi = max(hf_plan_rows, key=lambda r: (r["usd_per_second"], r["id"]))
+        intro = higgsfield_intro(lo, hi)
+        if intro not in hf_html:
+            errors.append("Higgsfield intro mismatch: " + intro)
+        if "used to $" in hf_html:
+            errors.append("Higgsfield intro still joins the credit assumption to the next price")
     if "1,000 credits" not in hf_html:
         errors.append("Higgsfield guide is missing the per-1,000-credit section")
     if not any("cinema" in f"{r.get('variant') or ''} {models[r['model']]['name']}".lower() for r in rows):

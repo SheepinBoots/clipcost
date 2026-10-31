@@ -14,7 +14,9 @@ def render(g):
     models = g["models"]
     plans = g["plans"]
     db = g["db"]
-    money = g["money"]
+    rate_money = g["rate_money"]
+    cost_money = g["cost_money"]
+    higgsfield_intro = g["higgsfield_intro"]
     e = g["e"]
     root = g["root"]
     tag = g["tag"]
@@ -51,6 +53,16 @@ def render(g):
     if best is None:
         raise SystemExit("guides need at least one current price row")
 
+    def left_out(item, reason):
+        """'Left out: Name (Reason).' The reason starts with a capital."""
+        item = (item or "").strip().rstrip(".")
+        reason = (reason or "").strip().rstrip(".")
+        if reason:
+            if reason[0].islower():
+                reason = reason[0].upper() + reason[1:]
+            return f"Left out: {item} ({reason})."
+        return f"Left out: {item}."
+
     def row_index():
         return {r["id"]: i for i, r in enumerate(rows)}
 
@@ -79,7 +91,7 @@ def render(g):
         if r.get("status") == "promo" and r.get("promo_until"):
             promo = f' <span class="small">until {e(r["promo_until"])}</span>'
         return (
-            f'{money(r["usd_per_second"])}/s on {plat_link(r["platform"], r["source_url"])}'
+            f'{rate_money(r["usd_per_second"])}/s on {plat_link(r["platform"], r["source_url"])}'
             f'<div class="small">{e(spec_phrase(r))} {tag(r["status"])}{promo}</div>'
             f'{assumption_html(r)}'
         )
@@ -96,7 +108,7 @@ def render(g):
         billing = (p.get("billing") or "").strip()
         bill = f" · {e(billing)}" if billing else ""
         credit_txt = f"{int(credits):,}" if float(credits).is_integer() else str(credits)
-        return f"{money(month)}/mo · {credit_txt} credits{bill}"
+        return f"{cost_money(month)}/mo · {credit_txt} credits{bill}"
 
     def with_nonpromo(label, picked, alt):
         text = f"The cheapest {label} rate we track is {rate_clause(picked)}."
@@ -118,7 +130,7 @@ def render(g):
         return (
             f"{minutes:g} finished {unit} ({format_seconds(finished)} seconds) at {mult:g}x retries "
             f"is {format_seconds(seconds)} billed seconds. "
-            f"At the lowest rate we track, {rate_clause(picked)}, that comes to {money(total)}."
+            f"At the lowest rate we track, {rate_clause(picked)}, that comes to {cost_money(total)}."
         )
 
     def count_text(n):
@@ -212,7 +224,7 @@ def render(g):
         for item in db.get("unverified") or []:
             blob = ((item.get("item") or "") + " " + (item.get("reason") or "")).lower()
             if "wan" in blob:
-                parts.append(f"Left out: {item['item']}. {item['reason']}.")
+                parts.append(left_out(item.get("item"), item.get("reason")))
         gap = " ".join(parts) if parts else "Every platform in the current price data has a Wan 3.0 or Wan 3.0 Prime row."
         lead = (
             f"The cheapest Wan 3.0 rate we track is {rate_clause(base)}. "
@@ -239,7 +251,7 @@ def render(g):
 <h2>{e(q_prime)}</h2><p>{e(a_prime)}</p>
 <h2>Every tracked Wan 3.0 and Wan 3.0 Prime price</h2>
 <p>{len(wan_rs)} live rows, lowest dollars per second first. Tier, resolution, audio, and any credit-plan assumption use the same labels as the price table.</p>
-<div class="tblwrap"><table>{head}<tbody>{"".join(row_html(r) for r in wan_rs)}</tbody></table></div>
+<div class="tblwrap"><table>{head}<tbody>{"".join(row_html(r, rate_money) for r in wan_rs)}</tbody></table></div>
 <h2>{e(q_gap)}</h2><p>{e(gap)}</p>
 {how_block()}
 {tick_script()}"""
@@ -247,9 +259,9 @@ def render(g):
             "/guides/cheapest-wan-3-0/",
             f"Cheapest way to use Wan 3.0 (and Wan 3.0 Prime): API vs Higgsfield vs Krea vs others | {BRAND}",
             (
-                f"Cheapest Wan 3.0 is {money(base['usd_per_second'])}/s on {base['platform']} "
+                f"Cheapest Wan 3.0 is {rate_money(base['usd_per_second'])}/s on {base['platform']} "
                 f"({shown_resolution(base)}, {g['status_phrase'](base)}). "
-                f"Wan 3.0 Prime is {money(prime['usd_per_second'])}/s on {prime['platform']}. "
+                f"Wan 3.0 Prime is {rate_money(prime['usd_per_second'])}/s on {prime['platform']}. "
                 f"Last checked {LAST}."
             ),
             body,
@@ -289,7 +301,7 @@ def render(g):
             body_rows.append(
                 f'<tr data-price-id="{e(picked["id"])}">'
                 f'<td><a href="{root(f"/models/{slug}/")}">{e(meta["name"])}</a></td>'
-                f'<td class="num">{money(picked["usd_per_second"])}{assumption_html(picked)}</td>'
+                f'<td class="num">{rate_money(picked["usd_per_second"])}{assumption_html(picked)}</td>'
                 f'<td>{plat_link(picked["platform"], picked["source_url"])}</td>'
                 f'<td>{e(picked["variant"])}</td>'
                 f'<td>{e(shown_tier(picked))}</td>'
@@ -330,7 +342,7 @@ def render(g):
             "/guides/cheapest-ai-video-generator/",
             f"Cheapest AI video generator right now, by model | {BRAND}",
             (
-                f"The lowest rate we track is {money(best_row['usd_per_second'])}/s for "
+                f"The lowest rate we track is {rate_money(best_row['usd_per_second'])}/s for "
                 f"{models[best_row['model']]['name']} on {best_row['platform']}. "
                 f"Cheapest option for each model. Last checked {LAST}."
             ),
@@ -356,16 +368,11 @@ def render(g):
         if plan_rows:
             lo = min(plan_rows, key=lambda r: (r["usd_per_second"], r["id"]))
             hi = max(plan_rows, key=lambda r: (r["usd_per_second"], r["id"]))
-            lead = (
-                f"The Higgsfield plan rates we track run from {rate_clause(lo)} to {rate_clause(hi)}. "
-                "Each row is that plan's effective dollars per second next to the cheapest rate we track for the same model on a platform other than Higgsfield."
-            )
+            lead = higgsfield_intro(lo, hi)
             q_worth = "Is Higgsfield worth it?"
             a_worth = (
-                f"The lowest Higgsfield plan rate we track is {rate_clause(lo)}. "
-                f"The highest is {rate_clause(hi)}. "
-                "The table sets each plan rate next to the cheapest non-Higgsfield rate for that model. "
-                "The two numbers are the comparison."
+                lead
+                + " The table sets each plan rate next to the cheapest non-Higgsfield rate for that model."
             )
         else:
             lo = hi = None
@@ -399,7 +406,7 @@ def render(g):
         for item in db.get("unverified") or []:
             blob = ((item.get("item") or "") + " " + (item.get("reason") or "")).lower()
             if "higgsfield" in blob:
-                parts.append(f"Unconfirmed: {item['item']}. {item['reason']}.")
+                parts.append(left_out(item.get("item"), item.get("reason")))
         gap = " ".join(parts) if parts else "Every model we track has a Higgsfield plan row."
         head = (
             "<thead><tr><th>Plan</th><th>Plan price</th><th>Model</th><th>Variant</th>"
@@ -418,7 +425,7 @@ def render(g):
                 f'<td>{e(r["variant"])}</td>'
                 f'<td>{e(shown_resolution(r))}</td>'
                 f'<td>{e(audio_phrase(r))}</td>'
-                f'<td class="num">{money(r["usd_per_second"])}{assumption_html(r)}</td>'
+                f'<td class="num">{rate_money(r["usd_per_second"])}{assumption_html(r)}</td>'
                 f'<td>{status_cell(r)}</td>'
                 f'<td class="math">{detail_html(r)}</td>'
                 f'<td>{other_cell(other)}</td>'
@@ -450,7 +457,7 @@ def render(g):
                 f'<td>{e(r["variant"])}</td>'
                 f'<td>{e(shown_resolution(r))}</td>'
                 f'<td>{e(audio_phrase(r))}</td>'
-                f'<td class="num">{money(r["usd_per_second"])}{assumption_html(r)}</td>'
+                f'<td class="num">{rate_money(r["usd_per_second"])}{assumption_html(r)}</td>'
                 f'<td>{status_cell(r)}</td>'
                 f'<td class="math">{detail_html(r)}</td>'
                 f'<td>{other_cell(other)}</td>'
@@ -525,7 +532,7 @@ def render(g):
         if pro_plans:
             pid, p = pro_plans[0]
             thousand_plain_parts.append(
-                f"Higgsfield Pro in our plan data is {p['plan']}: {money(p['usd_month'])} per month for {int(p['credits_month']):,} credits ({p.get('billing') or 'billing not listed'})."
+                f"Higgsfield Pro in our plan data is {p['plan']}: {cost_money(p['usd_month'])} per month for {int(p['credits_month']):,} credits ({p.get('billing') or 'billing not listed'})."
             )
         else:
             thousand_plain_parts.append(
@@ -554,9 +561,9 @@ def render(g):
                 "Seedance 2.5 has no Higgsfield credits-per-clip row, so there is no Seedance second count from 1,000 credits."
             )
             if seed_gap:
-                thousand_plain_parts.append(f"Left out: {seed_gap['item']}. {seed_gap['reason']}.")
+                thousand_plain_parts.append(left_out(seed_gap.get("item"), seed_gap.get("reason")))
         if kling_gap:
-            thousand_plain_parts.append(f"Left out of the Kling count: {kling_gap['item']}. {kling_gap['reason']}.")
+            thousand_plain_parts.append(left_out(kling_gap.get("item"), kling_gap.get("reason")))
         seed_other = best_model.get("seedance-2-5")
         kling_other = best_model.get("kling-3-0")
         if kling_other:
@@ -578,11 +585,11 @@ def render(g):
             price_rows_html.append(
                 "<tr>"
                 f"<td>{e(p['plan'])}</td>"
-                f"<td class=\"num\">{money(p['usd_month'])}/mo</td>"
+                f"<td class=\"num\">{cost_money(p['usd_month'])}/mo</td>"
                 f"<td class=\"num\">{int(p['credits_month']):,}</td>"
                 f"<td>{e(p.get('billing') or 'not listed')}</td>"
-                f"<td class=\"num\">{money(rate)}/credit</td>"
-                f"<td class=\"num\">{money(rate * 1000)}</td>"
+                f"<td class=\"num\">{rate_money(rate)}/credit</td>"
+                f"<td class=\"num\">{cost_money(rate * 1000)}</td>"
                 "</tr>"
             )
         if price_rows_html:
@@ -653,7 +660,7 @@ def render(g):
             clip_len = r.get("clip_seconds")
             credit_cell = credit_num(credits) if credits else "not in our data"
             clip_cell = f"{credit_num(clip_len)}s" if clip_len else "not in our data"
-            dollar_cell = money(per_clip) if per_clip is not None else "not in our data"
+            dollar_cell = cost_money(per_clip) if per_clip is not None else "not in our data"
             clip_body.append(
                 f'<tr data-price-id="{e(r["id"])}">'
                 f'<td>{e(r.get("plan_name") or "not listed")}</td>'
@@ -687,8 +694,8 @@ def render(g):
             (q_clip, a_clip),
             ("How do we calculate this?", HOW_PLAIN),
         ]
-        desc_lo = money(lo["usd_per_second"]) if lo is not None else "n/a"
-        desc_hi = money(hi["usd_per_second"]) if hi is not None else "n/a"
+        desc_lo = rate_money(lo["usd_per_second"]) if lo is not None else "n/a"
+        desc_hi = rate_money(hi["usd_per_second"]) if hi is not None else "n/a"
         body = f"""{crumb("Higgsfield")}
 <h1>Is Higgsfield worth it? Every plan's real cost per second</h1>
 <p class="lead">{e(lead)}</p>
@@ -753,8 +760,8 @@ def render(g):
             f'<td>{e(rec["tier"])}</td>'
             f'<td>{e(rec["resolution"])}</td>'
             f'<td>{e(rec["audio"])}</td>'
-            f'<td class="num">{money(rec["usd"])}{assume}</td>'
-            f'<td class="num">{money(total)}</td>'
+            f'<td class="num">{rate_money(rec["usd"])}{assume}</td>'
+            f'<td class="num">{cost_money(total)}</td>'
             f'<td>{tag(rec["status"])}{promo}{rec["badges"]}</td>'
             f'<td class="math">{rec["detail"]}</td>'
             "</tr>"
@@ -786,7 +793,7 @@ def render(g):
         )
         open_line = (
             f"The table opens on {models[default_model]['name']} at {default_res}, "
-            f"the lowest rate we track ({money(picked['usd_per_second'])}/s on {picked['platform']})."
+            f"the lowest rate we track ({rate_money(picked['usd_per_second'])}/s on {picked['platform']})."
         )
         faqs = [
             (q1, a1),
@@ -838,7 +845,7 @@ def render(g):
             f"AI video project budget calculator | {BRAND}",
             (
                 f"Estimate an AI video from finished minutes, a retry multiplier, and tracked dollars per second. "
-                f"3 finished minutes at 3x is {money(picked['usd_per_second'] * seconds)} at the lowest rate we track. "
+                f"3 finished minutes at 3x is {cost_money(picked['usd_per_second'] * seconds)} at the lowest rate we track. "
                 f"Last checked {LAST}."
             ),
             body,
@@ -869,7 +876,8 @@ def budget_script(g, records, defaults):
 BUDGET_JS = r"""
 const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function money(v){const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits;}
+function rateMoney(v){const n=Number(v),neg=n<0,abs=Math.abs(n),places=abs>=0.1?3:4,q=Math.pow(10,places),rounded=Math.round(abs*q),whole=Math.floor(rounded/q);let frac=String(rounded%q).padStart(places,'0').replace(/0+$/,'');if(frac.length<2)frac=frac.padEnd(2,'0');return (neg?'-$':'$')+whole+'.'+frac;}
+function costMoney(v){const neg=Number(v)<0,n=Math.round(Math.abs(Number(v))*100),whole=Math.floor(n/100),frac=String(n%100).padStart(2,'0');return (neg?'-$':'$')+whole+'.'+frac;}
 function tag(s){const label={verified:'vendor-stated',estimate:'approx.',promo:'promo',discontinued:'discontinued'}[s]||s;return '<span class="tag '+esc(s)+'">'+esc(label)+'</span>';}
 function rankRes(s){const m=/^(\d+(?:\.\d+)?)(p|k)$/i.exec(s);if(!m)return null;const n=Number(m[1]);return m[2].toLowerCase()==='k'?n*1000:n;}
 function resolutions(model){
@@ -928,7 +936,7 @@ function render(){
     const total=r.usd*seconds;
     const promo=r.promo_until?' <span class="small">until '+esc(r.promo_until)+'</span>':'';
     const assume=r.assumption?'<div class="assume">'+esc(r.assumption)+'</div>':'';
-    return '<tr data-price-id="'+esc(r.id)+'"><td>'+r.platform_html+'</td><td>'+esc(r.variant)+'</td><td>'+esc(r.tier)+'</td><td>'+esc(r.resolution)+'</td><td>'+esc(r.audio)+'</td><td class="num">'+money(r.usd)+assume+'</td><td class="num">'+money(total)+'</td><td>'+tag(r.status)+promo+r.badges+'</td><td class="math">'+r.detail+'</td></tr>';
+    return '<tr data-price-id="'+esc(r.id)+'"><td>'+r.platform_html+'</td><td>'+esc(r.variant)+'</td><td>'+esc(r.tier)+'</td><td>'+esc(r.resolution)+'</td><td>'+esc(r.audio)+'</td><td class="num">'+rateMoney(r.usd)+assume+'</td><td class="num">'+costMoney(total)+'</td><td>'+tag(r.status)+promo+r.badges+'</td><td class="math">'+r.detail+'</td></tr>';
   }).join('');
   if(window.clipTick) clipTick();
 }
