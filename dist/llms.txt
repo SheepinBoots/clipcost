@@ -88,6 +88,14 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 
 - [AI video deals](https://sheepinboots.github.io/clipcost/deals/): live discounts, plan sales, promo codes, and unlimited windows, with end dates when the vendor gave one.
 
+## Guides
+
+- [Guides](https://sheepinboots.github.io/clipcost/guides/): comparisons built from the same price rows.
+- [Cheapest way to use Wan 3.0](https://sheepinboots.github.io/clipcost/guides/cheapest-wan-3-0/): Wan 3.0 from $0.02 per second on Higgsfield API (plan tier not listed, resolution 480p, audio not listed), a promo until 2026-11-01 (checked 2026-10-31). Wan 3.0 Prime from $0.0272 per second on Higgsfield API (plan tier not listed, resolution 480p, audio not listed), a promo until 2026-11-01 (checked 2026-10-31).
+- [Cheapest AI video generator](https://sheepinboots.github.io/clipcost/guides/cheapest-ai-video-generator/): The lowest rate we track is $0.0163 per second on fal (plan tier not listed, resolution 480p, audio not listed), a promo until 2026-10-31 (checked 2026-10-31).
+- [Higgsfield plan rates](https://sheepinboots.github.io/clipcost/guides/is-higgsfield-worth-it/): The lowest Higgsfield plan rate we track is $0.033 per second on Higgsfield (plan tier Ultra (annual), resolution 480p, audio not listed), a vendor-stated rate (checked 2026-10-31). Assumes every credit you pay for is used.
+- [Project budget](https://sheepinboots.github.io/clipcost/guides/ai-video-project-budget/): Enter finished minutes and a retry multiplier to price each tracked dollars-per-second rate.
+
 ## Data
 
 - [prices.json](https://sheepinboots.github.io/clipcost/data/prices.json): the price catalog this page is built from.

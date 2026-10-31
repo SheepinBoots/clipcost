@@ -62,3 +62,12 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0;color:var
 .log li{margin:0 0 12px}.pill{font-size:12px;background:#1b2130;border-radius:6px;padding:1px 6px;color:var(--mut)}
 .calc{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:18px}@media(max-width:800px){.calc{grid-template-columns:1fr}}
 .kpi{font-size:22px;font-weight:800;color:var(--acc)}
+.tblwrap.fit{overflow:hidden}
+.tblwrap.fit table{width:100%;table-layout:fixed}
+.tblwrap.fit th,.tblwrap.fit td{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+.tblwrap.fit th{cursor:default}
+.tblwrap.fit td.num{white-space:nowrap;word-break:normal}
+details.src{margin:0}
+details.src summary{cursor:pointer;color:var(--acc2)}
+details.more{margin:10px 0 18px}
+details.more > summary{cursor:pointer;font-weight:650}
