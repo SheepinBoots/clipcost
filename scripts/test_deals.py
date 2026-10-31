@@ -101,12 +101,12 @@ def main():
         raise SystemExit("window should still be live on the estimated end date")
     if deals.is_current(window, "2026-10-21"):
         raise SystemExit("window should archive after the end date")
-    unlimited = by_id(live, "runway-kling4-unlimited-3d")
+    unlimited = by_id(doc["deals"], "runway-kling4-unlimited-3d")
     if unlimited.get("math") != "none" or unlimited.get("show_on_rows") is not False or unlimited.get("end") is not None:
         raise SystemExit("runway-kling4-unlimited-3d should not invent a rate or an end date")
     if any(deals.adjustment(unlimited, row, plans) for row in db["rows"]):
         raise SystemExit("runway-kling4-unlimited-3d matched a catalog row")
-    runway25 = by_id(live, "runway-kling4-25")
+    runway25 = by_id(doc["deals"], "runway-kling4-25")
     if runway25.get("math") != "none" or runway25.get("show_on_rows") is not False:
         raise SystemExit("runway-kling4-25 should not invent a rate")
     if runway25.get("end") != "2026-11-30" or runway25.get("end_is_estimate"):
@@ -160,6 +160,42 @@ def main():
         raise SystemExit("hf-kling4-launch models, start, or end")
     if kling4.get("source_kind") != "changelog":
         raise SystemExit("hf-kling4-launch source_kind")
+    nxt = next(d for d in doc["deals"] if d["id"] == "fal-minimax-h3-30-nov")
+    if nxt.get("percent") != 30 or nxt.get("type") != "api_promo" or nxt.get("math") != "stated":
+        raise SystemExit("fal-minimax-h3-30-nov percent, type, or math")
+    if nxt.get("start") != "2026-11-01" or nxt.get("end") != "2026-11-15" or nxt.get("end_is_estimate"):
+        raise SystemExit("fal-minimax-h3-30-nov dates")
+    if nxt.get("models") != ["minimax-hailuo"] or nxt.get("vendor") != "fal":
+        raise SystemExit("fal-minimax-h3-30-nov vendor or models")
+    if nxt.get("status") != "live":
+        raise SystemExit("fal-minimax-h3-30-nov should stay status live and flip by start date")
+    if deals.is_current(nxt, "2026-10-31") or not deals.is_upcoming(nxt, "2026-10-31"):
+        raise SystemExit("30% MiniMax promo should be upcoming on Oct 31")
+    if not deals.is_current(nxt, "2026-11-01") or deals.is_upcoming(nxt, "2026-11-01"):
+        raise SystemExit("30% MiniMax promo should be live on Nov 1")
+    if deals.is_current(nxt, "2026-11-16"):
+        raise SystemExit("30% MiniMax promo should end after Nov 15")
+    prior = next(d for d in doc["deals"] if d["id"] == "fal-minimax-35")
+    if prior.get("end") != "2026-10-31" or not deals.is_current(prior, "2026-10-31"):
+        raise SystemExit("fal-minimax-35 should still end Oct 31 and be live that day")
+    if deals.is_current(prior, "2026-11-01"):
+        raise SystemExit("fal-minimax-35 should not stay live on Nov 1")
+    turbo = rows["r186"]
+    if deals.adjustment(nxt, turbo, plans) is not None:
+        raise SystemExit("30% promo reused the 35% row price")
+    if deals.row_adjustments(turbo, [nxt], plans, "2026-10-31"):
+        raise SystemExit("30% promo badged a price row before Nov 1")
+    if deals.row_adjustments(turbo, [prior], plans, "2026-10-31"):
+        pass
+    else:
+        raise SystemExit("35% promo should still badge its row on Oct 31")
+    quote = "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026."
+    turbo_url = "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+    if nxt.get("source_quote") != quote or turbo_url not in [s.get("url") for s in nxt.get("sources") or []]:
+        raise SystemExit("fal-minimax-h3-30-nov quote or turbo source")
+    if any(d.get("conditions", {}).get("new_users_only") or d.get("conditions", {}).get("code") or d.get("conditions", {}).get("annual_only")
+           for d in [nxt]):
+        raise SystemExit("30% promo should have no code and no new-user or annual limit")
     if "klingai.com" in json.dumps(doc["deals"]):
         raise SystemExit("do not add an unverified klingai.com promo")
     # History stays out of the live list.

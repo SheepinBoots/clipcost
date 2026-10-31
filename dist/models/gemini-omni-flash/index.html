@@ -34,7 +34,26 @@ function clipWhen(end, est, standing){
   return 'ends in '+days+' day'+(days===1?'':'s')+x;
 }
 function clipTick(){
+  const live=document.getElementById('liveDeals');
+  const upcoming=document.getElementById('upcomingDeals');
+  if(live && upcoming){
+    upcoming.querySelectorAll('[data-deal-card]').forEach(card=>{
+      const start=card.getAttribute('data-deal-start')||'';
+      if(start && clipDays(start)<=0) live.appendChild(card);
+    });
+    const section=document.getElementById('upcoming');
+    if(section) section.hidden=upcoming.querySelector('[data-deal-card]')===null;
+  }
   document.querySelectorAll('[data-deal-end]').forEach(el=>{
+    const start=el.getAttribute('data-deal-start')||'';
+    if(start && clipDays(start)>0){
+      const days=clipDays(start);
+      const txt='starts in '+days+' day'+(days===1?'':'s');
+      const slot=el.querySelector('.ends');
+      if(slot) slot.textContent=txt;
+      else if(el.classList.contains('when')) el.textContent=txt;
+      return;
+    }
     const end=el.getAttribute('data-deal-end')||'';
     const txt=clipWhen(end, el.getAttribute('data-deal-est')==='1', el.getAttribute('data-deal-standing')==='1');
     const card=el.closest('[data-deal-card]');
@@ -55,6 +74,7 @@ function clipTick(){
     });
     strip.hidden=[...strip.querySelectorAll('[data-deal-card]')].every(c=>c.classList.contains('is-past'));
   }
+  if(typeof filterDeals==='function') filterDeals();
 }
 document.addEventListener('DOMContentLoaded', clipTick);
 </script>

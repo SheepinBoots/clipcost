@@ -85,8 +85,9 @@ def main():
     log = wr.load()
     assert [event for event in log if event["kind"] == "price"] == []
     assert any(event["kind"] == "note" and "a4f84a1" in event["text"] for event in log)
+    future_start = "promo_started:deal:fal-minimax-h3-30-nov:2026-11-01"
     promo_ids = {event["id"] for event in log if event["kind"] in ("promo_started", "promo_ended")}
-    assert promo_ids == {
+    week_ids = {
         "promo_ended:deal:hf-wan3-unlimited-7d:2026-10-20",
         "promo_started:deal:runway-kling4-unlimited-3d:2026-10-21",
         "promo_started:deal:runway-kling4-25:2026-10-21",
@@ -96,6 +97,10 @@ def main():
         "promo_started:deal:hf-seedance-unlimited-7d:2026-10-30",
         "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
+    assert promo_ids == week_ids | {future_start}
+    later = next(event for event in log if event["id"] == future_start)
+    assert later["date"] == "2026-11-01" and later["started"] == "2026-11-01"
+    assert later["checked"] == "2026-10-31" and later["vendor"] == "fal"
     higgs = next(event for event in log if event["id"].startswith("promo_ended:deal:hf-wan3"))
     assert higgs["end_is_estimate"] is True
     assert higgs["source_url"].startswith("https://")
@@ -149,7 +154,10 @@ def main():
     assert edition["covered_through"] == "2026-10-30"
     assert edition["first"] is True
     assert launch["pending"] == []
-    assert {event["id"] for event in edition["changes"]} == promo_ids
+    assert {event["id"] for event in edition["changes"]} == week_ids
+    held_start = wr.assign(log, "2026-11-06")
+    assert [item["id"] for item in held_start["reports"]] == ["2026-w44"]
+    assert [event["id"] for event in held_start["pending"]] == [future_start]
     assert wr.change_counts(edition) == {"price": 0, "promo_started": 6, "promo_ended": 2}
     assert sum(wr.change_counts(edition).values()) == 8
     launch_body = wr.render_report_body(edition, log)

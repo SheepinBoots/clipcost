@@ -66,16 +66,23 @@ def conditions(deal):
 
 
 def effective_status(deal, today):
-    """Live deals past their end date are archived. History stays ended."""
+    """Live deals past their end date are archived. A future start is not live yet."""
     status = deal.get("status") or "unconfirmed"
     end = deal.get("end")
+    start = deal.get("start")
     if status == "live" and end and end < today:
         return "ended"
+    if status == "live" and start and start > today:
+        return "upcoming"
     return status
 
 
 def is_current(deal, today):
     return effective_status(deal, today) == "live"
+
+
+def is_upcoming(deal, today):
+    return effective_status(deal, today) == "upcoming"
 
 
 def expire_deals(doc, today, log):
@@ -221,6 +228,10 @@ def adjustment(deal, row, plans):
         and row.get("list_usd_per_second") is not None
     ):
         if row.get("list_usd_per_second") is None:
+            return None
+        # The stated rate is the price on the row this deal is tied to.
+        # A later promo must not reuse an earlier promo row's dollars per second.
+        if deal["id"] not in (row.get("deal_ids") or []):
             return None
         base["usd"] = row["usd_per_second"]
         base["list_usd"] = row["list_usd_per_second"]

@@ -63,7 +63,8 @@ retired_rows = [r for r in db["rows"] if discontinued(r)]
 LAST = db.get("last_full_check") or min(r["checked"] for r in db["rows"])
 deal_doc = dealmod.load()
 LIVE_DEALS = [d for d in deal_doc["deals"] if dealmod.is_current(d, TODAY)]
-ARCHIVED = [d for d in deal_doc["deals"] if not dealmod.is_current(d, TODAY)]
+UPCOMING_DEALS = [d for d in deal_doc["deals"] if dealmod.is_upcoming(d, TODAY)]
+ARCHIVED = [d for d in deal_doc["deals"] if not dealmod.is_current(d, TODAY) and not dealmod.is_upcoming(d, TODAY)]
 HISTORY = list(deal_doc.get("history") or [])
 DEAL_BY_ID = {d["id"]: d for d in deal_doc["deals"]}
 CALC_DEALS = dealmod.calculator_map(deal_doc["deals"], plans, TODAY)
@@ -257,10 +258,17 @@ def ends_fallback(deal):
     est = " (estimated)" if deal.get("end_is_estimate") else ""
     return f"until {deal['end']}{est}"
 
+def when_label(deal):
+    """Upcoming offers show the start date. Live offers show the end."""
+    start = deal.get("start")
+    if start and start > TODAY:
+        return f"starts {start}"
+    return ends_fallback(deal)
+
 def deal_attrs(deal):
     cond = dealmod.conditions(deal)
     return (f'data-deal-end="{e(deal.get("end") or "")}" data-deal-est="{1 if deal.get("end_is_estimate") else 0}" '
-            f'data-deal-standing="{1 if cond.get("standing") else 0}"')
+            f'data-deal-standing="{1 if cond.get("standing") else 0}" data-deal-start="{e(deal.get("start") or "")}"')
 
 def deal_badges(r):
     bits = []
@@ -297,7 +305,26 @@ function clipWhen(end, est, standing){
   return 'ends in '+days+' day'+(days===1?'':'s')+x;
 }
 function clipTick(){
+  const live=document.getElementById('liveDeals');
+  const upcoming=document.getElementById('upcomingDeals');
+  if(live && upcoming){
+    upcoming.querySelectorAll('[data-deal-card]').forEach(card=>{
+      const start=card.getAttribute('data-deal-start')||'';
+      if(start && clipDays(start)<=0) live.appendChild(card);
+    });
+    const section=document.getElementById('upcoming');
+    if(section) section.hidden=upcoming.querySelector('[data-deal-card]')===null;
+  }
   document.querySelectorAll('[data-deal-end]').forEach(el=>{
+    const start=el.getAttribute('data-deal-start')||'';
+    if(start && clipDays(start)>0){
+      const days=clipDays(start);
+      const txt='starts in '+days+' day'+(days===1?'':'s');
+      const slot=el.querySelector('.ends');
+      if(slot) slot.textContent=txt;
+      else if(el.classList.contains('when')) el.textContent=txt;
+      return;
+    }
     const end=el.getAttribute('data-deal-end')||'';
     const txt=clipWhen(end, el.getAttribute('data-deal-est')==='1', el.getAttribute('data-deal-standing')==='1');
     const card=el.closest('[data-deal-card]');
@@ -318,6 +345,7 @@ function clipTick(){
     });
     strip.hidden=[...strip.querySelectorAll('[data-deal-card]')].every(c=>c.classList.contains('is-past'));
   }
+  if(typeof filterDeals==='function') filterDeals();
 }
 document.addEventListener('DOMContentLoaded', clipTick);
 """
@@ -763,7 +791,7 @@ def deal_card(deal, archive=False, rowset=None):
         when = "Ended"
     else:
         when = None
-    when_html = e(when) if archive else f'<span class="ends">{e(ends_fallback(deal))}</span>'
+    when_html = e(when) if archive else f'<span class="ends">{e(when_label(deal))}</span>'
     attrs = ' data-archive="1"' if archive else " " + deal_attrs(deal)
     pct = f' <span class="tag deal">−{deal["percent"]:g}%</span>' if deal.get("percent") is not None else ""
     quote = f'<blockquote class="small">“{e(deal.get("source_quote") or "")}”</blockquote>' if deal.get("source_quote") else ""
@@ -833,6 +861,9 @@ for slug, m in models.items():
     deals_html = ""
     if model_deals:
         deals_html = '<h2>Live deals for this model</h2><div class="dealgrid">' + "".join(deal_card(d, rowset=rs) for d in model_deals) + "</div>"
+    soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
+    if soon:
+        deals_html += '<h2>Starting soon</h2><div class="dealgrid">' + "".join(deal_card(d, rowset=rs) for d in soon) + "</div>"
     body = f"""<p class="small"><a href="{root("/")}">Prices</a> › {e(m['name'])}</p>
 <h1>{e(m['name'])} price per second ({MONTH})</h1>
 <p class="lead">{e(m['maker'])}'s {e(m['name'])} on {len({r['platform'] for r in rs})} platforms, all converted to dollars per second of video. Checked {LAST}.</p>
@@ -1031,13 +1062,24 @@ def deal_sort(deal):
     return (deal.get("end") is None, deal.get("end") or "9999-99-99", deal.get("vendor") or "", deal.get("title") or "")
 
 live_sorted = sorted(LIVE_DEALS, key=deal_sort)
-vendors = sorted({d["vendor"] for d in live_sorted})
-types = sorted({d["type"] for d in live_sorted})
+upcoming_sorted = sorted(UPCOMING_DEALS, key=lambda d: (d.get("start") or "", d.get("vendor") or "", d.get("title") or ""))
+vendors = sorted({d["vendor"] for d in live_sorted + upcoming_sorted})
+types = sorted({d["type"] for d in live_sorted + upcoming_sorted})
 live_html = "".join(deal_card(d) for d in live_sorted) or "<p>No live deals right now.</p>"
+upcoming_html = ""
+if upcoming_sorted:
+    upcoming_html = (
+        '<section id="upcoming"><h2>Starting soon</h2>'
+        '<p class="small">Verified offers that have not started. They are not applied to current prices. '
+        'On the start date they join the live list.</p>'
+        '<div class="dealgrid" id="upcomingDeals">'
+        + "".join(deal_card(d) for d in upcoming_sorted)
+        + "</div></section>"
+    )
 archive_sorted = sorted(ARCHIVED, key=lambda d: d.get("end") or "", reverse=True)
 archive_html = "".join(deal_card(d, archive=True) for d in archive_sorted) or "<p class='small'>No tracked deal has expired yet. Older holiday sales are on the Black Friday page, labeled 2025.</p>"
 deals_body = f"""<h1>AI video deals</h1>
-<p class="lead">Offers copied from vendor pricing pages and official accounts. Countdowns use your clock, so they stay right between daily builds. A deal with no end date is not given a guessed one.</p>
+<p class="lead">Offers copied from vendor pricing pages and official accounts. Countdowns use your clock, so they stay right between daily builds. A deal with no end date is not given a guessed one. An offer that starts later is listed under Starting soon and is not a current price.</p>
 {sponsor_slot("deals", featured=True)}
 <div class="disclose"><b>Disclosure.</b> Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you sign up through them, {BRAND} may earn a commission, at no extra cost to you. Links to Krea, Magnific, Runway, fal, and other vendors are the official URLs, with no affiliate tag. Deals are listed only when the vendor's own page or official account is the source. Order is the end date, not who pays us. See the <a href="{root("/about/#disclosure")}">full disclosure</a>.</div>
 <div class="filters">
@@ -1045,6 +1087,7 @@ deals_body = f"""<h1>AI video deals</h1>
 <select id="dType" aria-label="Deal type"><option value="">All types</option>{"".join(f'<option value="{e(t)}">{e(t.replace("_", " "))}</option>' for t in types)}</select>
 <span class="small" id="dCount"></span>
 </div>
+{upcoming_html}
 <div class="dealgrid" id="liveDeals">{live_html}</div>
 <h2>When these vendors run sales</h2>
 <p>Launch weeks are the usual pattern: a new video model is unlimited on credit plans and 30–75% off on APIs for one to four weeks. The holiday window, about Nov 20 through Jan 8, is the long one. In 2025 Higgsfield posted several waves, Magnific used a 50% code, and Krea posted 40% off yearly plans. End dates move. They get extended, reopened, or left as "limited time." If a page does not name an end date, this site does not invent one. <a href="{root("/deals/black-friday/")}">Black Friday 2026 stub, with 2025 dates</a>.</p>
@@ -1057,10 +1100,10 @@ deals_body = f"""<h1>AI video deals</h1>
 function filterDeals(){{
   const v=document.getElementById('dVendor').value, t=document.getElementById('dType').value;
   let n=0;
-  document.querySelectorAll('#liveDeals [data-deal-card]').forEach(card=>{{
+  document.querySelectorAll('#liveDeals [data-deal-card], #upcomingDeals [data-deal-card]').forEach(card=>{{
     const hide=(v&&card.dataset.vendor!==v)||(t&&card.dataset.type!==t);
     card.classList.toggle('is-filtered', hide);
-    if(!hide && !card.classList.contains('is-past')) n++;
+    if(!hide && !card.classList.contains('is-past') && card.parentElement && card.parentElement.id==='liveDeals') n++;
   }});
   const count=document.getElementById('dCount');
   if(count) count.textContent=n+' live';
@@ -1150,6 +1193,7 @@ def write_feeds():
     payload = {
         "updated": TODAY,
         "deals": [slim(d, "live") for d in live_sorted],
+        "upcoming": [slim(d, "upcoming") for d in upcoming_sorted],
         "archive": [slim(d, "ended") for d in archive_sorted],
         "history": [slim(d, "ended") for d in hist_sorted],
     }
