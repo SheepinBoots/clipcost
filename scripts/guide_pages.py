@@ -100,8 +100,8 @@ def render(g):
         if r.get("status") == "promo" and r.get("promo_until"):
             promo = f' <span class="small">until {e(r["promo_until"])}</span>'
         return (
-            f'{rate_money(r["usd_per_second"])}/s {e(r["platform"])} '
-            f'{e(shown_resolution(r))}{promo} {tag(r["status"])}'
+            f'{rate_money(r["usd_per_second"])}/s {e(r["platform"])} {e(shown_resolution(r))}'
+            f'<span class="badges">{promo}{tag(r["status"])}</span>'
         )
 
     def row_index():
@@ -115,7 +115,7 @@ def render(g):
         promo = ""
         if r.get("status") == "promo" and r.get("promo_until"):
             promo = f' <span class="small">until {e(r["promo_until"])}</span>'
-        return f'{tag(r["status"])}{promo}{deal_badges(r)}'
+        return f'<span class="badges">{tag(r["status"])}{promo}{deal_badges(r)}</span>'
 
     def detail_html(r):
         extra = e(r["math"]) if r.get("math") else ""
@@ -858,7 +858,7 @@ def render(g):
             f'<td>{e(rec["audio"])}</td>'
             f'<td class="num">{rate_money(rec["usd"])}{assume}</td>'
             f'<td class="num">{cost_money(total)}</td>'
-            f'<td>{tag(rec["status"])}{promo}{rec["badges"]}</td>'
+            f'<td><span class="badges">{tag(rec["status"])}{promo}{rec["badges"]}</span></td>'
             f'<td>{rec["source_html"]}</td>'
             "</tr>"
         )
@@ -1030,7 +1030,7 @@ function render(){
     const total=r.usd*seconds;
     const promo=r.promo_until?' <span class="small">until '+esc(r.promo_until)+'</span>':'';
     const assume=r.assumption?'<div class="assume">'+esc(r.assumption)+'</div>':'';
-    return '<tr data-price-id="'+esc(r.id)+'"><td>'+r.platform_html+'</td><td>'+esc(r.variant)+'</td><td>'+esc(r.tier)+'</td><td>'+esc(r.resolution)+'</td><td>'+esc(r.audio)+'</td><td class="num">'+rateMoney(r.usd)+assume+'</td><td class="num">'+costMoney(total)+'</td><td>'+tag(r.status)+promo+r.badges+'</td><td>'+r.source_html+'</td></tr>';
+    return '<tr data-price-id="'+esc(r.id)+'"><td>'+r.platform_html+'</td><td>'+esc(r.variant)+'</td><td>'+esc(r.tier)+'</td><td>'+esc(r.resolution)+'</td><td>'+esc(r.audio)+'</td><td class="num">'+rateMoney(r.usd)+assume+'</td><td class="num">'+costMoney(total)+'</td><td><span class="badges">'+tag(r.status)+promo+r.badges+'</span></td><td>'+r.source_html+'</td></tr>';
   }).join('');
   if(window.clipTick) clipTick();
 }
