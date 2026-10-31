@@ -39,7 +39,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
 
-      # About 17 sitemap URLs. A non-2xx IndexNow response warns and does not fail the deploy.
+      # Submits every sitemap URL, including the guides. A non-2xx IndexNow response warns and does not fail the deploy.
       - name: Notify IndexNow
         if: success()
         continue-on-error: true

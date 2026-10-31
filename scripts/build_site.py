@@ -33,6 +33,15 @@ TIER_RESOLUTIONS = {"Pro tier", "Pro", "Standard"}
 MISSING_RESOLUTIONS = {"", "—", "-", "–"}
 # GitHub project Pages serves this site under the path in SITE_URL ("" for a bare domain).
 BASE = urlparse(SITE_URL).path.rstrip("/")
+# Search guides. Every dollar figure on these pages is rendered from data/prices.json.
+GUIDE_LINKS = [
+    ("/guides/", "All guides"),
+    ("/guides/cheapest-wan-3-0/", "Cheapest Wan 3.0"),
+    ("/guides/cheapest-ai-video-generator/", "Cheapest by model"),
+    ("/guides/is-higgsfield-worth-it/", "Higgsfield plans"),
+    ("/guides/ai-video-project-budget/", "Project budget"),
+]
+HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
 def root(path):
     """Absolute site path, including the GitHub Pages project prefix."""
@@ -158,7 +167,7 @@ def ld_script(obj):
 def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None, robots="index,follow", canonical=True, before_count=""):
     canon = SITE_URL + path
     show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
-    navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/changes/", "Price changes")]
+    navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/guides/", "Guides"), ("/changes/", "Price changes")]
     if NEWSLETTER_ENABLED:
         navs.append(("/newsletter/", "Newsletter"))
     if show_reports:
@@ -166,6 +175,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
     navs.append(("/about/", "About"))
     nav = "".join(f'<a href="{root(h)}"{" class=on" if h==active else ""}>{t}</a>' for h, t in navs)
     modlinks = " · ".join(f'<a href="{root(f"/models/{s}/")}">{e(m["name"])}</a>' for s, m in models.items())
+    guidelinks = " · ".join(f'<a href="{root(h)}">{label}</a>' for h, label in GUIDE_LINKS)
     canon_html = f'<link rel="canonical" href="{canon}">' if canonical else ""
     og_url_html = f'<meta property="og:url" content="{canon}">' if canonical else ""
     doc = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -182,6 +192,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <header class="top"><div class="wrap"><a class="logo" href="{root("/")}">Vid<span>Fare</span></a><nav>{nav}</nav></div></header>
 <main class="wrap">{body}</main>
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
+<p><b>Guides:</b> {guidelinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="{root("/about/#disclosure")}">disclosure</a>).</p>
 <p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/advertise/")}">Advertise</a></p></div></footer>
 {before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
@@ -562,6 +573,170 @@ def stamp_published_prices():
 
 stamp_published_prices()
 
+def model_rows(slug):
+    return [r for r in rows if r["model"] == slug]
+
+def model_pick(slug, allow_promo=True):
+    """Same pick as the homepage cards: cheapest() on the current rows for one model."""
+    return cheapest(model_rows(slug), allow_promo)
+
+def overall_pick(allow_promo=True):
+    """Lowest homepage pick across models. Ties keep the earlier model in the catalog."""
+    best = None
+    best_i = None
+    for i, slug in enumerate(models):
+        picked = model_pick(slug, allow_promo)
+        if not picked:
+            continue
+        if best is None or picked["usd_per_second"] < best["usd_per_second"] or (
+            picked["usd_per_second"] == best["usd_per_second"] and i < best_i
+        ):
+            best = picked
+            best_i = i
+    return best
+
+def status_phrase(r):
+    st = r.get("status")
+    if st == "promo" and r.get("promo_until"):
+        return f"a promo until {r['promo_until']}"
+    if st == "promo":
+        return "a promo"
+    if st == "estimate":
+        return "an approximate rate"
+    if st == "verified":
+        return "a vendor-stated rate"
+    return str(st or "a listed rate")
+
+def rate_clause(r):
+    """One plain-text price clause. Dollars come from the row, formatted with money()."""
+    bit = (
+        f"{money(r['usd_per_second'])} per second on {r['platform']} "
+        f"({spec_phrase(r)}), {status_phrase(r)} (checked {r['checked']})"
+    )
+    extra = assumption_text(r)
+    if extra:
+        bit += ". " + extra.rstrip(".")
+    return bit
+
+def outside_higgsfield(r):
+    return r["platform"] not in HF_PLATFORMS
+
+def res_key(r):
+    return shown_resolution(r).lower()
+
+def first_min(rs):
+    """cheapest(), kept as a named helper for filtered sets."""
+    return cheapest(rs)
+
+def row_order(r):
+    return r["id"]
+
+def checked_line():
+    return f'<p class="small">Last checked {e(LAST)}.</p>'
+
+HOW_PLAIN = (
+    "Every dollar figure on this page comes from the price rows when the site is built. "
+    "API rows use the vendor's stated dollars per second. "
+    f"Credit-plan rows use plan price ÷ credits × credits per clip ÷ seconds, and {CREDIT_USE}. "
+    'A promo shows its end date. An approximate row is one the vendor marked with "~", "roughly", or "estimated". '
+    f"The full method is on the about page ({SITE_URL}/about/)."
+)
+BUDGET_HOW = (
+    HOW_PLAIN
+    + " Billed seconds are finished minutes times 60 times the retry multiplier. "
+    "The estimated total is billed seconds times that row's dollars per second. "
+    "A credit-plan rate already spreads the plan price across its credits."
+)
+
+def how_block(text=None):
+    plain = HOW_PLAIN if text is None else text
+    html_text = e(plain).replace(
+        e(SITE_URL + "/about/"),
+        f'<a href="{root("/about/")}">{e(SITE_URL + "/about/")}</a>',
+    )
+    return f"<h2>How do we calculate this?</h2><p>{html_text}</p>"
+
+def guide_faq_html(faqs):
+    return "".join(f"<h2>{e(q)}</h2><p>{e(a)}</p>" for q, a in faqs)
+
+def guide_faq_ld(path, faqs):
+    return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "url": SITE_URL + path,
+        "publisher": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/", "logo": LOGO_URL},
+        "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in faqs
+        ],
+    }
+
+def guide_page(path, title, desc, body, faqs):
+    raw = json.dumps(faqs, ensure_ascii=False).lower()
+    for bad in ("subscribe", "newsletter", "buttondown"):
+        if bad in raw:
+            raise SystemExit(f"{path} FAQ text contains {bad}")
+    page(path, title, desc, body, "/guides/", ld_script(guide_faq_ld(path, faqs)))
+
+def cheap_card(title, r, alt=None):
+    alt_html = ""
+    if alt is not None and alt is not r:
+        alt_html = (
+            f'<div class="sub">Without promos: {money(alt["usd_per_second"])}/s on {e(alt["platform"])} '
+            f'({e(spec_phrase(alt))})</div>'
+        )
+        if assumption_text(alt):
+            alt_html += assumption_html(alt)
+    promo = ""
+    if r.get("status") == "promo" and r.get("promo_until"):
+        promo = f' <span class="small">until {e(r["promo_until"])}</span>'
+    return (
+        f'<div class="card"><h3>{e(title)}</h3>'
+        f'<div class="big">{money(r["usd_per_second"])}<span class="small">/s</span></div>'
+        f'{assumption_html(r)}'
+        f'<div class="sub">{e(r["platform"])} · {e(spec_phrase(r))} {tag(r["status"])}{promo}</div>'
+        f'{deal_badges(r)}{alt_html}</div>'
+    )
+
+def wan_blurb():
+    base = model_pick("wan-3-0")
+    prime = model_pick("wan-3-0-prime")
+    return f"Wan 3.0 from {rate_clause(base)}. Wan 3.0 Prime from {rate_clause(prime)}."
+
+def cheapest_blurb():
+    best = overall_pick()
+    return f"The lowest rate we track is {rate_clause(best)}."
+
+def higgsfield_plan_rows():
+    return [r for r in rows if r["platform"] == "Higgsfield"]
+
+def hf_blurb():
+    picked = cheapest(higgsfield_plan_rows())
+    if not picked:
+        return "No Higgsfield plan rate is in the current price data."
+    return f"The lowest Higgsfield plan rate we track is {rate_clause(picked)}."
+
+def budget_blurb():
+    return "Enter finished minutes and a retry multiplier to price each tracked dollars-per-second rate."
+
+def home_guides_html():
+    blurbs = {
+        "/guides/cheapest-wan-3-0/": wan_blurb,
+        "/guides/cheapest-ai-video-generator/": cheapest_blurb,
+        "/guides/is-higgsfield-worth-it/": hf_blurb,
+        "/guides/ai-video-project-budget/": budget_blurb,
+    }
+    items = []
+    for path, label in GUIDE_LINKS:
+        if path == "/guides/":
+            continue
+        items.append(f'<li><a href="{root(path)}">{e(label)}</a>: {e(blurbs[path]())}</li>')
+    return (
+        '<h2>Guides</h2>'
+        '<p class="small">Written from the same price rows as the table below.</p>'
+        f'<ul>{"".join(items)}</ul>'
+    )
+
 # ---------- Home ----------
 cards = ""
 for slug, m in models.items():
@@ -609,6 +784,7 @@ home = f"""<h1>AI video cost per second, compared</h1>
 {ending_strip()}
 <h2>Cheapest way to run each model today</h2><div class="cards">{cards}</div>
 <p class="small">The lowest $/s for each model at any resolution, including temporary promos (labelled). Low-res tiers are usually the cheapest, so check the resolution.</p>
+{home_guides_html()}
 <h2>All prices</h2>
 <div class="filters">
 <select id="fModel" aria-label="Model"><option value="">All models</option>{opts([(s, m["name"]) for s, m in models.items()])}</select>
@@ -908,6 +1084,7 @@ calc_ld = {
 }
 calc = f"""<h1>AI video credit calculator</h1>
 <p class="lead">{calc_lead}</p>
+<p>Pricing a finished video from dollars per second? Use the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a>.</p>
 <div class="calc"><div class="card">
 <label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px">{plan_opts}</select>
 <label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %
@@ -1295,6 +1472,7 @@ not_found_body = f"""<h1>Page not found</h1>
 <li><a href="{root("/")}">Home</a></li>
 <li><a href="{root("/deals/")}">Deals</a></li>
 <li><a href="{root("/calculator/")}">Credit calculator</a></li>
+<li><a href="{root("/guides/")}">Guides</a></li>
 <li><a href="{root("/changes/")}">Price changes</a></li>
 </ul>
 <h2>A few model pages</h2>
@@ -1344,6 +1522,14 @@ def write_llms():
         "",
         f"- [AI video deals]({SITE_URL}/deals/): live discounts, plan sales, promo codes, and unlimited windows, with end dates when the vendor gave one.",
         "",
+        "## Guides",
+        "",
+        f"- [Guides]({SITE_URL}/guides/): comparisons built from the same price rows.",
+        f"- [Cheapest way to use Wan 3.0]({SITE_URL}/guides/cheapest-wan-3-0/): {wan_blurb()}",
+        f"- [Cheapest AI video generator]({SITE_URL}/guides/cheapest-ai-video-generator/): {cheapest_blurb()}",
+        f"- [Higgsfield plan rates]({SITE_URL}/guides/is-higgsfield-worth-it/): {hf_blurb()}",
+        f"- [Project budget]({SITE_URL}/guides/ai-video-project-budget/): {budget_blurb()}",
+        "",
         "## Data",
         "",
         f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog this page is built from.",
@@ -1364,11 +1550,15 @@ def write_llms():
         lines.append("")
     open(os.path.join(DIST, "llms.txt"), "w").write("\n".join(lines))
 
+import guide_pages
+guide_pages.render(globals())
 write_llms()
 open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: {root('/')}\nSitemap: {SITE_URL}/sitemap.xml\n")
-urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/changes/", "/about/", "/advertise/"]
+urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/"]
+urls += [path for path, _label in GUIDE_LINKS]
 if NEWSLETTER_ENABLED:
-    urls.insert(5, "/newsletter/")
+    urls.append("/newsletter/")
+urls += ["/changes/", "/about/", "/advertise/"]
 if report_paths:
     urls.extend(report_paths)
 urls += ["/models/"] + [f"/models/{s}/" for s in models]
@@ -1636,6 +1826,50 @@ def audit_site():
         errors.append("sitemap is missing /advertise/")
     if f"<loc>{SITE_URL}/models/</loc>" not in sitemap:
         errors.append("sitemap is missing /models/")
+    indexnow_src = open(os.path.join(ROOT, "scripts", "notify_indexnow.py"), encoding="utf-8").read()
+    for path, _label in GUIDE_LINKS:
+        if f"<loc>{SITE_URL}{path}</loc>" not in sitemap:
+            errors.append(f"sitemap is missing {path}")
+        if (SITE_URL + path) not in indexnow_src:
+            errors.append(f"IndexNow URL list is missing {path}")
+        rel = path.strip("/") + "/index.html"
+        guide_html = open(os.path.join(DIST, rel), encoding="utf-8").read()
+        if f"Last checked {LAST}" not in guide_html:
+            errors.append(f"{rel} is missing the last-checked date")
+        if 'href="' + root("/about/") + '"' not in guide_html and path != "/guides/":
+            errors.append(f"{rel} is missing the about-page link")
+        if "<form" in guide_html.lower():
+            errors.append(f"{rel} contains a form")
+        if "fetch(" in guide_html:
+            errors.append(f"{rel} makes a request")
+    home_html = open(os.path.join(DIST, "index.html"), encoding="utf-8").read()
+    home_nav = home_html.split("<nav>", 1)[-1].split("</nav>", 1)[0]
+    if f'href="{root("/guides/")}">Guides</a>' not in home_nav:
+        errors.append("nav is missing Guides")
+    if "<b>Guides:</b>" not in home_html:
+        errors.append("footer is missing Guides")
+    budget_html = open(os.path.join(DIST, "guides", "ai-video-project-budget", "index.html"), encoding="utf-8").read()
+    for label in ("1-minute explainer video", "3-minute music video", "10-minute short film"):
+        if label not in budget_html:
+            errors.append(f"budget page is missing the {label} preset")
+    picked = overall_pick()
+    if picked is not None:
+        if money(picked["usd_per_second"] * 3 * 60 * 3) not in budget_html:
+            errors.append("budget page is missing the 3-minute total at the lowest rate")
+        if money(picked["usd_per_second"] * 1 * 60 * 3) not in budget_html:
+            errors.append("budget page is missing the 1-minute total at the lowest rate")
+    hf_html = open(os.path.join(DIST, "guides", "is-higgsfield-worth-it", "index.html"), encoding="utf-8").read()
+    pro_named = any(
+        p.get("platform") == "Higgsfield" and (p.get("plan") or "").strip().lower() in ("pro", "pro (monthly)", "pro (annual)")
+        for p in plans.values()
+    )
+    if not pro_named and "not in our plan data" not in hf_html:
+        errors.append("Higgsfield guide should say Pro is not in the plan data")
+    if "1,000 credits" not in hf_html:
+        errors.append("Higgsfield guide is missing the per-1,000-credit section")
+    if not any("cinema" in f"{r.get('variant') or ''} {models[r['model']]['name']}".lower() for r in rows):
+        if "No Cinema Studio rate is in the price data." not in hf_html:
+            errors.append("Higgsfield guide should note the missing Cinema Studio rate")
     llms = open(os.path.join(DIST, "llms.txt"), encoding="utf-8").read()
     if f"{SITE_URL}/advertise/" not in llms:
         errors.append("llms.txt does not mention /advertise/")
