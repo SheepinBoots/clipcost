@@ -63,6 +63,47 @@ def render(g):
             return f"Left out: {item} ({reason})."
         return f"Left out: {item}."
 
+    def source_toggle(r):
+        parts = []
+        if (r.get("math") or "").strip():
+            parts.append(e(r["math"].strip()))
+        if (r.get("note") or "").strip():
+            parts.append(e(r["note"].strip()))
+        href, rel = outbound(r["source_url"])
+        link = f'<a href="{e(href)}" rel="{rel}" target="_blank">pricing page</a>'
+        checked = e(r.get("checked") or "")
+        body = " ".join(parts + [link, "· " + checked]).strip()
+        return f'<details class="src"><summary>source</summary><div class="math">{body}</div></details>'
+
+    def fit_table(head, row_htmls):
+        return f'<div class="tblwrap fit"><table>{head}<tbody>{"".join(row_htmls)}</tbody></table></div>'
+
+    def capped(head, visible_rows, extra_rows, summary):
+        shown = fit_table(head, visible_rows)
+        if not extra_rows:
+            return shown
+        return shown + f'<details class="more"><summary>{e(summary)}</summary>{fit_table(head, extra_rows)}</details>'
+
+    def without_promo(r):
+        """same = not a promo. A dollar amount is the promo row's list rate. — = promo with no list rate."""
+        if r.get("status") != "promo":
+            return "same"
+        listed = r.get("list_usd_per_second")
+        if listed is None:
+            return "—"
+        return rate_money(listed)
+
+    def other_short(r):
+        if r is None:
+            return "—"
+        promo = ""
+        if r.get("status") == "promo" and r.get("promo_until"):
+            promo = f' <span class="small">until {e(r["promo_until"])}</span>'
+        return (
+            f'{rate_money(r["usd_per_second"])}/s {e(r["platform"])} '
+            f'{e(shown_resolution(r))}{promo} {tag(r["status"])}'
+        )
+
     def row_index():
         return {r["id"]: i for i, r in enumerate(rows)}
 
@@ -241,7 +282,35 @@ def render(g):
             (q_gap, gap),
             ("How do we calculate this?", HOW_PLAIN),
         ]
-        head = THEAD.replace(' data-k="model"', "").replace(" data-k=", " data-x=")
+        wan_head = (
+            "<thead><tr><th>Model</th><th>Where</th><th>Variant</th><th>Tier</th>"
+            "<th>Res</th><th>Audio</th><th>$/s</th><th>Status</th><th>No promo</th><th>Source</th></tr></thead>"
+        )
+        wan_rows_html = []
+        for r in wan_rs:
+            promo_cell = without_promo(r)
+            promo_cls = ' class="num"' if promo_cell.startswith("$") else ""
+            wan_rows_html.append(
+                "<tr>"
+                f'<td><a href="{root(f"/models/{r["model"]}/")}">{e(models[r["model"]]["name"])}</a></td>'
+                f'<td>{plat_link(r["platform"], r["source_url"])}</td>'
+                f'<td>{e(r["variant"])}</td>'
+                f'<td>{e(shown_tier(r))}</td>'
+                f'<td>{e(shown_resolution(r))}</td>'
+                f'<td>{e(audio_phrase(r))}</td>'
+                f'<td class="num">{rate_money(r["usd_per_second"])}{assumption_html(r)}</td>'
+                f'<td>{status_cell(r)}</td>'
+                f'<td{promo_cls}>{promo_cell}</td>'
+                f'<td>{source_toggle(r)}</td>'
+                "</tr>"
+            )
+        wan_rest = wan_rows_html[15:]
+        wan_table = capped(
+            wan_head,
+            wan_rows_html[:15],
+            wan_rest,
+            f"Show the other {len(wan_rest)} Wan prices",
+        )
         body = f"""{crumb("Wan 3.0")}
 <h1>Cheapest way to use Wan 3.0 (and Wan 3.0 Prime): API vs Higgsfield vs Krea vs others</h1>
 <p class="lead">{e(lead)}</p>
@@ -250,8 +319,9 @@ def render(g):
 <h2>{e(q_base)}</h2><p>{e(a_base)}</p>
 <h2>{e(q_prime)}</h2><p>{e(a_prime)}</p>
 <h2>Every tracked Wan 3.0 and Wan 3.0 Prime price</h2>
-<p>{len(wan_rs)} live rows, lowest dollars per second first. Tier, resolution, audio, and any credit-plan assumption use the same labels as the price table.</p>
-<div class="tblwrap"><table>{head}<tbody>{"".join(row_html(r, rate_money) for r in wan_rs)}</tbody></table></div>
+<p>{len(wan_rs)} live rows, lowest dollars per second first. The first 15 are shown here.</p>
+<p class="small">No promo: same means this row is not a promo. A dollar amount is the list rate stored on that promo row. — means the row is a promo and the price file has no list rate.</p>
+{wan_table}
 <h2>{e(q_gap)}</h2><p>{e(gap)}</p>
 {how_block()}
 {tick_script()}"""
@@ -287,29 +357,28 @@ def render(g):
         q_each = "What is the cheapest option for each model?"
         answer = lead + " " + second
         head = (
-            "<thead><tr><th>Model</th><th>$ / sec</th><th>Where</th><th>Variant</th><th>Plan tier</th>"
-            "<th>Resolution</th><th>Audio</th><th>Status</th><th>Without promos</th><th>How we got it</th></tr></thead>"
+            "<thead><tr><th>Model</th><th>$/s</th><th>Where</th><th>Tier</th>"
+            "<th>Res</th><th>Audio</th><th>Status</th><th>No promo</th><th>Source</th></tr></thead>"
         )
         body_rows = []
         for _usd, _i, slug, meta, picked, alt_row in picks:
             if alt_row is None:
-                without = "not in our data"
+                without = "—"
             elif alt_row is picked:
-                without = "same row"
+                without = "same"
             else:
-                without = other_cell(alt_row)
+                without = other_short(alt_row)
             body_rows.append(
                 f'<tr data-price-id="{e(picked["id"])}">'
                 f'<td><a href="{root(f"/models/{slug}/")}">{e(meta["name"])}</a></td>'
                 f'<td class="num">{rate_money(picked["usd_per_second"])}{assumption_html(picked)}</td>'
                 f'<td>{plat_link(picked["platform"], picked["source_url"])}</td>'
-                f'<td>{e(picked["variant"])}</td>'
                 f'<td>{e(shown_tier(picked))}</td>'
                 f'<td>{e(shown_resolution(picked))}</td>'
                 f'<td>{e(audio_phrase(picked))}</td>'
                 f'<td>{status_cell(picked)}</td>'
                 f'<td>{without}</td>'
-                f'<td class="math">{detail_html(picked)}</td>'
+                f'<td>{source_toggle(picked)}</td>'
                 "</tr>"
             )
         gap_items = db.get("unverified") or []
@@ -331,8 +400,9 @@ def render(g):
 <div class="cards">{cheap_card("Lowest rate we track", best_row, alt)}</div>
 <h2>{e(q)}</h2><p>{e(answer)}</p>
 <h2>{e(q_each)}</h2>
-<p>One row per model, lowest dollars per second first. A promo keeps its end date. Without promos repeats the homepage's second figure when the winner is a promo.</p>
-<div class="tblwrap"><table>{head}<tbody>{"".join(body_rows)}</tbody></table></div>
+<p>One row per model, lowest dollars per second first. A promo keeps its end date.</p>
+<p class="small">No promo: same means that pick is not a promo. Otherwise the cell is the cheapest non-promo rate. — means there is no non-promo row.</p>
+{fit_table(head, body_rows)}
 <h2>What prices are not in this list?</h2>
 <p>These items are in the price file as unconfirmed, so they are not given a dollars-per-second row here.</p>
 {gap_html}
@@ -408,44 +478,59 @@ def render(g):
             if "higgsfield" in blob:
                 parts.append(left_out(item.get("item"), item.get("reason")))
         gap = " ".join(parts) if parts else "Every model we track has a Higgsfield plan row."
-        head = (
-            "<thead><tr><th>Plan</th><th>Plan price</th><th>Model</th><th>Variant</th>"
-            "<th>Resolution</th><th>Audio</th><th>Higgsfield $ / sec</th><th>Status</th><th>How we got it</th>"
-            "<th>Cheapest other, same model</th><th>Cheapest other, same resolution</th></tr></thead>"
+        plan_head = (
+            "<thead><tr><th>Plan</th><th>Price</th><th>Model</th><th>Res</th><th>Audio</th>"
+            "<th>$/s</th><th>Status</th><th>Other</th><th>Same res</th><th>Source</th></tr></thead>"
         )
-        plan_html = []
-        for r in plan_rows:
+
+        def plan_price_short(r):
+            pid = r.get("plan")
+            if not pid or pid not in plans or plans[pid].get("usd_month") is None:
+                return "—"
+            p = plans[pid]
+            credits = p.get("credits_month")
+            credit = f'<div class="small">{int(credits):,} credits</div>' if credits else ""
+            return f'{cost_money(p["usd_month"])}/mo{credit}'
+
+        def plan_tr(r):
             other = best_model.get(r["model"])
             same = best_res.get((r["model"], res_key(r)))
-            plan_html.append(
+            return (
                 f'<tr data-price-id="{e(r["id"])}">'
                 f'<td>{e(r.get("plan_name") or "not listed")}</td>'
-                f'<td>{plan_price_cell(r)}</td>'
+                f'<td>{plan_price_short(r)}</td>'
                 f'<td><a href="{root(f"/models/{r["model"]}/")}">{e(models[r["model"]]["name"])}</a></td>'
-                f'<td>{e(r["variant"])}</td>'
                 f'<td>{e(shown_resolution(r))}</td>'
                 f'<td>{e(audio_phrase(r))}</td>'
                 f'<td class="num">{rate_money(r["usd_per_second"])}{assumption_html(r)}</td>'
                 f'<td>{status_cell(r)}</td>'
-                f'<td class="math">{detail_html(r)}</td>'
-                f'<td>{other_cell(other)}</td>'
-                f'<td>{other_cell(same)}</td>'
+                f'<td>{other_short(other)}</td>'
+                f'<td>{other_short(same)}</td>'
+                f'<td>{source_toggle(r)}</td>'
                 "</tr>"
             )
+
+        plan_html = [plan_tr(r) for r in plan_rows]
         if plan_html:
-            plan_table = f'<div class="tblwrap"><table>{head}<tbody>{"".join(plan_html)}</tbody></table></div>'
+            by_rate = sorted(plan_rows, key=lambda r: (r["usd_per_second"], r["id"]))
+            plan_extra = plan_html if len(plan_html) > 10 else []
+            plan_table = capped(
+                plan_head,
+                [plan_tr(r) for r in by_rate[:10]],
+                plan_extra,
+                f"Show all {len(plan_html)} plan rates",
+            )
             plan_note = (
-                "<p class=\"small\">Same model is the lowest live rate on any platform other than Higgsfield or the Higgsfield API. "
-                "Same resolution adds that row's resolution. When no row matches, the cell says not in our data. "
+                "<p class=\"small\">The ten rows above are the lowest plan rates. Other is the cheapest rate for that model on a platform other than Higgsfield or the Higgsfield API. "
+                "Same res is the cheapest of those at this row's resolution. — means that comparison is not in the data. "
                 "An unlimited window stays a deal badge with its end date. The $/s column stays the credit rate.</p>"
             )
         else:
             plan_table = "<p>No Higgsfield plan row is in the current price data.</p>"
             plan_note = ""
         api_head = (
-            "<thead><tr><th>Model</th><th>Variant</th><th>Resolution</th><th>Audio</th>"
-            "<th>$ / sec</th><th>Status</th><th>How we got it</th>"
-            "<th>Cheapest other, same model</th><th>Cheapest other, same resolution</th></tr></thead>"
+            "<thead><tr><th>Model</th><th>Res</th><th>Audio</th><th>$/s</th><th>Status</th>"
+            "<th>Other</th><th>Same res</th><th>Source</th></tr></thead>"
         )
         api_html = []
         for r in by_price(api_rows):
@@ -454,20 +539,24 @@ def render(g):
             api_html.append(
                 f'<tr data-price-id="{e(r["id"])}">'
                 f'<td><a href="{root(f"/models/{r["model"]}/")}">{e(models[r["model"]]["name"])}</a></td>'
-                f'<td>{e(r["variant"])}</td>'
                 f'<td>{e(shown_resolution(r))}</td>'
                 f'<td>{e(audio_phrase(r))}</td>'
                 f'<td class="num">{rate_money(r["usd_per_second"])}{assumption_html(r)}</td>'
                 f'<td>{status_cell(r)}</td>'
-                f'<td class="math">{detail_html(r)}</td>'
-                f'<td>{other_cell(other)}</td>'
-                f'<td>{other_cell(same)}</td>'
+                f'<td>{other_short(other)}</td>'
+                f'<td>{other_short(same)}</td>'
+                f'<td>{source_toggle(r)}</td>'
                 "</tr>"
             )
         if api_html:
             api_table = (
                 "<p>These rows are Higgsfield API rates from the price data, not credit plans.</p>"
-                f'<div class="tblwrap"><table>{api_head}<tbody>{"".join(api_html)}</tbody></table></div>'
+                + capped(
+                    api_head,
+                    api_html[:10],
+                    api_html if len(api_html) > 10 else [],
+                    f"Show all {len(api_html)} API rates",
+                )
             )
         else:
             api_table = "<p>No Higgsfield API row is in the current price data.</p>"
@@ -595,8 +684,8 @@ def render(g):
         if price_rows_html:
             thousand_price_table = (
                 "<p>Cost of 1,000 credits on each Higgsfield plan we track. That is 1,000 times the plan price divided by its monthly credits.</p>"
-                '<div class="tblwrap"><table><thead><tr><th>Plan</th><th>Plan price</th><th>Credits / month</th>'
-                "<th>Billing</th><th>$ / credit</th><th>1,000 credits</th></tr></thead><tbody>"
+                '<div class="tblwrap fit"><table><thead><tr><th>Plan</th><th>Price</th><th>Credits</th>'
+                "<th>Billing</th><th>$/credit</th><th>1,000 credits</th></tr></thead><tbody>"
                 + "".join(price_rows_html)
                 + "</tbody></table></div>"
             )
@@ -617,16 +706,14 @@ def render(g):
                     f'<td class="num">{count_text(clips)}</td>'
                     f'<td class="num">{count_text(seconds)}</td>'
                     f'<td>{status_cell(r)}</td>'
-                    f'<td class="math">{detail_html(r)}</td>'
+                    f'<td>{source_toggle(r)}</td>'
                     "</tr>"
                 )
-            return (
-                f"<p>{caption}</p>"
-                '<div class="tblwrap"><table><thead><tr><th>Resolution</th><th>Credits / clip</th><th>Clip length</th>'
-                "<th>Clips from 1,000 credits</th><th>Seconds from 1,000 credits</th><th>Status</th><th>How we got it</th></tr></thead><tbody>"
-                + "".join(body_html)
-                + "</tbody></table></div>"
+            spec_head = (
+                "<thead><tr><th>Res</th><th>Credits</th><th>Clip</th><th>Clips</th>"
+                "<th>Seconds</th><th>Status</th><th>Source</th></tr></thead>"
             )
+            return f"<p>{caption}</p>" + fit_table(spec_head, body_html)
 
         thousand_html = (
             f"<h2>{e(q_thousand)}</h2><p>{e(a_thousand)}</p>"
@@ -661,25 +748,30 @@ def render(g):
             credit_cell = credit_num(credits) if credits else "not in our data"
             clip_cell = f"{credit_num(clip_len)}s" if clip_len else "not in our data"
             dollar_cell = cost_money(per_clip) if per_clip is not None else "not in our data"
-            clip_body.append(
+            clip_body.append((per_clip is None, per_clip if per_clip is not None else 0, r["id"], (
                 f'<tr data-price-id="{e(r["id"])}">'
                 f'<td>{e(r.get("plan_name") or "not listed")}</td>'
                 f'<td><a href="{root(f"/models/{r["model"]}/")}">{e(models[r["model"]]["name"])}</a></td>'
-                f'<td>{e(r["variant"])}</td>'
                 f'<td>{e(shown_resolution(r))}</td>'
-                f'<td>{e(audio_phrase(r))}</td>'
                 f'<td class="num">{clip_cell}</td>'
                 f'<td class="num">{credit_cell}</td>'
                 f'<td class="num">{dollar_cell}{assumption_html(r)}</td>'
                 f'<td>{status_cell(r)}</td>'
+                f'<td>{source_toggle(r)}</td>'
                 "</tr>"
-            )
+            )))
         if clip_body:
-            clip_table = (
-                '<div class="tblwrap"><table><thead><tr><th>Plan</th><th>Model</th><th>Variant</th><th>Resolution</th>'
-                "<th>Audio</th><th>Clip</th><th>Credits / clip</th><th>$ / clip</th><th>Status</th></tr></thead><tbody>"
-                + "".join(clip_body)
-                + "</tbody></table></div>"
+            clip_head = (
+                "<thead><tr><th>Plan</th><th>Model</th><th>Res</th><th>Clip</th>"
+                "<th>Credits</th><th>$/clip</th><th>Status</th><th>Source</th></tr></thead>"
+            )
+            clip_all = [html for _a, _b, _c, html in clip_body]
+            clip_top = [html for _a, _b, _c, html in sorted(clip_body)[:10]]
+            clip_table = capped(
+                clip_head,
+                clip_top,
+                clip_all if len(clip_all) > 10 else [],
+                f"Show all {len(clip_all)} clip prices",
             )
         else:
             clip_table = "<p>No Higgsfield plan row with a per-clip credit cost is in the current price data.</p>"
@@ -702,15 +794,15 @@ def render(g):
 {checked_line()}
 {cards}
 <h2>{e(q_worth)}</h2><p>{e(a_worth)}</p>
+{thousand_html}
+{clip_html}
 <h2>{e(q_plans)}</h2>
-<p>Plan price and credits come from the plan record. The $/s column is the row's effective rate. A plan with no row for a model is left out.</p>
-{plan_table}
+<p>The ten lowest plan rates are listed first. Plan price and credits come from the plan record. The $/s column is the row's effective rate. A plan with no row for a model is left out.</p>
 {plan_note}
+{plan_table}
 <h2>{e(q_api)}</h2>
 {api_table}
 <h2>{e(q_gap)}</h2><p>{e(gap)}</p>
-{thousand_html}
-{clip_html}
 {how_block()}
 {tick_script()}"""
         guide_page(
@@ -732,6 +824,9 @@ def render(g):
                 detail += (" " if detail else "") + e(r["note"])
             if r.get("checked"):
                 detail = (detail + " " if detail else "") + e(f"Checked {r['checked']}.")
+            href, rel = outbound(r["source_url"])
+            link = f'<a href="{e(href)}" rel="{rel}" target="_blank">pricing page</a>'
+            source_html = f'<details class="src"><summary>source</summary><div class="math">{(detail + " " + link).strip()}</div></details>'
             records.append({
                 "id": r["id"],
                 "model": r["model"],
@@ -746,6 +841,7 @@ def render(g):
                 "assumption": assumption_text(r),
                 "badges": deal_badges(r),
                 "detail": detail,
+                "source_html": source_html,
             })
         return records
 
@@ -763,7 +859,7 @@ def render(g):
             f'<td class="num">{rate_money(rec["usd"])}{assume}</td>'
             f'<td class="num">{cost_money(total)}</td>'
             f'<td>{tag(rec["status"])}{promo}{rec["badges"]}</td>'
-            f'<td class="math">{rec["detail"]}</td>'
+            f'<td>{rec["source_html"]}</td>'
             "</tr>"
         )
 
@@ -802,8 +898,8 @@ def render(g):
             ("How do we calculate this?", BUDGET_HOW),
         ]
         head = (
-            "<thead><tr><th>Where</th><th>Variant</th><th>Plan tier</th><th>Resolution</th><th>Audio</th>"
-            "<th>$ / sec</th><th>Estimated total</th><th>Status</th><th>How we got it</th></tr></thead>"
+            "<thead><tr><th>Where</th><th>Variant</th><th>Tier</th><th>Res</th><th>Audio</th>"
+            "<th>$/s</th><th>Total</th><th>Status</th><th>Source</th></tr></thead>"
         )
         script = budget_script(g, records, {"model": default_model, "resolution": default_res})
         body = f"""{crumb("Project budget")}
@@ -828,11 +924,9 @@ def render(g):
 <select id="resolution" style="width:100%"></select>
 <p class="small" id="budgetMsg" role="status"></p>
 <div class="small" style="margin-top:8px">Seconds billed</div><div class="kpi" id="kSecs">{format_seconds(seconds)}</div>
-</div>
-<div>
-<div class="tblwrap"><table id="budget">{head}<tbody>{"".join(budget_tr(rec, seconds) for rec in opening)}</tbody></table></div>
-<p class="small">Each row prices the whole billed length at that row's rate. Credit-plan totals assume every credit you pay for is used. The total is that rate times billed seconds.</p>
 </div></div>
+<div class="tblwrap fit"><table id="budget">{head}<tbody>{"".join(budget_tr(rec, seconds) for rec in opening)}</tbody></table></div>
+<p class="small">Each row prices the whole billed length at that row's rate. Credit-plan totals assume every credit you pay for is used. The total is that rate times billed seconds.</p>
 <noscript><p>Turn on JavaScript to change the minutes, multiplier, model, or resolution. The rates are embedded in this page. The examples below are already filled in from the price data.</p></noscript>
 <h2>{e(q1)}</h2><p>{e(a1)} The preset sets finished length to 1 minute (60 seconds) and leaves the multiplier, model, and resolution as they are.</p>
 <h2>{e(q3)}</h2><p>{e(a3)} The preset sets finished minutes to 3 and leaves the multiplier, model, and resolution as they are.</p>
@@ -936,7 +1030,7 @@ function render(){
     const total=r.usd*seconds;
     const promo=r.promo_until?' <span class="small">until '+esc(r.promo_until)+'</span>':'';
     const assume=r.assumption?'<div class="assume">'+esc(r.assumption)+'</div>':'';
-    return '<tr data-price-id="'+esc(r.id)+'"><td>'+r.platform_html+'</td><td>'+esc(r.variant)+'</td><td>'+esc(r.tier)+'</td><td>'+esc(r.resolution)+'</td><td>'+esc(r.audio)+'</td><td class="num">'+rateMoney(r.usd)+assume+'</td><td class="num">'+costMoney(total)+'</td><td>'+tag(r.status)+promo+r.badges+'</td><td class="math">'+r.detail+'</td></tr>';
+    return '<tr data-price-id="'+esc(r.id)+'"><td>'+r.platform_html+'</td><td>'+esc(r.variant)+'</td><td>'+esc(r.tier)+'</td><td>'+esc(r.resolution)+'</td><td>'+esc(r.audio)+'</td><td class="num">'+rateMoney(r.usd)+assume+'</td><td class="num">'+costMoney(total)+'</td><td>'+tag(r.status)+promo+r.badges+'</td><td>'+r.source_html+'</td></tr>';
   }).join('');
   if(window.clipTick) clipTick();
 }
