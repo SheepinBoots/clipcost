@@ -47,6 +47,7 @@ def render(g):
     higgsfield_plan_rows = g["higgsfield_plan_rows"]
     BRAND = g["BRAND"]
     LAST = g["LAST"]
+    page_title = g["page_title"]
     SITE_URL = g["SITE_URL"]
 
     best = overall_pick()
@@ -327,7 +328,7 @@ def render(g):
 {tick_script()}"""
         guide_page(
             "/guides/cheapest-wan-3-0/",
-            f"Cheapest way to use Wan 3.0 (and Wan 3.0 Prime): API vs Higgsfield vs Krea vs others | {BRAND}",
+            page_title("Cheapest way to use Wan 3.0"),
             (
                 f"Cheapest Wan 3.0 is {rate_money(base['usd_per_second'])}/s on {base['platform']} "
                 f"({shown_resolution(base)}, {g['status_phrase'](base)}). "
@@ -807,7 +808,7 @@ def render(g):
 {tick_script()}"""
         guide_page(
             "/guides/is-higgsfield-worth-it/",
-            f"Is Higgsfield worth it? Every plan's real cost per second | {BRAND}",
+            page_title("Is Higgsfield worth it?"),
             (
                 f"Higgsfield plan rates we track run from {desc_lo}/s to {desc_hi}/s, "
                 f"next to the cheapest non-Higgsfield rate for the same model. Last checked {LAST}."

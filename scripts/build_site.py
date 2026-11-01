@@ -57,6 +57,20 @@ models, plans, sources = db["models"], db["plans"], db["sources"]
 today = datetime.date.today()
 TODAY = today.isoformat()
 MONTH = today.strftime("%b %Y")
+TITLE_LIMIT = 60
+
+def page_title(phrase, with_month=True, with_brand=True):
+    """Keep phrase whole. Drop the month, then the brand, if the title would pass 60 characters."""
+    month = f" ({MONTH})" if with_month else ""
+    brand = f" | {BRAND}" if with_brand else ""
+    title = f"{phrase}{month}{brand}"
+    if len(title) <= TITLE_LIMIT:
+        return title
+    if with_month:
+        return page_title(phrase, False, with_brand)
+    if with_brand:
+        return page_title(phrase, False, False)
+    return phrase
 def discontinued(r):
     """A row is off sale once its status says so, or its shutdown date is before today."""
     if r.get("status") == "discontinued": return True
@@ -1096,7 +1110,7 @@ for slug, m in models.items():
 {news_box()}
 {tick_script()}
 {ld_script(faq_ld(slug, faqs))}"""
-    page(f"/models/{slug}/", f"{m['name']} price per second ({MONTH}): cheapest way to run it | {BRAND}",
+    page(f"/models/{slug}/", page_title(f"{m['name']} Price Per Second"),
          f"{m['name']} costs from {money(c['usd_per_second'])}/s ({c['platform']}, {spec_phrase(c)}). Compare {len(rs)} sourced prices across APIs and credit plans.", body)
 
 model_items = "".join(
@@ -1213,7 +1227,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
  $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);go();}});
 </script>{news_box()}"""
-page("/calculator/", f"AI Video Credit Calculator ({MONTH}): Higgsfield, Krea, Magnific | {BRAND}",
+page("/calculator/", page_title("AI Video Credit Calculator"),
      "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/", ld_script(calc_ld))
 
 # ---------- Changes ----------
@@ -1365,7 +1379,7 @@ def deals_item_list(deals):
         "itemListElement": elements,
     }
 
-page("/deals/", f"AI video deals ({MONTH}): Higgsfield, Krea, fal, Runway, Magnific | {BRAND}",
+page("/deals/", page_title("AI Video Deals"),
      "Live AI video discounts, plan sales, promo codes, and unlimited windows, with end dates and the $/s math.",
      deals_body, "/deals/",
      extra_head=(f'<link rel="alternate" type="application/rss+xml" title="{BRAND} deals" href="{root("/deals.xml")}">'
@@ -1386,7 +1400,7 @@ bf_body = f"""<p class="small"><a href="{root("/deals/")}">Deals</a> › Black F
 <p class="small">Those codes and percents are expired. Check the <a href="{root("/deals/")}">live deals</a> page before you pay.</p>
 <div class="disclose">Higgsfield links elsewhere on {BRAND} can be affiliate links. The posts linked on this page are the vendors' own X accounts. <a href="{root("/about/#disclosure")}">Disclosure</a>.</div>
 """
-page("/deals/black-friday/", f"AI video Black Friday 2026 (stub) and 2025 holiday deals | {BRAND}",
+page("/deals/black-friday/", page_title("AI Video Black Friday Deals"),
      "A stub for 2026 AI video holiday sales, plus dated 2025 examples from Higgsfield, Krea, and Magnific.",
      bf_body, "/deals/")
 
@@ -2068,6 +2082,8 @@ def audit_site():
         feed = open(os.path.join(DIST, rel), encoding="utf-8").read()
         if "data-sponsor" in feed or "Your tool here" in feed or "sponsor this spot" in feed:
             errors.append(f"{rel} contains sponsor placement markup")
+    import test_titles
+    errors.extend(test_titles.title_errors(DIST))
     if errors:
         raise SystemExit("site audit failed:\n- " + "\n- ".join(errors))
 
