@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-10-31",
+ "updated": "2026-11-01",
  "watch": [
   {
    "id": "hf_plans",
@@ -38,7 +38,7 @@
    "id": "hf-api-wan-60",
    "vendor": "Higgsfield API",
    "type": "api_promo",
-   "title": "Wan 3.0 API 60% off until Nov 1",
+   "title": "Wan API: Prime 40% off, Wan 3.0 50% off",
    "models": [
     "wan-3-0",
     "wan-3-0-prime"
@@ -53,26 +53,36 @@
     "code": null,
     "standing": false
    },
-   "percent": 60,
+   "percent": null,
    "bonus_credits": null,
    "price_before": null,
    "price_after": null,
    "start": "2026-10-13",
-   "end": "2026-11-01",
+   "end": null,
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://x.com/higgsfield_ai/status/2110074247569924489",
    "source_kind": "x_post",
    "source_quote": "Wan 3.0 is now UNLIMITED on Higgsfield for 7 days. 60% OFF on Higgsfield API.",
-   "verified_date": "2026-10-20",
+   "verified_date": "2026-11-01",
    "link_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "math": "stated",
-   "notes": "The model page states the discounted $/s. List rates are that price divided by 0.40, and the 480p Prime list matches the undiscounted $0.068/s row. Higgsfield's reply says until October 31, 2026. Higgsfield's sources give the end as Oct 31 or Nov 1, so the last day may be Oct 31.",
+   "notes": "Checked 2026-11-01. The model page states Wan 3.0 Prime at 40% off: $0.0408/s at 480p, $0.084/s at 720p, and $0.168/s at 1080p, with standard rates $0.068, $0.14, and $0.28. The API pricing page states Wan 3.0 at 50% off, list from $0.05/s and max-discount from $0.025/s. Neither page names an end date. Earlier Higgsfield posts called the launch discount 60% through Oct 31 or Nov 1. Higgsfield's reply says until October 31, 2026. Those dates are not on the pages checked 2026-11-01.",
    "sources": [
     {
      "url": "https://x.com/higgsfield_ai/status/2110074252171116649",
      "kind": "x_post",
      "quote": "until October 31, 2026"
+    },
+    {
+     "url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+     "kind": "pricing_page",
+     "quote": "these rates are 40% off; standard rates are $0.068 per second at 480p"
+    },
+    {
+     "url": "https://open.higgsfield.ai/pricing",
+     "kind": "pricing_page",
+     "quote": "Wan 3.0 Prime 40% OFF. Wan 3.0 list price from $0.050/s, max-discount price from $0.025/s, 50% OFF."
     }
    ]
   },
@@ -446,7 +456,7 @@
    "start": null,
    "end": "2026-10-31",
    "end_is_estimate": false,
-   "status": "live",
+   "status": "ended",
    "source_url": "https://x.com/higgsfield_ai/status/2109681164806177267",
    "source_kind": "x_post",
    "source_quote": "Genjutsu API 50% off through Oct 31 2026.",
@@ -705,7 +715,7 @@
    "start": null,
    "end": "2026-10-31",
    "end_is_estimate": false,
-   "status": "live",
+   "status": "ended",
    "source_url": "https://runwayml.com/pricing",
    "source_kind": "pricing_page",
    "source_quote": "Enterprises get 2 months of usage free. Sign by 10/31.",
@@ -924,7 +934,7 @@
    "start": null,
    "end": "2026-10-31",
    "end_is_estimate": false,
-   "status": "live",
+   "status": "ended",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "source_kind": "pricing_page",
    "source_quote": "35% off until Oct 31, 2026.",

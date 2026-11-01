@@ -83,9 +83,27 @@ def main():
     assert [event["row_id"] for event in next_friday["pending"]] == ["r3"]
 
     log = wr.load()
-    assert [event for event in log if event["kind"] == "price"] == []
+    price_ids = {
+        "price:2026-11-01:r001:0.0272:0.0408",
+        "price:2026-11-01:r002:0.056:0.084",
+        "price:2026-11-01:r003:0.112:0.168",
+        "price:2026-11-01:r005:0.02:0.025",
+        "price:2026-11-01:r006:0.08:0.1",
+    }
+    assert {event["id"] for event in log if event["kind"] == "price"} == price_ids
     assert any(event["kind"] == "note" and "a4f84a1" in event["text"] for event in log)
     future_start = "promo_started:deal:fal-minimax-h3-30-nov:2026-11-01"
+    nov1_ends = {
+        "promo_ended:row:r181:2026-10-31",
+        "promo_ended:row:r182:2026-10-31",
+        "promo_ended:row:r183:2026-10-31",
+        "promo_ended:row:r186:2026-10-31",
+        "promo_ended:row:r187:2026-10-31",
+        "promo_ended:row:r188:2026-10-31",
+        "promo_ended:deal:hf-genjutsu-api-50:2026-10-31",
+        "promo_ended:deal:runway-enterprise-2mo:2026-10-31",
+        "promo_ended:deal:fal-minimax-35:2026-10-31",
+    }
     promo_ids = {event["id"] for event in log if event["kind"] in ("promo_started", "promo_ended")}
     week_ids = {
         "promo_ended:deal:hf-wan3-unlimited-7d:2026-10-20",
@@ -97,7 +115,7 @@ def main():
         "promo_started:deal:hf-seedance-unlimited-7d:2026-10-30",
         "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
-    assert promo_ids == week_ids | {future_start}
+    assert promo_ids == week_ids | {future_start} | nov1_ends
     later = next(event for event in log if event["id"] == future_start)
     assert later["date"] == "2026-11-01" and later["started"] == "2026-11-01"
     assert later["checked"] == "2026-10-31" and later["vendor"] == "fal"
@@ -156,8 +174,11 @@ def main():
     assert launch["pending"] == []
     assert {event["id"] for event in edition["changes"]} == week_ids
     held_start = wr.assign(log, "2026-11-06")
-    assert [item["id"] for item in held_start["reports"]] == ["2026-w44"]
-    assert [event["id"] for event in held_start["pending"]] == [future_start]
+    assert [item["id"] for item in held_start["reports"]] == ["2026-w44", "2026-w45"]
+    assert held_start["pending"] == []
+    week45 = held_start["reports"][1]
+    assert week45["week_start"] == "2026-11-02" and week45["through"] == "2026-11-06"
+    assert {event["id"] for event in week45["changes"]} == price_ids | nov1_ends | {future_start}
     assert wr.change_counts(edition) == {"price": 0, "promo_started": 6, "promo_ended": 2}
     assert sum(wr.change_counts(edition).values()) == 8
     launch_body = wr.render_report_body(edition, log)

@@ -40,11 +40,25 @@ def main():
     # Stated API rates, not a recomputed anchor percent.
     wan = rows["r002"]
     adj = deals.adjustment(by_id(live, "hf-api-wan-60"), wan, plans)
-    close(adj["usd"], 0.056)
+    close(adj["usd"], 0.084)
     close(adj["list_usd"], 0.14)
-    mini = rows["r186"]
-    adj = deals.adjustment(by_id(live, "fal-minimax-35"), mini, plans)
+    if wan.get("promo_until") is not None:
+        raise SystemExit("Wan Prime row should not keep an end date the page does not state")
+    # The 35% catalog rows were removed when that promo ended. The math still uses a frozen row.
+    mini35 = {
+        "id": "r186", "model": "minimax-hailuo", "platform": "fal", "kind": "api",
+        "variant": "MiniMax H3 Max Turbo", "resolution": "480p",
+        "usd_per_second": 0.01625, "list_usd_per_second": 0.025,
+        "deal_ids": ["fal-minimax-35"],
+    }
+    prior35 = next(d for d in doc["deals"] if d["id"] == "fal-minimax-35")
+    prior35_live = dict(prior35, status="live")
+    adj = deals.adjustment(prior35_live, mini35, plans)
     close(adj["usd"], 0.01625)
+    close(adj["list_usd"], 0.025)
+    turbo30 = rows["r194"]
+    adj = deals.adjustment(next(d for d in doc["deals"] if d["id"] == "fal-minimax-h3-30-nov"), turbo30, plans)
+    close(adj["usd"], 0.0175)
     close(adj["list_usd"], 0.025)
     # Banner percent is not applied to rows.
     banner = by_id(live, "hf-banner-30")
@@ -114,7 +128,7 @@ def main():
     if any(deals.adjustment(runway25, row, plans) for row in db["rows"]):
         raise SystemExit("runway-kling4-25 matched a catalog row")
     sample = json.loads(json.dumps(doc))
-    sample["deals"] = [dict(by_id(live, "fal-minimax-35"))]
+    sample["deals"] = [dict(prior35_live)]
     log = []
     moved = deals.expire_deals(sample, "2026-10-31", log)
     if moved or sample["deals"][0]["status"] != "live":
@@ -145,14 +159,18 @@ def main():
         if not any(c["status"] == "possible_end" for c in third["candidates"]):
             raise SystemExit("removed sale text should be flagged, not deleted from deals")
     wan60 = next(d for d in doc["deals"] if d["id"] == "hf-api-wan-60")
-    if wan60["end"] != "2026-11-01" or wan60["status"] != "live" or wan60.get("percent") != 60:
-        raise SystemExit("hf-api-wan-60 end, status, or percent changed")
+    if wan60.get("end") is not None or wan60["status"] != "live" or wan60.get("percent") is not None:
+        raise SystemExit("hf-api-wan-60 should stay live, with no single percent and no stated end date")
     reply = "https://x.com/higgsfield_ai/status/2110074252171116649"
     extra_urls = [s.get("url") for s in wan60.get("sources") or [] if isinstance(s, dict)]
     if reply not in extra_urls or reply == wan60.get("source_url"):
         raise SystemExit("hf-api-wan-60 missing the Oct 31 reply as a second source")
+    if "https://open.higgsfield.ai/pricing" not in extra_urls:
+        raise SystemExit("hf-api-wan-60 missing the API pricing page")
     if "Oct 31" not in wan60.get("notes", "") or "Nov 1" not in wan60.get("notes", ""):
         raise SystemExit("hf-api-wan-60 missing the Oct 31 / Nov 1 note")
+    if "40%" not in wan60.get("notes", "") or "50%" not in wan60.get("notes", ""):
+        raise SystemExit("hf-api-wan-60 missing the Nov 1 Prime 40% and Wan 3.0 50% rates")
     kling4 = next(d for d in doc["deals"] if d["id"] == "hf-kling4-launch")
     if kling4.get("percent") is not None or kling4.get("type") != "percent_off" or kling4.get("status") != "live":
         raise SystemExit("hf-kling4-launch should be a live percent_off deal with no percent")
@@ -176,18 +194,19 @@ def main():
     if deals.is_current(nxt, "2026-11-16"):
         raise SystemExit("30% MiniMax promo should end after Nov 15")
     prior = next(d for d in doc["deals"] if d["id"] == "fal-minimax-35")
-    if prior.get("end") != "2026-10-31" or not deals.is_current(prior, "2026-10-31"):
-        raise SystemExit("fal-minimax-35 should still end Oct 31 and be live that day")
-    if deals.is_current(prior, "2026-11-01"):
+    if prior.get("end") != "2026-10-31" or prior.get("status") != "ended":
+        raise SystemExit("fal-minimax-35 should be archived with end Oct 31")
+    if not deals.is_current(dict(prior, status="live"), "2026-10-31"):
+        raise SystemExit("fal-minimax-35 should still be live on its end date")
+    if deals.is_current(prior, "2026-11-01") or deals.is_current(dict(prior, status="live"), "2026-11-01"):
         raise SystemExit("fal-minimax-35 should not stay live on Nov 1")
-    turbo = rows["r186"]
-    if deals.adjustment(nxt, turbo, plans) is not None:
+    if deals.adjustment(nxt, mini35, plans) is not None:
         raise SystemExit("30% promo reused the 35% row price")
-    if deals.row_adjustments(turbo, [nxt], plans, "2026-10-31"):
+    if deals.row_adjustments(rows["r194"], [nxt], plans, "2026-10-31"):
         raise SystemExit("30% promo badged a price row before Nov 1")
-    if deals.row_adjustments(turbo, [prior], plans, "2026-10-31"):
-        pass
-    else:
+    if not deals.row_adjustments(rows["r194"], [nxt], plans, "2026-11-01"):
+        raise SystemExit("30% promo should badge its row on Nov 1")
+    if not deals.row_adjustments(mini35, [dict(prior, status="live")], plans, "2026-10-31"):
         raise SystemExit("35% promo should still badge its row on Oct 31")
     quote = "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026."
     turbo_url = "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"

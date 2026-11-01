@@ -1,155 +1,6 @@
 {
- "updated": "2026-10-31",
+ "updated": "2026-11-01",
  "deals": [
-  {
-   "id": "hf-genjutsu-api-50",
-   "vendor": "Higgsfield API",
-   "type": "api_promo",
-   "title": "Genjutsu API 50% off through Oct 31",
-   "models": [],
-   "plans": [],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 50,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "start": null,
-   "end": "2026-10-31",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://x.com/higgsfield_ai/status/2109681164806177267",
-   "source_quote": "Genjutsu API 50% off through Oct 31 2026.",
-   "verified_date": "2026-10-20",
-   "notes": "Genjutsu is not in the VidFare catalog, so there is no $/s. The end date is the one in the official post.",
-   "examples": []
-  },
-  {
-   "id": "runway-enterprise-2mo",
-   "vendor": "Runway",
-   "type": "plan_sale",
-   "title": "Enterprise: 2 months of usage free if you sign by Oct 31",
-   "models": [],
-   "plans": [
-    "Enterprise"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false,
-    "free_months": 2
-   },
-   "percent": null,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "start": null,
-   "end": "2026-10-31",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://runwayml.com/pricing",
-   "source_quote": "Enterprises get 2 months of usage free. Sign by 10/31.",
-   "verified_date": "2026-10-20",
-   "notes": "Enterprise price is not in the catalog, so there is no blended $/s. The signup deadline is Oct 31, 2026.",
-   "examples": []
-  },
-  {
-   "id": "fal-minimax-35",
-   "vendor": "fal",
-   "type": "api_promo",
-   "title": "MiniMax H3 35% off until Oct 31",
-   "models": [
-    "minimax-hailuo"
-   ],
-   "plans": [],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 35,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "start": null,
-   "end": "2026-10-31",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
-   "source_quote": "35% off until Oct 31, 2026.",
-   "verified_date": "2026-10-20",
-   "notes": "The model pages state the discounted $/s for H3 Max and H3 Max Turbo at 480p, 768p, and 1080p. List rates are the separate vendor-stated rows. The same promo is on the H3 Max page.",
-   "examples": [
-    "MiniMax H3 Max Turbo 480p: $0.01625/s, list $0.025/s",
-    "MiniMax H3 Max Turbo 768p: $0.026/s, list $0.04/s",
-    "MiniMax H3 Max 480p: $0.0325/s, list $0.05/s",
-    "MiniMax H3 Max 768p: $0.052/s, list $0.08/s"
-   ]
-  },
-  {
-   "id": "hf-api-wan-60",
-   "vendor": "Higgsfield API",
-   "type": "api_promo",
-   "title": "Wan 3.0 API 60% off until Nov 1",
-   "models": [
-    "wan-3-0",
-    "wan-3-0-prime"
-   ],
-   "plans": [],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 60,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "start": "2026-10-13",
-   "end": "2026-11-01",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://x.com/higgsfield_ai/status/2110074247569924489",
-   "source_quote": "Wan 3.0 is now UNLIMITED on Higgsfield for 7 days. 60% OFF on Higgsfield API.",
-   "verified_date": "2026-10-20",
-   "notes": "The model page states the discounted $/s. List rates are that price divided by 0.40, and the 480p Prime list matches the undiscounted $0.068/s row. Higgsfield's reply says until October 31, 2026. Higgsfield's sources give the end as Oct 31 or Nov 1, so the last day may be Oct 31.",
-   "examples": [
-    "Text to video 480p: $0.02/s, list $0.05/s",
-    "Text/Image/Reference to video 480p: $0.0272/s, list $0.068/s",
-    "Text/Image/Reference to video 720p: $0.056/s, list $0.14/s",
-    "Text to video 1080p: $0.08/s, list $0.20/s"
-   ],
-   "sources": [
-    {
-     "url": "https://x.com/higgsfield_ai/status/2110074252171116649",
-     "kind": "x_post",
-     "quote": "until October 31, 2026"
-    }
-   ]
-  },
   {
    "id": "fal-flux3-75",
    "vendor": "fal",
@@ -180,6 +31,51 @@
    "verified_date": "2026-10-20",
    "notes": "Official fal post on Oct 19, 2026. Three weeks from that date is about Nov 9, so the end is an estimate. FLUX 3 Max is not in the catalog, so the 75% is not turned into a $/s.",
    "examples": []
+  },
+  {
+   "id": "fal-minimax-h3-30-nov",
+   "vendor": "fal",
+   "type": "api_promo",
+   "title": "MiniMax H3 Max and H3 Max Turbo 30% off Nov 1 through Nov 15",
+   "models": [
+    "minimax-hailuo"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 30,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-11-01",
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "source_quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026.",
+   "verified_date": "2026-10-31",
+   "notes": "The model pages state the 30% promo prices per second from November 1 through November 15, 2026: H3 Max $0.035 at 480p, $0.056 at 768p, and $0.112 at 1080p; H3 Max Turbo $0.0175 at 480p, $0.028 at 768p, and $0.056 at 1080p. Standard rates resume November 16, 2026: H3 Max $0.05, $0.08, and $0.16; H3 Max Turbo $0.025, $0.04, and $0.08. No code, and not limited to new users. This follows the 35% promo that ends October 31, 2026. The same billing message is on the H3 Max Turbo page.",
+   "examples": [
+    "MiniMax H3 Max Turbo 480p: $0.0175/s, list $0.025/s",
+    "MiniMax H3 Max Turbo 768p: $0.028/s, list $0.04/s",
+    "MiniMax H3 Max 480p: $0.035/s, list $0.05/s",
+    "MiniMax H3 Max 768p: $0.056/s, list $0.08/s"
+   ],
+   "sources": [
+    {
+     "url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+     "kind": "pricing_page",
+     "quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026."
+    }
+   ]
   },
   {
    "id": "runway-kling4-25",
@@ -562,6 +458,62 @@
    ]
   },
   {
+   "id": "hf-api-wan-60",
+   "vendor": "Higgsfield API",
+   "type": "api_promo",
+   "title": "Wan API: Prime 40% off, Wan 3.0 50% off",
+   "models": [
+    "wan-3-0",
+    "wan-3-0-prime"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-10-13",
+   "end": null,
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://x.com/higgsfield_ai/status/2110074247569924489",
+   "source_quote": "Wan 3.0 is now UNLIMITED on Higgsfield for 7 days. 60% OFF on Higgsfield API.",
+   "verified_date": "2026-11-01",
+   "notes": "Checked 2026-11-01. The model page states Wan 3.0 Prime at 40% off: $0.0408/s at 480p, $0.084/s at 720p, and $0.168/s at 1080p, with standard rates $0.068, $0.14, and $0.28. The API pricing page states Wan 3.0 at 50% off, list from $0.05/s and max-discount from $0.025/s. Neither page names an end date. Earlier Higgsfield posts called the launch discount 60% through Oct 31 or Nov 1. Higgsfield's reply says until October 31, 2026. Those dates are not on the pages checked 2026-11-01.",
+   "examples": [
+    "Text to video 480p: $0.025/s, list $0.05/s",
+    "Text/Image/Reference to video 480p: $0.0408/s, list $0.068/s",
+    "Text/Image/Reference to video 720p: $0.084/s, list $0.14/s",
+    "Text to video 1080p: $0.10/s, list $0.20/s"
+   ],
+   "sources": [
+    {
+     "url": "https://x.com/higgsfield_ai/status/2110074252171116649",
+     "kind": "x_post",
+     "quote": "until October 31, 2026"
+    },
+    {
+     "url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+     "kind": "pricing_page",
+     "quote": "these rates are 40% off; standard rates are $0.068 per second at 480p"
+    },
+    {
+     "url": "https://open.higgsfield.ai/pricing",
+     "kind": "pricing_page",
+     "quote": "Wan 3.0 Prime 40% OFF. Wan 3.0 list price from $0.050/s, max-discount price from $0.025/s, 50% OFF."
+    }
+   ]
+  },
+  {
    "id": "krea3-unlimited-14d",
    "vendor": "Krea",
    "type": "unlimited_window",
@@ -883,12 +835,78 @@
    "examples": []
   }
  ],
- "upcoming": [
+ "upcoming": [],
+ "archive": [
   {
-   "id": "fal-minimax-h3-30-nov",
+   "id": "hf-genjutsu-api-50",
+   "vendor": "Higgsfield API",
+   "type": "api_promo",
+   "title": "Genjutsu API 50% off through Oct 31",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 50,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": null,
+   "end": "2026-10-31",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://x.com/higgsfield_ai/status/2109681164806177267",
+   "source_quote": "Genjutsu API 50% off through Oct 31 2026.",
+   "verified_date": "2026-10-20",
+   "notes": "Genjutsu is not in the VidFare catalog, so there is no $/s. The end date is the one in the official post.",
+   "examples": []
+  },
+  {
+   "id": "runway-enterprise-2mo",
+   "vendor": "Runway",
+   "type": "plan_sale",
+   "title": "Enterprise: 2 months of usage free if you sign by Oct 31",
+   "models": [],
+   "plans": [
+    "Enterprise"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false,
+    "free_months": 2
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": null,
+   "end": "2026-10-31",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://runwayml.com/pricing",
+   "source_quote": "Enterprises get 2 months of usage free. Sign by 10/31.",
+   "verified_date": "2026-10-20",
+   "notes": "Enterprise price is not in the catalog, so there is no blended $/s. The signup deadline is Oct 31, 2026.",
+   "examples": []
+  },
+  {
+   "id": "fal-minimax-35",
    "vendor": "fal",
    "type": "api_promo",
-   "title": "MiniMax H3 Max and H3 Max Turbo 30% off Nov 1 through Nov 15",
+   "title": "MiniMax H3 35% off until Oct 31",
    "models": [
     "minimax-hailuo"
    ],
@@ -902,30 +920,21 @@
     "code": null,
     "standing": false
    },
-   "percent": 30,
+   "percent": 35,
    "bonus_credits": null,
    "price_before": null,
    "price_after": null,
    "price_pairs": null,
-   "start": "2026-11-01",
-   "end": "2026-11-15",
+   "start": null,
+   "end": "2026-10-31",
    "end_is_estimate": false,
-   "status": "upcoming",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
-   "source_quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026.",
-   "verified_date": "2026-10-31",
-   "notes": "The model pages state the 30% promo prices per second from November 1 through November 15, 2026: H3 Max $0.035 at 480p, $0.056 at 768p, and $0.112 at 1080p; H3 Max Turbo $0.0175 at 480p, $0.028 at 768p, and $0.056 at 1080p. Standard rates resume November 16, 2026: H3 Max $0.05, $0.08, and $0.16; H3 Max Turbo $0.025, $0.04, and $0.08. No code, and not limited to new users. This follows the 35% promo that ends October 31, 2026. The same billing message is on the H3 Max Turbo page.",
-   "examples": [],
-   "sources": [
-    {
-     "url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
-     "kind": "pricing_page",
-     "quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026."
-    }
-   ]
-  }
- ],
- "archive": [
+   "status": "ended",
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "source_quote": "35% off until Oct 31, 2026.",
+   "verified_date": "2026-10-20",
+   "notes": "The model pages state the discounted $/s for H3 Max and H3 Max Turbo at 480p, 768p, and 1080p. List rates are the separate vendor-stated rows. The same promo is on the H3 Max page.",
+   "examples": []
+  },
   {
    "id": "mag-premium-annual-50",
    "vendor": "Magnific",

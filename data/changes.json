@@ -51,5 +51,176 @@
   "variant": "Premium (annual)",
   "source_url": "https://www.magnific.com/pricing",
   "text": "Magnific Premium annual on the pricing page is $20 struck and $14.50/mo (240K credits/year). The extra 50% off at $7.25/mo ended October 26. List $/s was already calculated from the $14.50 catalog rate."
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r001",
+  "model": "wan-3-0-prime",
+  "platform": "Higgsfield API",
+  "variant": "Text/Image/Reference to video",
+  "resolution": "480p",
+  "old_usd_per_second": 0.0272,
+  "new_usd_per_second": 0.0408,
+  "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+  "type": "price"
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r002",
+  "model": "wan-3-0-prime",
+  "platform": "Higgsfield API",
+  "variant": "Text/Image/Reference to video",
+  "resolution": "720p",
+  "old_usd_per_second": 0.056,
+  "new_usd_per_second": 0.084,
+  "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+  "type": "price"
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r003",
+  "model": "wan-3-0-prime",
+  "platform": "Higgsfield API",
+  "variant": "Text/Image/Reference to video",
+  "resolution": "1080p",
+  "old_usd_per_second": 0.112,
+  "new_usd_per_second": 0.168,
+  "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+  "type": "price"
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r005",
+  "model": "wan-3-0",
+  "platform": "Higgsfield API",
+  "variant": "Text to video",
+  "resolution": "480p",
+  "old_usd_per_second": 0.02,
+  "new_usd_per_second": 0.025,
+  "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+  "type": "price"
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r006",
+  "model": "wan-3-0",
+  "platform": "Higgsfield API",
+  "variant": "Text to video",
+  "resolution": "1080p",
+  "old_usd_per_second": 0.08,
+  "new_usd_per_second": 0.1,
+  "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+  "type": "price"
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r181",
+  "model": "minimax-hailuo",
+  "platform": "fal",
+  "variant": "MiniMax H3 Max",
+  "resolution": "480p",
+  "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+  "promo_until": "2026-10-31",
+  "type": "promo_expired",
+  "text": "MiniMax H3 Max promo ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r182",
+  "model": "minimax-hailuo",
+  "platform": "fal",
+  "variant": "MiniMax H3 Max",
+  "resolution": "768p",
+  "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+  "promo_until": "2026-10-31",
+  "type": "promo_expired",
+  "text": "MiniMax H3 Max promo ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r183",
+  "model": "minimax-hailuo",
+  "platform": "fal",
+  "variant": "MiniMax H3 Max",
+  "resolution": "1080p",
+  "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+  "promo_until": "2026-10-31",
+  "type": "promo_expired",
+  "text": "MiniMax H3 Max promo ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r186",
+  "model": "minimax-hailuo",
+  "platform": "fal",
+  "variant": "MiniMax H3 Max Turbo",
+  "resolution": "480p",
+  "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+  "promo_until": "2026-10-31",
+  "type": "promo_expired",
+  "text": "MiniMax H3 Max Turbo promo ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r187",
+  "model": "minimax-hailuo",
+  "platform": "fal",
+  "variant": "MiniMax H3 Max Turbo",
+  "resolution": "768p",
+  "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+  "promo_until": "2026-10-31",
+  "type": "promo_expired",
+  "text": "MiniMax H3 Max Turbo promo ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "row": "r188",
+  "model": "minimax-hailuo",
+  "platform": "fal",
+  "variant": "MiniMax H3 Max Turbo",
+  "resolution": "1080p",
+  "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+  "promo_until": "2026-10-31",
+  "type": "promo_expired",
+  "text": "MiniMax H3 Max Turbo promo ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "type": "deal_ended",
+  "deal": "hf-genjutsu-api-50",
+  "vendor": "Higgsfield API",
+  "source_url": "https://x.com/higgsfield_ai/status/2109681164806177267",
+  "text": "Genjutsu API 50% off through Oct 31 ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "type": "deal_ended",
+  "deal": "runway-enterprise-2mo",
+  "vendor": "Runway",
+  "source_url": "https://runwayml.com/pricing",
+  "text": "Enterprise: 2 months of usage free if you sign by Oct 31 ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "type": "deal_ended",
+  "deal": "fal-minimax-35",
+  "vendor": "fal",
+  "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+  "text": "MiniMax H3 35% off until Oct 31 ended 2026-10-31."
+ },
+ {
+  "date": "2026-11-01",
+  "type": "notice",
+  "platform": "Higgsfield API",
+  "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+  "text": "Wan 3.0 Prime is 40% off ($0.0408/$0.084/$0.168 per second) and Wan 3.0 is 50% off ($0.025-$0.10 per second). The pages do not name an end date. The earlier 60% launch discount through Oct 31 or Nov 1 is no longer the rate on the page."
+ },
+ {
+  "date": "2026-11-01",
+  "type": "notice",
+  "platform": "fal",
+  "model": "minimax-hailuo",
+  "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+  "text": "MiniMax H3 Max and H3 Max Turbo 30% promo prices are now the current rows through Nov 15: H3 Max $0.035/$0.056/$0.112 and H3 Max Turbo $0.0175/$0.028/$0.056 per second. The 35% rows ended Oct 31."
  }
 ]
