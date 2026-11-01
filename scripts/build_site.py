@@ -927,7 +927,7 @@ home_ld = {
         },
     ],
 }
-page("/", f"AI Video Cost Per Second ({MONTH}): Wan 3.0, Kling 3.0, Veo 3.1, Seedance 2.5 | {BRAND}",
+page("/", f"Compare AI Video Cost Per Second ({MONTH}) | {BRAND}",
      f"Compare what AI video costs per second across Higgsfield, fal, Runway, Kling, Krea, Magnific, Replicate and Atlas Cloud. Checked {LAST}.",
      home, "/", ld_script(home_ld))
 
