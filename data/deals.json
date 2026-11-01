@@ -144,8 +144,8 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "30% OFF. EXTRA DISCOUNT: Nano Banana Pro, Nano Banana 2 & Kling 3.0 UNLIMITED.",
-   "verified_date": "2026-10-20",
+   "source_quote": "30% OFF. SEEDANCE 2.5, GPT IMAGE 2.5 & SEEDREAM 5.0 PRO UNLIMITED.",
+   "verified_date": "2026-11-01",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
@@ -283,23 +283,25 @@
    "percent": null,
    "bonus_credits": null,
    "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
+   "end": "2026-10-30",
+   "end_is_estimate": true,
+   "status": "ended",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
    "source_quote": "Plus and Ultra include 7-day unlimited Kling 3.0 and Nano Banana 2.",
    "verified_date": "2026-10-20",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "unlimited",
-   "notes": "The 7 days start at signup. There is no calendar end date. Web app only."
+   "notes": "The 7 days start at signup. Web app only. No longer listed on the pricing page from Oct 30. Last seen on higgsfield.ai/pricing in the Oct 29 snapshot. The Oct 30 end is an estimate."
   },
   {
    "id": "hf-nanobanana-unlimited-7d",
    "vendor": "Higgsfield",
    "type": "unlimited_window",
-   "title": "Nano Banana 2 and Pro unlimited for 7 days on Ultra",
-   "models": [],
+   "title": "7 days of unlimited Seedance 2.5, GPT Image 2.5, Seedream 5.0 Pro, and Nano Banana Pro 2K on Ultra",
+   "models": [
+    "seedance-2-5"
+   ],
    "plans": [
     "Ultra"
    ],
@@ -321,12 +323,12 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Nano Banana 2 and Pro unlimited for 7 days on Ultra, with a special 30% discount.",
-   "verified_date": "2026-10-20",
+   "source_quote": "Get Seedance 2.5, GPT Image 2.5 & Seedream 5.0 Pro Unlimited on Ultra plan for 7 days with Special 30% discount",
+   "verified_date": "2026-11-01",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Nano Banana is an image model, so this does not change a video $/s. Plus also includes 7-day unlimited Nano Banana 2. The 30% figure is not applied (see the banner deal)."
+   "notes": "Checked 2026-11-01. Ultra includes 7 days of unlimited Seedance 2.5, GPT Image 2.5, Seedream 5.0 Pro, and Nano Banana Pro 2K, with a special 30% discount. Nano Banana Pro, Seedream, and GPT Image are image models. Seedance 2.5 on Higgsfield is not in the price catalog, so this is not turned into a $/s. The 30% figure is not applied (see the banner deal). The 7 days start at signup."
   },
   {
    "id": "hf-seedance-business-30d",

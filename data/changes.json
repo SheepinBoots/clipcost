@@ -222,5 +222,13 @@
   "model": "minimax-hailuo",
   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
   "text": "MiniMax H3 Max and H3 Max Turbo 30% promo prices are now the current rows through Nov 15: H3 Max $0.035/$0.056/$0.112 and H3 Max Turbo $0.0175/$0.028/$0.056 per second. The 35% rows ended Oct 31."
+ },
+ {
+  "date": "2026-11-01",
+  "type": "deal_ended",
+  "deal": "hf-kling3-unlimited-7d",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Kling 3.0 unlimited for 7 days on Plus and Ultra ended 2026-10-30."
  }
 ]

@@ -103,6 +103,7 @@ def main():
         "promo_ended:deal:hf-genjutsu-api-50:2026-10-31",
         "promo_ended:deal:runway-enterprise-2mo:2026-10-31",
         "promo_ended:deal:fal-minimax-35:2026-10-31",
+        "promo_ended:deal:hf-kling3-unlimited-7d:2026-10-30",
     }
     promo_ids = {event["id"] for event in log if event["kind"] in ("promo_started", "promo_ended")}
     week_ids = {
