@@ -1,9 +1,9 @@
 {
- "run": "2026-11-01T19:46:17",
+ "run": "2026-11-02T16:12:14",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 14879
+   "chars": 16146
   },
   "hf_api": {
    "status": "fetched",
@@ -55,7 +55,7 @@
   },
   "atlas": {
    "status": "fetched",
-   "chars": 2072962
+   "chars": 2078433
   },
   "krea": {
    "status": "fetched",
@@ -85,71 +85,25 @@
  },
  "findings": [
   {
-   "kind": "plan",
-   "id": "hf-starter",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "Fixed amount of {N} credits/mo $19",
-   "old": 270,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Starter"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-plus-annual",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "Fixed amount of {N} credits/mo $59",
-   "old": 1200,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Plus (annual)"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-plus-monthly",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "${N} $47 per month, billed annually",
-   "old": 59,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Plus (monthly)"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-ultra-annual",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "Seedance 2.5 videos {N} 6,000 9,000",
-   "old": 3000,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Ultra (annual)"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-ultra-monthly",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "${N} $99 per month, billed annually",
-   "old": 129,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Ultra (monthly)"
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "snippet": "eators and leading enterprises Individual Team & Enterprise API Monthly Yearly -20% off Free Free forever. For people looking to explore Runway's AI Tools $0 /month 12"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "snippet": "ly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2"
   }
  ],
  "deal_scan": {
@@ -166,7 +120,7 @@
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 18
+    "snippets": 17
    },
    {
     "id": "magnific",
@@ -180,7 +134,7 @@
     "vendor": "Runway",
     "url": "https://runwayml.com/pricing",
     "status": "fetched",
-    "snippets": 6
+    "snippets": 8
    },
    {
     "id": "fal_pricing",
@@ -190,12 +144,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 1
+  "candidates": 3
  },
  "counts": {
-  "ok": 198,
+  "ok": 203,
   "changed": 0,
-  "missing": 5,
+  "missing": 0,
   "skipped": 6
  }
 }
