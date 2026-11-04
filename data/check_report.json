@@ -1,13 +1,13 @@
 {
- "run": "2026-11-03T21:05:18",
+ "run": "2026-11-04T08:07:17",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 16241
+   "chars": 16240
   },
   "hf_api": {
    "status": "fetched",
-   "chars": 6054
+   "chars": 3583
   },
   "hf_api_wan": {
    "status": "fetched",
@@ -15,23 +15,23 @@
   },
   "fal_wan3": {
    "status": "fetched",
-   "chars": 3498
+   "chars": 3530
   },
   "fal_wan3p": {
    "status": "fetched",
-   "chars": 6843
+   "chars": 6875
   },
   "fal_kling3": {
    "status": "fetched",
-   "chars": 3599
+   "chars": 3631
   },
   "fal_seed25": {
    "status": "fetched",
-   "chars": 11731
+   "chars": 11763
   },
   "fal_veo31": {
    "status": "fetched",
-   "chars": 13358
+   "chars": 13390
   },
   "fal_pricing": {
    "status": "fetched",
@@ -47,7 +47,7 @@
   },
   "kling_api": {
    "status": "fetched",
-   "chars": 5031
+   "chars": 5801
   },
   "gemini": {
    "status": "fetched",
@@ -55,15 +55,15 @@
   },
   "atlas": {
    "status": "fetched",
-   "chars": 2078433
+   "chars": 2079861
   },
   "krea": {
    "status": "fetched",
-   "chars": 45119
+   "chars": 42206
   },
   "magnific": {
    "status": "fetched",
-   "chars": 9205
+   "chars": 9272
   },
   "kling_app": {
    "status": "manual",
@@ -72,52 +72,18 @@
   },
   "fal_h3max": {
    "status": "fetched",
-   "chars": 7497
+   "chars": 7529
   },
   "fal_h3turbo": {
    "status": "fetched",
-   "chars": 7953
+   "chars": 7985
   },
   "fal_grok15": {
    "status": "fetched",
-   "chars": 3489
+   "chars": 3521
   }
  },
- "findings": [
-  {
-   "kind": "plan",
-   "id": "krea-basic-yearly",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Seedance 2.0 Fast videos ${X} ${N} /month",
-   "old": 5,
-   "new": null,
-   "model": null,
-   "platform": "Krea",
-   "variant": "Basic (yearly)"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~16 Seedan"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan"
-  }
- ],
+ "findings": [],
  "deal_scan": {
   "pages": [
    {
@@ -125,21 +91,21 @@
     "vendor": "Higgsfield",
     "url": "https://higgsfield.ai/pricing",
     "status": "fetched",
-    "snippets": 18
+    "snippets": 22
    },
    {
     "id": "krea",
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 18
+    "snippets": 17
    },
    {
     "id": "magnific",
     "vendor": "Magnific",
     "url": "https://www.magnific.com/pricing",
     "status": "fetched",
-    "snippets": 12
+    "snippets": 11
    },
    {
     "id": "runway_plans",
@@ -156,12 +122,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 3
+  "candidates": 0
  },
  "counts": {
-  "ok": 202,
+  "ok": 203,
   "changed": 0,
-  "missing": 1,
+  "missing": 0,
   "skipped": 6
  }
 }

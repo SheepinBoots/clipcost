@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-03",
+ "generated": "2026-11-04",
  "note": "Unconfirmed. These snippets are not published as deals.",
  "pages": [
   {
@@ -7,21 +7,21 @@
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "status": "fetched",
-   "snippets": 18
+   "snippets": 22
   },
   {
    "id": "krea",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "status": "fetched",
-   "snippets": 18
+   "snippets": 17
   },
   {
    "id": "magnific",
    "vendor": "Magnific",
    "url": "https://www.magnific.com/pricing",
    "status": "fetched",
-   "snippets": 12
+   "snippets": 11
   },
   {
    "id": "runway_plans",
@@ -38,30 +38,5 @@
    "snippets": 0
   }
  ],
- "candidates": [
-  {
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "sha": "0c5882ed7cc97ab9",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator",
-   "seen": "2026-11-03"
-  },
-  {
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "sha": "1eb73af9f90eedb1",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~16 Seedan",
-   "seen": "2026-11-03"
-  },
-  {
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "sha": "47e7d4ae84a29cc1",
-   "snippet": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~15 Seedan",
-   "seen": "2026-11-03"
-  }
- ]
+ "candidates": []
 }
