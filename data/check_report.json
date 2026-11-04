@@ -1,13 +1,13 @@
 {
- "run": "2026-11-04T08:07:17",
+ "run": "2026-11-04T21:22:02",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 16240
+   "chars": 15590
   },
   "hf_api": {
    "status": "fetched",
-   "chars": 3583
+   "chars": 5961
   },
   "hf_api_wan": {
    "status": "fetched",
@@ -39,7 +39,7 @@
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1519
+   "chars": 1492
   },
   "runway": {
    "status": "fetched",
@@ -59,7 +59,7 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 42206
+   "chars": 42330
   },
   "magnific": {
    "status": "fetched",
@@ -83,7 +83,51 @@
    "chars": 3521
   }
  },
- "findings": [],
+ "findings": [
+  {
+   "kind": "row",
+   "id": "r025",
+   "source": "rep_wan3",
+   "status": "missing",
+   "needle": "480p: ${N} per second",
+   "old": 0.05,
+   "new": null,
+   "model": "wan-3-0",
+   "platform": "Replicate",
+   "variant": "alibaba/wan-3"
+  },
+  {
+   "kind": "row",
+   "id": "r026",
+   "source": "rep_wan3",
+   "status": "missing",
+   "needle": "720p: ${N} per second",
+   "old": 0.1,
+   "new": null,
+   "model": "wan-3-0",
+   "platform": "Replicate",
+   "variant": "alibaba/wan-3"
+  },
+  {
+   "kind": "row",
+   "id": "r027",
+   "source": "rep_wan3",
+   "status": "missing",
+   "needle": "1080p: ${N} per second",
+   "old": 0.2,
+   "new": null,
+   "model": "wan-3-0",
+   "platform": "Replicate",
+   "variant": "alibaba/wan-3"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
+  }
+ ],
  "deal_scan": {
   "pages": [
    {
@@ -98,7 +142,7 @@
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 17
+    "snippets": 18
    },
    {
     "id": "magnific",
@@ -122,12 +166,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 0
+  "candidates": 1
  },
  "counts": {
-  "ok": 203,
+  "ok": 200,
   "changed": 0,
-  "missing": 0,
+  "missing": 3,
   "skipped": 6
  }
 }
