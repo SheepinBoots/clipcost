@@ -138,7 +138,7 @@ def main():
     desc = wr.report_description(report)
     assert "2 per-second price changes" in desc
     assert "Oct 20 to Oct 30, 2026" in desc
-    ld = wr.report_jsonld(report, "https://sheepinboots.github.io/clipcost/reports/2026-w44/")
+    ld = wr.report_jsonld(report, "https://vidfare.com/reports/2026-w44/")
     assert ld["headline"] == wr.report_h1(report)
     assert ld["description"] == desc
     assert ld["@type"] == "Article"
@@ -210,7 +210,7 @@ def main():
     assert "/reports/2026-w44/" in index
     assert "count toward the two-change minimum" in index
     assert "newsletter" not in index.lower()
-    index_ld = wr.index_jsonld("https://sheepinboots.github.io/clipcost/reports/")
+    index_ld = wr.index_jsonld("https://vidfare.com/reports/")
     assert index_ld["name"] == wr.INDEX_H1
     assert index_ld["description"] == wr.INDEX_DESCRIPTION
 
@@ -241,13 +241,13 @@ def main():
          "--as-of", "2026-10-30", "--out", preview],
         cwd=ROOT,
     )
-    page = os.path.join(preview, "clipcost", "reports", "index.html")
+    page = os.path.join(preview, "reports", "index.html")
     html = open(page, encoding="utf-8").read()
     assert html.count("<h1>") == 1
     assert "<h1>AI video price change reports</h1>" in html
     assert wr.INDEX_DESCRIPTION in html
     assert f'<meta name="description" content="{wr.INDEX_DESCRIPTION}">' in html
-    assert 'rel="canonical" href="https://sheepinboots.github.io/clipcost/reports/"' in html
+    assert 'rel="canonical" href="https://vidfare.com/reports/"' in html
     assert 'name="robots" content="index,follow"' in html
     assert "vidfare.goatcounter.com" in html
     assert "week of Oct 26, 2026" in html
@@ -255,7 +255,7 @@ def main():
     assert "newsletter" not in html.lower()
     assert '"@type": "CollectionPage"' in html
     assert wr.INDEX_DESCRIPTION in html.split('application/ld+json">', 1)[1]
-    week = os.path.join(preview, "clipcost", "reports", "2026-w44", "index.html")
+    week = os.path.join(preview, "reports", "2026-w44", "index.html")
     week_html = open(week, encoding="utf-8").read()
     assert week_html.count("<h1>") == 1
     assert "<h1>AI video price changes, week of Oct 26, 2026</h1>" in week_html
@@ -264,7 +264,7 @@ def main():
     assert "<h2>Promos started</h2>" in week_html
     assert "<h2>Promos ended</h2>" in week_html
     assert "https://www.magnific.com/pricing" in week_html
-    assert 'rel="canonical" href="https://sheepinboots.github.io/clipcost/reports/2026-w44/"' in week_html
+    assert 'rel="canonical" href="https://vidfare.com/reports/2026-w44/"' in week_html
     assert 'name="robots" content="index,follow"' in week_html
     assert "vidfare.goatcounter.com" in week_html
     assert "newsletter" not in week_html.lower()

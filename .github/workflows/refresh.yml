@@ -84,6 +84,18 @@ jobs:
       - name: Build site
         run: python3 scripts/build_site.py
 
+      # Same guard as Deploy to GitHub Pages: do not publish / paths on the project URL.
+      - name: Confirm Pages custom domain
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cname=$(gh api "repos/${{ github.repository }}/pages" --jq .cname)
+          echo "Pages cname: ${cname:-<unset>}"
+          if [ "$cname" != "vidfare.com" ]; then
+            echo "::error::Refusing to publish until the Pages custom domain is vidfare.com. In Settings → Pages, set Custom domain to vidfare.com and save, then re-run this workflow. Enforce HTTPS after the certificate is ready."
+            exit 1
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v6
 

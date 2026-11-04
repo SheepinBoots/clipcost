@@ -3,12 +3,13 @@
 import json, os, shutil, html, datetime, sys, email.utils, struct
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
+import notify_indexnow
 import weekly_report
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
-SITE_URL = "https://sheepinboots.github.io/clipcost"
+SITE_URL = "https://vidfare.com"
 BRAND = "VidFare"
 TAGLINE = "What every AI video second costs, everywhere."
 OG_IMAGE = SITE_URL + "/og.png"
@@ -31,7 +32,7 @@ CREDIT_USE = "assumes every credit you pay for is used"
 # These resolution values are model tiers, not pixel sizes. build_data.py stores them in resolution.
 TIER_RESOLUTIONS = {"Pro tier", "Pro", "Standard"}
 MISSING_RESOLUTIONS = {"", "—", "-", "–"}
-# GitHub project Pages serves this site under the path in SITE_URL ("" for a bare domain).
+# Path prefix under SITE_URL. Empty on https://vidfare.com, so links and assets stay at /.
 BASE = urlparse(SITE_URL).path.rstrip("/")
 # Search guides. Every dollar figure on these pages is rendered from data/prices.json.
 GUIDE_LINKS = [
@@ -44,7 +45,7 @@ GUIDE_LINKS = [
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
 def root(path):
-    """Absolute site path, including the GitHub Pages project prefix."""
+    """Site path. Includes a prefix only when SITE_URL has one."""
     if path.startswith(("http://", "https://", "mailto:", "#")):
         return path
     if not path.startswith("/"):
@@ -588,6 +589,13 @@ def write_favicon_ico(src_png, dest_ico):
 
 write_favicon_ico(os.path.join(ROOT, "src", "favicon-32.png"), os.path.join(DIST, "favicon.ico"))
 shutil.copy(os.path.join(ROOT, "src", "google43692aaea77cfb47.html"), DIST)
+# Actions deploys ignore a repo-root CNAME. The file still has to be in dist,
+# which is the directory the Pages artifact uploads.
+cname_host = urlparse(SITE_URL).hostname or ""
+open(os.path.join(DIST, "CNAME"), "w").write(cname_host + "\n")
+open(os.path.join(ROOT, "CNAME"), "w").write(cname_host + "\n")
+indexnow_key = notify_indexnow.KEY
+open(os.path.join(DIST, indexnow_key + ".txt"), "w").write(indexnow_key + "\n")
 os.makedirs(os.path.join(DIST, "data")); shutil.copy(os.path.join(ROOT, "data", "prices.json"), os.path.join(DIST, "data"))
 
 def stamp_published_prices():
@@ -1504,7 +1512,7 @@ page("/advertise/", f"Advertise on VidFare | {BRAND}", ad_desc, ad_body, "", ld_
 GOAT_404 = "<script>window.goatcounter={path:function(){return '404:'+location.pathname+location.search}}</script>\n"
 
 def newsletter_redirect_script():
-    """Send /clipcost/newsletter* (except the coming-soon URL itself) to /newsletter/."""
+    """Send other newsletter URLs to the coming-soon page."""
     dest = root("/newsletter/")
     prefix = BASE + "/newsletter"
     return (
@@ -2070,6 +2078,36 @@ def audit_site():
         errors.append("Kling model page comparison does not read as Pro tier with audio off")
     if "plan tier Standard, resolution not listed, audio off" not in kling_page:
         errors.append("Kling model page dropped the plan tier prefix for Standard")
+    host = urlparse(SITE_URL).hostname or ""
+    cname_dist = open(os.path.join(DIST, "CNAME"), encoding="utf-8").read().strip()
+    cname_root = open(os.path.join(ROOT, "CNAME"), encoding="utf-8").read().strip()
+    if cname_dist != host or cname_root != host:
+        errors.append(f"CNAME must be {host}")
+    key_file = os.path.join(DIST, notify_indexnow.KEY + ".txt")
+    key_body = open(key_file, encoding="utf-8").read().strip() if os.path.isfile(key_file) else ""
+    if key_body != notify_indexnow.KEY:
+        errors.append("IndexNow key file is missing from the site root")
+    if notify_indexnow.HOST != host or notify_indexnow.KEY_LOCATION != f"{SITE_URL}/{notify_indexnow.KEY}.txt":
+        errors.append("IndexNow host or key location does not match the site")
+    robots = open(os.path.join(DIST, "robots.txt"), encoding="utf-8").read()
+    if f"Sitemap: {SITE_URL}/sitemap.xml" not in robots:
+        errors.append("robots.txt sitemap is not the site URL")
+    if not os.path.isfile(os.path.join(DIST, "google43692aaea77cfb47.html")):
+        errors.append("Google verification file is missing")
+    if 'name="google-site-verification"' not in home_html:
+        errors.append("Google verification meta tag is missing")
+    old_url_markers = ("/clipcost", "sheepinboots.github.io")
+    for dirpath, _, filenames in os.walk(DIST):
+        for name in filenames:
+            path = os.path.join(dirpath, name)
+            if not name.endswith((".html", ".xml", ".txt", ".json", ".css", ".js")) and name != "CNAME":
+                continue
+            text = open(path, encoding="utf-8").read()
+            rel = os.path.relpath(path, DIST)
+            for marker in old_url_markers:
+                if marker in text:
+                    errors.append(f"{rel} still contains {marker}")
+                    break
     png_bytes = open(os.path.join(ROOT, "src", "favicon-32.png"), "rb").read()
     ico_path = os.path.join(DIST, "favicon.ico")
     ico_bytes = open(ico_path, "rb").read() if os.path.isfile(ico_path) else b""

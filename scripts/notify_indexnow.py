@@ -14,17 +14,17 @@ from pathlib import Path
 
 SITEMAP = Path("dist/sitemap.xml")
 ENDPOINT = "https://api.indexnow.org/indexnow"
-HOST = "sheepinboots.github.io"
+HOST = "vidfare.com"
 KEY = "52237a276970019be653b2921724b15c"
 KEY_LOCATION = f"https://{HOST}/{KEY}.txt"
 # Guide pages. build_site.py writes these into dist/sitemap.xml, and the
 # submitted urlList is every sitemap <loc>. This tuple is that guide set.
 GUIDE_URLS = (
-    "https://sheepinboots.github.io/clipcost/guides/",
-    "https://sheepinboots.github.io/clipcost/guides/cheapest-wan-3-0/",
-    "https://sheepinboots.github.io/clipcost/guides/cheapest-ai-video-generator/",
-    "https://sheepinboots.github.io/clipcost/guides/is-higgsfield-worth-it/",
-    "https://sheepinboots.github.io/clipcost/guides/ai-video-project-budget/",
+    "https://vidfare.com/guides/",
+    "https://vidfare.com/guides/cheapest-wan-3-0/",
+    "https://vidfare.com/guides/cheapest-ai-video-generator/",
+    "https://vidfare.com/guides/is-higgsfield-worth-it/",
+    "https://vidfare.com/guides/ai-video-project-budget/",
 )
 
 

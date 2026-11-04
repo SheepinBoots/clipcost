@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03",
+ "updated": "2026-11-04",
  "deals": [
   {
    "id": "fal-flux3-75",
@@ -30,6 +30,37 @@
    "source_quote": "75% off for the next three weeks.",
    "verified_date": "2026-10-20",
    "notes": "Official fal post on Oct 19, 2026. Three weeks from that date is about Nov 9, so the end is an estimate. FLUX 3 Max is not in the catalog, so the 75% is not turned into a $/s.",
+   "examples": []
+  },
+  {
+   "id": "krea3-openrouter-50",
+   "vendor": "Krea",
+   "type": "percent_off",
+   "title": "Krea 3 50% off on OpenRouter through Nov 10",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 50,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "start": "2026-11-02",
+   "end": "2026-11-10",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://x.com/krea_ai/status/2117354929446883726",
+   "source_quote": "Krea 3 is 50% off on OpenRouter until Nov 10.",
+   "verified_date": "2026-11-03",
+   "notes": "Krea 3 is an image model, so this does not change video $/s. The discount is on OpenRouter API generations, not Krea's own subscription plans. OpenRouter's own post (x.com/OpenRouter/status/2117353153352069485) says \"through Nov 10\".",
    "examples": []
   },
   {
