@@ -1247,12 +1247,12 @@ def calc_rows_html(plan_id):
     plan = plans[plan_id]
     price = plan["usd_month"]
     credits = plan["credits_month"]
-    scale = 1
     bits = []
     chosen = sorted((r for r in rows if r.get("plan") == plan_id), key=lambda r: r["usd_per_second"])
     for r in chosen:
         clips = clip_count(credits, r["credits_per_clip"])
-        pc = (r["usd_per_clip"] * scale)
+        unit = price / credits
+        pc = unit * r["credits_per_clip"]
         price_cell = money(pc) if clips > 0 else "—"
         per_sec = money(pc / r["clip_seconds"]) if clips > 0 else "—"
         cred = ("~" if r["status"] == "estimate" else "") + credits_text(r["credits_per_clip"])
@@ -1262,7 +1262,7 @@ def calc_rows_html(plan_id):
             f'<td>{e(shown_tier(r))}</td><td>{e(shown_resolution(r))}</td><td>{e(audio_phrase(r))}</td>'
             f'<td>{r["clip_seconds"]}s</td><td>{cred}</td>'
             f'<td class="num">{grouped_int(clips)}</td><td class="num">{price_cell}</td>'
-            f'<td class="num">{per_sec}{assume}</td></tr>'
+            f'<td class="num"><span class="amt">{per_sec}</span>{assume}</td></tr>'
         )
     per = price / credits
     note = (plan.get("credits_note") or "") + f" Billing: {plan['billing']}. Checked {plan['checked']}."
@@ -1351,36 +1351,35 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   const price=map&&map.price!=null?map.price:p.usd_month;
   const credits=p.credits_month+(map&&map.bonus_credits?map.bonus_credits:0);
   const per=price/credits;
-  const scale=(price/p.usd_month)*(p.credits_month/credits);
   $('kPrice').textContent='$'+price+'/mo';$('kCred').textContent=credits.toLocaleString();$('kPer').textContent='$'+per.toFixed(5);
   let note=(p.credits_note||'')+' Billing: '+p.billing+'. Checked '+p.checked+'.';
   if(map&&map.notes&&map.notes.length) note+=' '+map.notes.join(' ');
   $('pNote').textContent=note;
-  const hasUn=!!(map&&map.unlimited&&map.unlimited.length);
-  $('dealBox').hidden=!hasUn;
   const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener';
   const srcRel=tracked?'sponsored nofollow noopener':'nofollow noopener';
   $('pLink').innerHTML=`<a class="btn" href="${{esc(href)}}" rel="${{rel}}" target="_blank">See ${{esc(p.platform)}} plans</a> <a class="small" href="${{esc(tracked||p.source_url)}}" rel="${{srcRel}}" target="_blank">source</a>`;
+  const rsAll=d.rows.filter(r=>r.plan==k&&current(r));
+  const anyUn=!!(map&&map.unlimited&&map.unlimited.length&&rsAll.some(r=>unlimitedHit(map,r)));
+  $('dealBox').hidden=!anyUn;
+  if(anyUn) $('dealEff').textContent='Effective $/s for an unlimited window is the plan price divided by the seconds you make. It is not $0.';
   if(u==null){{$('ct').querySelector('tbody').innerHTML='<tr><td colspan="9">Enter a whole number from 1 to 100.</td></tr>';return}}
   const secs=Math.max(1, Number($('windowSecs').value)||1);
-  const rs=d.rows.filter(r=>r.plan==k&&current(r)).sort((a,b)=>a.usd_per_second-b.usd_per_second);
-  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{{const clips=clipCount(credits*u,r.credits_per_clip);const pc=(r.usd_per_clip*scale)/u;
+  const rs=rsAll.slice().sort((a,b)=>a.usd_per_second-b.usd_per_second);
+  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{{const clips=clipCount(credits*u,r.credits_per_clip);const unit=price/credits;const pc=unit*r.credits_per_clip/u;
    const priceCell=clips>0?money(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
    let extra='';
    const hit=unlimitedHit(map, r);
-   if(hit&&r.usd_per_second>0){{
-     const normal=r.usd_per_second*scale;
+   if(hit&&r.credits_per_clip>0&&r.clip_seconds>0){{
+     const normal=unit*r.credits_per_clip/r.clip_seconds;
      const be=Math.round(price/normal);
      extra=`<div class="small">Unlimited: worth it after ${{be}}s. At ${{secs}}s in the window, ${{money(price/secs)}}/s effective.</div>`;
    }}
-   if(map&&map.blended_price!=null&&clips>0){{
-     const bscale=(map.blended_price/p.usd_month)*(p.credits_month/credits);
-     extra+=`<div class="small">12-month blended ${{money((r.usd_per_clip*bscale)/u/r.clip_seconds)}}/s</div>`;
+   if(map&&map.blended_price!=null&&clips>0&&r.clip_seconds>0){{
+     extra+=`<div class="small">12-month blended ${{money((map.blended_price/credits)*r.credits_per_clip/u/r.clip_seconds)}}/s</div>`;
    }}
    const assume=assumptionOf(r);
    const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{esc(audioOf(r))}}</td><td>${{r.clip_seconds}}s</td><td>${{r.status=='estimate'?'~':''}}${{(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}}</td><td class="num">${{clips.toLocaleString()}}</td><td class="num">${{priceCell}}</td><td class="num">${{perSec}}${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
-  if(hasUn) $('dealEff').textContent='Effective $/s for an unlimited window is the plan price divided by the seconds you make. It is not $0.';
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{esc(audioOf(r))}}</td><td>${{r.clip_seconds}}s</td><td>${{r.status=='estimate'?'~':''}}${{(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}}</td><td class="num">${{clips.toLocaleString()}}</td><td class="num">${{priceCell}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
   history.replaceState(null,'','?plan='+k);}}
  $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
  $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);go();}});
@@ -1513,22 +1512,27 @@ def deals_item_list(deals):
             bits.append(f"ends {deal['end']}{est}")
         else:
             bits.append("no end date given")
-        offer = {
-            "@type": "Offer",
-            "name": deal.get("title") or deal["id"],
-            "url": f"{SITE_URL}/deals/#{deal['id']}",
-            "description": " · ".join(bit for bit in bits if bit),
-            "seller": {"@type": "Organization", "name": deal.get("vendor") or ""},
-        }
-        if deal.get("end"):
-            offer["priceValidUntil"] = deal["end"]
-        elements.append({
+        item = {
             "@type": "ListItem",
             "position": i,
             "name": deal.get("title") or deal["id"],
             "url": f"{SITE_URL}/deals/#{deal['id']}",
-            "item": offer,
-        })
+        }
+        price = deal.get("price_after")
+        if isinstance(price, (int, float)) and not isinstance(price, bool):
+            offer = {
+                "@type": "Offer",
+                "name": deal.get("title") or deal["id"],
+                "url": f"{SITE_URL}/deals/#{deal['id']}",
+                "description": " · ".join(bit for bit in bits if bit),
+                "price": f"{price:g}",
+                "priceCurrency": "USD",
+                "seller": {"@type": "Organization", "name": deal.get("vendor") or ""},
+            }
+            if deal.get("end"):
+                offer["priceValidUntil"] = deal["end"]
+            item["item"] = offer
+        elements.append(item)
     return {
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -1608,9 +1612,11 @@ def write_feeds():
         )
     built = email.utils.formatdate(datetime.datetime.now(datetime.timezone.utc).timestamp(), usegmt=True)
     rss = (
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\">\n<channel>\n"
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        "<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n<channel>\n"
         f"  <title>{BRAND} deals</title>\n"
         f"  <link>{SITE_URL}/deals/</link>\n"
+        f"  <atom:link href=\"{SITE_URL}/deals.xml\" rel=\"self\" type=\"application/rss+xml\"/>\n"
         "  <description>Live AI video deals from vendor pages and official accounts.</description>\n"
         f"  <lastBuildDate>{built}</lastBuildDate>\n"
         + "\n".join(items) + "\n</channel>\n</rss>\n"
@@ -1674,8 +1680,15 @@ def feed_items():
 def write_site_feed():
     import xml.etree.ElementTree as ET
     items = feed_items()
+    atom = "http://www.w3.org/2005/Atom"
     rss = ET.Element("rss", {"version": "2.0"})
+    rss.set("xmlns:atom", atom)
     channel = ET.SubElement(rss, "channel")
+    ET.SubElement(channel, "{%s}link" % atom, {
+        "href": SITE_URL + "/feed.xml",
+        "rel": "self",
+        "type": "application/rss+xml",
+    })
     ET.SubElement(channel, "title").text = BRAND
     ET.SubElement(channel, "link").text = SITE_URL + "/"
     ET.SubElement(channel, "description").text = "Price changes, weekly reports, and live deals."
@@ -2355,6 +2368,7 @@ def audit_site():
     errors.extend(test_titles.title_errors(DIST))
     errors.extend(structured_data_errors())
     errors.extend(feed_errors())
+    errors.extend(viewport_overflow_errors())
     if errors:
         raise SystemExit("site audit failed:\n- " + "\n- ".join(errors))
 
@@ -2424,6 +2438,24 @@ def structured_data_errors():
                         if q not in visible or a not in visible:
                             errors.append(f"{rel} FAQ text is not on the page: {q[:80]}")
     return errors
+
+def viewport_overflow_errors():
+    """Fail when a sitemap page is wider than a 390px phone. Skip if Chrome is not installed."""
+    import subprocess
+    chrome = next((p for p in (
+        os.environ.get("CHROME_PATH"), os.environ.get("CHROME_BIN"),
+        "/usr/bin/google-chrome", "/usr/bin/google-chrome-stable", "/usr/bin/chromium",
+    ) if p and os.path.isfile(p)), None)
+    script = os.path.join(ROOT, "scripts", "check_viewport.mjs")
+    if not chrome or not os.path.isdir(os.path.join(ROOT, "node_modules", "puppeteer-core")):
+        print("viewport check skipped (Chrome or puppeteer-core is not installed)", file=sys.stderr)
+        return []
+    out = subprocess.run(["node", script, DIST, chrome], capture_output=True, text=True, timeout=180)
+    text = (out.stdout or "") + (out.stderr or "")
+    if out.returncode != 0:
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        return lines or ["viewport check failed"]
+    return []
 
 def feed_errors():
     import xml.etree.ElementTree as ET

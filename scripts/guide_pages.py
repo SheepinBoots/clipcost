@@ -391,7 +391,7 @@ def render(g):
             gap_html = "<p>The price data has no separate unconfirmed-item list.</p>"
         faqs = [
             (q, answer),
-            (q_each, "One row per model, lowest dollars per second first. A promo keeps its end date."),
+            (q_each, "One row per model, lowest dollars per second first. A promo shows its end date when the vendor gives one."),
             ("How do we calculate this?", HOW_PLAIN),
         ]
         body = f"""{crumb("Cheapest by model")}
@@ -401,7 +401,7 @@ def render(g):
 <div class="cards">{cheap_card("Lowest rate we track", best_row, alt)}</div>
 <h2>{e(q)}</h2><p>{e(answer)}</p>
 <h2>{e(q_each)}</h2>
-<p>One row per model, lowest dollars per second first. A promo keeps its end date.</p>
+<p>One row per model, lowest dollars per second first. A promo shows its end date when the vendor gives one.</p>
 <p class="small">No promo: same means that pick is not a promo. Otherwise the cell is the cheapest non-promo rate. — means there is no non-promo row.</p>
 {fit_table(head, body_rows)}
 <h2>What prices are not in this list?</h2>
