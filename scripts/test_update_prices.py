@@ -36,6 +36,8 @@ def main():
     assert status == "ok" and value == 0.099, (status, value)
     assert up.next_flight_text("<html><p>no payload</p></html>") == ""
     assert up.check("visible only", {"needle": needle, "expect": 0.099})[0] == "missing"
+    assert up.check("if voice control is used you will be charged $0.196 .", {"needle": "you will be charged $0.196", "phrase": True})[0] == "ok"
+    assert up.check("no voice price", {"needle": "you will be charged $0.196", "phrase": True})[0] == "missing"
     print("ok")
 
 

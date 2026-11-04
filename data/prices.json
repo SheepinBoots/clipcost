@@ -373,6 +373,26 @@
     {
      "needle": "Video costs ${N} per second at 480p",
      "expect": 0.0408
+    },
+    {
+     "needle": "Wan 3.0 Prime Text to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Wan 3.0 Prime Image to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Wan 3.0 Prime Reference to Video",
+     "phrase": true
+    },
+    {
+     "needle": "2 – 30s",
+     "phrase": true
+    },
+    {
+     "needle": "$0.0408 per second at 480p for 1 or 2 second",
+     "phrase": true
     }
    ],
    "note": "40% off, as the model page states. Standard rates on that page are $0.068 at 480p for 1-2s clips, $0.14 at 720p for 30s clips, and $0.28 at 1080p for 30s clips. The API pricing page also says 40% off. Neither page names an end date.",
@@ -382,7 +402,26 @@
    "list_usd_per_second": 0.068,
    "deal_ids": [
     "hf-api-wan-60"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v",
+     "i2v",
+     "ref2v"
+    ],
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": false,
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -400,6 +439,30 @@
     {
      "needle": "${N} per second at 720p",
      "expect": 0.084
+    },
+    {
+     "needle": "Wan 3.0 Prime Text to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Wan 3.0 Prime Image to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Wan 3.0 Prime Reference to Video",
+     "phrase": true
+    },
+    {
+     "needle": "2 – 30s",
+     "phrase": true
+    },
+    {
+     "needle": "$0.084 per second at 720p for 30 second",
+     "phrase": true
+    },
+    {
+     "needle": "$0.084 per second at 720p for 30 second clips",
+     "phrase": true
     }
    ],
    "note": "40% off, as the model page states. Standard rates on that page are $0.068 at 480p for 1-2s clips, $0.14 at 720p for 30s clips, and $0.28 at 1080p for 30s clips. The API pricing page also says 40% off. Neither page names an end date.",
@@ -409,7 +472,26 @@
    "list_usd_per_second": 0.14,
    "deal_ids": [
     "hf-api-wan-60"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v",
+     "i2v",
+     "ref2v"
+    ],
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": 30,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": false,
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -427,6 +509,30 @@
     {
      "needle": "${N} per second at 1080p",
      "expect": 0.168
+    },
+    {
+     "needle": "Wan 3.0 Prime Text to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Wan 3.0 Prime Image to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Wan 3.0 Prime Reference to Video",
+     "phrase": true
+    },
+    {
+     "needle": "2 – 30s",
+     "phrase": true
+    },
+    {
+     "needle": "$0.168 per second at 1080p for 30 second",
+     "phrase": true
+    },
+    {
+     "needle": "$0.168 per second at 1080p for 30 second clips",
+     "phrase": true
     }
    ],
    "note": "40% off, as the model page states. Standard rates on that page are $0.068 at 480p for 1-2s clips, $0.14 at 720p for 30s clips, and $0.28 at 1080p for 30s clips. The API pricing page also says 40% off. Neither page names an end date.",
@@ -436,7 +542,26 @@
    "list_usd_per_second": 0.28,
    "deal_ids": [
     "hf-api-wan-60"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v",
+     "i2v",
+     "ref2v"
+    ],
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": 30,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": false,
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -459,7 +584,22 @@
    "note": "Undiscounted list price; 'from' = cheapest mode.",
    "id": "r004",
    "checked": "2026-11-04",
-   "source_url": "https://open.higgsfield.ai/pricing"
+   "source_url": "https://open.higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -477,6 +617,18 @@
     {
      "needle": "Wan 3.0 Text to Video ${N} –",
      "expect": 0.025
+    },
+    {
+     "needle": "Wan 3.0 Image to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Wan 3.0 Reference to Video",
+     "phrase": true
+    },
+    {
+     "needle": "2 – 30s",
+     "phrase": true
     }
    ],
    "note": "50% off, as the Higgsfield API pricing page states (list from $0.05/s, max-discount from $0.025/s). Low end of the model page's $0.025-$0.10/sec range. The page does not name an end date.",
@@ -486,7 +638,26 @@
    "list_usd_per_second": 0.05,
    "deal_ids": [
     "hf-api-wan-60"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v",
+     "i2v",
+     "ref2v"
+    ],
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": false,
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -504,6 +675,18 @@
     {
      "needle": "Wan 3.0 Text to Video ${X} – ${N} / sec",
      "expect": 0.1
+    },
+    {
+     "needle": "Wan 3.0 Image to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Wan 3.0 Reference to Video",
+     "phrase": true
+    },
+    {
+     "needle": "2 – 30s",
+     "phrase": true
     }
    ],
    "note": "50% off, as the Higgsfield API pricing page states. High end of the model page's $0.025-$0.10/sec range. The pricing page states the list as from $0.05/s and does not restate a 1080p standard rate. The page does not name an end date.",
@@ -513,7 +696,26 @@
    "list_usd_per_second": 0.2,
    "deal_ids": [
     "hf-api-wan-60"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v",
+     "i2v",
+     "ref2v"
+    ],
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": false,
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -536,7 +738,22 @@
    "note": "'From' price; resolution of cheapest mode not stated on the list.",
    "id": "r007",
    "checked": "2026-11-04",
-   "source_url": "https://open.higgsfield.ai/pricing"
+   "source_url": "https://open.higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": 3,
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -559,7 +776,22 @@
    "note": "'From' price; resolution of cheapest mode not stated on the list.",
    "id": "r008",
    "checked": "2026-11-04",
-   "source_url": "https://open.higgsfield.ai/pricing"
+   "source_url": "https://open.higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": 4,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -577,12 +809,37 @@
     {
      "needle": "${N} 480p ,",
      "expect": 0.05
+    },
+    {
+     "needle": "Wan (Text to Video)",
+     "phrase": true
+    },
+    {
+     "needle": "For every second of video you generate, you will be charged",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r009",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video"
+   "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -600,12 +857,37 @@
     {
      "needle": "${N} 720p ,",
      "expect": 0.1
+    },
+    {
+     "needle": "Wan (Text to Video)",
+     "phrase": true
+    },
+    {
+     "needle": "For every second of video you generate, you will be charged",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r010",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video"
+   "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -623,12 +905,37 @@
     {
      "needle": "or ${N} 1080p",
      "expect": 0.2
+    },
+    {
+     "needle": "Wan (Text to Video)",
+     "phrase": true
+    },
+    {
+     "needle": "For every second of video you generate, you will be charged",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r011",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video"
+   "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -646,12 +953,37 @@
     {
      "needle": "${N} at 480p",
      "expect": 0.068
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r012",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -669,12 +1001,37 @@
     {
      "needle": "${N} at 720p",
      "expect": 0.14
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r013",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -692,12 +1049,37 @@
     {
      "needle": "${N} at 1080p",
      "expect": 0.28
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r014",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video"
+   "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -715,12 +1097,37 @@
     {
      "needle": "charged ${N} (audio off)",
      "expect": 0.112
+    },
+    {
+     "needle": "Text to Video (pro)",
+     "phrase": true
+    },
+    {
+     "needle": "For every second of video you generated, you will be charged",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r015",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video"
+   "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video",
+   "variation": {
+    "audio": "without",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -738,12 +1145,46 @@
     {
      "needle": "(audio off) or ${N} (audio on)",
      "expect": 0.168
+    },
+    {
+     "needle": "Text to Video (pro)",
+     "phrase": true
+    },
+    {
+     "needle": "For every second of video you generated, you will be charged",
+     "phrase": true
+    },
+    {
+     "needle": "you will be charged $0.196",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r016",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video"
+   "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video",
+   "variation": {
+    "audio": "with",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": [
+     {
+      "label": "voice control with audio",
+      "usd_per_second": 0.196
+     }
+    ]
+   }
   },
   {
    "model": "seedance-2-5",
@@ -761,12 +1202,45 @@
     {
      "needle": "For 480p, your request will cost roughly ${N} per second",
      "expect": 0.2205
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
+    },
+    {
+     "needle": "up to 30 seconds",
+     "phrase": true
+    },
+    {
+     "needle": "per second of generated video",
+     "phrase": true
+    },
+    {
+     "needle": "480p with audio",
+     "phrase": true
     }
    ],
    "note": "fal says 'roughly': billed by tokens (16:9, 24fps).",
    "id": "r017",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video"
+   "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
+   "variation": {
+    "audio": "with",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -784,12 +1258,45 @@
     {
      "needle": "for 720p, you will be charged roughly ${N} per second",
      "expect": 0.473
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
+    },
+    {
+     "needle": "up to 30 seconds",
+     "phrase": true
+    },
+    {
+     "needle": "per second of generated video",
+     "phrase": true
+    },
+    {
+     "needle": "720p with audio",
+     "phrase": true
     }
    ],
    "note": "fal says 'roughly': billed by tokens.",
    "id": "r018",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video"
+   "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
+   "variation": {
+    "audio": "with",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -797,7 +1304,7 @@
    "platform": "fal",
    "kind": "api",
    "resolution": "1080p",
-   "audio": true,
+   "audio": null,
    "usd_per_second": 1.164,
    "status": "estimate",
    "promo_until": null,
@@ -807,12 +1314,41 @@
     {
      "needle": "for 1080p, roughly ${N} per second",
      "expect": 1.164
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
+    },
+    {
+     "needle": "up to 30 seconds",
+     "phrase": true
+    },
+    {
+     "needle": "per second of generated video",
+     "phrase": true
     }
    ],
    "note": "fal says 'roughly': billed by tokens.",
    "id": "r019",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video"
+   "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -830,12 +1366,35 @@
     {
      "needle": "charged ${N} without audio or ${X} with audio for 720p or 1080p",
      "expect": 0.2
+    },
+    {
+     "needle": "without audio or $0.40 with audio",
+     "phrase": true
+    },
+    {
+     "needle": "up to 8 seconds of video",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r020",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/fal-ai/veo3.1"
+   "source_url": "https://fal.ai/models/fal-ai/veo3.1",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 8,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -853,12 +1412,35 @@
     {
      "needle": "without audio or ${N} with audio for 720p or 1080p",
      "expect": 0.4
+    },
+    {
+     "needle": "without audio or $0.40 with audio",
+     "phrase": true
+    },
+    {
+     "needle": "up to 8 seconds of video",
+     "phrase": true
     }
    ],
    "note": "",
    "id": "r021",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/fal-ai/veo3.1"
+   "source_url": "https://fal.ai/models/fal-ai/veo3.1",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 8,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -876,12 +1458,37 @@
     {
      "needle": "standard rates are ${N} , ${X} , and ${X} per second at 480p , 768p , and 1080p",
      "expect": 0.05
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
     }
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026. 480p list rate (the model page's default tier during the promo is 768p).",
    "id": "r022",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -899,12 +1506,37 @@
     {
      "needle": "standard rates are ${N} , ${X} , and ${X} per second at 480p , 768p , and 1080p",
      "expect": 0.025
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
     }
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r023",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "grok-imagine",
@@ -912,7 +1544,7 @@
    "platform": "fal",
    "kind": "api",
    "resolution": "480p",
-   "audio": null,
+   "audio": true,
    "usd_per_second": 0.08,
    "status": "verified",
    "promo_until": null,
@@ -922,12 +1554,41 @@
     {
      "needle": "480p at ${N} /sec, 720p",
      "expect": 0.08
+    },
+    {
+     "needle": "prompts with audio",
+     "phrase": true
+    },
+    {
+     "needle": "Cost scales linearly with duration",
+     "phrase": true
+    },
+    {
+     "needle": "No input images or references",
+     "phrase": true
     }
    ],
    "note": "Grok Imagine Video 1.5. The older Grok Imagine Video (v1) is $0.05/s at 480p and is not this model.",
    "id": "r024",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video"
+   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
+   "variation": {
+    "audio": "with",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": false,
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -945,12 +1606,37 @@
     {
      "needle": "standard rates are ${X} , ${N} , and ${X} per second at 480p , 768p , and 1080p",
      "expect": 0.08
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
     }
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r179",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -968,12 +1654,37 @@
     {
      "needle": "standard rates are ${X} , ${X} , and ${N} per second at 480p , 768p , and 1080p",
      "expect": 0.16
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
     }
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r180",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -991,12 +1702,37 @@
     {
      "needle": "standard rates are ${X} , ${N} , and ${X} per second at 480p , 768p , and 1080p",
      "expect": 0.04
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
     }
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r184",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1014,12 +1750,37 @@
     {
      "needle": "standard rates are ${X} , ${X} , and ${N} per second at 480p , 768p , and 1080p",
      "expect": 0.08
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
     }
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r185",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video"
+   "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1037,6 +1798,14 @@
     {
      "needle": "get 30% off standard rates: ${N} at 480p",
      "expect": 0.035
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
     }
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
@@ -1046,7 +1815,24 @@
    "list_usd_per_second": 0.05,
    "deal_ids": [
     "fal-minimax-h3-30-nov"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1064,6 +1850,14 @@
     {
      "needle": "get 30% off standard rates: ${X} at 480p , ${N} at 768p",
      "expect": 0.056
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
     }
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
@@ -1073,7 +1867,24 @@
    "list_usd_per_second": 0.08,
    "deal_ids": [
     "fal-minimax-h3-30-nov"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1091,6 +1902,14 @@
     {
      "needle": "get 30% off standard rates: ${X} at 480p , ${X} at 768p , and ${N} at 1080p",
      "expect": 0.112
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "Text to Video",
+     "phrase": true
     }
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
@@ -1100,7 +1919,24 @@
    "list_usd_per_second": 0.16,
    "deal_ids": [
     "fal-minimax-h3-30-nov"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1118,6 +1954,14 @@
     {
      "needle": "get 30% off standard rates: ${N} at 480p",
      "expect": 0.0175
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
     }
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
@@ -1127,7 +1971,24 @@
    "list_usd_per_second": 0.025,
    "deal_ids": [
     "fal-minimax-h3-30-nov"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1145,6 +2006,14 @@
     {
      "needle": "get 30% off standard rates: ${X} at 480p , ${N} at 768p",
      "expect": 0.028
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
     }
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
@@ -1154,7 +2023,24 @@
    "list_usd_per_second": 0.04,
    "deal_ids": [
     "fal-minimax-h3-30-nov"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1172,6 +2058,14 @@
     {
      "needle": "get 30% off standard rates: ${X} at 480p , ${X} at 768p , and ${N} at 1080p",
      "expect": 0.056
+    },
+    {
+     "needle": "Billing is calculated per second of video generated",
+     "phrase": true
+    },
+    {
+     "needle": "text-to-video",
+     "phrase": true
     }
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
@@ -1181,7 +2075,24 @@
    "list_usd_per_second": 0.08,
    "deal_ids": [
     "fal-minimax-h3-30-nov"
-   ]
+   ],
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "grok-imagine",
@@ -1189,7 +2100,7 @@
    "platform": "fal",
    "kind": "api",
    "resolution": "720p",
-   "audio": null,
+   "audio": true,
    "usd_per_second": 0.14,
    "status": "verified",
    "promo_until": null,
@@ -1199,12 +2110,41 @@
     {
      "needle": "720p at ${N} /sec, 1080p",
      "expect": 0.14
+    },
+    {
+     "needle": "prompts with audio",
+     "phrase": true
+    },
+    {
+     "needle": "Cost scales linearly with duration",
+     "phrase": true
+    },
+    {
+     "needle": "No input images or references",
+     "phrase": true
     }
    ],
    "note": "Grok Imagine Video 1.5.",
    "id": "r189",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video"
+   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
+   "variation": {
+    "audio": "with",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": false,
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "grok-imagine",
@@ -1212,7 +2152,7 @@
    "platform": "fal",
    "kind": "api",
    "resolution": "1080p",
-   "audio": null,
+   "audio": true,
    "usd_per_second": 0.25,
    "status": "verified",
    "promo_until": null,
@@ -1222,12 +2162,41 @@
     {
      "needle": "1080p at ${N} /sec",
      "expect": 0.25
+    },
+    {
+     "needle": "prompts with audio",
+     "phrase": true
+    },
+    {
+     "needle": "Cost scales linearly with duration",
+     "phrase": true
+    },
+    {
+     "needle": "No input images or references",
+     "phrase": true
     }
    ],
    "note": "Grok Imagine Video 1.5.",
    "id": "r190",
    "checked": "2026-11-04",
-   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video"
+   "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
+   "variation": {
+    "audio": "with",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": false,
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -1245,12 +2214,42 @@
     {
      "needle": "480p: ${N} per second",
      "expect": 0.05
+    },
+    {
+     "needle": "Text to video",
+     "phrase": true
+    },
+    {
+     "needle": "Image to video",
+     "phrase": true
+    },
+    {
+     "needle": "from 2 to 30",
+     "phrase": true
     }
    ],
    "note": "Replicate's pricing page banner says 'Wan 3.0 is 30% off this week' - discount not shown on the model page, so not applied.",
    "id": "r025",
    "checked": "2026-11-04",
-   "source_url": "https://replicate.com/alibaba/wan-3"
+   "source_url": "https://replicate.com/alibaba/wan-3",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v",
+     "i2v"
+    ],
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -1268,12 +2267,42 @@
     {
      "needle": "720p: ${N} per second",
      "expect": 0.1
+    },
+    {
+     "needle": "Text to video",
+     "phrase": true
+    },
+    {
+     "needle": "Image to video",
+     "phrase": true
+    },
+    {
+     "needle": "from 2 to 30",
+     "phrase": true
     }
    ],
    "note": "Replicate's pricing page banner says 'Wan 3.0 is 30% off this week' - discount not shown on the model page, so not applied.",
    "id": "r026",
    "checked": "2026-11-04",
-   "source_url": "https://replicate.com/alibaba/wan-3"
+   "source_url": "https://replicate.com/alibaba/wan-3",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v",
+     "i2v"
+    ],
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -1291,12 +2320,42 @@
     {
      "needle": "1080p: ${N} per second",
      "expect": 0.2
+    },
+    {
+     "needle": "Text to video",
+     "phrase": true
+    },
+    {
+     "needle": "Image to video",
+     "phrase": true
+    },
+    {
+     "needle": "from 2 to 30",
+     "phrase": true
     }
    ],
    "note": "Replicate's pricing page banner says 'Wan 3.0 is 30% off this week' - discount not shown on the model page, so not applied.",
    "id": "r027",
    "checked": "2026-11-04",
-   "source_url": "https://replicate.com/alibaba/wan-3"
+   "source_url": "https://replicate.com/alibaba/wan-3",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v",
+     "i2v"
+    ],
+    "duration": {
+     "min_seconds": 2,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -1314,12 +2373,31 @@
     {
      "needle": "wan3 (480p) {N} credits",
      "expect": 5
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r028",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -1337,12 +2415,31 @@
     {
      "needle": "wan3 (720p) {N} credits",
      "expect": 10
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r029",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -1360,12 +2457,31 @@
     {
      "needle": "wan3 (1080p) {N} credits",
      "expect": 20
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r030",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -1383,12 +2499,31 @@
     {
      "needle": "wan3_prime (480p) {N} credits",
      "expect": 6.8
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r031",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -1406,12 +2541,31 @@
     {
      "needle": "wan3_prime (720p) {N} credits",
      "expect": 14
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r032",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -1429,12 +2583,31 @@
     {
      "needle": "wan3_prime (1080p) {N} credits",
      "expect": 28
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r033",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -1452,12 +2625,31 @@
     {
      "needle": "kling3.0_standard (no audio) {N} credits",
      "expect": 9
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r034",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -1475,12 +2667,31 @@
     {
      "needle": "kling3.0_standard (audio) {N} credits",
      "expect": 13
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r035",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -1498,12 +2709,31 @@
     {
      "needle": "kling3.0_pro (no audio) {N} credits",
      "expect": 12
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r036",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -1521,12 +2751,31 @@
     {
      "needle": "kling3.0_pro (audio) {N} credits",
      "expect": 17
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r037",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -1544,12 +2793,31 @@
     {
      "needle": "kling3.0_4k {N} credits",
      "expect": 43
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r038",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -1557,7 +2825,7 @@
    "platform": "Runway API",
    "kind": "api",
    "resolution": "480p",
-   "audio": true,
+   "audio": null,
    "usd_per_second": 0.2,
    "status": "verified",
    "promo_until": null,
@@ -1567,12 +2835,52 @@
     {
      "needle": "seedance2_5 (480p) {N} credits",
      "expect": 20
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "per second of input and reference video",
+     "phrase": true
+    },
+    {
+     "needle": "plus 10 credits per second of input and reference video",
+     "phrase": true
+    },
+    {
+     "needle": "80 credit minimum per generation",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. 80-credit ($0.80) minimum per generation; input/reference video billed extra.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r039",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 10 credits per second of input and reference video",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "80 credit minimum per generation",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "seedance-2-5",
@@ -1580,7 +2888,7 @@
    "platform": "Runway API",
    "kind": "api",
    "resolution": "720p",
-   "audio": true,
+   "audio": null,
    "usd_per_second": 0.3,
    "status": "verified",
    "promo_until": null,
@@ -1590,12 +2898,52 @@
     {
      "needle": "seedance2_5 (720p) {N} credits",
      "expect": 30
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "per second of input and reference video",
+     "phrase": true
+    },
+    {
+     "needle": "plus 15 credits per second of input and reference video",
+     "phrase": true
+    },
+    {
+     "needle": "80 credit minimum per generation",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. 80-credit ($0.80) minimum per generation; input/reference video billed extra.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r040",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 15 credits per second of input and reference video",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "80 credit minimum per generation",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "seedance-2-5",
@@ -1603,7 +2951,7 @@
    "platform": "Runway API",
    "kind": "api",
    "resolution": "1080p",
-   "audio": true,
+   "audio": null,
    "usd_per_second": 0.68,
    "status": "verified",
    "promo_until": null,
@@ -1613,12 +2961,52 @@
     {
      "needle": "seedance2_5 (1080p) {N} credits",
      "expect": 68
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "per second of input and reference video",
+     "phrase": true
+    },
+    {
+     "needle": "plus 34 credits per second of input and reference video",
+     "phrase": true
+    },
+    {
+     "needle": "80 credit minimum per generation",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. 80-credit ($0.80) minimum per generation; input/reference video billed extra.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r041",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 34 credits per second of input and reference video",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "80 credit minimum per generation",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "veo-3-1",
@@ -1636,12 +3024,31 @@
     {
      "needle": "veo3.1 (audio) {N} credits",
      "expect": 40
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r042",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -1659,12 +3066,31 @@
     {
      "needle": "veo3.1 (no audio) {N} credits",
      "expect": 20
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r043",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -1682,12 +3108,31 @@
     {
      "needle": "veo3.1_fast (audio) {N} credits",
      "expect": 15
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r044",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -1705,12 +3150,31 @@
     {
      "needle": "veo3.1_fast (no audio) {N} credits",
      "expect": 10
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r045",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "runway-gen-4",
@@ -1728,12 +3192,31 @@
     {
      "needle": "gen4.5 {N} credits",
      "expect": 12
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r046",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "runway-gen-4",
@@ -1751,12 +3234,31 @@
     {
      "needle": "gen4_turbo {N} credits",
      "expect": 5
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r047",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1774,12 +3276,52 @@
     {
      "needle": "hailuo3 (768P) {N} credits",
      "expect": 10
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "reference image",
+     "phrase": true
+    },
+    {
+     "needle": "2 credits per reference image",
+     "phrase": true
+    },
+    {
+     "needle": "reference video billed at the same per-second rate as output (capped at 15 seconds)",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +2 credits per reference image/start frame.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r048",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 2 credits per reference image or keyframe",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "reference video billed at the same per-second rate as output (capped at 15 seconds)",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1797,12 +3339,52 @@
     {
      "needle": "hailuo3 (2K) {N} credits",
      "expect": 15
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "reference image",
+     "phrase": true
+    },
+    {
+     "needle": "2 credits per reference image",
+     "phrase": true
+    },
+    {
+     "needle": "reference video billed at the same per-second rate as output (capped at 15 seconds)",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +2 credits per reference image/start frame.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r049",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 2 credits per reference image or keyframe",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "reference video billed at the same per-second rate as output (capped at 15 seconds)",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1820,12 +3402,31 @@
     {
      "needle": "h3_max (480p) {N} credits",
      "expect": 5
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r050",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -1843,12 +3444,31 @@
     {
      "needle": "h3_max (768p) {N} credits",
      "expect": 8
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r051",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "grok-imagine",
@@ -1866,12 +3486,44 @@
     {
      "needle": "grok_imagine_1_5 (480p) {N} credits",
      "expect": 10
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "image or audio reference",
+     "phrase": true
+    },
+    {
+     "needle": "1 credit per image or audio reference",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +1 credit per image/audio reference.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r052",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 1 credit per image or audio reference",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "grok-imagine",
@@ -1889,12 +3541,44 @@
     {
      "needle": "grok_imagine_1_5 (720p) {N} credits",
      "expect": 16
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "image or audio reference",
+     "phrase": true
+    },
+    {
+     "needle": "1 credit per image or audio reference",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +1 credit per image/audio reference.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r053",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 1 credit per image or audio reference",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "grok-imagine",
@@ -1912,12 +3596,44 @@
     {
      "needle": "grok_imagine_1_5 (1080p) {N} credits",
      "expect": 29
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "image or audio reference",
+     "phrase": true
+    },
+    {
+     "needle": "1 credit per image or audio reference",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +1 credit per image/audio reference.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r054",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 1 credit per image or audio reference",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "grok-imagine",
@@ -1935,12 +3651,44 @@
     {
      "needle": "grok_imagine_1_5_lite (480p) {N} credits",
      "expect": 2
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "image or audio reference",
+     "phrase": true
+    },
+    {
+     "needle": "1 credit per image or audio reference",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +1 credit per image/audio reference.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r055",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 1 credit per image or audio reference",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "grok-imagine",
@@ -1958,12 +3706,44 @@
     {
      "needle": "grok_imagine_1_5_lite (720p) {N} credits",
      "expect": 3
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "image or audio reference",
+     "phrase": true
+    },
+    {
+     "needle": "1 credit per image or audio reference",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +1 credit per image/audio reference.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r056",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 1 credit per image or audio reference",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "gemini-omni-flash",
@@ -1981,12 +3761,48 @@
     {
      "needle": "gemini_omni_flash_1.1 (720p) {N} credits",
      "expect": 10
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "1 credit per reference image",
+     "phrase": true
+    },
+    {
+     "needle": "and 1 credit per second of input video",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +1 credit per reference image.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r057",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 1 credit per reference image",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "and 1 credit per second of input video",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "gemini-omni-flash",
@@ -2004,12 +3820,48 @@
     {
      "needle": "gemini_omni_flash_1.1 (1080p) {N} credits",
      "expect": 15
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "1 credit per reference image",
+     "phrase": true
+    },
+    {
+     "needle": "and 1 credit per second of input video",
+     "phrase": true
     }
    ],
-   "note": "Runway credits are $0.01 each. +1 credit per reference image.",
+   "note": "Runway credits are $0.01 each.",
    "id": "r058",
    "checked": "2026-11-04",
-   "source_url": "https://docs.dev.runwayml.com/guides/pricing/"
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 1 credit per reference image",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "and 1 credit per second of input video",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
   },
   {
    "model": "kling-3-0",
@@ -2032,7 +3884,22 @@
    "note": "Official Kling resource-package rate.",
    "id": "r059",
    "checked": "2026-11-04",
-   "source_url": "https://kling.ai/document-api/pricing/base/video.md"
+   "source_url": "https://kling.ai/document-api/pricing/base/video.md",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -2055,7 +3922,22 @@
    "note": "Official Kling resource-package rate.",
    "id": "r060",
    "checked": "2026-11-04",
-   "source_url": "https://kling.ai/document-api/pricing/base/video.md"
+   "source_url": "https://kling.ai/document-api/pricing/base/video.md",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -2078,7 +3960,22 @@
    "note": "Official Kling resource-package rate.",
    "id": "r061",
    "checked": "2026-11-04",
-   "source_url": "https://kling.ai/document-api/pricing/base/video.md"
+   "source_url": "https://kling.ai/document-api/pricing/base/video.md",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": false,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -2101,7 +3998,22 @@
    "note": "Official Kling resource-package rate.",
    "id": "r062",
    "checked": "2026-11-04",
-   "source_url": "https://kling.ai/document-api/pricing/base/video.md"
+   "source_url": "https://kling.ai/document-api/pricing/base/video.md",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -2124,7 +4036,22 @@
    "note": "Official Kling resource-package rate.",
    "id": "r063",
    "checked": "2026-11-04",
-   "source_url": "https://kling.ai/document-api/pricing/base/video.md"
+   "source_url": "https://kling.ai/document-api/pricing/base/video.md",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -2147,7 +4074,22 @@
    "note": "Official Kling resource-package rate.",
    "id": "r064",
    "checked": "2026-11-04",
-   "source_url": "https://kling.ai/document-api/pricing/base/video.md"
+   "source_url": "https://kling.ai/document-api/pricing/base/video.md",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -2170,7 +4112,22 @@
    "note": "Official Kling resource-package rate.",
    "id": "r065",
    "checked": "2026-11-04",
-   "source_url": "https://kling.ai/document-api/pricing/base/video.md"
+   "source_url": "https://kling.ai/document-api/pricing/base/video.md",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -2194,7 +4151,22 @@
    "id": "r066",
    "checked": "2026-10-23",
    "source_url": "https://ai.google.dev/gemini-api/docs/veo",
-   "discontinued_on": "2026-10-22"
+   "discontinued_on": "2026-10-22",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -2210,7 +4182,7 @@
    "math": null,
    "checks": [
     {
-     "needle": "(720p and 1080p) ${N} (4k)",
+     "needle": "Veo 3.1 Standard video with audio price (default) Not available {X} (720p and 1080p) ${N} (4k)",
      "expect": 0.6
     }
    ],
@@ -2218,7 +4190,22 @@
    "id": "r067",
    "checked": "2026-10-23",
    "source_url": "https://ai.google.dev/gemini-api/docs/veo",
-   "discontinued_on": "2026-10-22"
+   "discontinued_on": "2026-10-22",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -2242,7 +4229,22 @@
    "id": "r068",
    "checked": "2026-10-23",
    "source_url": "https://ai.google.dev/gemini-api/docs/veo",
-   "discontinued_on": "2026-10-22"
+   "discontinued_on": "2026-10-22",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -2266,7 +4268,22 @@
    "id": "r069",
    "checked": "2026-10-23",
    "source_url": "https://ai.google.dev/gemini-api/docs/veo",
-   "discontinued_on": "2026-10-22"
+   "discontinued_on": "2026-10-22",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -2290,7 +4307,22 @@
    "id": "r070",
    "checked": "2026-10-23",
    "source_url": "https://ai.google.dev/gemini-api/docs/veo",
-   "discontinued_on": "2026-10-22"
+   "discontinued_on": "2026-10-22",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -2314,7 +4346,22 @@
    "id": "r071",
    "checked": "2026-10-23",
    "source_url": "https://ai.google.dev/gemini-api/docs/veo",
-   "discontinued_on": "2026-10-22"
+   "discontinued_on": "2026-10-22",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "gemini-omni-flash",
@@ -2332,12 +4379,31 @@
     {
      "needle": "effective price of approximately ${N} per second",
      "expect": 0.1
+    },
+    {
+     "needle": "approximately $0.10 per second",
+     "phrase": true
     }
    ],
    "note": "Token-billed; Google states 'approximately $0.10 per second' of 720p.",
    "id": "r072",
    "checked": "2026-11-04",
-   "source_url": "https://ai.google.dev/gemini-api/docs/pricing"
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -2355,12 +4421,33 @@
     {
      "needle": "480p Estimated → /s (estimated) ${N}",
      "expect": 0.1397
+    },
+    {
+     "needle": "Seedance 2.5 Text-to-Video",
+     "phrase": true
     }
    ],
    "note": "Atlas labels these '(estimated)': billed on actual video tokens.",
    "id": "r073",
    "checked": "2026-11-04",
-   "source_url": "https://www.atlascloud.ai/pricing"
+   "source_url": "https://www.atlascloud.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -2378,12 +4465,33 @@
     {
      "needle": "720p Estimated → /s (estimated) ${N}",
      "expect": 0.3005
+    },
+    {
+     "needle": "Seedance 2.5 Text-to-Video",
+     "phrase": true
     }
    ],
    "note": "Atlas labels these '(estimated)': billed on actual video tokens.",
    "id": "r074",
    "checked": "2026-11-04",
-   "source_url": "https://www.atlascloud.ai/pricing"
+   "source_url": "https://www.atlascloud.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -2401,12 +4509,33 @@
     {
      "needle": "1080p Estimated → /s (estimated) ${N}",
      "expect": 0.5914
+    },
+    {
+     "needle": "Seedance 2.5 Text-to-Video",
+     "phrase": true
     }
    ],
    "note": "Atlas labels these '(estimated)': billed on actual video tokens.",
    "id": "r075",
    "checked": "2026-11-04",
-   "source_url": "https://www.atlascloud.ai/pricing"
+   "source_url": "https://www.atlascloud.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -2429,7 +4558,24 @@
    "note": "",
    "id": "r076",
    "checked": "2026-11-04",
-   "source_url": "https://www.atlascloud.ai/pricing"
+   "source_url": "https://www.atlascloud.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "gemini-omni-flash",
@@ -2452,7 +4598,24 @@
    "note": "",
    "id": "r077",
    "checked": "2026-11-04",
-   "source_url": "https://www.atlascloud.ai/pricing"
+   "source_url": "https://www.atlascloud.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v"
+    ],
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2480,7 +4643,22 @@
    "note": "",
    "id": "r078",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2508,7 +4686,22 @@
    "note": "",
    "id": "r079",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2536,7 +4729,22 @@
    "note": "",
    "id": "r080",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2564,7 +4772,22 @@
    "note": "",
    "id": "r081",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2592,7 +4815,22 @@
    "note": "",
    "id": "r082",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2620,7 +4858,22 @@
    "note": "",
    "id": "r083",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2648,7 +4901,22 @@
    "note": "",
    "id": "r084",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2676,7 +4944,22 @@
    "note": "",
    "id": "r085",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2704,7 +4987,22 @@
    "note": "",
    "id": "r086",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2732,7 +5030,22 @@
    "note": "",
    "id": "r087",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2760,7 +5073,22 @@
    "note": "",
    "id": "r088",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2788,7 +5116,22 @@
    "note": "",
    "id": "r089",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2816,7 +5159,22 @@
    "note": "",
    "id": "r090",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2844,7 +5202,22 @@
    "note": "",
    "id": "r091",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -2872,7 +5245,22 @@
    "note": "",
    "id": "r092",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -2900,7 +5288,22 @@
    "note": "",
    "id": "r093",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -2928,7 +5331,22 @@
    "note": "",
    "id": "r094",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -2956,7 +5374,22 @@
    "note": "",
    "id": "r095",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -2984,7 +5417,22 @@
    "note": "",
    "id": "r096",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3012,7 +5460,22 @@
    "note": "",
    "id": "r097",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3040,7 +5503,22 @@
    "note": "",
    "id": "r098",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3068,7 +5546,22 @@
    "note": "",
    "id": "r099",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3096,7 +5589,22 @@
    "note": "",
    "id": "r100",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3124,7 +5632,22 @@
    "note": "",
    "id": "r101",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3152,7 +5675,22 @@
    "note": "",
    "id": "r102",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3180,7 +5718,22 @@
    "note": "",
    "id": "r103",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3208,7 +5761,22 @@
    "note": "",
    "id": "r104",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3236,7 +5804,22 @@
    "note": "",
    "id": "r105",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3264,7 +5847,22 @@
    "note": "",
    "id": "r106",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -3292,7 +5890,22 @@
    "note": "",
    "id": "r107",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3320,7 +5933,22 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r108",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3348,7 +5976,22 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r109",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3376,7 +6019,22 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r110",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3404,7 +6062,22 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r111",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3432,7 +6105,22 @@
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r112",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3460,7 +6148,22 @@
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r113",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3488,7 +6191,22 @@
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r114",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3516,7 +6234,22 @@
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r115",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3544,7 +6277,22 @@
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r116",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3572,7 +6320,22 @@
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r117",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3600,7 +6363,22 @@
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r118",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3628,7 +6406,22 @@
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r119",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -3656,7 +6449,22 @@
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r120",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -3684,7 +6492,22 @@
    "note": "",
    "id": "r121",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -3712,7 +6535,22 @@
    "note": "",
    "id": "r122",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -3740,7 +6578,22 @@
    "note": "",
    "id": "r123",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -3768,7 +6621,22 @@
    "note": "",
    "id": "r124",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -3796,7 +6664,22 @@
    "note": "",
    "id": "r125",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -3824,7 +6707,22 @@
    "note": "",
    "id": "r126",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -3852,7 +6750,22 @@
    "note": "",
    "id": "r127",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -3880,7 +6793,22 @@
    "note": "",
    "id": "r128",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -3908,7 +6836,22 @@
    "note": "",
    "id": "r129",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 6,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -3936,7 +6879,22 @@
    "note": "",
    "id": "r130",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 6,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -3964,7 +6922,22 @@
    "note": "",
    "id": "r131",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 6,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -3992,7 +6965,22 @@
    "note": "",
    "id": "r132",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 6,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -4020,7 +7008,22 @@
    "note": "",
    "id": "r133",
    "checked": "2026-11-04",
-   "source_url": "https://higgsfield.ai/pricing"
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 6,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -4048,7 +7051,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r134",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -4076,7 +7094,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r135",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0-prime",
@@ -4104,7 +7137,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r136",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -4132,7 +7180,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r137",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -4160,7 +7223,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r138",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "wan-3-0",
@@ -4188,7 +7266,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r139",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -4216,7 +7309,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r140",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 3,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -4244,7 +7352,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r141",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 3,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -4272,7 +7395,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r142",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 3,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -4300,7 +7438,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r143",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -4328,7 +7481,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r144",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -4356,7 +7524,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r145",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -4384,7 +7567,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r146",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -4412,7 +7610,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r147",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -4440,7 +7653,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r148",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -4468,7 +7696,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r149",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 6,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -4496,7 +7739,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r150",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 6,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -4524,7 +7782,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r151",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 6,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -4552,7 +7825,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r152",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -4580,7 +7868,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r153",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -4608,7 +7911,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r154",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "runway-gen-4",
@@ -4636,7 +7954,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r155",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "runway-gen-4",
@@ -4664,7 +7997,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r156",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "runway-gen-4",
@@ -4692,7 +8040,22 @@
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r157",
    "checked": "2026-11-04",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 2,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -4720,7 +8083,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r158",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -4748,7 +8126,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r159",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "kling-3-0",
@@ -4776,7 +8169,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r160",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -4804,7 +8212,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r161",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -4832,7 +8255,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r162",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -4860,7 +8298,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r163",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -4888,7 +8341,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r164",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -4916,7 +8384,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r165",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -4944,7 +8427,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r166",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -4972,7 +8470,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r167",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -5000,7 +8513,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r168",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "seedance-2-5",
@@ -5028,7 +8556,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r169",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -5056,7 +8599,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r170",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -5084,7 +8642,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r171",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "veo-3-1",
@@ -5112,7 +8685,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r172",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 4,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "gemini-omni-flash",
@@ -5140,7 +8728,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r173",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 3,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "gemini-omni-flash",
@@ -5168,7 +8771,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r174",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 3,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "gemini-omni-flash",
@@ -5196,7 +8814,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r175",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 3,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -5224,7 +8857,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r176",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -5252,7 +8900,22 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r177",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   },
   {
    "model": "minimax-hailuo",
@@ -5280,7 +8943,118 @@
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r178",
    "checked": "2026-11-04",
-   "source_url": "https://www.magnific.com/pricing"
+   "source_url": "https://www.magnific.com/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "veo-3-1",
+   "variant": "Standard, no audio",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "4K",
+   "audio": false,
+   "usd_per_second": 0.4,
+   "status": "verified",
+   "promo_until": null,
+   "source": "fal_veo31",
+   "math": null,
+   "checks": [
+    {
+     "needle": "At 4k, you will be charged ${N} per second without audio",
+     "expect": 0.4
+    },
+    {
+     "needle": "without audio or $0.40 with audio",
+     "phrase": true
+    },
+    {
+     "needle": "up to 8 seconds of video",
+     "phrase": true
+    }
+   ],
+   "note": "fal states the 4K rate in the same sentence as the 720p/1080p rates.",
+   "id": "r197",
+   "checked": "2026-11-04",
+   "source_url": "https://fal.ai/models/fal-ai/veo3.1",
+   "variation": {
+    "audio": "without",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 8,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "veo-3-1",
+   "variant": "Standard, with audio",
+   "platform": "fal",
+   "kind": "api",
+   "resolution": "4K",
+   "audio": true,
+   "usd_per_second": 0.6,
+   "status": "verified",
+   "promo_until": null,
+   "source": "fal_veo31",
+   "math": null,
+   "checks": [
+    {
+     "needle": "without audio, or ${N} with",
+     "expect": 0.6
+    },
+    {
+     "needle": "without audio or $0.40 with audio",
+     "phrase": true
+    },
+    {
+     "needle": "up to 8 seconds of video",
+     "phrase": true
+    },
+    {
+     "needle": "At 4k, you will be charged",
+     "phrase": true
+    }
+   ],
+   "note": "fal states the 4K rate in the same sentence as the 720p/1080p rates.",
+   "id": "r198",
+   "checked": "2026-11-04",
+   "source_url": "https://fal.ai/models/fal-ai/veo3.1",
+   "variation": {
+    "audio": "with",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 8,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": true,
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
   }
  ],
  "unverified": [
@@ -5313,5 +9087,20 @@
    "reason": "official API page lists per-second rates, but input video changes the billed duration, so no single $/s is in the table"
   }
  ],
- "last_full_check": "2026-11-04"
+ "last_full_check": "2026-11-04",
+ "variation_schema": {
+  "audio": "with, without, or not stated. A separate price for each is a separate row.",
+  "input": "not stated, or a list of t2v, i2v, ref2v, v2v, extend, lip-sync when the page names that mode for this price.",
+  "duration": {
+   "min_seconds": "number or not stated",
+   "max_seconds": "number or not stated",
+   "allowed_seconds": "list of seconds or not stated",
+   "priced_seconds": "the clip length this credit price is for, or not stated",
+   "rate_by_length": "not stated, or a list of {label, seconds, usd_per_second} copied from the page"
+  },
+  "audio_changes_price": "true, false, or not stated",
+  "length_changes_price": "true, false, or not stated",
+  "input_changes_price": "true, false, or not stated",
+  "modifiers": "not stated, or extra stated rates that are not the headline $/s"
+ }
 }

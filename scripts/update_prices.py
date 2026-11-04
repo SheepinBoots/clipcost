@@ -77,7 +77,13 @@ def parse(s):
     elif s.endswith("M"): mult, s = 1e6, s[:-1]
     return float(s) * mult
 
+def phrase_re(needle):
+    words = needle.split()
+    return re.compile(r"\s+".join(re.escape(w) for w in words)) if words else re.compile(r"$^")
+
 def check(text, chk):
+    if chk.get("phrase"):
+        return ("ok", chk.get("needle")) if phrase_re(chk.get("needle") or "").search(text) else ("missing", None)
     m = needle_re(chk["needle"]).search(text)
     if not m: return "missing", None
     v = parse(m.group(1))
@@ -164,6 +170,8 @@ def main():
             f = {"kind": kind, "id": it["id"], "source": it["source"], "status": st, "needle": chk["needle"],
                  "old": chk["expect"], "new": v, "model": it.get("model"), "platform": it.get("platform"), "variant": it.get("variant", it.get("plan"))}
             report["findings"].append(f)
+            if chk.get("phrase"):
+                continue
             if st == "changed" and a.apply and kind == "row" and it["kind"] == "api":
                 f["applied"] = True
                 row = next(r for r in db["rows"] if r["id"] == it["id"])
