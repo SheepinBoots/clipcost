@@ -4,6 +4,7 @@ import json, os, re, shutil, html, datetime, sys, email.utils, struct, hashlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
 import notify_indexnow
+import variations as variations
 import weekly_report
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
@@ -480,26 +481,79 @@ def shown_resolution(r):
     return res
 
 def shown_audio(r):
-    """on / off / not listed. False in the data is the vendor's audio-off rate."""
+    """with / without / not stated. Taken from variation when the page was re-read."""
+    stated = ((r.get("variation") or {}).get("audio"))
+    if stated in ("with", "without", "not stated"):
+        return stated
     if r.get("audio") is True:
-        return "on"
+        return "with"
     if r.get("audio") is False:
-        return "off"
-    return "not listed"
+        return "without"
+    return "not stated"
 
 def audio_phrase(r):
     word = shown_audio(r)
-    if word == "not listed":
-        return "not listed"
-    return "audio " + word
+    if word == "not stated":
+        return "not stated"
+    return word + " audio"
+
+def input_phrase(r):
+    stated = (r.get("variation") or {}).get("input")
+    if not stated or stated == "not stated":
+        return "not stated"
+    return ", ".join(variations.INPUT_LABELS.get(x, x) for x in stated)
+
+def length_phrase(r):
+    dur = ((r.get("variation") or {}).get("duration") or {})
+    rates = dur.get("rate_by_length")
+    if isinstance(rates, list) and rates:
+        return "; ".join(f"{tier['label']} {money(tier['usd_per_second'])}/s" for tier in rates)
+    priced = dur.get("priced_seconds")
+    if isinstance(priced, (int, float)) and not isinstance(priced, bool):
+        return f"priced at {priced:g}s"
+    lo, hi = dur.get("min_seconds"), dur.get("max_seconds")
+    if isinstance(lo, (int, float)) and isinstance(hi, (int, float)) and not isinstance(lo, bool):
+        return f"{lo:g}–{hi:g}s"
+    if isinstance(hi, (int, float)) and not isinstance(hi, bool):
+        return f"up to {hi:g}s"
+    if isinstance(lo, (int, float)) and not isinstance(lo, bool):
+        return f"from {lo:g}s"
+    return "not stated"
+
+def modifier_phrase(r):
+    mods = (r.get("variation") or {}).get("modifiers")
+    if not isinstance(mods, list) or not mods:
+        return ""
+    bits = []
+    for mod in mods:
+        usd = mod.get("usd_per_second")
+        if isinstance(usd, (int, float)) and not isinstance(usd, bool):
+            bits.append(f"{mod['label']} {money(usd)}/s")
+        else:
+            bits.append(mod["label"])
+    return "; ".join(bits)
+
+def fact_lines(r):
+    """Audio, input, and length. Not-stated stays visible so a blank is not a guess."""
+    extra = modifier_phrase(r)
+    also = f'<div class="small">Also: {e(extra)}</div>' if extra else ""
+    return (
+        f'{e(audio_phrase(r))}'
+        f'<div class="small">Input: {e(input_phrase(r))}</div>'
+        f'<div class="small">Length: {e(length_phrase(r))}</div>'
+        f'{also}'
+    )
 
 def spec_phrase(r):
-    aud = shown_audio(r)
-    aud_bit = "audio not listed" if aud == "not listed" else f"audio {aud}"
     tier = shown_tier(r)
     # "Pro tier" already ends in tier. Prefixing it reads as "plan tier Pro tier".
     tier_bit = tier if tier.lower().endswith("tier") else f"plan tier {tier}"
-    return f"{tier_bit}, resolution {shown_resolution(r)}, {aud_bit}"
+    bits = [tier_bit, f"resolution {shown_resolution(r)}", audio_phrase(r)]
+    if input_phrase(r) != "not stated":
+        bits.append("input " + input_phrase(r))
+    if length_phrase(r) != "not stated":
+        bits.append(length_phrase(r))
+    return ", ".join(bits)
 
 def assumption_text(r):
     """Usage assumption for a credit plan, or the vendor basis for a flagged estimate. Empty otherwise."""
@@ -528,7 +582,7 @@ def row_html(r, fmt=None):
     promo = f' <span class="small">until {r["promo_until"]}</span>' if r.get("promo_until") else ""
     disc = f' <span class="small">discontinued {e(r["discontinued_on"])}</span>' if r.get("discontinued_on") else ""
     return (f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(m)}</a></td><td>{plat_link(r["platform"], r["source_url"])}</td>'
-            f'<td>{e(r["variant"])}</td><td>{e(shown_tier(r))}</td><td>{e(shown_resolution(r))}</td><td>{e(audio_phrase(r))}</td>'
+            f'<td>{e(r["variant"])}</td><td>{e(shown_tier(r))}</td><td>{e(shown_resolution(r))}</td><td>{fact_lines(r)}</td>'
             f'<td class="num"><span class="amt">{show(r["usd_per_second"])}</span>{assumption_html(r)}</td>'
             f'<td>{tag(r["status"])}{promo}{deal_badges(r)}{disc}</td><td class="math">{extra}</td>'
             f'<td class="small"><a href="{html.escape(outbound(r["source_url"])[0])}" rel="{outbound(r["source_url"])[1]}" target="_blank">source</a><br>{r["checked"]}</td></tr>')
@@ -966,7 +1020,11 @@ function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfiel
 function plat(r){{const tracked=hf(r.source_url);if(tracked)return `<a href="${{esc(tracked)}}" rel="sponsored nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`;const a=AFF[r.platform];return a?`<a href="${{esc(a)}}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">${{esc(r.platform)}}</a>`:`<a href="${{esc(r.source_url)}}" rel="nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`}}
 function tierOf(r){{const name=String(r.plan_name||'').trim();if(name)return name;const res=String(r.resolution||'').trim();if(res==='Pro tier'||res==='Pro'||res==='Standard')return res;return 'not listed'}}
 function resOf(r){{const res=String(r.resolution||'').trim();if(!res||res==='—'||res==='-'||res==='–'||res==='Pro tier'||res==='Pro'||res==='Standard')return 'not listed';return res}}
-function audioOf(r){{if(r.audio===true)return 'audio on';if(r.audio===false)return 'audio off';return 'not listed'}}
+function audioOf(r){{const a=r.variation&&r.variation.audio;if(a==='with')return 'with audio';if(a==='without')return 'without audio';return 'not stated'}}
+function inputOf(r){{const inp=r.variation&&r.variation.input;const names={{t2v:'text-to-video',i2v:'image-to-video',ref2v:'reference',v2v:'video-to-video',extend:'extend','lip-sync':'lip-sync'}};if(!inp||inp==='not stated')return 'not stated';return inp.map(x=>names[x]||x).join(', ')}}
+function lengthOf(r){{const d=(r.variation&&r.variation.duration)||{{}};if(Array.isArray(d.rate_by_length))return d.rate_by_length.map(t=>t.label+' '+money(t.usd_per_second)+'/s').join('; ');if(typeof d.priced_seconds==='number')return 'priced at '+d.priced_seconds+'s';if(typeof d.min_seconds==='number'&&typeof d.max_seconds==='number')return d.min_seconds+'\u2013'+d.max_seconds+'s';if(typeof d.max_seconds==='number')return 'up to '+d.max_seconds+'s';if(typeof d.min_seconds==='number')return 'from '+d.min_seconds+'s';return 'not stated'}}
+function modifierOf(r){{const mods=r.variation&&r.variation.modifiers; if(!Array.isArray(mods)) return ''; return mods.map(m=>typeof m.usd_per_second==='number'?m.label+' '+money(m.usd_per_second)+'/s':m.label).join('; ')}}
+function factLines(r){{const also=modifierOf(r); return esc(audioOf(r))+'<div class="small">Input: '+esc(inputOf(r))+'</div><div class="small">Length: '+esc(lengthOf(r))+'</div>'+(also?'<div class="small">Also: '+esc(also)+'</div>':'')}}
 function assumptionOf(r){{if(r.kind==='plan')return r.status==='estimate'?'Estimate: assumes every credit you pay for is used':'Assumes every credit you pay for is used';if(r.status==='estimate'){{const note=String(r.note||'').trim();return note?'Estimate: '+note:'Estimate: the vendor marks this rate as approximate'}}return ''}}
 function render(){{
  const fm=$('fModel').value,fp=$('fPlat').value,fk=$('fKind').value,fr=$('fRes').value.trim().toLowerCase();
@@ -985,7 +1043,7 @@ function render(){{
   const src=hf(r.source_url),srcHref=src||r.source_url,srcRel=src?'sponsored nofollow noopener':'nofollow noopener';
   const assume=assumptionOf(r);
   const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
-  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{esc(r.variant)}}</td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{esc(audioOf(r))}}</td><td class="num"><span class="amt">${{money(r.usd_per_second)}}</span>${{assumeHtml}}</td><td>${{tag(r.status)}}${{promo}}${{badges}}${{disc}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
+  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{esc(r.variant)}}</td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{factLines(r)}}</td><td class="num"><span class="amt">${{money(r.usd_per_second)}}</span>${{assumeHtml}}</td><td>${{tag(r.status)}}${{promo}}${{badges}}${{disc}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
  $('count').textContent=rs.length+' rows';
  document.querySelectorAll('#prices th').forEach(th=>{{th.classList.remove('sorted-asc','sorted-desc');if(th.dataset.k==sortK)th.classList.add(dir>0?'sorted-asc':'sorted-desc')}});
  if(window.clipTick) clipTick();
@@ -1269,7 +1327,9 @@ def calc_rows_html(plan_id):
             f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a></td>'
             f'<td>{calc_lab("Plan tier", e(shown_tier(r)))}</td>'
             f'<td>{calc_lab("Resolution", e(shown_resolution(r)))}</td>'
-            f'<td>{calc_lab("Audio", e(audio_phrase(r)))}</td>'
+            f'<td>{calc_lab("Audio", e(audio_phrase(r)))}<div class="small">Input: {e(input_phrase(r))}</div><div class="small">Length: {e(length_phrase(r))}</div>'
+            + (f'<div class="small">Also: {e(modifier_phrase(r))}</div>' if modifier_phrase(r) else "")
+            + "</td>"
             f'<td>{calc_lab("Clip", str(r["clip_seconds"]) + "s")}</td>'
             f'<td>{calc_lab("Credits/clip", cred)}</td>'
             f'<td class="num">{calc_lab("Clips", grouped_int(clips))}</td>'
@@ -1306,6 +1366,12 @@ calc_ld = {
     "operatingSystem": "Web",
     "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
 }
+calc_res_opts = '<option value="">Any</option>' + "".join(
+    f'<option value="{e(res)}">{e(res)}</option>'
+    for res in dict.fromkeys(
+        shown_resolution(r) for r in rows if r.get("plan") == default_plan_id and not discontinued(r)
+    )
+)
 calc = f"""<h1>AI video credit calculator</h1>
 <p class="lead">{calc_lead}</p>
 <p>Pricing a finished video from dollars per second? Use the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a>.</p>
@@ -1313,7 +1379,12 @@ calc = f"""<h1>AI video credit calculator</h1>
 <label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px">{plan_opts}</select>
 <label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %
 <p class="small" id="usedMsg" role="status"></p>
+<label class="small" for="resPick">Resolution</label><br><select id="resPick" style="width:100%;margin:6px 0 8px">{calc_res_opts}</select>
+<label class="small" for="secs">Clip length (seconds)</label><br><input id="secs" type="number" min="1" step="1" placeholder="Any" style="width:100px">
+<label class="small" for="audioPick">Audio</label><br><select id="audioPick" style="width:100%;margin:6px 0"><option value="">Any</option><option value="with">with audio</option><option value="without">without audio</option></select>
+<label class="small" for="inputPick">Input</label><br><select id="inputPick" style="width:100%;margin:6px 0 8px"><option value="">Any</option><option value="t2v">text-to-video</option><option value="i2v">image-to-video</option><option value="ref2v">reference</option><option value="v2v">video-to-video</option><option value="extend">extend</option><option value="lip-sync">lip-sync</option></select>
 <label class="chk" style="margin-top:8px"><input type="checkbox" id="applyDeals"> apply today's deals</label>
+<p class="small" id="calcMsg"></p>
 <div id="dealBox" hidden>
 <label class="small" for="windowSecs">Seconds you'll make during an unlimited window</label><br>
 <input id="windowSecs" type="number" min="1" value="60" style="width:100px">
@@ -1338,7 +1409,10 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  const lab=(label,value)=>`<span class="lab">${{esc(label)}} </span>${{value}}`;
  function tierOf(r){{const name=String(r.plan_name||'').trim();if(name)return name;const res=String(r.resolution||'').trim();if(res==='Pro tier'||res==='Pro'||res==='Standard')return res;return 'not listed'}}
  function resOf(r){{const res=String(r.resolution||'').trim();if(!res||res==='—'||res==='-'||res==='–'||res==='Pro tier'||res==='Pro'||res==='Standard')return 'not listed';return res}}
- function audioOf(r){{if(r.audio===true)return 'audio on';if(r.audio===false)return 'audio off';return 'not listed'}}
+ function audioOf(r){{const a=r.variation&&r.variation.audio;if(a==='with')return 'with audio';if(a==='without')return 'without audio';return 'not stated'}}
+ function inputOf(r){{const inp=r.variation&&r.variation.input;const names={{t2v:'text-to-video',i2v:'image-to-video',ref2v:'reference',v2v:'video-to-video',extend:'extend','lip-sync':'lip-sync'}};if(!inp||inp==='not stated')return 'not stated';return inp.map(x=>names[x]||x).join(', ')}}
+ function lengthOf(r){{const d=(r.variation&&r.variation.duration)||{{}};if(Array.isArray(d.rate_by_length))return d.rate_by_length.map(t=>t.label+' '+money(t.usd_per_second)+'/s').join('; ');if(typeof d.priced_seconds==='number')return 'priced at '+d.priced_seconds+'s';if(typeof d.min_seconds==='number'&&typeof d.max_seconds==='number')return d.min_seconds+'\u2013'+d.max_seconds+'s';if(typeof d.max_seconds==='number')return 'up to '+d.max_seconds+'s';if(typeof d.min_seconds==='number')return 'from '+d.min_seconds+'s';return 'not stated'}}
+ function modifierOf(r){{const mods=r.variation&&r.variation.modifiers; if(!Array.isArray(mods)) return ''; return mods.map(m=>typeof m.usd_per_second==='number'?m.label+' '+money(m.usd_per_second)+'/s':m.label).join('; ')}}
  function assumptionOf(r){{if(r.kind==='plan')return r.status==='estimate'?'Estimate: assumes every credit you pay for is used':'Assumes every credit you pay for is used';if(r.status==='estimate'){{const note=String(r.note||'').trim();return note?'Estimate: '+note:'Estimate: the vendor marks this rate as approximate'}}return ''}}
  function clipCount(credits, per){{const raw=credits/per, nearest=Math.round(raw);return Math.abs(raw-nearest)<0.005?nearest:Math.floor(raw)}}
  function current(r){{const today=new Date().toISOString().slice(0,10);if(r.status==='discontinued')return false;if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
@@ -1360,6 +1434,24 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
     return true;
   }})||null;
  }}
+ function quoteRow(r, seconds, audio, inputType, resolution){{
+  const v=r.variation||{{}}, dur=v.duration||{{}};
+  if(resolution && String(r.resolution||'').toLowerCase().indexOf(String(resolution).toLowerCase())<0) return {{status:'not_offered'}};
+  if(audio){{const have=v.audio||'not stated'; if(have==='not stated') return {{status:'not_stated'}}; if(have!==audio) return {{status:'not_offered'}}}}
+  if(inputType){{const have=v.input; if(!have||have==='not stated') return {{status:'not_stated'}}; if(have.indexOf(inputType)<0) return {{status:'not_offered'}}}}
+  if(seconds==null) return {{status:'match'}};
+  if(Array.isArray(dur.rate_by_length)){{
+    const tier=dur.rate_by_length.find(t=>(t.seconds||[]).map(Number).indexOf(Number(seconds))>=0);
+    if(tier) return {{status:'match'}};
+    if((typeof dur.min_seconds==='number'&&seconds<dur.min_seconds)||(typeof dur.max_seconds==='number'&&seconds>dur.max_seconds)) return {{status:'not_offered'}};
+    return {{status:'not_stated'}};
+  }}
+  if((typeof dur.min_seconds==='number'&&seconds<dur.min_seconds)||(typeof dur.max_seconds==='number'&&seconds>dur.max_seconds)) return {{status:'not_offered'}};
+  if(v.length_changes_price===false) return {{status:'match'}};
+  if(typeof dur.priced_seconds==='number') return Number(seconds)===Number(dur.priced_seconds)?{{status:'match'}}:{{status:'not_stated'}};
+  return {{status:'not_stated'}};
+ }}
+ let picksRead=false;
  function go(){{const k=$('plan').value,p=d.plans[k],u=readUsed();
   const map=$('applyDeals').checked?DEALMAP[k]:null;
   const price=map&&map.price!=null?map.price:p.usd_month;
@@ -1373,12 +1465,32 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   const srcRel=tracked?'sponsored nofollow noopener':'nofollow noopener';
   $('pLink').innerHTML=`<a class="btn" href="${{esc(href)}}" rel="${{rel}}" target="_blank">See ${{esc(p.platform)}} plans</a> <a class="small" href="${{esc(tracked||p.source_url)}}" rel="${{srcRel}}" target="_blank">source</a>`;
   const rsAll=d.rows.filter(r=>r.plan==k&&current(r));
+  const resVals=[''].concat([...new Set(rsAll.map(r=>resOf(r)))]);
+  const have=[...$('resPick').options].map(o=>o.value);
+  const keep=$('resPick').value;
+  if(have.join('|')!==resVals.join('|')) $('resPick').innerHTML=resVals.map(v=>`<option value="${{esc(v)}}">${{v?esc(v):'Any'}}</option>`).join('');
+  if(!picksRead){{picksRead=true; const qs=new URLSearchParams(location.search); if(qs.get('seconds')) $('secs').value=qs.get('seconds'); if(qs.get('audio')) $('audioPick').value=qs.get('audio'); if(qs.get('input')) $('inputPick').value=qs.get('input'); if(qs.get('res')&&resVals.indexOf(qs.get('res'))>=0) $('resPick').value=qs.get('res');}}
+  else if(resVals.indexOf(keep)>=0) $('resPick').value=keep;
   const anyUn=!!(map&&map.unlimited&&map.unlimited.length&&rsAll.some(r=>unlimitedHit(map,r)));
   $('dealBox').hidden=!anyUn;
   if(anyUn) $('dealEff').textContent='Effective $/s for an unlimited window is the plan price divided by the seconds you make. It is not $0.';
   if(u==null){{$('ct').querySelector('tbody').innerHTML='<tr><td colspan="9">Enter a whole number from 1 to 100.</td></tr>';return}}
   const secs=Math.max(1, Number($('windowSecs').value)||1);
-  const rs=rsAll.slice().sort((a,b)=>a.usd_per_second-b.usd_per_second);
+  const rawClip=String($('secs').value||'').trim();
+  const clipSecs=rawClip===''?null:Math.max(1, Math.round(Number(rawClip))||1);
+  const wantRes=$('resPick').value, wantAudio=$('audioPick').value, wantInput=$('inputPick').value;
+  const judged=rsAll.map(r=>({{r, q:quoteRow(r, clipSecs, wantAudio, wantInput, wantRes)}}));
+  const stated=judged.filter(x=>x.q.status==='not_stated').length, missed=judged.filter(x=>x.q.status==='not_offered').length;
+  const rs=judged.filter(x=>x.q.status==='match').map(x=>x.r).sort((a,b)=>a.usd_per_second-b.usd_per_second);
+  let msg='';
+  if(!rs.length) msg='That combination is not offered, or the page does not state it, for this plan.';
+  else {{
+    const bits=[];
+    if(stated) bits.push(stated+(stated===1?' row does':' rows do')+' not state this combination, so they are not priced.');
+    if(missed) bits.push(missed+(missed===1?' row offers':' rows offer')+' a different combination.');
+    msg=bits.join(' ');
+  }}
+  $('calcMsg').textContent=msg;
   $('ct').querySelector('tbody').innerHTML=rs.map(r=>{{const clips=clipCount(credits*u,r.credits_per_clip);const unit=price/credits;const pc=unit*r.credits_per_clip/u;
    const priceCell=clips>0?clipMoney(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
    let extra='';
@@ -1394,10 +1506,15 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
    const assume=assumptionOf(r);
    const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
    const cred=(r.status=='estimate'?'~':'')+(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0);
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
-  history.replaceState(null,'','?plan='+k);}}
+   const also=modifierOf(r);
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}<div class="small">Input: ${{esc(inputOf(r))}}</div><div class="small">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="small">Also: '+esc(also)+'</div>':''}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
+  const q=new URLSearchParams(); q.set('plan', k);
+  if(wantRes) q.set('res', wantRes); if(clipSecs!=null) q.set('seconds', String(clipSecs)); if(wantAudio) q.set('audio', wantAudio); if(wantInput) q.set('input', wantInput);
+  history.replaceState(null,'','?'+q);}}
  $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
- $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);go();}});
+ $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);
+ $('resPick').addEventListener('input',go);$('secs').addEventListener('input',go);
+ $('audioPick').addEventListener('input',go);$('inputPick').addEventListener('input',go);go();}});
 </script>{news_box()}"""
 page("/calculator/", page_title("AI Video Credit Calculator"),
      "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/", ld_script(calc_ld))
@@ -1451,6 +1568,7 @@ page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRA
 <li><b>APIs</b>: we use the vendor's stated $ per second. Runway credits are $0.01 each.</li>
 <li><b>Credit plans</b>: plan price ÷ credits = $ per credit; × credits per clip ÷ clip length = $ per second. That assumes you use all your credits.</li>
 <li>If a vendor says "~", "roughly" or "estimated", we label the row <i>approx.</i> If we can't confirm a price, we leave it out rather than guess.</li>
+<li><b>Audio, input, and length</b> are recorded only when the vendor page says them. Audio is with audio, without audio, or not stated. Input is text-to-video, image-to-video, reference, video-to-video, extend, or lip-sync, and only when that mode is named for the price. Length is the clip the credit price is for, a stated min and max, or a per-second rate the page ties to a length. If the page does not say, the field stays not stated. A different price becomes its own row. It is not guessed from a nearby row.</li>
 <li>When a vendor shuts an endpoint down, that row is marked <i>discontinued</i> and kept under Discontinued with the last recorded rate. It is not used for cheapest picks.</li>
 <li>Prices exclude VAT/sales tax and change often. Always confirm on the vendor's page before paying.</li>
 <li><b>Deals</b> are a separate list. A discounted $/s uses the vendor's stated rate or the checkout plan price ÷ credits. A code that lasts the first N months also shows a 12-month blended rate. Unlimited windows show how many seconds of video cover the plan price. They are not listed at $0/s.</li></ul>
@@ -1812,6 +1930,7 @@ def write_llms():
         (
             f"{BRAND} compares AI video generation prices in dollars per second of finished video, "
             f"across APIs and credit plans. Figures are copied from each vendor's own pricing page. "
+            f"Audio, input type, and clip length are filled in only when that page states them. Otherwise the field is not stated. "
             f"Last full check: {LAST}. {len(rows)} current prices."
         ),
         "",
@@ -2318,7 +2437,7 @@ def audit_site():
             kling_llms = chunk
             break
     fal_line = next((line for line in kling_llms.splitlines() if line.startswith("- fal:")), "")
-    if "Pro tier, resolution not listed, audio off" not in fal_line or "plan tier Pro tier" in fal_line:
+    if "Pro tier, resolution not listed, without audio" not in fal_line or "plan tier Pro tier" in fal_line:
         errors.append("llms.txt Kling fal line does not read as Pro tier with audio off")
     if "plan tier Standard" not in llms:
         errors.append("llms.txt dropped the plan tier prefix for a name that does not end in tier")
@@ -2328,14 +2447,14 @@ def audit_site():
         if estimate_line not in page_html:
             errors.append(f"{rel} is missing the credit-plan estimate assumption")
         pro_rows = [part.split("</tr>", 1)[0] for part in page_html.split("<tr>") if "Pro, audio off" in part]
-        if not pro_rows or ">Pro tier<" not in pro_rows[0] or ">audio off<" not in pro_rows[0] or ">not listed<" not in pro_rows[0]:
+        if not pro_rows or ">Pro tier<" not in pro_rows[0] or ">without audio<" not in pro_rows[0] or ">not listed<" not in pro_rows[0]:
             errors.append(f"{rel} Kling Pro audio-off row is missing plan tier, resolution, or audio")
         if ">Plan tier</th>" not in page_html or ">Resolution</th>" not in page_html or ">Audio</th>" not in page_html:
             errors.append(f"{rel} price table is missing plan tier, resolution, or audio headings")
     kling_page = open(os.path.join(DIST, "models", "kling-3-0", "index.html"), encoding="utf-8").read()
-    if "Pro tier, resolution not listed, audio off" not in kling_page or "plan tier Pro tier" in kling_page:
+    if "Pro tier, resolution not listed, without audio" not in kling_page or "plan tier Pro tier" in kling_page:
         errors.append("Kling model page comparison does not read as Pro tier with audio off")
-    if "plan tier Standard, resolution not listed, audio off" not in kling_page:
+    if "plan tier Standard, resolution not listed, without audio" not in kling_page:
         errors.append("Kling model page dropped the plan tier prefix for Standard")
     host = urlparse(SITE_URL).hostname or ""
     cname_dist = open(os.path.join(DIST, "CNAME"), encoding="utf-8").read().strip()
@@ -2384,6 +2503,7 @@ def audit_site():
     errors.extend(structured_data_errors())
     errors.extend(feed_errors())
     errors.extend(viewport_overflow_errors())
+    errors.extend(variations.variation_errors(rows))
     if errors:
         raise SystemExit("site audit failed:\n- " + "\n- ".join(errors))
 

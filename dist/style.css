@@ -47,9 +47,11 @@ label.chk{display:flex;align-items:center;gap:6px;color:var(--mut);font-size:14p
  .tblwrap.wide td:nth-child(7) .assume{grid-column:1 / -1;grid-row:5;max-width:none;margin-top:2px;font-size:12px;line-height:1.3;text-align:left}
  .tblwrap.wide td:nth-child(3){grid-column:1 / -1;grid-row:3;margin-top:2px;font-size:12.5px;line-height:1.25;color:var(--mut)}
  .tblwrap.wide td:nth-child(5){grid-column:1 / -1;grid-row:4;font-size:12.5px;line-height:1.25;color:var(--mut)}
+ .tblwrap.wide td:nth-child(6){grid-column:1 / -1;grid-row:5;margin-top:2px;font-size:12.5px;line-height:1.3;color:var(--mut)}
+ .tblwrap.wide td:nth-child(7) .assume,.tblwrap.wide td:nth-child(7) .tiernote{grid-row:7}
  .tblwrap.wide td:nth-child(8){grid-column:1 / -1;grid-row:6;margin-top:3px}
  .tblwrap.wide td:nth-child(8) .tag{white-space:normal}
- .tblwrap.wide td:nth-child(4),.tblwrap.wide td:nth-child(6),.tblwrap.wide td:nth-child(9),.tblwrap.wide td:nth-child(10){display:none}
+ .tblwrap.wide td:nth-child(4),.tblwrap.wide td:nth-child(9),.tblwrap.wide td:nth-child(10){display:none}
  .tblwrap.wide tr:hover td{background:transparent}
  .tblwrap.wide tbody tr:hover{background:#121725}
  .tblwrap:has(#ct){overflow:visible;max-width:100%}
