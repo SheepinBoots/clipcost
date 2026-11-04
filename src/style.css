@@ -30,6 +30,7 @@ select,input{background:var(--card);color:var(--txt);border:1px solid var(--line
 label.chk{display:flex;align-items:center;gap:6px;color:var(--mut);font-size:14px}
 .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
 .swipehint{display:none;margin:0}
+#ct .lab{display:none}
 @media(max-width:899px){
  .tblwrap.wide{overflow:visible}
  .tblwrap.wide table,.tblwrap.wide thead,.tblwrap.wide tbody{display:block;width:100%}
@@ -71,6 +72,7 @@ label.chk{display:flex;align-items:center;gap:6px;color:var(--mut);font-size:14p
  #ct td:nth-child(9){display:contents}
  #ct td:nth-child(9) .amt{grid-column:2;grid-row:1;justify-self:end;align-self:start;font-weight:700;white-space:nowrap;color:var(--txt)}
  #ct td:nth-child(9) .small,#ct td:nth-child(9) .assume{grid-column:1 / -1;max-width:none;margin-top:2px;text-align:left;font-size:12px;line-height:1.3}
+ #ct .lab{display:inline;font-weight:650;color:var(--txt)}
  #ct tr:hover td{background:transparent}
  #ct tbody tr:hover{background:#121725}
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build the static VidFare site from data/*.json into dist/."""
-import json, os, shutil, html, datetime, sys, email.utils, struct, hashlib
+import json, os, re, shutil, html, datetime, sys, email.utils, struct, hashlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
 import notify_indexnow
@@ -186,6 +186,10 @@ def _money_places(v, places, min_digits=2):
     if len(frac) < min_digits:
         frac = frac.ljust(min_digits, "0")
     return f"{'-' if neg else ''}${whole}.{frac}"
+
+def clip_money(v):
+    """Calculator $/clip: 4 decimal places, half up. $/sec stays on money() at 5."""
+    return _money_places(v, 4)
 
 def rate_money(v):
     """$/s on the guides: 4 decimal places under $0.10, otherwise 3. At most 4 decimals."""
@@ -1229,6 +1233,10 @@ def credits_text(v):
 def grouped_int(n):
     return f"{int(round(n)):,}"
 
+def calc_lab(label, value):
+    """Visible on the phone cards. Hidden on desktop so the table stays unlabeled."""
+    return f'<span class="lab">{e(label)} </span>{value}'
+
 def calc_source_html(plan):
     """Same links the calculator script writes for the selected plan."""
     src = plan["source_url"]
@@ -1253,15 +1261,19 @@ def calc_rows_html(plan_id):
         clips = clip_count(credits, r["credits_per_clip"])
         unit = price / credits
         pc = unit * r["credits_per_clip"]
-        price_cell = money(pc) if clips > 0 else "—"
+        price_cell = clip_money(pc) if clips > 0 else "—"
         per_sec = money(pc / r["clip_seconds"]) if clips > 0 else "—"
         cred = ("~" if r["status"] == "estimate" else "") + credits_text(r["credits_per_clip"])
         assume = assumption_html(r)
         bits.append(
             f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a></td>'
-            f'<td>{e(shown_tier(r))}</td><td>{e(shown_resolution(r))}</td><td>{e(audio_phrase(r))}</td>'
-            f'<td>{r["clip_seconds"]}s</td><td>{cred}</td>'
-            f'<td class="num">{grouped_int(clips)}</td><td class="num">{price_cell}</td>'
+            f'<td>{calc_lab("Plan tier", e(shown_tier(r)))}</td>'
+            f'<td>{calc_lab("Resolution", e(shown_resolution(r)))}</td>'
+            f'<td>{calc_lab("Audio", e(audio_phrase(r)))}</td>'
+            f'<td>{calc_lab("Clip", str(r["clip_seconds"]) + "s")}</td>'
+            f'<td>{calc_lab("Credits/clip", cred)}</td>'
+            f'<td class="num">{calc_lab("Clips", grouped_int(clips))}</td>'
+            f'<td class="num">{calc_lab("$/clip", price_cell)}</td>'
             f'<td class="num"><span class="amt">{per_sec}</span>{assume}</td></tr>'
         )
     per = price / credits
@@ -1322,6 +1334,8 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  const pk=new URLSearchParams(location.search).get('plan');if(pk&&d.plans[pk])$('plan').value=pk;
  function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
  function money(v){{const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
+ function clipMoney(v){{const n=Math.round(Number(v)*10000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/10000);let digits=String(a%10000).padStart(4,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%10000).padStart(4,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
+ const lab=(label,value)=>`<span class="lab">${{esc(label)}} </span>${{value}}`;
  function tierOf(r){{const name=String(r.plan_name||'').trim();if(name)return name;const res=String(r.resolution||'').trim();if(res==='Pro tier'||res==='Pro'||res==='Standard')return res;return 'not listed'}}
  function resOf(r){{const res=String(r.resolution||'').trim();if(!res||res==='—'||res==='-'||res==='–'||res==='Pro tier'||res==='Pro'||res==='Standard')return 'not listed';return res}}
  function audioOf(r){{if(r.audio===true)return 'audio on';if(r.audio===false)return 'audio off';return 'not listed'}}
@@ -1366,7 +1380,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   const secs=Math.max(1, Number($('windowSecs').value)||1);
   const rs=rsAll.slice().sort((a,b)=>a.usd_per_second-b.usd_per_second);
   $('ct').querySelector('tbody').innerHTML=rs.map(r=>{{const clips=clipCount(credits*u,r.credits_per_clip);const unit=price/credits;const pc=unit*r.credits_per_clip/u;
-   const priceCell=clips>0?money(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
+   const priceCell=clips>0?clipMoney(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
    let extra='';
    const hit=unlimitedHit(map, r);
    if(hit&&r.credits_per_clip>0&&r.clip_seconds>0){{
@@ -1379,7 +1393,8 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
    }}
    const assume=assumptionOf(r);
    const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{esc(audioOf(r))}}</td><td>${{r.clip_seconds}}s</td><td>${{r.status=='estimate'?'~':''}}${{(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0)}}</td><td class="num">${{clips.toLocaleString()}}</td><td class="num">${{priceCell}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
+   const cred=(r.status=='estimate'?'~':'')+(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0);
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
   history.replaceState(null,'','?plan='+k);}}
  $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
  $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);go();}});
@@ -1681,8 +1696,8 @@ def write_site_feed():
     import xml.etree.ElementTree as ET
     items = feed_items()
     atom = "http://www.w3.org/2005/Atom"
+    ET.register_namespace("atom", atom)
     rss = ET.Element("rss", {"version": "2.0"})
-    rss.set("xmlns:atom", atom)
     channel = ET.SubElement(rss, "channel")
     ET.SubElement(channel, "{%s}link" % atom, {
         "href": SITE_URL + "/feed.xml",
@@ -2513,6 +2528,23 @@ def feed_errors():
         errors.append("feed.xml has no weekly reports")
     if not any(item.find("category") is not None and item.find("category").text == "deal" for item in channel.findall("item")):
         errors.append("feed.xml has no deals")
+    errors.extend(atom_self_errors(path, SITE_URL + "/feed.xml"))
+    errors.extend(atom_self_errors(os.path.join(DIST, "deals.xml"), SITE_URL + "/deals.xml"))
+    return errors
+
+def atom_self_errors(path, href):
+    name = os.path.basename(path)
+    if not os.path.isfile(path):
+        return [f"{name} was not built"]
+    text = open(path, encoding="utf-8").read()
+    errors = []
+    if "ns0" in text:
+        errors.append(f"{name} uses the ns0 namespace prefix")
+    if text.count('xmlns:atom="http://www.w3.org/2005/Atom"') != 1:
+        errors.append(f"{name} should declare xmlns:atom once")
+    compact = re.sub(r"\s+", " ", text)
+    if f'<atom:link href="{href}" rel="self" type="application/rss+xml"' not in compact:
+        errors.append(f"{name} is missing atom:link rel=self")
     return errors
 
 audit_site()
