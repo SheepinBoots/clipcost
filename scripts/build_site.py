@@ -466,7 +466,7 @@ def row_html(r, fmt=None):
     disc = f' <span class="small">discontinued {e(r["discontinued_on"])}</span>' if r.get("discontinued_on") else ""
     return (f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(m)}</a></td><td>{plat_link(r["platform"], r["source_url"])}</td>'
             f'<td>{e(r["variant"])}</td><td>{e(shown_tier(r))}</td><td>{e(shown_resolution(r))}</td><td>{e(audio_phrase(r))}</td>'
-            f'<td class="num">{show(r["usd_per_second"])}{assumption_html(r)}</td>'
+            f'<td class="num"><span class="amt">{show(r["usd_per_second"])}</span>{assumption_html(r)}</td>'
             f'<td>{tag(r["status"])}{promo}{deal_badges(r)}{disc}</td><td class="math">{extra}</td>'
             f'<td class="small"><a href="{html.escape(outbound(r["source_url"])[0])}" rel="{outbound(r["source_url"])[1]}" target="_blank">source</a><br>{r["checked"]}</td></tr>')
 
@@ -540,6 +540,11 @@ def faq_ld(slug, faqs):
         ],
     }
 
+def wide_table(inner, attrs=""):
+    """Price table that scrolls sideways on a phone. The hint is hidden at desktop width."""
+    return (f'<div class="widewrap"><p class="swipehint">Swipe</p>'
+            f'<div class="tblwrap wide"><table{attrs}>{inner}</table></div></div>')
+
 def retired_table(rs, thead=None):
     """Record of rates that are off sale. Not used for cheapest picks."""
     if not rs: return ""
@@ -547,7 +552,7 @@ def retired_table(rs, thead=None):
     body = "".join(row_html(r) for r in sorted(rs, key=lambda r: (r["model"], r["usd_per_second"])))
     return (f'<h2>Discontinued</h2>'
             f'<p class="small">These rates are off sale. The last price we recorded stays here, and these rows are left out of cheapest picks and the live table.</p>'
-            f'<div class="tblwrap"><table id="retired">{head}<tbody>{body}</tbody></table></div>')
+            f'{wide_table(head + "<tbody>" + body + "</tbody>", " id=\"retired\"")}')
 
 def news_box():
     # TODO: restore the signup by setting NEWSLETTER_ENABLED once Buttondown is live.
@@ -856,7 +861,7 @@ home = f"""<h1>AI video cost per second, compared</h1>
 <label class="chk"><input type="checkbox" id="fPromo"> hide promos</label>
 <label class="chk"><input type="checkbox" id="fEst"> hide approximations</label>
 <span class="small" id="count"></span></div>
-<div class="tblwrap"><table id="prices">{THEAD}<tbody>{"".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"]))}</tbody></table></div>
+{wide_table(THEAD + "<tbody>" + "".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"])) + "</tbody>", ' id="prices"')}
 <p class="small"><span class="tag verified">vendor-stated</span> = the number is on the vendor's page (plan rows: plan price ÷ credits × credits per clip, all vendor-stated). <span class="tag estimate">approx.</span> = the vendor itself says "~", "roughly" or "estimated". <span class="tag promo">promo</span> = temporary discount with an end date. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. {ver} of {len(rows)} live rows are vendor-stated.</p>
 {retired_table(retired_rows)}
 {news_box()}
@@ -900,7 +905,7 @@ function render(){{
   const src=hf(r.source_url),srcHref=src||r.source_url,srcRel=src?'sponsored nofollow noopener':'nofollow noopener';
   const assume=assumptionOf(r);
   const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
-  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{esc(r.variant)}}</td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{esc(audioOf(r))}}</td><td class="num">${{money(r.usd_per_second)}}${{assumeHtml}}</td><td>${{tag(r.status)}}${{promo}}${{badges}}${{disc}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
+  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{esc(r.variant)}}</td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{esc(audioOf(r))}}</td><td class="num"><span class="amt">${{money(r.usd_per_second)}}</span>${{assumeHtml}}</td><td>${{tag(r.status)}}${{promo}}${{badges}}${{disc}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
  $('count').textContent=rs.length+' rows';
  document.querySelectorAll('#prices th').forEach(th=>{{th.classList.remove('sorted-asc','sorted-desc');if(th.dataset.k==sortK)th.classList.add(dir>0?'sorted-asc':'sorted-desc')}});
  if(window.clipTick) clipTick();
@@ -1111,7 +1116,7 @@ for slug, m in models.items():
 {sponsor_slot("model:" + slug)}
 {deals_html}
 <h2>All {e(m['name'])} prices</h2>
-<div class="tblwrap"><table>{THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=')}<tbody>{"".join(row_html(r) for r in rs)}</tbody></table></div>
+{wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
 <p class="small">Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root("/calculator/")}">credit calculator</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {faq_html(faqs)}
