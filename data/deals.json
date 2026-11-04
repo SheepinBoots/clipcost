@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-11-03",
+ "updated": "2026-11-04",
  "watch": [
   {
    "id": "hf_plans",
@@ -1012,6 +1012,51 @@
      "url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
      "kind": "pricing_page",
      "quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026."
+    }
+   ]
+  },
+  {
+   "id": "replicate-minimax-h3-lite-highspeed-50",
+   "vendor": "Replicate",
+   "type": "api_promo",
+   "title": "MiniMax H3 Lite and Highspeed 50% off on Replicate until Dec 31",
+   "models": [
+    "minimax-hailuo"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 50,
+   "bonus_credits": null,
+   "start": "2026-11-03",
+   "end": "2026-12-31",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://x.com/replicate/status/2117693912106050026",
+   "source_kind": "x_post",
+   "source_quote": "Minimax H3 Lite and Highspeed are now 50% off until the end of the year. Exclusively on Replicate and @Cloudflare AI Gateway.",
+   "verified_date": "2026-11-04",
+   "link_url": "https://replicate.com/minimax/h3-highspeed",
+   "math": "none",
+   "show_on_rows": false,
+   "notes": "The post says until the end of the year, recorded here as 2026-12-31. Checked 2026-11-04. Both model pages show a banner, \"Minimax H3 Lite and Highspeed are 50% until end of year,\" and list H3 Lite at $0.0125/s for 480p and $0.02/s for 768p, and H3 Highspeed at $0.03/s. The billing block does not say whether those figures are the discounted rate or the list rate, so this is not turned into a $/s and is not applied to catalog rows. No code, not limited to new users, API only. H3 Lite and H3 Highspeed are grouped with MiniMax Hailuo / H3, the same model slug as the other H3 deals.",
+   "sources": [
+    {
+     "url": "https://replicate.com/minimax/h3-highspeed",
+     "kind": "pricing_page",
+     "quote": "Minimax H3 Lite and Highspeed are 50% until end of year"
+    },
+    {
+     "url": "https://replicate.com/minimax/h3-lite",
+     "kind": "pricing_page",
+     "quote": "Minimax H3 Lite and Highspeed are 50% until end of year"
     }
    ]
   },
