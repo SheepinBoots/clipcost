@@ -1212,9 +1212,77 @@ page("/models/", f"AI video models | {BRAND}",
      extra_head=ld_script(item_list_ld("Models", [(m["name"], f"/models/{slug}/") for slug, m in models.items()])))
 
 # ---------- Calculator ----------
+def js_round(n):
+    """Math.round for positive numbers."""
+    return int(n + 0.5)
+
+def clip_count(credits, per):
+    raw = credits / per
+    nearest = js_round(raw)
+    return nearest if abs(raw - nearest) < 0.005 else int(raw)
+
+def credits_text(v):
+    if abs(v - round(v)) < 1e-9 and abs(v % 1) < 1e-9:
+        return str(int(round(v)))
+    return f"{v:.2f}"
+
+def grouped_int(n):
+    return f"{int(round(n)):,}"
+
+def calc_source_html(plan):
+    """Same links the calculator script writes for the selected plan."""
+    src = plan["source_url"]
+    tracked = with_fpr(src) if is_higgsfield(src) else None
+    href = tracked or AFF.get(plan["platform"]) or src
+    rel = "sponsored nofollow noopener" if (tracked or AFF.get(plan["platform"])) else "nofollow noopener"
+    src_rel = "sponsored nofollow noopener" if tracked else "nofollow noopener"
+    src_href = tracked or src
+    return (
+        f'<a class="btn" href="{e(href)}" rel="{rel}" target="_blank">See {e(plan["platform"])} plans</a> '
+        f'<a class="small" href="{e(src_href)}" rel="{src_rel}" target="_blank">source</a>'
+    )
+
+def calc_rows_html(plan_id):
+    """Default 100% usage, deals off. Matches the script's first paint after prices.json loads."""
+    plan = plans[plan_id]
+    price = plan["usd_month"]
+    credits = plan["credits_month"]
+    scale = 1
+    bits = []
+    chosen = sorted((r for r in rows if r.get("plan") == plan_id), key=lambda r: r["usd_per_second"])
+    for r in chosen:
+        clips = clip_count(credits, r["credits_per_clip"])
+        pc = (r["usd_per_clip"] * scale)
+        price_cell = money(pc) if clips > 0 else "—"
+        per_sec = money(pc / r["clip_seconds"]) if clips > 0 else "—"
+        cred = ("~" if r["status"] == "estimate" else "") + credits_text(r["credits_per_clip"])
+        assume = assumption_html(r)
+        bits.append(
+            f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a></td>'
+            f'<td>{e(shown_tier(r))}</td><td>{e(shown_resolution(r))}</td><td>{e(audio_phrase(r))}</td>'
+            f'<td>{r["clip_seconds"]}s</td><td>{cred}</td>'
+            f'<td class="num">{grouped_int(clips)}</td><td class="num">{price_cell}</td>'
+            f'<td class="num">{per_sec}{assume}</td></tr>'
+        )
+    per = price / credits
+    note = (plan.get("credits_note") or "") + f" Billing: {plan['billing']}. Checked {plan['checked']}."
+    return {
+        "price": f"${price:g}/mo",
+        "credits": grouped_int(credits),
+        "per": f"${per:.5f}",
+        "note": note,
+        "link": calc_source_html(plan),
+        "rows": "".join(bits),
+    }
+
 plan_opts = ""
+default_plan_id = None
 for plat in sorted({p["platform"] for p in plans.values()}):
-    plan_opts += f'<optgroup label="{e(plat)}">' + "".join(f'<option value="{k}">{e(p["plan"])}: ${p["usd_month"]:g}/mo</option>' for k, p in plans.items() if p["platform"] == plat) + "</optgroup>"
+    keys = [k for k, p in plans.items() if p["platform"] == plat]
+    if default_plan_id is None and keys:
+        default_plan_id = keys[0]
+    plan_opts += f'<optgroup label="{e(plat)}">' + "".join(f'<option value="{k}">{e(plans[k]["plan"])}: ${plans[k]["usd_month"]:g}/mo</option>' for k in keys) + "</optgroup>"
+calc_seed = calc_rows_html(default_plan_id)
 calc_lead = "Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page."
 calc_ld = {
     "@context": "https://schema.org",
@@ -1239,11 +1307,11 @@ calc = f"""<h1>AI video credit calculator</h1>
 <input id="windowSecs" type="number" min="1" value="60" style="width:100px">
 <p class="small" id="dealEff"></p>
 </div>
-<div style="margin-top:14px"><div class="small">Plan price</div><div class="kpi" id="kPrice"></div>
-<div class="small" style="margin-top:8px">Credits per month</div><div class="kpi" id="kCred"></div>
-<div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer"></div></div>
-<p class="small" id="pNote"></p><p id="pLink"></p></div>
-<div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Plan tier</th><th>Resolution</th><th>Audio</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody></tbody></table></div>
+<div style="margin-top:14px"><div class="small">Plan price</div><div class="kpi" id="kPrice">{calc_seed["price"]}</div>
+<div class="small" style="margin-top:8px">Credits per month</div><div class="kpi" id="kCred">{calc_seed["credits"]}</div>
+<div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer">{calc_seed["per"]}</div></div>
+<p class="small" id="pNote">{e(calc_seed["note"])}</p><p id="pLink">{calc_seed["link"]}</p></div>
+<div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Plan tier</th><th>Resolution</th><th>Audio</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody>{calc_seed["rows"]}</tbody></table></div>
 <p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
 <script>
 const BASE={json.dumps(BASE)};const AFF={json.dumps(AFF)};const MODELS={json.dumps({k:v["name"] for k,v in models.items()})};
