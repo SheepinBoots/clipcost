@@ -1160,6 +1160,31 @@ def deal_source_links(deal):
         links.append(f'<a class="small" href="{e(href)}" rel="{rel}" target="_blank">source</a>')
     return " ".join(links)
 
+_URL_RE = re.compile(r"https?://[^\s<>\"']+")
+
+def linkify_note(text, vendor=""):
+    """Turn a bare URL in a deal note into a short link. The visible words are not the URL."""
+    parts = []
+    last = 0
+    for match in _URL_RE.finditer(text or ""):
+        parts.append(e(text[last:match.start()]))
+        url = match.group(0)
+        tail = ""
+        while url and url[-1] in ".,);":
+            tail = url[-1] + tail
+            url = url[:-1]
+        host = (urlparse(url).hostname or "").lower()
+        if host == "x.com" or host.endswith(".x.com") or host == "twitter.com" or host.endswith(".twitter.com"):
+            label = f"{vendor}'s post" if vendor else "post"
+        else:
+            label = host[4:] if host.startswith("www.") else (host or "link")
+        href, rel = outbound(url)
+        parts.append(f'<a href="{e(href)}" rel="{rel}" target="_blank">{e(label)}</a>')
+        parts.append(e(tail))
+        last = match.end()
+    parts.append(e(text[last:] if text else ""))
+    return "".join(parts)
+
 def deal_card(deal, archive=False, rowset=None):
     href, rel = outbound(deal.get("link_url") or deal["source_url"])
     bits = cond_bits(deal)
@@ -1177,7 +1202,7 @@ def deal_card(deal, archive=False, rowset=None):
     attrs = ' data-archive="1"' if archive else " " + deal_attrs(deal)
     pct = f' <span class="tag deal">−{deal["percent"]:g}%</span>' if deal.get("percent") is not None else ""
     quote = f'<blockquote class="small">“{e(deal.get("source_quote") or "")}”</blockquote>' if deal.get("source_quote") else ""
-    note = f'<p class="small">{e(deal["notes"])}</p>' if deal.get("notes") else ""
+    note = f'<p class="small">{linkify_note(deal["notes"], deal.get("vendor") or "")}</p>' if deal.get("notes") else ""
     cond = f'<p class="small">{e(" · ".join(bits))}</p>' if bits else ""
     season = f' <span class="tag">2025</span>' if deal.get("season") == "2025" else ""
     return (
@@ -1324,13 +1349,16 @@ def calc_rows_html(plan_id):
         per_sec = money(pc / r["clip_seconds"]) if clips > 0 else "—"
         cred = ("~" if r["status"] == "estimate" else "") + credits_text(r["credits_per_clip"])
         assume = assumption_html(r)
+        also = modifier_phrase(r)
         bits.append(
-            f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a></td>'
+            f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a>'
+            f'<div class="meta">Input: {e(input_phrase(r))}</div>'
+            f'<div class="meta">Length: {e(length_phrase(r))}</div>'
+            + (f'<div class="meta also">Also: {e(also)}</div>' if also else "")
+            + "</td>"
             f'<td>{calc_lab("Plan tier", e(shown_tier(r)))}</td>'
             f'<td>{calc_lab("Resolution", e(shown_resolution(r)))}</td>'
-            f'<td>{calc_lab("Audio", e(audio_phrase(r)))}<div class="small">Input: {e(input_phrase(r))}</div><div class="small">Length: {e(length_phrase(r))}</div>'
-            + (f'<div class="small">Also: {e(modifier_phrase(r))}</div>' if modifier_phrase(r) else "")
-            + "</td>"
+            f'<td>{calc_lab("Audio", e(audio_phrase(r)))}</td>'
             f'<td>{calc_lab("Clip", str(r["clip_seconds"]) + "s")}</td>'
             f'<td>{calc_lab("Credits/clip", cred)}</td>'
             f'<td class="num">{calc_lab("Clips", grouped_int(clips))}</td>'
@@ -1377,14 +1405,14 @@ calc = f"""<h1>AI video credit calculator</h1>
 <p class="lead">{calc_lead}</p>
 <p>Pricing a finished video from dollars per second? Use the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a>.</p>
 <div class="calc"><div class="card">
-<label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px">{plan_opts}</select>
-<label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %
+<div class="field"><label class="small" for="plan">Plan</label><select id="plan">{plan_opts}</select></div>
+<div class="field"><label class="small" for="used">% of credits you actually use</label><span class="ctl"><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %</span></div>
 <p class="small" id="usedMsg" role="status"></p>
-<label class="small" for="resPick">Resolution</label><br><select id="resPick" style="width:100%;margin:6px 0 8px">{calc_res_opts}</select>
-<label class="small" for="secs">Clip length (seconds)</label><br><input id="secs" type="number" min="1" step="1" placeholder="Any" style="width:100px">
-<label class="small" for="audioPick">Audio</label><br><select id="audioPick" style="width:100%;margin:6px 0"><option value="">Any</option><option value="with">with audio</option><option value="without">without audio</option></select>
-<label class="small" for="inputPick">Input</label><br><select id="inputPick" style="width:100%;margin:6px 0 8px"><option value="">Any</option><option value="t2v">text-to-video</option><option value="i2v">image-to-video</option><option value="ref2v">reference</option><option value="v2v">video-to-video</option><option value="extend">extend</option><option value="lip-sync">lip-sync</option></select>
-<label class="chk" style="margin-top:8px"><input type="checkbox" id="applyDeals"> apply today's deals</label>
+<div class="field"><label class="small" for="resPick">Resolution</label><select id="resPick">{calc_res_opts}</select></div>
+<div class="field"><label class="small" for="secs">Clip length (seconds)</label><input id="secs" type="number" min="1" step="1" placeholder="Any" style="width:100px"></div>
+<div class="field"><label class="small" for="audioPick">Audio</label><select id="audioPick"><option value="">Any</option><option value="with">with audio</option><option value="without">without audio</option></select></div>
+<div class="field"><label class="small" for="inputPick">Input</label><select id="inputPick"><option value="">Any</option><option value="t2v">text-to-video</option><option value="i2v">image-to-video</option><option value="ref2v">reference</option><option value="v2v">video-to-video</option><option value="extend">extend</option><option value="lip-sync">lip-sync</option></select></div>
+<label class="chk"><input type="checkbox" id="applyDeals"> apply today's deals</label>
 <p class="small" id="calcMsg"></p>
 <div id="dealBox" hidden>
 <label class="small" for="windowSecs">Seconds you'll make during an unlimited window</label><br>
@@ -1515,8 +1543,8 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
    const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
    const cred=(r.status=='estimate'?'~':'')+(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0);
    const also=modifierOf(r);
-   const mark=q.status==='unknown'?'<div class="small">not stated by vendor</div>':'';
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}<div class="small">Input: ${{esc(inputOf(r))}}</div><div class="small">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="small">Also: '+esc(also)+'</div>':''}}${{mark}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
+   const mark=q.status==='unknown'?'<div class="meta">not stated by vendor</div>':'';
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a><div class="meta">Input: ${{esc(inputOf(r))}}</div><div class="meta">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="meta also">Also: '+esc(also)+'</div>':''}}${{mark}}</td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
   const q=new URLSearchParams(); q.set('plan', k);
   if(wantRes) q.set('res', wantRes); if(clipSecs!=null) q.set('seconds', String(clipSecs)); if(wantAudio) q.set('audio', wantAudio); if(wantInput) q.set('input', wantInput);
   history.replaceState(null,'','?'+q);}}
