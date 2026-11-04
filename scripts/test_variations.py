@@ -46,12 +46,22 @@ p480 = next(r["id"] for r in DB["rows"] if r["source"] == "hf_api_wan" and r["re
 p720 = next(r["id"] for r in DB["rows"] if r["source"] == "hf_api_wan" and r["resolution"] == "720p" and r["model"] == "wan-3-0-prime")
 check("prime 480p at 1s below min", one(p480, seconds=1), "not_offered")
 check("prime 480p at 2s not a length tier", one(p480, seconds=2), "not_stated")
-check("prime 720p at 30s not a length tier", one(p720, seconds=30), "not_stated")
+check("prime 720p at 30s", one(p720, seconds=30), "match", 0.084)
+assert abs(one(p720, seconds=30)["usd_per_second"] * 30 - 2.52) < 1e-9
+p1080 = next(r["id"] for r in DB["rows"] if r["source"] == "hf_api_wan" and r["resolution"] == "1080p" and r["model"] == "wan-3-0-prime")
+check("prime 1080p at 30s", one(p1080, seconds=30), "match", 0.168)
+assert abs(one(p1080, seconds=30)["usd_per_second"] * 30 - 5.04) < 1e-9
 check("prime 720p at 40s not offered", one(p720, seconds=40), "not_offered")
+check("prime 720p at 5s not the stated length", one(p720, seconds=5), "not_stated")
 assert ROWS[p480]["variation"]["length_changes_price"] == "not stated"
 assert ROWS[p480]["variation"]["duration"]["rate_by_length"] == "not stated"
+assert ROWS[p720]["variation"]["length_changes_price"] == "not stated"
+assert ROWS[p720]["variation"]["duration"]["priced_seconds"] == 30
+assert ROWS[p720]["variation"]["duration"]["rate_by_length"] == "not stated"
 assert ROWS[p480]["variation"]["duration"]["min_seconds"] == 2
 assert ROWS[p480]["usd_per_second"] == 0.0408
+assert any("capped at 15 seconds" in m["label"] for m in ROWS["r048"]["variation"]["modifiers"])
+assert any("1 credit per second of input video" in m["label"] for m in ROWS["r057"]["variation"]["modifiers"])
 
 # Krea Kling is audio off at 3s. Magnific Veo is with audio at 4s.
 krea = next(r["id"] for r in DB["rows"] if r.get("plan") == "krea-pro-monthly" and r["variant"] == "Kling 3.0 Standard")

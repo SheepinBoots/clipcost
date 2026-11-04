@@ -459,6 +459,10 @@
     {
      "needle": "$0.084 per second at 720p for 30 second",
      "phrase": true
+    },
+    {
+     "needle": "$0.084 per second at 720p for 30 second clips",
+     "phrase": true
     }
    ],
    "note": "40% off, as the model page states. Standard rates on that page are $0.068 at 480p for 1-2s clips, $0.14 at 720p for 30s clips, and $0.28 at 1080p for 30s clips. The API pricing page also says 40% off. Neither page names an end date.",
@@ -480,7 +484,7 @@
      "min_seconds": 2,
      "max_seconds": 30,
      "allowed_seconds": "not stated",
-     "priced_seconds": "not stated",
+     "priced_seconds": 30,
      "rate_by_length": "not stated"
     },
     "audio_changes_price": "not stated",
@@ -525,6 +529,10 @@
     {
      "needle": "$0.168 per second at 1080p for 30 second",
      "phrase": true
+    },
+    {
+     "needle": "$0.168 per second at 1080p for 30 second clips",
+     "phrase": true
     }
    ],
    "note": "40% off, as the model page states. Standard rates on that page are $0.068 at 480p for 1-2s clips, $0.14 at 720p for 30s clips, and $0.28 at 1080p for 30s clips. The API pricing page also says 40% off. Neither page names an end date.",
@@ -546,7 +554,7 @@
      "min_seconds": 2,
      "max_seconds": 30,
      "allowed_seconds": "not stated",
-     "priced_seconds": "not stated",
+     "priced_seconds": 30,
      "rate_by_length": "not stated"
     },
     "audio_changes_price": "not stated",
@@ -3280,6 +3288,10 @@
     {
      "needle": "2 credits per reference image",
      "phrase": true
+    },
+    {
+     "needle": "reference video billed at the same per-second rate as output (capped at 15 seconds)",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
@@ -3302,6 +3314,10 @@
     "modifiers": [
      {
       "label": "plus 2 credits per reference image or keyframe",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "reference video billed at the same per-second rate as output (capped at 15 seconds)",
       "usd_per_second": "not stated"
      }
     ]
@@ -3335,6 +3351,10 @@
     {
      "needle": "2 credits per reference image",
      "phrase": true
+    },
+    {
+     "needle": "reference video billed at the same per-second rate as output (capped at 15 seconds)",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
@@ -3357,6 +3377,10 @@
     "modifiers": [
      {
       "label": "plus 2 credits per reference image or keyframe",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "reference video billed at the same per-second rate as output (capped at 15 seconds)",
       "usd_per_second": "not stated"
      }
     ]
@@ -3745,6 +3769,10 @@
     {
      "needle": "1 credit per reference image",
      "phrase": true
+    },
+    {
+     "needle": "and 1 credit per second of input video",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
@@ -3767,6 +3795,10 @@
     "modifiers": [
      {
       "label": "plus 1 credit per reference image",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "and 1 credit per second of input video",
       "usd_per_second": "not stated"
      }
     ]
@@ -3796,6 +3828,10 @@
     {
      "needle": "1 credit per reference image",
      "phrase": true
+    },
+    {
+     "needle": "and 1 credit per second of input video",
+     "phrase": true
     }
    ],
    "note": "Runway credits are $0.01 each.",
@@ -3818,6 +3854,10 @@
     "modifiers": [
      {
       "label": "plus 1 credit per reference image",
+      "usd_per_second": "not stated"
+     },
+     {
+      "label": "and 1 credit per second of input video",
       "usd_per_second": "not stated"
      }
     ]

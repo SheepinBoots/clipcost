@@ -130,7 +130,8 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{
   if(!shown.length) msg='That combination is not offered, or the page does not state a price for it, for this plan.';
   else {
     const bits=[];
-    if(unknownN) bits.push(rowsPhrase(unknownN, 'does not state audio or input, so it is marked not stated by vendor.', 'do not state audio or input, so they are marked not stated by vendor.'));
+    const unknownField=wantAudio&&wantInput?'audio or input':wantAudio?'audio':wantInput?'input':'audio or input';
+    if(unknownN) bits.push(rowsPhrase(unknownN, 'does not state '+unknownField+', so it is marked not stated by vendor.', 'do not state '+unknownField+', so they are marked not stated by vendor.'));
     if(stated) bits.push(rowsPhrase(stated, 'does not state this length, so it is not priced.', 'do not state this length, so they are not priced.'));
     if(missed) bits.push(rowsPhrase(missed, 'offers a different combination.', 'offer a different combination.'));
     msg=bits.join(' ');

@@ -94,13 +94,20 @@ def api_variation(row):
         v["input_changes_price"] = False
         v["duration"]["min_seconds"] = 2
         v["duration"]["max_seconds"] = 30
-        # The page gives one example length per resolution. It does not say the rate changes with length.
+        # One example length is stated per resolution. That is not a claim that the rate changes with length.
         v["phrases"] += [
             "Wan 3.0 Prime Text to Video",
             "Wan 3.0 Prime Image to Video",
             "Wan 3.0 Prime Reference to Video",
             "2 – 30s",
         ]
+        stated_length = {
+            "720p": (0.084, "$0.084 per second at 720p for 30 second clips"),
+            "1080p": (0.168, "$0.168 per second at 1080p for 30 second clips"),
+        }
+        if res in stated_length and abs(row.get("usd_per_second", 0) - stated_length[res][0]) < 1e-9:
+            v["duration"]["priced_seconds"] = 30
+            v["phrases"].append(stated_length[res][1])
         return v
 
     if plat == "Higgsfield API" and row.get("source") == "hf_api" and "List price" in variant:
@@ -221,16 +228,24 @@ def api_variation(row):
             v["modifiers"] = mods
         if variant.startswith("hailuo3"):
             v["input_changes_price"] = True
-            v["modifiers"] = [{"label": "plus 2 credits per reference image or keyframe", "usd_per_second": "not stated"}]
+            v["modifiers"] = [
+                {"label": "plus 2 credits per reference image or keyframe", "usd_per_second": "not stated"},
+                {"label": "reference video billed at the same per-second rate as output (capped at 15 seconds)", "usd_per_second": "not stated"},
+            ]
             v["phrases"].append("2 credits per reference image")
+            v["phrases"].append("reference video billed at the same per-second rate as output (capped at 15 seconds)")
         if variant.startswith("grok_imagine_1_5"):
             v["input_changes_price"] = True
             v["modifiers"] = [{"label": "plus 1 credit per image or audio reference", "usd_per_second": "not stated"}]
             v["phrases"].append("1 credit per image or audio reference")
         if variant.startswith("gemini_omni_flash"):
             v["input_changes_price"] = True
-            v["modifiers"] = [{"label": "plus 1 credit per reference image", "usd_per_second": "not stated"}]
+            v["modifiers"] = [
+                {"label": "plus 1 credit per reference image", "usd_per_second": "not stated"},
+                {"label": "and 1 credit per second of input video", "usd_per_second": "not stated"},
+            ]
             v["phrases"].append("1 credit per reference image")
+            v["phrases"].append("and 1 credit per second of input video")
         return v
 
     if plat == "Kling API":
