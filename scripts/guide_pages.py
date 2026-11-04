@@ -391,7 +391,7 @@ def render(g):
             gap_html = "<p>The price data has no separate unconfirmed-item list.</p>"
         faqs = [
             (q, answer),
-            (q_each, "The table is one row per model: the lowest live dollars per second, the same pick as the homepage cards."),
+            (q_each, "One row per model, lowest dollars per second first. A promo keeps its end date."),
             ("How do we calculate this?", HOW_PLAIN),
         ]
         body = f"""{crumb("Cheapest by model")}
@@ -780,8 +780,7 @@ def render(g):
 
         faqs = [
             (q_worth, a_worth),
-            (q_plans, "The plan table lists every current Higgsfield credit-plan row, with the plan price and credit amount from the plan record when that record has both."),
-            (q_api, "The API table lists every current Higgsfield API row. Those rates are separate from the credit plans."),
+            (q_plans, "The ten lowest plan rates are listed first. Plan price and credits come from the plan record. The $/s column is the row's effective rate. A plan with no row for a model is left out."),
             (q_gap, gap),
             (q_thousand, a_thousand),
             (q_clip, a_clip),

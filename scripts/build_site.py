@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build the static VidFare site from data/*.json into dist/."""
-import json, os, shutil, html, datetime, sys, email.utils, struct
+import json, os, shutil, html, datetime, sys, email.utils, struct, hashlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deals as dealmod
 import notify_indexnow
@@ -200,6 +200,61 @@ def ld_script(obj):
     raw = json.dumps(obj, ensure_ascii=False).replace("<", "\\u003c")
     return f'<script type="application/ld+json">{raw}</script>'
 
+def ld_join(*objs):
+    return "".join(ld_script(obj) for obj in objs)
+
+def breadcrumb_ld(crumbs):
+    """crumbs are (visible name, site path) in order, matching the on-page trail."""
+    return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": i, "name": name, "item": SITE_URL + path}
+            for i, (name, path) in enumerate(crumbs, 1)
+        ],
+    }
+
+def item_list_ld(name, entries):
+    """entries are (visible name, site path)."""
+    return {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": name,
+        "numberOfItems": len(entries),
+        "itemListElement": [
+            {"@type": "ListItem", "position": i, "name": label, "url": SITE_URL + path}
+            for i, (label, path) in enumerate(entries, 1)
+        ],
+    }
+
+def rfc822_day(day):
+    """UTC midnight of a real calendar date. Not the build clock."""
+    dt = datetime.datetime.combine(
+        datetime.date.fromisoformat(day), datetime.time(0, 0), datetime.timezone.utc)
+    return email.utils.formatdate(dt.timestamp(), usegmt=True)
+
+def change_anchor(change):
+    bits = [
+        change.get("date") or "",
+        change.get("type") or "",
+        str(change.get("row") or ""),
+        change.get("model") or "",
+        change.get("platform") or "",
+        change.get("variant") or "",
+        change.get("resolution") or "",
+        change.get("text") or "",
+    ]
+    return "change-" + hashlib.sha1("\n".join(bits).encode()).hexdigest()[:16]
+
+def change_plain(change):
+    if change.get("type") == "price" and change.get("model") in models:
+        return (
+            f"{models[change['model']]['name']} on {change.get('platform') or ''} "
+            f"({change.get('variant') or ''}, {change.get('resolution') or ''}): "
+            f"{money(change.get('old_usd_per_second'))} → {money(change.get('new_usd_per_second'))}/s"
+        )
+    return change.get("text") or change.get("type") or "Price change"
+
 def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None, robots="index,follow", canonical=True, before_count=""):
     canon = SITE_URL + path
     show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
@@ -224,6 +279,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <meta property="og:image" content="{OG_IMAGE}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{e(OG_ALT)}">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{e(title)}"><meta name="twitter:description" content="{e(desc)}"><meta name="twitter:image" content="{OG_IMAGE}">
 <meta name="theme-color" content="#0b0d12"><link rel="icon" href="{root("/favicon.ico")}" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="{root("/favicon-32.png")}"><link rel="icon" type="image/svg+xml" href="{root("/logo.svg")}"><link rel="apple-touch-icon" href="{root("/logo-512.png")}">
+<link rel="alternate" type="application/rss+xml" title="{BRAND}" href="{root("/feed.xml")}">
 <link rel="stylesheet" href="{root("/style.css")}">{extra_head}</head><body>
 <header class="top"><div class="wrap"><a class="logo" href="{root("/")}">Vid<span>Fare</span></a><nav>{nav}</nav></div></header>
 <main class="wrap">{body}</main>
@@ -256,7 +312,10 @@ def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
         body = weekly_report.render_report_body(
             report, events, prior, link_fn=lambda url: outbound(url))
         page(path, f"{headline} | {BRAND}", description, body, "/reports/",
-             ld_script(weekly_report.report_jsonld(report, SITE_URL + path)),
+             ld_join(
+                 weekly_report.report_jsonld(report, SITE_URL + path),
+                 breadcrumb_ld([("Reports", "/reports/"), (headline, path)]),
+             ),
              dest=dest, reports_nav=reports_nav)
         paths.append(path)
         prior = report["through"]
@@ -738,12 +797,29 @@ def guide_faq_ld(path, faqs):
         ],
     }
 
+GUIDE_CRUMBS = {
+    "/guides/cheapest-wan-3-0/": "Wan 3.0",
+    "/guides/cheapest-ai-video-generator/": "Cheapest by model",
+    "/guides/is-higgsfield-worth-it/": "Higgsfield",
+    "/guides/ai-video-project-budget/": "Project budget",
+}
+
 def guide_page(path, title, desc, body, faqs):
     raw = json.dumps(faqs, ensure_ascii=False).lower()
     for bad in ("subscribe", "newsletter", "buttondown"):
         if bad in raw:
             raise SystemExit(f"{path} FAQ text contains {bad}")
-    page(path, title, desc, body, "/guides/", ld_script(guide_faq_ld(path, faqs)))
+    blocks = [guide_faq_ld(path, faqs)]
+    if path == "/guides/":
+        blocks.append(item_list_ld("Guides", [
+            ("What is the cheapest way to use Wan 3.0?", "/guides/cheapest-wan-3-0/"),
+            ("What is the cheapest AI video generator right now?", "/guides/cheapest-ai-video-generator/"),
+            ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/"),
+            ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/"),
+        ]))
+    elif path in GUIDE_CRUMBS:
+        blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
+    page(path, title, desc, body, "/guides/", ld_join(*blocks))
 
 def cheap_card(title, r, alt=None):
     alt_html = ""
@@ -1122,7 +1198,7 @@ for slug, m in models.items():
 {faq_html(faqs)}
 {news_box()}
 {tick_script()}
-{ld_script(faq_ld(slug, faqs))}"""
+{ld_join(faq_ld(slug, faqs), breadcrumb_ld([("Prices", "/"), (m["name"], f"/models/{slug}/")]))}"""
     page(f"/models/{slug}/", page_title(f"{m['name']} Price Per Second"),
          f"{m['name']} costs from {money(c['usd_per_second'])}/s ({c['platform']}, {spec_phrase(c)}). Compare {len(rs)} sourced prices across APIs and credit plans.", body)
 
@@ -1132,7 +1208,8 @@ model_items = "".join(
 )
 page("/models/", f"AI video models | {BRAND}",
      f"Every AI video model {BRAND} prices, with a page of sourced cost-per-second comparisons.",
-     f'<h1>Models</h1><p class="lead">Every model {BRAND} tracks, with sourced prices per second of video.</p><ul class="model-index">{model_items}</ul>')
+     f'<h1>Models</h1><p class="lead">Every model {BRAND} tracks, with sourced prices per second of video.</p><ul class="model-index">{model_items}</ul>',
+     extra_head=ld_script(item_list_ld("Models", [(m["name"], f"/models/{slug}/") for slug, m in models.items()])))
 
 # ---------- Calculator ----------
 plan_opts = ""
@@ -1255,7 +1332,7 @@ for c in sorted(changes, key=lambda c: c["date"], reverse=True):
         src = f' <a class="small" href="{e(href)}" rel="{rel}" target="_blank">source</a>'
     else:
         src = ""
-    items += f'<li><span class="pill">{c["date"]}</span> <span class="pill">{e(c.get("type","")).upper()}</span> {txt}{src}</li>'
+    items += f'<li id="{change_anchor(c)}"><span class="pill">{c["date"]}</span> <span class="pill">{e(c.get("type","")).upper()}</span> {txt}{src}</li>'
 page("/changes/", f"AI Video Price Changes Log ({MONTH}) | {BRAND}",
      "Every AI video price change we detect, with dates and sources: Wan, Kling, Veo, Seedance, Runway, Higgsfield and more.",
      f"""<h1>Price changes log</h1><p class="lead">A daily script re-checks every source and logs each price change here with the date and a link to the source.</p>
@@ -1415,7 +1492,8 @@ bf_body = f"""<p class="small"><a href="{root("/deals/")}">Deals</a> › Black F
 """
 page("/deals/black-friday/", page_title("AI Video Black Friday Deals"),
      "A stub for 2026 AI video holiday sales, plus dated 2025 examples from Higgsfield, Krea, and Magnific.",
-     bf_body, "/deals/")
+     bf_body, "/deals/",
+     extra_head=ld_script(breadcrumb_ld([("Deals", "/deals/"), ("Black Friday", "/deals/black-friday/")])))
 
 def write_feeds():
     def slim(deal, status):
@@ -1472,6 +1550,84 @@ def write_feeds():
     open(os.path.join(DIST, "deals.xml"), "w").write(rss)
 
 write_feeds()
+
+def feed_items():
+    """Price changes, published weekly reports, and live deals. Dates come from the records."""
+    items = []
+    for change in changes:
+        day = change.get("date")
+        if not day:
+            continue
+        anchor = change_anchor(change)
+        link = f"{SITE_URL}/changes/#{anchor}"
+        items.append({
+            "title": change_plain(change),
+            "link": link,
+            "guid": link,
+            "date": day,
+            "description": change_plain(change),
+            "category": "price change",
+        })
+    if REPORTS_ENABLED:
+        result = weekly_report.assign(weekly_report.load(), today)
+        for report in result["reports"]:
+            path = f"/reports/{report['id']}/"
+            link = SITE_URL + path
+            items.append({
+                "title": weekly_report.report_h1(report),
+                "link": link,
+                "guid": link,
+                "date": report["through"],
+                "description": weekly_report.report_description(report),
+                "category": "report",
+            })
+    for deal in live_sorted:
+        day = deal.get("start") or deal.get("verified_date")
+        if not day:
+            continue
+        link = f"{SITE_URL}/deals/#{deal['id']}"
+        title = deal.get("title") or deal["id"]
+        desc = deal.get("source_quote") or title
+        if deal.get("end"):
+            desc += " Ends " + deal["end"] + (" (estimated)." if deal.get("end_is_estimate") else ".")
+        else:
+            desc += " No end date given."
+        items.append({
+            "title": title,
+            "link": link,
+            "guid": link,
+            "date": day,
+            "description": desc,
+            "category": "deal",
+        })
+    items.sort(key=lambda item: (item["date"], item["guid"]), reverse=True)
+    return items
+
+def write_site_feed():
+    import xml.etree.ElementTree as ET
+    items = feed_items()
+    rss = ET.Element("rss", {"version": "2.0"})
+    channel = ET.SubElement(rss, "channel")
+    ET.SubElement(channel, "title").text = BRAND
+    ET.SubElement(channel, "link").text = SITE_URL + "/"
+    ET.SubElement(channel, "description").text = "Price changes, weekly reports, and live deals."
+    latest = max((item["date"] for item in items), default=LAST)
+    ET.SubElement(channel, "lastBuildDate").text = rfc822_day(latest)
+    for item in items:
+        node = ET.SubElement(channel, "item")
+        ET.SubElement(node, "title").text = item["title"]
+        ET.SubElement(node, "link").text = item["link"]
+        ET.SubElement(node, "guid", {"isPermaLink": "true"}).text = item["guid"]
+        ET.SubElement(node, "pubDate").text = rfc822_day(item["date"])
+        ET.SubElement(node, "description").text = item["description"]
+        ET.SubElement(node, "category").text = item["category"]
+    tree = ET.ElementTree(rss)
+    ET.indent(tree, space="  ")
+    path = os.path.join(DIST, "feed.xml")
+    tree.write(path, encoding="UTF-8", xml_declaration=True)
+    text = open(path, encoding="utf-8").read()
+    if not text.endswith("\n"):
+        open(path, "a", encoding="utf-8").write("\n")
 
 # ---------- Advertise ----------
 AD_MAIL = "mailto:emmanueldevgonzalez@gmail.com?subject=" + quote("VidFare sponsorship")
@@ -1548,6 +1704,7 @@ page("/404.html", f"Page not found | {BRAND}", "Page not found.", not_found_body
      extra_head=newsletter_redirect_script(), robots="noindex", canonical=False, before_count=GOAT_404)
 
 report_paths = write_report_pages(DIST, today, public_log=True) if REPORTS_ENABLED else []
+write_site_feed()
 
 def write_llms():
     """Plain summary for AI search. Every price is the cheapest current row for that model and platform."""
@@ -1601,6 +1758,7 @@ def write_llms():
         "",
         f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog this page is built from.",
         f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals.",
+        f"- [feed.xml]({SITE_URL}/feed.xml): RSS of price changes, weekly reports, and live deals.",
         "",
         f"Advertise: {SITE_URL}/advertise/ — labelled sponsor placements. They never change the price order.",
         "",
@@ -2127,8 +2285,135 @@ def audit_site():
             errors.append(f"{rel} contains sponsor placement markup")
     import test_titles
     errors.extend(test_titles.title_errors(DIST))
+    errors.extend(structured_data_errors())
+    errors.extend(feed_errors())
     if errors:
         raise SystemExit("site audit failed:\n- " + "\n- ".join(errors))
+
+def visible_page_text(raw):
+    """Text a reader sees. Inline tags are removed without inserting spaces."""
+    import re
+    cleaned = re.sub(r"(?is)<script\b[^>]*>.*?</script>", " ", raw)
+    cleaned = re.sub(r"(?is)<style\b[^>]*>.*?</style>", " ", cleaned)
+    cleaned = re.sub(r"(?is)<br\s*/?>", " ", cleaned)
+    cleaned = re.sub(r"(?is)</(p|div|li|h1|h2|h3|tr|section|article)>", " ", cleaned)
+    cleaned = re.sub(r"(?is)<[^>]+>", "", cleaned)
+    cleaned = html.unescape(cleaned)
+    return re.sub(r"\s+", " ", cleaned).strip()
+
+def norm_space(text):
+    import re
+    return re.sub(r"\s+", " ", text or "").strip()
+
+def jsonld_nodes(node, out):
+    if isinstance(node, list):
+        for item in node:
+            jsonld_nodes(item, out)
+        return
+    if not isinstance(node, dict):
+        return
+    out.append(node)
+    if isinstance(node.get("@graph"), list):
+        jsonld_nodes(node["@graph"], out)
+
+def structured_data_errors():
+    import re
+    errors = []
+    alternate = f'rel="alternate" type="application/rss+xml" title="{BRAND}" href="{root("/feed.xml")}"'
+    for dirpath, _, filenames in os.walk(DIST):
+        for name in filenames:
+            if not name.endswith(".html"):
+                continue
+            path = os.path.join(dirpath, name)
+            raw = open(path, encoding="utf-8").read()
+            if "<html" not in raw.lower():
+                continue
+            rel = os.path.relpath(path, DIST).replace(os.sep, "/")
+            if alternate not in raw:
+                errors.append(f"{rel} is missing the feed.xml alternate link")
+            visible = visible_page_text(raw)
+            for match in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', raw, re.S):
+                blob = html.unescape(match.group(1))
+                try:
+                    data = json.loads(blob)
+                except json.JSONDecodeError as exc:
+                    errors.append(f"{rel} JSON-LD is invalid: {exc}")
+                    continue
+                nodes = []
+                jsonld_nodes(data, nodes)
+                for node in nodes:
+                    types = node.get("@type")
+                    types = types if isinstance(types, list) else [types]
+                    if "FAQPage" not in types:
+                        continue
+                    for question in node.get("mainEntity") or []:
+                        q = norm_space((question or {}).get("name") or "")
+                        answer = (question or {}).get("acceptedAnswer") or {}
+                        a = norm_space(answer.get("text") if isinstance(answer, dict) else "")
+                        if not q or not a:
+                            errors.append(f"{rel} FAQ entry is missing a question or answer")
+                            continue
+                        if q not in visible or a not in visible:
+                            errors.append(f"{rel} FAQ text is not on the page: {q[:80]}")
+    return errors
+
+def feed_errors():
+    import xml.etree.ElementTree as ET
+    errors = []
+    path = os.path.join(DIST, "feed.xml")
+    if not os.path.isfile(path):
+        return ["feed.xml was not built"]
+    try:
+        root = ET.parse(path).getroot()
+    except ET.ParseError as exc:
+        return [f"feed.xml is not valid XML: {exc}"]
+    if root.tag != "rss":
+        errors.append("feed.xml root is not rss")
+        return errors
+    channel = root.find("channel")
+    if channel is None:
+        return ["feed.xml is missing a channel"]
+    by_guid = {}
+    for item in channel.findall("item"):
+        fields = {tag: (item.find(tag).text or "").strip() if item.find(tag) is not None else "" for tag in ("title", "link", "guid", "pubDate", "category")}
+        if any(not fields[tag] for tag in ("title", "link", "guid", "pubDate")):
+            errors.append("feed item is missing title, link, guid, or pubDate")
+            continue
+        if fields["guid"] in by_guid:
+            errors.append(f"feed guid is repeated: {fields['guid']}")
+        parsed = email.utils.parsedate_to_datetime(fields["pubDate"])
+        if parsed is None:
+            errors.append(f"feed pubDate is not a date: {fields['pubDate']}")
+            continue
+        by_guid[fields["guid"]] = parsed.date().isoformat()
+        if fields["category"] not in ("price change", "report", "deal"):
+            errors.append(f"feed category {fields['category']!r} is not a price change, report, or deal")
+    for change in changes:
+        day = change.get("date")
+        if not day:
+            continue
+        guid = f"{SITE_URL}/changes/#{change_anchor(change)}"
+        if by_guid.get(guid) != day:
+            errors.append(f"feed price change {guid} is dated {by_guid.get(guid)} instead of {day}")
+    if REPORTS_ENABLED:
+        for report in weekly_report.assign(weekly_report.load(), today)["reports"]:
+            guid = f"{SITE_URL}/reports/{report['id']}/"
+            if by_guid.get(guid) != report["through"]:
+                errors.append(f"feed report {guid} is dated {by_guid.get(guid)} instead of {report['through']}")
+    for deal in live_sorted:
+        day = deal.get("start") or deal.get("verified_date")
+        if not day:
+            continue
+        guid = f"{SITE_URL}/deals/#{deal['id']}"
+        if by_guid.get(guid) != day:
+            errors.append(f"feed deal {guid} is dated {by_guid.get(guid)} instead of {day}")
+    if not any(item.find("category") is not None and item.find("category").text == "price change" for item in channel.findall("item")):
+        errors.append("feed.xml has no price changes")
+    if REPORTS_ENABLED and not any(item.find("category") is not None and item.find("category").text == "report" for item in channel.findall("item")):
+        errors.append("feed.xml has no weekly reports")
+    if not any(item.find("category") is not None and item.find("category").text == "deal" for item in channel.findall("item")):
+        errors.append("feed.xml has no deals")
+    return errors
 
 audit_site()
 write_report_preview()
