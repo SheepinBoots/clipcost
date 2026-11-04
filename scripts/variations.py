@@ -94,22 +94,13 @@ def api_variation(row):
         v["input_changes_price"] = False
         v["duration"]["min_seconds"] = 2
         v["duration"]["max_seconds"] = 30
-        v["length_changes_price"] = True
+        # The page gives one example length per resolution. It does not say the rate changes with length.
         v["phrases"] += [
             "Wan 3.0 Prime Text to Video",
             "Wan 3.0 Prime Image to Video",
             "Wan 3.0 Prime Reference to Video",
             "2 – 30s",
         ]
-        promo = {
-            "480p": (0.0408, "1 or 2 second", [1, 2], "1-2s"),
-            "720p": (0.084, "30 second", [30], "30s"),
-            "1080p": (0.168, "30 second", [30], "30s"),
-        }
-        if res in promo and abs(row["usd_per_second"] - promo[res][0]) < 1e-9:
-            usd, words, seconds, label = promo[res]
-            v["duration"]["rate_by_length"] = [{"label": label, "seconds": seconds, "usd_per_second": usd}]
-            v["phrases"].append(f"${usd:g} per second at {res} for {words}")
         return v
 
     if plat == "Higgsfield API" and row.get("source") == "hf_api" and "List price" in variant:
@@ -161,6 +152,9 @@ def api_variation(row):
         v["duration"]["max_seconds"] = 30
         v["length_changes_price"] = False
         v["phrases"] += ["text-to-video", "up to 30 seconds", "per second of generated video"]
+        if res in ("480p", "720p"):
+            v["audio"] = "with"
+            v["phrases"].append(f"{res} with audio")
         return v
 
     if plat == "fal" and model == "veo-3-1":
@@ -187,7 +181,6 @@ def api_variation(row):
         v["input"] = ["t2v"]
         v["input_changes_price"] = False
         v["audio"] = "with"
-        v["audio_changes_price"] = False
         v["length_changes_price"] = False
         v["phrases"] += [
             "prompts with audio",
@@ -214,15 +207,30 @@ def api_variation(row):
             v["audio"] = "with"
             v["audio_changes_price"] = True
         if variant.startswith("seedance2_5"):
+            # Output is priced per second, but an 80-credit minimum means a short clip costs more per second.
+            v["length_changes_price"] = "not stated"
             v["input_changes_price"] = True
-            v["modifiers"] = [{"label": "input and reference video billed per second on top of output", "usd_per_second": "not stated"}]
-            v["phrases"].append("per second of input and reference video")
+            extra = {"480p": 10, "720p": 15, "1080p": 34}.get(res)
+            mods = []
+            if extra:
+                label = f"plus {extra} credits per second of input and reference video"
+                mods.append({"label": label, "usd_per_second": "not stated"})
+                v["phrases"].append(label)
+            mods.append({"label": "80 credit minimum per generation", "usd_per_second": "not stated"})
+            v["phrases"].append("80 credit minimum per generation")
+            v["modifiers"] = mods
         if variant.startswith("hailuo3"):
             v["input_changes_price"] = True
-            v["phrases"].append("reference image")
+            v["modifiers"] = [{"label": "plus 2 credits per reference image or keyframe", "usd_per_second": "not stated"}]
+            v["phrases"].append("2 credits per reference image")
         if variant.startswith("grok_imagine_1_5"):
             v["input_changes_price"] = True
-            v["phrases"].append("image or audio reference")
+            v["modifiers"] = [{"label": "plus 1 credit per image or audio reference", "usd_per_second": "not stated"}]
+            v["phrases"].append("1 credit per image or audio reference")
+        if variant.startswith("gemini_omni_flash"):
+            v["input_changes_price"] = True
+            v["modifiers"] = [{"label": "plus 1 credit per reference image", "usd_per_second": "not stated"}]
+            v["phrases"].append("1 credit per reference image")
         return v
 
     if plat == "Kling API":
@@ -241,10 +249,8 @@ def api_variation(row):
         return v
 
     if plat == "Google Gemini API" and model == "veo-3-1":
-        # Discontinued. Only mark audio when this row's own needle says so.
-        # The 4K line's needle does not repeat "with audio", and the live pricing page no longer lists Veo.
-        needles = " ".join(c.get("needle") or "" for c in row.get("checks") or []).lower()
-        if "with audio" in needles or "(audio)" in needles:
+        # Discontinued. The variant is "(audio)" and the pricing sentence is the with-audio price.
+        if "(audio)" in variant.lower() or "with audio" in " ".join(c.get("needle") or "" for c in row.get("checks") or []).lower():
             v["audio"] = "with"
         return v
 
@@ -273,6 +279,31 @@ def classify(row):
     return api_variation(row)
 
 
+def tidy_note(row):
+    """Surcharges that now live in modifiers should not stay only in the note."""
+    note = row.get("note") or ""
+    for cut in (
+        "+1 credit per image/audio reference.",
+        "+1 credit per reference image.",
+        "+2 credits per reference image/start frame.",
+        "80-credit ($0.80) minimum per generation; input/reference video billed extra.",
+    ):
+        note = note.replace(cut, "")
+    note = re.sub(r"\s{2,}", " ", note).strip()
+    row["note"] = note
+
+def widen_veo_4k_needle(row):
+    """The 4K check is the rest of the with-audio sentence. Keep the $0.60 expectation."""
+    if row.get("id") != "r067":
+        return
+    for chk in row.get("checks") or []:
+        if chk.get("phrase"):
+            continue
+        if "with audio" in (chk.get("needle") or "").lower():
+            continue
+        if "(4k)" in (chk.get("needle") or "").lower():
+            chk["needle"] = "Veo 3.1 Standard video with audio price (default) Not available {X} (720p and 1080p) ${N} (4k)"
+
 def apply_variations(db):
     """Attach variation objects. Does not change usd_per_second."""
     headlines = []
@@ -280,9 +311,11 @@ def apply_variations(db):
     for row in db["rows"]:
         before = row.get("usd_per_second")
         before_audio = row.get("audio")
+        widen_veo_4k_needle(row)
         v = classify(row)
         phrases = v.pop("phrases")
         row["variation"] = v
+        tidy_note(row)
         for phrase in phrases:
             add_phrase(row, phrase)
         if v["audio"] == "with":
@@ -334,51 +367,65 @@ def _veo_4k_rows(db):
     return made
 
 
+UNLISTED_RESOLUTIONS = {"", "—", "-", "–", "Pro tier", "Pro", "Standard"}
+
+def resolution_matches(row, resolution):
+    """'not listed' matches an empty or tier resolution, the same values the table shows as not listed."""
+    raw = str(row.get("resolution") or "").strip()
+    if str(resolution).strip().lower() == "not listed":
+        return raw in UNLISTED_RESOLUTIONS
+    return str(resolution).lower() in raw.lower()
+
 def quote(row, seconds=None, audio=None, input_type=None, resolution=None):
     """Price one row for a calculator selection. None means no filter.
 
-    status is match, not_offered, or not_stated. usd_per_second is set only on match.
+    status is match, unknown, not_offered, or not_stated.
+    unknown keeps the row: audio or input was not stated, and nothing else contradicts the pick.
+    usd_per_second is set on match and unknown. A length outside min/max is not_offered.
     """
     v = row.get("variation") or blank()
     dur = v.get("duration") or {}
-    if resolution:
-        have = str(row.get("resolution") or "")
-        if resolution.lower() not in have.lower():
-            return {"status": "not_offered", "detail": f"Resolution {resolution} is not this row."}
+    if resolution and not resolution_matches(row, resolution):
+        return {"status": "not_offered", "detail": f"Resolution {resolution} is not this row."}
+    unknown = False
     if audio:
         have = v.get("audio") or "not stated"
         if have == "not stated":
-            return {"status": "not_stated", "detail": "The page does not say whether audio is on."}
-        if have != audio:
+            unknown = True
+        elif have != audio:
             return {"status": "not_offered", "detail": "This row is the other audio price."}
     if input_type:
         have = v.get("input")
         if have == "not stated" or not have:
-            return {"status": "not_stated", "detail": "The page does not name an input type for this price."}
-        if input_type not in have:
+            unknown = True
+        elif input_type not in have:
             return {"status": "not_offered", "detail": "This row is a different input type."}
-    if seconds is None:
-        return {"status": "match", "usd_per_second": row["usd_per_second"], "detail": ""}
-    rates = dur.get("rate_by_length")
-    if isinstance(rates, list):
-        for tier in rates:
-            if int(seconds) in [int(s) for s in tier.get("seconds") or []]:
-                return {"status": "match", "usd_per_second": tier["usd_per_second"], "detail": tier.get("label") or ""}
+    usd = row["usd_per_second"]
+    detail = ""
+    if seconds is not None:
         lo, hi = dur.get("min_seconds"), dur.get("max_seconds")
-        if _num(lo) and seconds < lo or _num(hi) and seconds > hi:
+        if (_num(lo) and seconds < lo) or (_num(hi) and seconds > hi):
             return {"status": "not_offered", "detail": "That length is outside the range on the page."}
-        return {"status": "not_stated", "detail": "The page gives a per-second rate for another length, not this one."}
-    lo, hi = dur.get("min_seconds"), dur.get("max_seconds")
-    if (_num(lo) and seconds < lo) or (_num(hi) and seconds > hi):
-        return {"status": "not_offered", "detail": "That length is outside the range on the page."}
-    if v.get("length_changes_price") is False:
-        return {"status": "match", "usd_per_second": row["usd_per_second"], "detail": ""}
-    priced = dur.get("priced_seconds")
-    if _num(priced):
-        if int(seconds) == int(priced):
-            return {"status": "match", "usd_per_second": row["usd_per_second"], "detail": f"{priced:g}s"}
-        return {"status": "not_stated", "detail": f"The page prices this clip at {priced:g}s, not {int(seconds)}s."}
-    return {"status": "not_stated", "detail": "The page does not state a rate for that length."}
+        rates = dur.get("rate_by_length")
+        if isinstance(rates, list):
+            tier = next((t for t in rates if int(seconds) in [int(s) for s in t.get("seconds") or []]), None)
+            if tier is None:
+                return {"status": "not_stated", "detail": "The page gives a per-second rate for another length, not this one."}
+            usd = tier["usd_per_second"]
+            detail = tier.get("label") or ""
+        elif v.get("length_changes_price") is False:
+            detail = ""
+        else:
+            priced = dur.get("priced_seconds")
+            if _num(priced) and int(seconds) == int(priced):
+                detail = f"{priced:g}s"
+            elif _num(priced):
+                return {"status": "not_stated", "detail": f"The page prices this clip at {priced:g}s, not {int(seconds)}s."}
+            else:
+                return {"status": "not_stated", "detail": "The page does not state a rate for that length."}
+    if unknown:
+        return {"status": "unknown", "usd_per_second": usd, "detail": "not stated by vendor"}
+    return {"status": "match", "usd_per_second": usd, "detail": detail}
 
 
 def variation_errors(rows):

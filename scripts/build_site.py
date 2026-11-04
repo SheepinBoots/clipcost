@@ -548,12 +548,13 @@ def spec_phrase(r):
     tier = shown_tier(r)
     # "Pro tier" already ends in tier. Prefixing it reads as "plan tier Pro tier".
     tier_bit = tier if tier.lower().endswith("tier") else f"plan tier {tier}"
-    bits = [tier_bit, f"resolution {shown_resolution(r)}", audio_phrase(r)]
-    if input_phrase(r) != "not stated":
-        bits.append("input " + input_phrase(r))
-    if length_phrase(r) != "not stated":
-        bits.append(length_phrase(r))
-    return ", ".join(bits)
+    aud = shown_audio(r)
+    aud_bit = "audio not stated" if aud == "not stated" else aud + " audio"
+    inp = input_phrase(r)
+    inp_bit = "input not stated" if inp == "not stated" else "input " + inp
+    length = length_phrase(r)
+    length_bit = "length not stated" if length == "not stated" else length
+    return ", ".join([tier_bit, f"resolution {shown_resolution(r)}", aud_bit, inp_bit, length_bit])
 
 def assumption_text(r):
     """Usage assumption for a credit plan, or the vendor basis for a flagged estimate. Empty otherwise."""
@@ -1434,22 +1435,26 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
     return true;
   }})||null;
  }}
+ function unlistedRes(res){{const raw=String(res||'').trim(); return raw===''||raw==='\u2014'||raw==='-'||raw==='\u2013'||raw==='Pro tier'||raw==='Pro'||raw==='Standard'}}
  function quoteRow(r, seconds, audio, inputType, resolution){{
   const v=r.variation||{{}}, dur=v.duration||{{}};
-  if(resolution && String(r.resolution||'').toLowerCase().indexOf(String(resolution).toLowerCase())<0) return {{status:'not_offered'}};
-  if(audio){{const have=v.audio||'not stated'; if(have==='not stated') return {{status:'not_stated'}}; if(have!==audio) return {{status:'not_offered'}}}}
-  if(inputType){{const have=v.input; if(!have||have==='not stated') return {{status:'not_stated'}}; if(have.indexOf(inputType)<0) return {{status:'not_offered'}}}}
-  if(seconds==null) return {{status:'match'}};
-  if(Array.isArray(dur.rate_by_length)){{
-    const tier=dur.rate_by_length.find(t=>(t.seconds||[]).map(Number).indexOf(Number(seconds))>=0);
-    if(tier) return {{status:'match'}};
-    if((typeof dur.min_seconds==='number'&&seconds<dur.min_seconds)||(typeof dur.max_seconds==='number'&&seconds>dur.max_seconds)) return {{status:'not_offered'}};
-    return {{status:'not_stated'}};
+  if(resolution){{
+    if(String(resolution).toLowerCase()==='not listed'){{ if(!unlistedRes(r.resolution)) return {{status:'not_offered'}} }}
+    else if(String(r.resolution||'').toLowerCase().indexOf(String(resolution).toLowerCase())<0) return {{status:'not_offered'}};
   }}
-  if((typeof dur.min_seconds==='number'&&seconds<dur.min_seconds)||(typeof dur.max_seconds==='number'&&seconds>dur.max_seconds)) return {{status:'not_offered'}};
-  if(v.length_changes_price===false) return {{status:'match'}};
-  if(typeof dur.priced_seconds==='number') return Number(seconds)===Number(dur.priced_seconds)?{{status:'match'}}:{{status:'not_stated'}};
-  return {{status:'not_stated'}};
+  let unknown=false;
+  if(audio){{const have=v.audio||'not stated'; if(have==='not stated') unknown=true; else if(have!==audio) return {{status:'not_offered'}}}}
+  if(inputType){{const have=v.input; if(!have||have==='not stated') unknown=true; else if(have.indexOf(inputType)<0) return {{status:'not_offered'}}}}
+  if(seconds!=null){{
+    if((typeof dur.min_seconds==='number'&&seconds<dur.min_seconds)||(typeof dur.max_seconds==='number'&&seconds>dur.max_seconds)) return {{status:'not_offered'}};
+    if(Array.isArray(dur.rate_by_length)){{
+      if(!dur.rate_by_length.find(t=>(t.seconds||[]).map(Number).indexOf(Number(seconds))>=0)) return {{status:'not_stated'}};
+    }} else if(v.length_changes_price!==false){{
+      if(typeof dur.priced_seconds==='number'){{ if(Number(seconds)!==Number(dur.priced_seconds)) return {{status:'not_stated'}} }}
+      else return {{status:'not_stated'}};
+    }}
+  }}
+  return unknown?{{status:'unknown'}}:{{status:'match'}};
  }}
  let picksRead=false;
  function go(){{const k=$('plan').value,p=d.plans[k],u=readUsed();
@@ -1480,18 +1485,20 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   const clipSecs=rawClip===''?null:Math.max(1, Math.round(Number(rawClip))||1);
   const wantRes=$('resPick').value, wantAudio=$('audioPick').value, wantInput=$('inputPick').value;
   const judged=rsAll.map(r=>({{r, q:quoteRow(r, clipSecs, wantAudio, wantInput, wantRes)}}));
-  const stated=judged.filter(x=>x.q.status==='not_stated').length, missed=judged.filter(x=>x.q.status==='not_offered').length;
-  const rs=judged.filter(x=>x.q.status==='match').map(x=>x.r).sort((a,b)=>a.usd_per_second-b.usd_per_second);
+  const shown=judged.filter(x=>x.q.status==='match'||x.q.status==='unknown').sort((a,b)=>a.r.usd_per_second-b.r.usd_per_second);
+  const unknownN=judged.filter(x=>x.q.status==='unknown').length, stated=judged.filter(x=>x.q.status==='not_stated').length, missed=judged.filter(x=>x.q.status==='not_offered').length;
+  const rowsPhrase=(n, one, many)=>n+(n===1?' row '+one:' rows '+many);
   let msg='';
-  if(!rs.length) msg='That combination is not offered, or the page does not state it, for this plan.';
+  if(!shown.length) msg='That combination is not offered, or the page does not state a price for it, for this plan.';
   else {{
     const bits=[];
-    if(stated) bits.push(stated+(stated===1?' row does':' rows do')+' not state this combination, so they are not priced.');
-    if(missed) bits.push(missed+(missed===1?' row offers':' rows offer')+' a different combination.');
+    if(unknownN) bits.push(rowsPhrase(unknownN, 'does not state audio or input, so it is marked not stated by vendor.', 'do not state audio or input, so they are marked not stated by vendor.'));
+    if(stated) bits.push(rowsPhrase(stated, 'does not state this length, so it is not priced.', 'do not state this length, so they are not priced.'));
+    if(missed) bits.push(rowsPhrase(missed, 'offers a different combination.', 'offer a different combination.'));
     msg=bits.join(' ');
   }}
   $('calcMsg').textContent=msg;
-  $('ct').querySelector('tbody').innerHTML=rs.map(r=>{{const clips=clipCount(credits*u,r.credits_per_clip);const unit=price/credits;const pc=unit*r.credits_per_clip/u;
+  $('ct').querySelector('tbody').innerHTML=shown.map(({{r,q}})=>{{const clips=clipCount(credits*u,r.credits_per_clip);const unit=price/credits;const pc=unit*r.credits_per_clip/u;
    const priceCell=clips>0?clipMoney(pc):'—', perSec=clips>0?money(pc/r.clip_seconds):'—';
    let extra='';
    const hit=unlimitedHit(map, r);
@@ -1507,7 +1514,8 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
    const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
    const cred=(r.status=='estimate'?'~':'')+(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0);
    const also=modifierOf(r);
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}<div class="small">Input: ${{esc(inputOf(r))}}</div><div class="small">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="small">Also: '+esc(also)+'</div>':''}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
+   const mark=q.status==='unknown'?'<div class="small">not stated by vendor</div>':'';
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}<div class="small">Input: ${{esc(inputOf(r))}}</div><div class="small">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="small">Also: '+esc(also)+'</div>':''}}${{mark}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
   const q=new URLSearchParams(); q.set('plan', k);
   if(wantRes) q.set('res', wantRes); if(clipSecs!=null) q.set('seconds', String(clipSecs)); if(wantAudio) q.set('audio', wantAudio); if(wantInput) q.set('input', wantInput);
   history.replaceState(null,'','?'+q);}}
@@ -1568,7 +1576,7 @@ page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRA
 <li><b>APIs</b>: we use the vendor's stated $ per second. Runway credits are $0.01 each.</li>
 <li><b>Credit plans</b>: plan price ÷ credits = $ per credit; × credits per clip ÷ clip length = $ per second. That assumes you use all your credits.</li>
 <li>If a vendor says "~", "roughly" or "estimated", we label the row <i>approx.</i> If we can't confirm a price, we leave it out rather than guess.</li>
-<li><b>Audio, input, and length</b> are recorded only when the vendor page says them. Audio is with audio, without audio, or not stated. Input is text-to-video, image-to-video, reference, video-to-video, extend, or lip-sync, and only when that mode is named for the price. Length is the clip the credit price is for, a stated min and max, or a per-second rate the page ties to a length. If the page does not say, the field stays not stated. A different price becomes its own row. It is not guessed from a nearby row.</li>
+<li><b>Audio, input, and length</b> are copied from the vendor page. Audio is with audio, without audio, or not stated. Input is text-to-video, image-to-video, reference, video-to-video, extend, or lip-sync when that mode is named for the price. Length is the clip the credit price is for, a stated min and max, or a per-second rate the page ties to a length. If the page does not say it, the field stays not stated. A value is not inferred from a nearby sentence or from another row. A different stated price becomes its own row.</li>
 <li>When a vendor shuts an endpoint down, that row is marked <i>discontinued</i> and kept under Discontinued with the last recorded rate. It is not used for cheapest picks.</li>
 <li>Prices exclude VAT/sales tax and change often. Always confirm on the vendor's page before paying.</li>
 <li><b>Deals</b> are a separate list. A discounted $/s uses the vendor's stated rate or the checkout plan price ÷ credits. A code that lasts the first N months also shows a 12-month blended rate. Unlimited windows show how many seconds of video cover the plan price. They are not listed at $0/s.</li></ul>
