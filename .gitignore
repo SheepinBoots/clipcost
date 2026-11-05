@@ -20,3 +20,6 @@ preview/
 # OS / editor
 .DS_Store
 *.log
+
+# Cloudflare local dev
+.wrangler/

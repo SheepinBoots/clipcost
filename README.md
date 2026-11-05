@@ -41,6 +41,12 @@ Open a [GitHub issue](https://github.com/SheepinBoots/clipcost/issues/new).
 
 Weekly price reports live at `/reports/` and `/reports/YYYY-wNN/`. `REPORTS_ENABLED` in `scripts/build_site.py` is on, so a qualifying week is included in the deployed site. A Friday run (13:30 UTC, with the 15:17 UTC refresh as the backstop) covers the ISO week through that Friday. The week is published only when [`data/price_changes.jsonl`](data/price_changes.jsonl) has at least two qualifying changes. A per-second price change, a promo start, and a promo end each count. A shorter week is skipped and those changes roll forward. The first edition is the week of Oct 26, 2026 (2026-w44) and includes verified changes since the Oct 20 baseline. `python3 scripts/preview_report.py` writes the current eligible report into `preview/`.
 
+## MCP server
+
+A read-only MCP server for ChatGPT, Claude, and Cursor lives in [`mcp-server`](mcp-server/). It is a Cloudflare Worker planned for `https://mcp.vidfare.com/mcp`. It reads the live [prices.json](https://vidfare.com/data/prices.json) and [deals.json](https://vidfare.com/deals.json), keeps them for five minutes, and does not invent a price. The endpoint is not deployed yet. The docs page is [/mcp/](https://vidfare.com/mcp/).
+
+`src/.well-known/mcp-registry-auth` is a placeholder. At publish time, replace that whole line with the `v=MCPv1; k=ed25519; p=...` proof record from `mcp-publisher login http`. The build copies it to `dist/.well-known/mcp-registry-auth` and writes `dist/.nojekyll` so GitHub Pages serves the dot-directory. Registry metadata is [`mcp-server/server.json`](mcp-server/server.json). A Cursor example is [`mcp-server/.mcp.json`](mcp-server/.mcp.json).
+
 ## License
 
 MIT (see LICENSE)
