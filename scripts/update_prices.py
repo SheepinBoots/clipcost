@@ -43,6 +43,35 @@ def next_flight_text(html):
             continue
     return collapse(" ".join(parts)) if parts else ""
 
+def billing_tier_text(html):
+    """Read per-tier prices from JSON script tags BeautifulSoup does not show.
+
+    Replicate keeps the billing table in a React props script. The visible
+    page text no longer includes lines like "480p: $0.035 per second".
+    """
+    lines, seen = [], set()
+    for raw in re.findall(r'<script\b[^>]*type="application/json"[^>]*>(.*?)</script>', html, re.S):
+        try:
+            data = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(data, dict):
+            continue
+        tiers = (data.get("billingConfig") or {}).get("current_tiers") or []
+        for tier in tiers:
+            title = str(tier.get("title") or "").strip()
+            for price in tier.get("prices") or []:
+                amount = str(price.get("price") or "").strip()
+                label = str(price.get("title") or "").strip()
+                if not title or not amount:
+                    continue
+                line = f"{title}: {amount} {label}".strip()
+                if line in seen:
+                    continue
+                seen.add(line)
+                lines.append(line)
+    return collapse(" ".join(lines)) if lines else ""
+
 def fetch(src):
     if src["fetch"] == "static":
         r = requests.get(src["url"], headers={"User-Agent": UA}, timeout=40)
@@ -53,13 +82,33 @@ def fetch(src):
             extra = next_flight_text(r.text)
             if extra:
                 text = text + " " + extra
+        if src.get("billing_json"):
+            extra = billing_tier_text(r.text)
+            if extra:
+                text = text + " " + extra
         return text
     if src["fetch"] == "render":
-        out = subprocess.run(["node", os.path.join(ROOT, "scripts", "render.mjs"), src["url"], "5000"],
-                             capture_output=True, text=True, timeout=150)
-        if len(out.stdout) < 500: raise RuntimeError("render returned too little text")
-        return collapse(out.stdout)
+        return collapse(render_text(src))
     raise RuntimeError("manual source")
+
+def render_text(src):
+    """Render a JS page. Retry once when a required phrase has not hydrated."""
+    attempts = 2 if src.get("ready") else 1
+    last = "render failed"
+    for _ in range(attempts):
+        cmd = ["node", os.path.join(ROOT, "scripts", "render.mjs"), src["url"], "5000"]
+        if src.get("ready"):
+            cmd.append(src["ready"])
+        try:
+            out = subprocess.run(cmd, capture_output=True, text=True, timeout=150)
+        except subprocess.TimeoutExpired:
+            last = "render timed out"
+            continue
+        if out.returncode == 0 and len(out.stdout) >= 500:
+            return out.stdout
+        detail = (out.stderr or "render returned too little text").strip().splitlines()
+        last = detail[-1][:200] if detail else "render failed"
+    raise RuntimeError(last)
 
 def needle_re(needle):
     parts = re.split(r"(\{N\}|\{X\})", needle)

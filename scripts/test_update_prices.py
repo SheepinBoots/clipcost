@@ -36,6 +36,13 @@ def main():
     assert status == "ok" and value == 0.099, (status, value)
     assert up.next_flight_text("<html><p>no payload</p></html>") == ""
     assert up.check("visible only", {"needle": needle, "expect": 0.099})[0] == "missing"
+    # Replicate hides the billing table in a JSON script BeautifulSoup drops.
+    billing = '<script type="application/json">{"billingConfig":{"current_tiers":[{"title":"480p","prices":[{"price":"$0.035","title":"per second of output video"}]},{"title":"720p","prices":[{"price":"$0.07","title":"per second of output video"}]},{"title":"1080p","prices":[{"price":"$0.14","title":"per second of output video"}]}]}}</script>'
+    billed = up.billing_tier_text(billing)
+    assert up.check(billed, {"needle": "480p: ${N} per second", "expect": 0.035}) == ("ok", 0.035)
+    assert up.check(billed, {"needle": "720p: ${N} per second", "expect": 0.07}) == ("ok", 0.07)
+    assert up.check(billed, {"needle": "1080p: ${N} per second", "expect": 0.14}) == ("ok", 0.14)
+    assert up.billing_tier_text("<html><p>no billing</p></html>") == ""
     assert up.check("if voice control is used you will be charged $0.196 .", {"needle": "you will be charged $0.196", "phrase": True})[0] == "ok"
     assert up.check("no voice price", {"needle": "you will be charged $0.196", "phrase": True})[0] == "missing"
     print("ok")

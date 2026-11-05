@@ -5,7 +5,31 @@
     <title>VidFare</title>
     <link>https://vidfare.com/</link>
     <description>Price changes, weekly reports, and live deals.</description>
-    <lastBuildDate>Tue, 03 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 05 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Wan 3.0 on Replicate (alibaba/wan-3, 1080p): $0.20 → $0.14/s</title>
+      <link>https://vidfare.com/changes/#change-bbbdf0a7ba8284a2</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-bbbdf0a7ba8284a2</guid>
+      <pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Replicate (alibaba/wan-3, 1080p): $0.20 → $0.14/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Replicate (alibaba/wan-3, 720p): $0.10 → $0.07/s</title>
+      <link>https://vidfare.com/changes/#change-619b5508f03999b1</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-619b5508f03999b1</guid>
+      <pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Replicate (alibaba/wan-3, 720p): $0.10 → $0.07/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Replicate (alibaba/wan-3, 480p): $0.05 → $0.035/s</title>
+      <link>https://vidfare.com/changes/#change-4f9818b02aaa7c5e</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-4f9818b02aaa7c5e</guid>
+      <pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Replicate (alibaba/wan-3, 480p): $0.05 → $0.035/s</description>
+      <category>price change</category>
+    </item>
     <item>
       <title>MiniMax H3 Lite and Highspeed 50% off on Replicate until Dec 31</title>
       <link>https://vidfare.com/deals/#replicate-minimax-h3-lite-highspeed-50</link>

@@ -230,5 +230,41 @@
   "vendor": "Higgsfield",
   "source_url": "https://higgsfield.ai/pricing",
   "text": "Kling 3.0 unlimited for 7 days on Plus and Ultra ended 2026-10-30."
+ },
+ {
+  "date": "2026-11-05",
+  "row": "r025",
+  "model": "wan-3-0",
+  "platform": "Replicate",
+  "variant": "alibaba/wan-3",
+  "resolution": "480p",
+  "old_usd_per_second": 0.05,
+  "new_usd_per_second": 0.035,
+  "source_url": "https://replicate.com/alibaba/wan-3",
+  "type": "price"
+ },
+ {
+  "date": "2026-11-05",
+  "row": "r026",
+  "model": "wan-3-0",
+  "platform": "Replicate",
+  "variant": "alibaba/wan-3",
+  "resolution": "720p",
+  "old_usd_per_second": 0.1,
+  "new_usd_per_second": 0.07,
+  "source_url": "https://replicate.com/alibaba/wan-3",
+  "type": "price"
+ },
+ {
+  "date": "2026-11-05",
+  "row": "r027",
+  "model": "wan-3-0",
+  "platform": "Replicate",
+  "variant": "alibaba/wan-3",
+  "resolution": "1080p",
+  "old_usd_per_second": 0.2,
+  "new_usd_per_second": 0.14,
+  "source_url": "https://replicate.com/alibaba/wan-3",
+  "type": "price"
  }
 ]

@@ -1,9 +1,9 @@
 {
- "run": "2026-11-04T21:22:02",
+ "run": "2026-11-05T16:13:25",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 15590
+   "chars": 15578
   },
   "hf_api": {
    "status": "fetched",
@@ -27,7 +27,7 @@
   },
   "fal_seed25": {
    "status": "fetched",
-   "chars": 11763
+   "chars": 10286
   },
   "fal_veo31": {
    "status": "fetched",
@@ -39,7 +39,7 @@
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1492
+   "chars": 1614
   },
   "runway": {
    "status": "fetched",
@@ -55,15 +55,15 @@
   },
   "atlas": {
    "status": "fetched",
-   "chars": 2079861
+   "chars": 2113462
   },
   "krea": {
    "status": "fetched",
-   "chars": 42330
+   "chars": 42594
   },
   "magnific": {
    "status": "fetched",
-   "chars": 9272
+   "chars": 9256
   },
   "kling_app": {
    "status": "manual",
@@ -72,7 +72,7 @@
   },
   "fal_h3max": {
    "status": "fetched",
-   "chars": 7529
+   "chars": 7534
   },
   "fal_h3turbo": {
    "status": "fetched",
@@ -84,42 +84,6 @@
   }
  },
  "findings": [
-  {
-   "kind": "row",
-   "id": "r025",
-   "source": "rep_wan3",
-   "status": "missing",
-   "needle": "480p: ${N} per second",
-   "old": 0.05,
-   "new": null,
-   "model": "wan-3-0",
-   "platform": "Replicate",
-   "variant": "alibaba/wan-3"
-  },
-  {
-   "kind": "row",
-   "id": "r026",
-   "source": "rep_wan3",
-   "status": "missing",
-   "needle": "720p: ${N} per second",
-   "old": 0.1,
-   "new": null,
-   "model": "wan-3-0",
-   "platform": "Replicate",
-   "variant": "alibaba/wan-3"
-  },
-  {
-   "kind": "row",
-   "id": "r027",
-   "source": "rep_wan3",
-   "status": "missing",
-   "needle": "1080p: ${N} per second",
-   "old": 0.2,
-   "new": null,
-   "model": "wan-3-0",
-   "platform": "Replicate",
-   "variant": "alibaba/wan-3"
-  },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
@@ -135,7 +99,7 @@
     "vendor": "Higgsfield",
     "url": "https://higgsfield.ai/pricing",
     "status": "fetched",
-    "snippets": 22
+    "snippets": 23
    },
    {
     "id": "krea",
@@ -169,9 +133,9 @@
   "candidates": 1
  },
  "counts": {
-  "ok": 200,
+  "ok": 371,
   "changed": 0,
-  "missing": 3,
+  "missing": 0,
   "skipped": 6
  }
 }
