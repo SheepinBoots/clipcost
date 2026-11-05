@@ -98,7 +98,9 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 
 ## Data
 
-- [prices.json](https://vidfare.com/data/prices.json): the price catalog this page is built from.
+- [Price data](https://vidfare.com/data/): how to read prices.json, share a calculator link, and credit VidFare.
+- [prices.json](https://vidfare.com/data/prices.json): the price catalog. CORS is open. A full check updates last_full_check.
+- Calculator link: https://vidfare.com/calculator/?model=kling-3-0&seconds=10 — model is the /models/<slug>/ slug. Optional: resolution, audio (with or without), input (t2v, i2v, ref2v, v2v, extend, lip-sync), plan, provider, seconds, used.
 - [deals.json](https://vidfare.com/deals.json): the live and archived deals.
 - [feed.xml](https://vidfare.com/feed.xml): RSS of price changes, weekly reports, and live deals.
 
