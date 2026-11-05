@@ -290,7 +290,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <main class="wrap">{body}</main>
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p><b>Guides:</b> {guidelinks}</p>
-<p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="{root("/about/#disclosure")}">disclosure</a>).</p>
+<p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a class="disc" href="{root("/about/#disclosure")}">disclosure</a>).</p>
 <p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/advertise/")}">Advertise</a></p></div></footer>
 {before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
