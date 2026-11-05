@@ -717,8 +717,8 @@ shutil.copy(os.path.join(ROOT, "src", "google43692aaea77cfb47.html"), DIST)
 cname_host = urlparse(SITE_URL).hostname or ""
 open(os.path.join(DIST, "CNAME"), "w").write(cname_host + "\n")
 open(os.path.join(ROOT, "CNAME"), "w").write(cname_host + "\n")
-# GitHub Pages runs Jekyll for branch deploys and skips dot-directories such as
-# .well-known unless this file is present. The Actions artifact is dist/.
+# upload-pages-artifact omits dot paths unless include-hidden-files is true.
+# .nojekyll also stops a Jekyll publish from skipping .well-known.
 open(os.path.join(DIST, ".nojekyll"), "w").write("")
 auth_src = os.path.join(ROOT, "src", ".well-known", "mcp-registry-auth")
 auth_dir = os.path.join(DIST, ".well-known")
@@ -2087,7 +2087,8 @@ def write_llms():
         f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog. CORS is open. A full check updates last_full_check.",
         f"- Calculator link: {SITE_URL}/calculator/?model=kling-3-0&seconds=10 — model is the /models/<slug>/ slug. Optional: resolution, audio (with or without), input (t2v, i2v, ref2v, v2v, extend, lip-sync), plan, provider, seconds, used.",
         f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals. The same file is also at {SITE_URL}/data/deals.json.",
-        f"- [Use VidFare with AI]({SITE_URL}/mcp/): a read-only MCP server for ChatGPT, Claude, and Cursor. The endpoint https://mcp.vidfare.com/mcp is coming soon. It reads prices.json and deals.json and does not invent a price.",
+        f"- [Use VidFare with AI]({SITE_URL}/mcp/): the live read-only MCP server at https://mcp.vidfare.com/mcp for ChatGPT, Claude, and Cursor. It reads prices.json and deals.json and does not invent a price.",
+        "- MCP tools: list_models (each model and its cheapest current dollars per second); get_model_prices (one model, with an optional provider and resolution); estimate_cost (one clip, using the credit calculator's inputs); cheapest_options (lowest stated price for a length and resolution); list_deals (live deals, or upcoming, ended, or all).",
         f"- [feed.xml]({SITE_URL}/feed.xml): RSS of price changes, weekly reports, and live deals.",
         "",
         f"Advertise: {SITE_URL}/advertise/ — labelled sponsor placements. They never change the price order.",
@@ -2251,7 +2252,7 @@ data_body = f"""<h1>Price data</h1>
 <h2>Using the data</h2>
 <p>Free to use. Please credit and link {BRAND} (vidfare.com). The code in the GitHub repository is MIT. The price data is free to use with that credit.</p>
 <h2>Ask an assistant</h2>
-<p>The same files can be queried through a read-only MCP server. How to add it to ChatGPT, Claude, and Cursor is on <a href="{root("/mcp/")}">Use VidFare with AI</a>. The endpoint <code>https://mcp.vidfare.com/mcp</code> is coming soon. It reads this file and <a href="{root("/deals.json")}">deals.json</a>. It does not replace either file, and it does not invent a price.</p>
+<p>The same files can be queried through the live read-only MCP server at <a href="https://mcp.vidfare.com/mcp"><code>https://mcp.vidfare.com/mcp</code></a>. How to add it to ChatGPT, Claude, and Cursor is on <a href="{root("/mcp/")}">Use VidFare with AI</a>. It reads this file and <a href="{root("/deals.json")}">deals.json</a>. It does not replace either file, and it does not invent a price.</p>
 """
 page("/data/", page_title("Price data for developers"),
      f"How to read the public {BRAND} price file, share a calculator link, and credit the data.",
@@ -2272,7 +2273,7 @@ mcp_ld = {
 }
 mcp_body = f"""<h1>Use VidFare with AI</h1>
 <p class="lead">A public, read-only server so ChatGPT, Claude, and Cursor can look up {BRAND} prices and cite vidfare.com.</p>
-<div class="callout"><b>Coming soon.</b> The server is in this repository and is not deployed yet. <code>https://mcp.vidfare.com/mcp</code> will answer once the Worker and the <code>mcp</code> DNS record are live. Until then a client will not connect. The steps below are the ones to use when it is.</div>
+<div class="callout"><b>Live.</b> Connect a client to <code>https://mcp.vidfare.com/mcp</code>. The server is public and read-only. No key and no sign-in.</div>
 <p>It reads <a href="{root("/data/prices.json")}">prices.json</a> and <a href="{root("/deals.json")}">deals.json</a>. It does not scrape vendor sites, and it does not invent a price when those files do not state one. Answers include the source, the date last checked, and a link back to {BRAND}.</p>
 <h2>Models</h2>
 <p>{mcp_models}.</p>
@@ -2286,27 +2287,29 @@ mcp_body = f"""<h1>Use VidFare with AI</h1>
 </ul>
 <h2>ChatGPT</h2>
 <ol>
-<li>Open Settings, then Apps or Connectors.</li>
-<li>Add a custom MCP connector.</li>
+<li>If you do not see a way to add a server, open Settings, then Apps or Security, and turn on Developer mode.</li>
+<li>On the web, open Settings, then Apps, and create an app. In the desktop app, open Settings, then Plugins, then MCPs, and choose Add MCP server.</li>
+<li>Name it VidFare. If it asks for a transport, choose Streamable HTTP.</li>
 <li>Paste <code>https://mcp.vidfare.com/mcp</code>.</li>
-<li>Leave authentication off. The server is public and read-only.</li>
+<li>Leave the token, headers, and OAuth client empty. Save, then ask for a VidFare price.</li>
 </ol>
 <h2>Claude</h2>
 <ol>
-<li>Open Settings, then Connectors.</li>
-<li>Add a custom connector named VidFare.</li>
-<li>Paste <code>https://mcp.vidfare.com/mcp</code>.</li>
-<li>Leave authentication off.</li>
+<li>Open Settings, then Connectors. On claude.ai that is Customize, then Connectors.</li>
+<li>Choose Add custom connector.</li>
+<li>Name it VidFare and paste <code>https://mcp.vidfare.com/mcp</code>.</li>
+<li>Leave the OAuth client id and secret blank, then add it. If a sign-in window opens, close it. This server has no account.</li>
+<li>Allow the tools. They only read public prices.</li>
 </ol>
 <h2>Cursor</h2>
-<p>Add this to the project file <code>.cursor/mcp.json</code>, or use the same JSON as <code>.mcp.json</code>:</p>
+<p>For one project, save this as <code>.cursor/mcp.json</code>. For every project, save it as <code>~/.cursor/mcp.json</code>. The same JSON also works as <code>.mcp.json</code>.</p>
 <p><code style="white-space:pre-wrap">{e(mcp_cursor)}</code></p>
-<p class="small">The copy in the repository is <code>mcp-server/.mcp.json</code>. There is no API key to add.</p>
+<p class="small">The copy in the repository is <code>mcp-server/.mcp.json</code>. Save the file. Cursor lists VidFare under Settings, then MCP. There is no API key.</p>
 <h2>The price file is still here</h2>
 <p>Scripts that fetch JSON can keep using <a href="{root("/data/")}">the data page</a>. The assistant server is another way to read the same catalog.</p>
 """
 page("/mcp/", page_title("Use VidFare with AI"),
-     f"How to connect ChatGPT, Claude, and Cursor to the {BRAND} price server. The endpoint is coming soon.",
+     f"How to connect ChatGPT, Claude, and Cursor to the live {BRAND} price server.",
      mcp_body, "", ld_script(mcp_ld))
 
 urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/", "/mcp/"]
@@ -2340,6 +2343,49 @@ def check_sponsor_renderer():
         raise SystemExit("an active slot with an empty name is treated as empty")
     if sponsor_record("model:not-a-real-model") is not sponsors.get("model:default"):
         raise SystemExit("model pages should fall back to model:default")
+
+def mcp_link_errors():
+    """Site links to /mcp/ or the registry file must be files this build wrote."""
+    import re
+    targets = []
+    for dirpath, _, filenames in os.walk(DIST):
+        for name in filenames:
+            if not name.endswith((".html", ".xml", ".txt")):
+                continue
+            path = os.path.join(dirpath, name)
+            text = open(path, encoding="utf-8").read()
+            rel = os.path.relpath(path, DIST)
+            for match in re.finditer(r'(?:href|loc)="([^"]+)"|\((https://vidfare\.com[^)\s]+)\)', text):
+                raw = match.group(1) or match.group(2)
+                site_path = None
+                if raw.startswith(SITE_URL + "/"):
+                    site_path = raw[len(SITE_URL):]
+                elif raw.startswith("/") and not raw.startswith("//"):
+                    site_path = raw
+                if site_path is None:
+                    continue
+                site_path = site_path.split("#", 1)[0].split("?", 1)[0]
+                if site_path.rstrip("/") not in ("/mcp", "/.well-known/mcp-registry-auth"):
+                    if not site_path.startswith("/.well-known/"):
+                        continue
+                targets.append((rel, site_path))
+    errors = []
+    seen = set()
+    for rel, site_path in targets:
+        key = (rel, site_path)
+        if key in seen:
+            continue
+        seen.add(key)
+        bare = site_path.lstrip("/")
+        if site_path.endswith("/"):
+            dest = os.path.join(DIST, bare, "index.html")
+        else:
+            dest = os.path.join(DIST, bare)
+        if not os.path.isfile(dest):
+            errors.append(f"{rel} links to {site_path}, which this build did not write")
+    if not any(site_path.rstrip("/") == "/mcp" for _, site_path in seen):
+        errors.append("no built page links to /mcp/")
+    return errors
 
 def audit_site():
     """Fail the build if a page breaks the HTML or sponsor rules."""
@@ -2586,13 +2632,24 @@ def audit_site():
         errors.append("mcp page was not built")
     else:
         mcp_html = open(mcp_page, encoding="utf-8").read()
-        if "Coming soon" not in mcp_html or "https://mcp.vidfare.com/mcp" not in mcp_html:
-            errors.append("mcp page is missing the coming soon notice or the endpoint")
+        if "https://mcp.vidfare.com/mcp" not in mcp_html:
+            errors.append("mcp page is missing the endpoint")
+        if "<b>Live.</b>" not in mcp_html:
+            errors.append("mcp page is missing the live notice")
+        if "coming soon" in mcp_html.lower() or "not deployed" in mcp_html.lower():
+            errors.append("mcp page still says the server is not live")
         if "<h1>Use VidFare with AI</h1>" not in mcp_html:
             errors.append("mcp page h1")
+        for tool in ("list_models", "get_model_prices", "estimate_cost", "cheapest_options", "list_deals"):
+            if f"<code>{tool}</code>" not in mcp_html:
+                errors.append(f"mcp page is missing {tool}")
     data_html = open(os.path.join(DIST, "data", "index.html"), encoding="utf-8").read()
     if f'href="{root("/mcp/")}"' not in data_html:
         errors.append("data page does not link to /mcp/")
+    if "https://mcp.vidfare.com/mcp" not in data_html:
+        errors.append("data page is missing the live MCP endpoint")
+    if "coming soon" in data_html.lower():
+        errors.append("data page still says the MCP server is coming soon")
     auth_file = os.path.join(DIST, ".well-known", "mcp-registry-auth")
     auth_body = open(auth_file, encoding="utf-8").read() if os.path.isfile(auth_file) else ""
     if "PLACEHOLDER_REPLACE_AT_PUBLISH" not in auth_body or not auth_body.startswith("v=MCPv1;"):
@@ -2663,6 +2720,12 @@ def audit_site():
         errors.append("llms.txt does not mention /advertise/")
     if f"{SITE_URL}/mcp/" not in llms or "mcp.vidfare.com/mcp" not in llms:
         errors.append("llms.txt does not mention the MCP server")
+    if "coming soon" in llms.lower():
+        errors.append("llms.txt still says the MCP server is coming soon")
+    for tool in ("list_models", "get_model_prices", "estimate_cost", "cheapest_options", "list_deals"):
+        if tool not in llms:
+            errors.append(f"llms.txt does not name {tool}")
+    errors.extend(mcp_link_errors())
     models_index = os.path.join(DIST, "models", "index.html")
     if not os.path.isfile(models_index):
         errors.append("models index was not built")

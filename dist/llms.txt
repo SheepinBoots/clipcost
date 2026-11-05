@@ -102,7 +102,8 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [prices.json](https://vidfare.com/data/prices.json): the price catalog. CORS is open. A full check updates last_full_check.
 - Calculator link: https://vidfare.com/calculator/?model=kling-3-0&seconds=10 — model is the /models/<slug>/ slug. Optional: resolution, audio (with or without), input (t2v, i2v, ref2v, v2v, extend, lip-sync), plan, provider, seconds, used.
 - [deals.json](https://vidfare.com/deals.json): the live and archived deals. The same file is also at https://vidfare.com/data/deals.json.
-- [Use VidFare with AI](https://vidfare.com/mcp/): a read-only MCP server for ChatGPT, Claude, and Cursor. The endpoint https://mcp.vidfare.com/mcp is coming soon. It reads prices.json and deals.json and does not invent a price.
+- [Use VidFare with AI](https://vidfare.com/mcp/): the live read-only MCP server at https://mcp.vidfare.com/mcp for ChatGPT, Claude, and Cursor. It reads prices.json and deals.json and does not invent a price.
+- MCP tools: list_models (each model and its cheapest current dollars per second); get_model_prices (one model, with an optional provider and resolution); estimate_cost (one clip, using the credit calculator's inputs); cheapest_options (lowest stated price for a length and resolution); list_deals (live deals, or upcoming, ended, or all).
 - [feed.xml](https://vidfare.com/feed.xml): RSS of price changes, weekly reports, and live deals.
 
 Advertise: https://vidfare.com/advertise/ — labelled sponsor placements. They never change the price order.
