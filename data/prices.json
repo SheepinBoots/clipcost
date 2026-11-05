@@ -4372,7 +4372,7 @@
    "kind": "api",
    "resolution": "720p",
    "audio": null,
-   "usd_per_second": 0.1,
+   "usd_per_second": 0.07,
    "status": "estimate",
    "promo_until": null,
    "source": "gemini",
@@ -4380,7 +4380,7 @@
    "checks": [
     {
      "needle": "effective price of approximately ${N} per second",
-     "expect": 0.1
+     "expect": 0.07
     },
     {
      "needle": "approximately $0.10 per second",

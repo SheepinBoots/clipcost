@@ -14,7 +14,7 @@
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "status": "fetched",
-   "snippets": 18
+   "snippets": 17
   },
   {
    "id": "magnific",
@@ -40,11 +40,27 @@
  ],
  "candidates": [
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "sha": "0c5882ed7cc97ab9",
    "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator",
+   "seen": "2026-11-05"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "sha": "43ecc1ab97dbd97d",
+   "snippet": "Google Seedream 5 Pro New ByteDance Seedance 2.5 New ByteDance Nano Banana Pro Unlimited Google Available Claude MCP ChatGPT MCP Photoshop Plugin Figma Plugin See all A",
+   "seen": "2026-11-05"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "sha": "4ef675e205a32181",
+   "snippet": "agnific Seedream 5 Pro New ByteDance Seedance 2.5 New ByteDance Nano Banana Pro Unlimited Google Available Claude MCP ChatGPT MCP Photoshop Plugin Figma Plugin See all A",
    "seen": "2026-11-05"
   }
  ]

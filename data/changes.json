@@ -266,5 +266,17 @@
   "new_usd_per_second": 0.14,
   "source_url": "https://replicate.com/alibaba/wan-3",
   "type": "price"
+ },
+ {
+  "date": "2026-11-05",
+  "row": "r072",
+  "model": "gemini-omni-flash",
+  "platform": "Google Gemini API",
+  "variant": "gemini-omni-1.1-flash",
+  "resolution": "720p",
+  "old_usd_per_second": 0.1,
+  "new_usd_per_second": 0.07,
+  "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+  "type": "price"
  }
 ]

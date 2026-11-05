@@ -1,9 +1,9 @@
 {
- "run": "2026-11-05T16:13:25",
+ "run": "2026-11-05T21:29:27",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 15578
+   "chars": 14178
   },
   "hf_api": {
    "status": "fetched",
@@ -31,7 +31,7 @@
   },
   "fal_veo31": {
    "status": "fetched",
-   "chars": 13390
+   "chars": 13423
   },
   "fal_pricing": {
    "status": "fetched",
@@ -39,7 +39,7 @@
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1614
+   "chars": 1620
   },
   "runway": {
    "status": "fetched",
@@ -51,7 +51,7 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 93591
+   "chars": 95275
   },
   "atlas": {
    "status": "fetched",
@@ -59,11 +59,11 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 42594
+   "chars": 45660
   },
   "magnific": {
    "status": "fetched",
-   "chars": 9256
+   "chars": 9289
   },
   "kling_app": {
    "status": "manual",
@@ -85,11 +85,38 @@
  },
  "findings": [
   {
+   "kind": "row",
+   "id": "r072",
+   "source": "gemini",
+   "status": "changed",
+   "needle": "effective price of approximately ${N} per second",
+   "old": 0.1,
+   "new": 0.07,
+   "model": "gemini-omni-flash",
+   "platform": "Google Gemini API",
+   "variant": "gemini-omni-1.1-flash",
+   "applied": true
+  },
+  {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "Google Seedream 5 Pro New ByteDance Seedance 2.5 New ByteDance Nano Banana Pro Unlimited Google Available Claude MCP ChatGPT MCP Photoshop Plugin Figma Plugin See all A"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "agnific Seedream 5 Pro New ByteDance Seedance 2.5 New ByteDance Nano Banana Pro Unlimited Google Available Claude MCP ChatGPT MCP Photoshop Plugin Figma Plugin See all A"
   }
  ],
  "deal_scan": {
@@ -106,7 +133,7 @@
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 18
+    "snippets": 17
    },
    {
     "id": "magnific",
@@ -130,11 +157,11 @@
     "snippets": 0
    }
   ],
-  "candidates": 1
+  "candidates": 3
  },
  "counts": {
-  "ok": 371,
-  "changed": 0,
+  "ok": 370,
+  "changed": 1,
   "missing": 0,
   "skipped": 6
  }
