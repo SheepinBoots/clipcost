@@ -151,6 +151,17 @@ function withCors(response: Response, request: Request): Response {
   return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 }
 
+const GLAMA_CLAIM = '{"$schema":"https://glama.ai/mcp/schemas/connector.json","claim":"glama_claim_AzGr6ysbXyOX7w20aPWp9fcSiauXq9W9"}';
+
+function glamaClaim(request: Request): Response | null {
+  const path = new URL(request.url).pathname;
+  if (path !== "/mcp/.well-known/glama.json") return null;
+  if (request.method !== "GET" && request.method !== "HEAD") return null;
+  const headers = corsHeaders(request);
+  headers.set("content-type", "application/json");
+  return new Response(request.method === "HEAD" ? null : GLAMA_CLAIM, { status: 200, headers });
+}
+
 function scheduleUsage(
   request: Request,
   response: Response,
@@ -170,6 +181,8 @@ function scheduleUsage(
 export default {
   async fetch(request: Request, env: Env = {}, ctx: { waitUntil?: (promise: Promise<unknown>) => void } = {}): Promise<Response> {
     const url = new URL(request.url);
+    const claim = glamaClaim(request);
+    if (claim) return claim;
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
