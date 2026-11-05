@@ -4,6 +4,11 @@ import { z } from "zod";
 import { CatalogError, loadLiveCatalog } from "./catalog.ts";
 import { DEALS_URL, PRICES_URL, runTool, SITE } from "./tools.ts";
 import { withUtm } from "./links.ts";
+import { skipUsage, tallyResponse, toolCallsFromText, type UsageDataset } from "./usage.ts";
+
+export interface Env {
+  USAGE?: UsageDataset;
+}
 
 const INSTRUCTIONS = [
   "VidFare is a read-only catalog of AI video prices in dollars per second of finished video.",
@@ -146,8 +151,24 @@ function withCors(response: Response, request: Request): Response {
   return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 }
 
+function scheduleUsage(
+  request: Request,
+  response: Response,
+  env: Env,
+  ctx: { waitUntil?: (promise: Promise<unknown>) => void },
+  bodyText: string,
+): void {
+  if (skipUsage(request)) return;
+  const tools = toolCallsFromText(bodyText);
+  if (!tools.length) return;
+  const copy = response.clone();
+  const job = tallyResponse(copy, tools, env.USAGE).catch(() => {});
+  if (ctx.waitUntil) ctx.waitUntil(job);
+  else void job;
+}
+
 export default {
-  async fetch(request: Request, _env: unknown, ctx: { waitUntil?: (promise: Promise<unknown>) => void }): Promise<Response> {
+  async fetch(request: Request, env: Env = {}, ctx: { waitUntil?: (promise: Promise<unknown>) => void } = {}): Promise<Response> {
     const url = new URL(request.url);
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(request) });
@@ -165,6 +186,14 @@ export default {
       headers.set("content-type", "text/plain; charset=utf-8");
       return new Response("Not found. The MCP endpoint is /mcp\n", { status: 404, headers });
     }
+    let bodyText = "";
+    if (!skipUsage(request)) {
+      try {
+        bodyText = await request.clone().text();
+      } catch {
+        bodyText = "";
+      }
+    }
     const mcp = createServer();
     const transport = new WebStandardStreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
@@ -172,6 +201,7 @@ export default {
     });
     await mcp.connect(transport);
     const response = await transport.handleRequest(request);
+    scheduleUsage(request, response, env, ctx, bodyText);
     ctx.waitUntil?.(mcp.close());
     return withCors(response, request);
   },
