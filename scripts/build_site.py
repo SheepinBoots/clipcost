@@ -717,6 +717,13 @@ shutil.copy(os.path.join(ROOT, "src", "google43692aaea77cfb47.html"), DIST)
 cname_host = urlparse(SITE_URL).hostname or ""
 open(os.path.join(DIST, "CNAME"), "w").write(cname_host + "\n")
 open(os.path.join(ROOT, "CNAME"), "w").write(cname_host + "\n")
+# GitHub Pages runs Jekyll for branch deploys and skips dot-directories such as
+# .well-known unless this file is present. The Actions artifact is dist/.
+open(os.path.join(DIST, ".nojekyll"), "w").write("")
+auth_src = os.path.join(ROOT, "src", ".well-known", "mcp-registry-auth")
+auth_dir = os.path.join(DIST, ".well-known")
+os.makedirs(auth_dir, exist_ok=True)
+shutil.copy(auth_src, os.path.join(auth_dir, "mcp-registry-auth"))
 indexnow_key = notify_indexnow.KEY
 open(os.path.join(DIST, indexnow_key + ".txt"), "w").write(indexnow_key + "\n")
 os.makedirs(os.path.join(DIST, "data")); shutil.copy(os.path.join(ROOT, "data", "prices.json"), os.path.join(DIST, "data"))
@@ -1809,8 +1816,10 @@ def write_feeds():
             "id": deal["id"], "vendor": deal.get("vendor"), "type": deal.get("type"),
             "title": deal.get("title"), "models": deal.get("models") or [], "plans": deal.get("plans") or [],
             "conditions": dealmod.conditions(deal), "percent": deal.get("percent"),
-            "bonus_credits": deal.get("bonus_credits"), "price_before": deal.get("price_before"),
+            "bonus_credits": deal.get("bonus_credits"),             "price_before": deal.get("price_before"),
             "price_after": deal.get("price_after"), "price_pairs": deal.get("price_pairs"),
+            "full_plan_id": deal.get("full_plan_id"), "deal_plan_id": deal.get("deal_plan_id"),
+            "math": deal.get("math"), "variants": deal.get("variants") or [],
             "start": deal.get("start"), "end": deal.get("end"),
             "end_is_estimate": bool(deal.get("end_is_estimate")), "status": status,
             "source_url": deal.get("source_url"), "source_quote": deal.get("source_quote"),
@@ -2077,7 +2086,8 @@ def write_llms():
         f"- [Price data]({SITE_URL}/data/): how to read prices.json, share a calculator link, and credit VidFare.",
         f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog. CORS is open. A full check updates last_full_check.",
         f"- Calculator link: {SITE_URL}/calculator/?model=kling-3-0&seconds=10 — model is the /models/<slug>/ slug. Optional: resolution, audio (with or without), input (t2v, i2v, ref2v, v2v, extend, lip-sync), plan, provider, seconds, used.",
-        f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals.",
+        f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals. The same file is also at {SITE_URL}/data/deals.json.",
+        f"- [Use VidFare with AI]({SITE_URL}/mcp/): a read-only MCP server for ChatGPT, Claude, and Cursor. The endpoint https://mcp.vidfare.com/mcp is coming soon. It reads prices.json and deals.json and does not invent a price.",
         f"- [feed.xml]({SITE_URL}/feed.xml): RSS of price changes, weekly reports, and live deals.",
         "",
         f"Advertise: {SITE_URL}/advertise/ — labelled sponsor placements. They never change the price order.",
@@ -2240,12 +2250,66 @@ data_body = f"""<h1>Price data</h1>
 <p>Price changes, weekly reports, and live deals are in <a href="{root("/feed.xml")}">/feed.xml</a>.</p>
 <h2>Using the data</h2>
 <p>Free to use. Please credit and link {BRAND} (vidfare.com). The code in the GitHub repository is MIT. The price data is free to use with that credit.</p>
+<h2>Ask an assistant</h2>
+<p>The same files can be queried through a read-only MCP server. How to add it to ChatGPT, Claude, and Cursor is on <a href="{root("/mcp/")}">Use VidFare with AI</a>. The endpoint <code>https://mcp.vidfare.com/mcp</code> is coming soon. It reads this file and <a href="{root("/deals.json")}">deals.json</a>. It does not replace either file, and it does not invent a price.</p>
 """
 page("/data/", page_title("Price data for developers"),
      f"How to read the public {BRAND} price file, share a calculator link, and credit the data.",
      data_body, "/data/", ld_script(data_ld))
 
-urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/"]
+mcp_models = ", ".join(e(m["name"]) for m in models.values())
+mcp_cursor = (
+    '{\n  "mcpServers": {\n    "vidfare": {\n'
+    '      "url": "https://mcp.vidfare.com/mcp"\n    }\n  }\n}'
+)
+mcp_ld = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Use VidFare with AI",
+    "url": SITE_URL + "/mcp/",
+    "description": f"How to query {BRAND} prices from ChatGPT, Claude, and Cursor.",
+    "isPartOf": {"@type": "WebSite", "name": BRAND, "url": SITE_URL + "/"},
+}
+mcp_body = f"""<h1>Use VidFare with AI</h1>
+<p class="lead">A public, read-only server so ChatGPT, Claude, and Cursor can look up {BRAND} prices and cite vidfare.com.</p>
+<div class="callout"><b>Coming soon.</b> The server is in this repository and is not deployed yet. <code>https://mcp.vidfare.com/mcp</code> will answer once the Worker and the <code>mcp</code> DNS record are live. Until then a client will not connect. The steps below are the ones to use when it is.</div>
+<p>It reads <a href="{root("/data/prices.json")}">prices.json</a> and <a href="{root("/deals.json")}">deals.json</a>. It does not scrape vendor sites, and it does not invent a price when those files do not state one. Answers include the source, the date last checked, and a link back to {BRAND}.</p>
+<h2>Models</h2>
+<p>{mcp_models}.</p>
+<h2>Tools</h2>
+<ul>
+<li><code>list_models</code> lists each model and its cheapest current dollars per second.</li>
+<li><code>get_model_prices</code> takes a model, and optionally a provider and a resolution.</li>
+<li><code>estimate_cost</code> takes a model and seconds, plus the calculator inputs: resolution, audio, input, plan, provider, and percent of credits used.</li>
+<li><code>cheapest_options</code> takes seconds and a resolution.</li>
+<li><code>list_deals</code> lists live deals. Ask for upcoming, ended, or all to see the other groups.</li>
+</ul>
+<h2>ChatGPT</h2>
+<ol>
+<li>Open Settings, then Apps or Connectors.</li>
+<li>Add a custom MCP connector.</li>
+<li>Paste <code>https://mcp.vidfare.com/mcp</code>.</li>
+<li>Leave authentication off. The server is public and read-only.</li>
+</ol>
+<h2>Claude</h2>
+<ol>
+<li>Open Settings, then Connectors.</li>
+<li>Add a custom connector named VidFare.</li>
+<li>Paste <code>https://mcp.vidfare.com/mcp</code>.</li>
+<li>Leave authentication off.</li>
+</ol>
+<h2>Cursor</h2>
+<p>Add this to the project file <code>.cursor/mcp.json</code>, or use the same JSON as <code>.mcp.json</code>:</p>
+<p><code style="white-space:pre-wrap">{e(mcp_cursor)}</code></p>
+<p class="small">The copy in the repository is <code>mcp-server/.mcp.json</code>. There is no API key to add.</p>
+<h2>The price file is still here</h2>
+<p>Scripts that fetch JSON can keep using <a href="{root("/data/")}">the data page</a>. The assistant server is another way to read the same catalog.</p>
+"""
+page("/mcp/", page_title("Use VidFare with AI"),
+     f"How to connect ChatGPT, Claude, and Cursor to the {BRAND} price server. The endpoint is coming soon.",
+     mcp_body, "", ld_script(mcp_ld))
+
+urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/", "/mcp/"]
 urls += [path for path, _label in GUIDE_LINKS]
 if NEWSLETTER_ENABLED:
     urls.append("/newsletter/")
@@ -2515,6 +2579,26 @@ def audit_site():
     sitemap = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
     if f"<loc>{SITE_URL}/data/</loc>" not in sitemap:
         errors.append("sitemap is missing /data/")
+    if f"<loc>{SITE_URL}/mcp/</loc>" not in sitemap:
+        errors.append("sitemap is missing /mcp/")
+    mcp_page = os.path.join(DIST, "mcp", "index.html")
+    if not os.path.isfile(mcp_page):
+        errors.append("mcp page was not built")
+    else:
+        mcp_html = open(mcp_page, encoding="utf-8").read()
+        if "Coming soon" not in mcp_html or "https://mcp.vidfare.com/mcp" not in mcp_html:
+            errors.append("mcp page is missing the coming soon notice or the endpoint")
+        if "<h1>Use VidFare with AI</h1>" not in mcp_html:
+            errors.append("mcp page h1")
+    data_html = open(os.path.join(DIST, "data", "index.html"), encoding="utf-8").read()
+    if f'href="{root("/mcp/")}"' not in data_html:
+        errors.append("data page does not link to /mcp/")
+    auth_file = os.path.join(DIST, ".well-known", "mcp-registry-auth")
+    auth_body = open(auth_file, encoding="utf-8").read() if os.path.isfile(auth_file) else ""
+    if "PLACEHOLDER_REPLACE_AT_PUBLISH" not in auth_body or not auth_body.startswith("v=MCPv1;"):
+        errors.append("site output is missing the mcp-registry-auth placeholder")
+    if not os.path.isfile(os.path.join(DIST, ".nojekyll")):
+        errors.append(".nojekyll is missing, so GitHub Pages can skip .well-known")
     if f"<loc>{SITE_URL}/advertise/</loc>" not in sitemap:
         errors.append("sitemap is missing /advertise/")
     if f"<loc>{SITE_URL}/models/</loc>" not in sitemap:
@@ -2577,6 +2661,8 @@ def audit_site():
     llms = open(os.path.join(DIST, "llms.txt"), encoding="utf-8").read()
     if f"{SITE_URL}/advertise/" not in llms:
         errors.append("llms.txt does not mention /advertise/")
+    if f"{SITE_URL}/mcp/" not in llms or "mcp.vidfare.com/mcp" not in llms:
+        errors.append("llms.txt does not mention the MCP server")
     models_index = os.path.join(DIST, "models", "index.html")
     if not os.path.isfile(models_index):
         errors.append("models index was not built")
