@@ -78,7 +78,7 @@ def main():
             with tarfile.open(hidden_on) as tar:
                 extracted = tar.extractfile(member)
                 body = extracted.read().decode("utf-8").strip() if extracted else ""
-            if body != "v=MCPv1; k=ed25519; p=PLACEHOLDER_REPLACE_AT_PUBLISH":
+            if body != "v=MCPv1; k=ed25519; p=ONNlWhbxQdLcq/vVLAzvHUwd/E1fGGZCcvb7B0M013c=":
                 errors.append(f"artifact auth file body is {body!r}")
             if any(name.endswith(".html") and "well-known" in name for name in kept):
                 errors.append("the registry path was archived as HTML")

@@ -42,15 +42,9 @@ Cursor can use [`mcp-server/.mcp.json`](.mcp.json). Put the same JSON in a proje
 
 [`server.json`](server.json) is the MCP Registry document. The name is `com.vidfare/vidfare`. The remote is `streamable-http` at `https://mcp.vidfare.com/mcp`.
 
-Namespace verification for `com.vidfare` is HTTP. The site serves `https://vidfare.com/.well-known/mcp-registry-auth`. The committed file is a placeholder:
+Namespace verification for `com.vidfare` is HTTP. The site serves the published proof record at `https://vidfare.com/.well-known/mcp-registry-auth`. The file is one line, `v=MCPv1; k=ed25519; p=<public key>`. The private key is not in this repo.
 
-```text
-v=MCPv1; k=ed25519; p=PLACEHOLDER_REPLACE_AT_PUBLISH
-```
-
-Replace that entire line before publishing. `mcp-publisher login http` prints the real proof record (`v=MCPv1; k=ed25519; p=<public key>`) from the key you generate at publish time. The file body is that one line. Do not leave the placeholder, and do not add a comment: the registry reads the body. The private key stays with the publisher and is not committed.
-
-The site build copies the file into `dist/.well-known/` and writes `dist/.nojekyll`. `actions/upload-pages-artifact` leaves dot paths out unless `include-hidden-files` is true. Both deploy workflows set that. The published file is `https://vidfare.com/.well-known/mcp-registry-auth`, with status 200 and no redirect.
+The site build copies the file into `dist/.well-known/` and writes `dist/.nojekyll`. `actions/upload-pages-artifact` leaves dot paths out unless `include-hidden-files` is true. Both deploy workflows set that, so the URL answers 200 with no redirect.
 
 ## Deploy later
 

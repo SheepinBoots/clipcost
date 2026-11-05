@@ -2652,8 +2652,9 @@ def audit_site():
         errors.append("data page still says the MCP server is coming soon")
     auth_file = os.path.join(DIST, ".well-known", "mcp-registry-auth")
     auth_body = open(auth_file, encoding="utf-8").read() if os.path.isfile(auth_file) else ""
-    if "PLACEHOLDER_REPLACE_AT_PUBLISH" not in auth_body or not auth_body.startswith("v=MCPv1;"):
-        errors.append("site output is missing the mcp-registry-auth placeholder")
+    proof = "v=MCPv1; k=ed25519; p=ONNlWhbxQdLcq/vVLAzvHUwd/E1fGGZCcvb7B0M013c=\n"
+    if auth_body != proof:
+        errors.append("mcp-registry-auth is not the published proof record")
     if not os.path.isfile(os.path.join(DIST, ".nojekyll")):
         errors.append(".nojekyll is missing, so GitHub Pages can skip .well-known")
     if f"<loc>{SITE_URL}/advertise/</loc>" not in sitemap:

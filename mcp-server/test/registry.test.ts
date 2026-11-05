@@ -26,8 +26,7 @@ test("server.json matches the official MCP registry schema", async () => {
   assert.ok(server.description.length <= 100);
 });
 
-test("registry auth file is a placeholder proof record", () => {
-  const body = readFileSync(join(here, "..", "..", "src", ".well-known", "mcp-registry-auth"), "utf8").trim();
-  assert.equal(body, "v=MCPv1; k=ed25519; p=PLACEHOLDER_REPLACE_AT_PUBLISH");
-  assert.match(body, /PLACEHOLDER_REPLACE_AT_PUBLISH/);
+test("registry auth file is the published proof record", () => {
+  const raw = readFileSync(join(here, "..", "..", "src", ".well-known", "mcp-registry-auth"), "utf8");
+  assert.equal(raw, "v=MCPv1; k=ed25519; p=ONNlWhbxQdLcq/vVLAzvHUwd/E1fGGZCcvb7B0M013c=\n");
 });
