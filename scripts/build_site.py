@@ -1446,7 +1446,9 @@ calc = f"""<h1>AI video credit calculator</h1>
 <script>
 const BASE={json.dumps(BASE)};const AFF={json.dumps(AFF)};const MODELS={json.dumps({k:v["name"] for k,v in models.items()})};
 const DEALMAP={json.dumps(CALC_DEALS)};
-fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
+const EMBED={json.dumps({"plans": plans, "rows": [r for r in db["rows"] if r.get("plan")]}, separators=(",", ":"))};
+let render=()=>{{}};
+function start(d){{
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;'}}[c]));
  function parseQuery(qs){{
@@ -1524,7 +1526,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   return unknown?{{status:'unknown'}}:{{status:'match'}};
  }}
  let picksRead=false;
- function go(){{const k=$('plan').value,p=d.plans[k],u=readUsed();
+ render=function(){{const k=$('plan').value,p=d.plans[k],u=readUsed();
   const map=$('applyDeals').checked?DEALMAP[k]:null;
   const price=map&&map.price!=null?map.price:p.usd_month;
   const credits=p.credits_month+(map&&map.bonus_credits?map.bonus_credits:0);
@@ -1593,21 +1595,32 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   if(modelFilter) q.set('model', modelFilter);
   if(p.platform) q.set('provider', p.platform);
   if(wantRes) q.set('resolution', wantRes); if(clipSecs!=null) q.set('seconds', String(clipSecs)); if(wantAudio) q.set('audio', wantAudio); if(wantInput) q.set('input', wantInput);
-  history.replaceState(null,'','?'+q);}}
- $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
- $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);
- $('resPick').addEventListener('input',go);$('secs').addEventListener('input',go);
- $('audioPick').addEventListener('input',go);$('inputPick').addEventListener('input',go);
- $('copyLink').addEventListener('click',()=>{{
-  const url=location.href;
-  const show=text=>{{$('copyMsg').textContent=text;}};
-  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>show('Link copied.')).catch(()=>show(url));
-  else show(url);
- }});
- go();}});
+  history.replaceState(null,'','?'+q);}};
+ if(!start.bound){{
+  start.bound=true;
+  const call=()=>render();
+  $('plan').addEventListener('input',call);$('used').addEventListener('input',call);
+  $('applyDeals').addEventListener('input',call);$('windowSecs').addEventListener('input',call);
+  $('resPick').addEventListener('input',call);$('secs').addEventListener('input',call);
+  $('audioPick').addEventListener('input',call);$('inputPick').addEventListener('input',call);
+  $('copyLink').addEventListener('click',()=>{{
+   const url=location.href;
+   const show=text=>{{$('copyMsg').textContent=text;}};
+   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>show('Link copied.')).catch(()=>show(url));
+   else show(url);
+  }});
+ }}
+ render();
+}}
+try{{ start(EMBED); }} finally {{ document.documentElement.classList.remove('calc-hold'); }}
+fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
+ const slim=x=>JSON.stringify({{plans:x.plans,rows:(x.rows||[]).filter(r=>r.plan)}});
+ if(slim(d)!==slim(EMBED)) start(d);
+}}).catch(()=>{{}});
 </script>{news_box()}"""
 page("/calculator/", page_title("AI Video Credit Calculator"),
-     "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/", ld_script(calc_ld))
+     "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/",
+     '<script>if(location.search){var k=["model","seconds","sec","resolution","res","audio","input","plan","provider","platform","used"],q=new URLSearchParams(location.search);for(var i=0;i<k.length;i++){if(q.get(k[i])){document.documentElement.classList.add("calc-hold");break}}}</script><style>html.calc-hold body{visibility:hidden}</style>' + ld_script(calc_ld))
 
 # ---------- Changes ----------
 items = ""
