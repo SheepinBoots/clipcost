@@ -67,12 +67,12 @@ try {
       const table = document.querySelector('#ct');
       if (!table) return {missing: true};
       if (getComputedStyle(table).display === 'block') return {cards: true};
-      const cells = [...table.querySelectorAll('tbody tr:first-child td')].slice(0, 4);
+      const cells = [...table.querySelectorAll('tbody tr:first-child td')];
       const widths = cells.map(td => Math.round(td.getBoundingClientRect().width));
       return {cards: false, min: widths.length ? Math.min(...widths) : 0, widths};
     });
     if (info.missing) bad.push(`calculator table missing at ${width}px`);
-    else if (!info.cards && info.min < 90) bad.push(`calculator text cells ${info.widths.join(',')}px at ${width}px`);
+    else if (!info.cards && info.min < 90) bad.push(`calculator columns ${info.widths.join(',')}px at ${width}px`);
   }
 } finally {
   await browser.close();

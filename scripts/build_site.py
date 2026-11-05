@@ -993,8 +993,8 @@ home = f"""<h1>AI video cost per second, compared</h1>
 <select id="fPlat" aria-label="Platform"><option value="">All platforms</option>{opts([(p, p) for p in platforms])}</select>
 <select id="fKind" aria-label="Type"><option value="">API + plans</option><option value="api">Pay-as-you-go API</option><option value="plan">Subscription plans</option></select>
 <input id="fRes" placeholder="Resolution e.g. 720p" aria-label="Resolution" size="16">
-<label class="chk"><input type="checkbox" id="fPromo"> hide promos</label>
-<label class="chk"><input type="checkbox" id="fEst"> hide approximations</label>
+<label class="chk" for="fPromo"><input type="checkbox" id="fPromo"> hide promos</label>
+<label class="chk" for="fEst"><input type="checkbox" id="fEst"> hide approximations</label>
 <span class="small" id="count"></span></div>
 {wide_table(THEAD + "<tbody>" + "".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"])) + "</tbody>", ' id="prices"')}
 <p class="small"><span class="tag verified">vendor-stated</span> = the number is on the vendor's page (plan rows: plan price ÷ credits × credits per clip, all vendor-stated). <span class="tag estimate">approx.</span> = the vendor itself says "~", "roughly" or "estimated". <span class="tag promo">promo</span> = temporary discount with an end date. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. {ver} of {len(rows)} live rows are vendor-stated.</p>
@@ -1317,6 +1317,20 @@ def credits_text(v):
 def grouped_int(n):
     return f"{int(round(n)):,}"
 
+def calc_fn(text):
+    """Footnote marker. The full sentence is under the table and in the tooltip."""
+    if not text:
+        return ""
+    mark = "†" if text.startswith("Estimate") else "*"
+    return f'<a class="fn" href="#calcNotes" title="{e(text)}">{mark}</a>'
+
+def calc_notes_html(texts):
+    seen = []
+    for text in texts:
+        if text and text not in seen:
+            seen.append(text)
+    return " ".join(("†" if text.startswith("Estimate") else "*") + " " + e(text) for text in seen)
+
 def calc_lab(label, value):
     """Visible on the phone cards. Hidden on desktop so the table stays unlabeled."""
     return f'<span class="lab">{e(label)} </span>{value}'
@@ -1348,10 +1362,10 @@ def calc_rows_html(plan_id):
         price_cell = clip_money(pc) if clips > 0 else "—"
         per_sec = money(pc / r["clip_seconds"]) if clips > 0 else "—"
         cred = ("~" if r["status"] == "estimate" else "") + credits_text(r["credits_per_clip"])
-        assume = assumption_html(r)
         also = modifier_phrase(r)
+        note = assumption_text(r)
         bits.append(
-            f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a>'
+            f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a>{calc_fn(note)}'
             f'<div class="meta">Input: {e(input_phrase(r))}</div>'
             f'<div class="meta">Length: {e(length_phrase(r))}</div>'
             + (f'<div class="meta also">Also: {e(also)}</div>' if also else "")
@@ -1359,11 +1373,11 @@ def calc_rows_html(plan_id):
             f'<td>{calc_lab("Plan tier", e(shown_tier(r)))}</td>'
             f'<td>{calc_lab("Resolution", e(shown_resolution(r)))}</td>'
             f'<td>{calc_lab("Audio", e(audio_phrase(r)))}</td>'
-            f'<td>{calc_lab("Clip", str(r["clip_seconds"]) + "s")}</td>'
+            f'<td class="num">{calc_lab("Clip", str(r["clip_seconds"]) + "s")}</td>'
             f'<td>{calc_lab("Credits/clip", cred)}</td>'
             f'<td class="num">{calc_lab("Clips", grouped_int(clips))}</td>'
             f'<td class="num">{calc_lab("$/clip", price_cell)}</td>'
-            f'<td class="num"><span class="amt">{per_sec}</span>{assume}</td></tr>'
+            f'<td class="num"><span class="amt">{per_sec}</span></td></tr>'
         )
     per = price / credits
     note = (plan.get("credits_note") or "") + f" Billing: {plan['billing']}. Checked {plan['checked']}."
@@ -1374,6 +1388,7 @@ def calc_rows_html(plan_id):
         "note": note,
         "link": calc_source_html(plan),
         "rows": "".join(bits),
+        "notes": calc_notes_html(assumption_text(r) for r in chosen),
     }
 
 plan_opts = ""
@@ -1412,7 +1427,7 @@ calc = f"""<h1>AI video credit calculator</h1>
 <div class="field"><label class="small" for="secs">Clip length (seconds)</label><input id="secs" type="number" min="1" step="1" placeholder="Any" style="width:100px"></div>
 <div class="field"><label class="small" for="audioPick">Audio</label><select id="audioPick"><option value="">Any</option><option value="with">with audio</option><option value="without">without audio</option></select></div>
 <div class="field"><label class="small" for="inputPick">Input</label><select id="inputPick"><option value="">Any</option><option value="t2v">text-to-video</option><option value="i2v">image-to-video</option><option value="ref2v">reference</option><option value="v2v">video-to-video</option><option value="extend">extend</option><option value="lip-sync">lip-sync</option></select></div>
-<label class="chk"><input type="checkbox" id="applyDeals"> apply today's deals</label>
+<label class="chk" for="applyDeals"><input type="checkbox" id="applyDeals"> apply today's deals</label>
 <p class="small" id="calcMsg"></p>
 <div id="dealBox" hidden>
 <label class="small" for="windowSecs">Seconds you'll make during an unlimited window</label><br>
@@ -1424,6 +1439,7 @@ calc = f"""<h1>AI video credit calculator</h1>
 <div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer">{calc_seed["per"]}</div></div>
 <p class="small" id="pNote">{e(calc_seed["note"])}</p><p id="pLink">{calc_seed["link"]}</p></div>
 <div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Plan tier</th><th>Resolution</th><th>Audio</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody>{calc_seed["rows"]}</tbody></table></div>
+<p class="small" id="calcNotes">{calc_seed["notes"]}</p>
 <p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
 <script>
 const BASE={json.dumps(BASE)};const AFF={json.dumps(AFF)};const MODELS={json.dumps({k:v["name"] for k,v in models.items()})};
@@ -1540,11 +1556,15 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
      extra+=`<div class="small">12-month blended ${{money((map.blended_price/credits)*r.credits_per_clip/u/r.clip_seconds)}}/s</div>`;
    }}
    const assume=assumptionOf(r);
-   const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
+   const fn=assume?`<a class="fn" href="#calcNotes" title="${{esc(assume)}}">${{assume.indexOf('Estimate')===0?'†':'*'}}</a>`:'';
    const cred=(r.status=='estimate'?'~':'')+(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0);
    const also=modifierOf(r);
    const mark=q.status==='unknown'?'<div class="meta">not stated by vendor</div>':'';
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a><div class="meta">Input: ${{esc(inputOf(r))}}</div><div class="meta">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="meta also">Also: '+esc(also)+'</div>':''}}${{mark}}</td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
+   const dealNote=extra?`<div class="meta also">${{extra.replace(/<\\/?div[^>]*>/g,'')}}</div>`:'';
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a>${{fn}}<div class="meta">Input: ${{esc(inputOf(r))}}</div><div class="meta">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="meta also">Also: '+esc(also)+'</div>':''}}${{dealNote}}${{mark}}</td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td class="num">${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span></td></tr>`}}).join('');
+  const noteSeen=[];
+  shown.forEach(({{r}})=>{{const t=assumptionOf(r); if(t&&noteSeen.indexOf(t)<0) noteSeen.push(t);}});
+  $('calcNotes').innerHTML=noteSeen.map(t=>(t.indexOf('Estimate')===0?'†':'*')+' '+esc(t)).join(' ');
   const q=new URLSearchParams(); q.set('plan', k);
   if(wantRes) q.set('res', wantRes); if(clipSecs!=null) q.set('seconds', String(clipSecs)); if(wantAudio) q.set('audio', wantAudio); if(wantInput) q.set('input', wantInput);
   history.replaceState(null,'','?'+q);}}
@@ -1639,7 +1659,7 @@ archive_html = "".join(deal_card(d, archive=True) for d in archive_sorted) or "<
 deals_body = f"""<h1>AI video deals</h1>
 <p class="lead">Offers copied from vendor pricing pages and official accounts. Countdowns use your clock, so they stay right between daily builds. A deal with no end date is not given a guessed one. An offer that starts later is listed under Starting soon and is not a current price.</p>
 {sponsor_slot("deals", featured=True)}
-<div class="disclose"><b>Disclosure.</b> Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you sign up through them, {BRAND} may earn a commission, at no extra cost to you. Links to Krea, Magnific, Runway, fal, and other vendors are the official URLs, with no affiliate tag. Deals are listed only when the vendor's own page or official account is the source. Order is the end date, not who pays us. See the <a href="{root("/about/#disclosure")}">full disclosure</a>.</div>
+<div class="disclose"><b>Disclosure.</b> Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you sign up through them, {BRAND} may earn a commission, at no extra cost to you. Links to Krea, Magnific, Runway, fal, and other vendors are the official URLs, with no affiliate tag. Deals are listed only when the vendor's own page or official account is the source. Order is the end date, not who pays us. See the <a class="tap" href="{root("/about/#disclosure")}">full disclosure</a>.</div>
 <div class="filters">
 <select id="dVendor" aria-label="Vendor"><option value="">All vendors</option>{"".join(f'<option value="{e(v)}">{e(v)}</option>' for v in vendors)}</select>
 <select id="dType" aria-label="Deal type"><option value="">All types</option>{"".join(f'<option value="{e(t)}">{e(t.replace("_", " "))}</option>' for t in types)}</select>
@@ -1730,7 +1750,7 @@ bf_body = f"""<p class="small"><a href="{root("/deals/")}">Deals</a> › Black F
 <li>Krea posted 40% off yearly plans on Nov 28 (Black Friday, "today only"), Dec 1 (Cyber Monday), and Dec 24 (up to 40% off Pro and Max).</li>
 </ul>
 <p class="small">Those codes and percents are expired. Check the <a href="{root("/deals/")}">live deals</a> page before you pay.</p>
-<div class="disclose">Higgsfield links elsewhere on {BRAND} can be affiliate links. The posts linked on this page are the vendors' own X accounts. <a href="{root("/about/#disclosure")}">Disclosure</a>.</div>
+<div class="disclose">Higgsfield links elsewhere on {BRAND} can be affiliate links. The posts linked on this page are the vendors' own X accounts. <a class="tap" href="{root("/about/#disclosure")}">Disclosure</a>.</div>
 """
 page("/deals/black-friday/", page_title("AI Video Black Friday Deals"),
      "A stub for 2026 AI video holiday sales, plus dated 2025 examples from Higgsfield, Krea, and Magnific.",
