@@ -44,18 +44,35 @@ const browser = await puppeteer.launch({executablePath, headless:'new', args:['-
 const page = await browser.newPage();
 const bad = [];
 try {
-  await page.setViewport({width:390, height:844, deviceScaleFactor:1, isMobile:true, hasTouch:true});
-  for (const rel of paths) {
-    await page.goto(`http://127.0.0.1:${port}${rel}`, {waitUntil:'networkidle2', timeout:30000});
-    await new Promise(r => setTimeout(r, 200));
-    const m = await page.evaluate(() => ({
-      inner: window.innerWidth,
-      client: document.documentElement.clientWidth,
-      scroll: document.documentElement.scrollWidth,
-    }));
-    if (m.scroll > m.client + 1 || m.inner > 391) {
-      bad.push(`${rel} inner ${m.inner} client ${m.client} scroll ${m.scroll}`);
+  for (const width of [360, 390]) {
+    await page.setViewport({width, height:844, deviceScaleFactor:1, isMobile:true, hasTouch:true});
+    for (const rel of paths) {
+      await page.goto(`http://127.0.0.1:${port}${rel}`, {waitUntil:'networkidle2', timeout:30000});
+      await new Promise(r => setTimeout(r, 150));
+      const m = await page.evaluate(() => ({
+        inner: window.innerWidth,
+        client: document.documentElement.clientWidth,
+        scroll: document.documentElement.scrollWidth,
+      }));
+      if (m.scroll > m.client + 1 || m.inner > width + 1) {
+        bad.push(`${rel} at ${width}px inner ${m.inner} client ${m.client} scroll ${m.scroll}`);
+      }
     }
+  }
+  for (const width of [1024, 1280]) {
+    await page.setViewport({width, height:900, deviceScaleFactor:1, isMobile:false, hasTouch:false});
+    await page.goto(`http://127.0.0.1:${port}/calculator/`, {waitUntil:'networkidle2', timeout:30000});
+    await new Promise(r => setTimeout(r, 300));
+    const info = await page.evaluate(() => {
+      const table = document.querySelector('#ct');
+      if (!table) return {missing: true};
+      if (getComputedStyle(table).display === 'block') return {cards: true};
+      const cells = [...table.querySelectorAll('tbody tr:first-child td')];
+      const widths = cells.map(td => Math.round(td.getBoundingClientRect().width));
+      return {cards: false, min: widths.length ? Math.min(...widths) : 0, widths};
+    });
+    if (info.missing) bad.push(`calculator table missing at ${width}px`);
+    else if (!info.cards && info.min < 90) bad.push(`calculator columns ${info.widths.join(',')}px at ${width}px`);
   }
 } finally {
   await browser.close();
@@ -65,4 +82,4 @@ if (bad.length) {
   console.error(bad.join('\n'));
   process.exit(1);
 }
-console.log(`ok ${paths.length} pages fit a 390px viewport`);
+console.log(`ok ${paths.length} pages fit 360px and 390px; calculator columns are cards or at least 90px`);

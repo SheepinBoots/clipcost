@@ -290,7 +290,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <main class="wrap">{body}</main>
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p><b>Guides:</b> {guidelinks}</p>
-<p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a href="{root("/about/#disclosure")}">disclosure</a>).</p>
+<p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a class="disc" href="{root("/about/#disclosure")}">disclosure</a>).</p>
 <p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/advertise/")}">Advertise</a></p></div></footer>
 {before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
@@ -993,8 +993,8 @@ home = f"""<h1>AI video cost per second, compared</h1>
 <select id="fPlat" aria-label="Platform"><option value="">All platforms</option>{opts([(p, p) for p in platforms])}</select>
 <select id="fKind" aria-label="Type"><option value="">API + plans</option><option value="api">Pay-as-you-go API</option><option value="plan">Subscription plans</option></select>
 <input id="fRes" placeholder="Resolution e.g. 720p" aria-label="Resolution" size="16">
-<label class="chk"><input type="checkbox" id="fPromo"> hide promos</label>
-<label class="chk"><input type="checkbox" id="fEst"> hide approximations</label>
+<label class="chk" for="fPromo"><input type="checkbox" id="fPromo"> hide promos</label>
+<label class="chk" for="fEst"><input type="checkbox" id="fEst"> hide approximations</label>
 <span class="small" id="count"></span></div>
 {wide_table(THEAD + "<tbody>" + "".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"])) + "</tbody>", ' id="prices"')}
 <p class="small"><span class="tag verified">vendor-stated</span> = the number is on the vendor's page (plan rows: plan price ÷ credits × credits per clip, all vendor-stated). <span class="tag estimate">approx.</span> = the vendor itself says "~", "roughly" or "estimated". <span class="tag promo">promo</span> = temporary discount with an end date. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. {ver} of {len(rows)} live rows are vendor-stated.</p>
@@ -1160,6 +1160,31 @@ def deal_source_links(deal):
         links.append(f'<a class="small" href="{e(href)}" rel="{rel}" target="_blank">source</a>')
     return " ".join(links)
 
+_URL_RE = re.compile(r"https?://[^\s<>\"']+")
+
+def linkify_note(text, vendor=""):
+    """Turn a bare URL in a deal note into a short link. The visible words are not the URL."""
+    parts = []
+    last = 0
+    for match in _URL_RE.finditer(text or ""):
+        parts.append(e(text[last:match.start()]))
+        url = match.group(0)
+        tail = ""
+        while url and url[-1] in ".,);":
+            tail = url[-1] + tail
+            url = url[:-1]
+        host = (urlparse(url).hostname or "").lower()
+        if host == "x.com" or host.endswith(".x.com") or host == "twitter.com" or host.endswith(".twitter.com"):
+            label = f"{vendor}'s post" if vendor else "post"
+        else:
+            label = host[4:] if host.startswith("www.") else (host or "link")
+        href, rel = outbound(url)
+        parts.append(f'<a href="{e(href)}" rel="{rel}" target="_blank">{e(label)}</a>')
+        parts.append(e(tail))
+        last = match.end()
+    parts.append(e(text[last:] if text else ""))
+    return "".join(parts)
+
 def deal_card(deal, archive=False, rowset=None):
     href, rel = outbound(deal.get("link_url") or deal["source_url"])
     bits = cond_bits(deal)
@@ -1177,7 +1202,7 @@ def deal_card(deal, archive=False, rowset=None):
     attrs = ' data-archive="1"' if archive else " " + deal_attrs(deal)
     pct = f' <span class="tag deal">−{deal["percent"]:g}%</span>' if deal.get("percent") is not None else ""
     quote = f'<blockquote class="small">“{e(deal.get("source_quote") or "")}”</blockquote>' if deal.get("source_quote") else ""
-    note = f'<p class="small">{e(deal["notes"])}</p>' if deal.get("notes") else ""
+    note = f'<p class="small">{linkify_note(deal["notes"], deal.get("vendor") or "")}</p>' if deal.get("notes") else ""
     cond = f'<p class="small">{e(" · ".join(bits))}</p>' if bits else ""
     season = f' <span class="tag">2025</span>' if deal.get("season") == "2025" else ""
     return (
@@ -1292,6 +1317,20 @@ def credits_text(v):
 def grouped_int(n):
     return f"{int(round(n)):,}"
 
+def calc_fn(text):
+    """Footnote marker. The full sentence is under the table and in the tooltip."""
+    if not text:
+        return ""
+    mark = "†" if text.startswith("Estimate") else "*"
+    return f'<a class="fn" href="#calcNotes" title="{e(text)}">{mark}</a>'
+
+def calc_notes_html(texts):
+    seen = []
+    for text in texts:
+        if text and text not in seen:
+            seen.append(text)
+    return " ".join(("†" if text.startswith("Estimate") else "*") + " " + e(text) for text in seen)
+
 def calc_lab(label, value):
     """Visible on the phone cards. Hidden on desktop so the table stays unlabeled."""
     return f'<span class="lab">{e(label)} </span>{value}'
@@ -1323,19 +1362,22 @@ def calc_rows_html(plan_id):
         price_cell = clip_money(pc) if clips > 0 else "—"
         per_sec = money(pc / r["clip_seconds"]) if clips > 0 else "—"
         cred = ("~" if r["status"] == "estimate" else "") + credits_text(r["credits_per_clip"])
-        assume = assumption_html(r)
+        also = modifier_phrase(r)
+        note = assumption_text(r)
         bits.append(
-            f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a></td>'
+            f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(r["variant"])}</a>{calc_fn(note)}'
+            f'<div class="meta">Input: {e(input_phrase(r))}</div>'
+            f'<div class="meta">Length: {e(length_phrase(r))}</div>'
+            + (f'<div class="meta also">Also: {e(also)}</div>' if also else "")
+            + "</td>"
             f'<td>{calc_lab("Plan tier", e(shown_tier(r)))}</td>'
             f'<td>{calc_lab("Resolution", e(shown_resolution(r)))}</td>'
-            f'<td>{calc_lab("Audio", e(audio_phrase(r)))}<div class="small">Input: {e(input_phrase(r))}</div><div class="small">Length: {e(length_phrase(r))}</div>'
-            + (f'<div class="small">Also: {e(modifier_phrase(r))}</div>' if modifier_phrase(r) else "")
-            + "</td>"
-            f'<td>{calc_lab("Clip", str(r["clip_seconds"]) + "s")}</td>'
+            f'<td>{calc_lab("Audio", e(audio_phrase(r)))}</td>'
+            f'<td class="num">{calc_lab("Clip", str(r["clip_seconds"]) + "s")}</td>'
             f'<td>{calc_lab("Credits/clip", cred)}</td>'
             f'<td class="num">{calc_lab("Clips", grouped_int(clips))}</td>'
             f'<td class="num">{calc_lab("$/clip", price_cell)}</td>'
-            f'<td class="num"><span class="amt">{per_sec}</span>{assume}</td></tr>'
+            f'<td class="num"><span class="amt">{per_sec}</span></td></tr>'
         )
     per = price / credits
     note = (plan.get("credits_note") or "") + f" Billing: {plan['billing']}. Checked {plan['checked']}."
@@ -1346,6 +1388,7 @@ def calc_rows_html(plan_id):
         "note": note,
         "link": calc_source_html(plan),
         "rows": "".join(bits),
+        "notes": calc_notes_html(assumption_text(r) for r in chosen),
     }
 
 plan_opts = ""
@@ -1377,14 +1420,14 @@ calc = f"""<h1>AI video credit calculator</h1>
 <p class="lead">{calc_lead}</p>
 <p>Pricing a finished video from dollars per second? Use the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a>.</p>
 <div class="calc"><div class="card">
-<label class="small" for="plan">Plan</label><br><select id="plan" style="width:100%;margin:6px 0 12px">{plan_opts}</select>
-<label class="small" for="used">% of credits you actually use</label><br><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %
+<div class="field"><label class="small" for="plan">Plan</label><select id="plan">{plan_opts}</select></div>
+<div class="field"><label class="small" for="used">% of credits you actually use</label><span class="ctl"><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %</span></div>
 <p class="small" id="usedMsg" role="status"></p>
-<label class="small" for="resPick">Resolution</label><br><select id="resPick" style="width:100%;margin:6px 0 8px">{calc_res_opts}</select>
-<label class="small" for="secs">Clip length (seconds)</label><br><input id="secs" type="number" min="1" step="1" placeholder="Any" style="width:100px">
-<label class="small" for="audioPick">Audio</label><br><select id="audioPick" style="width:100%;margin:6px 0"><option value="">Any</option><option value="with">with audio</option><option value="without">without audio</option></select>
-<label class="small" for="inputPick">Input</label><br><select id="inputPick" style="width:100%;margin:6px 0 8px"><option value="">Any</option><option value="t2v">text-to-video</option><option value="i2v">image-to-video</option><option value="ref2v">reference</option><option value="v2v">video-to-video</option><option value="extend">extend</option><option value="lip-sync">lip-sync</option></select>
-<label class="chk" style="margin-top:8px"><input type="checkbox" id="applyDeals"> apply today's deals</label>
+<div class="field"><label class="small" for="resPick">Resolution</label><select id="resPick">{calc_res_opts}</select></div>
+<div class="field"><label class="small" for="secs">Clip length (seconds)</label><input id="secs" type="number" min="1" step="1" placeholder="Any" style="width:100px"></div>
+<div class="field"><label class="small" for="audioPick">Audio</label><select id="audioPick"><option value="">Any</option><option value="with">with audio</option><option value="without">without audio</option></select></div>
+<div class="field"><label class="small" for="inputPick">Input</label><select id="inputPick"><option value="">Any</option><option value="t2v">text-to-video</option><option value="i2v">image-to-video</option><option value="ref2v">reference</option><option value="v2v">video-to-video</option><option value="extend">extend</option><option value="lip-sync">lip-sync</option></select></div>
+<label class="chk" for="applyDeals"><input type="checkbox" id="applyDeals"> apply today's deals</label>
 <p class="small" id="calcMsg"></p>
 <div id="dealBox" hidden>
 <label class="small" for="windowSecs">Seconds you'll make during an unlimited window</label><br>
@@ -1396,6 +1439,7 @@ calc = f"""<h1>AI video credit calculator</h1>
 <div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer">{calc_seed["per"]}</div></div>
 <p class="small" id="pNote">{e(calc_seed["note"])}</p><p id="pLink">{calc_seed["link"]}</p></div>
 <div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Plan tier</th><th>Resolution</th><th>Audio</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody>{calc_seed["rows"]}</tbody></table></div>
+<p class="small" id="calcNotes">{calc_seed["notes"]}</p>
 <p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
 <script>
 const BASE={json.dumps(BASE)};const AFF={json.dumps(AFF)};const MODELS={json.dumps({k:v["name"] for k,v in models.items()})};
@@ -1512,11 +1556,15 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
      extra+=`<div class="small">12-month blended ${{money((map.blended_price/credits)*r.credits_per_clip/u/r.clip_seconds)}}/s</div>`;
    }}
    const assume=assumptionOf(r);
-   const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
+   const fn=assume?`<a class="fn" href="#calcNotes" title="${{esc(assume)}}">${{assume.indexOf('Estimate')===0?'†':'*'}}</a>`:'';
    const cred=(r.status=='estimate'?'~':'')+(+r.credits_per_clip).toFixed(r.credits_per_clip%1?2:0);
    const also=modifierOf(r);
-   const mark=q.status==='unknown'?'<div class="small">not stated by vendor</div>':'';
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a></td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}<div class="small">Input: ${{esc(inputOf(r))}}</div><div class="small">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="small">Also: '+esc(also)+'</div>':''}}${{mark}}</td><td>${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span>${{extra}}${{assumeHtml}}</td></tr>`}}).join('');
+   const mark=q.status==='unknown'?'<div class="meta">not stated by vendor</div>':'';
+   const dealNote=extra?`<div class="meta also">${{extra.replace(/<\\/?div[^>]*>/g,'')}}</div>`:'';
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a>${{fn}}<div class="meta">Input: ${{esc(inputOf(r))}}</div><div class="meta">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="meta also">Also: '+esc(also)+'</div>':''}}${{dealNote}}${{mark}}</td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td class="num">${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span></td></tr>`}}).join('');
+  const noteSeen=[];
+  shown.forEach(({{r}})=>{{const t=assumptionOf(r); if(t&&noteSeen.indexOf(t)<0) noteSeen.push(t);}});
+  $('calcNotes').innerHTML=noteSeen.map(t=>(t.indexOf('Estimate')===0?'†':'*')+' '+esc(t)).join(' ');
   const q=new URLSearchParams(); q.set('plan', k);
   if(wantRes) q.set('res', wantRes); if(clipSecs!=null) q.set('seconds', String(clipSecs)); if(wantAudio) q.set('audio', wantAudio); if(wantInput) q.set('input', wantInput);
   history.replaceState(null,'','?'+q);}}
@@ -1611,7 +1659,7 @@ archive_html = "".join(deal_card(d, archive=True) for d in archive_sorted) or "<
 deals_body = f"""<h1>AI video deals</h1>
 <p class="lead">Offers copied from vendor pricing pages and official accounts. Countdowns use your clock, so they stay right between daily builds. A deal with no end date is not given a guessed one. An offer that starts later is listed under Starting soon and is not a current price.</p>
 {sponsor_slot("deals", featured=True)}
-<div class="disclose"><b>Disclosure.</b> Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you sign up through them, {BRAND} may earn a commission, at no extra cost to you. Links to Krea, Magnific, Runway, fal, and other vendors are the official URLs, with no affiliate tag. Deals are listed only when the vendor's own page or official account is the source. Order is the end date, not who pays us. See the <a href="{root("/about/#disclosure")}">full disclosure</a>.</div>
+<div class="disclose"><b>Disclosure.</b> Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you sign up through them, {BRAND} may earn a commission, at no extra cost to you. Links to Krea, Magnific, Runway, fal, and other vendors are the official URLs, with no affiliate tag. Deals are listed only when the vendor's own page or official account is the source. Order is the end date, not who pays us. See the <a class="tap" href="{root("/about/#disclosure")}">full disclosure</a>.</div>
 <div class="filters">
 <select id="dVendor" aria-label="Vendor"><option value="">All vendors</option>{"".join(f'<option value="{e(v)}">{e(v)}</option>' for v in vendors)}</select>
 <select id="dType" aria-label="Deal type"><option value="">All types</option>{"".join(f'<option value="{e(t)}">{e(t.replace("_", " "))}</option>' for t in types)}</select>
@@ -1702,7 +1750,7 @@ bf_body = f"""<p class="small"><a href="{root("/deals/")}">Deals</a> › Black F
 <li>Krea posted 40% off yearly plans on Nov 28 (Black Friday, "today only"), Dec 1 (Cyber Monday), and Dec 24 (up to 40% off Pro and Max).</li>
 </ul>
 <p class="small">Those codes and percents are expired. Check the <a href="{root("/deals/")}">live deals</a> page before you pay.</p>
-<div class="disclose">Higgsfield links elsewhere on {BRAND} can be affiliate links. The posts linked on this page are the vendors' own X accounts. <a href="{root("/about/#disclosure")}">Disclosure</a>.</div>
+<div class="disclose">Higgsfield links elsewhere on {BRAND} can be affiliate links. The posts linked on this page are the vendors' own X accounts. <a class="tap" href="{root("/about/#disclosure")}">Disclosure</a>.</div>
 """
 page("/deals/black-friday/", page_title("AI Video Black Friday Deals"),
      "A stub for 2026 AI video holiday sales, plus dated 2025 examples from Higgsfield, Krea, and Magnific.",
