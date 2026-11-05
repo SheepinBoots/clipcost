@@ -2088,6 +2088,7 @@ def write_llms():
         f"- Calculator link: {SITE_URL}/calculator/?model=kling-3-0&seconds=10 — model is the /models/<slug>/ slug. Optional: resolution, audio (with or without), input (t2v, i2v, ref2v, v2v, extend, lip-sync), plan, provider, seconds, used.",
         f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals. The same file is also at {SITE_URL}/data/deals.json.",
         f"- [Use VidFare with AI]({SITE_URL}/mcp/): the live read-only MCP server at https://mcp.vidfare.com/mcp for ChatGPT, Claude, and Cursor. It reads prices.json and deals.json and does not invent a price.",
+        "- MCP tools: list_models (each model and its cheapest current dollars per second); get_model_prices (one model, with an optional provider and resolution); estimate_cost (one clip, using the credit calculator's inputs); cheapest_options (lowest stated price for a length and resolution); list_deals (live deals, or upcoming, ended, or all).",
         f"- [feed.xml]({SITE_URL}/feed.xml): RSS of price changes, weekly reports, and live deals.",
         "",
         f"Advertise: {SITE_URL}/advertise/ — labelled sponsor placements. They never change the price order.",
@@ -2343,6 +2344,49 @@ def check_sponsor_renderer():
     if sponsor_record("model:not-a-real-model") is not sponsors.get("model:default"):
         raise SystemExit("model pages should fall back to model:default")
 
+def mcp_link_errors():
+    """Site links to /mcp/ or the registry file must be files this build wrote."""
+    import re
+    targets = []
+    for dirpath, _, filenames in os.walk(DIST):
+        for name in filenames:
+            if not name.endswith((".html", ".xml", ".txt")):
+                continue
+            path = os.path.join(dirpath, name)
+            text = open(path, encoding="utf-8").read()
+            rel = os.path.relpath(path, DIST)
+            for match in re.finditer(r'(?:href|loc)="([^"]+)"|\((https://vidfare\.com[^)\s]+)\)', text):
+                raw = match.group(1) or match.group(2)
+                site_path = None
+                if raw.startswith(SITE_URL + "/"):
+                    site_path = raw[len(SITE_URL):]
+                elif raw.startswith("/") and not raw.startswith("//"):
+                    site_path = raw
+                if site_path is None:
+                    continue
+                site_path = site_path.split("#", 1)[0].split("?", 1)[0]
+                if site_path.rstrip("/") not in ("/mcp", "/.well-known/mcp-registry-auth"):
+                    if not site_path.startswith("/.well-known/"):
+                        continue
+                targets.append((rel, site_path))
+    errors = []
+    seen = set()
+    for rel, site_path in targets:
+        key = (rel, site_path)
+        if key in seen:
+            continue
+        seen.add(key)
+        bare = site_path.lstrip("/")
+        if site_path.endswith("/"):
+            dest = os.path.join(DIST, bare, "index.html")
+        else:
+            dest = os.path.join(DIST, bare)
+        if not os.path.isfile(dest):
+            errors.append(f"{rel} links to {site_path}, which this build did not write")
+    if not any(site_path.rstrip("/") == "/mcp" for _, site_path in seen):
+        errors.append("no built page links to /mcp/")
+    return errors
+
 def audit_site():
     """Fail the build if a page breaks the HTML or sponsor rules."""
     from html.parser import HTMLParser
@@ -2596,6 +2640,9 @@ def audit_site():
             errors.append("mcp page still says the server is not live")
         if "<h1>Use VidFare with AI</h1>" not in mcp_html:
             errors.append("mcp page h1")
+        for tool in ("list_models", "get_model_prices", "estimate_cost", "cheapest_options", "list_deals"):
+            if f"<code>{tool}</code>" not in mcp_html:
+                errors.append(f"mcp page is missing {tool}")
     data_html = open(os.path.join(DIST, "data", "index.html"), encoding="utf-8").read()
     if f'href="{root("/mcp/")}"' not in data_html:
         errors.append("data page does not link to /mcp/")
@@ -2675,6 +2722,10 @@ def audit_site():
         errors.append("llms.txt does not mention the MCP server")
     if "coming soon" in llms.lower():
         errors.append("llms.txt still says the MCP server is coming soon")
+    for tool in ("list_models", "get_model_prices", "estimate_cost", "cheapest_options", "list_deals"):
+        if tool not in llms:
+            errors.append(f"llms.txt does not name {tool}")
+    errors.extend(mcp_link_errors())
     models_index = os.path.join(DIST, "models", "index.html")
     if not os.path.isfile(models_index):
         errors.append("models index was not built")
