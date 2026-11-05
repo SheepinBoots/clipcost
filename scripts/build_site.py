@@ -263,7 +263,7 @@ def change_plain(change):
 def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None, robots="index,follow", canonical=True, before_count=""):
     canon = SITE_URL + path
     show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
-    navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/guides/", "Guides"), ("/changes/", "Price changes")]
+    navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/guides/", "Guides"), ("/changes/", "Price changes"), ("/data/", "Data")]
     if NEWSLETTER_ENABLED:
         navs.append(("/newsletter/", "Newsletter"))
     if show_reports:
@@ -291,7 +291,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p><b>Guides:</b> {guidelinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a class="disc" href="{root("/about/#disclosure")}">disclosure</a>).</p>
-<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/advertise/")}">Advertise</a></p></div></footer>
+<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/data/")}">Price data</a> · <a href="{root("/advertise/")}">Advertise</a></p></div></footer>
 {before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </body></html>"""
@@ -1281,7 +1281,7 @@ for slug, m in models.items():
 {deals_html}
 <h2>All {e(m['name'])} prices</h2>
 {wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
-<p class="small">Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root("/calculator/")}">credit calculator</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
+<p class="small">Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {faq_html(faqs)}
 {news_box()}
@@ -1439,15 +1439,40 @@ calc = f"""<h1>AI video credit calculator</h1>
 <div class="small" style="margin-top:8px">Cost per credit</div><div class="kpi" id="kPer">{calc_seed["per"]}</div></div>
 <p class="small" id="pNote">{e(calc_seed["note"])}</p><p id="pLink">{calc_seed["link"]}</p></div>
 <div><div class="tblwrap"><table id="ct"><thead><tr><th>Model</th><th>Plan tier</th><th>Resolution</th><th>Audio</th><th>Clip</th><th>Credits/clip</th><th>Clips / month</th><th>$ / clip</th><th>$ / sec</th></tr></thead><tbody>{calc_seed["rows"]}</tbody></table></div>
+<p class="small" id="modelNote"></p>
+<p><button type="button" class="btn" id="copyLink">Copy link to this result</button> <span class="small" id="copyMsg" role="status"></span></p>
 <p class="small" id="calcNotes">{calc_seed["notes"]}</p>
 <p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
 <script>
 const BASE={json.dumps(BASE)};const AFF={json.dumps(AFF)};const MODELS={json.dumps({k:v["name"] for k,v in models.items()})};
 const DEALMAP={json.dumps(CALC_DEALS)};
-fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
+const EMBED={json.dumps({"plans": plans, "rows": [r for r in db["rows"] if r.get("plan")]}, separators=(",", ":"))};
+let render=()=>{{}};
+function start(d){{
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;'}}[c]));
- const pk=new URLSearchParams(location.search).get('plan');if(pk&&d.plans[pk])$('plan').value=pk;
+ function parseQuery(qs){{
+  const out={{}};
+  const model=qs.get('model')||''; if(MODELS[model]) out.model=model;
+  const plan=qs.get('plan')||''; if(d.plans[plan]) out.plan=plan;
+  const provider=(qs.get('provider')||qs.get('platform')||'').trim().toLowerCase();
+  if(provider&&!out.plan){{ const hit=Object.keys(d.plans).find(id=>(d.plans[id].platform||'').toLowerCase()===provider); if(hit) out.plan=hit; }}
+  const secRaw=(qs.get('seconds')||qs.get('sec')||'').trim(); if(/^\\d+$/.test(secRaw)&&Number(secRaw)>=1) out.seconds=Number(secRaw);
+  const audio=(qs.get('audio')||'').trim().toLowerCase();
+  if(audio==='with'||audio==='on') out.audio='with'; else if(audio==='without'||audio==='off') out.audio='without';
+  const input=(qs.get('input')||'').trim().toLowerCase();
+  if(['t2v','i2v','ref2v','v2v','extend','lip-sync'].indexOf(input)>=0) out.input=input;
+  const used=(qs.get('used')||'').trim(); if(/^\\d+$/.test(used)){{ const n=Number(used); if(n>=1&&n<=100) out.used=n; }}
+  out.resolution=(qs.get('resolution')||qs.get('res')||'').trim();
+  return out;
+ }}
+ const initial=parseQuery(new URLSearchParams(location.search));
+ if(initial.plan) $('plan').value=initial.plan;
+ if(initial.used) $('used').value=String(initial.used);
+ if(initial.seconds) $('secs').value=String(initial.seconds);
+ if(initial.audio) $('audioPick').value=initial.audio;
+ if(initial.input) $('inputPick').value=initial.input;
+ let modelFilter=initial.model||'';
  function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
  function money(v){{const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
  function clipMoney(v){{const n=Math.round(Number(v)*10000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/10000);let digits=String(a%10000).padStart(4,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%10000).padStart(4,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
@@ -1501,7 +1526,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   return unknown?{{status:'unknown'}}:{{status:'match'}};
  }}
  let picksRead=false;
- function go(){{const k=$('plan').value,p=d.plans[k],u=readUsed();
+ render=function(){{const k=$('plan').value,p=d.plans[k],u=readUsed();
   const map=$('applyDeals').checked?DEALMAP[k]:null;
   const price=map&&map.price!=null?map.price:p.usd_month;
   const credits=p.credits_month+(map&&map.bonus_credits?map.bonus_credits:0);
@@ -1513,12 +1538,13 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   const tracked=hf(p.source_url),href=tracked||AFF[p.platform]||p.source_url,rel=(tracked||AFF[p.platform])?'sponsored nofollow noopener':'nofollow noopener';
   const srcRel=tracked?'sponsored nofollow noopener':'nofollow noopener';
   $('pLink').innerHTML=`<a class="btn" href="${{esc(href)}}" rel="${{rel}}" target="_blank">See ${{esc(p.platform)}} plans</a> <a class="small" href="${{esc(tracked||p.source_url)}}" rel="${{srcRel}}" target="_blank">source</a>`;
-  const rsAll=d.rows.filter(r=>r.plan==k&&current(r));
+  const rsAll=d.rows.filter(r=>r.plan==k&&current(r)&&(!modelFilter||r.model===modelFilter));
+  $('modelNote').textContent=modelFilter?('Showing '+MODELS[modelFilter]+' only.'):'';
   const resVals=[''].concat([...new Set(rsAll.map(r=>resOf(r)))]);
   const have=[...$('resPick').options].map(o=>o.value);
   const keep=$('resPick').value;
   if(have.join('|')!==resVals.join('|')) $('resPick').innerHTML=resVals.map(v=>`<option value="${{esc(v)}}">${{v?esc(v):'Any'}}</option>`).join('');
-  if(!picksRead){{picksRead=true; const qs=new URLSearchParams(location.search); if(qs.get('seconds')) $('secs').value=qs.get('seconds'); if(qs.get('audio')) $('audioPick').value=qs.get('audio'); if(qs.get('input')) $('inputPick').value=qs.get('input'); if(qs.get('res')&&resVals.indexOf(qs.get('res'))>=0) $('resPick').value=qs.get('res');}}
+  if(!picksRead){{picksRead=true; const want=(initial.resolution||'').toLowerCase(); const hit=resVals.find(v=>v.toLowerCase()===want); if(hit) $('resPick').value=hit;}}
   else if(resVals.indexOf(keep)>=0) $('resPick').value=keep;
   const anyUn=!!(map&&map.unlimited&&map.unlimited.length&&rsAll.some(r=>unlimitedHit(map,r)));
   $('dealBox').hidden=!anyUn;
@@ -1566,15 +1592,35 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
   shown.forEach(({{r}})=>{{const t=assumptionOf(r); if(t&&noteSeen.indexOf(t)<0) noteSeen.push(t);}});
   $('calcNotes').innerHTML=noteSeen.map(t=>(t.indexOf('Estimate')===0?'†':'*')+' '+esc(t)).join(' ');
   const q=new URLSearchParams(); q.set('plan', k);
-  if(wantRes) q.set('res', wantRes); if(clipSecs!=null) q.set('seconds', String(clipSecs)); if(wantAudio) q.set('audio', wantAudio); if(wantInput) q.set('input', wantInput);
-  history.replaceState(null,'','?'+q);}}
- $('plan').addEventListener('input',go);$('used').addEventListener('input',go);
- $('applyDeals').addEventListener('input',go);$('windowSecs').addEventListener('input',go);
- $('resPick').addEventListener('input',go);$('secs').addEventListener('input',go);
- $('audioPick').addEventListener('input',go);$('inputPick').addEventListener('input',go);go();}});
+  if(modelFilter) q.set('model', modelFilter);
+  if(p.platform) q.set('provider', p.platform);
+  if(wantRes) q.set('resolution', wantRes); if(clipSecs!=null) q.set('seconds', String(clipSecs)); if(wantAudio) q.set('audio', wantAudio); if(wantInput) q.set('input', wantInput);
+  history.replaceState(null,'','?'+q);}};
+ if(!start.bound){{
+  start.bound=true;
+  const call=()=>render();
+  $('plan').addEventListener('input',call);$('used').addEventListener('input',call);
+  $('applyDeals').addEventListener('input',call);$('windowSecs').addEventListener('input',call);
+  $('resPick').addEventListener('input',call);$('secs').addEventListener('input',call);
+  $('audioPick').addEventListener('input',call);$('inputPick').addEventListener('input',call);
+  $('copyLink').addEventListener('click',()=>{{
+   const url=location.href;
+   const show=text=>{{$('copyMsg').textContent=text;}};
+   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>show('Link copied.')).catch(()=>show(url));
+   else show(url);
+  }});
+ }}
+ render();
+}}
+try{{ start(EMBED); }} finally {{ document.documentElement.classList.remove('calc-hold'); }}
+fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
+ const slim=x=>JSON.stringify({{plans:x.plans,rows:(x.rows||[]).filter(r=>r.plan)}});
+ if(slim(d)!==slim(EMBED)) start(d);
+}}).catch(()=>{{}});
 </script>{news_box()}"""
 page("/calculator/", page_title("AI Video Credit Calculator"),
-     "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/", ld_script(calc_ld))
+     "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/",
+     '<script>if(location.search){var k=["model","seconds","sec","resolution","res","audio","input","plan","provider","platform","used"],q=new URLSearchParams(location.search);for(var i=0;i<k.length;i++){if(q.get(k[i])){document.documentElement.classList.add("calc-hold");break}}}</script><style>html.calc-hold body{visibility:hidden}</style>' + ld_script(calc_ld))
 
 # ---------- Changes ----------
 items = ""
@@ -2028,7 +2074,9 @@ def write_llms():
         "",
         "## Data",
         "",
-        f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog this page is built from.",
+        f"- [Price data]({SITE_URL}/data/): how to read prices.json, share a calculator link, and credit VidFare.",
+        f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog. CORS is open. A full check updates last_full_check.",
+        f"- Calculator link: {SITE_URL}/calculator/?model=kling-3-0&seconds=10 — model is the /models/<slug>/ slug. Optional: resolution, audio (with or without), input (t2v, i2v, ref2v, v2v, extend, lip-sync), plan, provider, seconds, used.",
         f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals.",
         f"- [feed.xml]({SITE_URL}/feed.xml): RSS of price changes, weekly reports, and live deals.",
         "",
@@ -2051,7 +2099,153 @@ import guide_pages
 guide_pages.render(globals())
 write_llms()
 open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: {root('/')}\nSitemap: {SITE_URL}/sitemap.xml\n")
-urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/"]
+def _keys_in_order(records):
+    found = []
+    for record in records:
+        if not isinstance(record, dict):
+            continue
+        for key in record:
+            if key not in found:
+                found.append(key)
+    return found
+
+FIELD_HELP = {
+    "generated": "Date this catalog file was first assembled.",
+    "currency": "Currency for every dollar amount. It is USD.",
+    "sources": "The vendor pages the daily check reads. Each one has a name, a URL, and how the page is fetched.",
+    "models": "The models in the catalog. The key is the slug used on /models/<slug>/ and in calculator links.",
+    "plans": "Credit plans the calculator can select. The key is the plan id used as ?plan=.",
+    "rows": "One object per price. This is the list to read.",
+    "unverified": "Things we looked for and could not confirm, so they are not prices.",
+    "last_full_check": "Date of the last daily check that fetched every source.",
+    "variation_schema": "A short reminder of what the variation object on a row means.",
+    "name": "Display name.",
+    "maker": "Company that makes the model.",
+    "url": "Page the check reads.",
+    "fetch": "How that page is read: static HTML, a rendered browser, or by hand.",
+    "ready": "Whether that source is included in the daily check.",
+    "note": "A short note from the source page or the check.",
+    "platform": "Where the price is sold, such as fal or Higgsfield.",
+    "plan": "On a plan record, the plan name. On a row, the plan id when the price is a credit plan.",
+    "usd_month": "What the plan costs per month, in dollars.",
+    "billing": "Whether the plan is billed monthly, yearly, or annually.",
+    "credits_month": "Credits, or units, the plan includes for a month.",
+    "credits_note": "Extra note when credits are granted per year and shown as a monthly average.",
+    "source": "Which entry in sources this record is checked against.",
+    "checks": "Needles the daily check looks for on the source page. A phrase check only confirms the words are still there.",
+    "checked": "Date this record was last confirmed.",
+    "source_url": "The page this price came from.",
+    "model": "Model slug.",
+    "variant": "The specific mode or plan row, in the vendor's words.",
+    "kind": "api for a pay-as-you-go rate, or plan for a credit-plan rate.",
+    "resolution": "Resolution or tier the vendor stated. An em dash means the page did not list one.",
+    "audio": "Older true/false flag. Prefer variation.audio, which is with, without, or not stated.",
+    "usd_per_second": "Dollars per second of finished video.",
+    "list_usd_per_second": "The vendor's undiscounted dollars per second, when a promo row has one.",
+    "status": "verified, estimate, promo, or discontinued.",
+    "promo_until": "End date of a promo, when the vendor gave one.",
+    "math": "How a credit-plan row was turned into dollars per second.",
+    "id": "Stable id for the row.",
+    "deal_ids": "Live deals that apply to this row.",
+    "discontinued_on": "Date the vendor shut this endpoint down.",
+    "plan_name": "Plan name shown in the table.",
+    "clip_seconds": "Clip length the credit price is for.",
+    "credits_per_clip": "Credits, or units, one clip costs.",
+    "usd_per_clip": "Dollars for one clip at that length, before display rounding.",
+    "variation": "What the vendor page actually said about audio, input type, and clip length.",
+    "audio_changes_price": "True, false, or not stated. Not stated means the page did not say.",
+    "length_changes_price": "True, false, or not stated.",
+    "input_changes_price": "True, false, or not stated.",
+    "modifiers": "Extra charges the page states on top of the headline rate, or not stated.",
+    "min_seconds": "Shortest clip the page allows, or not stated.",
+    "max_seconds": "Longest clip the page allows, or not stated.",
+    "allowed_seconds": "Clip lengths the page lists, or not stated.",
+    "priced_seconds": "The clip length this credit price is for, or not stated.",
+    "rate_by_length": "Per-second rates the page ties to particular lengths, or not stated.",
+    "input": "t2v, i2v, ref2v, v2v, extend, lip-sync, or not stated.",
+}
+FIELD_HELP["audio"] = "Inside variation: with, without, or not stated. The older row field is the true/false flag."
+
+def _field_table(keys):
+    return "".join(
+        f"<tr><td><code>{e(key)}</code></td><td>{e(FIELD_HELP.get(key, 'Included in the file.'))}</td></tr>"
+        for key in keys
+    )
+
+row_keys = _keys_in_order(db["rows"])
+plan_keys = _keys_in_order(plans.values())
+model_keys = _keys_in_order(models.values())
+source_keys = _keys_in_order(sources.values())
+variation_keys = _keys_in_order(r.get("variation") or {} for r in db["rows"])
+duration_keys = _keys_in_order((r.get("variation") or {}).get("duration") or {} for r in db["rows"])
+checked_on = db.get("last_full_check") or LAST
+data_examples = [
+    ("/calculator/?model=kling-3-0&seconds=10", "Kling 3.0, 10 second clips."),
+    ("/calculator/?model=wan-3-0&resolution=480p&seconds=5&provider=Higgsfield", "Wan 3.0 at 480p for 5 seconds on a Higgsfield plan."),
+    ("/calculator/?model=veo-3-1&audio=with&seconds=4&provider=Magnific", "Veo 3.1 with audio, 4 seconds, on a Magnific plan."),
+]
+data_ld = {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": f"{BRAND} AI video prices",
+    "description": (
+        f"Dollars per second for AI video models, copied from vendor pricing pages. "
+        f"Free to use if you credit and link {BRAND} (vidfare.com). Updated by the daily price check."
+    ),
+    "url": SITE_URL + "/data/",
+    "isAccessibleForFree": True,
+    "creator": {"@type": "Person", "name": "Emmanuel Gonzalez"},
+    "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": SITE_URL + "/data/prices.json",
+    },
+    "temporalCoverage": checked_on,
+}
+data_body = f"""<h1>Price data</h1>
+<p class="lead">The prices on {BRAND} are a public JSON file. You can read it from a script or an AI agent. You do not need an account or a key.</p>
+<h2>The file</h2>
+<p><a href="{root("/data/prices.json")}">https://vidfare.com/data/prices.json</a></p>
+<p>CORS is already open, so a browser page on another site can fetch it. The daily price check reads the vendor pages and updates this file. <code>last_full_check</code> is the date of the last check that fetched every source. Right now that date is {e(checked_on)}.</p>
+<h2>What is in the file</h2>
+<table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody>{_field_table(list(db.keys()))}</tbody></table>
+<h2>Each price row</h2>
+<p>Read <code>rows</code>. A row is one price for one model, on one platform, at one resolution.</p>
+<table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody>{_field_table(row_keys)}</tbody></table>
+<h2>Audio, input, and length</h2>
+<p><code>variation</code> records only what the vendor page stated. If the page did not say, the value is <code>not stated</code>.</p>
+<table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody>{_field_table(variation_keys)}</tbody></table>
+<p>Inside <code>duration</code>:</p>
+<table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody>{_field_table(duration_keys)}</tbody></table>
+<h2>Models, plans, and sources</h2>
+<p>Model fields: {", ".join(f"<code>{e(k)}</code>" for k in model_keys)}.</p>
+<p>Plan fields: {", ".join(f"<code>{e(k)}</code>" for k in plan_keys)}.</p>
+<p>Source fields: {", ".join(f"<code>{e(k)}</code>" for k in source_keys)}.</p>
+<h2>Share a calculator link</h2>
+<p>Open <a href="{root("/calculator/")}">/calculator/</a> with a query string. Unknown parameters are ignored. The model slug is the same one used on <a href="{root("/models/")}">/models/&lt;slug&gt;/</a>.</p>
+<ul>
+<li><code>model</code> such as <code>kling-3-0</code></li>
+<li><code>seconds</code> clip length</li>
+<li><code>resolution</code> such as <code>480p</code> or <code>not listed</code></li>
+<li><code>audio</code> <code>with</code> or <code>without</code> (<code>on</code> and <code>off</code> also work)</li>
+<li><code>input</code> <code>t2v</code>, <code>i2v</code>, <code>ref2v</code>, <code>v2v</code>, <code>extend</code>, or <code>lip-sync</code></li>
+<li><code>plan</code> a plan id, or <code>provider</code> <code>Higgsfield</code>, <code>Krea</code>, or <code>Magnific</code></li>
+<li><code>used</code> percent of credits used, from 1 to 100</li>
+</ul>
+<ul>
+{"".join(f'<li><a href="{root(path)}"><code>{e(path)}</code></a> {e(label)}</li>' for path, label in data_examples)}
+</ul>
+<p>Changing the calculator updates the address bar, so the URL you see is the one to share. Each model page also links to the calculator with that model filled in.</p>
+<h2>RSS</h2>
+<p>Price changes, weekly reports, and live deals are in <a href="{root("/feed.xml")}">/feed.xml</a>.</p>
+<h2>Using the data</h2>
+<p>Free to use. Please credit and link {BRAND} (vidfare.com). The code in the GitHub repository is MIT. The price data is free to use with that credit.</p>
+"""
+page("/data/", page_title("Price data for developers"),
+     f"How to read the public {BRAND} price file, share a calculator link, and credit the data.",
+     data_body, "/data/", ld_script(data_ld))
+
+urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/"]
 urls += [path for path, _label in GUIDE_LINKS]
 if NEWSLETTER_ENABLED:
     urls.append("/newsletter/")
@@ -2319,6 +2513,8 @@ def audit_site():
         if f'<link rel="canonical" href="{SITE_URL}/advertise/">' not in ad:
             errors.append("advertise page canonical")
     sitemap = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
+    if f"<loc>{SITE_URL}/data/</loc>" not in sitemap:
+        errors.append("sitemap is missing /data/")
     if f"<loc>{SITE_URL}/advertise/</loc>" not in sitemap:
         errors.append("sitemap is missing /advertise/")
     if f"<loc>{SITE_URL}/models/</loc>" not in sitemap:
@@ -2343,6 +2539,8 @@ def audit_site():
     home_nav = home_html.split("<nav>", 1)[-1].split("</nav>", 1)[0]
     if f'href="{root("/guides/")}">Guides</a>' not in home_nav:
         errors.append("nav is missing Guides")
+    if f'href="{root("/data/")}">Data</a>' not in home_nav:
+        errors.append("nav is missing Data")
     if "<b>Guides:</b>" not in home_html:
         errors.append("footer is missing Guides")
     budget_html = open(os.path.join(DIST, "guides", "ai-video-project-budget", "index.html"), encoding="utf-8").read()
