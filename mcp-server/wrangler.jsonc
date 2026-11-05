@@ -11,5 +11,11 @@
       "pattern": "mcp.vidfare.com",
       "custom_domain": true
     }
+  ],
+  "analytics_engine_datasets": [
+    {
+      "binding": "USAGE",
+      "dataset": "vidfare_mcp_usage"
+    }
   ]
 }

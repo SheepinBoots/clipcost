@@ -25,6 +25,22 @@ Responses are cached for 5 minutes. If a fetch fails, or the catalog does not st
 
 `estimate_cost` uses the same row filter as the credit calculator (`scripts/variations.py`) and the same plan math as the calculator script: plan price ÷ credits × credits per clip, divided again by the share of credits actually used. API rows are billed seconds times the stated dollars per second. `scripts/test_mcp_parity.py` checks that against the site code.
 
+## Usage counts
+
+A `tools/call` writes one Workers Analytics Engine point: blob1 is the tool name (`unknown` if it is not one of the five tools), blob2 is `success` or `error`, and double1 is `1`. The engine stores the time. The UTC day is that timestamp. The read script also prints when that UTC midnight falls in Pacific Time. Nothing else is stored: no arguments, prompt, IP address, user agent, session id, or country. There is no public stats URL.
+
+Counts are tool requests, not unique people, visits, or sponsor impressions. A retry, a second call from the same person, and a client that does not send the test header each add one. Requests with `X-VidFare-Test: 1`, and `POST`s to localhost or `127.0.0.1` (`wrangler dev`), are not written. `initialize`, `tools/list`, notifications, `OPTIONS`, and `GET` are not written. A crawler or someone else's test client that calls a tool is counted.
+
+The write is not awaited and a failure is ignored, so a counter error does not change the tool response.
+
+`wrangler.jsonc` binds `USAGE` to the dataset `vidfare_mcp_usage`. The dataset is created on the first write. Deploying that binding uses the existing Worker deploy token (Workers Scripts Edit or Workers Admin, Workers Routes Edit, and Zone Read). It does not need Analytics Read. Reading the counts does. Create a separate token with **Account → Account Analytics → Read**, scoped to the VidFare account, and run:
+
+```bash
+CLOUDFLARE_ACCOUNT_ID=... CLOUDFLARE_API_TOKEN=... python3 scripts/mcp_usage.py
+```
+
+Do not put that token in the repo.
+
 ## Local
 
 ```bash

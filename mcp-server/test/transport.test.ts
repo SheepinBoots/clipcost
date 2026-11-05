@@ -23,6 +23,7 @@ test("streamable http smoke test against wrangler dev", { timeout: 180000 }, asy
       "content-type": "application/json",
       accept: "application/json, text/event-stream",
       "mcp-protocol-version": "2025-11-25",
+      "x-vidfare-test": "1",
     };
     const init = await post({
       jsonrpc: "2.0",
@@ -73,7 +74,7 @@ test("streamable http smoke test against wrangler dev", { timeout: 180000 }, asy
     }, null, 2));
   } finally {
     try {
-      process.kill(-child.pid, "SIGTERM");
+      if (child.pid !== undefined) process.kill(-child.pid, "SIGTERM");
     } catch {
       child.kill("SIGTERM");
     }
