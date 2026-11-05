@@ -1,19 +1,19 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="google-site-verification" content="nlx0gVcAU_holiR5TLbIUc0ECk-VPLUPKHiVqlGNCIM" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Use VidFare with AI (Nov 2026) | VidFare</title><meta name="description" content="How to connect ChatGPT, Claude, and Cursor to the VidFare price server. The endpoint is coming soon.">
+<title>Use VidFare with AI (Nov 2026) | VidFare</title><meta name="description" content="How to connect ChatGPT, Claude, and Cursor to the live VidFare price server.">
 <link rel="canonical" href="https://vidfare.com/mcp/"><meta name="robots" content="index,follow">
-<meta property="og:type" content="website"><meta property="og:title" content="Use VidFare with AI (Nov 2026) | VidFare"><meta property="og:description" content="How to connect ChatGPT, Claude, and Cursor to the VidFare price server. The endpoint is coming soon.">
+<meta property="og:type" content="website"><meta property="og:title" content="Use VidFare with AI (Nov 2026) | VidFare"><meta property="og:description" content="How to connect ChatGPT, Claude, and Cursor to the live VidFare price server.">
 <meta property="og:url" content="https://vidfare.com/mcp/"><meta property="og:site_name" content="VidFare">
 <meta property="og:image" content="https://vidfare.com/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="VidFare. What every AI video second costs, everywhere.">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Use VidFare with AI (Nov 2026) | VidFare"><meta name="twitter:description" content="How to connect ChatGPT, Claude, and Cursor to the VidFare price server. The endpoint is coming soon."><meta name="twitter:image" content="https://vidfare.com/og.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Use VidFare with AI (Nov 2026) | VidFare"><meta name="twitter:description" content="How to connect ChatGPT, Claude, and Cursor to the live VidFare price server."><meta name="twitter:image" content="https://vidfare.com/og.png">
 <meta name="theme-color" content="#0b0d12"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/svg+xml" href="/logo.svg"><link rel="apple-touch-icon" href="/logo-512.png">
 <link rel="alternate" type="application/rss+xml" title="VidFare" href="/feed.xml">
 <link rel="stylesheet" href="/style.css"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Use VidFare with AI", "url": "https://vidfare.com/mcp/", "description": "How to query VidFare prices from ChatGPT, Claude, and Cursor.", "isPartOf": {"@type": "WebSite", "name": "VidFare", "url": "https://vidfare.com/"}}</script></head><body>
 <header class="top"><div class="wrap"><a class="logo" href="/">Vid<span>Fare</span></a><nav><a href="/">Prices</a><a href="/deals/">Deals</a><a href="/calculator/">Credit calculator</a><a href="/guides/">Guides</a><a href="/changes/">Price changes</a><a href="/data/">Data</a><a href="/reports/">Reports</a><a href="/about/">About</a></nav></div></header>
 <main class="wrap"><h1>Use VidFare with AI</h1>
 <p class="lead">A public, read-only server so ChatGPT, Claude, and Cursor can look up VidFare prices and cite vidfare.com.</p>
-<div class="callout"><b>Coming soon.</b> The server is in this repository and is not deployed yet. <code>https://mcp.vidfare.com/mcp</code> will answer once the Worker and the <code>mcp</code> DNS record are live. Until then a client will not connect. The steps below are the ones to use when it is.</div>
+<div class="callout"><b>Live.</b> Connect a client to <code>https://mcp.vidfare.com/mcp</code>. The server is public and read-only. No key and no sign-in.</div>
 <p>It reads <a href="/data/prices.json">prices.json</a> and <a href="/deals.json">deals.json</a>. It does not scrape vendor sites, and it does not invent a price when those files do not state one. Answers include the source, the date last checked, and a link back to VidFare.</p>
 <h2>Models</h2>
 <p>Wan 3.0 Prime, Wan 3.0, Kling 3.0, Seedance 2.5, Veo 3.1, Gemini Omni Flash 1.1, MiniMax Hailuo / H3, Runway Gen-4.x, Grok Imagine Video 1.5.</p>
@@ -27,20 +27,22 @@
 </ul>
 <h2>ChatGPT</h2>
 <ol>
-<li>Open Settings, then Apps or Connectors.</li>
-<li>Add a custom MCP connector.</li>
+<li>If you do not see a way to add a server, open Settings, then Apps or Security, and turn on Developer mode.</li>
+<li>On the web, open Settings, then Apps, and create an app. In the desktop app, open Settings, then Plugins, then MCPs, and choose Add MCP server.</li>
+<li>Name it VidFare. If it asks for a transport, choose Streamable HTTP.</li>
 <li>Paste <code>https://mcp.vidfare.com/mcp</code>.</li>
-<li>Leave authentication off. The server is public and read-only.</li>
+<li>Leave the token, headers, and OAuth client empty. Save, then ask for a VidFare price.</li>
 </ol>
 <h2>Claude</h2>
 <ol>
-<li>Open Settings, then Connectors.</li>
-<li>Add a custom connector named VidFare.</li>
-<li>Paste <code>https://mcp.vidfare.com/mcp</code>.</li>
-<li>Leave authentication off.</li>
+<li>Open Settings, then Connectors. On claude.ai that is Customize, then Connectors.</li>
+<li>Choose Add custom connector.</li>
+<li>Name it VidFare and paste <code>https://mcp.vidfare.com/mcp</code>.</li>
+<li>Leave the OAuth client id and secret blank, then add it. If a sign-in window opens, close it. This server has no account.</li>
+<li>Allow the tools. They only read public prices.</li>
 </ol>
 <h2>Cursor</h2>
-<p>Add this to the project file <code>.cursor/mcp.json</code>, or use the same JSON as <code>.mcp.json</code>:</p>
+<p>For one project, save this as <code>.cursor/mcp.json</code>. For every project, save it as <code>~/.cursor/mcp.json</code>. The same JSON also works as <code>.mcp.json</code>.</p>
 <p><code style="white-space:pre-wrap">{
   &quot;mcpServers&quot;: {
     &quot;vidfare&quot;: {
@@ -48,7 +50,7 @@
     }
   }
 }</code></p>
-<p class="small">The copy in the repository is <code>mcp-server/.mcp.json</code>. There is no API key to add.</p>
+<p class="small">The copy in the repository is <code>mcp-server/.mcp.json</code>. Save the file. Cursor lists VidFare under Settings, then MCP. There is no API key.</p>
 <h2>The price file is still here</h2>
 <p>Scripts that fetch JSON can keep using <a href="/data/">the data page</a>. The assistant server is another way to read the same catalog.</p>
 </main>

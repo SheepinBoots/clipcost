@@ -43,9 +43,9 @@ Weekly price reports live at `/reports/` and `/reports/YYYY-wNN/`. `REPORTS_ENAB
 
 ## MCP server
 
-A read-only MCP server for ChatGPT, Claude, and Cursor lives in [`mcp-server`](mcp-server/). It is a Cloudflare Worker planned for `https://mcp.vidfare.com/mcp`. It reads the live [prices.json](https://vidfare.com/data/prices.json) and [deals.json](https://vidfare.com/deals.json), keeps them for five minutes, and does not invent a price. The endpoint is not deployed yet. The docs page is [/mcp/](https://vidfare.com/mcp/).
+A read-only MCP server for ChatGPT, Claude, and Cursor lives in [`mcp-server`](mcp-server/). It is live at `https://mcp.vidfare.com/mcp`. It reads the live [prices.json](https://vidfare.com/data/prices.json) and [deals.json](https://vidfare.com/deals.json), keeps them for five minutes, and does not invent a price. The docs page is [/mcp/](https://vidfare.com/mcp/).
 
-`src/.well-known/mcp-registry-auth` is a placeholder. At publish time, replace that whole line with the `v=MCPv1; k=ed25519; p=...` proof record from `mcp-publisher login http`. The build copies it to `dist/.well-known/mcp-registry-auth` and writes `dist/.nojekyll` so GitHub Pages serves the dot-directory. Registry metadata is [`mcp-server/server.json`](mcp-server/server.json). A Cursor example is [`mcp-server/.mcp.json`](mcp-server/.mcp.json).
+`src/.well-known/mcp-registry-auth` is a placeholder. At publish time, replace that whole line with the `v=MCPv1; k=ed25519; p=...` proof record from `mcp-publisher login http`. The build copies it to `dist/.well-known/mcp-registry-auth` and writes `dist/.nojekyll`. Both Pages workflows set `include-hidden-files: true`, because the artifact upload otherwise drops those dot paths. Registry metadata is [`mcp-server/server.json`](mcp-server/server.json). A Cursor example is [`mcp-server/.mcp.json`](mcp-server/.mcp.json).
 
 ## License
 

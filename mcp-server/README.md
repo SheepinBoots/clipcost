@@ -2,7 +2,7 @@
 
 Public, read-only [Model Context Protocol](https://modelcontextprotocol.io) server for the VidFare price catalog. It speaks Streamable HTTP at `/mcp`, with no authentication. A client such as ChatGPT, Claude, or Cursor can list models, read prices, estimate a clip, and list deals. Every result includes the VidFare source URL, the last-checked date, and a vidfare.com page link. Those vidfare.com links also carry `utm_source=mcp&utm_medium=tool&utm_campaign=vidfare_mcp`.
 
-The Worker is planned for `https://mcp.vidfare.com/mcp`. It is not deployed. Do not run `wrangler login`, `wrangler deploy`, or create the DNS record from this repository until the owner adds the token below.
+The Worker is live at `https://mcp.vidfare.com/mcp`. Do not run `wrangler login` or `wrangler deploy` from this repository.
 
 ## Data
 
@@ -36,7 +36,7 @@ npx wrangler dev
 
 `wrangler dev` stays on this machine. It does not deploy.
 
-Cursor can use [`mcp-server/.mcp.json`](.mcp.json). Put the same JSON in a project's `.cursor/mcp.json`. The URL will not connect until `mcp.vidfare.com` is live.
+Cursor can use [`mcp-server/.mcp.json`](.mcp.json). Put the same JSON in a project's `.cursor/mcp.json`. The URL is `https://mcp.vidfare.com/mcp`.
 
 ## Registry
 
@@ -50,7 +50,7 @@ v=MCPv1; k=ed25519; p=PLACEHOLDER_REPLACE_AT_PUBLISH
 
 Replace that entire line before publishing. `mcp-publisher login http` prints the real proof record (`v=MCPv1; k=ed25519; p=<public key>`) from the key you generate at publish time. The file body is that one line. Do not leave the placeholder, and do not add a comment: the registry reads the body. The private key stays with the publisher and is not committed.
 
-The site build copies the file into `dist/.well-known/` and writes `dist/.nojekyll`. GitHub Pages skips dot-directories when Jekyll runs. `.nojekyll` turns Jekyll off so `/.well-known/mcp-registry-auth` is served as a 200 with no redirect.
+The site build copies the file into `dist/.well-known/` and writes `dist/.nojekyll`. `actions/upload-pages-artifact` leaves dot paths out unless `include-hidden-files` is true. Both deploy workflows set that. The published file is `https://vidfare.com/.well-known/mcp-registry-auth`, with status 200 and no redirect.
 
 ## Deploy later
 

@@ -47,6 +47,9 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: dist
+          # The default is false. The action then runs tar --exclude=.[^/]*
+          # which drops .well-known and .nojekyll, so the registry file 404s.
+          include-hidden-files: true
 
       - name: Deploy to GitHub Pages
         id: deployment

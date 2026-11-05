@@ -103,6 +103,9 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: dist
+          # Same as pages.yml. A refresh deploy would otherwise republish
+          # without .well-known and .nojekyll.
+          include-hidden-files: true
 
       - name: Deploy to GitHub Pages
         id: deployment
