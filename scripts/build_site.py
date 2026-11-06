@@ -291,7 +291,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p><b>Guides:</b> {guidelinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a class="disc" href="{root("/about/#disclosure")}">disclosure</a>).</p>
-<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/data/")}">Price data</a> · <a href="{root("/advertise/")}">Advertise</a></p></div></footer>
+<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/data/")}">Price data</a> · <a href="{root("/advertise/")}">Advertise</a> · <a href="https://twelve.tools">Twelve Tools</a></p></div></footer>
 {before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </body></html>"""
@@ -1686,7 +1686,8 @@ page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRA
 <h2>Not included yet (unconfirmed)</h2><ul class="small">{unv}</ul>
 <h2 id="disclosure">Affiliate disclosure</h2>
 <div class="disclose">Some links on {BRAND} are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price. Sponsored placements are labelled "Sponsor" and never affect the price order.</div>
-<p class="small">Contact: TODO-add-contact-email</p>""", "/about/", ld_script(about_ld))
+<p class="small">Contact: TODO-add-contact-email</p>
+<p class="small">Directories: <a href="https://dang.ai">Dang.ai</a>.</p>""", "/about/", ld_script(about_ld))
 
 # ---------- Deals ----------
 def deal_sort(deal):
@@ -2900,6 +2901,10 @@ def audit_site():
     about = open(os.path.join(DIST, "about", "index.html"), encoding="utf-8").read()
     if 'Sponsored placements are labelled "Sponsor" and never affect the price order.' not in about:
         errors.append("about disclosure is missing the sponsor sentence")
+    if '<p class="small">Directories: <a href="https://dang.ai">Dang.ai</a>.</p>' not in about:
+        errors.append("about page is missing the Dang.ai directory line")
+    if 'href="https://twelve.tools">Twelve Tools</a>' not in home_html.split("<footer>", 1)[-1]:
+        errors.append("footer is missing the Twelve Tools link")
     for rel in ("deals.json", os.path.join("data", "deals.json")):
         feed = open(os.path.join(DIST, rel), encoding="utf-8").read()
         if "data-sponsor" in feed or "Your tool here" in feed or "sponsor this spot" in feed:
