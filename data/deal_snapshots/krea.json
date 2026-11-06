@@ -1,8 +1,12 @@
 {
  "id": "krea",
  "url": "https://www.krea.ai/pricing",
- "saved": "2026-11-05",
+ "saved": "2026-11-06",
  "snippets": [
+  {
+   "sha": "0c5882ed7cc97ab9",
+   "text": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
+  },
   {
    "sha": "2fa7453ecf92273a",
    "text": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Model Licensing Looking for API? Free 100 units / day $0 /month Get Free Krea 3"
@@ -12,16 +16,16 @@
    "text": "s when purchasing additional compute unit packs beyond your monthly allocation. Unlimited relaxed generations Continue generating with supported in-house image models af"
   },
   {
-   "sha": "1eb73af9f90eedb1",
-   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~112 Nano Banana 2 generations ~16 Seedan"
+   "sha": "17e0c96c9828b5d7",
+   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Basic 5,000 units / month ~200 Nano Banana 2.1 generations ~16 Seed"
   },
   {
-   "sha": "1fe05feef106204a",
-   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Most popular Pro 20,000 units / month 450 Nano Banana 2 generations"
+   "sha": "fbc382e80fe3b190",
+   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Most popular Pro 20,000 units / month ~803 Nano Banana 2.1 generati"
   },
   {
-   "sha": "1298ea75e97cfdde",
-   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Max 60,000 units / month 1,350 Nano Banana 2 generations ~197 Seeda"
+   "sha": "b908bafb377c338b",
+   "text": "s in parallel, and queue excess jobs instead of hitting a hard submission stop. Promo placeholder Max 60,000 units / month ~2,410 Nano Banana 2.1 generations ~197 Se"
   },
   {
    "sha": "bfb2d98c5c40a874",
