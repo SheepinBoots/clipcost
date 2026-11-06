@@ -1,9 +1,9 @@
 {
- "run": "2026-11-06T20:02:03",
+ "run": "2026-11-06T20:56:42",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 14176
+   "chars": 14744
   },
   "hf_api": {
    "status": "fetched",
@@ -35,11 +35,11 @@
   },
   "fal_pricing": {
    "status": "fetched",
-   "chars": 7874
+   "chars": 7893
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1612
+   "chars": 1620
   },
   "runway": {
    "status": "fetched",
@@ -83,15 +83,7 @@
    "chars": 3535
   }
  },
- "findings": [
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
-  }
- ],
+ "findings": [],
  "deal_scan": {
   "pages": [
    {
@@ -130,7 +122,7 @@
     "snippets": 0
    }
   ],
-  "candidates": 1
+  "candidates": 0
  },
  "counts": {
   "ok": 371,
