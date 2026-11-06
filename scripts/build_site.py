@@ -1686,7 +1686,7 @@ page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRA
 <h2>Not included yet (unconfirmed)</h2><ul class="small">{unv}</ul>
 <h2 id="disclosure">Affiliate disclosure</h2>
 <div class="disclose">Some links on {BRAND} are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price. Sponsored placements are labelled "Sponsor" and never affect the price order.</div>
-<p class="small">Contact: TODO-add-contact-email</p>
+<p class="small">Contact: <a href="mailto:emmanueldevgonzalez@gmail.com">emmanueldevgonzalez@gmail.com</a>.</p>
 <p class="small">Directories: <a href="https://dang.ai">Dang.ai</a>.</p>""", "/about/", ld_script(about_ld))
 
 # ---------- Deals ----------
@@ -2901,6 +2901,10 @@ def audit_site():
     about = open(os.path.join(DIST, "about", "index.html"), encoding="utf-8").read()
     if 'Sponsored placements are labelled "Sponsor" and never affect the price order.' not in about:
         errors.append("about disclosure is missing the sponsor sentence")
+    if '<p class="small">Contact: <a href="mailto:emmanueldevgonzalez@gmail.com">emmanueldevgonzalez@gmail.com</a>.</p>' not in about:
+        errors.append("about page contact line")
+    if "TODO-add-contact-email" in about:
+        errors.append("about page still has the contact placeholder")
     if '<p class="small">Directories: <a href="https://dang.ai">Dang.ai</a>.</p>' not in about:
         errors.append("about page is missing the Dang.ai directory line")
     if 'href="https://twelve.tools">Twelve Tools</a>' not in home_html.split("<footer>", 1)[-1]:
