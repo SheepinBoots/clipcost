@@ -5,7 +5,63 @@
     <title>VidFare</title>
     <link>https://vidfare.com/</link>
     <description>Price changes, weekly reports, and live deals.</description>
-    <lastBuildDate>Thu, 05 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>AI video price changes, week of Nov 2, 2026</title>
+      <link>https://vidfare.com/reports/2026-w45/</link>
+      <guid isPermaLink="true">https://vidfare.com/reports/2026-w45/</guid>
+      <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+      <description>This report covers Oct 31 to Nov 6, 2026. Counted changes: 9 per-second price changes, 1 promos started, and 11 promos ended.</description>
+      <category>report</category>
+    </item>
+    <item>
+      <title>Kling 2.5 720p unlimited until Dec 4, 2026</title>
+      <link>https://vidfare.com/deals/#mag-kling25-unlimited</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#mag-kling25-unlimited</guid>
+      <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 2.5 at 720p is unlimited from December 4, 2025 to December 4, 2026. Ends 2026-12-04.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Yearly plans 40% off</title>
+      <link>https://vidfare.com/deals/#krea-yearly-40</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#krea-yearly-40</guid>
+      <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+      <description>A 40% off badge on yearly plans (Max $105 → $63/mo). No end date given.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>7 days of unlimited Seedance 2.5, GPT Image 2.6, Seedream 5.0 Pro, and Nano Banana Pro 2K on Ultra</title>
+      <link>https://vidfare.com/deals/#hf-nanobanana-unlimited-7d</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-nanobanana-unlimited-7d</guid>
+      <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Get GPT Image 2.6, Seedream 5.0 Pro &amp; Nano Banana Pro Unlimited on Ultra plan for 7 days with Special 30% discount No end date given.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Pricing-page banner: 30% off</title>
+      <link>https://vidfare.com/deals/#hf-banner-30</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-banner-30</guid>
+      <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+      <description>30% OFF. GPT IMAGE 2.6, SEEDREAM 5.0 PRO &amp; NANO BANANA PRO UNLIMITED. No end date given.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Hailuo 2.3 Fast 768p unlimited all year ended 2026-11-06.</title>
+      <link>https://vidfare.com/changes/#change-71d2a0f1d3c55459</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-71d2a0f1d3c55459</guid>
+      <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Hailuo 2.3 Fast 768p unlimited all year ended 2026-11-06.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Magnific Kling 2.5 720p unlimited on Plus (catalog Premium+) and Pro ends December 4, 2026. The pricing page badge says Until Dec. 4. The tooltip says the window runs from December 4, 2025 to December 4, 2026.</title>
+      <link>https://vidfare.com/changes/#change-7079dfd21db3e4d1</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-7079dfd21db3e4d1</guid>
+      <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Magnific Kling 2.5 720p unlimited on Plus (catalog Premium+) and Pro ends December 4, 2026. The pricing page badge says Until Dec. 4. The tooltip says the window runs from December 4, 2025 to December 4, 2026.</description>
+      <category>price change</category>
+    </item>
     <item>
       <title>Wan 3.0 on Replicate (alibaba/wan-3, 1080p): $0.20 → $0.14/s</title>
       <link>https://vidfare.com/changes/#change-bbbdf0a7ba8284a2</link>
@@ -31,6 +87,14 @@
       <category>price change</category>
     </item>
     <item>
+      <title>Gemini Omni Flash 1.1 on Google Gemini API (gemini-omni-1.1-flash, 720p): $0.10 → $0.07/s</title>
+      <link>https://vidfare.com/changes/#change-463b4a09a8b25223</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-463b4a09a8b25223</guid>
+      <pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Gemini Omni Flash 1.1 on Google Gemini API (gemini-omni-1.1-flash, 720p): $0.10 → $0.07/s</description>
+      <category>price change</category>
+    </item>
+    <item>
       <title>MiniMax H3 Lite and Highspeed 50% off on Replicate until Dec 31</title>
       <link>https://vidfare.com/deals/#replicate-minimax-h3-lite-highspeed-50</link>
       <guid isPermaLink="true">https://vidfare.com/deals/#replicate-minimax-h3-lite-highspeed-50</guid>
@@ -44,22 +108,6 @@
       <guid isPermaLink="true">https://vidfare.com/deals/#krea3-openrouter-50</guid>
       <pubDate>Mon, 02 Nov 2026 00:00:00 GMT</pubDate>
       <description>Krea 3 is 50% off on OpenRouter until Nov 10. Ends 2026-11-10.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>7 days of unlimited Seedance 2.5, GPT Image 2.5, Seedream 5.0 Pro, and Nano Banana Pro 2K on Ultra</title>
-      <link>https://vidfare.com/deals/#hf-nanobanana-unlimited-7d</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-nanobanana-unlimited-7d</guid>
-      <pubDate>Sun, 01 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Get Seedance 2.5, GPT Image 2.5 &amp; Seedream 5.0 Pro Unlimited on Ultra plan for 7 days with Special 30% discount No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Pricing-page banner: 30% off</title>
-      <link>https://vidfare.com/deals/#hf-banner-30</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-banner-30</guid>
-      <pubDate>Sun, 01 Nov 2026 00:00:00 GMT</pubDate>
-      <description>30% OFF. SEEDANCE 2.5, GPT IMAGE 2.5 &amp; SEEDREAM 5.0 PRO UNLIMITED. No end date given.</description>
       <category>deal</category>
     </item>
     <item>
@@ -303,35 +351,11 @@
       <category>deal</category>
     </item>
     <item>
-      <title>Kling 2.5 720p unlimited all year</title>
-      <link>https://vidfare.com/deals/#mag-kling25-unlimited</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#mag-kling25-unlimited</guid>
-      <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
-      <description>Unlimited, all year on Kling 2.5 720p for Premium+ and Pro. No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Hailuo 2.3 Fast 768p unlimited all year</title>
-      <link>https://vidfare.com/deals/#mag-hailuo-fast-unlimited</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#mag-hailuo-fast-unlimited</guid>
-      <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
-      <description>Unlimited, all year on MiniMax Hailuo 2.3 Fast 768p for Premium+ and Pro. No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
       <title>Unlimited Krea 3 for 14 days with Pro or Max annual</title>
       <link>https://vidfare.com/deals/#krea3-unlimited-14d</link>
       <guid isPermaLink="true">https://vidfare.com/deals/#krea3-unlimited-14d</guid>
       <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
       <description>Unlimited Krea 3 for 14 days with a qualifying Pro or Max annual purchase. No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Yearly plans 40% off</title>
-      <link>https://vidfare.com/deals/#krea-yearly-40</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#krea-yearly-40</guid>
-      <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
-      <description>A 40% off badge on yearly plans (Max $105 → $63/mo). No end date given.</description>
       <category>deal</category>
     </item>
     <item>

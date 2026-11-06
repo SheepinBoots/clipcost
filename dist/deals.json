@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05",
+ "updated": "2026-11-06",
  "deals": [
   {
    "id": "fal-flux3-75",
@@ -191,6 +191,44 @@
    "examples": []
   },
   {
+   "id": "mag-kling25-unlimited",
+   "vendor": "Magnific",
+   "type": "unlimited_window",
+   "title": "Kling 2.5 720p unlimited until Dec 4, 2026",
+   "models": [],
+   "plans": [
+    "Premium+",
+    "Pro"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": "720p",
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "unlimited",
+   "variants": [],
+   "start": null,
+   "end": "2026-12-04",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://www.magnific.com/pricing",
+   "source_quote": "Kling 2.5 at 720p is unlimited from December 4, 2025 to December 4, 2026.",
+   "verified_date": "2026-11-06",
+   "notes": "Capped at 720p. Kling 2.5 is not in the VidFare catalog (VidFare tracks Kling 3.0), so there is no $/s. The pricing page badge says Until Dec. 4, and the tooltip dates the window December 4, 2025 to December 4, 2026. That Dec 4, 2026 date is the end, not an estimate. The page calls the plan Plus; the catalog records it as Premium+. Plus and Pro both show the badge.",
+   "examples": []
+  },
+  {
    "id": "replicate-minimax-h3-lite-highspeed-50",
    "vendor": "Replicate",
    "type": "api_promo",
@@ -286,7 +324,7 @@
    "id": "hf-nanobanana-unlimited-7d",
    "vendor": "Higgsfield",
    "type": "unlimited_window",
-   "title": "7 days of unlimited Seedance 2.5, GPT Image 2.5, Seedream 5.0 Pro, and Nano Banana Pro 2K on Ultra",
+   "title": "7 days of unlimited Seedance 2.5, GPT Image 2.6, Seedream 5.0 Pro, and Nano Banana Pro 2K on Ultra",
    "models": [
     "seedance-2-5"
    ],
@@ -317,9 +355,9 @@
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "Get Seedance 2.5, GPT Image 2.5 & Seedream 5.0 Pro Unlimited on Ultra plan for 7 days with Special 30% discount",
-   "verified_date": "2026-11-01",
-   "notes": "Checked 2026-11-01. Ultra includes 7 days of unlimited Seedance 2.5, GPT Image 2.5, Seedream 5.0 Pro, and Nano Banana Pro 2K, with a special 30% discount. Nano Banana Pro, Seedream, and GPT Image are image models. Seedance 2.5 on Higgsfield is not in the price catalog, so this is not turned into a $/s. The 30% figure is not applied (see the banner deal). The 7 days start at signup.",
+   "source_quote": "Get GPT Image 2.6, Seedream 5.0 Pro & Nano Banana Pro Unlimited on Ultra plan for 7 days with Special 30% discount",
+   "verified_date": "2026-11-06",
+   "notes": "Checked 2026-11-06. Ultra includes 7 days of unlimited Seedance 2.5, GPT Image 2.6, Seedream 5.0 Pro, and Nano Banana Pro 2K, with a special 30% discount. Nano Banana Pro, Seedream, and GPT Image are image models. Seedance 2.5 on Higgsfield is not in the price catalog, so this is not turned into a $/s. The 30% figure is not applied (see the banner deal). The 7 days start at signup.",
    "examples": []
   },
   {
@@ -428,8 +466,8 @@
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "30% OFF. SEEDANCE 2.5, GPT IMAGE 2.5 & SEEDREAM 5.0 PRO UNLIMITED.",
-   "verified_date": "2026-11-01",
+   "source_quote": "30% OFF. GPT IMAGE 2.6, SEEDREAM 5.0 PRO & NANO BANANA PRO UNLIMITED.",
+   "verified_date": "2026-11-06",
    "notes": "Higgsfield's advertised percent is measured against its own anchor prices. This 30% is not applied to $/s. Checkout annual prices are the Plus, Ultra, and Starter deals.",
    "examples": []
   },
@@ -697,92 +735,12 @@
    "status": "live",
    "source_url": "https://www.krea.ai/pricing",
    "source_quote": "A 40% off badge on yearly plans (Max $105 → $63/mo).",
-   "verified_date": "2026-10-20",
+   "verified_date": "2026-11-06",
    "notes": "Pro yearly in the catalog is $21/mo versus $35 monthly, which is the same 40%. Max is not in the catalog, so Max has no $/s. No end date was on the page.",
    "examples": [
     "Pro: $35 → $21/mo · Veo 3.1 720p $0.02333/s vs $0.03889/s",
     "Max: $105 → $63/mo"
    ]
-  },
-  {
-   "id": "mag-hailuo-fast-unlimited",
-   "vendor": "Magnific",
-   "type": "unlimited_window",
-   "title": "Hailuo 2.3 Fast 768p unlimited all year",
-   "models": [
-    "minimax-hailuo"
-   ],
-   "plans": [
-    "Premium+",
-    "Pro"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": "768p",
-    "web_only": false,
-    "code": null,
-    "standing": true
-   },
-   "percent": null,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "full_plan_id": null,
-   "deal_plan_id": null,
-   "math": "unlimited",
-   "variants": [
-    "Hailuo 2.3 Fast"
-   ],
-   "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://www.magnific.com/pricing",
-   "source_quote": "Unlimited, all year on MiniMax Hailuo 2.3 Fast 768p for Premium+ and Pro.",
-   "verified_date": "2026-10-20",
-   "notes": "Standing plan feature. Magnific rows in the catalog are other Hailuo variants, so this is not treated as $0/s on those rows.",
-   "examples": []
-  },
-  {
-   "id": "mag-kling25-unlimited",
-   "vendor": "Magnific",
-   "type": "unlimited_window",
-   "title": "Kling 2.5 720p unlimited all year",
-   "models": [],
-   "plans": [
-    "Premium+",
-    "Pro"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": "720p",
-    "web_only": false,
-    "code": null,
-    "standing": true
-   },
-   "percent": null,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "full_plan_id": null,
-   "deal_plan_id": null,
-   "math": "unlimited",
-   "variants": [],
-   "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://www.magnific.com/pricing",
-   "source_quote": "Unlimited, all year on Kling 2.5 720p for Premium+ and Pro.",
-   "verified_date": "2026-10-20",
-   "notes": "Standing plan feature, capped at 720p. Kling 2.5 is not in the catalog (VidFare tracks Kling 3.0), so there is no break-even against a Kling 2.5 credit price.",
-   "examples": []
   },
   {
    "id": "mag-annual-25",
@@ -967,6 +925,48 @@
  ],
  "upcoming": [],
  "archive": [
+  {
+   "id": "mag-hailuo-fast-unlimited",
+   "vendor": "Magnific",
+   "type": "unlimited_window",
+   "title": "Hailuo 2.3 Fast 768p unlimited all year",
+   "models": [
+    "minimax-hailuo"
+   ],
+   "plans": [
+    "Premium+",
+    "Pro"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": "768p",
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "unlimited",
+   "variants": [
+    "Hailuo 2.3 Fast"
+   ],
+   "start": null,
+   "end": "2026-11-06",
+   "end_is_estimate": true,
+   "status": "ended",
+   "source_url": "https://www.magnific.com/pricing",
+   "source_quote": "Unlimited, all year on MiniMax Hailuo 2.3 Fast 768p for Premium+ and Pro.",
+   "verified_date": "2026-11-06",
+   "notes": "No longer listed in the Magnific pricing Unlimited section as of the 2026-11-06 check. The Unlimited rows are Nano Banana 2, Kling 2.5, and Nano Banana Pro. Last verified live 2026-10-20. The end date is that check date, not an earlier exact day. Magnific catalog rows are other Hailuo variants, so this was not treated as $0/s on those rows.",
+   "examples": []
+  },
   {
    "id": "hf-genjutsu-api-50",
    "vendor": "Higgsfield API",

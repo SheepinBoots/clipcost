@@ -278,5 +278,20 @@
   "new_usd_per_second": 0.07,
   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
   "type": "price"
+ },
+ {
+  "date": "2026-11-06",
+  "type": "deal_ended",
+  "deal": "mag-hailuo-fast-unlimited",
+  "vendor": "Magnific",
+  "source_url": "https://www.magnific.com/pricing",
+  "text": "Hailuo 2.3 Fast 768p unlimited all year ended 2026-11-06."
+ },
+ {
+  "date": "2026-11-06",
+  "type": "notice",
+  "platform": "Magnific",
+  "source_url": "https://www.magnific.com/pricing",
+  "text": "Magnific Kling 2.5 720p unlimited on Plus (catalog Premium+) and Pro ends December 4, 2026. The pricing page badge says Until Dec. 4. The tooltip says the window runs from December 4, 2025 to December 4, 2026."
  }
 ]

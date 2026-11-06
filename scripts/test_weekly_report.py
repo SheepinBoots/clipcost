@@ -109,6 +109,7 @@ def main():
         "promo_ended:deal:fal-minimax-35:2026-10-31",
         "promo_ended:deal:hf-kling3-unlimited-7d:2026-10-30",
     }
+    hailuo_end = "promo_ended:deal:mag-hailuo-fast-unlimited:2026-11-06"
     promo_ids = {event["id"] for event in log if event["kind"] in ("promo_started", "promo_ended")}
     week_ids = {
         "promo_ended:deal:hf-wan3-unlimited-7d:2026-10-20",
@@ -120,7 +121,7 @@ def main():
         "promo_started:deal:hf-seedance-unlimited-7d:2026-10-30",
         "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
-    assert promo_ids == week_ids | {future_start} | nov1_ends
+    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end}
     later = next(event for event in log if event["id"] == future_start)
     assert later["date"] == "2026-11-01" and later["started"] == "2026-11-01"
     assert later["checked"] == "2026-10-31" and later["vendor"] == "fal"
@@ -183,7 +184,9 @@ def main():
     assert held_start["pending"] == []
     week45 = held_start["reports"][1]
     assert week45["week_start"] == "2026-11-02" and week45["through"] == "2026-11-06"
-    assert {event["id"] for event in week45["changes"]} == price_ids | nov1_ends | {future_start}
+    assert {event["id"] for event in week45["changes"]} == price_ids | nov1_ends | {future_start, hailuo_end}
+    hailuo = next(event for event in log if event["id"] == hailuo_end)
+    assert hailuo["end_is_estimate"] is True and hailuo["ended"] == "2026-11-06" and hailuo["date"] == "2026-11-06"
     assert wr.change_counts(edition) == {"price": 0, "promo_started": 6, "promo_ended": 2}
     assert sum(wr.change_counts(edition).values()) == 8
     launch_body = wr.render_report_body(edition, log)

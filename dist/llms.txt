@@ -2,87 +2,87 @@
 
 > What every AI video second costs, everywhere.
 
-VidFare compares AI video generation prices in dollars per second of finished video, across APIs and credit plans. Figures are copied from each vendor's own pricing page. Audio, input type, and clip length are filled in only when that page states them. Otherwise the field is not stated. Last full check: 2026-11-05. 186 current prices.
+VidFare compares AI video generation prices in dollars per second of finished video, across APIs and credit plans. Figures are copied from each vendor's own pricing page. Audio, input type, and clip length are filled in only when that page states them. Otherwise the field is not stated. Last full check: 2026-11-06. 186 current prices.
 
 ## Cheapest current price by model and platform
 
 ### Wan 3.0 Prime
 
-- [Wan 3.0 Prime prices](https://vidfare.com/models/wan-3-0-prime/): cheapest overall $0.0408/s on Higgsfield API, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s (checked 2026-11-05).
-- Higgsfield API: $0.0408/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s (checked 2026-11-05).
-- Higgsfield: $0.0495/s, plan tier Ultra (annual), resolution 480p, audio not stated, input not stated, priced at 5s (checked 2026-11-05). Assumes every credit you pay for is used.
-- Krea: $0.05051/s, plan tier Basic (yearly), resolution 480p, audio not stated, input not stated, priced at 2s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- Runway API: $0.068/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-05).
-- fal: $0.068/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-05).
+- [Wan 3.0 Prime prices](https://vidfare.com/models/wan-3-0-prime/): cheapest overall $0.0408/s on Higgsfield API, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s (checked 2026-11-06).
+- Higgsfield API: $0.0408/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s (checked 2026-11-06).
+- Higgsfield: $0.0495/s, plan tier Ultra (annual), resolution 480p, audio not stated, input not stated, priced at 5s (checked 2026-11-06). Assumes every credit you pay for is used.
+- Krea: $0.05051/s, plan tier Basic (yearly), resolution 480p, audio not stated, input not stated, priced at 2s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- Runway API: $0.068/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-06).
+- fal: $0.068/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-06).
 
 ### Wan 3.0
 
-- [Wan 3.0 prices](https://vidfare.com/models/wan-3-0/): cheapest overall $0.025/s on Higgsfield API, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s (checked 2026-11-05).
-- Higgsfield API: $0.025/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s (checked 2026-11-05).
-- Higgsfield: $0.033/s, plan tier Ultra (annual), resolution 480p, audio not stated, input not stated, priced at 5s (checked 2026-11-05). Assumes every credit you pay for is used.
-- Replicate: $0.035/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, 2–30s (checked 2026-11-05).
-- Runway API: $0.05/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-05).
-- fal: $0.05/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-05).
-- Krea: $0.05556/s, plan tier Basic (yearly), resolution 480p, audio not stated, input not stated, priced at 2s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
+- [Wan 3.0 prices](https://vidfare.com/models/wan-3-0/): cheapest overall $0.025/s on Higgsfield API, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s (checked 2026-11-06).
+- Higgsfield API: $0.025/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s (checked 2026-11-06).
+- Higgsfield: $0.033/s, plan tier Ultra (annual), resolution 480p, audio not stated, input not stated, priced at 5s (checked 2026-11-06). Assumes every credit you pay for is used.
+- Replicate: $0.035/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, 2–30s (checked 2026-11-06).
+- Runway API: $0.05/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-06).
+- fal: $0.05/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-06).
+- Krea: $0.05556/s, plan tier Basic (yearly), resolution 480p, audio not stated, input not stated, priced at 2s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
 
 ### Kling 3.0
 
-- [Kling 3.0 prices](https://vidfare.com/models/kling-3-0/): cheapest overall $0.0495/s on Higgsfield, plan tier Ultra (annual), resolution 720p, audio not stated, input not stated, priced at 5s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- Higgsfield: $0.0495/s, plan tier Ultra (annual), resolution 720p, audio not stated, input not stated, priced at 5s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- Magnific: $0.0594/s, plan tier Pro (annual), resolution 1080p, audio not stated, input not stated, priced at 5s (checked 2026-11-05). Assumes every credit you pay for is used.
-- Krea: $0.06231/s, plan tier Basic (yearly), resolution not listed, without audio, input not stated, priced at 3s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- Higgsfield API: $0.084/s, plan tier not listed, resolution lowest mode, audio not stated, input not stated, 3–15s (checked 2026-11-05).
-- Kling API: $0.084/s, plan tier not listed, resolution 720p, without audio, input not stated, length not stated (checked 2026-11-05).
-- Runway API: $0.09/s, plan tier Standard, resolution not listed, without audio, input not stated, length not stated (checked 2026-11-05).
-- fal: $0.112/s, Pro tier, resolution not listed, without audio, input text-to-video, length not stated (checked 2026-11-05).
+- [Kling 3.0 prices](https://vidfare.com/models/kling-3-0/): cheapest overall $0.0495/s on Higgsfield, plan tier Ultra (annual), resolution 720p, audio not stated, input not stated, priced at 5s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- Higgsfield: $0.0495/s, plan tier Ultra (annual), resolution 720p, audio not stated, input not stated, priced at 5s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- Magnific: $0.0594/s, plan tier Pro (annual), resolution 1080p, audio not stated, input not stated, priced at 5s (checked 2026-11-06). Assumes every credit you pay for is used.
+- Krea: $0.06231/s, plan tier Basic (yearly), resolution not listed, without audio, input not stated, priced at 3s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- Higgsfield API: $0.084/s, plan tier not listed, resolution lowest mode, audio not stated, input not stated, 3–15s (checked 2026-11-06).
+- Kling API: $0.084/s, plan tier not listed, resolution 720p, without audio, input not stated, length not stated (checked 2026-11-06).
+- Runway API: $0.09/s, plan tier Standard, resolution not listed, without audio, input not stated, length not stated (checked 2026-11-06).
+- fal: $0.112/s, Pro tier, resolution not listed, without audio, input text-to-video, length not stated (checked 2026-11-06).
 
 ### Seedance 2.5
 
-- [Seedance 2.5 prices](https://vidfare.com/models/seedance-2-5/): cheapest overall $0.132/s on Magnific, plan tier Pro (annual), resolution 480p, audio not stated, input not stated, priced at 4s (checked 2026-11-05). Assumes every credit you pay for is used.
-- Magnific: $0.132/s, plan tier Pro (annual), resolution 480p, audio not stated, input not stated, priced at 4s (checked 2026-11-05). Assumes every credit you pay for is used.
-- Atlas Cloud: $0.1397/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-05). Estimate: Atlas labels these '(estimated)': billed on actual video tokens.
-- Runway API: $0.20/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-05).
-- Higgsfield API: $0.206/s, plan tier not listed, resolution lowest mode, audio not stated, input not stated, 4–30s (checked 2026-11-05).
-- fal: $0.2205/s, plan tier not listed, resolution 480p, with audio, input text-to-video, up to 30s (checked 2026-11-05). Estimate: fal says 'roughly': billed by tokens (16:9, 24fps).
+- [Seedance 2.5 prices](https://vidfare.com/models/seedance-2-5/): cheapest overall $0.132/s on Magnific, plan tier Pro (annual), resolution 480p, audio not stated, input not stated, priced at 4s (checked 2026-11-06). Assumes every credit you pay for is used.
+- Magnific: $0.132/s, plan tier Pro (annual), resolution 480p, audio not stated, input not stated, priced at 4s (checked 2026-11-06). Assumes every credit you pay for is used.
+- Atlas Cloud: $0.1397/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-06). Estimate: Atlas labels these '(estimated)': billed on actual video tokens.
+- Runway API: $0.20/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-06).
+- Higgsfield API: $0.206/s, plan tier not listed, resolution lowest mode, audio not stated, input not stated, 4–30s (checked 2026-11-06).
+- fal: $0.2205/s, plan tier not listed, resolution 480p, with audio, input text-to-video, up to 30s (checked 2026-11-06). Estimate: fal says 'roughly': billed by tokens (16:9, 24fps).
 
 ### Veo 3.1
 
-- [Veo 3.1 prices](https://vidfare.com/models/veo-3-1/): cheapest overall $0.02222/s on Krea, plan tier Basic (yearly), resolution 720p, audio not stated, input not stated, priced at 4s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- Krea: $0.02222/s, plan tier Basic (yearly), resolution 720p, audio not stated, input not stated, priced at 4s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- Runway API: $0.10/s, plan tier not listed, resolution not listed, without audio, input not stated, length not stated (checked 2026-11-05).
-- Higgsfield: $0.132/s, plan tier Ultra (annual), resolution 720p, audio not stated, input not stated, priced at 4s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- fal: $0.20/s, plan tier not listed, resolution 720p/1080p, without audio, input not stated, up to 8s (checked 2026-11-05).
-- Magnific: $0.3432/s, plan tier Pro (annual), resolution 4K, with audio, input not stated, priced at 4s (checked 2026-11-05). Assumes every credit you pay for is used.
+- [Veo 3.1 prices](https://vidfare.com/models/veo-3-1/): cheapest overall $0.02222/s on Krea, plan tier Basic (yearly), resolution 720p, audio not stated, input not stated, priced at 4s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- Krea: $0.02222/s, plan tier Basic (yearly), resolution 720p, audio not stated, input not stated, priced at 4s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- Runway API: $0.10/s, plan tier not listed, resolution not listed, without audio, input not stated, length not stated (checked 2026-11-06).
+- Higgsfield: $0.132/s, plan tier Ultra (annual), resolution 720p, audio not stated, input not stated, priced at 4s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- fal: $0.20/s, plan tier not listed, resolution 720p/1080p, without audio, input not stated, up to 8s (checked 2026-11-06).
+- Magnific: $0.3432/s, plan tier Pro (annual), resolution 4K, with audio, input not stated, priced at 4s (checked 2026-11-06). Assumes every credit you pay for is used.
 
 ### Gemini Omni Flash 1.1
 
-- [Gemini Omni Flash 1.1 prices](https://vidfare.com/models/gemini-omni-flash/): cheapest overall $0.099/s on Atlas Cloud, plan tier not listed, resolution 720p, audio not stated, input text-to-video, length not stated (checked 2026-11-05).
-- Atlas Cloud: $0.099/s, plan tier not listed, resolution 720p, audio not stated, input text-to-video, length not stated (checked 2026-11-05).
-- Google Gemini API: $0.10/s, plan tier not listed, resolution 720p, audio not stated, input not stated, length not stated (checked 2026-11-05). Estimate: Token-billed; Google states 'approximately $0.10 per second' of 720p.
-- Runway API: $0.10/s, plan tier not listed, resolution 720p, audio not stated, input not stated, length not stated (checked 2026-11-05).
-- Magnific: $0.1584/s, plan tier Pro (annual), resolution not listed, audio not stated, input not stated, priced at 3s (checked 2026-11-05). Assumes every credit you pay for is used.
+- [Gemini Omni Flash 1.1 prices](https://vidfare.com/models/gemini-omni-flash/): cheapest overall $0.07/s on Google Gemini API, plan tier not listed, resolution 720p, audio not stated, input not stated, length not stated (checked 2026-11-06). Estimate: Token-billed; Google states 'approximately $0.10 per second' of 720p.
+- Google Gemini API: $0.07/s, plan tier not listed, resolution 720p, audio not stated, input not stated, length not stated (checked 2026-11-06). Estimate: Token-billed; Google states 'approximately $0.10 per second' of 720p.
+- Atlas Cloud: $0.099/s, plan tier not listed, resolution 720p, audio not stated, input text-to-video, length not stated (checked 2026-11-06).
+- Runway API: $0.10/s, plan tier not listed, resolution 720p, audio not stated, input not stated, length not stated (checked 2026-11-06).
+- Magnific: $0.1584/s, plan tier Pro (annual), resolution not listed, audio not stated, input not stated, priced at 3s (checked 2026-11-06). Assumes every credit you pay for is used.
 
 ### MiniMax Hailuo / H3
 
-- [MiniMax Hailuo / H3 prices](https://vidfare.com/models/minimax-hailuo/): cheapest overall $0.0175/s on fal, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-05), promo until 2026-11-15.
-- fal: $0.0175/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-05), promo until 2026-11-15.
-- Krea: $0.02597/s, plan tier Basic (yearly), resolution 480p, audio not stated, input not stated, priced at 5s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- Magnific: $0.0264/s, plan tier Pro (annual), resolution 768p, audio not stated, input not stated, priced at 5s (checked 2026-11-05). Assumes every credit you pay for is used.
-- Higgsfield: $0.033/s, plan tier Ultra (annual), resolution 768p, audio not stated, input not stated, priced at 6s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
-- Atlas Cloud: $0.0437/s, plan tier not listed, resolution 480P, audio not stated, input text-to-video, length not stated (checked 2026-11-05).
-- Runway API: $0.05/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-05).
+- [MiniMax Hailuo / H3 prices](https://vidfare.com/models/minimax-hailuo/): cheapest overall $0.0175/s on fal, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-06), promo until 2026-11-15.
+- fal: $0.0175/s, plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated (checked 2026-11-06), promo until 2026-11-15.
+- Krea: $0.02597/s, plan tier Basic (yearly), resolution 480p, audio not stated, input not stated, priced at 5s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- Magnific: $0.0264/s, plan tier Pro (annual), resolution 768p, audio not stated, input not stated, priced at 5s (checked 2026-11-06). Assumes every credit you pay for is used.
+- Higgsfield: $0.033/s, plan tier Ultra (annual), resolution 768p, audio not stated, input not stated, priced at 6s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
+- Atlas Cloud: $0.0437/s, plan tier not listed, resolution 480P, audio not stated, input text-to-video, length not stated (checked 2026-11-06).
+- Runway API: $0.05/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-06).
 
 ### Runway Gen-4.x
 
-- [Runway Gen-4.x prices](https://vidfare.com/models/runway-gen-4/): cheapest overall $0.05/s on Runway API, plan tier not listed, resolution not listed, audio not stated, input not stated, length not stated (checked 2026-11-05).
-- Runway API: $0.05/s, plan tier not listed, resolution not listed, audio not stated, input not stated, length not stated (checked 2026-11-05).
-- Krea: $0.08929/s, plan tier Basic (yearly), resolution not listed, audio not stated, input not stated, priced at 2s (checked 2026-11-05). Estimate: assumes every credit you pay for is used.
+- [Runway Gen-4.x prices](https://vidfare.com/models/runway-gen-4/): cheapest overall $0.05/s on Runway API, plan tier not listed, resolution not listed, audio not stated, input not stated, length not stated (checked 2026-11-06).
+- Runway API: $0.05/s, plan tier not listed, resolution not listed, audio not stated, input not stated, length not stated (checked 2026-11-06).
+- Krea: $0.08929/s, plan tier Basic (yearly), resolution not listed, audio not stated, input not stated, priced at 2s (checked 2026-11-06). Estimate: assumes every credit you pay for is used.
 
 ### Grok Imagine Video 1.5
 
-- [Grok Imagine Video 1.5 prices](https://vidfare.com/models/grok-imagine/): cheapest overall $0.02/s on Runway API, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-05).
-- Runway API: $0.02/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-05).
-- fal: $0.08/s, plan tier not listed, resolution 480p, with audio, input text-to-video, length not stated (checked 2026-11-05).
+- [Grok Imagine Video 1.5 prices](https://vidfare.com/models/grok-imagine/): cheapest overall $0.02/s on Runway API, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-06).
+- Runway API: $0.02/s, plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated (checked 2026-11-06).
+- fal: $0.08/s, plan tier not listed, resolution 480p, with audio, input text-to-video, length not stated (checked 2026-11-06).
 
 ## Deals
 
@@ -91,9 +91,9 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 ## Guides
 
 - [Guides](https://vidfare.com/guides/): comparisons built from the same price rows.
-- [Cheapest way to use Wan 3.0](https://vidfare.com/guides/cheapest-wan-3-0/): Wan 3.0 from $0.025 per second on Higgsfield API (plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s), a promo (checked 2026-11-05). Wan 3.0 Prime from $0.0408 per second on Higgsfield API (plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s), a promo (checked 2026-11-05).
-- [Cheapest AI video generator](https://vidfare.com/guides/cheapest-ai-video-generator/): The lowest rate we track is $0.0175 per second on fal (plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated), a promo until 2026-11-15 (checked 2026-11-05).
-- [Higgsfield plan rates](https://vidfare.com/guides/is-higgsfield-worth-it/): The lowest Higgsfield plan rate we track is $0.033 per second on Higgsfield (plan tier Ultra (annual), resolution 480p, audio not stated, input not stated, priced at 5s), a vendor-stated rate (checked 2026-11-05). Assumes every credit you pay for is used.
+- [Cheapest way to use Wan 3.0](https://vidfare.com/guides/cheapest-wan-3-0/): Wan 3.0 from $0.025 per second on Higgsfield API (plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s), a promo (checked 2026-11-06). Wan 3.0 Prime from $0.0408 per second on Higgsfield API (plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, reference, 2–30s), a promo (checked 2026-11-06).
+- [Cheapest AI video generator](https://vidfare.com/guides/cheapest-ai-video-generator/): The lowest rate we track is $0.0175 per second on fal (plan tier not listed, resolution 480p, audio not stated, input text-to-video, length not stated), a promo until 2026-11-15 (checked 2026-11-06).
+- [Higgsfield plan rates](https://vidfare.com/guides/is-higgsfield-worth-it/): The lowest Higgsfield plan rate we track is $0.033 per second on Higgsfield (plan tier Ultra (annual), resolution 480p, audio not stated, input not stated, priced at 5s), a vendor-stated rate (checked 2026-11-06). Assumes every credit you pay for is used.
 - [Project budget](https://vidfare.com/guides/ai-video-project-budget/): Enter finished minutes and a retry multiplier to price each tracked dollars-per-second rate.
 
 ## Data
@@ -114,3 +114,4 @@ Published on Friday when at least two verified changes were checked. A change is
 
 - https://vidfare.com/reports/
 - https://vidfare.com/reports/2026-w44/
+- https://vidfare.com/reports/2026-w45/
