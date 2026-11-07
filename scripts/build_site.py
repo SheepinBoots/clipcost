@@ -17,12 +17,12 @@ OG_IMAGE = SITE_URL + "/og.png"
 LOGO_URL = SITE_URL + "/logo-512.png"
 ORG_ID = SITE_URL + "/#organization"
 OG_ALT = BRAND + ". " + TAGLINE
-# TODO: set True once the Buttondown form endpoint is live (see NEWSLETTER_ACTION).
-# While False, the signup form, the Newsletter nav link, and the advertise-page
-# newsletter spot are omitted. /newsletter/ is a noindex coming-soon page and
-# stays out of sitemap.xml.
-NEWSLETTER_ENABLED = False
-NEWSLETTER_ACTION = "#TODO-newsletter-endpoint"  # TODO: Buttondown form action
+# The Kit form is live. The header nav stays as it is on the live site, so a
+# Newsletter item is not added. /newsletter/ is a normal page and is in the sitemap.
+NEWSLETTER_ENABLED = True
+KIT_FORM_ACTION = "https://app.kit.com/forms/10154736/subscriptions"
+KIT_FORM_ID = "10154736"
+KIT_UID = "127ad5e4e5"
 # Weekly /reports/ pages. On for the live site. A week is still withheld when
 # it has fewer than two qualifying changes (per-second price changes, promo
 # starts, and promo ends).
@@ -264,8 +264,6 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
     canon = SITE_URL + path
     show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
     navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/guides/", "Guides"), ("/changes/", "Price changes"), ("/data/", "Data")]
-    if NEWSLETTER_ENABLED:
-        navs.append(("/newsletter/", "Newsletter"))
     if show_reports:
         navs.append(("/reports/", "Reports"))
     navs.append(("/about/", "About"))
@@ -673,14 +671,17 @@ def retired_table(rs, thead=None):
             f'{wide_table(head + "<tbody>" + body + "</tbody>", " id=\"retired\"")}')
 
 def news_box():
-    # TODO: restore the signup by setting NEWSLETTER_ENABLED once Buttondown is live.
+    """Kit signup. The form posts on its own if ck.5.js does not load."""
     if not NEWSLETTER_ENABLED:
         return ""
     return f"""<section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
-<p class="small" style="margin:0">Every Monday: price changes, new models, and the cheapest way to run each one. Free, unsubscribe any time.</p>
-<form action="{NEWSLETTER_ACTION}" method="post" onsubmit="event.preventDefault();this.querySelector('button').textContent='Thanks! (signup not connected yet)';">
-<!-- TODO: point action at the Buttondown form endpoint -->
-<input type="email" name="email" required placeholder="you@email.com" aria-label="Email address"><button class="btn" type="submit">Subscribe</button></form></section>"""
+<p class="small" style="margin:0">Every Monday: price changes, new models, and the cheapest way to run each one. Free.</p>
+<label class="small" for="newsEmail">Email address</label>
+<form action="{KIT_FORM_ACTION}" class="seva-form formkit-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_UID}" data-format="inline" data-version="5">
+<input id="newsEmail" type="email" name="email_address" required placeholder="you@email.com" aria-label="Email address"><button class="btn" type="submit">Subscribe</button>
+</form>
+<p class="small">Check your inbox to confirm. You are not subscribed until you confirm.</p>
+<script src="https://f.convertkit.com/ckjs/ck.5.js"></script></section>"""
 
 shutil.rmtree(DIST, ignore_errors=True); os.makedirs(DIST)
 shutil.copy(os.path.join(ROOT, "src", "style.css"), DIST)
@@ -1648,7 +1649,6 @@ page("/changes/", f"AI Video Price Changes Log ({MONTH}) | {BRAND}",
 <ul class="log" style="padding-left:0;list-style:none">{items}</ul>{news_box()}""", "/changes/")
 
 # ---------- Newsletter ----------
-# TODO: the signup page and nav link come back when NEWSLETTER_ENABLED is True.
 if NEWSLETTER_ENABLED:
     page("/newsletter/", f"{BRAND} Weekly: AI video price drops & new models", "One short email a week: AI video price changes, new models and the cheapest way to run them.",
          f"""<h1>{BRAND} Weekly</h1><p class="lead">One short email every Monday: which AI video prices changed, which new models launched, and the cheapest way to run each one right now. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
@@ -2802,6 +2802,17 @@ def audit_site():
                 errors.append("newsletter nav link is present while the newsletter is off")
         if "newsletter" in llms.lower() or "subscribe" in llms.lower():
             errors.append("llms.txt implies a newsletter signup")
+    else:
+        news_path = os.path.join(DIST, "newsletter", "index.html")
+        news_html = open(news_path, encoding="utf-8").read() if os.path.isfile(news_path) else ""
+        if f'action="{KIT_FORM_ACTION}"' not in news_html or "ck.5.js" not in news_html:
+            errors.append("newsletter page is missing the Kit form")
+        if "Check your inbox to confirm." not in news_html:
+            errors.append("newsletter page is missing the confirm-inbox line")
+        if "TODO-newsletter-endpoint" in news_html or "preventDefault" in news_html:
+            errors.append("newsletter page still blocks the Kit form")
+        if 'name="email_address"' not in news_html:
+            errors.append("newsletter page email field")
     if weekly_report.format_usd("0.0272") != money("0.0272") or weekly_report.format_usd("0.1") != money("0.1"):
         errors.append("report dollar format drifted from the price table")
     if REPORTS_ENABLED:
