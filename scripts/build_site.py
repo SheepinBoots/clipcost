@@ -132,6 +132,8 @@ def plat_link(p, url):
 e = html.escape
 HOUSE_LINE = "Your tool here: sponsor this spot"
 SPONSOR_REL = "sponsored nofollow noopener"
+EDITOR_NAME = "Emmanuel Gonzalez"
+EDITOR_LD = {"@type": "Person", "name": EDITOR_NAME}
 
 def sponsor_record(slot_id):
     """home, deals, or model:<slug>. A missing model slot uses model:default."""
@@ -164,7 +166,44 @@ def render_sponsor(slot_id, rec, featured=False):
     return f'<aside class="{cls}" data-sponsor="{e(slot_id)}">{"".join(bits)}</aside>'
 
 def sponsor_slot(slot_id, featured=False):
-    return render_sponsor(slot_id, sponsor_record(slot_id), featured)
+    """Filled placements stay. An empty house placeholder is not rendered."""
+    rec = sponsor_record(slot_id)
+    if not sponsor_filled(rec):
+        return ""
+    return render_sponsor(slot_id, rec, featured)
+
+def public_gap(item):
+    """Public wording for a price the catalog does not include. The data reason stays in the file."""
+    name = (item.get("item") or "").strip().rstrip(".")
+    reason = (item.get("reason") or "").strip().rstrip(".")
+    known = {
+        "pricing not rendered without login/region; check manually":
+            "The pricing page did not show a price without a login or a region, so there is no dollars-per-second row.",
+        "discount not reflected on model page; not applied":
+            "The model page did not show that discount on the price, so it is not in the table.",
+        "model page shows no static price":
+            "The model page did not show a static price, so there is no row.",
+        "plan page only says '~80 Seedance 2.5 videos' for 1,200 credits without clip length/resolution":
+            "The plan page says '~80 Seedance 2.5 videos' for 1,200 credits and does not give clip length or resolution, so there is no dollars-per-second row.",
+        "compare table says ~7 credits/5s at 720p, plan quiz says ≈14 credits per 8s 720p; both approximate":
+            "The compare table says ~7 credits/5s at 720p and the plan quiz says ≈14 credits per 8s 720p. Those two figures disagree, so neither is a dollars-per-second row.",
+        "count column appears to assume a 40k pack, price for that pack not shown; Max omitted":
+            "The count column uses a 40k pack whose price is not shown, so Max has no row.",
+        "official API page lists per-second rates, but input video changes the billed duration, so no single $/s is in the table":
+            "The official API page lists per-second rates, and input video changes the billed duration, so there is no single dollars-per-second row.",
+    }
+    sentence = known.get(reason)
+    if sentence is None:
+        cleaned = reason.replace("check manually", "not shown on the fetched page")
+        cleaned = cleaned.replace("price file", "price table")
+        cleaned = cleaned.replace("when site built", "on the date checked")
+        if cleaned:
+            sentence = cleaned[0].upper() + cleaned[1:]
+            if not sentence.endswith("."):
+                sentence += "."
+        else:
+            sentence = "No dollars-per-second row."
+    return f"{name}: {sentence}" if name else sentence
 def money(v):
     """Shared with the page scripts: up to 5 decimals, half up, trailing zeros trimmed to 2."""
     n = int((Decimal(str(v)) * Decimal(100000)).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
@@ -260,7 +299,24 @@ def change_plain(change):
         )
     return change.get("text") or change.get("type") or "Price change"
 
+def with_affiliate_note(body):
+    """Short disclosure under the title on pages that contain affiliate links."""
+    if 'rel="sponsored' not in body:
+        return body
+    if 'id="disclosure"' in body or "/about/#disclosure" in body:
+        return body
+    note = affiliate_note_html()
+    marker = byline_html()
+    if marker in body:
+        return body.replace(marker, marker + note, 1)
+    end = body.find("</h1>")
+    if end == -1:
+        return note + body
+    end += len("</h1>")
+    return body[:end] + note + body[end:]
+
 def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None, robots="index,follow", canonical=True, before_count=""):
+    body = with_affiliate_note(body)
     canon = SITE_URL + path
     show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
     navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/guides/", "Guides"), ("/changes/", "Price changes"), ("/data/", "Data")]
@@ -358,7 +414,46 @@ def write_report_preview():
     os.makedirs(preview_root, exist_ok=True)
     open(os.path.join(preview_root, "STATUS.txt"), "w", encoding="utf-8").write("\n".join(lines) + "\n")
 
-def tag(st): return f'<span class="tag {st}">{ {"verified":"vendor-stated","estimate":"approx.","promo":"promo","discontinued":"discontinued"}[st] }</span>'
+def rate_label(r):
+    """Visible origin of a $/s figure. A credit-plan estimate is never called a published rate."""
+    if r.get("kind") == "plan":
+        if r.get("status") == "estimate":
+            return "estimated from credit plan"
+        return "from credit plan"
+    status = r.get("status")
+    if status == "estimate":
+        return "estimated rate"
+    if status == "promo":
+        return "promo"
+    if status == "discontinued":
+        return "discontinued"
+    return "published rate"
+
+def tag(r):
+    status = r.get("status") if isinstance(r, dict) else r
+    label = rate_label(r) if isinstance(r, dict) else {
+        "verified": "published rate",
+        "estimate": "estimated rate",
+        "promo": "promo",
+        "discontinued": "discontinued",
+    }.get(status, status)
+    return f'<span class="tag {status}">{e(label)}</span>'
+
+def source_link(r):
+    href, rel = outbound(r["source_url"])
+    return f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>'
+
+def checked_source(r):
+    return f'<div class="small">Checked {e(r["checked"])}. {source_link(r)}.</div>'
+
+def byline_html():
+    return f'<p class="byline">Edited by {e(EDITOR_NAME)}</p>'
+
+def affiliate_note_html():
+    return (
+        f'<p class="disclose">Some links on this page are affiliate links. '
+        f'<a class="tap" href="{root("/about/#disclosure")}">Affiliate disclosure</a>.</p>'
+    )
 
 def ends_fallback(deal):
     cond = dealmod.conditions(deal)
@@ -396,13 +491,39 @@ def deal_badges(r):
     return (" " + "".join(bits)) if bits else ""
 
 def deal_price_line(rs):
+    """Name the deal row's variant and origin. A higher price on another plan is not a cut on the headline."""
     best = dealmod.best_deal_price(rs, LIVE_DEALS, plans, TODAY)
     if not best:
         return ""
     deal = DEAL_BY_ID[best["deal_id"]]
     row = best["row"]
-    return (f'<div class="sub" {deal_attrs(deal)}>With live deals: {money(best["usd"])}/s on {e(row["platform"])} '
-            f'({e(spec_phrase(row))}) · <span class="ends">{e(ends_fallback(deal))}</span></div>')
+    headline = cheapest(rs)
+    compared = ""
+    if best.get("list_usd") is not None and abs(best["list_usd"] - best["usd"]) > 1e-9:
+        compared = f" versus {money(best['list_usd'])}/s at the price this deal compares"
+        if best.get("label"):
+            compared += f" ({best['label']})"
+    detail = (
+        f'{e(row["variant"])} on {e(row["platform"])} ({e(spec_phrase(row))}), {e(rate_label(row))}: '
+        f'{money(best["usd"])}/s{compared}. Checked {e(row["checked"])}. {source_link(row)}.'
+    )
+    if headline and row.get("id") != headline.get("id"):
+        if best["usd"] + 1e-12 < headline["usd_per_second"]:
+            prefix = (
+                f'Lower live-deal price on a different option, not a cut on '
+                f'{e(headline["variant"])} at {money(headline["usd_per_second"])}/s'
+            )
+        else:
+            prefix = (
+                f'Different option, not a cut on {e(headline["variant"])} '
+                f'at {money(headline["usd_per_second"])}/s'
+            )
+    else:
+        prefix = "With this live deal"
+    return (
+        f'<div class="sub" {deal_attrs(deal)}>{prefix}: {detail} '
+        f'<span class="ends">{e(ends_fallback(deal))}</span></div>'
+    )
 
 TICK_JS = """
 function clipDays(end){const p=end.split('-').map(Number);const e=new Date(p[0],p[1]-1,p[2]);const t=new Date();t.setHours(0,0,0,0);return Math.round((e-t)/86400000)}
@@ -557,14 +678,13 @@ def spec_phrase(r):
 def assumption_text(r):
     """Usage assumption for a credit plan, or the vendor basis for a flagged estimate. Empty otherwise."""
     if r.get("kind") == "plan":
-        if r.get("status") == "estimate":
-            return "Estimate: " + CREDIT_USE
-        return "Assumes every credit you pay for is used"
+        kind = "Estimated from credit plan. " if r.get("status") == "estimate" else "From credit plan. "
+        return kind + "Assumes every credit you pay for is used."
     if r.get("status") == "estimate":
         note = (r.get("note") or "").strip()
         if note:
-            return "Estimate: " + note
-        return "Estimate: the vendor marks this rate as approximate"
+            return "Estimated rate. " + note
+        return "Estimated rate. The vendor marks this rate as approximate."
     return ""
 
 def assumption_html(r):
@@ -583,7 +703,7 @@ def row_html(r, fmt=None):
     return (f'<tr><td><a href="{root(f"/models/{r["model"]}/")}">{e(m)}</a></td><td>{plat_link(r["platform"], r["source_url"])}</td>'
             f'<td>{e(r["variant"])}</td><td>{e(shown_tier(r))}</td><td>{e(shown_resolution(r))}</td><td>{fact_lines(r)}</td>'
             f'<td class="num"><span class="amt">{show(r["usd_per_second"])}</span>{assumption_html(r)}</td>'
-            f'<td>{tag(r["status"])}{promo}{deal_badges(r)}{disc}</td><td class="math">{extra}</td>'
+            f'<td>{tag(r)}{promo}{deal_badges(r)}{disc}</td><td class="math">{extra}</td>'
             f'<td class="small"><a href="{html.escape(outbound(r["source_url"])[0])}" rel="{outbound(r["source_url"])[1]}" target="_blank">source</a><br>{r["checked"]}</td></tr>')
 
 THEAD = ('<thead><tr><th data-k="model">Model</th><th data-k="platform">Where</th><th data-k="variant">Variant / plan</th>'
@@ -597,9 +717,10 @@ def cheapest(rs, allow_promo=True):
 def price_fact(r, platform=True):
     """One price sentence. The dollar amount is the same money() string as the table."""
     where = f" on {r['platform']}" if platform else ""
-    text = f"{money(r['usd_per_second'])}/s{where}, {spec_phrase(r)} (checked {r['checked']})"
-    if r.get("status") == "promo" and r.get("promo_until"):
-        text += f", promo until {r['promo_until']}"
+    text = (
+        f"{money(r['usd_per_second'])}/s{where} for {r['variant']}, {spec_phrase(r)}, "
+        f"{status_phrase(r)} (checked {r['checked']}, {r['source_url']})"
+    )
     assump = assumption_text(r)
     if assump:
         text += ". " + assump.rstrip(".")
@@ -622,7 +743,7 @@ def model_faqs(m, rs, clip5):
     if len(faqs) < 4:
         faqs.append((
             f"How much does {name} cost per second?",
-            f"As of {LAST}, from {money(c['usd_per_second'])}/s ({c['platform']}, {c['resolution']}). A 5-second clip at that rate costs about {clip5}.",
+            f"As of {c['checked']}, from {money(c['usd_per_second'])}/s ({c['platform']}, {c['variant']}, {shown_resolution(c)}, {status_phrase(c)}, checked {c['checked']}, {c['source_url']}). A 5-second clip at that rate costs about {clip5}.",
         ))
     if len(faqs) < 4:
         c2 = cheapest(rs, False)
@@ -649,6 +770,8 @@ def faq_ld(slug, faqs):
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "url": f"{SITE_URL}/models/{slug}/",
+        "author": EDITOR_LD,
+        "editor": EDITOR_LD,
         "publisher": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/", "logo": LOGO_URL},
         "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
@@ -670,15 +793,35 @@ def retired_table(rs, thead=None):
             f'<p class="small">These rates are off sale. The last price we recorded stays here, and these rows are left out of cheapest picks and the live table.</p>'
             f'{wide_table(head + "<tbody>" + body + "</tbody>", " id=\"retired\"")}')
 
+KIT_SUCCESS = "Almost done. Check your inbox for a confirmation email."
+
 def news_box():
-    """Kit signup. The form posts on its own if ck.5.js does not load."""
+    """Kit signup. ck.5.js fills data-element success and errors. The form still posts if that script does not load."""
     if not NEWSLETTER_ENABLED:
         return ""
+    # ck.5.js reads data-options and, on success, replaces [data-element=fields]
+    # with a formkit-alert[data-element=success] whose text is success_message.
+    # On failure it appends list items to [data-element=errors]. Double opt-in stays:
+    # the message asks for the confirmation email, and the form action is unchanged.
+    options = e(json.dumps({
+        "settings": {
+            "after_subscribe": {
+                "action": "message",
+                "success_message": KIT_SUCCESS,
+                "redirect_url": "",
+            }
+        }
+    }, separators=(",", ":")))
     return f"""<section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
 <p class="small" style="margin:0">Every Monday: price changes, new models, and the cheapest way to run each one. Free.</p>
+<form action="{KIT_FORM_ACTION}" class="seva-form formkit-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_UID}" data-format="inline" data-version="5" data-options="{options}">
+<div class="formkit-notices" aria-live="polite">
+<ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+<div data-element="fields" class="seva-fields formkit-fields">
 <label class="small" for="newsEmail">Email address</label>
-<form action="{KIT_FORM_ACTION}" class="seva-form formkit-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_UID}" data-format="inline" data-version="5">
-<input id="newsEmail" type="email" name="email_address" required placeholder="you@email.com" aria-label="Email address"><button class="btn" type="submit">Subscribe</button>
+<div class="news-row"><input id="newsEmail" type="email" name="email_address" required placeholder="you@email.com" aria-label="Email address"><button class="btn" data-element="submit" type="submit">Subscribe</button></div>
+</div>
+</div>
 </form>
 <p class="small">Check your inbox to confirm. You are not subscribed until you confirm.</p>
 <script src="https://f.convertkit.com/ckjs/ck.5.js"></script></section>"""
@@ -771,22 +914,26 @@ def overall_pick(allow_promo=True):
     return best
 
 def status_phrase(r):
-    st = r.get("status")
-    if st == "promo" and r.get("promo_until"):
+    label = rate_label(r)
+    if r.get("status") == "promo" and r.get("promo_until"):
         return f"a promo until {r['promo_until']}"
-    if st == "promo":
+    if r.get("status") == "promo":
         return "a promo"
-    if st == "estimate":
-        return "an approximate rate"
-    if st == "verified":
-        return "a vendor-stated rate"
-    return str(st or "a listed rate")
+    if label == "published rate":
+        return "a published rate"
+    if label == "estimated from credit plan":
+        return "estimated from a credit plan"
+    if label == "from credit plan":
+        return "from a credit plan"
+    if label == "estimated rate":
+        return "an estimated rate"
+    return label
 
 def rate_clause(r):
     """One plain-text price clause. The shown $/s is display-rounded; the row value is unchanged."""
     bit = (
-        f"{rate_money(r['usd_per_second'])} per second on {r['platform']} "
-        f"({spec_phrase(r)}), {status_phrase(r)} (checked {r['checked']})"
+        f"{rate_money(r['usd_per_second'])} per second for {r['variant']} on {r['platform']} "
+        f"({spec_phrase(r)}), {status_phrase(r)} (checked {r['checked']}, {r['source_url']})"
     )
     extra = assumption_text(r)
     if extra:
@@ -802,10 +949,14 @@ def credit_use_assumed(r):
 
 def higgsfield_intro(lo, hi):
     """Two sentences. Rates are display-rounded; plan, model, and resolution come from the rows."""
-    low = f"{rate_money(lo['usd_per_second'])}/s ({plan_short_name(lo.get('plan_name'))}, {shown_resolution(lo)})"
-    high_bits = f"{plan_short_name(hi.get('plan_name'))}, {models[hi['model']]['name']} {shown_resolution(hi)}"
-    if hi.get("status") == "estimate":
-        high_bits += ", approximate"
+    low = (
+        f"{rate_money(lo['usd_per_second'])}/s ({plan_short_name(lo.get('plan_name'))}, "
+        f"{shown_resolution(lo)}, {status_phrase(lo)}, checked {lo['checked']}, {lo['source_url']})"
+    )
+    high_bits = (
+        f"{plan_short_name(hi.get('plan_name'))}, {models[hi['model']]['name']} {shown_resolution(hi)}, "
+        f"{status_phrase(hi)}, checked {hi['checked']}, {hi['source_url']}"
+    )
     text = f"Higgsfield plan rates we track run from {low} to {rate_money(hi['usd_per_second'])}/s ({high_bits})."
     if credit_use_assumed(lo) and credit_use_assumed(hi):
         text += " Both assume every credit you pay for is used."
@@ -828,10 +979,11 @@ def checked_line():
     return f'<p class="small">Last checked {e(LAST)}.</p>'
 
 HOW_PLAIN = (
-    "Every dollar figure on this page comes from the price rows when the site is built. "
-    "API rows use the vendor's stated dollars per second. "
-    f"Credit-plan rows use plan price ÷ credits × credits per clip ÷ seconds, and {CREDIT_USE}. "
-    'A promo shows its end date. An approximate row is one the vendor marked with "~", "roughly", or "estimated". '
+    "Each dollar figure is a current price row, with the vendor page and the date that page was checked. "
+    "A published rate is a dollars-per-second figure on that page, or an API credit count times the credit price the page states. "
+    f"A credit-plan figure is plan price ÷ credits × credits per clip ÷ seconds, and it {CREDIT_USE}. "
+    'When the vendor marks that count with "~", "roughly", or "estimated", the row is labelled estimated from credit plan and is not a list price. '
+    "A promo shows its end date when the vendor gave one. "
     f"The full method is on the about page ({SITE_URL}/about/)."
 )
 BUDGET_HOW = (
@@ -857,6 +1009,8 @@ def guide_faq_ld(path, faqs):
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "url": SITE_URL + path,
+        "author": EDITOR_LD,
+        "editor": EDITOR_LD,
         "publisher": {"@type": "Organization", "name": BRAND, "url": SITE_URL + "/", "logo": LOGO_URL},
         "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
@@ -872,6 +1026,10 @@ GUIDE_CRUMBS = {
 }
 
 def guide_page(path, title, desc, body, faqs):
+    end = body.find("</h1>")
+    if end != -1 and byline_html() not in body:
+        end += len("</h1>")
+        body = body[:end] + byline_html() + body[end:]
     raw = json.dumps(faqs, ensure_ascii=False).lower()
     for bad in ("subscribe", "newsletter", "buttondown"):
         if bad in raw:
@@ -892,19 +1050,24 @@ def cheap_card(title, r, alt=None):
     alt_html = ""
     if alt is not None and alt is not r:
         alt_html = (
-            f'<div class="sub">Without promos: {rate_money(alt["usd_per_second"])}/s on {e(alt["platform"])} '
-            f'({e(spec_phrase(alt))})</div>'
+            f'<div class="sub">Without promos: {rate_money(alt["usd_per_second"])}/s for {e(alt["variant"])} '
+            f'on {e(alt["platform"])} ({e(spec_phrase(alt))}), {e(rate_label(alt))}. '
+            f'Checked {e(alt["checked"])}. {source_link(alt)}.</div>'
         )
         if assumption_text(alt):
             alt_html += assumption_html(alt)
     promo = ""
     if r.get("status") == "promo" and r.get("promo_until"):
         promo = f' <span class="small">until {e(r["promo_until"])}</span>'
+    math = ""
+    if r.get("kind") == "api" and (r.get("math") or "").strip():
+        math = f'<div class="assume">{e(r["math"].strip())}</div>'
     return (
         f'<div class="card"><h3>{e(title)}</h3>'
         f'<div class="big">{rate_money(r["usd_per_second"])}<span class="small">/s</span></div>'
-        f'{assumption_html(r)}'
-        f'<div class="sub">{e(r["platform"])} · {e(spec_phrase(r))} {tag(r["status"])}{promo}</div>'
+        f'{assumption_html(r)}{math}'
+        f'<div class="sub">{e(r["platform"])} · {e(r["variant"])} · {e(spec_phrase(r))} {tag(r)}{promo}</div>'
+        f'{checked_source(r)}'
         f'{deal_badges(r)}{alt_html}</div>'
     )
 
@@ -954,17 +1117,29 @@ for slug, m in models.items():
     c = cheapest(rs); c2 = cheapest(rs, False)
     alt = ""
     if c2 and c2 is not c:
-        alt = f'<div class="sub">Without promos: {money(c2["usd_per_second"])}/s on {e(c2["platform"])} ({e(spec_phrase(c2))})</div>'
+        alt = (
+            f'<div class="sub">Without promos: {money(c2["usd_per_second"])}/s for {e(c2["variant"])} '
+            f'on {e(c2["platform"])} ({e(spec_phrase(c2))}), {e(rate_label(c2))}. '
+            f'Checked {e(c2["checked"])}. {source_link(c2)}.</div>'
+        )
         if assumption_text(c2):
             alt += assumption_html(c2)
+    math = ""
+    if c.get("kind") == "api" and (c.get("math") or "").strip():
+        math = f'<div class="assume">{e(c["math"].strip())}</div>'
     cards += (f'<div class="card"><h3>{e(m["name"])}</h3><div class="big">{money(c["usd_per_second"])}<span class="small">/s</span></div>'
-              f'{assumption_html(c)}'
-              f'<div class="sub">{e(c["platform"])} · {e(spec_phrase(c))} {tag(c["status"])}</div>{alt}'
+              f'{assumption_html(c)}{math}'
+              f'<div class="sub">{e(c["platform"])} · {e(c["variant"])} · {e(spec_phrase(c))} {tag(c)}</div>'
+              f'{checked_source(c)}{alt}'
               f'{deal_price_line(rs)}'
               f'<a class="go" href="{root(f"/models/{slug}/")}">All {len(rs)} prices →</a></div>')
 opts = lambda vals: "".join(f'<option value="{e(v)}">{e(l)}</option>' for v, l in vals)
 platforms = sorted({r["platform"] for r in rows})
-ver = sum(r["status"] == "verified" for r in rows)
+n_published = sum(rate_label(r) == "published rate" for r in rows)
+n_plan = sum(rate_label(r) == "from credit plan" for r in rows)
+n_plan_est = sum(rate_label(r) == "estimated from credit plan" for r in rows)
+n_api_est = sum(rate_label(r) == "estimated rate" for r in rows)
+n_promo = sum(r["status"] == "promo" for r in rows)
 def ending_strip():
     soon = []
     for deal in LIVE_DEALS:
@@ -1002,10 +1177,10 @@ home = f"""<h1>AI video cost per second, compared</h1>
 <select id="fKind" aria-label="Type"><option value="">API + plans</option><option value="api">Pay-as-you-go API</option><option value="plan">Subscription plans</option></select>
 <input id="fRes" placeholder="Resolution e.g. 720p" aria-label="Resolution" size="16">
 <label class="chk" for="fPromo"><input type="checkbox" id="fPromo"> hide promos</label>
-<label class="chk" for="fEst"><input type="checkbox" id="fEst"> hide approximations</label>
+<label class="chk" for="fEst"><input type="checkbox" id="fEst"> hide estimates</label>
 <span class="small" id="count"></span></div>
 {wide_table(THEAD + "<tbody>" + "".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"])) + "</tbody>", ' id="prices"')}
-<p class="small"><span class="tag verified">vendor-stated</span> = the number is on the vendor's page (plan rows: plan price ÷ credits × credits per clip, all vendor-stated). <span class="tag estimate">approx.</span> = the vendor itself says "~", "roughly" or "estimated". <span class="tag promo">promo</span> = temporary discount with an end date. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. {ver} of {len(rows)} live rows are vendor-stated.</p>
+<p class="small"><span class="tag verified">published rate</span> = the vendor states this dollars per second, or states an API credit count and a credit price (Runway credits are $0.01). <span class="tag verified">from credit plan</span> = plan price ÷ credits × credits per clip ÷ seconds, using a credit count the vendor stated exactly. It is not a list price per second. <span class="tag estimate">estimated from credit plan</span> = the same credit-plan math when the vendor marks the count with "~", "roughly", or "estimated". <span class="tag estimate">estimated rate</span> = an API price the vendor calls approximate. <span class="tag promo">promo</span> = a temporary discount, with the end date when the vendor gave one. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. Of {len(rows)} live rows: {n_published} published rates, {n_plan} from a credit plan, {n_plan_est} estimated from a credit plan, {n_api_est} estimated API rates, {n_promo} promos.</p>
 {retired_table(retired_rows)}
 {news_box()}
 <script>
@@ -1023,7 +1198,8 @@ let sortK='usd_per_second',dir=1;
 const $=id=>document.getElementById(id);
 function esc(s){{return String(s??'').replace(/[&<>"]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c]))}}
 function money(v){{const n=Math.round(Number(v)*100000);const neg=n<0,a=Math.abs(n),whole=Math.floor(a/100000);let digits=String(a%100000).padStart(5,'0').replace(/0+$/,'');if(digits.length<2)digits=String(a%100000).padStart(5,'0').slice(0,2);return (neg?'-':'')+'$'+whole+'.'+digits}}
-function tag(s){{return `<span class="tag ${{s}}">${{{{verified:'vendor-stated',estimate:'approx.',promo:'promo',discontinued:'discontinued'}}[s]||esc(s)}}</span>`}}
+function rateLabel(r){{if(r.kind==='plan')return r.status==='estimate'?'estimated from credit plan':'from credit plan';if(r.status==='estimate')return 'estimated rate';if(r.status==='promo')return 'promo';if(r.status==='discontinued')return 'discontinued';return 'published rate'}}
+function tag(r){{const s=r.status;return `<span class="tag ${{s}}">${{esc(rateLabel(r))}}</span>`}}
 function current(r){{const today=new Date().toISOString().slice(0,10);if(r.status==='discontinued')return false;if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
 function hf(url){{try{{const u=new URL(url);const h=u.hostname;if(h!=='higgsfield.ai'&&!h.endsWith('.higgsfield.ai'))return null;if(h==='higgsfield.ai'&&(u.pathname===''||u.pathname==='/'))return {json.dumps(HF_BASE)};u.searchParams.delete('ref');u.searchParams.set('fpr',{json.dumps(HF_FPR)});return u.toString()}}catch(e){{return null}}}}
 function plat(r){{const tracked=hf(r.source_url);if(tracked)return `<a href="${{esc(tracked)}}" rel="sponsored nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`;const a=AFF[r.platform];return a?`<a href="${{esc(a)}}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="TODO">${{esc(r.platform)}}</a>`:`<a href="${{esc(r.source_url)}}" rel="nofollow noopener" target="_blank">${{esc(r.platform)}}</a>`}}
@@ -1034,7 +1210,7 @@ function inputOf(r){{const inp=r.variation&&r.variation.input;const names={{t2v:
 function lengthOf(r){{const d=(r.variation&&r.variation.duration)||{{}};if(Array.isArray(d.rate_by_length))return d.rate_by_length.map(t=>t.label+' '+money(t.usd_per_second)+'/s').join('; ');if(typeof d.priced_seconds==='number')return 'priced at '+d.priced_seconds+'s';if(typeof d.min_seconds==='number'&&typeof d.max_seconds==='number')return d.min_seconds+'\u2013'+d.max_seconds+'s';if(typeof d.max_seconds==='number')return 'up to '+d.max_seconds+'s';if(typeof d.min_seconds==='number')return 'from '+d.min_seconds+'s';return 'not stated'}}
 function modifierOf(r){{const mods=r.variation&&r.variation.modifiers; if(!Array.isArray(mods)) return ''; return mods.map(m=>typeof m.usd_per_second==='number'?m.label+' '+money(m.usd_per_second)+'/s':m.label).join('; ')}}
 function factLines(r){{const also=modifierOf(r); return esc(audioOf(r))+'<div class="small">Input: '+esc(inputOf(r))+'</div><div class="small">Length: '+esc(lengthOf(r))+'</div>'+(also?'<div class="small">Also: '+esc(also)+'</div>':'')}}
-function assumptionOf(r){{if(r.kind==='plan')return r.status==='estimate'?'Estimate: assumes every credit you pay for is used':'Assumes every credit you pay for is used';if(r.status==='estimate'){{const note=String(r.note||'').trim();return note?'Estimate: '+note:'Estimate: the vendor marks this rate as approximate'}}return ''}}
+function assumptionOf(r){{if(r.kind==='plan')return (r.status==='estimate'?'Estimated from credit plan. ':'From credit plan. ')+'Assumes every credit you pay for is used.';if(r.status==='estimate'){{const note=String(r.note||'').trim();return note?'Estimated rate. '+note:'Estimated rate. The vendor marks this rate as approximate.'}}return ''}}
 function render(){{
  const fm=$('fModel').value,fp=$('fPlat').value,fk=$('fKind').value,fr=$('fRes').value.trim().toLowerCase();
  let rs=DATA.filter(r=>current(r)&&(!fm||r.model==fm)&&(!fp||r.platform==fp)&&(!fk||r.kind==fk)&&(!fr||String(r.resolution).toLowerCase().includes(fr))&&!($('fPromo').checked&&r.status=='promo')&&!($('fEst').checked&&r.status=='estimate'));
@@ -1052,7 +1228,7 @@ function render(){{
   const src=hf(r.source_url),srcHref=src||r.source_url,srcRel=src?'sponsored nofollow noopener':'nofollow noopener';
   const assume=assumptionOf(r);
   const assumeHtml=assume?`<div class="assume">${{esc(assume)}}</div>`:'';
-  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{esc(r.variant)}}</td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{factLines(r)}}</td><td class="num"><span class="amt">${{money(r.usd_per_second)}}</span>${{assumeHtml}}</td><td>${{tag(r.status)}}${{promo}}${{badges}}${{disc}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
+  return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(MODELS[r.model])}}</a></td><td>${{plat(r)}}</td><td>${{esc(r.variant)}}</td><td>${{esc(tierOf(r))}}</td><td>${{esc(resOf(r))}}</td><td>${{factLines(r)}}</td><td class="num"><span class="amt">${{money(r.usd_per_second)}}</span>${{assumeHtml}}</td><td>${{tag(r)}}${{promo}}${{badges}}${{disc}}</td><td class="math">${{extra}}</td><td class="small"><a href="${{esc(srcHref)}}" rel="${{srcRel}}" target="_blank">source</a><br>${{r.checked}}</td></tr>`}}).join('');
  $('count').textContent=rs.length+' rows';
  document.querySelectorAll('#prices th').forEach(th=>{{th.classList.remove('sorted-asc','sorted-desc');if(th.dataset.k==sortK)th.classList.add(dir>0?'sorted-asc':'sorted-desc')}});
  if(window.clipTick) clipTick();
@@ -1136,7 +1312,14 @@ def example_items(deal, rowset):
             extra = ""
             if ex.get("usd") is not None:
                 name = models.get(ex.get("model") or "", {}).get("name", "")
-                extra = f" · {name} {ex.get('resolution') or ''} {money(ex['usd'])}/s vs {money(ex['list_usd'])}/s"
+                variant = ex.get("variant") or ""
+                res = str(ex.get("resolution") or "").strip()
+                res_bit = "resolution not listed" if res in MISSING_RESOLUTIONS else res
+                origin = rate_label({"kind": ex.get("kind"), "status": ex.get("status")})
+                extra = (
+                    f" · {name}, {variant}, {res_bit}: {money(ex['usd'])}/s vs {money(ex['list_usd'])}/s"
+                    f" ({origin})"
+                )
                 if ex.get("blended_usd") is not None:
                     extra += f" · 12-month blended {money(ex['blended_usd'])}/s"
             items.append(f"{ex['label']}: {price}{extra}")
@@ -1234,6 +1417,47 @@ def deals_for_model(slug, rs):
             found.append(deal)
     return found
 
+def model_spread(m, rs):
+    """One paragraph from the rows: platforms, resolutions, variants, and the low and high prices."""
+    lo = min(rs, key=lambda r: (r["usd_per_second"], r["id"]))
+    hi = max(rs, key=lambda r: (r["usd_per_second"], r["id"]))
+    plats = sorted({r["platform"] for r in rs})
+    ress, variants, counts = [], [], {}
+    for r in rs:
+        res = shown_resolution(r)
+        if res not in ress:
+            ress.append(res)
+        if r["variant"] not in variants:
+            variants.append(r["variant"])
+        label = rate_label(r)
+        counts[label] = counts.get(label, 0) + 1
+    if len(variants) <= 6:
+        variant_bit = "Variants: " + ", ".join(variants) + "."
+    else:
+        variant_bit = f"{len(variants)} variants are in the table."
+    high = ""
+    if hi["id"] != lo["id"]:
+        high = (
+            f' Highest is {money(hi["usd_per_second"])}/s for {e(hi["variant"])} on {e(hi["platform"])}, '
+            f'{e(rate_label(hi))}, checked {e(hi["checked"])}, {source_link(hi)}.'
+        )
+    labels = ", ".join(f"{n} {label}" for label, n in counts.items())
+    return (
+        f'{e(m["name"])} has {len(rs)} current prices on {len(plats)} platforms ({e(", ".join(plats))}). '
+        f'Resolutions in the table: {e(", ".join(ress))}. {e(variant_bit)} '
+        f'Lowest is {money(lo["usd_per_second"])}/s for {e(lo["variant"])} on {e(lo["platform"])}, '
+        f'{e(rate_label(lo))}, checked {e(lo["checked"])}, {source_link(lo)}.{high} '
+        f'Labels: {e(labels)}.'
+    )
+
+def compared_sentence(prefix, r):
+    promo = f", a promo until {e(r['promo_until'])}" if r.get("status") == "promo" and r.get("promo_until") else ""
+    assump = f" {e(assumption_text(r))}" if assumption_text(r) else ""
+    return (
+        f"{prefix}{money(r['usd_per_second'])}/s for {e(r['variant'])} on {e(r['platform'])} "
+        f"({e(spec_phrase(r))}), {e(rate_label(r))}{promo}, checked {e(r['checked'])}, {source_link(r)}.{assump}"
+    )
+
 # ---------- Model pages ----------
 for slug, m in models.items():
     rs = sorted([r for r in rows if r["model"] == slug], key=lambda r: r["usd_per_second"])
@@ -1242,34 +1466,20 @@ for slug, m in models.items():
     for r in rs: byres.setdefault(r["resolution"], r)
     def res_item(k, v):
         heading = k if str(k).strip() not in MISSING_RESOLUTIONS else "not listed"
-        tail = f" {e(assumption_text(v).rstrip('.'))}." if assumption_text(v) else ""
-        return (f'<li><b>{e(heading)}</b>: {money(v["usd_per_second"])}/s on {e(v["platform"])} '
-                f'({e(spec_phrase(v))}) {tag(v["status"])}{tail}</li>')
+        tail = f" {e(assumption_text(v))}" if assumption_text(v) else ""
+        return (f'<li><b>{e(heading)}</b>: {money(v["usd_per_second"])}/s for {e(v["variant"])} on {e(v["platform"])} '
+                f'({e(spec_phrase(v))}) {tag(v)}{tail} Checked {e(v["checked"])}. {source_link(v)}.</li>')
     resl = "".join(res_item(k, v) for k, v in byres.items())
     api_rs = [r for r in rs if r["kind"] == "api"]; plan_rs = [r for r in rs if r["kind"] == "plan"]
     ca = cheapest(api_rs, False); cp = cheapest(plan_rs, False)
-    summary = f"<p>The cheapest price we found today is <b>{money(c['usd_per_second'])} per second</b> on <b>{e(c['platform'])}</b> ({e(spec_phrase(c))})"
-    summary += f", a promo that ends {c['promo_until']}." if c["status"] == "promo" else "."
-    if assumption_text(c):
-        summary += " " + e(assumption_text(c).rstrip(".")) + "."
-    if c2 is not c:
-        summary += f" Without promos, the cheapest is {money(c2['usd_per_second'])}/s on {e(c2['platform'])} ({e(spec_phrase(c2))})."
-        if assumption_text(c2):
-            summary += " " + e(assumption_text(c2).rstrip(".")) + "."
-    summary += "</p>"
-    more = []
-    if ca:
-        line = f"Cheapest pay-as-you-go API: {money(ca['usd_per_second'])}/s on {e(ca['platform'])} ({e(spec_phrase(ca))})."
-        if assumption_text(ca):
-            line += " " + e(assumption_text(ca).rstrip(".")) + "."
-        more.append(line)
-    if cp:
-        line = f"Cheapest subscription: {money(cp['usd_per_second'])}/s on {e(cp['platform'])} ({e(spec_phrase(cp))})."
-        if assumption_text(cp):
-            line += " " + e(assumption_text(cp).rstrip(".")) + "."
-        more.append(line)
-    if more:
-        summary += "<p>" + " ".join(more) + "</p>"
+    extra_bits = []
+    if c2 is not None and c2 is not c:
+        extra_bits.append(compared_sentence("Without promos, the cheapest is ", c2))
+    if ca is not None and ca is not c:
+        extra_bits.append(compared_sentence("Cheapest pay-as-you-go API: ", ca))
+    if cp is not None and cp is not c:
+        extra_bits.append(compared_sentence("Cheapest subscription: ", cp))
+    summary = f"<p>{' '.join(extra_bits)}</p>" if extra_bits else ""
     clip5 = money(c["usd_per_second"] * 5)
     faqs = model_faqs(m, rs, clip5)
     model_deals = deals_for_model(slug, rs)
@@ -1279,24 +1489,28 @@ for slug, m in models.items():
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
     if soon:
         deals_html += '<h2>Starting soon</h2><div class="dealgrid">' + "".join(deal_card(d, rowset=rs) for d in soon) + "</div>"
+    card_math = ""
+    if c.get("kind") == "api" and (c.get("math") or "").strip():
+        card_math = f'<div class="assume">{e(c["math"].strip())}</div>'
     body = f"""<p class="small"><a href="{root("/")}">Prices</a> › {e(m['name'])}</p>
 <h1>{e(m['name'])} price per second ({MONTH})</h1>
-<p class="lead">{e(m['maker'])}'s {e(m['name'])} on {len({r['platform'] for r in rs})} platforms, all converted to dollars per second of video. Checked {LAST}.</p>
-<div class="cards"><div class="card"><h3>Cheapest today</h3><div class="big">{money(c['usd_per_second'])}<span class="small">/s</span></div>{assumption_html(c)}<div class="sub">{e(c['platform'])} · {e(spec_phrase(c))} {tag(c['status'])}</div><div class="sub">≈ {clip5} for a 5s clip</div>{deal_price_line(rs)}</div>
+{byline_html()}
+<p class="lead">{model_spread(m, rs)}</p>
+<div class="cards"><div class="card"><h3>Cheapest today</h3><div class="big">{money(c['usd_per_second'])}<span class="small">/s</span></div>{assumption_html(c)}{card_math}<div class="sub">{e(c['platform'])} · {e(c['variant'])} · {e(spec_phrase(c))} {tag(c)}</div>{checked_source(c)}<div class="sub">≈ {clip5} for a 5s clip</div>{deal_price_line(rs)}</div>
 <div class="card"><h3>Cheapest by resolution</h3><ul class="small" style="padding-left:18px;margin:6px 0">{resl}</ul></div></div>
 {summary}
 {sponsor_slot("model:" + slug)}
 {deals_html}
 <h2>All {e(m['name'])} prices</h2>
 {wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
-<p class="small">Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
+<p class="small">A row labelled estimated from credit plan is not a list price. Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {faq_html(faqs)}
 {news_box()}
 {tick_script()}
 {ld_join(faq_ld(slug, faqs), breadcrumb_ld([("Prices", "/"), (m["name"], f"/models/{slug}/")]))}"""
     page(f"/models/{slug}/", page_title(f"{m['name']} Price Per Second"),
-         f"{m['name']} costs from {money(c['usd_per_second'])}/s ({c['platform']}, {spec_phrase(c)}). Compare {len(rs)} sourced prices across APIs and credit plans.", body)
+         f"{m['name']} costs from {money(c['usd_per_second'])}/s ({c['platform']}, {c['variant']}, {rate_label(c)}). Compare {len(rs)} sourced prices across APIs and credit plans.", body)
 
 model_items = "".join(
     f'<li><a href="{root(f"/models/{slug}/")}">{e(m["name"])}</a></li>'
@@ -1385,7 +1599,7 @@ def calc_rows_html(plan_id):
             f'<td>{calc_lab("Credits/clip", cred)}</td>'
             f'<td class="num">{calc_lab("Clips", grouped_int(clips))}</td>'
             f'<td class="num">{calc_lab("$/clip", price_cell)}</td>'
-            f'<td class="num"><span class="amt">{per_sec}</span></td></tr>'
+            f'<td class="num"><span class="amt">{per_sec}</span><div class="assume">{e(rate_label(r))}</div></td></tr>'
         )
     per = price / credits
     note = (plan.get("credits_note") or "") + f" Billing: {plan['billing']}. Checked {plan['checked']}."
@@ -1450,7 +1664,7 @@ calc = f"""<h1>AI video credit calculator</h1>
 <p class="small" id="modelNote"></p>
 <p><button type="button" class="btn" id="copyLink">Copy link to this result</button> <span class="small" id="copyMsg" role="status"></span></p>
 <p class="small" id="calcNotes">{calc_seed["notes"]}</p>
-<p class="small">"~" = the platform gives an approximate credit cost. Using fewer of your credits raises the real cost of each clip.</p></div></div>
+<p class="small">"~" = the platform gives an approximate credit cost. A figure labelled estimated from credit plan is not a list price. Using fewer of your credits raises the real cost of each clip.</p></div></div>
 <script>
 const BASE={json.dumps(BASE)};const AFF={json.dumps(AFF)};const MODELS={json.dumps({k:v["name"] for k,v in models.items()})};
 const DEALMAP={json.dumps(CALC_DEALS)};
@@ -1491,7 +1705,7 @@ function start(d){{
  function inputOf(r){{const inp=r.variation&&r.variation.input;const names={{t2v:'text-to-video',i2v:'image-to-video',ref2v:'reference',v2v:'video-to-video',extend:'extend','lip-sync':'lip-sync'}};if(!inp||inp==='not stated')return 'not stated';return inp.map(x=>names[x]||x).join(', ')}}
  function lengthOf(r){{const d=(r.variation&&r.variation.duration)||{{}};if(Array.isArray(d.rate_by_length))return d.rate_by_length.map(t=>t.label+' '+money(t.usd_per_second)+'/s').join('; ');if(typeof d.priced_seconds==='number')return 'priced at '+d.priced_seconds+'s';if(typeof d.min_seconds==='number'&&typeof d.max_seconds==='number')return d.min_seconds+'\u2013'+d.max_seconds+'s';if(typeof d.max_seconds==='number')return 'up to '+d.max_seconds+'s';if(typeof d.min_seconds==='number')return 'from '+d.min_seconds+'s';return 'not stated'}}
  function modifierOf(r){{const mods=r.variation&&r.variation.modifiers; if(!Array.isArray(mods)) return ''; return mods.map(m=>typeof m.usd_per_second==='number'?m.label+' '+money(m.usd_per_second)+'/s':m.label).join('; ')}}
- function assumptionOf(r){{if(r.kind==='plan')return r.status==='estimate'?'Estimate: assumes every credit you pay for is used':'Assumes every credit you pay for is used';if(r.status==='estimate'){{const note=String(r.note||'').trim();return note?'Estimate: '+note:'Estimate: the vendor marks this rate as approximate'}}return ''}}
+ function assumptionOf(r){{if(r.kind==='plan')return (r.status==='estimate'?'Estimated from credit plan. ':'From credit plan. ')+'Assumes every credit you pay for is used.';if(r.status==='estimate'){{const note=String(r.note||'').trim();return note?'Estimated rate. '+note:'Estimated rate. The vendor marks this rate as approximate.'}}return ''}}
  function clipCount(credits, per){{const raw=credits/per, nearest=Math.round(raw);return Math.abs(raw-nearest)<0.005?nearest:Math.floor(raw)}}
  function current(r){{const today=new Date().toISOString().slice(0,10);if(r.status==='discontinued')return false;if(r.promo_until&&r.promo_until<today)return false;if(r.discontinued_on&&r.discontinued_on<today)return false;return true}}
  function readUsed(){{const el=$('used'), raw=String(el.value).trim();
@@ -1595,7 +1809,8 @@ function start(d){{
    const also=modifierOf(r);
    const mark=q.status==='unknown'?'<div class="meta">not stated by vendor</div>':'';
    const dealNote=extra?`<div class="meta also">${{extra.replace(/<\\/?div[^>]*>/g,'')}}</div>`:'';
-   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a>${{fn}}<div class="meta">Input: ${{esc(inputOf(r))}}</div><div class="meta">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="meta also">Also: '+esc(also)+'</div>':''}}${{dealNote}}${{mark}}</td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td class="num">${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span></td></tr>`}}).join('');
+   const origin=r.kind==='plan'?(r.status==='estimate'?'estimated from credit plan':'from credit plan'):(r.status==='estimate'?'estimated rate':'published rate');
+   return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a>${{fn}}<div class="meta">Input: ${{esc(inputOf(r))}}</div><div class="meta">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="meta also">Also: '+esc(also)+'</div>':''}}${{dealNote}}${{mark}}</td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td class="num">${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span><div class="assume">${{esc(origin)}}</div></td></tr>`}}).join('');
   const noteSeen=[];
   shown.forEach(({{r}})=>{{const t=assumptionOf(r); if(t&&noteSeen.indexOf(t)<0) noteSeen.push(t);}});
   $('calcNotes').innerHTML=noteSeen.map(t=>(t.indexOf('Estimate')===0?'†':'*')+' '+esc(t)).join(' ');
@@ -1661,29 +1876,49 @@ else:
          robots="noindex")
 
 # ---------- About ----------
-srcl = "".join(f'<li><a href="{e(outbound(s["url"])[0])}" rel="{outbound(s["url"])[1]}" target="_blank">{e(s["name"])}</a>{" (checked by hand)" if s["fetch"]=="manual" else ""}</li>' for s in sources.values())
-unv = "".join(f'<li>{e(u["item"])}: <span class="small">{e(u["reason"])}</span></li>' for u in db["unverified"])
+srcl = "".join(
+    f'<li><a href="{e(outbound(s["url"])[0])}" rel="{outbound(s["url"])[1]}" target="_blank">{e(s["name"])}</a>'
+    f'{" (not in the daily fetch)" if s["fetch"]=="manual" else ""}</li>'
+    for s in sources.values()
+)
+unv = "".join(f'<li>{e(public_gap(u))}</li>' for u in db["unverified"])
 about_ld = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
     "url": SITE_URL + "/about/",
-    "author": {"@type": "Person", "name": "Emmanuel Gonzalez"},
+    "author": EDITOR_LD,
+    "editor": EDITOR_LD,
 }
 page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRAND} collects and normalizes AI video prices, and how the site is funded.",
      f"""<h1>About {BRAND}</h1>
+{byline_html()}
 <p class="lead">{BRAND} tracks what AI video generation actually costs, per second of finished video, across every place you can run a model. {e(TAGLINE)}</p>
 <p>Made by Emmanuel Gonzalez.</p>
 <h2>How the numbers work</h2>
 <ul><li>Every price comes from the vendor's own pricing or model page, saved with a source link and the date we checked it.</li>
-<li><b>APIs</b>: we use the vendor's stated $ per second. Runway credits are $0.01 each.</li>
-<li><b>Credit plans</b>: plan price ÷ credits = $ per credit; × credits per clip ÷ clip length = $ per second. That assumes you use all your credits.</li>
-<li>If a vendor says "~", "roughly" or "estimated", we label the row <i>approx.</i> If we can't confirm a price, we leave it out rather than guess.</li>
+<li><b>Published rate</b>: the vendor states dollars per second, or states an API credit count and a credit price. Runway API rows are credits per second times $0.01, the credit price on the Runway API pricing page.</li>
+<li><b>From credit plan</b>: plan price ÷ credits = $ per credit; × credits per clip ÷ clip length = $ per second. That assumes you use all your credits. It is not a list price per second.</li>
+<li><b>Estimated from credit plan</b>: the same math when the vendor says "~", "roughly", or "estimated" for the clip count. That label is not a list price. If a price cannot be confirmed, it is left out.</li>
 <li><b>Audio, input, and length</b> are copied from the vendor page. Audio is with audio, without audio, or not stated. Input is text-to-video, image-to-video, reference, video-to-video, extend, or lip-sync when that mode is named for the price. Length is the clip the credit price is for, a stated min and max, or a per-second rate the page ties to a length. If the page does not say it, the field stays not stated. A value is not inferred from a nearby sentence or from another row. A different stated price becomes its own row.</li>
 <li>When a vendor shuts an endpoint down, that row is marked <i>discontinued</i> and kept under Discontinued with the last recorded rate. It is not used for cheapest picks.</li>
 <li>Prices exclude VAT/sales tax and change often. Always confirm on the vendor's page before paying.</li>
-<li><b>Deals</b> are a separate list. A discounted $/s uses the vendor's stated rate or the checkout plan price ÷ credits. A code that lasts the first N months also shows a 12-month blended rate. Unlimited windows show how many seconds of video cover the plan price. They are not listed at $0/s.</li></ul>
+<li><b>Deals</b> are a separate list. A discounted $/s uses the vendor's stated rate or the checkout plan price ÷ credits. A code that lasts the first N months also shows a 12-month blended rate. Unlimited windows show how many seconds of video cover the plan price. They are not listed at $0/s. A deal on one variant is labelled with that variant, so it is not read as a discount on a different row.</li></ul>
+<h2>How we source and check prices</h2>
+<p>Each row keeps the vendor page it came from and the date that page last matched its check. The daily job is <code>scripts/update_prices.py --apply</code>. GitHub Actions runs it at 15:17 UTC every day, and again at 13:30 UTC on Fridays, then rebuilds the site from the data files.</p>
+<ul>
+<li>A source marked static is downloaded and read as page text. Some of those pages also keep a price in a script payload, and the check reads that payload when the row is set up for it.</li>
+<li>A source marked render is opened in Chrome and read after the page loads. Higgsfield plans are one of these.</li>
+<li>A source marked manual is not fetched. Kling app subscriptions are that source. The pricing page did not show prices without a login or a region, so those subscriptions are not in the table.</li>
+<li>Each row and each plan has a needle: the phrase and the number stored for it. The check searches the fetched text for that phrase and compares the number with the stored value.</li>
+<li>When an API row's number has changed, the job updates that row's dollars per second by the same factor and writes the old and new figures to the price-change log. A credit-plan row is not rewritten by that step. A plan whose price or credit count changed is flagged, and its dollars per second stay as stored.</li>
+<li>A row whose needles still match is stamped with that day's date. A credit-plan row is not stamped when its plan failed the check.</li>
+<li>A promo whose end date has passed is removed from the live table and recorded as ended. A live deal past its end date is marked ended.</li>
+<li>The same run looks for new or removed sale-like sentences on the watched pricing pages. Those sentences are saved as unconfirmed candidates. They are not added to the deals list, and they do not change a price.</li>
+<li>When every source except the manual one was fetched, <code>last_full_check</code> becomes that date.</li>
+</ul>
+<p>The check compares stored numbers with the fetched page. It does not add a price the page did not state.</p>
 <h2>Sources we check</h2><ul class="small">{srcl}</ul>
-<h2>Not included yet (unconfirmed)</h2><ul class="small">{unv}</ul>
+<h2>Not in the price table</h2><ul class="small">{unv}</ul>
 <h2 id="disclosure">Affiliate disclosure</h2>
 <div class="disclose">Some links on {BRAND} are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price. Sponsored placements are labelled "Sponsor" and never affect the price order.</div>
 <p class="small">Contact: <a href="mailto:emmanueldevgonzalez@gmail.com">emmanueldevgonzalez@gmail.com</a>.</p>
@@ -2337,12 +2572,16 @@ def check_sponsor_renderer():
         raise SystemExit("sponsor markup must not be a table or a deal card")
     empty = render_sponsor("deals", {"name": "", "url": "", "tagline": "", "active": False}, featured=True)
     if HOUSE_LINE not in empty or f'href="{root("/advertise/")}"' not in empty or "Featured" not in empty:
-        raise SystemExit("empty sponsor slot should link to the advertise page")
+        raise SystemExit("empty sponsor markup should still describe the advertise page")
     if "sponsored" in empty:
         raise SystemExit("the house placeholder is not an outbound sponsor link")
+    if sponsor_slot("deals", featured=True):
+        raise SystemExit("an empty sponsor slot should be omitted from the page")
     blank = render_sponsor("home", {"name": " ", "url": "https://example.com", "tagline": "", "active": True})
     if HOUSE_LINE not in blank:
         raise SystemExit("an active slot with an empty name is treated as empty")
+    if sponsor_slot("home"):
+        raise SystemExit("home placeholder should be omitted while the slot is empty")
     if sponsor_record("model:not-a-real-model") is not sponsors.get("model:default"):
         raise SystemExit("model pages should fall back to model:default")
 
@@ -2504,15 +2743,17 @@ def audit_site():
 
     def expected_slots(rel):
         if rel == "index.html":
-            return ["home"]
-        if rel == "deals/index.html":
-            return ["deals"]
-        prefix = "models/"
-        if rel.startswith(prefix) and rel.endswith("/index.html"):
-            rest = rel[len(prefix):-len("index.html")].strip("/")
-            if rest and "/" not in rest:
-                return ["model:" + rest]
-        return []
+            ids = ["home"]
+        elif rel == "deals/index.html":
+            ids = ["deals"]
+        else:
+            ids = []
+            prefix = "models/"
+            if rel.startswith(prefix) and rel.endswith("/index.html"):
+                rest = rel[len(prefix):-len("index.html")].strip("/")
+                if rest and "/" not in rest:
+                    ids = ["model:" + rest]
+        return [slot for slot in ids if sponsor_filled(sponsor_record(slot))]
 
     for dirpath, _, filenames in os.walk(DIST):
         for name in filenames:
@@ -2575,6 +2816,8 @@ def audit_site():
                 errors.append(f"{rel} is missing the favicon.ico link next to the PNG icon")
             if not parser.footer_advertise:
                 errors.append(f"{rel} footer is missing Advertise")
+            if HOUSE_LINE in raw:
+                errors.append(f"{rel} shows an empty sponsor placeholder")
             if parser.bad_sponsor:
                 errors.append(f"{rel} has a sponsor inside a table or deals list: {parser.bad_sponsor}")
             want = expected_slots(rel)
@@ -2813,6 +3056,18 @@ def audit_site():
             errors.append("newsletter page still blocks the Kit form")
         if 'name="email_address"' not in news_html:
             errors.append("newsletter page email field")
+        if f'data-sv-form="{KIT_FORM_ID}"' not in news_html or f'data-uid="{KIT_UID}"' not in news_html:
+            errors.append("newsletter form id or uid changed")
+        if 'data-element="errors"' not in news_html or 'data-element="fields"' not in news_html:
+            errors.append("newsletter form is missing Kit success and error targets")
+        if 'aria-live="polite"' not in news_html:
+            errors.append("newsletter form is missing an aria-live region")
+        if KIT_SUCCESS not in news_html:
+            errors.append("newsletter form is missing the Kit success message")
+        home_form = open(os.path.join(DIST, "index.html"), encoding="utf-8").read()
+        for rel, text in (("home", home_form), ("newsletter", news_html)):
+            if text.count(KIT_FORM_ACTION) != 1 or text.count('name="email_address"') != 1:
+                errors.append(f"{rel} Kit form action or email field was duplicated or dropped")
     if weekly_report.format_usd("0.0272") != money("0.0272") or weekly_report.format_usd("0.1") != money("0.1"):
         errors.append("report dollar format drifted from the price table")
     if REPORTS_ENABLED:
@@ -2859,12 +3114,18 @@ def audit_site():
         errors.append("llms.txt Kling fal line does not read as Pro tier with audio off")
     if "plan tier Standard" not in llms:
         errors.append("llms.txt dropped the plan tier prefix for a name that does not end in tier")
-    estimate_line = "Estimate: " + CREDIT_USE
+    estimate_line = "Estimated from credit plan. Assumes every credit you pay for is used."
     for rel in ("index.html", "models/kling-3-0/index.html"):
         page_html = open(os.path.join(DIST, rel), encoding="utf-8").read()
         if estimate_line not in page_html:
             errors.append(f"{rel} is missing the credit-plan estimate assumption")
-        pro_rows = [part.split("</tr>", 1)[0] for part in page_html.split("<tr>") if "Pro, audio off" in part]
+        if "published rate" not in page_html or "estimated from credit plan" not in page_html:
+            errors.append(f"{rel} does not label published rates and credit-plan estimates")
+        pro_rows = [
+            part.split("</tr>", 1)[0]
+            for part in page_html.split("<tr>")
+            if "Pro, audio off" in part and "<td" in part.split("</tr>", 1)[0]
+        ]
         if not pro_rows or ">Pro tier<" not in pro_rows[0] or ">without audio<" not in pro_rows[0] or ">not listed<" not in pro_rows[0]:
             errors.append(f"{rel} Kling Pro audio-off row is missing plan tier, resolution, or audio")
         if ">Plan tier</th>" not in page_html or ">Resolution</th>" not in page_html or ">Audio</th>" not in page_html:
@@ -2918,6 +3179,40 @@ def audit_site():
         errors.append("about page still has the contact placeholder")
     if '<p class="small">Directories: <a href="https://dang.ai">Dang.ai</a>.</p>' not in about:
         errors.append("about page is missing the Dang.ai directory line")
+    if "Edited by Emmanuel Gonzalez" not in about:
+        errors.append("about page is missing the editor byline")
+    if "How we source and check prices" not in about:
+        errors.append("about page is missing the price-check description")
+    if "check manually" in about.lower() or "checked by hand" in about.lower():
+        errors.append("about page claims a manual check")
+    runway = open(os.path.join(DIST, "models", "runway-gen-4", "index.html"), encoding="utf-8").read()
+    if "gen4_turbo" not in runway or "$0.05" not in runway:
+        errors.append("Runway page dropped the gen4_turbo price")
+    if "0.09375" not in runway or "Runway Gen-4.5" not in runway:
+        errors.append("Runway page dropped the Krea Gen-4.5 deal price")
+    if "not a cut on gen4_turbo" not in runway:
+        errors.append("Runway page still presents the Krea deal as the gen4_turbo price")
+    if "estimated from credit plan" not in runway or "published rate" not in runway:
+        errors.append("Runway page does not separate the published rate from the credit-plan estimate")
+    cheap = open(os.path.join(DIST, "guides", "cheapest-ai-video-generator", "index.html"), encoding="utf-8").read()
+    wan = open(os.path.join(DIST, "guides", "cheapest-wan-3-0", "index.html"), encoding="utf-8").read()
+    for rel, text in (("cheapest guide", cheap), ("wan guide", wan)):
+        visible = visible_page_text(text).lower()
+        for phrase in ("price file", "check manually", "when the site is built", "when site built"):
+            if phrase in visible:
+                errors.append(f"{rel} still says {phrase!r}")
+        if "Edited by Emmanuel Gonzalez" not in text:
+            errors.append(f"{rel} is missing the editor byline")
+    if visible_page_text(cheap).lower().count("the lowest rate we track is") != 1:
+        errors.append("cheapest guide repeats the lowest-rate sentence")
+    home_visible = visible_page_text(home_html)
+    if "Affiliate disclosure" not in home_visible:
+        errors.append("home page is missing the short affiliate disclosure")
+    kling = open(os.path.join(DIST, "models", "kling-3-0", "index.html"), encoding="utf-8").read()
+    if "Edited by Emmanuel Gonzalez" not in kling:
+        errors.append("model page is missing the editor byline")
+    if "hello@vidfare.com" in home_html or "hello@vidfare.com" in about:
+        errors.append("unverified hello@vidfare.com was published")
     if 'href="https://twelve.tools">Twelve Tools</a>' not in home_html.split("<footer>", 1)[-1]:
         errors.append("footer is missing the Twelve Tools link")
     for rel in ("deals.json", os.path.join("data", "deals.json")):
