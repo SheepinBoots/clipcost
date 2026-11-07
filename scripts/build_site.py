@@ -19,6 +19,7 @@ ORG_ID = SITE_URL + "/#organization"
 OG_ALT = BRAND + ". " + TAGLINE
 # The Kit form is live. The header nav stays as it is on the live site, so a
 # Newsletter item is not added. /newsletter/ is a normal page and is in the sitemap.
+CONTACT_EMAIL = "hello@vidfare.com"
 NEWSLETTER_ENABLED = True
 KIT_FORM_ACTION = "https://app.kit.com/forms/10154736/subscriptions"
 KIT_FORM_ID = "10154736"
@@ -1921,7 +1922,7 @@ page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRA
 <h2>Not in the price table</h2><ul class="small">{unv}</ul>
 <h2 id="disclosure">Affiliate disclosure</h2>
 <div class="disclose">Some links on {BRAND} are affiliate links. If you sign up through them we may earn a commission, at no extra cost to you. Affiliate status never changes the order of the tables: rows are always sorted by price. Sponsored placements are labelled "Sponsor" and never affect the price order.</div>
-<p class="small">Contact: <a href="mailto:emmanueldevgonzalez@gmail.com">emmanueldevgonzalez@gmail.com</a>.</p>
+<p class="small">Contact: <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>.</p>
 <p class="small">Directories: <a href="https://dang.ai">Dang.ai</a>.</p>""", "/about/", ld_script(about_ld))
 
 # ---------- Deals ----------
@@ -2192,7 +2193,7 @@ def write_site_feed():
         open(path, "a", encoding="utf-8").write("\n")
 
 # ---------- Advertise ----------
-AD_MAIL = "mailto:emmanueldevgonzalez@gmail.com?subject=" + quote("VidFare sponsorship")
+AD_MAIL = "mailto:" + CONTACT_EMAIL + "?subject=" + quote("VidFare sponsorship")
 ad_desc = (
     "Sponsor a labelled spot on VidFare, where people compare where to generate AI video. "
     "Home banner, model page box, and the deals featured spot. Rates on request."
@@ -2218,7 +2219,7 @@ ad_body = f"""<h1>Advertise on VidFare</h1>
 <li>Relevant AI video and creator tools only.</li>
 <li>VidFare may decline a placement.</li>
 </ul>
-<p>Rates on request. Email <a href="{e(AD_MAIL)}">emmanueldevgonzalez@gmail.com</a>.</p>"""
+<p>Rates on request. Email <a href="{e(AD_MAIL)}">{CONTACT_EMAIL}</a>.</p>"""
 ad_ld = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -2854,8 +2855,10 @@ def audit_site():
         ad = open(ad_path, encoding="utf-8").read()
         if "<h1>Advertise on VidFare</h1>" not in ad:
             errors.append("advertise page h1")
-        if AD_MAIL not in ad or "emmanueldevgonzalez@gmail.com" not in ad:
+        if AD_MAIL not in ad or CONTACT_EMAIL not in ad:
             errors.append("advertise page mailto")
+        if "emmanueldevgonzalez@gmail.com" in ad:
+            errors.append("advertise page still uses the Gmail address")
         if "Rates on request." not in ad:
             errors.append("advertise page rates line")
         if NEWSLETTER_ENABLED:
@@ -3173,8 +3176,10 @@ def audit_site():
     about = open(os.path.join(DIST, "about", "index.html"), encoding="utf-8").read()
     if 'Sponsored placements are labelled "Sponsor" and never affect the price order.' not in about:
         errors.append("about disclosure is missing the sponsor sentence")
-    if '<p class="small">Contact: <a href="mailto:emmanueldevgonzalez@gmail.com">emmanueldevgonzalez@gmail.com</a>.</p>' not in about:
+    if f'<p class="small">Contact: <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>.</p>' not in about:
         errors.append("about page contact line")
+    if "emmanueldevgonzalez@gmail.com" in about:
+        errors.append("about page still uses the Gmail address")
     if "TODO-add-contact-email" in about:
         errors.append("about page still has the contact placeholder")
     if '<p class="small">Directories: <a href="https://dang.ai">Dang.ai</a>.</p>' not in about:
@@ -3211,8 +3216,14 @@ def audit_site():
     kling = open(os.path.join(DIST, "models", "kling-3-0", "index.html"), encoding="utf-8").read()
     if "Edited by Emmanuel Gonzalez" not in kling:
         errors.append("model page is missing the editor byline")
-    if "hello@vidfare.com" in home_html or "hello@vidfare.com" in about:
-        errors.append("unverified hello@vidfare.com was published")
+    for dirpath, _, filenames in os.walk(DIST):
+        for name in filenames:
+            if not name.endswith((".html", ".xml", ".txt", ".json")):
+                continue
+            path = os.path.join(dirpath, name)
+            text = open(path, encoding="utf-8", errors="replace").read()
+            if "emmanueldevgonzalez@gmail.com" in text:
+                errors.append(os.path.relpath(path, DIST) + " still contains the Gmail address")
     if 'href="https://twelve.tools">Twelve Tools</a>' not in home_html.split("<footer>", 1)[-1]:
         errors.append("footer is missing the Twelve Tools link")
     for rel in ("deals.json", os.path.join("data", "deals.json")):
