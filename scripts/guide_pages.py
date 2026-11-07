@@ -55,14 +55,7 @@ def render(g):
         raise SystemExit("guides need at least one current price row")
 
     def left_out(item, reason):
-        """'Left out: Name (Reason).' The reason starts with a capital."""
-        item = (item or "").strip().rstrip(".")
-        reason = (reason or "").strip().rstrip(".")
-        if reason:
-            if reason[0].islower():
-                reason = reason[0].upper() + reason[1:]
-            return f"Left out: {item} ({reason})."
-        return f"Left out: {item}."
+        return g["public_gap"]({"item": item, "reason": reason})
 
     def source_toggle(r):
         parts = []
@@ -102,7 +95,7 @@ def render(g):
             promo = f' <span class="small">until {e(r["promo_until"])}</span>'
         return (
             f'{rate_money(r["usd_per_second"])}/s {e(r["platform"])} {e(shown_resolution(r))}'
-            f'<span class="badges">{promo}{tag(r["status"])}</span>'
+            f'<span class="badges">{promo}{tag(r)}</span>'
         )
 
     def row_index():
@@ -116,7 +109,7 @@ def render(g):
         promo = ""
         if r.get("status") == "promo" and r.get("promo_until"):
             promo = f' <span class="small">until {e(r["promo_until"])}</span>'
-        return f'<span class="badges">{tag(r["status"])}{promo}{deal_badges(r)}</span>'
+        return f'<span class="badges">{tag(r)}{promo}{deal_badges(r)}</span>'
 
     def detail_html(r):
         extra = e(r["math"]) if r.get("math") else ""
@@ -134,7 +127,7 @@ def render(g):
             promo = f' <span class="small">until {e(r["promo_until"])}</span>'
         return (
             f'{rate_money(r["usd_per_second"])}/s on {plat_link(r["platform"], r["source_url"])}'
-            f'<div class="small">{e(spec_phrase(r))} {tag(r["status"])}{promo}</div>'
+            f'<div class="small">{e(spec_phrase(r))} {tag(r)}{promo}</div>'
             f'{assumption_html(r)}'
         )
 
@@ -268,15 +261,16 @@ def render(g):
             if "wan" in blob:
                 parts.append(left_out(item.get("item"), item.get("reason")))
         gap = " ".join(parts) if parts else "Every platform in the current price data has a Wan 3.0 or Wan 3.0 Prime row."
-        lead = (
-            f"The cheapest Wan 3.0 rate we track is {rate_clause(base)}. "
-            f"The cheapest Wan 3.0 Prime rate is {rate_clause(prime)}."
-        )
         q_base = "What is the cheapest way to use Wan 3.0?"
         q_prime = "What is the cheapest way to use Wan 3.0 Prime?"
         q_gap = "Which platforms have no Wan 3.0 price here?"
         a_base = with_nonpromo("Wan 3.0", base, base_alt)
         a_prime = with_nonpromo("Wan 3.0 Prime", prime, prime_alt)
+        lead = (
+            "Wan 3.0 and Wan 3.0 Prime are priced as separate models. "
+            "Each card is that model's lowest current row. "
+            "A promo, a published rate, and a credit-plan estimate stay labelled, so an estimate is not shown as a list price."
+        )
         faqs = [
             (q_base, a_base),
             (q_prime, a_prime),
@@ -321,7 +315,7 @@ def render(g):
 <h2>{e(q_prime)}</h2><p>{e(a_prime)}</p>
 <h2>Every tracked Wan 3.0 and Wan 3.0 Prime price</h2>
 <p>{len(wan_rs)} live rows, lowest dollars per second first. The first 15 are shown here.</p>
-<p class="small">No promo: same means this row is not a promo. A dollar amount is the list rate stored on that promo row. — means the row is a promo and the price file has no list rate.</p>
+<p class="small">No promo: same means this row is not a promo. A dollar amount is the list rate stored on that promo row. — means the promo row has no separate list rate.</p>
 {wan_table}
 <h2>{e(q_gap)}</h2><p>{e(gap)}</p>
 {how_block()}
@@ -349,14 +343,14 @@ def render(g):
         picks.sort()
         best_row = picks[0][4]
         alt = overall_pick(False)
-        lead = f"The lowest rate we track is {rate_clause(best_row)}."
         if alt is not None and alt is not best_row:
             second = f"Without promos, the lowest rate is {rate_clause(alt)}."
         else:
-            second = "Each model below is that homepage pick: the lowest live dollars per second, with a promo or an approximate row labelled when it wins."
+            second = "Each model below is that homepage pick: the lowest live dollars per second. A promo or an estimate is labelled on the row that wins."
         q = "What is the cheapest AI video generator right now?"
         q_each = "What is the cheapest option for each model?"
-        answer = lead + " " + second
+        answer = f"The lowest rate we track is {rate_clause(best_row)}. {second}"
+        lead = answer
         head = (
             "<thead><tr><th>Model</th><th>$/s</th><th>Where</th><th>Tier</th>"
             "<th>Res</th><th>Audio</th><th>Status</th><th>No promo</th><th>Source</th></tr></thead>"
@@ -385,27 +379,33 @@ def render(g):
         gap_items = db.get("unverified") or []
         if gap_items:
             gap_html = '<ul class="small">' + "".join(
-                f'<li>{e(item["item"])}: {e(item["reason"])}</li>' for item in gap_items
+                f'<li>{e(g["public_gap"](item))}</li>' for item in gap_items
             ) + "</ul>"
         else:
             gap_html = "<p>The price data has no separate unconfirmed-item list.</p>"
+        q_each_answer = (
+            "One row per model, lowest dollars per second first. "
+            "The status label says published rate, from credit plan, or estimated from credit plan. "
+            "A promo shows its end date when the vendor gives one."
+        )
         faqs = [
             (q, answer),
-            (q_each, "One row per model, lowest dollars per second first. A promo shows its end date when the vendor gives one."),
+            (q_each, q_each_answer),
             ("How do we calculate this?", HOW_PLAIN),
         ]
         body = f"""{crumb("Cheapest by model")}
 <h1>Cheapest AI video generator right now, by model</h1>
-<p class="lead">{e(lead)} {e(second)}</p>
+<p class="lead">{e(lead)}</p>
 {checked_line()}
 <div class="cards">{cheap_card("Lowest rate we track", best_row, alt)}</div>
-<h2>{e(q)}</h2><p>{e(answer)}</p>
+<h2>{e(q)}</h2>
+<p>The introduction is that single row. It names the variant and whether the figure is a published rate, a credit-plan estimate, or a promo.</p>
 <h2>{e(q_each)}</h2>
-<p>One row per model, lowest dollars per second first. A promo shows its end date when the vendor gives one.</p>
+<p>{e(q_each_answer)}</p>
 <p class="small">No promo: same means that pick is not a promo. Otherwise the cell is the cheapest non-promo rate. — means there is no non-promo row.</p>
 {fit_table(head, body_rows)}
 <h2>What prices are not in this list?</h2>
-<p>These items are in the price file as unconfirmed, so they are not given a dollars-per-second row here.</p>
+<p>These prices are not in the table. The vendor page did not give a single dollars-per-second figure the check could confirm.</p>
 {gap_html}
 {how_block()}
 {tick_script()}"""
@@ -839,6 +839,7 @@ def render(g):
                 "status": r["status"],
                 "promo_until": r.get("promo_until") or "",
                 "assumption": assumption_text(r),
+                "rate_label": g["rate_label"](r),
                 "badges": deal_badges(r),
                 "detail": detail,
                 "source_html": source_html,
@@ -858,7 +859,7 @@ def render(g):
             f'<td>{e(rec["audio"])}</td>'
             f'<td class="num">{rate_money(rec["usd"])}{assume}</td>'
             f'<td class="num">{cost_money(total)}</td>'
-            f'<td><span class="badges">{tag(rec["status"])}{promo}{rec["badges"]}</span></td>'
+            f'<td><span class="badges"><span class="tag {e(rec["status"])}">{e(rec["rate_label"])}</span>{promo}{rec["badges"]}</span></td>'
             f'<td>{rec["source_html"]}</td>'
             "</tr>"
         )
@@ -972,7 +973,7 @@ const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function rateMoney(v){const n=Number(v),neg=n<0,abs=Math.abs(n),places=abs>=0.1?3:4,q=Math.pow(10,places),rounded=Math.round(abs*q),whole=Math.floor(rounded/q);let frac=String(rounded%q).padStart(places,'0').replace(/0+$/,'');if(frac.length<2)frac=frac.padEnd(2,'0');return (neg?'-$':'$')+whole+'.'+frac;}
 function costMoney(v){const neg=Number(v)<0,n=Math.round(Math.abs(Number(v))*100),whole=Math.floor(n/100),frac=String(n%100).padStart(2,'0');return (neg?'-$':'$')+whole+'.'+frac;}
-function tag(s){const label={verified:'vendor-stated',estimate:'approx.',promo:'promo',discontinued:'discontinued'}[s]||s;return '<span class="tag '+esc(s)+'">'+esc(label)+'</span>';}
+function tag(r){return '<span class="tag '+esc(r.status)+'">'+esc(r.rate_label||r.status)+'</span>';}
 function rankRes(s){const m=/^(\d+(?:\.\d+)?)(p|k)$/i.exec(s);if(!m)return null;const n=Number(m[1]);return m[2].toLowerCase()==='k'?n*1000:n;}
 function resolutions(model){
   const seen=new Set(), out=[];
@@ -1030,7 +1031,7 @@ function render(){
     const total=r.usd*seconds;
     const promo=r.promo_until?' <span class="small">until '+esc(r.promo_until)+'</span>':'';
     const assume=r.assumption?'<div class="assume">'+esc(r.assumption)+'</div>':'';
-    return '<tr data-price-id="'+esc(r.id)+'"><td>'+r.platform_html+'</td><td>'+esc(r.variant)+'</td><td>'+esc(r.tier)+'</td><td>'+esc(r.resolution)+'</td><td>'+esc(r.audio)+'</td><td class="num">'+rateMoney(r.usd)+assume+'</td><td class="num">'+costMoney(total)+'</td><td><span class="badges">'+tag(r.status)+promo+r.badges+'</span></td><td>'+r.source_html+'</td></tr>';
+    return '<tr data-price-id="'+esc(r.id)+'"><td>'+r.platform_html+'</td><td>'+esc(r.variant)+'</td><td>'+esc(r.tier)+'</td><td>'+esc(r.resolution)+'</td><td>'+esc(r.audio)+'</td><td class="num">'+rateMoney(r.usd)+assume+'</td><td class="num">'+costMoney(total)+'</td><td><span class="badges">'+tag(r)+promo+r.badges+'</span></td><td>'+r.source_html+'</td></tr>';
   }).join('');
   if(window.clipTick) clipTick();
 }

@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06",
+ "updated": "2026-11-07",
  "deals": [
   {
    "id": "fal-flux3-75",
@@ -433,7 +433,7 @@
    "verified_date": "2026-10-20",
    "notes": "Standing annual checkout price, not an extra cut on top of the annual plan. $/s uses $47 ÷ 1,200 credits.",
    "examples": [
-    "Plus: $59 → $47/mo · Wan 3.0 480p $0.03917/s vs $0.04917/s"
+    "Plus: $59 → $47/mo · Wan 3.0, Wan 3.0, 480p: $0.03917/s vs $0.04917/s (from credit plan)"
    ]
   },
   {
@@ -584,7 +584,7 @@
    "verified_date": "2026-10-20",
    "notes": "The page calls this 23% off. $/s uses the $99 checkout price, not 23% off the monthly row.",
    "examples": [
-    "Ultra: $129 → $99/mo · Wan 3.0 480p $0.033/s vs $0.043/s"
+    "Ultra: $129 → $99/mo · Wan 3.0, Wan 3.0, 480p: $0.033/s vs $0.043/s (from credit plan)"
    ]
   },
   {
@@ -738,7 +738,7 @@
    "verified_date": "2026-11-06",
    "notes": "Pro yearly in the catalog is $21/mo versus $35 monthly, which is the same 40%. Max is not in the catalog, so Max has no $/s. No end date was on the page.",
    "examples": [
-    "Pro: $35 → $21/mo · Veo 3.1 720p $0.02333/s vs $0.03889/s",
+    "Pro: $35 → $21/mo · Veo 3.1, Veo 3.1 Lite, 720p: $0.02333/s vs $0.03889/s (estimated from credit plan)",
     "Max: $105 → $63/mo"
    ]
   },

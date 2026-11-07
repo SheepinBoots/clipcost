@@ -377,7 +377,10 @@ def plan_examples(deal, rows, plans, limit=4):
             if sample is None or adj["usd"] < sample["usd"]:
                 sample = {
                     "model": row.get("model"),
+                    "variant": row.get("variant"),
                     "resolution": row.get("resolution"),
+                    "kind": row.get("kind"),
+                    "status": row.get("status"),
                     "usd": adj["usd"],
                     "list_usd": adj["list_usd"],
                     "blended_usd": adj["blended_usd"],
