@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-06",
+ "generated": "2026-11-07",
  "note": "Unconfirmed. These snippets are not published as deals.",
  "pages": [
   {
@@ -14,7 +14,7 @@
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "status": "fetched",
-   "snippets": 17
+   "snippets": 22
   },
   {
    "id": "magnific",
@@ -38,5 +38,62 @@
    "snippets": 0
   }
  ],
- "candidates": []
+ "candidates": [
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "0c5882ed7cc97ab9",
+   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator",
+   "seen": "2026-11-07"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "f7fdb26903c09230",
+   "snippet": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Model Licensing Looking for API? Free 100 units / day $0 /month Get Free Unlimi",
+   "seen": "2026-11-07"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "d9991f2591f14aa1",
+   "snippet": "ance 2.5 videos $9 $5 /month Get Basic Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 Gene",
+   "seen": "2026-11-07"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "bd4faa3ec0ff4a03",
+   "snippet": "ons ~65 Seedance 2.5 videos $35 $21 /month Get Pro Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 Generat",
+   "seen": "2026-11-07"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "a1eba5238d631474",
+   "snippet": "edance 2.5 videos 40k 60k 80k 100k $105 $63 /month Get Max Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 Generat",
+   "seen": "2026-11-07"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "71cccf0bbecf6d25",
+   "snippet": "th Get Free Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 Gene",
+   "seen": "2026-11-07"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "2fa7453ecf92273a",
+   "snippet": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Model Licensing Looking for API? Free 100 units / day $0 /month Get Free Krea 3",
+   "seen": "2026-11-07"
+  }
+ ]
 }
