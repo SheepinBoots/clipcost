@@ -1,9 +1,9 @@
 {
- "run": "2026-11-08T16:04:45",
+ "run": "2026-11-08T19:45:14",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 14735
+   "chars": 14176
   },
   "hf_api": {
    "status": "fetched",
@@ -39,7 +39,7 @@
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1623
+   "chars": 1613
   },
   "runway": {
    "status": "fetched",
@@ -83,42 +83,7 @@
    "chars": 3535
   }
  },
- "findings": [
-  {
-   "kind": "deal",
-   "id": "fal-flux3-75",
-   "status": "deal_ended",
-   "end": "2026-11-07"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "Studio Supercomputer Edit Community Plugins Canvas Originals Enterprise Pricing 30% OFF Login Sign up GPT IMAGE 2.6, SEEDREAM 5.0 PRO & NANO BANANA PRO UNLIMITED SIGN"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "UP AND GET YOUR ADDITIONAL DISCOUNT Get GPT Image 2.6, Seedream 5.0 Pro & Nano Banana Pro Unlimited on Ultra plan f"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "Studio Supercomputer Edit Community Plugins Canvas Originals Enterprise Pricing 30% OFF Login Get started GPT IMAGE 2.6, SEEDREAM 5.0 PRO & NANO BANANA PRO UNLIMITED S"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "IGN UP AND GET YOUR ADDITIONAL DISCOUNT Get GPT Image 2.6, Seedream 5.0 Pro & Nano Banana Pro Unlimited on Ultra plan f"
-  }
- ],
+ "findings": [],
  "deal_scan": {
   "pages": [
    {
@@ -157,7 +122,7 @@
     "snippets": 0
    }
   ],
-  "candidates": 4
+  "candidates": 0
  },
  "counts": {
   "ok": 371,
