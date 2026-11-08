@@ -110,6 +110,7 @@ def main():
         "promo_ended:deal:hf-kling3-unlimited-7d:2026-10-30",
     }
     hailuo_end = "promo_ended:deal:mag-hailuo-fast-unlimited:2026-11-06"
+    flux_end = "promo_ended:deal:fal-flux3-75:2026-11-07"
     promo_ids = {event["id"] for event in log if event["kind"] in ("promo_started", "promo_ended")}
     week_ids = {
         "promo_ended:deal:hf-wan3-unlimited-7d:2026-10-20",
@@ -121,7 +122,10 @@ def main():
         "promo_started:deal:hf-seedance-unlimited-7d:2026-10-30",
         "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
-    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end}
+    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end}
+    flux = next(event for event in log if event["id"] == flux_end)
+    assert flux["date"] == "2026-11-08" and flux["ended"] == "2026-11-07"
+    assert flux["end_is_estimate"] is False and flux["checked"] == "2026-11-08"
     later = next(event for event in log if event["id"] == future_start)
     assert later["date"] == "2026-11-01" and later["started"] == "2026-11-01"
     assert later["checked"] == "2026-10-31" and later["vendor"] == "fal"

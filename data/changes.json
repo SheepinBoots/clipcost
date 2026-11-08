@@ -293,5 +293,13 @@
   "platform": "Magnific",
   "source_url": "https://www.magnific.com/pricing",
   "text": "Magnific Kling 2.5 720p unlimited on Plus (catalog Premium+) and Pro ends December 4, 2026. The pricing page badge says Until Dec. 4. The tooltip says the window runs from December 4, 2025 to December 4, 2026."
+ },
+ {
+  "date": "2026-11-08",
+  "type": "deal_ended",
+  "deal": "fal-flux3-75",
+  "vendor": "fal",
+  "source_url": "https://fal.ai/flux-3-max",
+  "text": "FLUX 3 Max 75% off until November 7 ended 2026-11-07."
  }
 ]
