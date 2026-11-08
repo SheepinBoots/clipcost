@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-11-07",
+ "updated": "2026-11-08",
  "watch": [
   {
    "id": "hf_plans",
@@ -1127,7 +1127,7 @@
    "link_url": "https://fal.ai/flux-3-max",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Checked 2026-11-07. Official page banner: Free until Monday, November 9 at 12 PM PST. Daily free caps: 3 signed out, 4 signed in, 5 with verified payment method; up to 15 seconds at 720p with sound; text/image/keyframes to video; refills 24 hours after first generation; API requests billed as usual. After free allowance or when the offer ends, billed $0.0425/s at 720p (75% rate ends November 7 per same page). Official X: https://x.com/fal/status/2118753653096149187 says free FLUX 3 Max generations are available on fal through November 9. FLUX 3 Max is not in the VidFare catalog, so this is not turned into a $/s.",
+   "notes": "Checked 2026-11-07. Official page banner: Free until Monday, November 9 at 12 PM PST. Daily free caps: 3 signed out, 4 signed in, 5 with verified payment method; up to 15 seconds at 720p with sound; text/image/keyframes to video; refills 24 hours after first generation; API requests billed as usual. After free allowance or when the offer ends, billed $0.085/s at 720p (50% rate through November 21 per same page). Official X: https://x.com/fal/status/2118753653096149187 says free FLUX 3 Max generations are available on fal through November 9. FLUX 3 Max is not in the VidFare catalog, so this is not turned into a $/s.",
    "sources": [
     {
      "url": "https://x.com/fal/status/2118753653096149187",
@@ -1135,6 +1135,37 @@
      "quote": "Free FLUX 3 Max generations are available on fal through November 9."
     }
    ]
+  },
+  {
+   "id": "fal-flux3-50",
+   "vendor": "fal",
+   "type": "percent_off",
+   "title": "FLUX 3 Max 50% off until November 21",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": "720p",
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 50,
+   "bonus_credits": null,
+   "start": null,
+   "end": "2026-11-21",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://fal.ai/flux-3-max",
+   "source_kind": "pricing_page",
+   "source_quote": "FLUX 3 Max is 50% off until November 21",
+   "verified_date": "2026-11-08",
+   "link_url": "https://fal.ai/flux-3-max",
+   "math": "none",
+   "show_on_rows": false,
+   "notes": "Checked 2026-11-08 on https://fal.ai/flux-3-max. Page says FLUX 3 Max is 50% off until November 21: $0.085/s at 720p, list $0.17, billed per second of output, no minimums or subscription; text-to-video and image-to-video cost the same. Follows the 75% launch rate (fal-flux3-75), which ended November 7. FLUX 3 Max is not in the VidFare catalog, so the 50% is not turned into a $/s."
   }
  ],
  "history": [
