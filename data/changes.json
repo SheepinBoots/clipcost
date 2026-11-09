@@ -269,15 +269,13 @@
  },
  {
   "date": "2026-11-05",
-  "row": "r072",
+  "type": "notice",
   "model": "gemini-omni-flash",
   "platform": "Google Gemini API",
-  "variant": "gemini-omni-1.1-flash",
+  "variant": "gemini-omni-1.2-flash",
   "resolution": "720p",
-  "old_usd_per_second": 0.1,
-  "new_usd_per_second": 0.07,
   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
-  "type": "price"
+  "text": "Gemini Omni 1.2 Flash (gemini-omni-1.2-flash) launched at approximately $0.07/s for 720p, $0.104/s for 1080p with upsampling, and $0.209/s for 4K with upsampling. Gemini Omni 1.1 Flash remains approximately $0.10/s for 720p. The pricing page does not state a 1080p or 4K per-second rate for 1.1. It lists $0.023/s for 360p on 1.2, a resolution this tracker does not record."
  },
  {
   "date": "2026-11-06",

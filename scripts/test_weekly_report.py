@@ -92,7 +92,6 @@ def main():
         "price:2026-11-05:r025:0.05:0.035",
         "price:2026-11-05:r026:0.1:0.07",
         "price:2026-11-05:r027:0.2:0.14",
-        "price:2026-11-05:r072:0.1:0.07",
     }
     assert {event["id"] for event in log if event["kind"] == "price"} == price_ids
     assert any(event["kind"] == "note" and "a4f84a1" in event["text"] for event in log)
@@ -189,6 +188,16 @@ def main():
     week45 = held_start["reports"][1]
     assert week45["week_start"] == "2026-11-02" and week45["through"] == "2026-11-06"
     assert {event["id"] for event in week45["changes"]} == price_ids | nov1_ends | {future_start, hailuo_end}
+    assert not any(event["id"] == "price:2026-11-05:r072:0.1:0.07" for event in log)
+    omni_launch = next(event for event in log if event["id"] == "added:2026-11-05:gemini-omni-1.2-flash")
+    assert omni_launch["kind"] == "added" and omni_launch["variant"] == "gemini-omni-1.2-flash"
+    assert omni_launch["date"] == "2026-11-05" and omni_launch["checked"] == "2026-11-09"
+    assert "$0.07/s" in omni_launch["what"] and "$0.10/s" in omni_launch["what"]
+    week45_body = wr.render_report_body(week45, log)
+    price_table, _, added_section = week45_body.partition("<h2>New models and platforms</h2>")
+    assert "gemini-omni-1.1-flash" not in price_table
+    assert "gemini-omni-1.2-flash" in added_section
+    assert "$0.07/s" in added_section
     hailuo = next(event for event in log if event["id"] == hailuo_end)
     assert hailuo["end_is_estimate"] is True and hailuo["ended"] == "2026-11-06" and hailuo["date"] == "2026-11-06"
     assert wr.change_counts(edition) == {"price": 0, "promo_started": 6, "promo_ended": 2}

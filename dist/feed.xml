@@ -27,7 +27,7 @@
       <link>https://vidfare.com/reports/2026-w45/</link>
       <guid isPermaLink="true">https://vidfare.com/reports/2026-w45/</guid>
       <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
-      <description>This report covers Oct 31 to Nov 6, 2026. Counted changes: 9 per-second price changes, 1 promos started, and 11 promos ended.</description>
+      <description>This report covers Oct 31 to Nov 6, 2026. Counted changes: 8 per-second price changes, 1 promos started, and 11 promos ended.</description>
       <category>report</category>
     </item>
     <item>
@@ -87,6 +87,14 @@
       <category>price change</category>
     </item>
     <item>
+      <title>Gemini Omni 1.2 Flash (gemini-omni-1.2-flash) launched at approximately $0.07/s for 720p, $0.104/s for 1080p with upsampling, and $0.209/s for 4K with upsampling. Gemini Omni 1.1 Flash remains approximately $0.10/s for 720p. The pricing page does not state a 1080p or 4K per-second rate for 1.1. It lists $0.023/s for 360p on 1.2, a resolution this tracker does not record.</title>
+      <link>https://vidfare.com/changes/#change-c9645883db4f149b</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-c9645883db4f149b</guid>
+      <pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Gemini Omni 1.2 Flash (gemini-omni-1.2-flash) launched at approximately $0.07/s for 720p, $0.104/s for 1080p with upsampling, and $0.209/s for 4K with upsampling. Gemini Omni 1.1 Flash remains approximately $0.10/s for 720p. The pricing page does not state a 1080p or 4K per-second rate for 1.1. It lists $0.023/s for 360p on 1.2, a resolution this tracker does not record.</description>
+      <category>price change</category>
+    </item>
+    <item>
       <title>Wan 3.0 on Replicate (alibaba/wan-3, 1080p): $0.20 → $0.14/s</title>
       <link>https://vidfare.com/changes/#change-bbbdf0a7ba8284a2</link>
       <guid isPermaLink="true">https://vidfare.com/changes/#change-bbbdf0a7ba8284a2</guid>
@@ -108,14 +116,6 @@
       <guid isPermaLink="true">https://vidfare.com/changes/#change-4f9818b02aaa7c5e</guid>
       <pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate>
       <description>Wan 3.0 on Replicate (alibaba/wan-3, 480p): $0.05 → $0.035/s</description>
-      <category>price change</category>
-    </item>
-    <item>
-      <title>Gemini Omni Flash 1.1 on Google Gemini API (gemini-omni-1.1-flash, 720p): $0.10 → $0.07/s</title>
-      <link>https://vidfare.com/changes/#change-463b4a09a8b25223</link>
-      <guid isPermaLink="true">https://vidfare.com/changes/#change-463b4a09a8b25223</guid>
-      <pubDate>Thu, 05 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Gemini Omni Flash 1.1 on Google Gemini API (gemini-omni-1.1-flash, 720p): $0.10 → $0.07/s</description>
       <category>price change</category>
     </item>
     <item>

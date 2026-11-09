@@ -271,7 +271,17 @@ def api_variation(row):
 
     if plat == "Google Gemini API" and model == "gemini-omni-flash":
         v["length_changes_price"] = False
-        v["phrases"].append("approximately $0.10 per second")
+        if "1.2" in variant:
+            # The pricing page states generation and editing up to 15 seconds.
+            v["duration"]["max_seconds"] = 15
+            v["phrases"].append("up to 15 seconds")
+            v["phrases"].append("approximately $0.07 per second")
+            if res == "1080p":
+                v["phrases"].append("$0.104/s for 1080p with upsampling")
+            elif res == "4K":
+                v["phrases"].append("$0.209/s for 4K with upsampling")
+        else:
+            v["phrases"].append("approximately $0.10 per second")
         return v
 
     if plat == "Atlas Cloud":

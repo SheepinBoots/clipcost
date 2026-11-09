@@ -4372,22 +4372,26 @@
    "kind": "api",
    "resolution": "720p",
    "audio": null,
-   "usd_per_second": 0.07,
+   "usd_per_second": 0.1,
    "status": "estimate",
    "promo_until": null,
    "source": "gemini",
    "math": null,
    "checks": [
     {
-     "needle": "effective price of approximately ${N} per second",
-     "expect": 0.07
+     "needle": "Under Standard pricing, this equates to an effective price of approximately ${N} per second",
+     "expect": 0.1
     },
     {
      "needle": "approximately $0.10 per second",
      "phrase": true
+    },
+    {
+     "needle": "Effective December 3, 2026",
+     "phrase": true
     }
    ],
-   "note": "Token-billed; Google states 'approximately $0.10 per second' of 720p.",
+   "note": "Token-billed; Google states 'approximately $0.10 per second' of 720p. Effective December 3, 2026, requests to gemini-omni-1.1-flash route to gemini-omni-1.2-flash and are billed at 1.2 rates.",
    "id": "r072",
    "checked": "2026-11-09",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
@@ -4397,6 +4401,144 @@
     "duration": {
      "min_seconds": "not stated",
      "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "gemini-omni-flash",
+   "variant": "gemini-omni-1.2-flash",
+   "platform": "Google Gemini API",
+   "kind": "api",
+   "resolution": "720p",
+   "audio": null,
+   "usd_per_second": 0.07,
+   "status": "estimate",
+   "promo_until": null,
+   "source": "gemini",
+   "math": null,
+   "checks": [
+    {
+     "needle": "($12.00 per 1M tokens), this equates to an effective price of approximately ${N} per second",
+     "expect": 0.07
+    },
+    {
+     "needle": "approximately $0.07 per second",
+     "phrase": true
+    },
+    {
+     "needle": "up to 15 seconds",
+     "phrase": true
+    }
+   ],
+   "note": "Token-billed; Google states an effective price of approximately $0.07 per second of 720p ($12.00 per 1M video tokens, 5,792 tokens per second).",
+   "id": "r199",
+   "checked": "2026-11-09",
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "gemini-omni-flash",
+   "variant": "gemini-omni-1.2-flash (1080p with upsampling)",
+   "platform": "Google Gemini API",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.104,
+   "status": "estimate",
+   "promo_until": null,
+   "source": "gemini",
+   "math": null,
+   "checks": [
+    {
+     "needle": "${N}/s for 1080p with upsampling",
+     "expect": 0.104
+    },
+    {
+     "needle": "$0.104/s for 1080p with upsampling",
+     "phrase": true
+    },
+    {
+     "needle": "up to 15 seconds",
+     "phrase": true
+    }
+   ],
+   "note": "Token-billed; Google states $0.104/s for 1080p with upsampling at 8,688 tokens/s. Gemini Omni 1.1 Flash has no stated 1080p per-second rate on this page.",
+   "id": "r200",
+   "checked": "2026-11-09",
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "gemini-omni-flash",
+   "variant": "gemini-omni-1.2-flash (4K with upsampling)",
+   "platform": "Google Gemini API",
+   "kind": "api",
+   "resolution": "4K",
+   "audio": null,
+   "usd_per_second": 0.209,
+   "status": "estimate",
+   "promo_until": null,
+   "source": "gemini",
+   "math": null,
+   "checks": [
+    {
+     "needle": "${N}/s for 4K with upsampling",
+     "expect": 0.209
+    },
+    {
+     "needle": "$0.209/s for 4K with upsampling",
+     "phrase": true
+    },
+    {
+     "needle": "up to 15 seconds",
+     "phrase": true
+    }
+   ],
+   "note": "Token-billed; Google states $0.209/s for 4K with upsampling at 17,376 tokens/s. Gemini Omni 1.1 Flash has no stated 4K per-second rate on this page.",
+   "id": "r201",
+   "checked": "2026-11-09",
+   "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": 15,
      "allowed_seconds": "not stated",
      "priced_seconds": "not stated",
      "rate_by_length": "not stated"
