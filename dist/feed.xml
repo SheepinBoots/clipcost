@@ -5,7 +5,23 @@
     <title>VidFare</title>
     <link>https://vidfare.com/</link>
     <description>Price changes, weekly reports, and live deals.</description>
-    <lastBuildDate>Fri, 06 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>FLUX 3 Max 50% off until November 21</title>
+      <link>https://vidfare.com/deals/#fal-flux3-50</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#fal-flux3-50</guid>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
+      <description>FLUX 3 Max is 50% off until November 21 Ends 2026-11-21.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>FLUX 3 Max 75% off until November 7 ended 2026-11-07.</title>
+      <link>https://vidfare.com/changes/#change-bf160fbbc33b9cbf</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-bf160fbbc33b9cbf</guid>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
+      <description>FLUX 3 Max 75% off until November 7 ended 2026-11-07.</description>
+      <category>price change</category>
+    </item>
     <item>
       <title>AI video price changes, week of Nov 2, 2026</title>
       <link>https://vidfare.com/reports/2026-w45/</link>
@@ -44,6 +60,14 @@
       <guid isPermaLink="true">https://vidfare.com/deals/#hf-banner-30</guid>
       <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
       <description>30% OFF. GPT IMAGE 2.6, SEEDREAM 5.0 PRO &amp; NANO BANANA PRO UNLIMITED. No end date given.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Free FLUX 3 Max videos daily through Nov 9 (playground)</title>
+      <link>https://vidfare.com/deals/#fal-flux3-free-weekend</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#fal-flux3-free-weekend</guid>
+      <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
+      <description>From Friday, November 6 at 9 AM PST to Monday, November 9 at 12 PM PST, everyone gets free FLUX 3 Max videos every day. Ends 2026-11-09.</description>
       <category>deal</category>
     </item>
     <item>
@@ -421,14 +445,6 @@
       <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
       <description>Google's pricing page says the Veo 3.1 preview endpoints (standard, fast, lite) shut down on Oct 22, 2026; Google points users to Gemini Omni Flash.</description>
       <category>price change</category>
-    </item>
-    <item>
-      <title>FLUX 3 Max 75% off for about three weeks</title>
-      <link>https://vidfare.com/deals/#fal-flux3-75</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#fal-flux3-75</guid>
-      <pubDate>Mon, 19 Oct 2026 00:00:00 GMT</pubDate>
-      <description>75% off for the next three weeks. Ends 2026-11-09 (estimated).</description>
-      <category>deal</category>
     </item>
     <item>
       <title>Wan API: Prime 40% off, Wan 3.0 50% off</title>

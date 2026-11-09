@@ -346,7 +346,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p><b>Guides:</b> {guidelinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a class="disc" href="{root("/about/#disclosure")}">disclosure</a>).</p>
-<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/data/")}">Price data</a> · <a href="{root("/advertise/")}">Advertise</a> · <a href="https://twelve.tools">Twelve Tools</a></p></div></footer>
+<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/data/")}">Price data</a> · <a href="{root("/advertise/")}">Advertise</a> · <a href="{root("/contact/")}">Contact</a> · <a href="https://twelve.tools">Twelve Tools</a></p></div></footer>
 {before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </body></html>"""
@@ -2231,6 +2231,54 @@ ad_ld = {
 }
 page("/advertise/", f"Advertise on VidFare | {BRAND}", ad_desc, ad_body, "", ld_script(ad_ld))
 
+# ---------- Contact ----------
+# Title stays under the 60-character audit. "Contact VidFare" is 15 characters.
+CONTACT_TITLE = "Contact VidFare"
+contact_desc = (
+    f"Email {CONTACT_EMAIL} about a VidFare price, a deal, or the site. "
+    "Sponsorships use the same email."
+)
+contact_body = f"""<h1>Contact VidFare</h1>
+<p class="lead">Questions about a price, a deal, or this site.</p>
+<p>Email <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>.</p>
+<p>Sponsorships: email <a href="{e(AD_MAIL)}">{CONTACT_EMAIL}</a>.</p>
+<p><a href="{root("/advertise/")}">Advertise</a> · <a href="{root("/about/")}">About</a></p>"""
+contact_ld = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": CONTACT_TITLE,
+    "description": contact_desc,
+    "url": SITE_URL + "/contact/",
+    "isPartOf": {"@type": "WebSite", "name": BRAND, "url": SITE_URL + "/"},
+    "publisher": {"@id": ORG_ID},
+}
+page("/contact/", CONTACT_TITLE, contact_desc, contact_body, "", ld_script(contact_ld))
+
+def write_contact_redirect():
+    """GitHub Pages has no server redirects.
+
+    A request for /contact-us (no slash) is a 301 to /contact-us/. This file
+    is that directory index: a meta refresh to /contact/, with a plain link
+    when the refresh does not run.
+    """
+    dest = root("/contact/")
+    canon = SITE_URL + "/contact/"
+    doc = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact</title>
+<meta http-equiv="refresh" content="0; url={e(dest)}">
+<link rel="canonical" href="{e(canon)}">
+<meta name="robots" content="noindex">
+</head><body>
+<p><a href="{e(dest)}">Contact</a></p>
+</body></html>
+"""
+    out = os.path.join(DIST, "contact-us", "index.html")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    open(out, "w").write(doc)
+
+write_contact_redirect()
+
 # ---------- 404, robots, sitemap ----------
 # Count a missing URL as its own path. GoatCounter reads this before count.js.
 GOAT_404 = "<script>window.goatcounter={path:function(){return '404:'+location.pathname+location.search}}</script>\n"
@@ -2554,7 +2602,7 @@ urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/", "/mcp/
 urls += [path for path, _label in GUIDE_LINKS]
 if NEWSLETTER_ENABLED:
     urls.append("/newsletter/")
-urls += ["/changes/", "/about/", "/advertise/"]
+urls += ["/changes/", "/about/", "/advertise/", "/contact/"]
 if report_paths:
     urls.extend(report_paths)
 urls += ["/models/"] + [f"/models/{s}/" for s in models]
@@ -2629,6 +2677,28 @@ def mcp_link_errors():
         errors.append("no built page links to /mcp/")
     return errors
 
+def contact_redirect_errors(raw):
+    """The /contact-us/ file is a meta refresh, not a normal page."""
+    errors = []
+    dest = root("/contact/")
+    canon = f'<link rel="canonical" href="{SITE_URL}/contact/">'
+    refresh = f'<meta http-equiv="refresh" content="0; url={dest}">'
+    if refresh not in raw:
+        errors.append("contact-us redirect is missing the meta refresh to /contact/")
+    if canon not in raw or raw.count('rel="canonical"') != 1:
+        errors.append("contact-us canonical must be https://vidfare.com/contact/")
+    if 'name="robots" content="noindex"' not in raw:
+        errors.append("contact-us robots must be noindex")
+    if f'<a href="{dest}">Contact</a>' not in raw:
+        errors.append("contact-us redirect is missing the plain fallback link")
+    if "<form" in raw.lower() or "tel:" in raw.lower():
+        errors.append("contact-us redirect must not include a form or phone link")
+    if "sora" in raw.lower():
+        errors.append("contact-us redirect names Sora")
+    if "emmanueldevgonzalez@gmail.com" in raw:
+        errors.append("contact-us redirect still uses the Gmail address")
+    return errors
+
 def audit_site():
     """Fail the build if a page breaks the HTML or sponsor rules."""
     from html.parser import HTMLParser
@@ -2670,6 +2740,7 @@ def audit_site():
             self.jsonld_buf = []
             self.in_footer = False
             self.footer_advertise = False
+            self.footer_contact = False
             self._link = None
 
         def handle_starttag(self, tag, attrs):
@@ -2692,6 +2763,8 @@ def audit_site():
             href = ad.get("href", "")
             if tag == "a" and self.in_footer and href.rstrip("/").endswith("/advertise"):
                 self.footer_advertise = True
+            if tag == "a" and self.in_footer and href.rstrip("/").endswith("/contact"):
+                self.footer_contact = True
             classes = ad.get("class", "").split()
             if tag == "aside" and "sponsor" in classes:
                 for parent, pattrs in self.stack:
@@ -2766,6 +2839,9 @@ def audit_site():
                 continue
             rel = os.path.relpath(path, DIST).replace(os.sep, "/")
             low = raw.lower()
+            if rel == "contact-us/index.html":
+                errors.extend(contact_redirect_errors(raw))
+                continue
             coming_soon = rel == "newsletter/index.html" and not NEWSLETTER_ENABLED
             missing = rel == "404.html"
             if "nosnippet" in low or ("noindex" in low and not (coming_soon or missing)):
@@ -2817,6 +2893,8 @@ def audit_site():
                 errors.append(f"{rel} is missing the favicon.ico link next to the PNG icon")
             if not parser.footer_advertise:
                 errors.append(f"{rel} footer is missing Advertise")
+            if not parser.footer_contact:
+                errors.append(f"{rel} footer is missing Contact")
             if HOUSE_LINE in raw:
                 errors.append(f"{rel} shows an empty sponsor placeholder")
             if parser.bad_sponsor:
@@ -2870,7 +2948,43 @@ def audit_site():
             errors.append("advertise page JSON-LD WebPage")
         if f'<link rel="canonical" href="{SITE_URL}/advertise/">' not in ad:
             errors.append("advertise page canonical")
+    contact_path = os.path.join(DIST, "contact", "index.html")
+    if not os.path.isfile(contact_path):
+        errors.append("contact page was not built")
+    else:
+        contact = open(contact_path, encoding="utf-8").read()
+        if f"<title>{e(CONTACT_TITLE)}</title>" not in contact:
+            errors.append("contact page title")
+        if len(CONTACT_TITLE) > TITLE_LIMIT:
+            errors.append(f"contact page title is {len(CONTACT_TITLE)} characters")
+        if f'<meta name="description" content="{e(contact_desc)}">' not in contact:
+            errors.append("contact page meta description")
+        if f'<link rel="canonical" href="{SITE_URL}/contact/">' not in contact:
+            errors.append("contact page canonical")
+        if "<h1>Contact VidFare</h1>" not in contact:
+            errors.append("contact page h1")
+        mailtos = set(re.findall(r'href="(mailto:[^"]*)"', contact))
+        allowed_mail = {f"mailto:{CONTACT_EMAIL}", AD_MAIL}
+        if mailtos != allowed_mail:
+            errors.append(f"contact page mailto links must be the public address and the sponsorship subject only: {sorted(mailtos)}")
+        if f'href="{root("/advertise/")}"' not in contact or f'href="{root("/about/")}"' not in contact:
+            errors.append("contact page is missing the advertise or about link")
+        if "<form" in contact.lower() or "tel:" in contact.lower():
+            errors.append("contact page must not include a form or phone link")
+        if "sora" in contact.lower():
+            errors.append("contact page names Sora")
+        if "emmanueldevgonzalez@gmail.com" in contact:
+            errors.append("contact page still uses the Gmail address")
+        if 'name="robots" content="index,follow"' not in contact:
+            errors.append("contact page robots must be index,follow")
+    redirect_path = os.path.join(DIST, "contact-us", "index.html")
+    if not os.path.isfile(redirect_path):
+        errors.append("contact-us redirect was not built")
     sitemap = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
+    if f"<loc>{SITE_URL}/contact/</loc>" not in sitemap:
+        errors.append("sitemap is missing /contact/")
+    if "contact-us" in sitemap:
+        errors.append("sitemap includes /contact-us")
     if f"<loc>{SITE_URL}/data/</loc>" not in sitemap:
         errors.append("sitemap is missing /data/")
     if f"<loc>{SITE_URL}/mcp/</loc>" not in sitemap:
@@ -2927,6 +3041,8 @@ def audit_site():
             errors.append(f"{rel} makes a request")
     home_html = open(os.path.join(DIST, "index.html"), encoding="utf-8").read()
     home_nav = home_html.split("<nav>", 1)[-1].split("</nav>", 1)[0]
+    if ">Contact<" in home_nav:
+        errors.append("header nav must stay unchanged and not add Contact")
     if f'href="{root("/guides/")}">Guides</a>' not in home_nav:
         errors.append("nav is missing Guides")
     if f'href="{root("/data/")}">Data</a>' not in home_nav:
@@ -3278,6 +3394,8 @@ def structured_data_errors():
             if "<html" not in raw.lower():
                 continue
             rel = os.path.relpath(path, DIST).replace(os.sep, "/")
+            if rel == "contact-us/index.html":
+                continue
             if alternate not in raw:
                 errors.append(f"{rel} is missing the feed.xml alternate link")
             visible = visible_page_text(raw)
