@@ -1,23 +1,23 @@
 {
- "updated": "2026-11-07",
+ "updated": "2026-11-09",
  "deals": [
   {
-   "id": "fal-flux3-75",
+   "id": "fal-flux3-free-weekend",
    "vendor": "fal",
-   "type": "percent_off",
-   "title": "FLUX 3 Max 75% off for about three weeks",
+   "type": "unlimited_window",
+   "title": "Free FLUX 3 Max videos daily through Nov 9 (playground)",
    "models": [],
    "plans": [],
    "conditions": {
     "new_users_only": false,
     "annual_only": false,
     "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
+    "max_resolution": "720p",
+    "web_only": true,
     "code": null,
     "standing": false
    },
-   "percent": 75,
+   "percent": null,
    "bonus_credits": null,
    "price_before": null,
    "price_after": null,
@@ -26,15 +26,22 @@
    "deal_plan_id": null,
    "math": "none",
    "variants": [],
-   "start": "2026-10-19",
+   "start": "2026-11-06",
    "end": "2026-11-09",
-   "end_is_estimate": true,
+   "end_is_estimate": false,
    "status": "live",
-   "source_url": "https://x.com/fal/status/2112251022047412492",
-   "source_quote": "75% off for the next three weeks.",
-   "verified_date": "2026-10-20",
-   "notes": "Official fal post on Oct 19, 2026. Three weeks from that date is about Nov 9, so the end is an estimate. FLUX 3 Max is not in the catalog, so the 75% is not turned into a $/s.",
-   "examples": []
+   "source_url": "https://fal.ai/flux-3-max",
+   "source_quote": "From Friday, November 6 at 9 AM PST to Monday, November 9 at 12 PM PST, everyone gets free FLUX 3 Max videos every day.",
+   "verified_date": "2026-11-07",
+   "notes": "Checked 2026-11-07. Official page banner: Free until Monday, November 9 at 12 PM PST. Daily free caps: 3 signed out, 4 signed in, 5 with verified payment method; up to 15 seconds at 720p with sound; text/image/keyframes to video; refills 24 hours after first generation; API requests billed as usual. After free allowance or when the offer ends, billed $0.085/s at 720p (50% rate through November 21 per same page). Official X: https://x.com/fal/status/2118753653096149187 says free FLUX 3 Max generations are available on fal through November 9. FLUX 3 Max is not in the VidFare catalog, so this is not turned into a $/s.",
+   "examples": [],
+   "sources": [
+    {
+     "url": "https://x.com/fal/status/2118753653096149187",
+     "kind": "x_post",
+     "quote": "Free FLUX 3 Max generations are available on fal through November 9."
+    }
+   ]
   },
   {
    "id": "krea3-openrouter-50",
@@ -119,6 +126,41 @@
      "quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026."
     }
    ]
+  },
+  {
+   "id": "fal-flux3-50",
+   "vendor": "fal",
+   "type": "percent_off",
+   "title": "FLUX 3 Max 50% off until November 21",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": "720p",
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 50,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-21",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://fal.ai/flux-3-max",
+   "source_quote": "FLUX 3 Max is 50% off until November 21",
+   "verified_date": "2026-11-08",
+   "notes": "Checked 2026-11-08 on https://fal.ai/flux-3-max. Page says FLUX 3 Max is 50% off until November 21: $0.085/s at 720p, list $0.17, billed per second of output, no minimums or subscription; text-to-video and image-to-video cost the same. Follows the 75% launch rate (fal-flux3-75), which ended November 7. FLUX 3 Max is not in the VidFare catalog, so the 50% is not turned into a $/s.",
+   "examples": []
   },
   {
    "id": "runway-kling4-25",
@@ -925,6 +967,48 @@
  ],
  "upcoming": [],
  "archive": [
+  {
+   "id": "fal-flux3-75",
+   "vendor": "fal",
+   "type": "percent_off",
+   "title": "FLUX 3 Max 75% off until November 7",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 75,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": "2026-10-19",
+   "end": "2026-11-07",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://fal.ai/flux-3-max",
+   "source_quote": "FLUX 3 Max is 75% off until November 7",
+   "verified_date": "2026-11-07",
+   "notes": "Checked 2026-11-07 on https://fal.ai/flux-3-max. Page says FLUX 3 Max is 75% off until November 7 at $0.0425/s 720p (list $0.17). That pay-per-use rate ends November 7. Separate free playground weekend offer is deal fal-flux3-free-weekend. FLUX 3 Max is not in the catalog, so the 75% is not turned into a $/s. Original launch post: https://x.com/fal/status/2112251022047412492.",
+   "examples": [],
+   "sources": [
+    {
+     "url": "https://x.com/fal/status/2112251022047412492",
+     "kind": "x_post",
+     "quote": "75% off for the next three weeks."
+    }
+   ]
+  },
   {
    "id": "mag-hailuo-fast-unlimited",
    "vendor": "Magnific",
