@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-08",
+ "generated": "2026-11-09",
  "note": "Unconfirmed. These snippets are not published as deals.",
  "pages": [
   {
@@ -14,7 +14,7 @@
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "status": "fetched",
-   "snippets": 17
+   "snippets": 18
   },
   {
    "id": "magnific",
@@ -38,5 +38,30 @@
    "snippets": 0
   }
  ],
- "candidates": []
+ "candidates": [
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "0c5882ed7cc97ab9",
+   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator",
+   "seen": "2026-11-09"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "sha": "65a261922e316ab2",
+   "snippet": "Ds Top up credits anytime Early access to AI features Metadata export & lineage Unlimited Save credits on 30+ models Nano Banana 2 All year Kling 2.5 All year Nano Banan",
+   "seen": "2026-11-09"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "sha": "d7028cf21b55fcd4",
+   "snippet": "Ds Top up credits anytime Early access to AI features Metadata export & lineage Unlimited Save credits on 30+ models Nano Banana 2 All year Kling 2.5 Until Dec. 4 Nano B",
+   "seen": "2026-11-09"
+  }
+ ]
 }
