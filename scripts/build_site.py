@@ -817,7 +817,7 @@ def news_box():
         }
     }, separators=(",", ":")))
     return f"""<section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
-<p class="small" style="margin:0">Every Monday: price changes, new models, and the cheapest way to run each one. Free.</p>
+<p class="small" style="margin:0">VidFare Weekly: one email every Friday with the AI video models that got cheaper that week. Free, unsubscribe anytime.</p>
 <form action="{KIT_FORM_ACTION}" class="seva-form formkit-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_FORM_UID}" data-format="inline" data-version="5" data-options="{options}">
 <div class="formkit-notices" aria-live="polite">
 <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
@@ -1185,8 +1185,8 @@ home = f"""<h1>AI video cost per second, compared</h1>
 <span class="small" id="count"></span></div>
 {wide_table(THEAD + "<tbody>" + "".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"])) + "</tbody>", ' id="prices"')}
 <p class="small"><span class="tag verified">published rate</span> = the vendor states this dollars per second, or states an API credit count and a credit price (Runway credits are $0.01). <span class="tag verified">from credit plan</span> = plan price ÷ credits × credits per clip ÷ seconds, using a credit count the vendor stated exactly. It is not a list price per second. <span class="tag estimate">estimated from credit plan</span> = the same credit-plan math when the vendor marks the count with "~", "roughly", or "estimated". <span class="tag estimate">estimated rate</span> = an API price the vendor calls approximate. <span class="tag promo">promo</span> = a temporary discount, with the end date when the vendor gave one. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. Of {len(rows)} live rows: {n_published} published rates, {n_plan} from a credit plan, {n_plan_est} estimated from a credit plan, {n_api_est} estimated API rates, {n_promo} promos.</p>
-{retired_table(retired_rows)}
 {news_box()}
+{retired_table(retired_rows)}
 <script>
 {TICK_JS}
 const BASE={json.dumps(BASE)};
@@ -1508,9 +1508,9 @@ for slug, m in models.items():
 <h2>All {e(m['name'])} prices</h2>
 {wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
 <p class="small">A row labelled estimated from credit plan is not a list price. Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
+{news_box()}
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {faq_html(faqs)}
-{news_box()}
 {tick_script()}
 {ld_join(faq_ld(slug, faqs), breadcrumb_ld([("Prices", "/"), (m["name"], f"/models/{slug}/")]))}"""
     page(f"/models/{slug}/", page_title(f"{m['name']} Price Per Second"),

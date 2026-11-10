@@ -1,48 +1,6 @@
 {
- "updated": "2026-11-09",
+ "updated": "2026-11-10",
  "deals": [
-  {
-   "id": "fal-flux3-free-weekend",
-   "vendor": "fal",
-   "type": "unlimited_window",
-   "title": "Free FLUX 3 Max videos daily through Nov 9 (playground)",
-   "models": [],
-   "plans": [],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": "720p",
-    "web_only": true,
-    "code": null,
-    "standing": false
-   },
-   "percent": null,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "full_plan_id": null,
-   "deal_plan_id": null,
-   "math": "none",
-   "variants": [],
-   "start": "2026-11-06",
-   "end": "2026-11-09",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://fal.ai/flux-3-max",
-   "source_quote": "From Friday, November 6 at 9 AM PST to Monday, November 9 at 12 PM PST, everyone gets free FLUX 3 Max videos every day.",
-   "verified_date": "2026-11-07",
-   "notes": "Checked 2026-11-07. Official page banner: Free until Monday, November 9 at 12 PM PST. Daily free caps: 3 signed out, 4 signed in, 5 with verified payment method; up to 15 seconds at 720p with sound; text/image/keyframes to video; refills 24 hours after first generation; API requests billed as usual. After free allowance or when the offer ends, billed $0.085/s at 720p (50% rate through November 21 per same page). Official X: https://x.com/fal/status/2118753653096149187 says free FLUX 3 Max generations are available on fal through November 9. FLUX 3 Max is not in the VidFare catalog, so this is not turned into a $/s.",
-   "examples": [],
-   "sources": [
-    {
-     "url": "https://x.com/fal/status/2118753653096149187",
-     "kind": "x_post",
-     "quote": "Free FLUX 3 Max generations are available on fal through November 9."
-    }
-   ]
-  },
   {
    "id": "krea3-openrouter-50",
    "vendor": "Krea",
@@ -967,6 +925,48 @@
  ],
  "upcoming": [],
  "archive": [
+  {
+   "id": "fal-flux3-free-weekend",
+   "vendor": "fal",
+   "type": "unlimited_window",
+   "title": "Free FLUX 3 Max videos daily through Nov 9 (playground)",
+   "models": [],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": "720p",
+    "web_only": true,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": "2026-11-06",
+   "end": "2026-11-09",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://fal.ai/flux-3-max",
+   "source_quote": "From Friday, November 6 at 9 AM PST to Monday, November 9 at 12 PM PST, everyone gets free FLUX 3 Max videos every day.",
+   "verified_date": "2026-11-07",
+   "notes": "Checked 2026-11-07. Official page banner: Free until Monday, November 9 at 12 PM PST. Daily free caps: 3 signed out, 4 signed in, 5 with verified payment method; up to 15 seconds at 720p with sound; text/image/keyframes to video; refills 24 hours after first generation; API requests billed as usual. After free allowance or when the offer ends, billed $0.085/s at 720p (50% rate through November 21 per same page). Official X: https://x.com/fal/status/2118753653096149187 says free FLUX 3 Max generations are available on fal through November 9. FLUX 3 Max is not in the VidFare catalog, so this is not turned into a $/s.",
+   "examples": [],
+   "sources": [
+    {
+     "url": "https://x.com/fal/status/2118753653096149187",
+     "kind": "x_post",
+     "quote": "Free FLUX 3 Max generations are available on fal through November 9."
+    }
+   ]
+  },
   {
    "id": "fal-flux3-75",
    "vendor": "fal",
