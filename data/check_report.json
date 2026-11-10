@@ -1,9 +1,9 @@
 {
- "run": "2026-11-09T23:47:43",
+ "run": "2026-11-10T16:17:09",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 14243
+   "chars": 14806
   },
   "hf_api": {
    "status": "fetched",
@@ -35,11 +35,11 @@
   },
   "fal_pricing": {
    "status": "fetched",
-   "chars": 7798
+   "chars": 7802
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1622
+   "chars": 1623
   },
   "runway": {
    "status": "fetched",
@@ -51,19 +51,19 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 95275
+   "chars": 100347
   },
   "atlas": {
    "status": "fetched",
-   "chars": 2128818
+   "chars": 2430813
   },
   "krea": {
    "status": "fetched",
-   "chars": 42769
+   "chars": 28850
   },
   "magnific": {
    "status": "fetched",
-   "chars": 9281
+   "chars": 9490
   },
   "kling_app": {
    "status": "manual",
@@ -89,11 +89,25 @@
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "Studio Supercomputer Edit Community Plugins Canvas Originals Enterprise Pricing 30% OFF Login Get started SEEDANCE 2.5, GPT IMAGE 2.6 & SEEDREAM 5.5 UNLIMITED SIGN UP"
+   "snippet": "Studio Supercomputer Edit Community Plugins Canvas Originals Enterprise Pricing 30% OFF Login Sign up SEEDANCE 2.5, GPT IMAGE 2.6 & SEEDREAM 5.5 UNLIMITED SIGN UP AND"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "GET YOUR ADDITIONAL DISCOUNT Get Seedance 2.5, GPT Image 2.6 & Seedream 5.5 Unlimited on Ultra plan for 7 days with Special 30% discount All plans For individual cre"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "Studio Supercomputer Edit Community Plugins Canvas Originals Enterprise Pricing 30% OFF Login Get started SEEDANCE 2.5, GPT IMAGE 2.6 & SEEDREAM 5.5 UNLIMITED SIGN UP"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "AND GET YOUR ADDITIONAL DISCOUNT Get Seedance 2.5, GPT Image 2.6 & Seedream 5.5 Unlimited on Ultra plan for 7 days with Special 30% discount All plans For individual cre"
@@ -101,100 +115,23 @@
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ators & Enterprises Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Save up to 30% Starter For first-time AI"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "rter 270 credits / month 135 images Nano Banana Pro 15 videos Seedance 2.0 Fast Unlimited models Seedance 2.5 Nano Banana Pro Seedream 5.0 Pro Seedream 5.5 GPT Image 2.6"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "2 other unlimited models Free generations Higgsfield Genjutsu Genjutsu Lite 1080p 5 free gens Hig"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "mited Seedream 5.0 Pro 2K Unlimited Seedream 5.5 2K Unlimited GPT Image 2.6 2K 5 other unlimited models Free generations Higgsfield Genjutsu"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "imited Seedream 5.0 Pro 2K Unlimited Seedream 5.5 2K Unlimited GPT Image 2.6 2K 5 other unlimited models Free generations Higgsfield Genjutsu"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "820 of 1,200 credits Included in plan 1,200 credits / month Credit top-ups with discount 7-day unlimited GPT Image 2.6 2K 7-day unlimited Seedream 5.5 2K All models & f"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "Studio Supercomputer Edit Community Plugins Canvas Originals Enterprise Pricing 30% OFF Login Sign up GPT IMAGE 2.6, SEEDREAM 5.0 PRO & NANO BANANA PRO UNLIMITED SIGN"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "UP AND GET YOUR ADDITIONAL DISCOUNT Get GPT Image 2.6, Seedream 5.0 Pro & Nano Banana Pro Unlimited on Ultra plan f"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "or 7 days with Special 30% discount All plans For individual creators & Enterprises Individual Seedance 2.5 Unlimit"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "rter 270 credits / month 135 images Nano Banana Pro 15 videos Seedance 2.0 Fast Unlimited models Seedance 2.5 Nano Banana Pro Seedream 5.0 Pro GPT Image 2.6 2 other unli"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "mited Seedream 5.0 Pro 2K Unlimited GPT Image 2.6 2K 5 other unlimited models Free generations Higgsfield Genjutsu 720p 3 free gens Genjutsu Lite 1080"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "imited Seedream 5.0 Pro 2K Unlimited GPT Image 2.6 2K 5 other unlimited models Free generations Higgsfield Genjutsu 720p 3 free gens Genjutsu Lite 1080"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "820 of 1,200 credits Included in plan 1,200 credits / month Credit top-ups with discount 7-day unlimited GPT Image 2.6 2K 7-day unlimited Seedream 5.0 Pro 2K All models"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Model Licensing Looking for API? Free 100 units / day $0 /month Get Free Krea 3"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "More Seedance Studio More Nano Banana More Realtime More Edit More More Pricing 40% off yearly Enterprise Sign in Toggle Sidebar Pick your plan Trusted by 40M+ creator"
+   "snippet": "w to Krea? Save up to 50% on your first plan Sign up free and we'll offer you a discount on your first plan. Sign up free Monthly Yearly 40% off Model Licensing Looking"
   }
  ],
  "deal_scan": {
@@ -235,7 +172,7 @@
     "snippets": 0
    }
   ],
-  "candidates": 16
+  "candidates": 7
  },
  "counts": {
   "ok": 381,

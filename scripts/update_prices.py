@@ -86,10 +86,30 @@ def fetch(src):
             extra = billing_tier_text(r.text)
             if extra:
                 text = text + " " + extra
+        if src.get("number_flow"):
+            extra = number_flow_text(src)
+            if extra:
+                text = text + " " + extra
         return text
     if src["fetch"] == "render":
         return collapse(render_text(src))
     raise RuntimeError("manual source")
+
+def number_flow_text(src):
+    """Read plan-card prices that exist only as shadow-DOM digits.
+
+    Krea's yearly figures left the server HTML. The card still draws them
+    after the Yearly toggle. The line is labeled with the plan name.
+    """
+    cmd = ["node", os.path.join(ROOT, "scripts", "number_flow.mjs"), src["url"], src["number_flow"]]
+    try:
+        out = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError("number-flow timed out")
+    if out.returncode != 0 or not out.stdout.strip():
+        detail = (out.stderr or "number-flow failed").strip().splitlines()
+        raise RuntimeError(detail[-1][:200] if detail else "number-flow failed")
+    return out.stdout
 
 def render_text(src):
     """Render a JS page. Retry once when a required phrase has not hydrated."""
