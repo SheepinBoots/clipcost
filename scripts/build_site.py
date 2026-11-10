@@ -21,9 +21,12 @@ OG_ALT = BRAND + ". " + TAGLINE
 # Newsletter item is not added. /newsletter/ is a normal page and is in the sitemap.
 CONTACT_EMAIL = "hello@vidfare.com"
 NEWSLETTER_ENABLED = True
-KIT_FORM_ACTION = "https://app.kit.com/forms/10154736/subscriptions"
-KIT_FORM_ID = "10154736"
-KIT_UID = "127ad5e4e5"
+# Kit (ConvertKit) signup. Every page renders news_box() from these three
+# values. Swap the account form here, then rebuild dist. Nothing else
+# should hardcode the id, uid, or action URL.
+KIT_FORM_ID = "10170819"
+KIT_FORM_UID = "6ef7eafdbe"
+KIT_FORM_ACTION = "https://app.kit.com/forms/10170819/subscriptions"
 # Weekly /reports/ pages. On for the live site. A week is still withheld when
 # it has fewer than two qualifying changes (per-second price changes, promo
 # starts, and promo ends).
@@ -794,7 +797,7 @@ def retired_table(rs, thead=None):
             f'<p class="small">These rates are off sale. The last price we recorded stays here, and these rows are left out of cheapest picks and the live table.</p>'
             f'{wide_table(head + "<tbody>" + body + "</tbody>", " id=\"retired\"")}')
 
-KIT_SUCCESS = "Almost done. Check your inbox for a confirmation email."
+KIT_SUCCESS = "Thanks! Check your inbox to confirm your subscription."
 
 def news_box():
     """Kit signup. ck.5.js fills data-element success and errors. The form still posts if that script does not load."""
@@ -815,7 +818,7 @@ def news_box():
     }, separators=(",", ":")))
     return f"""<section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
 <p class="small" style="margin:0">Every Monday: price changes, new models, and the cheapest way to run each one. Free.</p>
-<form action="{KIT_FORM_ACTION}" class="seva-form formkit-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_UID}" data-format="inline" data-version="5" data-options="{options}">
+<form action="{KIT_FORM_ACTION}" class="seva-form formkit-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_FORM_UID}" data-format="inline" data-version="5" data-options="{options}">
 <div class="formkit-notices" aria-live="polite">
 <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
 <div data-element="fields" class="seva-fields formkit-fields">
@@ -3175,7 +3178,7 @@ def audit_site():
             errors.append("newsletter page still blocks the Kit form")
         if 'name="email_address"' not in news_html:
             errors.append("newsletter page email field")
-        if f'data-sv-form="{KIT_FORM_ID}"' not in news_html or f'data-uid="{KIT_UID}"' not in news_html:
+        if f'data-sv-form="{KIT_FORM_ID}"' not in news_html or f'data-uid="{KIT_FORM_UID}"' not in news_html:
             errors.append("newsletter form id or uid changed")
         if 'data-element="errors"' not in news_html or 'data-element="fields"' not in news_html:
             errors.append("newsletter form is missing Kit success and error targets")
