@@ -1870,7 +1870,7 @@ page("/changes/", f"AI Video Price Changes Log ({MONTH}) | {BRAND}",
 # ---------- Newsletter ----------
 if NEWSLETTER_ENABLED:
     page("/newsletter/", f"{BRAND} Weekly: AI video price drops & new models", "One short email a week: AI video price changes, new models and the cheapest way to run them.",
-         f"""<h1>{BRAND} Weekly</h1><p class="lead">One short email every Monday: which AI video prices changed, which new models launched, and the cheapest way to run each one right now. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
+         f"""<h1>{BRAND} Weekly</h1><p class="lead">One short email every Friday: which AI video prices changed, which new models launched, and the cheapest way to run each one right now. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
 else:
     page("/newsletter/", f"Newsletter coming soon | {BRAND}",
          "The VidFare newsletter is not open yet.",
