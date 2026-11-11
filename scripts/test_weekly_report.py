@@ -230,6 +230,18 @@ def main():
     assert omni_launch["date"] == "2026-11-05" and omni_launch["checked"] == "2026-11-09"
     assert "$0.07/s" in omni_launch["what"] and "$0.10/s" in omni_launch["what"]
     week45_body = wr.render_report_body(week45, log)
+    assert "$0.112/s to $0.168/s" in week45_body
+    assert "+50%" in week45_body
+    assert "-30%" in week45_body
+    assert "https://replicate.com/alibaba/wan-3" in week45_body
+    assert "<h2>What changed</h2>" in week45_body
+    assert "<h2>Biggest price moves</h2>" in week45_body
+    assert "<h2>Takeaways</h2>" in week45_body
+    takeaways = week45_body.split("<h2>Takeaways</h2>", 1)[1].split("<h2>", 1)[0]
+    assert 2 <= takeaways.count("<li>") <= 4
+    assert "sora" not in week45_body.lower()
+    assert wr.report_content_date(week45, log, "2026-10-30") == "2026-11-09"
+    assert wr.index_content_date(wr.assign(log, "2026-11-11"), log, "2026-11-11") == "2026-11-11"
     price_table, _, added_section = week45_body.partition("<h2>New models and platforms</h2>")
     assert "gemini-omni-1.1-flash" not in price_table
     assert "gemini-omni-1.2-flash" in added_section
