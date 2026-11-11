@@ -176,3 +176,7 @@ details.src{margin:0}
 details.src summary{cursor:pointer;color:var(--acc2)}
 details.more{margin:10px 0 18px}
 details.more > summary{cursor:pointer;font-weight:650}
+.promptbox{max-width:100%;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 16px;margin:8px 0 18px}
+.promptbox pre,.snippet{display:block;max-width:100%;margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#10141c;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font:14px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--txt)}
+.snippet{margin:8px 0 16px}
+.promptbox .btn{min-height:40px}
