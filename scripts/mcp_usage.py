@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Read VidFare MCP tool-request counts from Workers Analytics Engine.
+"""Read VidFare MCP usage counts from Workers Analytics Engine.
 
-The token needs Account Analytics Read on the VidFare account.
-It is not the Worker deploy token.
+Points are anonymous: method, tool name, coarse client bucket, and a probe
+flag. The token needs Account Analytics Read on the VidFare account.
+It is not the Worker deploy token. Do not commit the token.
 
   CLOUDFLARE_ACCOUNT_ID=... CLOUDFLARE_API_TOKEN=... python3 scripts/mcp_usage.py
-  python3 scripts/mcp_usage.py --days 14
+  python3 scripts/mcp_usage.py --days 7
 """
 import argparse
 import json
@@ -18,20 +19,23 @@ from zoneinfo import ZoneInfo
 
 DATASET = "vidfare_mcp_usage"
 LABEL = (
-    "tool requests (not unique people, visits, or sponsor impressions; "
-    "retries and tests can inflate them)"
+    "requests (not unique people, visits, or sponsor impressions; "
+    "retries can inflate them). v2 points only"
 )
 PACIFIC = ZoneInfo("America/Los_Angeles")
 
 
 def query(days):
     return (
-        "SELECT toDate(timestamp) AS day_utc, blob1 AS tool, blob2 AS outcome, "
-        "SUM(_sample_interval * double1) AS requests "
+        "SELECT toDate(timestamp) AS day_utc, blob1 AS method, blob2 AS tool, "
+        "blob3 AS client, SUM(_sample_interval) AS requests, "
+        "SUM(_sample_interval * double1) AS probes, "
+        "SUM(_sample_interval) - SUM(_sample_interval * double1) AS non_probes "
         f"FROM {DATASET} "
-        f"WHERE timestamp > NOW() - INTERVAL '{int(days)}' DAY "
-        "GROUP BY day_utc, tool, outcome "
-        "ORDER BY day_utc, tool, outcome "
+        "WHERE blob8 = 'v2' "
+        f"AND timestamp > NOW() - INTERVAL '{int(days)}' DAY "
+        "GROUP BY day_utc, method, tool, client "
+        "ORDER BY day_utc, method, tool, client "
         "FORMAT JSON"
     )
 
@@ -56,7 +60,7 @@ def render(rows):
         "",
     ]
     if not rows:
-        lines.append("No tool requests in this window.")
+        lines.append("No requests in this window.")
         return "\n".join(lines) + "\n"
     current = None
     for row in rows:
@@ -67,7 +71,16 @@ def render(rows):
         count = row["requests"]
         if isinstance(count, float) and count.is_integer():
             count = int(count)
-        lines.append(f"  {row['tool']}  {row['outcome']}  {count}")
+        probes = row["probes"]
+        non_probes = row["non_probes"]
+        if isinstance(probes, float) and probes.is_integer():
+            probes = int(probes)
+        if isinstance(non_probes, float) and non_probes.is_integer():
+            non_probes = int(non_probes)
+        lines.append(
+            f"  {row['method']}  {row['tool']}  {row['client']}  "
+            f"{count}  probes {probes}  non-probes {non_probes}"
+        )
     return "\n".join(lines) + "\n"
 
 
