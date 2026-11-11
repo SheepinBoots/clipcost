@@ -237,7 +237,9 @@ def main():
             counts[st] += 1
             if st == "ok": continue
             f = {"kind": kind, "id": it["id"], "source": it["source"], "status": st, "needle": chk["needle"],
-                 "old": chk["expect"], "new": v, "model": it.get("model"), "platform": it.get("platform"), "variant": it.get("variant", it.get("plan"))}
+                 "old": chk.get("expect"), "new": v, "model": it.get("model"), "platform": it.get("platform"), "variant": it.get("variant", it.get("plan"))}
+            if chk.get("phrase"):
+                f["phrase"] = True
             report["findings"].append(f)
             if chk.get("phrase"):
                 continue

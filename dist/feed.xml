@@ -5,7 +5,303 @@
     <title>VidFare</title>
     <link>https://vidfare.com/</link>
     <description>Price changes, weekly reports, and live deals.</description>
-    <lastBuildDate>Sun, 08 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Ultra annual billing, $129 to $65/mo</title>
+      <link>https://vidfare.com/deals/#hf-ultra-annual</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-annual</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Ultra BEST VALUE $65/month Billed annually No end date given.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Plus annual billing, $59 to $35/mo</title>
+      <link>https://vidfare.com/deals/#hf-plus-annual</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-annual</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Plus $35/month Billed annually No end date given.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Veo 3.1 on Higgsfield (Veo 3.1, 720p): $0.33 → $0.21667/s</title>
+      <link>https://vidfare.com/changes/#change-f883abbb7893937a</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-f883abbb7893937a</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Veo 3.1 on Higgsfield (Veo 3.1, 720p): $0.33 → $0.21667/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 720p): $0.05875 → $0.04375/s</title>
+      <link>https://vidfare.com/changes/#change-f7c488164b70ed98</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-f7c488164b70ed98</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 720p): $0.05875 → $0.04375/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield API (List price (lowest mode), 480p): $0.068 → $0.051/s</title>
+      <link>https://vidfare.com/changes/#change-efd5c21bc6d328a3</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-efd5c21bc6d328a3</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield API (List price (lowest mode), 480p): $0.068 → $0.051/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 480p): $0.03917 → $0.02917/s</title>
+      <link>https://vidfare.com/changes/#change-e6eb30621881977c</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-e6eb30621881977c</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 480p): $0.03917 → $0.02917/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Krea 3 50% off on OpenRouter through Nov 10 ended 2026-11-10.</title>
+      <link>https://vidfare.com/changes/#change-e571b8c61e3c1880</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-e571b8c61e3c1880</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Krea 3 50% off on OpenRouter through Nov 10 ended 2026-11-10.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield API (Text to video, 480p): $0.025 → $0.0375/s</title>
+      <link>https://vidfare.com/changes/#change-e06c019d49aa867c</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-e06c019d49aa867c</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield API (Text to video, 480p): $0.025 → $0.0375/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan API Prime 40% off and Wan 3.0 50% off is no longer on the pricing pages as of 2026-11-11.</title>
+      <link>https://vidfare.com/changes/#change-dd13c857acc484aa</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-dd13c857acc484aa</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan API Prime 40% off and Wan 3.0 50% off is no longer on the pricing pages as of 2026-11-11.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield API (Text/Image/Reference to video, 1080p): $0.168 → $0.21/s</title>
+      <link>https://vidfare.com/changes/#change-d9d485c12171cb75</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-d9d485c12171cb75</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield API (Text/Image/Reference to video, 1080p): $0.168 → $0.21/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 4K): $0.235 → $0.175/s</title>
+      <link>https://vidfare.com/changes/#change-d532a33e2452b5ea</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-d532a33e2452b5ea</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 4K): $0.235 → $0.175/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Veo 3.1 on Higgsfield (Veo 3.1 Fast, 720p): $0.15667 → $0.11667/s</title>
+      <link>https://vidfare.com/changes/#change-d17bab3ff01c18ee</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-d17bab3ff01c18ee</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Veo 3.1 on Higgsfield (Veo 3.1 Fast, 720p): $0.15667 → $0.11667/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 1080p): $0.1155 → $0.07583/s</title>
+      <link>https://vidfare.com/changes/#change-cb469e86c891e16a</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-cb469e86c891e16a</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 1080p): $0.1155 → $0.07583/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.198 → $0.13/s</title>
+      <link>https://vidfare.com/changes/#change-cb100aab52be9768</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-cb100aab52be9768</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.198 → $0.13/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield API (Text to video, 1080p): $0.10 → $0.15/s</title>
+      <link>https://vidfare.com/changes/#change-bfd0fb8ebd38cca1</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-bfd0fb8ebd38cca1</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield API (Text to video, 1080p): $0.10 → $0.15/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>MiniMax Hailuo / H3 on Higgsfield (Hailuo 2.3, 768p): $0.03917 → $0.02917/s</title>
+      <link>https://vidfare.com/changes/#change-bd9a88fb73ae147a</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-bd9a88fb73ae147a</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>MiniMax Hailuo / H3 on Higgsfield (Hailuo 2.3, 768p): $0.03917 → $0.02917/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 480p): $0.05875 → $0.04375/s</title>
+      <link>https://vidfare.com/changes/#change-b75eeff30954bc22</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-b75eeff30954bc22</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 480p): $0.05875 → $0.04375/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Veo 3.1 on Higgsfield (Veo 3.1, 720p): $0.39167 → $0.29167/s</title>
+      <link>https://vidfare.com/changes/#change-b20836fa5857437c</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-b20836fa5857437c</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Veo 3.1 on Higgsfield (Veo 3.1, 720p): $0.39167 → $0.29167/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Veo 3.1 on Higgsfield (Veo 3.1 Fast, 720p): $0.132 → $0.08667/s</title>
+      <link>https://vidfare.com/changes/#change-afb77db75090a572</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-afb77db75090a572</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Veo 3.1 on Higgsfield (Veo 3.1 Fast, 720p): $0.132 → $0.08667/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 720p): $0.06854 → $0.05104/s</title>
+      <link>https://vidfare.com/changes/#change-acbff5489f9512e0</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-acbff5489f9512e0</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 720p): $0.06854 → $0.05104/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 720p): $0.05775 → $0.03792/s</title>
+      <link>https://vidfare.com/changes/#change-aa9a6674b27cd3bf</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-aa9a6674b27cd3bf</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 720p): $0.05775 → $0.03792/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Higgsfield annual checkout on 2026-11-11 is Plus $35/mo (was $47, beside monthly $59, labeled −41%, Save $288) and Ultra $65/mo (was $99, beside monthly $129, labeled −50%, Save $768). Monthly prices stay $59 and $129. Starter stays $19. The page says the 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $35 and $65.</title>
+      <link>https://vidfare.com/changes/#change-a9f480cb0c90dac6</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-a9f480cb0c90dac6</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Higgsfield annual checkout on 2026-11-11 is Plus $35/mo (was $47, beside monthly $59, labeled −41%, Save $288) and Ultra $65/mo (was $99, beside monthly $129, labeled −50%, Save $768). Monthly prices stay $59 and $129. Starter stays $19. The page says the 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $35 and $65.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 4K): $0.198 → $0.13/s</title>
+      <link>https://vidfare.com/changes/#change-a5b66b3357d1493c</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-a5b66b3357d1493c</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 4K): $0.198 → $0.13/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 720p): $0.0495 → $0.0325/s</title>
+      <link>https://vidfare.com/changes/#change-9f6538ee05be6180</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-9f6538ee05be6180</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 720p): $0.0495 → $0.0325/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield API (Text/Image/Reference to video, 720p): $0.084 → $0.105/s</title>
+      <link>https://vidfare.com/changes/#change-9b6d56793f40fb4d</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-9b6d56793f40fb4d</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield API (Text/Image/Reference to video, 720p): $0.084 → $0.105/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 1080p): $0.13708 → $0.10208/s</title>
+      <link>https://vidfare.com/changes/#change-7db4c3d2f34efc9a</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-7db4c3d2f34efc9a</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 1080p): $0.13708 → $0.10208/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 480p): $0.033 → $0.02167/s</title>
+      <link>https://vidfare.com/changes/#change-7c3fdc57c90fa381</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-7c3fdc57c90fa381</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 480p): $0.033 → $0.02167/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 720p): $0.1175 → $0.0875/s</title>
+      <link>https://vidfare.com/changes/#change-6bdcd565a1f362ac</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-6bdcd565a1f362ac</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 720p): $0.1175 → $0.0875/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 1080p): $0.05775 → $0.03792/s</title>
+      <link>https://vidfare.com/changes/#change-6bb5c29b5253ca54</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-6bb5c29b5253ca54</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 1080p): $0.05775 → $0.03792/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 720p): $0.099 → $0.065/s</title>
+      <link>https://vidfare.com/changes/#change-626d95e2d48cece8</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-626d95e2d48cece8</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 720p): $0.099 → $0.065/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 1080p): $0.06854 → $0.05104/s</title>
+      <link>https://vidfare.com/changes/#change-4c9b65d25cc943cb</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-4c9b65d25cc943cb</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 1080p): $0.06854 → $0.05104/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 480p): $0.0495 → $0.0325/s</title>
+      <link>https://vidfare.com/changes/#change-4a6452483e3461ef</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-4a6452483e3461ef</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 480p): $0.0495 → $0.0325/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>MiniMax Hailuo / H3 on Higgsfield (Hailuo 2.3, 768p): $0.033 → $0.02167/s</title>
+      <link>https://vidfare.com/changes/#change-33cd14d3b498357b</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-33cd14d3b498357b</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>MiniMax Hailuo / H3 on Higgsfield (Hailuo 2.3, 768p): $0.033 → $0.02167/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield API (Text/Image/Reference to video, 480p): $0.0408 → $0.051/s</title>
+      <link>https://vidfare.com/changes/#change-1348a6d2fa9784bf</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-1348a6d2fa9784bf</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield API (Text/Image/Reference to video, 480p): $0.0408 → $0.051/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Seedance 2.5 on Higgsfield API (List price (lowest mode), lowest mode): $0.206 → $0.118/s</title>
+      <link>https://vidfare.com/changes/#change-08ce2cc30b8d367d</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-08ce2cc30b8d367d</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Seedance 2.5 on Higgsfield API (List price (lowest mode), lowest mode): $0.206 → $0.118/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield API (List price (lowest mode), lowest mode): $0.084 → $0.071/s</title>
+      <link>https://vidfare.com/changes/#change-068f913c673eec79</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-068f913c673eec79</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield API (List price (lowest mode), lowest mode): $0.084 → $0.071/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.235 → $0.175/s</title>
+      <link>https://vidfare.com/changes/#change-040b178c91fad446</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-040b178c91fad446</guid>
+      <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.235 → $0.175/s</description>
+      <category>price change</category>
+    </item>
     <item>
       <title>FLUX 3 Max 50% off until November 21</title>
       <link>https://vidfare.com/deals/#fal-flux3-50</link>
@@ -116,14 +412,6 @@
       <guid isPermaLink="true">https://vidfare.com/deals/#replicate-minimax-h3-lite-highspeed-50</guid>
       <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
       <description>Minimax H3 Lite and Highspeed are now 50% off until the end of the year. Exclusively on Replicate and @Cloudflare AI Gateway. Ends 2026-12-31.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Krea 3 50% off on OpenRouter through Nov 10</title>
-      <link>https://vidfare.com/deals/#krea3-openrouter-50</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#krea3-openrouter-50</guid>
-      <pubDate>Mon, 02 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Krea 3 is 50% off on OpenRouter until Nov 10. Ends 2026-11-10.</description>
       <category>deal</category>
     </item>
     <item>
@@ -375,14 +663,6 @@
       <category>deal</category>
     </item>
     <item>
-      <title>Ultra annual billing, $129 to $99/mo</title>
-      <link>https://vidfare.com/deals/#hf-ultra-annual</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-annual</guid>
-      <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
-      <description>Ultra $129 → $99/mo. No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
       <title>Starter annual discount listed at 30%</title>
       <link>https://vidfare.com/deals/#hf-starter-annual</link>
       <guid isPermaLink="true">https://vidfare.com/deals/#hf-starter-annual</guid>
@@ -396,14 +676,6 @@
       <guid isPermaLink="true">https://vidfare.com/deals/#hf-seedance-business-30d</guid>
       <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
       <description>30-day unlimited Seedance 2.5 on business plans only. No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Plus annual billing, $59 to $47/mo</title>
-      <link>https://vidfare.com/deals/#hf-plus-annual</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-annual</guid>
-      <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
-      <description>Plus $59 → $47/mo. No end date given.</description>
       <category>deal</category>
     </item>
     <item>
@@ -437,14 +709,6 @@
       <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
       <description>Google's pricing page says the Veo 3.1 preview endpoints (standard, fast, lite) shut down on Oct 22, 2026; Google points users to Gemini Omni Flash.</description>
       <category>price change</category>
-    </item>
-    <item>
-      <title>Wan API: Prime 40% off, Wan 3.0 50% off</title>
-      <link>https://vidfare.com/deals/#hf-api-wan-60</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-api-wan-60</guid>
-      <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
-      <description>Wan 3.0 is now UNLIMITED on Higgsfield for 7 days. 60% OFF on Higgsfield API. No end date given.</description>
-      <category>deal</category>
     </item>
   </channel>
 </rss>

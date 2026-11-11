@@ -94,20 +94,16 @@ def api_variation(row):
         v["input_changes_price"] = False
         v["duration"]["min_seconds"] = 2
         v["duration"]["max_seconds"] = 30
-        # One example length is stated per resolution. That is not a claim that the rate changes with length.
+        # The page states one rate per resolution and total = rate × duration.
+        v["length_changes_price"] = False
         v["phrases"] += [
             "Wan 3.0 Prime Text to Video",
             "Wan 3.0 Prime Image to Video",
             "Wan 3.0 Prime Reference to Video",
             "2 – 30s",
+            "Standard self-serve rates",
+            "Total price = selected rate × output duration in seconds",
         ]
-        stated_length = {
-            "720p": (0.084, "$0.084 per second at 720p for 30 second clips"),
-            "1080p": (0.168, "$0.168 per second at 1080p for 30 second clips"),
-        }
-        if res in stated_length and abs(row.get("usd_per_second", 0) - stated_length[res][0]) < 1e-9:
-            v["duration"]["priced_seconds"] = 30
-            v["phrases"].append(stated_length[res][1])
         return v
 
     if plat == "Higgsfield API" and row.get("source") == "hf_api" and "List price" in variant:

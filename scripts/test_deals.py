@@ -37,11 +37,10 @@ def main():
             raise SystemExit(f"{deal['id']} source is not a vendor or official account: {host}")
         if deal["status"] != "live":
             raise SystemExit(deal["id"])
-    # Stated API rates, not a recomputed anchor percent.
+    # The Nov 1 API promo is archived. Current Prime rows are the stated standard rates.
     wan = rows["r002"]
-    adj = deals.adjustment(by_id(live, "hf-api-wan-60"), wan, plans)
-    close(adj["usd"], 0.084)
-    close(adj["list_usd"], 0.14)
+    if wan["usd_per_second"] != 0.105 or wan.get("status") != "verified" or wan.get("deal_ids") or wan.get("list_usd_per_second") is not None:
+        raise SystemExit("Wan Prime 720p should be the stated $0.105/s standard rate")
     if wan.get("promo_until") is not None:
         raise SystemExit("Wan Prime row should not keep an end date the page does not state")
     # The 35% catalog rows were removed when that promo ended. The math still uses a frozen row.
@@ -72,8 +71,8 @@ def main():
     # Annual checkout price / credits, not 20% off the row.
     plus = next(r for r in db["rows"] if r["id"] == "r080")
     adj = deals.adjustment(by_id(live, "hf-plus-annual"), plus, plans)
-    close(adj["usd"], 47 / 1200 * 7.5 / 5)
-    close(adj["usd"], 0.05875)
+    close(adj["usd"], 35 / 1200 * 7.5 / 5)
+    close(adj["usd"], 0.04375)
     # Krea yearly 40% uses $21, not a second discount on the yearly row's neighbors.
     krea = next(r for r in db["rows"] if r.get("plan") == "krea-pro-monthly" and r["model"] == "wan-3-0-prime")
     adj = deals.adjustment(by_id(live, "krea-yearly-40"), krea, plans)
@@ -159,8 +158,12 @@ def main():
         if not any(c["status"] == "possible_end" for c in third["candidates"]):
             raise SystemExit("removed sale text should be flagged, not deleted from deals")
     wan60 = next(d for d in doc["deals"] if d["id"] == "hf-api-wan-60")
-    if wan60.get("end") is not None or wan60["status"] != "live" or wan60.get("percent") is not None:
-        raise SystemExit("hf-api-wan-60 should stay live, with no single percent and no stated end date")
+    if wan60.get("status") != "ended" or wan60.get("end") != "2026-11-11" or not wan60.get("end_is_estimate"):
+        raise SystemExit("hf-api-wan-60 should be archived on the 2026-11-11 check, with an estimated end")
+    if deals.is_current(wan60, "2026-11-11"):
+        raise SystemExit("hf-api-wan-60 should not stay live after the pages dropped the discount")
+    if wan60.get("percent") is not None:
+        raise SystemExit("hf-api-wan-60 should keep no single percent")
     reply = "https://x.com/higgsfield_ai/status/2110074252171116649"
     extra_urls = [s.get("url") for s in wan60.get("sources") or [] if isinstance(s, dict)]
     if reply not in extra_urls or reply == wan60.get("source_url"):

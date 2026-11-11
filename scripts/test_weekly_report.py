@@ -83,7 +83,7 @@ def main():
     assert [event["row_id"] for event in next_friday["pending"]] == ["r3"]
 
     log = wr.load()
-    price_ids = {
+    week45_price_ids = {
         "price:2026-11-01:r001:0.0272:0.0408",
         "price:2026-11-01:r002:0.056:0.084",
         "price:2026-11-01:r003:0.112:0.168",
@@ -92,6 +92,40 @@ def main():
         "price:2026-11-05:r025:0.05:0.035",
         "price:2026-11-05:r026:0.1:0.07",
         "price:2026-11-05:r027:0.2:0.14",
+    }
+    price_ids = week45_price_ids | {
+        "price:2026-11-11:r001:0.0408:0.051",
+        "price:2026-11-11:r002:0.084:0.105",
+        "price:2026-11-11:r003:0.168:0.21",
+        "price:2026-11-11:r004:0.068:0.051",
+        "price:2026-11-11:r005:0.025:0.0375",
+        "price:2026-11-11:r006:0.1:0.15",
+        "price:2026-11-11:r007:0.084:0.071",
+        "price:2026-11-11:r008:0.206:0.118",
+        "price:2026-11-11:r079:0.05875:0.04375",
+        "price:2026-11-11:r081:0.0495:0.0325",
+        "price:2026-11-11:r084:0.1175:0.0875",
+        "price:2026-11-11:r086:0.099:0.065",
+        "price:2026-11-11:r089:0.235:0.175",
+        "price:2026-11-11:r091:0.198:0.13",
+        "price:2026-11-11:r094:0.03917:0.02917",
+        "price:2026-11-11:r096:0.033:0.02167",
+        "price:2026-11-11:r099:0.06854:0.05104",
+        "price:2026-11-11:r101:0.05775:0.03792",
+        "price:2026-11-11:r104:0.13708:0.10208",
+        "price:2026-11-11:r106:0.1155:0.07583",
+        "price:2026-11-11:r109:0.05875:0.04375",
+        "price:2026-11-11:r111:0.0495:0.0325",
+        "price:2026-11-11:r113:0.06854:0.05104",
+        "price:2026-11-11:r115:0.05775:0.03792",
+        "price:2026-11-11:r117:0.235:0.175",
+        "price:2026-11-11:r119:0.198:0.13",
+        "price:2026-11-11:r121:0.39167:0.29167",
+        "price:2026-11-11:r123:0.33:0.21667",
+        "price:2026-11-11:r125:0.15667:0.11667",
+        "price:2026-11-11:r127:0.132:0.08667",
+        "price:2026-11-11:r130:0.03917:0.02917",
+        "price:2026-11-11:r132:0.033:0.02167",
     }
     assert {event["id"] for event in log if event["kind"] == "price"} == price_ids
     assert any(event["kind"] == "note" and "a4f84a1" in event["text"] for event in log)
@@ -110,6 +144,8 @@ def main():
     }
     hailuo_end = "promo_ended:deal:mag-hailuo-fast-unlimited:2026-11-06"
     flux_end = "promo_ended:deal:fal-flux3-75:2026-11-07"
+    krea_end = "promo_ended:deal:krea3-openrouter-50:2026-11-10"
+    wan_api_end = "promo_ended:deal:hf-api-wan-60:2026-11-11"
     promo_ids = {event["id"] for event in log if event["kind"] in ("promo_started", "promo_ended")}
     week_ids = {
         "promo_ended:deal:hf-wan3-unlimited-7d:2026-10-20",
@@ -121,7 +157,7 @@ def main():
         "promo_started:deal:hf-seedance-unlimited-7d:2026-10-30",
         "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
-    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end}
+    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end, krea_end, wan_api_end}
     flux = next(event for event in log if event["id"] == flux_end)
     assert flux["date"] == "2026-11-08" and flux["ended"] == "2026-11-07"
     assert flux["end_is_estimate"] is False and flux["checked"] == "2026-11-08"
@@ -187,7 +223,7 @@ def main():
     assert held_start["pending"] == []
     week45 = held_start["reports"][1]
     assert week45["week_start"] == "2026-11-02" and week45["through"] == "2026-11-06"
-    assert {event["id"] for event in week45["changes"]} == price_ids | nov1_ends | {future_start, hailuo_end}
+    assert {event["id"] for event in week45["changes"]} == week45_price_ids | nov1_ends | {future_start, hailuo_end}
     assert not any(event["id"] == "price:2026-11-05:r072:0.1:0.07" for event in log)
     omni_launch = next(event for event in log if event["id"] == "added:2026-11-05:gemini-omni-1.2-flash")
     assert omni_launch["kind"] == "added" and omni_launch["variant"] == "gemini-omni-1.2-flash"

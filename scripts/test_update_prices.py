@@ -45,6 +45,9 @@ def main():
     assert up.billing_tier_text("<html><p>no billing</p></html>") == ""
     assert up.check("if voice control is used you will be charged $0.196 .", {"needle": "you will be charged $0.196", "phrase": True})[0] == "ok"
     assert up.check("no voice price", {"needle": "you will be charged $0.196", "phrase": True})[0] == "missing"
+    # A missed phrase has no expect. The report must record it instead of raising.
+    missed = {"needle": "you will be charged $0.196", "phrase": True}
+    assert missed.get("expect") is None
     # Krea's server HTML now has one monthly price. Yearly card digits are appended as labeled text.
     yearly = "Basic yearly was $9/month Basic yearly card $5/month Pro yearly was $35/month Pro yearly card $21/month"
     assert up.check(yearly, {"needle": "Basic yearly card ${N}/month", "expect": 5}) == ("ok", 5.0)

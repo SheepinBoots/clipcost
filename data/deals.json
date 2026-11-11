@@ -58,16 +58,16 @@
    "price_before": null,
    "price_after": null,
    "start": "2026-10-13",
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
+   "end": "2026-11-11",
+   "end_is_estimate": true,
+   "status": "ended",
    "source_url": "https://x.com/higgsfield_ai/status/2110074247569924489",
    "source_kind": "x_post",
    "source_quote": "Wan 3.0 is now UNLIMITED on Higgsfield for 7 days. 60% OFF on Higgsfield API.",
-   "verified_date": "2026-11-01",
+   "verified_date": "2026-11-11",
    "link_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "math": "stated",
-   "notes": "Checked 2026-11-01. The model page states Wan 3.0 Prime at 40% off: $0.0408/s at 480p, $0.084/s at 720p, and $0.168/s at 1080p, with standard rates $0.068, $0.14, and $0.28. The API pricing page states Wan 3.0 at 50% off, list from $0.05/s and max-discount from $0.025/s. Neither page names an end date. Earlier Higgsfield posts called the launch discount 60% through Oct 31 or Nov 1. Higgsfield's reply says until October 31, 2026. Those dates are not on the pages checked 2026-11-01.",
+   "notes": "Checked 2026-11-01. The model page states Wan 3.0 Prime at 40% off: $0.0408/s at 480p, $0.084/s at 720p, and $0.168/s at 1080p, with standard rates $0.068, $0.14, and $0.28. The API pricing page states Wan 3.0 at 50% off, list from $0.05/s and max-discount from $0.025/s. Neither page names an end date. Earlier Higgsfield posts called the launch discount 60% through Oct 31 or Nov 1. Higgsfield's reply says until October 31, 2026. Those dates are not on the pages checked 2026-11-01. Checked 2026-11-11. The model page states standard self-serve rates of $0.0510/s at 480p, $0.1050/s at 720p, and $0.2100/s at 1080p, and Wan 3.0 at $0.0375–$0.15/sec. The API pricing page lists Wan 3.0 Prime from $0.051/s and Wan 3.0 from $0.038/s. Neither page states 40% off or 50% off. The end date is this check, not a date the page named.",
    "sources": [
     {
      "url": "https://x.com/higgsfield_ai/status/2110074252171116649",
@@ -83,6 +83,11 @@
      "url": "https://open.higgsfield.ai/pricing",
      "kind": "pricing_page",
      "quote": "Wan 3.0 Prime 40% OFF. Wan 3.0 list price from $0.050/s, max-discount price from $0.025/s, 50% OFF."
+    },
+    {
+     "url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
+     "kind": "pricing_page",
+     "quote": "Standard self-serve rates in USD per video second: 480p: $0.0510; 720p: $0.1050; 1080p: $0.2100."
     }
    ]
   },
@@ -155,7 +160,7 @@
    "id": "hf-plus-annual",
    "vendor": "Higgsfield",
    "type": "plan_sale",
-   "title": "Plus annual billing, $59 to $47/mo",
+   "title": "Plus annual billing, $59 to $35/mo",
    "models": [],
    "plans": [
     "Plus"
@@ -171,27 +176,27 @@
     "code": null,
     "standing": true
    },
-   "percent": 20,
+   "percent": 41,
    "bonus_credits": null,
    "price_before": 59,
-   "price_after": 47,
+   "price_after": 35,
    "start": null,
    "end": null,
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Plus $59 → $47/mo.",
-   "verified_date": "2026-10-20",
+   "source_quote": "Plus $35/month Billed annually",
+   "verified_date": "2026-11-11",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "plan_price",
-   "notes": "Standing annual checkout price, not an extra cut on top of the annual plan. $/s uses $47 ÷ 1,200 credits."
+   "notes": "On 2026-11-11 the pricing page shows Plus annual at $35/mo beside monthly $59, labeled −41%, and Save $288. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $35 ÷ 1,200 credits."
   },
   {
    "id": "hf-ultra-annual",
    "vendor": "Higgsfield",
    "type": "plan_sale",
-   "title": "Ultra annual billing, $129 to $99/mo",
+   "title": "Ultra annual billing, $129 to $65/mo",
    "models": [],
    "plans": [
     "Ultra"
@@ -207,21 +212,21 @@
     "code": null,
     "standing": true
    },
-   "percent": 23,
+   "percent": 50,
    "bonus_credits": null,
    "price_before": 129,
-   "price_after": 99,
+   "price_after": 65,
    "start": null,
    "end": null,
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Ultra $129 → $99/mo.",
-   "verified_date": "2026-10-20",
+   "source_quote": "Ultra BEST VALUE $65/month Billed annually",
+   "verified_date": "2026-11-11",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "plan_price",
-   "notes": "The page calls this 23% off. $/s uses the $99 checkout price, not 23% off the monthly row."
+   "notes": "On 2026-11-11 the pricing page shows Ultra annual at $65/mo beside monthly $129, labeled −50%, and Save $768. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $65 ÷ 3,000 credits."
   },
   {
    "id": "hf-starter-annual",
@@ -573,7 +578,7 @@
    "start": "2026-11-02",
    "end": "2026-11-10",
    "end_is_estimate": false,
-   "status": "live",
+   "status": "ended",
    "source_url": "https://x.com/krea_ai/status/2117354929446883726",
    "source_kind": "x_post",
    "source_quote": "Krea 3 is 50% off on OpenRouter until Nov 10.",

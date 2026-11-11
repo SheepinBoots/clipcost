@@ -45,21 +45,21 @@ check("fal kling off row rejects on", one(off, audio="with"), "not_offered")
 p480 = next(r["id"] for r in DB["rows"] if r["source"] == "hf_api_wan" and r["resolution"] == "480p" and r["model"] == "wan-3-0-prime")
 p720 = next(r["id"] for r in DB["rows"] if r["source"] == "hf_api_wan" and r["resolution"] == "720p" and r["model"] == "wan-3-0-prime")
 check("prime 480p at 1s below min", one(p480, seconds=1), "not_offered")
-check("prime 480p at 2s not a length tier", one(p480, seconds=2), "not_stated")
-check("prime 720p at 30s", one(p720, seconds=30), "match", 0.084)
-assert abs(one(p720, seconds=30)["usd_per_second"] * 30 - 2.52) < 1e-9
+check("prime 480p at 2s", one(p480, seconds=2), "match", 0.051)
+check("prime 720p at 30s", one(p720, seconds=30), "match", 0.105)
+assert abs(one(p720, seconds=30)["usd_per_second"] * 30 - 3.15) < 1e-9
 p1080 = next(r["id"] for r in DB["rows"] if r["source"] == "hf_api_wan" and r["resolution"] == "1080p" and r["model"] == "wan-3-0-prime")
-check("prime 1080p at 30s", one(p1080, seconds=30), "match", 0.168)
-assert abs(one(p1080, seconds=30)["usd_per_second"] * 30 - 5.04) < 1e-9
+check("prime 1080p at 30s", one(p1080, seconds=30), "match", 0.21)
+assert abs(one(p1080, seconds=30)["usd_per_second"] * 30 - 6.3) < 1e-9
 check("prime 720p at 40s not offered", one(p720, seconds=40), "not_offered")
-check("prime 720p at 5s not the stated length", one(p720, seconds=5), "not_stated")
-assert ROWS[p480]["variation"]["length_changes_price"] == "not stated"
+check("prime 720p at 5s", one(p720, seconds=5), "match", 0.105)
+assert ROWS[p480]["variation"]["length_changes_price"] is False
 assert ROWS[p480]["variation"]["duration"]["rate_by_length"] == "not stated"
-assert ROWS[p720]["variation"]["length_changes_price"] == "not stated"
-assert ROWS[p720]["variation"]["duration"]["priced_seconds"] == 30
+assert ROWS[p720]["variation"]["length_changes_price"] is False
+assert ROWS[p720]["variation"]["duration"]["priced_seconds"] == "not stated"
 assert ROWS[p720]["variation"]["duration"]["rate_by_length"] == "not stated"
 assert ROWS[p480]["variation"]["duration"]["min_seconds"] == 2
-assert ROWS[p480]["usd_per_second"] == 0.0408
+assert ROWS[p480]["usd_per_second"] == 0.051
 assert any("capped at 15 seconds" in m["label"] for m in ROWS["r048"]["variation"]["modifiers"])
 assert any("1 credit per second of input video" in m["label"] for m in ROWS["r057"]["variation"]["modifiers"])
 
