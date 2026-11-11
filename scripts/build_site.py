@@ -6,6 +6,7 @@ import deals as dealmod
 import notify_indexnow
 import variations as variations
 import weekly_report
+import analytics
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -120,6 +121,8 @@ ARCHIVED = [d for d in deal_doc["deals"] if not dealmod.is_current(d, TODAY) and
 HISTORY = list(deal_doc.get("history") or [])
 DEAL_BY_ID = {d["id"]: d for d in deal_doc["deals"]}
 CALC_DEALS = dealmod.calculator_map(deal_doc["deals"], plans, TODAY)
+# Hostname -> vendor slug for GoatCounter outbound events (scripts/analytics.py).
+VF_HOSTS = analytics.host_map(db["rows"], deal_doc["deals"])
 
 # Higgsfield referral is approved. Krea and Magnific use their official URLs until affiliate IDs exist.
 HF_FPR = "emmanuel-bbfe0e"
@@ -379,7 +382,10 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/data/")}">Price data</a> · <a href="{root("/advertise/")}">Advertise</a> · <a href="{root("/contact/")}">Contact</a> · <a href="https://twelve.tools">Twelve Tools</a></p></div></footer>
 {before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
+{analytics.script_tag(path, root)}
 </body></html>"""
+    model_hit = re.match(r"^/models/([a-z0-9-]+)/$", path)
+    doc = analytics.annotate(doc, path, VF_HOSTS, root("/advertise/"), model=model_hit.group(1) if model_hit else None)
     base_dir = DIST if dest is None else dest
     out = os.path.join(base_dir, path.strip("/"), "index.html") if path.endswith("/") else os.path.join(base_dir, path.strip("/"))
     os.makedirs(os.path.dirname(out), exist_ok=True)
@@ -867,6 +873,10 @@ def news_box():
 
 shutil.rmtree(DIST, ignore_errors=True); os.makedirs(DIST)
 shutil.copy(os.path.join(ROOT, "src", "style.css"), DIST)
+# Cookie-free GoatCounter events. The vendor host map is filled in at build time.
+with open(os.path.join(ROOT, "src", "vf-events.js"), encoding="utf-8") as _src, \
+        open(os.path.join(DIST, analytics.SCRIPT_PATH.lstrip("/")), "w", encoding="utf-8") as _out:
+    _out.write(analytics.js_source(_src.read(), VF_HOSTS))
 shutil.copy(os.path.join(ROOT, "src", "og.png"), os.path.join(DIST, "og.png"))
 for _f in ("favicon-32.png", "logo.svg", "logo-512.png", "logo-240.png"):
     shutil.copy(os.path.join(ROOT, "src", _f), os.path.join(DIST, _f))
