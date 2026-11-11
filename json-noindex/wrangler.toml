@@ -1,0 +1,8 @@
+name = "vidfare-json-noindex"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = false
+routes = [
+  { pattern = "vidfare.com/deals.json*", zone_name = "vidfare.com" },
+  { pattern = "vidfare.com/data/*", zone_name = "vidfare.com" }
+]
