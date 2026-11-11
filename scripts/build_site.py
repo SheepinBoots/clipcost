@@ -64,6 +64,26 @@ today = datetime.date.today()
 TODAY = today.isoformat()
 MONTH = today.strftime("%b %Y")
 TITLE_LIMIT = 60
+AGENT_H1 = "Let your AI agent check AI video prices before it generates."
+HOME_TITLE = "Let your AI agent check AI video prices | VidFare"
+HOME_DESC = (
+    "Let your AI agent check current AI video prices and live deals before it generates. "
+    "The dollars-per-second table stays on the page for people to compare."
+)
+MCP_TITLE = "Connect an AI agent to VidFare prices | VidFare"
+MCP_DESC = (
+    "Paste a prompt, then connect ChatGPT, Claude, or Cursor to the VidFare MCP server. "
+    "Your agent checks current per-second prices and deals, and cites vidfare.com."
+)
+AGENT_PROMPT = (
+    "Before you recommend an AI video model or generate a video, use the VidFare MCP tools to check current prices. "
+    "Call cheapest_options or estimate_cost for the length and resolution I need, call list_deals for active discounts, "
+    "and use get_model_prices or list_models for details. Give me the per-second price and total cost for the top options, "
+    "mention any live deal, and cite vidfare.com as the source with the date the prices were checked."
+)
+MCP_ENDPOINT = "https://mcp.vidfare.com/mcp"
+MCP_CURSOR = '{"mcpServers":{"vidfare":{"url":"https://mcp.vidfare.com/mcp"}}}'
+MCP_PRIVACY = "Anonymous usage counts (method, tool name, coarse client type) are logged; no IPs or request contents."
 
 def page_title(phrase, with_month=True, with_brand=True):
     """Keep phrase whole. Drop the month, then the brand, if the title would pass 60 characters."""
@@ -1166,9 +1186,19 @@ def ending_strip():
         )
     return f'<section class="strip" id="ending"><h2>Deals ending this week</h2><div class="dealgrid">{cards_html}</div><p class="small"><a href="{root("/deals/")}">All deals</a></p></section>'
 
-home = f"""<h1>AI video cost per second, compared</h1>
+home = f"""<h1>{e(AGENT_H1)}</h1>
 <p class="tagline">{e(TAGLINE)}</p>
-<p class="lead">{len(rows)} prices for {len(models)} video models on {len(platforms)} platforms, from Higgsfield plans to the fal, Runway and Kling APIs. Everything is converted to <b>dollars per second of video</b>, and the math is shown for credit plans. Checked {LAST}.</p>
+<section class="strip" id="for-agents">
+<h2>What an agent can ask</h2>
+<p>The MCP server reads these prices and the deals on this site. It does not invent a price. An agent can ask for:</p>
+<ul>
+<li>the cheapest model for a length and resolution, such as 5 seconds at 720p</li>
+<li>current deals</li>
+<li>a cost estimate for a project</li>
+</ul>
+<p><a href="{root("/mcp/")}">Connect your agent</a></p>
+</section>
+<p class="lead">{len(rows)} prices for {len(models)} video models on {len(platforms)} platforms, from Higgsfield plans to the fal, Runway and Kling APIs. Everything is converted to <b>dollars per second of video</b>, and the math is shown for credit plans. Checked {LAST}. The table below stays for people.</p>
 {sponsor_slot("home")}
 {ending_strip()}
 <h2>Cheapest way to run each model today</h2><div class="cards">{cards}</div>
@@ -1256,7 +1286,7 @@ home_ld = {
             "@type": "WebSite",
             "name": BRAND,
             "url": SITE_URL + "/",
-            "description": TAGLINE,
+            "description": HOME_DESC,
             "image": LOGO_URL,
             "publisher": {"@id": ORG_ID},
         },
@@ -1281,9 +1311,7 @@ home_ld = {
         },
     ],
 }
-page("/", f"Compare AI Video Cost Per Second ({MONTH}) | {BRAND}",
-     f"Compare what AI video costs per second across Higgsfield, fal, Runway, Kling, Krea, Magnific, Replicate and Atlas Cloud. Checked {LAST}.",
-     home, "/", ld_script(home_ld))
+page("/", HOME_TITLE, HOME_DESC, home, "/", ld_script(home_ld))
 
 def cond_bits(deal):
     c = dealmod.conditions(deal)
@@ -2375,7 +2403,7 @@ def write_llms():
         f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog. CORS is open. A full check updates last_full_check.",
         f"- Calculator link: {SITE_URL}/calculator/?model=kling-3-0&seconds=10 — model is the /models/<slug>/ slug. Optional: resolution, audio (with or without), input (t2v, i2v, ref2v, v2v, extend, lip-sync), plan, provider, seconds, used.",
         f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals. The same file is also at {SITE_URL}/data/deals.json.",
-        f"- [Use VidFare with AI]({SITE_URL}/mcp/): the live read-only MCP server at https://mcp.vidfare.com/mcp for ChatGPT, Claude, and Cursor. It reads prices.json and deals.json and does not invent a price.",
+        f"- [Connect an agent]({SITE_URL}/mcp/): the live read-only MCP server at {MCP_ENDPOINT} for ChatGPT, Claude, and Cursor. An agent can check current prices and deals before it recommends or generates a video. It reads prices.json and deals.json and does not invent a price.",
         "- MCP tools: list_models (each model and its cheapest current dollars per second); get_model_prices (one model, with an optional provider and resolution); estimate_cost (one clip, using the credit calculator's inputs); cheapest_options (lowest stated price for a length and resolution); list_deals (live deals, or upcoming, ended, or all).",
         f"- [feed.xml]({SITE_URL}/feed.xml): RSS of price changes, weekly reports, and live deals.",
         "",
@@ -2540,29 +2568,94 @@ data_body = f"""<h1>Price data</h1>
 <h2>Using the data</h2>
 <p>Free to use. Please credit and link {BRAND} (vidfare.com). The code in the GitHub repository is MIT. The price data is free to use with that credit.</p>
 <h2>Ask an assistant</h2>
-<p>The same files can be queried through the live read-only MCP server at <a href="https://mcp.vidfare.com/mcp"><code>https://mcp.vidfare.com/mcp</code></a>. How to add it to ChatGPT, Claude, and Cursor is on <a href="{root("/mcp/")}">Use VidFare with AI</a>. It reads this file and <a href="{root("/deals.json")}">deals.json</a>. It does not replace either file, and it does not invent a price.</p>
+<p>The same files can be queried through the live read-only MCP server at <a href="{MCP_ENDPOINT}"><code>{MCP_ENDPOINT}</code></a>. How to connect ChatGPT, Claude, and Cursor is on <a href="{root("/mcp/")}">the MCP page</a>. It reads this file and <a href="{root("/deals.json")}">deals.json</a>. It does not replace either file, and it does not invent a price.</p>
 """
 page("/data/", page_title("Price data for developers"),
      f"How to read the public {BRAND} price file, share a calculator link, and credit the data.",
      data_body, "/data/", ld_script(data_ld))
 
+def copy_prompt_block(text):
+    """Visible prompt plus a Copy button. The text stays selectable if script is blocked."""
+    script = """<script>
+(function () {
+  var btn = document.getElementById("copy-prompt");
+  var node = document.getElementById("vidfare-prompt");
+  var status = document.getElementById("copy-status");
+  if (!btn || !node) return;
+  function say(message) {
+    if (status) status.textContent = message;
+  }
+  function selectPrompt() {
+    var range = document.createRange();
+    range.selectNodeContents(node);
+    var sel = window.getSelection();
+    if (!sel) return;
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  function fallback(value) {
+    var area = document.createElement("textarea");
+    area.value = value;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.top = "0";
+    area.style.left = "0";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.focus();
+    area.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (err) { ok = false; }
+    document.body.removeChild(area);
+    if (!ok) selectPrompt();
+    say(ok ? "Copied." : "Select the prompt and copy it.");
+  }
+  btn.addEventListener("click", function () {
+    var value = node.textContent || "";
+    var writer = navigator.clipboard && navigator.clipboard.writeText;
+    var pending = writer ? writer.call(navigator.clipboard, value) : null;
+    if (pending && typeof pending.then === "function") {
+      pending.then(function () { say("Copied."); }, function () { fallback(value); });
+      return;
+    }
+    fallback(value);
+  });
+})();
+</script>"""
+    return (
+        '<div class="promptbox">'
+        f'<pre id="vidfare-prompt" tabindex="0" aria-label="Prompt to paste into your agent">{e(text)}</pre>'
+        '<p><button type="button" class="btn" id="copy-prompt" aria-controls="vidfare-prompt">Copy</button></p>'
+        '<p class="small" id="copy-status" role="status" aria-live="polite"></p>'
+        "<noscript><p class=\"small\">Select the prompt and copy it.</p></noscript>"
+        "</div>"
+        + script
+    )
+
 mcp_models = ", ".join(e(m["name"]) for m in models.values())
-mcp_cursor = (
-    '{\n  "mcpServers": {\n    "vidfare": {\n'
-    '      "url": "https://mcp.vidfare.com/mcp"\n    }\n  }\n}'
-)
 mcp_ld = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Use VidFare with AI",
+    "name": AGENT_H1,
     "url": SITE_URL + "/mcp/",
-    "description": f"How to query {BRAND} prices from ChatGPT, Claude, and Cursor.",
+    "description": MCP_DESC,
     "isPartOf": {"@type": "WebSite", "name": BRAND, "url": SITE_URL + "/"},
 }
-mcp_body = f"""<h1>Use VidFare with AI</h1>
-<p class="lead">A public, read-only server so ChatGPT, Claude, and Cursor can look up {BRAND} prices and cite vidfare.com.</p>
-<div class="callout"><b>Live.</b> Connect a client to <code>https://mcp.vidfare.com/mcp</code>. The server is public and read-only. No key and no sign-in.</div>
-<p>It reads <a href="{root("/data/prices.json")}">prices.json</a> and <a href="{root("/deals.json")}">deals.json</a>. It does not scrape vendor sites, and it does not invent a price when those files do not state one. Answers include the source, the date last checked, and a link back to {BRAND}.</p>
+mcp_body = f"""<h1>{e(AGENT_H1)}</h1>
+<p class="lead">Connect ChatGPT, Claude, or Cursor, then paste the prompt below. The server is public and read-only. It reads <a href="{root("/data/prices.json")}">prices.json</a> and <a href="{root("/deals.json")}">deals.json</a>. It does not invent a price. Answers include the source, the date last checked, and a link back to {BRAND}.</p>
+<h2>Prompt</h2>
+<p>Paste this into your agent after VidFare is connected.</p>
+{copy_prompt_block(AGENT_PROMPT)}
+<h2>Connect</h2>
+<p><b>Live.</b> Use <code>{MCP_ENDPOINT}</code>. No key and no sign-in.</p>
+<h2>ChatGPT</h2>
+<p>Open Settings, then Connectors. Turn on developer mode if custom connectors are hidden. Add a custom connector with <code>{MCP_ENDPOINT}</code>.</p>
+<h2>Claude</h2>
+<p>Add a custom connector with <code>{MCP_ENDPOINT}</code>.</p>
+<h2>Cursor</h2>
+<p>Save this as <code>.cursor/mcp.json</code> for one project, or as <code>~/.cursor/mcp.json</code> for every project.</p>
+<pre class="snippet"><code>{e(MCP_CURSOR)}</code></pre>
+<p class="small">The same object is in <code>mcp-server/.mcp.json</code> in the repository. There is no API key.</p>
 <h2>Models</h2>
 <p>{mcp_models}.</p>
 <h2>Tools</h2>
@@ -2573,33 +2666,11 @@ mcp_body = f"""<h1>Use VidFare with AI</h1>
 <li><code>cheapest_options</code> takes seconds and a resolution.</li>
 <li><code>list_deals</code> lists live deals. Ask for upcoming, ended, or all to see the other groups.</li>
 </ul>
-<p class="small">Anonymous usage counts (method, tool name, coarse client type) are logged; no IPs or request contents. The question and argument values are not stored.</p>
-<h2>ChatGPT</h2>
-<ol>
-<li>If you do not see a way to add a server, open Settings, then Apps or Security, and turn on Developer mode.</li>
-<li>On the web, open Settings, then Apps, and create an app. In the desktop app, open Settings, then Plugins, then MCPs, and choose Add MCP server.</li>
-<li>Name it VidFare. If it asks for a transport, choose Streamable HTTP.</li>
-<li>Paste <code>https://mcp.vidfare.com/mcp</code>.</li>
-<li>Leave the token, headers, and OAuth client empty. Save, then ask for a VidFare price.</li>
-</ol>
-<h2>Claude</h2>
-<ol>
-<li>Open Settings, then Connectors. On claude.ai that is Customize, then Connectors.</li>
-<li>Choose Add custom connector.</li>
-<li>Name it VidFare and paste <code>https://mcp.vidfare.com/mcp</code>.</li>
-<li>Leave the OAuth client id and secret blank, then add it. If a sign-in window opens, close it. This server has no account.</li>
-<li>Allow the tools. They only read public prices.</li>
-</ol>
-<h2>Cursor</h2>
-<p>For one project, save this as <code>.cursor/mcp.json</code>. For every project, save it as <code>~/.cursor/mcp.json</code>. The same JSON also works as <code>.mcp.json</code>.</p>
-<p><code style="white-space:pre-wrap">{e(mcp_cursor)}</code></p>
-<p class="small">The copy in the repository is <code>mcp-server/.mcp.json</code>. Save the file. Cursor lists VidFare under Settings, then MCP. There is no API key.</p>
+<p class="small">{MCP_PRIVACY} The question and argument values are not stored.</p>
 <h2>The price file is still here</h2>
-<p>Scripts that fetch JSON can keep using <a href="{root("/data/")}">the data page</a>. The assistant server is another way to read the same catalog.</p>
+<p>Scripts that fetch JSON can keep using <a href="{root("/data/")}">the data page</a>. The MCP server is another way to read the same catalog.</p>
 """
-page("/mcp/", page_title("Use VidFare with AI"),
-     f"How to connect ChatGPT, Claude, and Cursor to the live {BRAND} price server.",
-     mcp_body, "", ld_script(mcp_ld))
+page("/mcp/", MCP_TITLE, MCP_DESC, mcp_body, "", ld_script(mcp_ld))
 
 urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/", "/mcp/"]
 urls += [path for path, _label in GUIDE_LINKS]
@@ -2700,6 +2771,27 @@ def contact_redirect_errors(raw):
         errors.append("contact-us redirect names Sora")
     if "emmanueldevgonzalez@gmail.com" in raw:
         errors.append("contact-us redirect still uses the Gmail address")
+    return errors
+
+def social_meta_errors(label, raw, title, desc):
+    """Home and MCP titles stay within 60 characters, descriptions within 150–160."""
+    errors = []
+    if len(title) > TITLE_LIMIT:
+        errors.append(f"{label} title is {len(title)} characters")
+    if not 150 <= len(desc) <= 160:
+        errors.append(f"{label} description is {len(desc)} characters")
+    expected = [
+        f"<title>{e(title)}</title>",
+        f'<meta name="description" content="{e(desc)}">',
+        f'<meta property="og:title" content="{e(title)}">',
+        f'<meta property="og:description" content="{e(desc)}">',
+        f'<meta name="twitter:title" content="{e(title)}">',
+        f'<meta name="twitter:description" content="{e(desc)}">',
+    ]
+    for snippet in expected:
+        if snippet not in raw:
+            errors.append(f"{label} social tags do not match the title and description")
+            break
     return errors
 
 def audit_site():
@@ -3003,11 +3095,22 @@ def audit_site():
             errors.append("mcp page is missing the live notice")
         if "coming soon" in mcp_html.lower() or "not deployed" in mcp_html.lower():
             errors.append("mcp page still says the server is not live")
-        if "<h1>Use VidFare with AI</h1>" not in mcp_html:
+        if f"<h1>{e(AGENT_H1)}</h1>" not in mcp_html:
             errors.append("mcp page h1")
+        if AGENT_PROMPT not in mcp_html:
+            errors.append("mcp page is missing the agent prompt")
+        if 'id="copy-prompt"' not in mcp_html or 'id="vidfare-prompt"' not in mcp_html:
+            errors.append("mcp page is missing the copy button")
+        if e(MCP_CURSOR) not in mcp_html:
+            errors.append("mcp page is missing the Cursor snippet")
+        if MCP_PRIVACY not in mcp_html:
+            errors.append("mcp page is missing the privacy line")
+        if "plugin" in mcp_html.lower() or "sora" in mcp_html.lower():
+            errors.append("mcp page names a plugin or Sora")
         for tool in ("list_models", "get_model_prices", "estimate_cost", "cheapest_options", "list_deals"):
             if f"<code>{tool}</code>" not in mcp_html:
                 errors.append(f"mcp page is missing {tool}")
+        errors.extend(social_meta_errors("mcp", mcp_html, MCP_TITLE, MCP_DESC))
     data_html = open(os.path.join(DIST, "data", "index.html"), encoding="utf-8").read()
     if f'href="{root("/mcp/")}"' not in data_html:
         errors.append("data page does not link to /mcp/")
@@ -3043,6 +3146,22 @@ def audit_site():
         if "fetch(" in guide_html:
             errors.append(f"{rel} makes a request")
     home_html = open(os.path.join(DIST, "index.html"), encoding="utf-8").read()
+    errors.extend(social_meta_errors("home", home_html, HOME_TITLE, HOME_DESC))
+    if f"<h1>{e(AGENT_H1)}</h1>" not in home_html:
+        errors.append("home page h1")
+    if 'id="for-agents"' not in home_html or f'href="{root("/mcp/")}"' not in home_html:
+        errors.append("home page is missing the agent section link to /mcp/")
+    prices_at = home_html.find('id="prices"')
+    agents_at = home_html.find('id="for-agents"')
+    news_at = home_html.find('<section class="news" id="newsletter">')
+    if agents_at < 0 or prices_at < 0 or not agents_at < prices_at:
+        errors.append("agent section must stay above the price table")
+    if news_at < 0 or prices_at < 0 or not prices_at < news_at:
+        errors.append("newsletter signup must stay under the price table")
+    elif "<section" in home_html[prices_at:news_at]:
+        errors.append("a section was inserted between the price table and the newsletter")
+    if "sora" in home_html.lower() or "plugin" in home_html.lower():
+        errors.append("home page names a plugin or Sora")
     home_nav = home_html.split("<nav>", 1)[-1].split("</nav>", 1)[0]
     if ">Contact<" in home_nav:
         errors.append("header nav must stay unchanged and not add Contact")
