@@ -5,6 +5,7 @@ figure is rendered from the current price rows. This module does not hard-code
 rates, plans, or counts.
 """
 import json
+import flow_guide
 from decimal import Decimal, ROUND_HALF_UP
 
 
@@ -210,6 +211,9 @@ def render(g):
             ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/", g["hf_blurb"]()),
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/", project_cost_sentence(3)),
         ]
+        if db.get("flow"):
+            entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
+        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven"}.get(len(entries), str(len(entries)))
         blocks = []
         faqs = []
         for question, path, answer in entries:
@@ -221,7 +225,7 @@ def render(g):
         body = (
             f'<p class="small"><a href="{root("/")}">Prices</a> › Guides</p>'
             "<h1>Guides</h1>"
-            "<p class=\"lead\">Four comparisons built from the same price rows as the homepage.</p>"
+            f"<p class=\"lead\">{count} comparisons built from the same price rows as the homepage.</p>"
             f"{checked_line()}"
             + "".join(blocks)
             + how_block()

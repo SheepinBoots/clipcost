@@ -106,6 +106,17 @@
    "name": "fal: Grok Imagine Video 1.5",
    "url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
    "fetch": "static"
+  },
+  "gflow_credits": {
+   "name": "Google Flow Help: Manage your Google Flow credits",
+   "url": "https://support.google.com/flow/answer/16526234?hl=en",
+   "fetch": "static"
+  },
+  "google_ai_plans": {
+   "name": "Google AI plans (Google One)",
+   "url": "https://one.google.com/about/google-ai-plans/",
+   "fetch": "render",
+   "ready": "Google AI Ultra 20x"
   }
  },
  "models": {
@@ -9447,5 +9458,529 @@
   "length_changes_price": "true, false, or not stated",
   "input_changes_price": "true, false, or not stated",
   "modifiers": "not stated, or extra stated rates that are not the headline $/s"
+ },
+ "flow": {
+  "about": "Google Flow credit plans and per-generation credit costs, used by /guides/google-flow-credits-calculator/. These are not price rows. A plan's $/s is plan price / monthly Flow credits x credits per generation / clip seconds, and assumes every credit is used and the whole plan price goes to video.",
+  "plans": {
+   "gflow-plus": {
+    "platform": "Google Flow",
+    "plan": "Google AI Plus",
+    "usd_month": 4.99,
+    "billing": "monthly",
+    "credits_month": 200,
+    "tier": "plus",
+    "source": "google_ai_plans",
+    "checks": [
+     {
+      "needle": "Features Google AI Plus ${N}/mo",
+      "expect": 4.99
+     },
+     {
+      "needle": "Google Flow Credits {N}/mo {X}/mo {X}/mo {X}/mo",
+      "expect": 200
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://one.google.com/about/google-ai-plans/"
+   },
+   "gflow-pro": {
+    "platform": "Google Flow",
+    "plan": "Google AI Pro",
+    "usd_month": 19.99,
+    "billing": "monthly",
+    "credits_month": 1000,
+    "tier": "pro",
+    "source": "google_ai_plans",
+    "checks": [
+     {
+      "needle": "Google AI Pro ${N}/mo Google AI Ultra 5x",
+      "expect": 19.99
+     },
+     {
+      "needle": "Google Flow Credits {X}/mo {N}/mo {X}/mo {X}/mo",
+      "expect": 1000
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://one.google.com/about/google-ai-plans/"
+   },
+   "gflow-pro-annual": {
+    "platform": "Google Flow",
+    "plan": "Google AI Pro (annual)",
+    "usd_month": 16.66583,
+    "billing": "annual ($199.99/yr)",
+    "credits_month": 1000,
+    "tier": "pro",
+    "source": "google_ai_plans",
+    "checks": [
+     {
+      "needle": "Monthly (${X}) Annual (${N})",
+      "expect": 199.99
+     },
+     {
+      "needle": "Google Flow Credits {X}/mo {N}/mo {X}/mo {X}/mo",
+      "expect": 1000
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://one.google.com/about/google-ai-plans/",
+    "usd_year": 199.99,
+    "credits_note": "Google states Flow credits per month for Pro. The $199.99 yearly price is divided by 12."
+   },
+   "gflow-ultra-5x": {
+    "platform": "Google Flow",
+    "plan": "Google AI Ultra 5x",
+    "usd_month": 99.99,
+    "billing": "monthly",
+    "credits_month": 10000,
+    "tier": "ultra",
+    "source": "google_ai_plans",
+    "checks": [
+     {
+      "needle": "Google AI Ultra 5x ${N}/mo",
+      "expect": 99.99
+     },
+     {
+      "needle": "Google Flow Credits {X}/mo {X}/mo {N}/mo {X}/mo",
+      "expect": 10000
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://one.google.com/about/google-ai-plans/",
+    "help_name": "Google AI Ultra $100"
+   },
+   "gflow-ultra-20x": {
+    "platform": "Google Flow",
+    "plan": "Google AI Ultra 20x",
+    "usd_month": 199.99,
+    "billing": "monthly",
+    "credits_month": 25000,
+    "tier": "ultra",
+    "source": "google_ai_plans",
+    "checks": [
+     {
+      "needle": "Google AI Ultra 20x ${N}/mo",
+      "expect": 199.99
+     },
+     {
+      "needle": "Google Flow Credits {X}/mo {X}/mo {X}/mo {N}/mo",
+      "expect": 25000
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://one.google.com/about/google-ai-plans/",
+    "help_name": "Google AI Ultra $200"
+   }
+  },
+  "daily": {
+   "credits_day": 50,
+   "source": "gflow_credits",
+   "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+   "checked": "2026-11-11",
+   "checks": [
+    {
+     "needle": "With or without a subscription, you receive {N} Google Flow credits per day",
+     "expect": 50
+    },
+    {
+     "needle": "Your daily credit refresh is triggered by your first generation",
+     "phrase": true
+    },
+    {
+     "needle": "If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over",
+     "phrase": true
+    }
+   ]
+  },
+  "plan_credits_check": {
+   "source": "gflow_credits",
+   "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+   "checked": "2026-11-11",
+   "checks": [
+    {
+     "needle": "Google AI Plus subscribers receive an extra {N} Google Flow credits each month",
+     "expect": 200
+    },
+    {
+     "needle": "Google AI Pro subscribers receive an extra {N} Google Flow credits each month",
+     "expect": 1000
+    },
+    {
+     "needle": "Google AI Ultra $100 subscribers receive an extra {N} Google Flow credits each month",
+     "expect": 10000
+    },
+    {
+     "needle": "Google AI Ultra $200 subscribers receive an extra {N} Google Flow credits each month",
+     "expect": 25000
+    }
+   ]
+  },
+  "credit_costs": [
+   {
+    "id": "flow-veo31-lite",
+    "model": "veo-3-1",
+    "variant": "Veo 3.1 Lite",
+    "resolution": "720p",
+    "clip_seconds": [
+     4,
+     6,
+     8
+    ],
+    "credits_per_generation": {
+     "non_ultra": 10,
+     "ultra": 5
+    },
+    "eligible": "all users",
+    "source": "gflow_credits",
+    "checks": [
+     {
+      "needle": "Veo 3.1 - Lite 4s, 6s, 8s videos Non-Ultra subscribers: {N} Ultra subscribers: {X}",
+      "expect": 10
+     },
+     {
+      "needle": "Veo 3.1 - Lite 4s, 6s, 8s videos Non-Ultra subscribers: {X} Ultra subscribers: {N}",
+      "expect": 5
+     },
+     {
+      "needle": "With Veo 3.1 Lite, all users can generate 4s, 6s, or 8s videos in 720p",
+      "phrase": true
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en"
+   },
+   {
+    "id": "flow-veo31-lite-lower-priority",
+    "model": "veo-3-1",
+    "variant": "Veo 3.1 Lite (Lower Priority mode)",
+    "resolution": "720p",
+    "clip_seconds": [
+     4,
+     6,
+     8
+    ],
+    "credits_per_generation": {
+     "ultra_20x": 0
+    },
+    "eligible": "Ultra 20x subscribers & family plan managers only",
+    "source": "gflow_credits",
+    "checks": [
+     {
+      "needle": "Generate 4s, 6s, or 8s videos in Lower Priority mode Ultra 20x subscribers & family plan managers only {N} credits",
+      "expect": 0
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en"
+   },
+   {
+    "id": "flow-veo31-fast",
+    "model": "veo-3-1",
+    "variant": "Veo 3.1 Fast",
+    "resolution": "not stated",
+    "clip_seconds": [
+     4,
+     6,
+     8
+    ],
+    "credits_per_generation": {
+     "non_ultra": 20,
+     "ultra": 10
+    },
+    "eligible": "all users",
+    "source": "gflow_credits",
+    "checks": [
+     {
+      "needle": "Veo 3.1 - Fast 4s, 6s, 8s videos Non-Ultra subscribers: {N} Ultra subscribers: {X}",
+      "expect": 20
+     },
+     {
+      "needle": "Veo 3.1 - Fast 4s, 6s, 8s videos Non-Ultra subscribers: {X} Ultra subscribers: {N}",
+      "expect": 10
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "retiring_on": "2026-12-05",
+    "note": "Google's table gives no resolution for Veo 3.1 Fast."
+   },
+   {
+    "id": "flow-veo31-quality",
+    "model": "veo-3-1",
+    "variant": "Veo 3.1 Quality",
+    "resolution": "not stated",
+    "clip_seconds": [
+     8
+    ],
+    "credits_per_generation": {
+     "all": 100
+    },
+    "eligible": "all users",
+    "source": "gflow_credits",
+    "checks": [
+     {
+      "needle": "Veo 3.1 - Quality 8s videos All users: {N}",
+      "expect": 100
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "retiring_on": "2026-12-05",
+    "note": "Google's table gives no resolution for Veo 3.1 Quality."
+   },
+   {
+    "id": "flow-omni12-360p",
+    "model": "gemini-omni-flash",
+    "variant": "Omni Flash 1.2",
+    "resolution": "360p",
+    "clip_seconds": {
+     "min": 1,
+     "max": 10,
+     "subscriber_max": 15
+    },
+    "eligible": "all users up to 10s; Plus, Pro and Ultra up to 15s",
+    "source": "gflow_credits",
+    "checks": [
+     {
+      "needle": "Generate or edit videos up to 10s All users 360p {N} credit per second",
+      "expect": 1
+     },
+     {
+      "needle": "360p 1 credit per second up to 10s {N} credits per extra second between 11-15s",
+      "expect": 2
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "credits_per_second": {
+     "up_to_10s": 1,
+     "extra_11_15s": 2
+    },
+    "note": "Google lists per-second credits for 1-10s, then a higher rate for each second from 11 to 15. The help page does not list allowed lengths, so the calculator takes whole seconds."
+   },
+   {
+    "id": "flow-omni12-720p",
+    "model": "gemini-omni-flash",
+    "variant": "Omni Flash 1.2",
+    "resolution": "720p",
+    "clip_seconds": {
+     "min": 1,
+     "max": 10,
+     "subscriber_max": 15
+    },
+    "eligible": "all users up to 10s; Plus, Pro and Ultra up to 15s",
+    "source": "gflow_credits",
+    "checks": [
+     {
+      "needle": "Generate or edit videos up to 10s All users 360p {X} credit per second 720p {N} credits per second",
+      "expect": 3
+     },
+     {
+      "needle": "720p 3 credits per second up to 10s {N} credits per extra second between 11-15s",
+      "expect": 6
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "credits_per_second": {
+     "up_to_10s": 3,
+     "extra_11_15s": 6
+    },
+    "note": "Google lists per-second credits for 1-10s, then a higher rate for each second from 11 to 15. The help page does not list allowed lengths, so the calculator takes whole seconds."
+   },
+   {
+    "id": "flow-omni11-720p",
+    "model": "gemini-omni-flash",
+    "variant": "Omni Flash 1.1",
+    "resolution": "720p",
+    "clip_seconds": [
+     4,
+     6,
+     8,
+     10
+    ],
+    "credits_per_generation": {
+     "4": 7,
+     "6": 10,
+     "8": 12,
+     "10": 15
+    },
+    "eligible": "all users",
+    "source": "gflow_credits",
+    "checks": [
+     {
+      "needle": "Omni Flash 1.1 (720p) 4s, 6s, 8s, 10s videos Does not include edits to uploaded & generated videos All users: 4s: {N} 6s: {X} 8s: {X} 10s: {X}",
+      "expect": 7
+     },
+     {
+      "needle": "Omni Flash 1.1 (720p) 4s, 6s, 8s, 10s videos Does not include edits to uploaded & generated videos All users: 4s: {X} 6s: {N} 8s: {X} 10s: {X}",
+      "expect": 10
+     },
+     {
+      "needle": "Omni Flash 1.1 (720p) 4s, 6s, 8s, 10s videos Does not include edits to uploaded & generated videos All users: 4s: {X} 6s: {X} 8s: {N} 10s: {X}",
+      "expect": 12
+     },
+     {
+      "needle": "Omni Flash 1.1 (720p) 4s, 6s, 8s, 10s videos Does not include edits to uploaded & generated videos All users: 4s: {X} 6s: {X} 8s: {X} 10s: {N}",
+      "expect": 15
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "retiring_on": "2026-12-05",
+    "note": "Does not include edits to uploaded and generated videos."
+   },
+   {
+    "id": "flow-omni11-360p",
+    "model": "gemini-omni-flash",
+    "variant": "Omni Flash 1.1",
+    "resolution": "360p",
+    "clip_seconds": [
+     4,
+     6,
+     8,
+     10
+    ],
+    "credits_per_generation": {
+     "4": 4,
+     "6": 5,
+     "8": 6,
+     "10": 7
+    },
+    "eligible": "all users",
+    "source": "gflow_credits",
+    "checks": [
+     {
+      "needle": "Omni Flash 1.1 (360p) 4s, 6s, 8s, 10s videos Does not include edits to uploaded & generated videos All users: 4s: {N} 6s: {X} 8s: {X} 10s: {X}",
+      "expect": 4
+     },
+     {
+      "needle": "Omni Flash 1.1 (360p) 4s, 6s, 8s, 10s videos Does not include edits to uploaded & generated videos All users: 4s: {X} 6s: {N} 8s: {X} 10s: {X}",
+      "expect": 5
+     },
+     {
+      "needle": "Omni Flash 1.1 (360p) 4s, 6s, 8s, 10s videos Does not include edits to uploaded & generated videos All users: 4s: {X} 6s: {X} 8s: {N} 10s: {X}",
+      "expect": 6
+     },
+     {
+      "needle": "Omni Flash 1.1 (360p) 4s, 6s, 8s, 10s videos Does not include edits to uploaded & generated videos All users: 4s: {X} 6s: {X} 8s: {X} 10s: {N}",
+      "expect": 7
+     }
+    ],
+    "checked": "2026-11-11",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "retiring_on": "2026-12-05",
+    "note": "Does not include edits to uploaded and generated videos."
+   }
+  ],
+  "notices": [
+   {
+    "id": "retirement",
+    "date": "2026-12-05",
+    "retiring_on": "2026-12-05",
+    "quote": "On December 5, 2026, Veo 3.1 Fast, Veo 3.1 Quality, and Omni Flash 1.1 will be retired. Until then, you can generate with these models at standard credit rates while transitioning your workflows to Omni Flash 1.2 or Veo 3.1 Lite.",
+    "source": "gflow_credits",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "checked": "2026-11-11",
+    "checks": [
+     {
+      "needle": "On December 5, 2026, Veo 3.1 Fast, Veo 3.1 Quality, and Omni Flash 1.1 will be retired. Until then, you can generate with these models at standard credit rates while transitioning your workflows to Omni Flash 1.2 or Veo 3.1 Lite.",
+      "phrase": true
+     }
+    ]
+   },
+   {
+    "id": "extend",
+    "date": "2026-11-05",
+    "quote": "On November 5, 2026, Veo Extend was retired. To extend a video, you must be a Google AI Plus, Pro, or Ultra subscriber and use Omni Flash 1.2.",
+    "source": "gflow_credits",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "checked": "2026-11-11",
+    "checks": [
+     {
+      "needle": "On November 5, 2026, Veo Extend was retired. To extend a video, you must be a Google AI Plus, Pro, or Ultra subscriber and use Omni Flash 1.2.",
+      "phrase": true
+     }
+    ]
+   },
+   {
+    "id": "per_generation",
+    "quote": "The Google Flow/AI credit costs below are per generation, not per request. Some product features will create multiple generations per request. For example, in Google Flow, you can make a single request that may generate 2 videos.",
+    "source": "gflow_credits",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "checked": "2026-11-11",
+    "checks": [
+     {
+      "needle": "The Google Flow/AI credit costs below are per generation, not per request. Some product features will create multiple generations per request. For example, in Google Flow, you can make a single request that may generate 2 videos.",
+      "phrase": true
+     }
+    ]
+   },
+   {
+    "id": "monthly_rollover",
+    "quote": "Google Flow credits for your Google AI Plus, Pro, or Ultra plan refresh at the start of your billing cycle. Unused monthly Google Flow credits do not roll over to the next month.",
+    "source": "gflow_credits",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "checked": "2026-11-11",
+    "checks": [
+     {
+      "needle": "Google Flow credits for your Google AI Plus, Pro, or Ultra plan refresh at the start of your billing cycle. Unused monthly Google Flow credits do not roll over to the next month.",
+      "phrase": true
+     }
+    ]
+   },
+   {
+    "id": "daily_refresh",
+    "quote": "Your daily credit refresh is triggered by your first generation. For example, if you use your Google Flow credits for the first time on August 12, your next 50 Google Flow credits will become available on August 13. If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over.",
+    "source": "gflow_credits",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "checked": "2026-11-11",
+    "checks": [
+     {
+      "needle": "Your daily credit refresh is triggered by your first generation. For example, if you use your Google Flow credits for the first time on August 12, your next 50 Google Flow credits will become available on August 13. If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over.",
+      "phrase": true
+     }
+    ]
+   },
+   {
+    "id": "peak_hours",
+    "quote": "During peak hours, roughly 2 PM to 5 PM UTC, you may not be able to generate videos without a subscription.",
+    "source": "gflow_credits",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "checked": "2026-11-11",
+    "checks": [
+     {
+      "needle": "During peak hours, roughly 2 PM to 5 PM UTC, you may not be able to generate videos without a subscription.",
+      "phrase": true
+     }
+    ]
+   },
+   {
+    "id": "subject_to_change",
+    "quote": "Limits are subject to change at any time. To find the latest costs, at the top right of your prompt box, click Settings.",
+    "source": "gflow_credits",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "checked": "2026-11-11",
+    "checks": [
+     {
+      "needle": "Limits are subject to change at any time. To find the latest costs, at the top right of your prompt box, click",
+      "phrase": true
+     }
+    ]
+   },
+   {
+    "id": "ai_credits",
+    "quote": "In supported regions (except Japan), Plus, Pro, and Ultra subscribers can purchase AI credits.",
+    "source": "gflow_credits",
+    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
+    "checked": "2026-11-11",
+    "checks": [
+     {
+      "needle": "In supported regions (except Japan), Plus, Pro, and Ultra subscribers can purchase AI credits.",
+      "phrase": true
+     }
+    ]
+   }
+  ]
  }
 }
