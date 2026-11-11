@@ -2,6 +2,84 @@
  "updated": "2026-11-11",
  "deals": [
   {
+   "id": "hf-plus-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Plus monthly first month, $59 to $47",
+   "models": [],
+   "plans": [
+    "Plus"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 20,
+   "bonus_credits": null,
+   "price_before": 59,
+   "price_after": 47,
+   "price_pairs": null,
+   "full_plan_id": "hf-plus-monthly",
+   "deal_plan_id": null,
+   "math": "plan_price",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "$59 $47 billed monthly, renews at $59. 20% OFF.",
+   "verified_date": "2026-11-11",
+   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing. Plus is $47 the first month and renews at $59, labeled 20% OFF, with 1,200 credits / month. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 20% figure is the first-month checkout math, not the 'up to 60% off' banner. $/s uses the first-month $47 and a 12-month blend with the $59 renewal.",
+   "examples": [
+    "Plus: $59 → $47/mo · Wan 3.0, Wan 3.0, 480p: $0.03917/s vs $0.04917/s (from credit plan) · 12-month blended $0.04833/s"
+   ]
+  },
+  {
+   "id": "hf-ultra-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra monthly first month, $129 to $79",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 40,
+   "bonus_credits": null,
+   "price_before": 129,
+   "price_after": 79,
+   "price_pairs": null,
+   "full_plan_id": "hf-ultra-monthly",
+   "deal_plan_id": null,
+   "math": "plan_price",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "$129 $79 billed monthly, renews at $129. 40% OFF.",
+   "verified_date": "2026-11-11",
+   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing, Ultra 3K (3,000 credits / month). Ultra is $79 the first month and renews at $129, labeled 40% OFF. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 40% figure is the first-month checkout math on the 3K tier, not the 'up to 60% off' banner. A separate −45% badge sits next to the 3K/6K/9K selector; 6K and 9K monthly prices were not opened. $/s uses the first-month $79 and a 12-month blend with the $129 renewal.",
+   "examples": [
+    "Ultra: $129 → $79/mo · Wan 3.0, Wan 3.0, 480p: $0.02633/s vs $0.043/s (from credit plan) · 12-month blended $0.04161/s"
+   ]
+  },
+  {
    "id": "fal-minimax-h3-30-nov",
    "vendor": "fal",
    "type": "api_promo",
@@ -786,46 +864,6 @@
    "verified_date": "2026-10-21",
    "notes": "Kling 4 is not in the price catalog, so there is no $/s. New Max or Team plan signups only. The 3 days start at signup. The post gives no calendar end date.",
    "examples": []
-  },
-  {
-   "id": "runway-seedance-unlimited",
-   "vendor": "Runway",
-   "type": "unlimited_window",
-   "title": "Unlimited Seedance 2.5 on Pro and Max",
-   "models": [
-    "seedance-2-5"
-   ],
-   "plans": [
-    "Pro",
-    "Max"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": true
-   },
-   "percent": null,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "full_plan_id": null,
-   "deal_plan_id": null,
-   "math": "unlimited",
-   "variants": [],
-   "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://runwayml.com/pricing",
-   "source_quote": "Pro and Max list Unlimited Seedance 2.5 as a plan feature.",
-   "verified_date": "2026-10-20",
-   "notes": "Standing plan feature. Runway does not publish a Seedance credit price in this catalog, so there is no break-even seconds. Pro annual is $28/mo and Max annual is $76/mo.",
-   "examples": []
   }
  ],
  "upcoming": [],
@@ -889,6 +927,46 @@
      "quote": "Standard self-serve rates in USD per video second: 480p: $0.0510; 720p: $0.1050; 1080p: $0.2100."
     }
    ]
+  },
+  {
+   "id": "runway-seedance-unlimited",
+   "vendor": "Runway",
+   "type": "unlimited_window",
+   "title": "Unlimited Seedance 2.5 on Pro and Max",
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [
+    "Pro",
+    "Max"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "unlimited",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-11",
+   "end_is_estimate": true,
+   "status": "ended",
+   "source_url": "https://runwayml.com/pricing",
+   "source_quote": "Pro and Max list Seedance 2.5 as a model with no Unlimited label. The Unlimited badge is on Topaz AI Upscale.",
+   "verified_date": "2026-11-11",
+   "notes": "Checked 2026-11-11. runwayml.com/pricing redirects to runway.com/pricing. Pro and Max list Seedance 2.5 as a model chip with no Unlimited label; the Unlimited badge on that row is on Topaz AI Upscale. The comparison table lists Seedance 2.0 Pro 1080p at 160 credits/4s, not Seedance 2.5. The page does not state an Unlimited Seedance 2.5 offer. The end date is this check, not a date the page named. Pro annual is $28/mo and Max annual is $76/mo.",
+   "examples": []
   },
   {
    "id": "krea3-openrouter-50",

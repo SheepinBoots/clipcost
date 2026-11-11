@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-11-08",
+ "updated": "2026-11-11",
  "watch": [
   {
    "id": "hf_plans",
@@ -227,6 +227,78 @@
    "link_url": "https://higgsfield.ai/pricing",
    "math": "plan_price",
    "notes": "On 2026-11-11 the pricing page shows Ultra annual at $65/mo beside monthly $129, labeled −50%, and Save $768. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $65 ÷ 3,000 credits."
+  },
+  {
+   "id": "hf-plus-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Plus monthly first month, $59 to $47",
+   "models": [],
+   "plans": [
+    "Plus"
+   ],
+   "full_plan_id": "hf-plus-monthly",
+   "deal_plan_id": null,
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 20,
+   "bonus_credits": null,
+   "price_before": 59,
+   "price_after": 47,
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_kind": "pricing_page",
+   "source_quote": "$59 $47 billed monthly, renews at $59. 20% OFF.",
+   "verified_date": "2026-11-11",
+   "link_url": "https://higgsfield.ai/pricing",
+   "math": "plan_price",
+   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing. Plus is $47 the first month and renews at $59, labeled 20% OFF, with 1,200 credits / month. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 20% figure is the first-month checkout math, not the 'up to 60% off' banner. $/s uses the first-month $47 and a 12-month blend with the $59 renewal."
+  },
+  {
+   "id": "hf-ultra-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra monthly first month, $129 to $79",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "full_plan_id": "hf-ultra-monthly",
+   "deal_plan_id": null,
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 40,
+   "bonus_credits": null,
+   "price_before": 129,
+   "price_after": 79,
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_kind": "pricing_page",
+   "source_quote": "$129 $79 billed monthly, renews at $129. 40% OFF.",
+   "verified_date": "2026-11-11",
+   "link_url": "https://higgsfield.ai/pricing",
+   "math": "plan_price",
+   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing, Ultra 3K (3,000 credits / month). Ultra is $79 the first month and renews at $129, labeled 40% OFF. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 40% figure is the first-month checkout math on the 3K tier, not the 'up to 60% off' banner. A separate −45% badge sits next to the 3K/6K/9K selector; 6K and 9K monthly prices were not opened. $/s uses the first-month $79 and a 12-month blend with the $129 renewal."
   },
   {
    "id": "hf-starter-annual",
@@ -836,21 +908,21 @@
     "max_resolution": null,
     "web_only": false,
     "code": null,
-    "standing": true
+    "standing": false
    },
    "percent": null,
    "bonus_credits": null,
    "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
+   "end": "2026-11-11",
+   "end_is_estimate": true,
+   "status": "ended",
    "source_url": "https://runwayml.com/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Pro and Max list Unlimited Seedance 2.5 as a plan feature.",
-   "verified_date": "2026-10-20",
+   "source_quote": "Pro and Max list Seedance 2.5 as a model with no Unlimited label. The Unlimited badge is on Topaz AI Upscale.",
+   "verified_date": "2026-11-11",
    "link_url": "https://runwayml.com/pricing",
    "math": "unlimited",
-   "notes": "Standing plan feature. Runway does not publish a Seedance credit price in this catalog, so there is no break-even seconds. Pro annual is $28/mo and Max annual is $76/mo."
+   "notes": "Checked 2026-11-11. runwayml.com/pricing redirects to runway.com/pricing. Pro and Max list Seedance 2.5 as a model chip with no Unlimited label; the Unlimited badge on that row is on Topaz AI Upscale. The comparison table lists Seedance 2.0 Pro 1080p at 160 credits/4s, not Seedance 2.5. The page does not state an Unlimited Seedance 2.5 offer. The end date is this check, not a date the page named. Pro annual is $28/mo and Max annual is $76/mo."
   },
   {
    "id": "runway-kling4-unlimited-3d",

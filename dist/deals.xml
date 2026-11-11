@@ -5,7 +5,21 @@
   <link>https://vidfare.com/deals/</link>
   <atom:link href="https://vidfare.com/deals.xml" rel="self" type="application/rss+xml"/>
   <description>Live AI video deals from vendor pages and official accounts.</description>
-  <lastBuildDate>Wed, 11 Nov 2026 17:30:53 GMT</lastBuildDate>
+  <lastBuildDate>Wed, 11 Nov 2026 18:21:08 GMT</lastBuildDate>
+  <item>
+    <title>Plus monthly first month, $59 to $47</title>
+    <link>https://vidfare.com/deals/#hf-plus-monthly-first</link>
+    <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-monthly-first</guid>
+    <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+    <description>$59 $47 billed monthly, renews at $59. 20% OFF. Ends 2026-11-15.</description>
+  </item>
+  <item>
+    <title>Ultra monthly first month, $129 to $79</title>
+    <link>https://vidfare.com/deals/#hf-ultra-monthly-first</link>
+    <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-monthly-first</guid>
+    <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
+    <description>$129 $79 billed monthly, renews at $129. 40% OFF. Ends 2026-11-15.</description>
+  </item>
   <item>
     <title>MiniMax H3 Max and H3 Max Turbo 30% off Nov 1 through Nov 15</title>
     <link>https://vidfare.com/deals/#fal-minimax-h3-30-nov</link>
@@ -138,13 +152,6 @@
     <guid isPermaLink="true">https://vidfare.com/deals/#runway-kling4-unlimited-3d</guid>
     <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
     <description>Sign up for a new Max or Team plan to get 3 days of unlimited access. No end date given.</description>
-  </item>
-  <item>
-    <title>Unlimited Seedance 2.5 on Pro and Max</title>
-    <link>https://vidfare.com/deals/#runway-seedance-unlimited</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#runway-seedance-unlimited</guid>
-    <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
-    <description>Pro and Max list Unlimited Seedance 2.5 as a plan feature. No end date given.</description>
   </item>
 </channel>
 </rss>
