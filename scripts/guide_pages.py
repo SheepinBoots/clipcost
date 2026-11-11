@@ -939,9 +939,8 @@ def render(g):
             "/guides/ai-video-project-budget/",
             f"AI video project budget calculator | {BRAND}",
             (
-                f"Estimate an AI video from finished minutes, a retry multiplier, and tracked dollars per second. "
-                f"3 finished minutes at 3x is {cost_money(picked['usd_per_second'] * seconds)} at the lowest rate we track. "
-                f"Last checked {LAST}."
+                f"3 finished minutes at 3x is {cost_money(picked['usd_per_second'] * seconds)} "
+                f"at the lowest tracked rate. Last checked {LAST}."
             ),
             body,
             faqs,

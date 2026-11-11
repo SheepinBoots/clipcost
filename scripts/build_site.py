@@ -110,6 +110,8 @@ def current(r):
 rows = [r for r in db["rows"] if current(r)]
 retired_rows = [r for r in db["rows"] if discontinued(r)]
 LAST = db.get("last_full_check") or min(r["checked"] for r in db["rows"])
+# Per-URL sitemap dates. Pages not listed here use LAST, which is the catalog check, not the build clock.
+SITEMAP_LASTMOD = {}
 deal_doc = dealmod.load()
 LIVE_DEALS = [d for d in deal_doc["deals"] if dealmod.is_current(d, TODAY)]
 UPCOMING_DEALS = [d for d in deal_doc["deals"] if dealmod.is_upcoming(d, TODAY)]
@@ -146,6 +148,10 @@ def outbound(url):
     if is_higgsfield(url):
         return with_fpr(url), "sponsored nofollow noopener"
     return url, "nofollow noopener"
+
+def json_link(path, label):
+    """Fetchable data file. nofollow so the link is not a hint to index the JSON."""
+    return f'<a href="{html.escape(root(path))}" rel="nofollow">{html.escape(label)}</a>'
 
 def plat_link(p, url):
     if p in ("Higgsfield", "Higgsfield API") or is_higgsfield(url):
@@ -383,6 +389,9 @@ def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
     events = weekly_report.load()
     result = weekly_report.assign(events, as_of)
     paths = ["/reports/"]
+    record_dates = dest in (None, DIST)
+    if record_dates:
+        SITEMAP_LASTMOD["/reports/"] = weekly_report.index_content_date(result, events, as_of) or LAST
     page("/reports/", f"{weekly_report.INDEX_H1} | {BRAND}", weekly_report.INDEX_DESCRIPTION,
          weekly_report.render_index_body(result, events, href_fn=root, public_log=public_log),
          "/reports/", ld_script(weekly_report.index_jsonld(SITE_URL + "/reports/")),
@@ -391,12 +400,17 @@ def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
     for report in result["reports"]:
         path = f"/reports/{report['id']}/"
         headline = weekly_report.report_h1(report)
-        description = weekly_report.report_description(report)
+        description = weekly_report.report_meta(report)
+        modified = weekly_report.report_content_date(report, events, prior)
+        if record_dates:
+            SITEMAP_LASTMOD[path] = modified
         body = weekly_report.render_report_body(
             report, events, prior, link_fn=lambda url: outbound(url))
+        linked = weekly_report.report_jsonld(report, SITE_URL + path)
+        linked["dateModified"] = modified
         page(path, f"{headline} | {BRAND}", description, body, "/reports/",
              ld_join(
-                 weekly_report.report_jsonld(report, SITE_URL + path),
+                 linked,
                  breadcrumb_ld([("Reports", "/reports/"), (headline, path)]),
              ),
              dest=dest, reports_nav=reports_nav)
@@ -1049,11 +1063,31 @@ GUIDE_CRUMBS = {
     "/guides/ai-video-project-budget/": "Project budget",
 }
 
+def guide_crosslinks(path):
+    """One line under the title. Only guides whose prices the report or the holiday page uses."""
+    linked = {
+        "/guides/",
+        "/guides/cheapest-wan-3-0/",
+        "/guides/cheapest-ai-video-generator/",
+        "/guides/is-higgsfield-worth-it/",
+        "/guides/ai-video-project-budget/",
+    }
+    if path not in linked:
+        return ""
+    return crosslink_html(bool(LATEST_REPORT), bool(HOLIDAY_MODEL_SLUGS))
+
 def guide_page(path, title, desc, body, faqs):
     end = body.find("</h1>")
     if end != -1 and byline_html() not in body:
         end += len("</h1>")
         body = body[:end] + byline_html() + body[end:]
+    note = guide_crosslinks(path)
+    if note and note not in body:
+        marker = byline_html()
+        if marker in body:
+            body = body.replace(marker, marker + note, 1)
+        else:
+            body = note + body
     raw = json.dumps(faqs, ensure_ascii=False).lower()
     for bad in ("subscribe", "newsletter", "buttondown"):
         if bad in raw:
@@ -1186,6 +1220,77 @@ def ending_strip():
         )
     return f'<section class="strip" id="ending"><h2>Deals ending this week</h2><div class="dealgrid">{cards_html}</div><p class="small"><a href="{root("/deals/")}">All deals</a></p></section>'
 
+HOLIDAY_NEEDLES = ("black friday", "cyber monday", "cyber week", "cyber weekend", "holiday sale", "11.11")
+
+def deal_blob(deal):
+    return " ".join([
+        deal.get("title") or "",
+        deal.get("notes") or "",
+        deal.get("source_quote") or "",
+    ]).lower()
+
+def is_holiday_named(deal):
+    blob = deal_blob(deal)
+    return any(needle in blob for needle in HOLIDAY_NEEDLES)
+
+def catalog_touch(deal):
+    """Catalog models this deal names or adjusts. Empty when the price table has no row for it."""
+    found = set()
+    for slug in deal.get("models") or []:
+        if slug in models:
+            found.add(slug)
+    for row in rows:
+        if deal.get("id") in (row.get("deal_ids") or []) or dealmod.adjustment(deal, row, plans):
+            if row.get("model") in models:
+                found.add(row["model"])
+    return found
+
+def featured_deal_slugs():
+    slugs = set()
+    for deal in LIVE_DEALS:
+        touched = catalog_touch(deal)
+        if is_holiday_named(deal) or (deal.get("end") and touched):
+            slugs |= touched
+    return slugs
+
+REPORT_EVENTS = weekly_report.load() if REPORTS_ENABLED else []
+REPORT_RESULT = weekly_report.assign(REPORT_EVENTS, today) if REPORTS_ENABLED else {"reports": [], "pending": []}
+LATEST_REPORT = REPORT_RESULT["reports"][-1] if REPORT_RESULT.get("reports") else None
+
+def report_model_slugs(report):
+    if not report:
+        return set()
+    published = REPORT_RESULT.get("reports") or []
+    index = next((i for i, item in enumerate(published) if item.get("id") == report.get("id")), 0)
+    prior = published[index - 1]["through"] if index else None
+    slugs = set()
+    for event in report.get("changes") or []:
+        if event.get("model") in models:
+            slugs.add(event["model"])
+        deal = DEAL_BY_ID.get(event.get("deal_id") or "")
+        if deal:
+            for slug in deal.get("models") or []:
+                if slug in models:
+                    slugs.add(slug)
+    catalog = weekly_report.catalog_for(REPORT_EVENTS, report["through"], prior)
+    for event in catalog.get("added") or []:
+        if event.get("model") in models:
+            slugs.add(event["model"])
+    return slugs
+
+REPORT_MODEL_SLUGS = report_model_slugs(LATEST_REPORT)
+HOLIDAY_MODEL_SLUGS = featured_deal_slugs()
+
+def crosslink_html(include_report, include_holiday, report_label="Latest weekly report"):
+    bits = []
+    if include_report and LATEST_REPORT:
+        bits.append(f'<a href="{root(f"/reports/{LATEST_REPORT["id"]}/")}">{e(report_label)}</a>')
+    if include_holiday:
+        bits.append(f'<a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a>')
+    if not bits:
+        return ""
+    return '<p class="small">' + " · ".join(bits) + "</p>"
+
 home = f"""<h1>{e(AGENT_H1)}</h1>
 <p class="tagline">{e(TAGLINE)}</p>
 <section class="strip" id="for-agents">
@@ -1204,6 +1309,7 @@ home = f"""<h1>{e(AGENT_H1)}</h1>
 <h2>Cheapest way to run each model today</h2><div class="cards">{cards}</div>
 <p class="small">The lowest $/s for each model at any resolution, including temporary promos (labelled). Low-res tiers are usually the cheapest, so check the resolution.</p>
 {home_guides_html()}
+{crosslink_html(True, True)}
 <h2>All prices</h2>
 <div class="filters">
 <select id="fModel" aria-label="Model"><option value="">All models</option>{opts([(s, m["name"]) for s, m in models.items()])}</select>
@@ -1524,11 +1630,17 @@ for slug, m in models.items():
     card_math = ""
     if c.get("kind") == "api" and (c.get("math") or "").strip():
         card_math = f'<div class="assume">{e(c["math"].strip())}</div>'
+    cross = crosslink_html(
+        slug in REPORT_MODEL_SLUGS,
+        slug in HOLIDAY_MODEL_SLUGS,
+        weekly_report.report_h1(LATEST_REPORT) if LATEST_REPORT else "",
+    )
+    cross_html = (cross + "\n") if cross else ""
     body = f"""<p class="small"><a href="{root("/")}">Prices</a> › {e(m['name'])}</p>
 <h1>{e(m['name'])} price per second ({MONTH})</h1>
 {byline_html()}
 <p class="lead">{model_spread(m, rs)}</p>
-<div class="cards"><div class="card"><h3>Cheapest today</h3><div class="big">{money(c['usd_per_second'])}<span class="small">/s</span></div>{assumption_html(c)}{card_math}<div class="sub">{e(c['platform'])} · {e(c['variant'])} · {e(spec_phrase(c))} {tag(c)}</div>{checked_source(c)}<div class="sub">≈ {clip5} for a 5s clip</div>{deal_price_line(rs)}</div>
+{cross_html}<div class="cards"><div class="card"><h3>Cheapest today</h3><div class="big">{money(c['usd_per_second'])}<span class="small">/s</span></div>{assumption_html(c)}{card_math}<div class="sub">{e(c['platform'])} · {e(c['variant'])} · {e(spec_phrase(c))} {tag(c)}</div>{checked_source(c)}<div class="sub">≈ {clip5} for a 5s clip</div>{deal_price_line(rs)}</div>
 <div class="card"><h3>Cheapest by resolution</h3><ul class="small" style="padding-left:18px;margin:6px 0">{resl}</ul></div></div>
 {summary}
 {sponsor_slot("model:" + slug)}
@@ -1989,10 +2101,10 @@ deals_body = f"""<h1>AI video deals</h1>
 {upcoming_html}
 <div class="dealgrid" id="liveDeals">{live_html}</div>
 <h2>When these vendors run sales</h2>
-<p>Launch weeks are the usual pattern: a new video model is unlimited on credit plans and 30–75% off on APIs for one to four weeks. The holiday window, about Nov 20 through Jan 8, is the long one. In 2025 Higgsfield posted several waves, Magnific used a 50% code, and Krea posted 40% off yearly plans. End dates move. They get extended, reopened, or left as "limited time." If a page does not name an end date, this site does not invent one. <a href="{root("/deals/black-friday/")}">Black Friday 2026 stub, with 2025 dates</a>.</p>
+<p>Launch weeks are the usual pattern: a new video model is unlimited on credit plans and 30–75% off on APIs for one to four weeks. The holiday window, about Nov 20 through Jan 8, is the long one. In 2025 Higgsfield posted several waves, Magnific used a 50% code, and Krea posted 40% off yearly plans. End dates move. They get extended, reopened, or left as "limited time." If a page does not name an end date, this site does not invent one. <a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a>.</p>
 <h2>Past deals</h2>
 <div class="dealgrid" id="archive">{archive_html}</div>
-<p class="small"><a href="{root("/deals.xml")}">Deals RSS</a> · <a href="{root("/deals.json")}">deals.json</a></p>
+<p class="small"><a href="{root("/deals.xml")}">Deals RSS</a> · {json_link("/deals.json", "deals.json")}</p>
 {news_box()}
 {tick_script()}
 <script>
@@ -2059,24 +2171,367 @@ page("/deals/", page_title("AI Video Deals"),
                  + ld_script(deals_item_list(live_sorted))))
 
 hist_sorted = sorted(HISTORY, key=lambda d: d.get("start") or "")
-bf_body = f"""<p class="small"><a href="{root("/deals/")}">Deals</a> › Black Friday</p>
-<h1>AI video Black Friday and holiday deals</h1>
-<p class="lead">A stub for the 2026 holiday season, about Nov 20 through Jan 8. This page will be updated when 2026 offers are on the vendors' own sites. Nothing below is a live 2026 price.</p>
-<div class="callout"><b>2025 history.</b> Every example on this page is a past sale. The year is 2025 (one Higgsfield wave ran through Jan 7, 2026). Dates and percents are from the vendors' official X accounts. They are not current codes.</div>
-<div class="dealgrid">{"".join(deal_card(d, archive=True) for d in hist_sorted)}</div>
-<h2>What 2025 looked like</h2>
-<ul>
-<li>Higgsfield posted a new "final call" every few days from Dec 3, 2025: 70% off, then 67% off, 80% off for three days, and 85% off from Dec 29 to Jan 7.</li>
-<li>Magnific's Black Friday was 50% off every plan, including yearly, with code BFMAGNIFIC, Nov 24–28 2025.</li>
-<li>Krea posted 40% off yearly plans on Nov 28 (Black Friday, "today only"), Dec 1 (Cyber Monday), and Dec 24 (up to 40% off Pro and Max).</li>
-</ul>
-<p class="small">Those codes and percents are expired. Check the <a href="{root("/deals/")}">live deals</a> page before you pay.</p>
-<div class="disclose">Higgsfield links elsewhere on {BRAND} can be affiliate links. The posts linked on this page are the vendors' own X accounts. <a class="tap" href="{root("/about/#disclosure")}">Disclosure</a>.</div>
-"""
+
+def _note_sentence(text, needle):
+    for part in re.split(r"(?<=[.!?])\s+", (text or "").strip()):
+        if needle.lower() in part.lower():
+            return part.strip()
+    return ""
+
+def _plain_date(value, estimate=False):
+    if not value:
+        return "not stated"
+    text = str(value)
+    if estimate:
+        text += " (estimated)"
+    return text
+
+def _money_field(value):
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return f"${value:g}/mo"
+    return "not stated"
+
+def _per_second_pairs(deal):
+    """One before/after pair per catalog option. Monthly and annual rows that match are one pair."""
+    found = {}
+    for row in rows:
+        adj = dealmod.adjustment(deal, row, plans)
+        if not adj or adj.get("usd") is None or adj.get("list_usd") is None:
+            continue
+        key = (
+            row.get("model"),
+            row.get("variant"),
+            shown_resolution(row),
+            shown_audio(row),
+            input_phrase(row),
+        )
+        previous = found.get(key)
+        if previous is not None:
+            same = (
+                abs(previous[1]["usd"] - adj["usd"]) < 1e-9
+                and abs(previous[1]["list_usd"] - adj["list_usd"]) < 1e-9
+            )
+            if not same:
+                key = key + (row.get("plan"),)
+                previous = found.get(key)
+        prefer = row.get("plan") == deal.get("deal_plan_id")
+        if previous is None or (prefer and previous[0].get("plan") != deal.get("deal_plan_id")):
+            found[key] = (row, adj)
+    items = list(found.values())
+    items.sort(key=lambda item: (
+        models.get(item[0].get("model"), {}).get("name") or "",
+        str(item[0].get("resolution") or ""),
+        item[0].get("variant") or "",
+        item[0].get("id") or "",
+    ))
+    return items
+
+def _stated_rows(deal):
+    matched = [
+        row for row in rows
+        if deal.get("id") in (row.get("deal_ids") or []) and row.get("list_usd_per_second") is not None
+    ]
+    matched.sort(key=lambda row: (row.get("usd_per_second") or 0, row.get("id") or ""))
+    return matched
+
+def _rate_table(pairs, dates, before_label="Before $/s", after_label="After $/s", extra_note=""):
+    if not pairs:
+        return "<p>The catalog does not have a before and after dollars per second for this offer.</p>"
+    body = []
+    for row, before, after in pairs:
+        if row.get("checked"):
+            dates.append(row["checked"])
+        name = models.get(row.get("model"), {}).get("name", row.get("model") or "")
+        label = f"{name}, {row.get('variant') or ''}, {shown_resolution(row)}"
+        audio = shown_audio(row)
+        if audio != "not stated":
+            label += f", {audio} audio"
+        source = ""
+        if row.get("source_url"):
+            href, rel = outbound(row["source_url"])
+            source = f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>'
+        body.append(
+            "<tr>"
+            f"<td>{e(label)}</td>"
+            f'<td class="num">{money(before)}</td>'
+            f'<td class="num">{money(after)}</td>'
+            f"<td>{e(rate_label(row))}</td>"
+            f"<td>{e(row.get('checked') or '')}</td>"
+            f'<td class="small">{source}</td>'
+            "</tr>"
+        )
+    labels = {rate_label(row) for row, _before, _after in pairs}
+    note = extra_note
+    if note and not note.endswith(" "):
+        note += " "
+    note += "Before and after are dollars per second of finished video."
+    if any("credit plan" in label for label in labels):
+        note += (
+            " A credit-plan row is plan price ÷ credits × credits per clip ÷ seconds, "
+            "and it assumes every paid credit is used."
+        )
+    if "promo" in labels:
+        note += " A promo row's before figure is the list rate stored on that row."
+    return (
+        '<div class="tblwrap"><table><thead><tr>'
+        f"<th>Row</th><th>{e(before_label)}</th><th>{e(after_label)}</th>"
+        "<th>How the rate is labeled</th><th>Checked</th><th>Source</th>"
+        "</tr></thead><tbody>"
+        + "".join(body)
+        + "</tbody></table></div>"
+        + f'<p class="small">{e(note)}</p>'
+    )
+
+def _plan_facts(deal, dates):
+    if deal.get("verified_date"):
+        dates.append(deal["verified_date"])
+    sale_11 = bool(_note_sentence(deal.get("notes") or "", "11.11"))
+    if sale_11:
+        items = [
+            f"<li>Monthly billing: {_money_field(deal.get('price_before'))}</li>",
+            f"<li>Annual billing under the 11.11 sale: {_money_field(deal.get('price_after'))}</li>",
+        ]
+    else:
+        items = [
+            f"<li>Plan price before: {_money_field(deal.get('price_before'))}</li>",
+            f"<li>Plan price after: {_money_field(deal.get('price_after'))}</li>",
+        ]
+    full = plans.get(deal.get("full_plan_id") or "") or {}
+    annual = plans.get(deal.get("deal_plan_id") or "") or {}
+    if isinstance(full.get("usd_month"), (int, float)) and not isinstance(full.get("usd_month"), bool):
+        items.append(f"<li>Monthly price on the plan record: ${full['usd_month']:g}/mo</li>")
+    if isinstance(annual.get("usd_month"), (int, float)) and not isinstance(annual.get("usd_month"), bool):
+        items.append(f"<li>Annual price on the plan record: ${annual['usd_month']:g}/mo</li>")
+    credits = annual.get("credits_month")
+    if isinstance(credits, (int, float)) and not isinstance(credits, bool):
+        items.append(f"<li>Credits on the annual plan record: {int(credits):,} per month</li>")
+    if deal.get("percent") is not None:
+        items.append(f"<li>Percent on the deal record: {deal['percent']:g}%</li>")
+    items.append(f"<li>Start date: {e(_plain_date(deal.get('start')))}</li>")
+    if sale_11:
+        items.append("<li>The 11.11 sale ends Nov 15, per Higgsfield's pricing page.</li>")
+    elif deal.get("end"):
+        items.append(f"<li>End date: {e(_plain_date(deal.get('end'), deal.get('end_is_estimate')))}</li>")
+    else:
+        items.append("<li>End date: not stated in the end field</li>")
+    note = _note_sentence(deal.get("notes") or "", "11.11")
+    if note and not sale_11:
+        items.append(f"<li>Check note: {e(note)}</li>")
+    items.append(f"<li>Verified: {e(deal.get('verified_date') or 'not stated')}</li>")
+    if dealmod.conditions(deal).get("standing"):
+        items.append("<li>The deal record marks this as a standing price.</li>")
+    source_url = deal.get("source_url") or deal.get("link_url")
+    if source_url:
+        href, rel = outbound(source_url)
+        items.append(f'<li>Source: <a href="{e(href)}" rel="{rel}" target="_blank">source</a></li>')
+    items.append(f'<li><a href="{root("/deals/")}#{e(deal["id"])}">Full deal record</a></li>')
+    return "<ul>" + "".join(items) + "</ul>"
+
+def _deal_pairs(deal):
+    stated = _stated_rows(deal)
+    if stated:
+        return [(row, row["list_usd_per_second"], row["usd_per_second"]) for row in stated]
+    return [(row, adj["list_usd"], adj["usd"]) for row, adj in _per_second_pairs(deal)]
+
+bf_dates = []
+holiday_live = [deal for deal in live_sorted if is_holiday_named(deal)]
+dated_live = [deal for deal in live_sorted if deal.get("end") and not is_holiday_named(deal)]
+open_live = [deal for deal in live_sorted if not deal.get("end") and not is_holiday_named(deal)]
+titled = [
+    deal for deal in holiday_live
+    if "black friday" in (deal.get("title") or "").lower() or "cyber monday" in (deal.get("title") or "").lower()
+]
+note_11 = ""
+for deal in holiday_live:
+    note_11 = _note_sentence(deal.get("notes") or "", "11.11")
+    if note_11:
+        break
+holiday_html = []
+if not holiday_live:
+    holiday_html.append("<p>No live deal in the file uses Black Friday, Cyber Monday, holiday-sale, or 11.11 wording.</p>")
+elif not titled:
+    holiday_html.append("<p>No live deal has Black Friday or Cyber Monday in its title.</p>")
+else:
+    names = ", ".join(deal.get("title") or deal["id"] for deal in titled)
+    holiday_html.append(f"<p>Live deals titled as Black Friday or Cyber Monday: {e(names)}.</p>")
+for deal in holiday_live:
+    holiday_html.append(f"<h3>{e(deal.get('title') or deal['id'])}</h3>")
+    holiday_html.append(f'<p class="small">{e(deal.get("vendor") or "")}</p>')
+    if deal.get("source_quote"):
+        holiday_html.append(f'<blockquote class="small">“{e(deal["source_quote"])}”</blockquote>')
+    holiday_html.append(_plan_facts(deal, bf_dates))
+    pairs = _deal_pairs(deal)
+    if pairs:
+        if _note_sentence(deal.get("notes") or "", "11.11"):
+            holiday_html.append("<p><b>Per second, monthly billing vs annual billing under the 11.11 sale</b></p>")
+            holiday_html.append(_rate_table(
+                pairs, bf_dates,
+                "Monthly billing $/s",
+                "Annual billing $/s",
+                "Before is monthly billing. After is annual billing under the 11.11 sale, which ends Nov 15 per Higgsfield's pricing page.",
+            ))
+        else:
+            holiday_html.append("<p><b>Per second, from the price catalog</b></p>")
+            holiday_html.append(_rate_table(pairs, bf_dates))
+    else:
+        holiday_html.append("<p>The catalog does not have a before and after dollars per second for this offer.</p>")
+dated_html = [
+    "<p>These are the other live deals that have an end date. "
+    "They are not titled as Black Friday or Cyber Monday. "
+    "A per-second before and after is shown only when the catalog has both numbers.</p>"
+]
+plain_rows = []
+for deal in dated_live:
+    if deal.get("verified_date"):
+        bf_dates.append(deal["verified_date"])
+    pairs = _deal_pairs(deal)
+    if not pairs:
+        plain_rows.append(deal)
+        continue
+    start = _plain_date(deal.get("start"))
+    end = _plain_date(deal.get("end"), deal.get("end_is_estimate"))
+    source_url = deal.get("source_url") or deal.get("link_url")
+    source = ""
+    if source_url:
+        href, rel = outbound(source_url)
+        source = f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>'
+    dated_html.append(f"<h3>{e(deal.get('title') or deal['id'])}</h3>")
+    dated_html.append(
+        f'<p class="small">{e(deal.get("vendor") or "")}. '
+        f"Start {e(start)}. End {e(end)}. "
+        f'Verified {e(deal.get("verified_date") or "not stated")}. {source}. '
+        f'<a href="{root("/deals/")}#{e(deal["id"])}">Full deal record</a>.</p>'
+    )
+    if deal.get("source_quote"):
+        dated_html.append(f'<blockquote class="small">“{e(deal["source_quote"])}”</blockquote>')
+    dated_html.append(_rate_table(pairs, bf_dates))
+if plain_rows:
+    body_rows = []
+    for deal in plain_rows:
+        source_url = deal.get("source_url") or deal.get("link_url")
+        source = ""
+        if source_url:
+            href, rel = outbound(source_url)
+            source = f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>'
+        body_rows.append(
+            "<tr>"
+            f'<td><a href="{root("/deals/")}#{e(deal["id"])}">{e(deal.get("title") or deal["id"])}</a>'
+            f'<div class="small">{e(deal.get("vendor") or "")}</div></td>'
+            f"<td>{e(_plain_date(deal.get('start')))}</td>"
+            f"<td>{e(_plain_date(deal.get('end'), deal.get('end_is_estimate')))}</td>"
+            f"<td>{e(deal.get('verified_date') or '')}</td>"
+            f'<td class="small">{source}</td>'
+            "<td>not stored</td>"
+            "</tr>"
+        )
+    dated_html.append(
+        '<div class="tblwrap"><table><thead><tr>'
+        "<th>Offer</th><th>Start</th><th>End</th><th>Verified</th><th>Source</th><th>Before and after $/s</th>"
+        "</tr></thead><tbody>"
+        + "".join(body_rows)
+        + "</tbody></table></div>"
+        '<p class="small">“not stored” means this deal has no before and after dollars per second in the catalog.</p>'
+    )
+if not dated_live:
+    dated_html.append("<p>No other live deal has an end date.</p>")
+for deal in hist_sorted:
+    if deal.get("verified_date"):
+        bf_dates.append(deal["verified_date"])
+content_dates = [day for day in bf_dates if day]
+BF_CONTENT_DATE = max(content_dates) if content_dates else (deal_doc.get("updated") or LAST)
+SITEMAP_LASTMOD["/deals/black-friday/"] = BF_CONTENT_DATE
+file_updated = deal_doc.get("updated") or ""
+if file_updated and file_updated != BF_CONTENT_DATE:
+    updated_line = (
+        f"Last updated {BF_CONTENT_DATE}. That is the newest verified or checked date in the sections below. "
+        f"The deals file updated field is {file_updated}."
+    )
+else:
+    updated_line = f"Last updated {BF_CONTENT_DATE}."
+status_bits = []
+if not titled:
+    status_bits.append("No live deal is titled Black Friday or Cyber Monday.")
+if note_11:
+    status_bits.append("Higgsfield's 11.11 sale ends Nov 15.")
+eleven = [
+    deal for deal in holiday_live
+    if _note_sentence(deal.get("notes") or "", "11.11")
+    and isinstance(deal.get("price_before"), (int, float)) and not isinstance(deal.get("price_before"), bool)
+    and isinstance(deal.get("price_after"), (int, float)) and not isinstance(deal.get("price_after"), bool)
+]
+if eleven:
+    bits = []
+    for deal in eleven:
+        plan_name = (deal.get("plans") or ["Plan"])[0]
+        bits.append(f"{plan_name} ${deal['price_before']:g} to ${deal['price_after']:g}/mo")
+    status_bits.append(", ".join(bits) + ", monthly vs annual.")
+bf_desc = " ".join(status_bits)
+if len(bf_desc) > 160:
+    raise SystemExit(f"black friday description is {len(bf_desc)} characters")
+bf_faqs = [
+    (
+        "How are prices checked?",
+        "Each price and deal is copied from the vendor's own pricing page or an official post. "
+        "The page keeps that source link and the date it was checked. A daily check runs at 15:17 UTC. "
+        "This page only shows offers that are in the deals file or the price catalog.",
+    ),
+    (
+        "How is the per-second price computed?",
+        "When the vendor states dollars per second, that rate is shown. A credit plan is plan price divided by credits, "
+        "times credits per clip, divided by seconds. That math assumes every paid credit is used. "
+        "A figure the vendor marks with a tilde, roughly, or estimated is labeled an estimate. "
+        "If the catalog does not have both a before and an after rate, this page does not fill one in.",
+    ),
+    (
+        "When does this page update?",
+        "The page is rebuilt from the deals file and the price catalog after those files change. "
+        f"The deals file updated field is {file_updated or 'not stated'}. "
+        f"The newest verified or checked date on this page is {BF_CONTENT_DATE}. "
+        "An end date is shown only when the deal record or its check note states one.",
+    ),
+]
+bf_faq_ld = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "url": SITE_URL + "/deals/black-friday/",
+    "mainEntity": [
+        {"@type": "Question", "name": question, "acceptedAnswer": {"@type": "Answer", "text": answer}}
+        for question, answer in bf_faqs
+    ],
+}
+lead = (
+    "Black Friday, Cyber Monday, and other holiday-sale wording in the deals file, "
+    "then the live deals that have an end date. "
+    "A per-second before and after appears only when the price catalog has both rates."
+)
+bf_body = (
+    f'<p class="small"><a href="{root("/deals/")}">Deals</a> › Black Friday</p>'
+    "<h1>AI video Black Friday and holiday deals</h1>"
+    f'<p class="lead">{e(lead)}</p>'
+    f"<p>{e(updated_line)}</p>"
+    "<h2>Holiday-sale wording in the current deals</h2>"
+    + "".join(holiday_html)
+    + "<h2>Other live deals with an end date</h2>"
+    + "".join(dated_html)
+    + news_box()
+    + f'<p>{len(open_live)} other live deals have no end date in the record. '
+    f'They are not listed here as a holiday sale. <a href="{root("/deals/")}">All live deals</a>.</p>'
+    + faq_html(bf_faqs)
+    + "<h2>2025 Black Friday and holiday sales</h2>"
+    + f"<p>The history list has {len(hist_sorted)} past offers. Each card is that record, with its source. They are not current prices.</p>"
+    + '<div class="dealgrid">'
+    + "".join(deal_card(deal, archive=True) for deal in hist_sorted)
+    + "</div>"
+    + f'<div class="disclose">Higgsfield links elsewhere on {BRAND} can be affiliate links. '
+    "The posts and pricing pages linked here are the vendors' own sources. "
+    f'<a class="tap" href="{root("/about/#disclosure")}">Disclosure</a>.</div>'
+)
 page("/deals/black-friday/", page_title("AI Video Black Friday Deals"),
-     "A stub for 2026 AI video holiday sales, plus dated 2025 examples from Higgsfield, Krea, and Magnific.",
-     bf_body, "/deals/",
-     extra_head=ld_script(breadcrumb_ld([("Deals", "/deals/"), ("Black Friday", "/deals/black-friday/")])))
+     bf_desc, bf_body, "/deals/",
+     extra_head=ld_join(
+         breadcrumb_ld([("Deals", "/deals/"), ("Black Friday", "/deals/black-friday/")]),
+         bf_faq_ld,
+     ))
 
 def write_feeds():
     def slim(deal, status):
@@ -2403,6 +2858,7 @@ def write_llms():
         f"- [prices.json]({SITE_URL}/data/prices.json): the price catalog. CORS is open. A full check updates last_full_check.",
         f"- Calculator link: {SITE_URL}/calculator/?model=kling-3-0&seconds=10 — model is the /models/<slug>/ slug. Optional: resolution, audio (with or without), input (t2v, i2v, ref2v, v2v, extend, lip-sync), plan, provider, seconds, used.",
         f"- [deals.json]({SITE_URL}/deals.json): the live and archived deals. The same file is also at {SITE_URL}/data/deals.json.",
+        "- JSON files at those URLs are data downloads for scripts and agents, not HTML pages.",
         f"- [Connect an agent]({SITE_URL}/mcp/): the live read-only MCP server at {MCP_ENDPOINT} for ChatGPT, Claude, and Cursor. An agent can check current prices and deals before it recommends or generates a video. It reads prices.json and deals.json and does not invent a price.",
         "- MCP tools: list_models (each model and its cheapest current dollars per second); get_model_prices (one model, with an optional provider and resolution); estimate_cost (one clip, using the credit calculator's inputs); cheapest_options (lowest stated price for a length and resolution); list_deals (live deals, or upcoming, ended, or all).",
         f"- [feed.xml]({SITE_URL}/feed.xml): RSS of price changes, weekly reports, and live deals.",
@@ -2425,6 +2881,9 @@ def write_llms():
 import guide_pages
 guide_pages.render(globals())
 write_llms()
+# GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
+# fetchable. A noindex response header has to be set on the host that answers
+# the request. Do not add a _headers file that Pages will not apply.
 open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: {root('/')}\nSitemap: {SITE_URL}/sitemap.xml\n")
 def _keys_in_order(records):
     found = []
@@ -2532,7 +2991,7 @@ data_ld = {
 data_body = f"""<h1>Price data</h1>
 <p class="lead">The prices on {BRAND} are a public JSON file. You can read it from a script or an AI agent. You do not need an account or a key.</p>
 <h2>The file</h2>
-<p><a href="{root("/data/prices.json")}">https://vidfare.com/data/prices.json</a></p>
+<p>{json_link("/data/prices.json", "https://vidfare.com/data/prices.json")}</p>
 <p>CORS is already open, so a browser page on another site can fetch it. The daily price check reads the vendor pages and updates this file. <code>last_full_check</code> is the date of the last check that fetched every source. Right now that date is {e(checked_on)}.</p>
 <h2>What is in the file</h2>
 <table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody>{_field_table(list(db.keys()))}</tbody></table>
@@ -2568,7 +3027,7 @@ data_body = f"""<h1>Price data</h1>
 <h2>Using the data</h2>
 <p>Free to use. Please credit and link {BRAND} (vidfare.com). The code in the GitHub repository is MIT. The price data is free to use with that credit.</p>
 <h2>Ask an assistant</h2>
-<p>The same files can be queried through the live read-only MCP server at <a href="{MCP_ENDPOINT}"><code>{MCP_ENDPOINT}</code></a>. How to connect ChatGPT, Claude, and Cursor is on <a href="{root("/mcp/")}">the MCP page</a>. It reads this file and <a href="{root("/deals.json")}">deals.json</a>. It does not replace either file, and it does not invent a price.</p>
+<p>The same files can be queried through the live read-only MCP server at <a href="{MCP_ENDPOINT}"><code>{MCP_ENDPOINT}</code></a>. How to connect ChatGPT, Claude, and Cursor is on <a href="{root("/mcp/")}">the MCP page</a>. It reads this file and {json_link("/deals.json", "deals.json")}. It does not replace either file, and it does not invent a price.</p>
 """
 page("/data/", page_title("Price data for developers"),
      f"How to read the public {BRAND} price file, share a calculator link, and credit the data.",
@@ -2642,7 +3101,7 @@ mcp_ld = {
     "isPartOf": {"@type": "WebSite", "name": BRAND, "url": SITE_URL + "/"},
 }
 mcp_body = f"""<h1>{e(AGENT_H1)}</h1>
-<p class="lead">Connect ChatGPT, Claude, or Cursor, then paste the prompt below. The server is public and read-only. It reads <a href="{root("/data/prices.json")}">prices.json</a> and <a href="{root("/deals.json")}">deals.json</a>. It does not invent a price. Answers include the source, the date last checked, and a link back to {BRAND}.</p>
+<p class="lead">Connect ChatGPT, Claude, or Cursor, then paste the prompt below. The server is public and read-only. It reads {json_link("/data/prices.json", "prices.json")} and {json_link("/deals.json", "deals.json")}. It does not invent a price. Answers include the source, the date last checked, and a link back to {BRAND}.</p>
 <h2>Prompt</h2>
 <p>Paste this into your agent after VidFare is connected.</p>
 {copy_prompt_block(AGENT_PROMPT)}
@@ -2681,7 +3140,7 @@ if report_paths:
     urls.extend(report_paths)
 urls += ["/models/"] + [f"/models/{s}/" for s in models]
 open(os.path.join(DIST, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    "".join(f"  <url><loc>{SITE_URL}{u}</loc><lastmod>{LAST}</lastmod></url>\n" for u in urls) + "</urlset>\n")
+    "".join(f"  <url><loc>{SITE_URL}{u}</loc><lastmod>{SITEMAP_LASTMOD.get(u) or LAST}</lastmod></url>\n" for u in urls) + "</urlset>\n")
 def check_sponsor_renderer():
     live = render_sponsor(
         "home",
@@ -3084,6 +3543,42 @@ def audit_site():
         errors.append("sitemap is missing /data/")
     if f"<loc>{SITE_URL}/mcp/</loc>" not in sitemap:
         errors.append("sitemap is missing /mcp/")
+    for loc in re.findall(r"<loc>([^<]+)</loc>", sitemap):
+        if loc.split("?", 1)[0].rstrip("/").endswith(".json"):
+            errors.append(f"sitemap includes a JSON URL: {loc}")
+    calc_html = open(os.path.join(DIST, "calculator", "index.html"), encoding="utf-8").read()
+    calc_canon = re.search(r'<link rel="canonical" href="([^"]*)"', calc_html)
+    if not calc_canon or calc_canon.group(1) != SITE_URL + "/calculator/":
+        errors.append("calculator canonical must be https://vidfare.com/calculator/")
+    if REPORTS_ENABLED:
+        published_now = weekly_report.assign(weekly_report.load(), today)
+        prior_through = None
+        for report in published_now["reports"]:
+            modified = weekly_report.report_content_date(report, weekly_report.load(), prior_through)
+            report_path = f"/reports/{report['id']}/"
+            if f"<loc>{SITE_URL}{report_path}</loc><lastmod>{modified}</lastmod>" not in sitemap:
+                errors.append(f"sitemap lastmod for {report_path} should be {modified}")
+            report_html = open(os.path.join(DIST, report_path.strip("/"), "index.html"), encoding="utf-8").read()
+            if f'"dateModified": "{modified}"' not in report_html:
+                errors.append(f"{report_path} dateModified should be {modified}")
+            prior_through = report["through"]
+        index_date = weekly_report.index_content_date(published_now, weekly_report.load(), today) or LAST
+        if f"<loc>{SITE_URL}/reports/</loc><lastmod>{index_date}</lastmod>" not in sitemap:
+            errors.append(f"sitemap lastmod for /reports/ should be {index_date}")
+    bf_last = SITEMAP_LASTMOD.get("/deals/black-friday/")
+    if not bf_last or f"<loc>{SITE_URL}/deals/black-friday/</loc><lastmod>{bf_last}</lastmod>" not in sitemap:
+        errors.append("sitemap lastmod for /deals/black-friday/")
+    for dirpath, _, filenames in os.walk(DIST):
+        for name in filenames:
+            if not name.endswith(".html"):
+                continue
+            raw = open(os.path.join(dirpath, name), encoding="utf-8").read()
+            rel = os.path.relpath(os.path.join(dirpath, name), DIST)
+            for tag in re.findall(r"<a\b[^>]*>", raw, re.I):
+                for href in re.findall(r'href="([^"]*)"', tag):
+                    target = href.split("?", 1)[0].split("#", 1)[0]
+                    if target.endswith(".json") and "nofollow" not in tag.lower():
+                        errors.append(f"{rel} links {href} without nofollow")
     mcp_page = os.path.join(DIST, "mcp", "index.html")
     if not os.path.isfile(mcp_page):
         errors.append("mcp page was not built")

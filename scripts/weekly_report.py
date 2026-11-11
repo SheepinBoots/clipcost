@@ -48,10 +48,15 @@ MISSING_RESOLUTIONS = {"", "—", "-", "–"}
 COUNT_KINDS = {"price", "promo_started", "promo_ended"}
 CATALOG_KINDS = {"promo_started", "promo_ended", "added"}
 INDEX_H1 = "AI video price change reports"
-INDEX_DESCRIPTION = (
+# Visible lead. The meta description is the shorter INDEX_DESCRIPTION.
+INDEX_LEAD = (
     "Friday reports of AI video price changes and promo starts and ends for each ISO week. "
     "A week is published when VidFare has checked at least two of those changes. "
     "A week with fewer changes is skipped, and those changes are included in the next report that reaches two."
+)
+INDEX_DESCRIPTION = (
+    "Friday reports of AI video price changes, promo starts, and promo ends. "
+    "A week is published when at least two checked changes are recorded."
 )
 NO_PRICE_NOTE = "No per-second price changes this week"
 
@@ -371,13 +376,25 @@ def change_counts(report):
     }
 
 
-def report_description(report):
+def _count_sentence(report):
     counts = change_counts(report)
-    sentence = (
+    return (
         f"This report covers {range_phrase(report['covered_from'], report['covered_through'])}. "
         f"Counted changes: {counts['price']} per-second price changes, "
         f"{counts['promo_started']} promos started, and {counts['promo_ended']} promos ended."
     )
+
+
+def report_meta(report):
+    """Meta, Open Graph, and Twitter description. 160 characters or fewer."""
+    sentence = _count_sentence(report)
+    if len(sentence) > 160:
+        raise SystemExit(f"report meta description is {len(sentence)} characters: {sentence}")
+    return sentence
+
+
+def report_description(report):
+    sentence = _count_sentence(report)
     if report.get("first"):
         sentence += (
             " No earlier weekly report was published, so this first edition includes verified "
@@ -541,6 +558,278 @@ def _of_kind(report, kind):
     return rows
 
 
+def _count_phrase(n, singular, plural):
+    return f"{n} {singular if n == 1 else plural}"
+
+
+def _price_groups(events):
+    """Group per-second rows that share a model, platform, and percent."""
+    groups = {}
+    order = []
+    for event in events:
+        pct = format_pct(event.get("old_usd_per_second"), event.get("new_usd_per_second"))
+        key = (
+            event.get("model_name") or event.get("model") or "",
+            event.get("platform") or "",
+            pct or "n/a",
+        )
+        if key not in groups:
+            groups[key] = []
+            order.append(key)
+        groups[key].append(event)
+    return [(key, groups[key]) for key in order]
+
+
+def _pct_number(pct):
+    if not pct or pct == "n/a":
+        return None
+    try:
+        return Decimal(str(pct).replace("%", "").replace("+", ""))
+    except Exception:
+        return None
+
+
+def _group_rate_bits(events):
+    ordered = sorted(events, key=lambda event: (
+        event.get("resolution") or "",
+        event.get("variant") or "",
+        event.get("id") or "",
+    ))
+    bits = []
+    for event in ordered:
+        resolution = event.get("resolution") or "not listed"
+        bits.append(
+            f"{resolution} {format_usd(event.get('old_usd_per_second'))}/s to "
+            f"{format_usd(event.get('new_usd_per_second'))}/s"
+        )
+    return bits
+
+
+def _group_sentence(key, events, link_fn):
+    name, platform, pct = key
+    where = f"{name} on {platform}" if platform else name
+    detail = "; ".join(_group_rate_bits(events))
+    checked = sorted({event.get("date") for event in events if event.get("date")})
+    checked_text = ", ".join(long_date(day) for day in checked)
+    urls = []
+    for event in events:
+        url = event.get("source_url")
+        if url and url not in urls:
+            urls.append(url)
+    links = " ".join(link for link in (_link(url, link_fn) for url in urls) if link)
+    sentence = f"{_escape(where)}, {_escape(pct)}: {_escape(detail)}."
+    if checked_text:
+        sentence += f" Checked {_escape(checked_text)}."
+    if links:
+        sentence += f" {links}"
+    return sentence
+
+
+def _extreme_groups(groups):
+    """Groups at the highest percent and at the lowest percent."""
+    numbered = []
+    for key, events in groups:
+        value = _pct_number(key[2])
+        if value is None:
+            continue
+        numbered.append((value, key, events))
+    if not numbered:
+        return [], []
+    high = max(item[0] for item in numbered)
+    low = min(item[0] for item in numbered)
+    highs = [(key, events) for value, key, events in numbered if value == high]
+    lows = [(key, events) for value, key, events in numbered if value == low and value != high]
+    return highs, lows
+
+
+def _and_join(items):
+    items = list(items)
+    if len(items) <= 1:
+        return "".join(items)
+    if len(items) == 2:
+        return f"{items[0]} and {items[1]}"
+    return ", ".join(items[:-1]) + ", and " + items[-1]
+
+
+def _what_changed_text(report, catalog):
+    counts = change_counts(report)
+    price_rows = _of_kind(report, "price")
+    models = sorted({
+        event.get("model_name") or event.get("model")
+        for event in price_rows
+        if event.get("model_name") or event.get("model")
+    })
+    platforms = sorted({event.get("platform") for event in price_rows if event.get("platform")})
+    text = _count_phrase(counts["price"], "per-second price change", "per-second price changes")
+    if models:
+        text += " for " + _and_join(models)
+    if platforms:
+        text += " at " + _and_join(platforms)
+    text += (
+        ", "
+        + _count_phrase(counts["promo_started"], "promo started", "promos started")
+        + ", and "
+        + _count_phrase(counts["promo_ended"], "promo ended", "promos ended")
+        + "."
+    )
+    added = len(catalog.get("added") or [])
+    if added:
+        text += (
+            " "
+            + _count_phrase(added, "new model or platform row was", "new model or platform rows were")
+            + " recorded. Those are not per-second price changes."
+        )
+    return text
+
+
+def _one_or_more(n, singular, plural):
+    if n == 1:
+        return f"One {singular}"
+    return f"{n} {plural}"
+
+
+def _promo_takeaway(started, ended):
+    parts = []
+    if started:
+        bits = []
+        for event in started:
+            title = event.get("title") or event.get("deal_id") or event.get("id")
+            if event.get("started"):
+                when = f"started {long_date(event['started'])}"
+            else:
+                when = f"recorded {long_date(event['date'])}"
+            bits.append(f"{title}, {when}")
+        parts.append(_one_or_more(len(started), "promo started", "promos started") + ": " + "; ".join(bits) + ".")
+    else:
+        parts.append("No promo started in this span.")
+    dated = []
+    for event in ended:
+        if not event.get("ended"):
+            continue
+        dated.append((event["ended"], bool(event.get("end_is_estimate"))))
+    end_labels = []
+    for day, estimate in sorted(set(dated)):
+        label = long_date(day)
+        if estimate:
+            label += " (estimated)"
+        end_labels.append(label)
+    ended_text = _one_or_more(len(ended), "promo ended", "promos ended")
+    if end_labels:
+        ended_text += ". End dates on those rows: " + ", ".join(end_labels)
+    parts.append(ended_text + ".")
+    return " ".join(parts)
+
+
+def _added_takeaway(added):
+    if len(added) != 1:
+        return (
+            _count_phrase(len(added), "new row was", "new rows were")
+            + " recorded. The rates are in the new-models section. They are not per-second price changes."
+        )
+    event = added[0]
+    name = event.get("model_name") or event.get("model") or "New row"
+    platform = event.get("platform") or ""
+    where = f"{name} on {platform}" if platform else name
+    what = (event.get("what") or "New row.").strip()
+    if what[-1:] not in ".!?":
+        what += "."
+    checked = event.get("checked") or event.get("date")
+    sentence = f"{where}: new row, not a per-second price change. {what}"
+    if checked:
+        sentence += f" Checked {long_date(checked)}."
+    return sentence
+
+
+def _cited_dates(report, events, prior_through):
+    dates = []
+    if report.get("through"):
+        dates.append(report["through"])
+    for event in report.get("changes") or []:
+        for key in ("date", "checked", "started", "ended"):
+            if event.get(key):
+                dates.append(event[key])
+    if events is not None:
+        catalog = catalog_for(events, report["through"], prior_through)
+        for group in catalog.values():
+            for event in group:
+                for key in ("date", "checked"):
+                    if event.get(key):
+                        dates.append(event[key])
+    return [day for day in dates if day]
+
+
+def report_content_date(report, events=None, prior_through=None):
+    """Latest date the report page actually cites. Not the build clock."""
+    dates = _cited_dates(report, events, prior_through)
+    return max(dates) if dates else report.get("through")
+
+
+def index_content_date(result, events, as_of):
+    """Latest logged date the index is summarizing, on or before as_of."""
+    as_of_s = parse_date(as_of).isoformat()
+    dates = []
+    for event in events or []:
+        for key in ("date", "checked"):
+            day = event.get(key)
+            if day and day <= as_of_s:
+                dates.append(day)
+    for report in result.get("reports") or []:
+        if report.get("through") and report["through"] <= as_of_s:
+            dates.append(report["through"])
+    return max(dates) if dates else None
+
+
+def render_analysis(report, events, prior_through=None, link_fn=None):
+    """Short read of this week's rows. Every figure comes from those rows."""
+    catalog = catalog_for(events, report["through"], prior_through)
+    price_rows = _of_kind(report, "price")
+    started = _of_kind(report, "promo_started")
+    ended = _of_kind(report, "promo_ended")
+    groups = _price_groups(price_rows)
+    highs, lows = _extreme_groups(groups)
+    extreme_keys = {key for key, _events in highs + lows}
+    parts = [
+        "<h2>What changed</h2>",
+        f"<p>{_escape(_what_changed_text(report, catalog))}</p>",
+        "<h2>Biggest price moves</h2>",
+    ]
+    if not price_rows:
+        parts.append(f"<p>{_escape(NO_PRICE_NOTE)}</p>")
+    else:
+        items = []
+        for key, grouped in highs + lows:
+            items.append(f"<li>{_group_sentence(key, grouped, link_fn)}</li>")
+        signs = []
+        for event in price_rows:
+            old = Decimal(str(event.get("old_usd_per_second")))
+            new = Decimal(str(event.get("new_usd_per_second")))
+            signs.append((new > old) - (new < old))
+        if signs and all(sign > 0 for sign in signs):
+            items.append("<li>Every per-second change in this report is higher than the rate it replaced.</li>")
+        elif signs and all(sign < 0 for sign in signs):
+            items.append("<li>Every per-second change in this report is lower than the rate it replaced.</li>")
+        parts.append("<ul>" + "".join(items) + "</ul>")
+    takeaways = []
+    for key, grouped in groups:
+        if key in extreme_keys:
+            continue
+        takeaways.append(("html", _group_sentence(key, grouped, link_fn)))
+    takeaways.append(("text", _promo_takeaway(started, ended)))
+    if catalog.get("added") and len(takeaways) < 4:
+        takeaways.append(("text", _added_takeaway(catalog["added"])))
+    if len(takeaways) < 2:
+        takeaways.append((
+            "text",
+            f"This report covers {range_phrase(report['covered_from'], report['covered_through'])}.",
+        ))
+    takeaways = takeaways[:4]
+    parts.append("<h2>Takeaways</h2><ul>")
+    for kind, item in takeaways:
+        parts.append(f"<li>{item if kind == 'html' else _escape(item)}</li>")
+    parts.append("</ul>")
+    return "".join(parts)
+
+
 def render_report_body(report, events, prior_through=None, link_fn=None):
     catalog = catalog_for(events, report["through"], prior_through)
     # Promo sections list only the changes assigned to this report.
@@ -553,6 +842,7 @@ def render_report_body(report, events, prior_through=None, link_fn=None):
     ]
     for paragraph in report_paragraphs(report):
         parts.append(f"<p>{_escape(paragraph)}</p>")
+    parts.append(render_analysis(report, events, prior_through, link_fn))
     parts.append("<h2>Price changes</h2>")
     if price_rows:
         parts.append(render_change_table(price_rows, link_fn))
@@ -580,7 +870,7 @@ def render_report_body(report, events, prior_through=None, link_fn=None):
 def render_index_body(result, events, href_fn=None, public_log=False):
     parts = [
         f"<h1>{_escape(INDEX_H1)}</h1>",
-        f'<p class="lead">{_escape(INDEX_DESCRIPTION)}</p>',
+        f'<p class="lead">{_escape(INDEX_LEAD)}</p>',
     ]
     for paragraph in index_paragraphs(result, events):
         parts.append(f"<p>{_escape(paragraph)}</p>")
