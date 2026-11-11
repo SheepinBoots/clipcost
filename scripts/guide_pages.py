@@ -210,6 +210,7 @@ def render(g):
             ("What is the cheapest AI video generator right now?", "/guides/cheapest-ai-video-generator/", g["cheapest_blurb"]()),
             ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/", g["hf_blurb"]()),
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/", project_cost_sentence(3)),
+            ("Is there a truly unlimited Seedance 2.5 plan?", "/guides/seedance-2-5-unlimited/", g["seedance_unlimited_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))

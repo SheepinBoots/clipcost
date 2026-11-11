@@ -144,17 +144,17 @@
    "percent": 30,
    "bonus_credits": null,
    "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
+   "end": "2026-11-11",
+   "end_is_estimate": true,
+   "status": "ended",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
    "source_quote": "30% OFF. GPT IMAGE 2.6, SEEDREAM 5.0 PRO & NANO BANANA PRO UNLIMITED.",
-   "verified_date": "2026-11-06",
+   "verified_date": "2026-11-11",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Higgsfield's advertised percent is measured against its own anchor prices. This 30% is not applied to $/s. Checkout annual prices are the Plus, Ultra, and Starter deals."
+   "notes": "Higgsfield's advertised percent is measured against its own anchor prices. This 30% is not applied to $/s. Checkout annual prices are the Plus, Ultra, and Starter deals. Checked 2026-11-11. The 30% OFF banner is gone. The page header now says 60% OFF and '11.11 sale ends on Nov 15. Don't miss your chance to get up to 60% OFF.' That banner is measured against Higgsfield's anchor prices; the checkout prices are the Plus and Ultra annual and first-month deals. The end date is this check, not a date the page named."
   },
   {
    "id": "hf-plus-annual",
@@ -323,17 +323,17 @@
    "price_before": 19,
    "price_after": null,
    "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
+   "end": "2026-11-11",
+   "end_is_estimate": true,
+   "status": "ended",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
    "source_quote": "Annual discounts: Starter 30%.",
-   "verified_date": "2026-10-20",
+   "verified_date": "2026-11-11",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "The pricing page lists Starter at 30% off annually. The checked Starter price is $19 for monthly and annual, so no lower checkout price is applied to $/s."
+   "notes": "The pricing page lists Starter at 30% off annually. The checked Starter price is $19 for monthly and annual, so no lower checkout price is applied to $/s. Checked 2026-11-11. On both the Monthly and Annual toggles the pricing page shows Starter at $19 ('Billed monthly' and '/mo, billed yearly') with no Starter discount label, so the 30% annual discount is no longer stated. The end date is this check, not a date the page named."
   },
   {
    "id": "hf-kling3-unlimited-7d",
@@ -395,38 +395,37 @@
    "percent": null,
    "bonus_credits": null,
    "start": null,
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
+   "end": "2026-11-11",
+   "end_is_estimate": true,
+   "status": "ended",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
    "source_quote": "Get GPT Image 2.6, Seedream 5.0 Pro & Nano Banana Pro Unlimited on Ultra plan for 7 days with Special 30% discount",
-   "verified_date": "2026-11-06",
+   "verified_date": "2026-11-11",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Checked 2026-11-06. Ultra includes 7 days of unlimited Seedance 2.5, GPT Image 2.6, Seedream 5.0 Pro, and Nano Banana Pro 2K, with a special 30% discount. Nano Banana Pro, Seedream, and GPT Image are image models. Seedance 2.5 on Higgsfield is not in the price catalog, so this is not turned into a $/s. The 30% figure is not applied (see the banner deal). The 7 days start at signup."
+   "notes": "Checked 2026-11-06. Ultra includes 7 days of unlimited Seedance 2.5, GPT Image 2.6, Seedream 5.0 Pro, and Nano Banana Pro 2K, with a special 30% discount. Nano Banana Pro, Seedream, and GPT Image are image models. Seedance 2.5 on Higgsfield is not in the price catalog, so this is not turned into a $/s. The 30% figure is not applied (see the banner deal). The 7 days start at signup. Checked 2026-11-11. The pricing page no longer shows this 7-day Ultra bundle or the special 30% discount. Ultra now lists 14 days of unlimited Seedance 2.5 (annual 1080p, monthly 720p) and 60 days of unlimited Nano Banana Pro, Seedream 5.0 Pro, GPT Image 2.5 and GPT Image 2.6 at 2K (see the 11.11 Seedance 2.5 deal). The end date is this check, not a date the page named."
   },
   {
    "id": "hf-seedance-business-30d",
    "vendor": "Higgsfield",
    "type": "unlimited_window",
-   "title": "Seedance 2.5 unlimited for 30 days on Business",
+   "title": "Seedance 2.5 unlimited for 30 days on Business Scale (annual)",
    "models": [
     "seedance-2-5"
    ],
    "plans": [
-    "Business"
+    "Scale"
    ],
    "conditions": {
     "new_users_only": false,
-    "annual_only": false,
+    "annual_only": true,
     "first_months": null,
     "max_resolution": null,
     "web_only": true,
     "code": null,
-    "standing": false,
-    "signup_window_days": 30
+    "standing": false
    },
    "percent": null,
    "bonus_credits": null,
@@ -436,11 +435,34 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "30-day unlimited Seedance 2.5 on business plans only.",
-   "verified_date": "2026-10-20",
+   "source_quote": "Scale $80 /seat/mo, yearly. 30-day unlimited with business verification. Unlimited Seedance 2.5 Special 25s, 720p.",
+   "verified_date": "2026-11-11",
    "link_url": "https://higgsfield.ai/pricing",
-   "math": "unlimited",
-   "notes": "Business plan price is not in the catalog, so there is no break-even seconds. Web app only."
+   "math": "none",
+   "notes": "Checked 2026-11-11 on the Business plans tab of higgsfield.ai/pricing. Scale annual is $80 per seat per month, billed yearly (list $215), with 30 days of unlimited Seedance 2.5 at up to 25-second clips and 720p, after business verification. Scale monthly is $120 per seat per month with 7 days of the same Seedance 2.5 window. The cards show 5 seats and say Scale workspaces are 5 to 15 members. Team ($45 annual, $55 monthly per seat) lists unlimited Seedance 2.0 at 15s, 720p, not Seedance 2.5. Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods. Business plan prices are not in the price catalog, so this is not turned into a $/s.",
+   "show_on_rows": false,
+   "windows": [
+    {
+     "plan": "Scale",
+     "billing": "annual",
+     "usd_seat_month": 80,
+     "seats": 5,
+     "days": 30,
+     "max_clip_seconds": 25,
+     "resolution": "720p",
+     "quote": "Scale $215 $80 /seat/mo, yearly. 5 seats. 30-day unlimited with business verification. Unlimited Seedance 2.5 Special 25s, 720p."
+    },
+    {
+     "plan": "Scale",
+     "billing": "monthly",
+     "usd_seat_month": 120,
+     "seats": 5,
+     "days": 7,
+     "max_clip_seconds": 25,
+     "resolution": "720p",
+     "quote": "Scale $215 $120 per seat/mo. 45% OFF. 5 seats. 7-day unlimited with business verification. Unlimited Seedance 2.5 Special 25s, 720p."
+    }
+   ]
   },
   {
    "id": "hf-seedance-unlimited-7d",
@@ -469,17 +491,93 @@
    "percent": null,
    "bonus_credits": null,
    "start": "2026-10-29",
-   "end": null,
-   "end_is_estimate": false,
-   "status": "live",
+   "end": "2026-11-11",
+   "end_is_estimate": true,
+   "status": "ended",
    "source_url": "https://x.com/higgsfield/status/2115929160447393797",
    "source_kind": "x_post",
    "source_quote": "Unlimited Seedance 2.5 on Higgsfield for 7 days. Zero credit cost, all week. Available now for new users. Limited-time offer, terms apply.",
-   "verified_date": "2026-10-30",
+   "verified_date": "2026-11-11",
    "link_url": "https://higgsfield.ai/",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Checked 2026-10-30. New users only. The 7 days start at signup, and the posts give no calendar end date. Annual Pro, Plus, Max and Ultra: Seedance 2.5 up to 20 seconds at 720p (1080p on Ultra); GPT Image 2.5; Nano Banana Pro up to 2K; Seedream 5.0 Pro up to 2K. Monthly Max and Ultra: Seedance 2.5 up to 20 seconds at 480p (Max) or 720p (Ultra); GPT Image 2.5; Nano Banana Pro up to 2K; Seedream 5.0 Pro up to 2K. Monthly Pro and Plus: GPT Image 2.5 and Seedream 5.0 Pro up to 2K. Limited-time offer, terms apply. Plan caps: https://x.com/higgsfield/status/2115929163010064546. Seedance 2.5 on Higgsfield is not in the price catalog, so this is not turned into a $/s."
+   "notes": "Checked 2026-10-30. New users only. The 7 days start at signup, and the posts give no calendar end date. Annual Pro, Plus, Max and Ultra: Seedance 2.5 up to 20 seconds at 720p (1080p on Ultra); GPT Image 2.5; Nano Banana Pro up to 2K; Seedream 5.0 Pro up to 2K. Monthly Max and Ultra: Seedance 2.5 up to 20 seconds at 480p (Max) or 720p (Ultra); GPT Image 2.5; Nano Banana Pro up to 2K; Seedream 5.0 Pro up to 2K. Monthly Pro and Plus: GPT Image 2.5 and Seedream 5.0 Pro up to 2K. Limited-time offer, terms apply. Plan caps: https://x.com/higgsfield/status/2115929163010064546. Seedance 2.5 on Higgsfield is not in the price catalog, so this is not turned into a $/s. Checked 2026-11-11. higgsfield.ai/pricing no longer shows a 7-day new-user window with 20-second caps on annual plans. It shows plan-specific 11.11 windows instead (see the 11.11 Seedance 2.5 deal) and does not say new users only. The end date is this check, not a date the page named."
+  },
+  {
+   "id": "hf-seedance-unlimited-1111",
+   "vendor": "Higgsfield",
+   "type": "unlimited_window",
+   "title": "11.11 sale: 7 to 14 days of unlimited Seedance 2.5 on Plus and Ultra",
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [
+    "Plus",
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": true,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_kind": "pricing_page",
+   "source_quote": "Unlimited for 14 days. Unlimited Seedance 2.5 30s 720p. 11.11 sale ends on Nov 15.",
+   "verified_date": "2026-11-11",
+   "link_url": "https://higgsfield.ai/pricing",
+   "math": "none",
+   "show_on_rows": false,
+   "windows": [
+    {
+     "plan": "Plus",
+     "billing": "annual",
+     "plan_id": "hf-plus-annual",
+     "days": 14,
+     "max_clip_seconds": 30,
+     "resolution": "720p",
+     "quote": "Plus $59 $35 /mo, billed yearly. Unlimited for 14 days. Unlimited Seedance 2.5 30s 720p."
+    },
+    {
+     "plan": "Ultra",
+     "billing": "annual",
+     "plan_id": "hf-ultra-annual",
+     "days": 14,
+     "max_clip_seconds": 30,
+     "resolution": "1080p",
+     "quote": "Ultra $129 $65 /mo, billed yearly. Unlimited for 14 days. Unlimited Seedance 2.5 30s 1080p."
+    },
+    {
+     "plan": "Plus",
+     "billing": "monthly",
+     "plan_id": "hf-plus-monthly",
+     "price_deal": "hf-plus-monthly-first",
+     "days": 7,
+     "max_clip_seconds": 20,
+     "resolution": "480p",
+     "quote": "Plus $59 $47 billed monthly, renews at $59. Unlimited for 7 days. Unlimited Seedance 2.5 20s 480p."
+    },
+    {
+     "plan": "Ultra",
+     "billing": "monthly",
+     "plan_id": "hf-ultra-monthly",
+     "price_deal": "hf-ultra-monthly-first",
+     "days": 14,
+     "max_clip_seconds": 20,
+     "resolution": "720p",
+     "quote": "Ultra $129 $79 billed monthly, renews at $129. Unlimited for 14 days. Unlimited Seedance 2.5 20s 720p."
+    }
+   ],
+   "notes": "Checked 2026-11-11 on higgsfield.ai/pricing (Annual and Monthly toggles, rendered). Annual Plus ($35/mo billed yearly): 14 days of unlimited Seedance 2.5, 30-second clips, 720p. Annual Ultra ($65/mo billed yearly): 14 days, 30s, 1080p. Monthly Plus ($47 first month, renews at $59): 7 days, 20s, 480p. Monthly Ultra ($79 first month, renews at $129): 14 days, 20s, 720p. Starter lists no Seedance 2.5 unlimited window. The page does not say new users only or when the days start. The cards say 'Unlimited sale ends in' with a countdown that reached zero at Nov 15 00:00 UTC (Nov 14, 4 pm PT) when checked, and the header says '11.11 sale ends on Nov 15.' Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods. Seedance 2.5 on Higgsfield plans is not in the price catalog, so this is not turned into a $/s."
   },
   {
    "id": "hf-kling4-launch",
@@ -1243,6 +1341,44 @@
    "math": "none",
    "show_on_rows": false,
    "notes": "Checked 2026-11-08 on https://fal.ai/flux-3-max. Page says FLUX 3 Max is 50% off until November 21: $0.085/s at 720p, list $0.17, billed per second of output, no minimums or subscription; text-to-video and image-to-video cost the same. Follows the 75% launch rate (fal-flux3-75), which ended November 7. FLUX 3 Max is not in the VidFare catalog, so the 50% is not turned into a $/s."
+  },
+  {
+   "id": "hf-seedance-33d-aug",
+   "vendor": "Higgsfield",
+   "type": "unlimited_window",
+   "title": "Up to 33 days of unlimited Seedance 2.5 (activate before Aug 9)",
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [
+    "Pro",
+    "Plus",
+    "Max",
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": "720p",
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "start": "2026-08-06",
+   "end": "2026-08-09",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://higgsfield.ai/blog/33-days-unlimited-seedance-2-5",
+   "source_kind": "blog",
+   "source_quote": "Higgsfield just launched a new Unlimited Seedance offer, running up to 33 days, available to anyone who activates it before August 9.",
+   "verified_date": "2026-11-11",
+   "link_url": "https://higgsfield.ai/blog/33-days-unlimited-seedance-2-5",
+   "math": "none",
+   "show_on_rows": false,
+   "notes": "Checked 2026-11-11 on Higgsfield's blog post (published 2026-08-06). Seedance 2.5 at up to 720p for 22 to 33 days by plan and billing, with max clips from 10 seconds (monthly Plus) to 30 seconds (annual Ultra 9000). Monthly Pro was not included. The clock started when access was activated, and the post says the Unlimited toggle in the model menu had to be on, or generations drew from credits. The end date is the activation deadline, not when the last window closed."
   }
  ],
  "history": [

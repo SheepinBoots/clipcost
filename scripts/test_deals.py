@@ -60,7 +60,8 @@ def main():
     close(adj["usd"], 0.0175)
     close(adj["list_usd"], 0.025)
     # Banner percent is not applied to rows.
-    banner = by_id(live, "hf-banner-30")
+    # Archived 2026-11-11 when the page dropped it. Re-check the math as if it were live.
+    banner = dict(by_id(doc["deals"], "hf-banner-30"), status="live")
     for row in db["rows"]:
         if deals.adjustment(banner, row, plans) is not None:
             raise SystemExit("banner percent leaked onto a row")

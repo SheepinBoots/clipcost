@@ -25,6 +25,7 @@ GUIDE_URLS = (
     "https://vidfare.com/guides/cheapest-ai-video-generator/",
     "https://vidfare.com/guides/is-higgsfield-worth-it/",
     "https://vidfare.com/guides/ai-video-project-budget/",
+    "https://vidfare.com/guides/seedance-2-5-unlimited/",
 )
 
 
