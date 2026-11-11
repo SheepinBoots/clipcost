@@ -163,7 +163,30 @@ def retired(it, today):
     if it.get("status") == "discontinued":
         return True
     end = it.get("discontinued_on")
-    return bool(end and end < today)
+    if end and end < today:
+        return True
+    # A Flow model Google says retires on a date is off the help page from that day.
+    gone = it.get("retiring_on")
+    return bool(gone and gone <= today)
+
+def flow_records(db):
+    """Google Flow plan, credit-cost, and notice records. Each has its own source and checks."""
+    flow = db.get("flow") or {}
+    out = []
+    for pid, p in (flow.get("plans") or {}).items():
+        out.append(("flow_plan", pid, p))
+    for key in ("daily", "plan_credits_check"):
+        if flow.get(key):
+            out.append(("flow_" + key, key, flow[key]))
+    for c in flow.get("credit_costs") or []:
+        out.append(("flow_cost", c["id"], c))
+    for n in flow.get("notices") or []:
+        out.append(("flow_notice", n["id"], n))
+    return out
+
+def flow_items(db):
+    """Flow records in the (kind, item) shape the check loop reads. They are reported, never auto-applied."""
+    return [(kind, dict(rec, id=rid)) for kind, rid, rec in flow_records(db)]
 
 def stamp_checked(db, texts, findings, today):
     """Re-date rows whose own checks passed. A plan-price finding blocks rows derived from that plan."""
@@ -177,6 +200,10 @@ def stamp_checked(db, texts, findings, today):
     for pid, p in db["plans"].items():
         if p.get("source") in texts and pid not in bad_plans:
             p["checked"] = today
+    bad_flow = {(f.get("kind"), f["id"]) for f in findings}
+    for kind, rid, rec in flow_records(db):
+        if rec.get("source") in texts and (kind, rid) not in bad_flow:
+            rec["checked"] = today
 
 def expire_promos(db, today, log):
     """Remove promo rows whose end date has passed and record that in the change log."""
@@ -228,7 +255,7 @@ def main():
         print(f"{sid:12s} {report['sources'][sid]['status']}", file=sys.stderr)
 
     log = json.load(open(CHANGES)) if os.path.exists(CHANGES) else []
-    items = [("row", r) for r in db["rows"]] + [("plan", dict(p, id=k)) for k, p in db["plans"].items()]
+    items = [("row", r) for r in db["rows"]] + [("plan", dict(p, id=k)) for k, p in db["plans"].items()] + flow_items(db)
     counts = {"ok": 0, "changed": 0, "missing": 0, "skipped": 0}
     for kind, it in items:
         if it["source"] not in texts or retired(it, today): counts["skipped"] += 1; continue

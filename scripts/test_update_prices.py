@@ -54,6 +54,20 @@ def main():
     assert up.check(yearly, {"needle": "Pro yearly card ${N}/month", "expect": 21}) == ("ok", 21.0)
     assert up.check(yearly, {"needle": "Pro yearly was ${N}/month", "expect": 35}) == ("ok", 35.0)
     assert up.check("Pro yearly card $21 Max", {"needle": "Pro yearly card ${N}", "expect": 21}) == ("changed", 21000000.0)
+    # Google Flow plans, credit costs, and notices are checked like rows, against their own sources.
+    flow = up.flow_items(db)
+    kinds = {kind for kind, _ in flow}
+    assert {"flow_plan", "flow_cost", "flow_notice", "flow_daily", "flow_plan_credits_check"} <= kinds, kinds
+    for kind, rec in flow:
+        assert rec["source"] in db["sources"], (kind, rec["id"])
+        assert rec.get("checks"), (kind, rec["id"])
+        assert rec.get("source_url", "").startswith("https://"), (kind, rec["id"])
+        assert rec.get("checked"), (kind, rec["id"])
+    assert up.retired({"retiring_on": "2026-12-05"}, "2026-12-04") is False
+    assert up.retired({"retiring_on": "2026-12-05"}, "2026-12-05") is True
+    lite = next(rec for kind, rec in flow if rec["id"] == "flow-veo31-lite")
+    text = "Veo 3.1 - Lite 4s, 6s, 8s videos Non-Ultra subscribers: 10 Ultra subscribers: 5 Veo 3.1 - Fast"
+    assert [up.check(text, c)[0] for c in lite["checks"] if not c.get("phrase")] == ["ok", "ok"]
     print("ok")
 
 

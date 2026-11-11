@@ -1061,6 +1061,7 @@ GUIDE_CRUMBS = {
     "/guides/cheapest-ai-video-generator/": "Cheapest by model",
     "/guides/is-higgsfield-worth-it/": "Higgsfield",
     "/guides/ai-video-project-budget/": "Project budget",
+    "/guides/google-flow-credits-calculator/": "Google Flow credits",
 }
 
 def guide_crosslinks(path):
@@ -1099,6 +1100,7 @@ def guide_page(path, title, desc, body, faqs):
             ("What is the cheapest AI video generator right now?", "/guides/cheapest-ai-video-generator/"),
             ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/"),
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/"),
+            ("How many Google Flow credits does a Veo 3.1 or Omni Flash video cost?", "/guides/google-flow-credits-calculator/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1636,6 +1638,9 @@ for slug, m in models.items():
         weekly_report.report_h1(LATEST_REPORT) if LATEST_REPORT else "",
     )
     cross_html = (cross + "\n") if cross else ""
+    flow_note = ""
+    if slug in ("veo-3-1", "gemini-omni-flash") and db.get("flow"):
+        flow_note = f' Paying with Google Flow credits? See the <a href="{root("/guides/google-flow-credits-calculator/")}">Google Flow credits calculator</a>.'
     body = f"""<p class="small"><a href="{root("/")}">Prices</a> › {e(m['name'])}</p>
 <h1>{e(m['name'])} price per second ({MONTH})</h1>
 {byline_html()}
@@ -1647,7 +1652,7 @@ for slug, m in models.items():
 {deals_html}
 <h2>All {e(m['name'])} prices</h2>
 {wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
-<p class="small">A row labelled estimated from credit plan is not a list price. Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.</p>
+<p class="small">A row labelled estimated from credit plan is not a list price. Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.{flow_note}</p>
 {news_box()}
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {faq_html(faqs)}
@@ -1784,7 +1789,7 @@ calc_res_opts = '<option value="">Any</option>' + "".join(
 )
 calc = f"""<h1>AI video credit calculator</h1>
 <p class="lead">{calc_lead}</p>
-<p>Pricing a finished video from dollars per second? Use the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a>.</p>
+<p>Pricing a finished video from dollars per second? Use the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a>. Using Google Flow credits from a Google AI plan? Use the <a href="{root("/guides/google-flow-credits-calculator/")}">Google Flow credits calculator</a>.</p>
 <div class="calc"><div class="card">
 <div class="field"><label class="small" for="plan">Plan</label><select id="plan">{plan_opts}</select></div>
 <div class="field"><label class="small" for="used">% of credits you actually use</label><span class="ctl"><input id="used" type="number" value="100" style="width:100px" aria-describedby="usedMsg"> %</span></div>
@@ -2102,6 +2107,7 @@ deals_body = f"""<h1>AI video deals</h1>
 <div class="dealgrid" id="liveDeals">{live_html}</div>
 <h2>When these vendors run sales</h2>
 <p>Launch weeks are the usual pattern: a new video model is unlimited on credit plans and 30–75% off on APIs for one to four weeks. The holiday window, about Nov 20 through Jan 8, is the long one. In 2025 Higgsfield posted several waves, Magnific used a 50% code, and Krea posted 40% off yearly plans. End dates move. They get extended, reopened, or left as "limited time." If a page does not name an end date, this site does not invent one. <a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a>.</p>
+<p class="small">Spending Google AI plan credits on Veo 3.1 or Omni Flash? The <a href="{root("/guides/google-flow-credits-calculator/")}">Google Flow credits calculator</a> turns them into videos and dollars per second.</p>
 <h2>Past deals</h2>
 <div class="dealgrid" id="archive">{archive_html}</div>
 <p class="small"><a href="{root("/deals.xml")}">Deals RSS</a> · {json_link("/deals.json", "deals.json")}</p>
@@ -2880,6 +2886,8 @@ def write_llms():
 
 import guide_pages
 guide_pages.render(globals())
+import flow_guide
+flow_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers
@@ -2905,6 +2913,7 @@ FIELD_HELP = {
     "unverified": "Things we looked for and could not confirm, so they are not prices.",
     "last_full_check": "Date of the last daily check that fetched every source.",
     "variation_schema": "A short reminder of what the variation object on a row means.",
+    "flow": "Google Flow plans, credits per video, and Google's quoted notices for the Flow credits guide. Not price rows; the daily check re-reads them.",
     "name": "Display name.",
     "maker": "Company that makes the model.",
     "url": "Page the check reads.",
@@ -3133,6 +3142,7 @@ page("/mcp/", MCP_TITLE, MCP_DESC, mcp_body, "", ld_script(mcp_ld))
 
 urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/", "/mcp/"]
 urls += [path for path, _label in GUIDE_LINKS]
+urls.append("/guides/google-flow-credits-calculator/")
 if NEWSLETTER_ENABLED:
     urls.append("/newsletter/")
 urls += ["/changes/", "/about/", "/advertise/", "/contact/"]
