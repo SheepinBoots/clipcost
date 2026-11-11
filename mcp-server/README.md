@@ -27,19 +27,52 @@ Responses are cached for 5 minutes. If a fetch fails, or the catalog does not st
 
 ## Usage counts
 
-A `tools/call` writes one Workers Analytics Engine point: blob1 is the tool name (`unknown` if it is not one of the five tools), blob2 is `success` or `error`, and double1 is `1`. The engine stores the time. The UTC day is that timestamp. The read script also prints when that UTC midnight falls in Pacific Time. Nothing else is stored: no arguments, prompt, IP address, user agent, session id, or country. There is no public stats URL.
+Each request writes one Workers Analytics Engine point per JSON-RPC message. A batch of up to 20 messages writes one point each. A longer batch writes a single point with method `batch`. The write is `env.USAGE?.writeDataPoint(...)` with no `await`. A missing binding or a throw is ignored, so logging cannot change the response. Workers Analytics Engine is on the free tier. The dataset is created on the first write. There is no public stats URL.
 
-Counts are tool requests, not unique people, visits, or sponsor impressions. A retry, a second call from the same person, and a client that does not send the test header each add one. Requests with `X-VidFare-Test: 1`, and `POST`s to localhost or `127.0.0.1` (`wrangler dev`), are not written. `initialize`, `tools/list`, notifications, `OPTIONS`, and `GET` are not written. A crawler or someone else's test client that calls a tool is counted.
+Points written before this layout used blob1 as the tool name and blob2 as `success` or `error`. New points set blob8 to `v2`. Queries below keep those layouts apart.
 
-The write is not awaited and a failure is ignored, so a counter error does not change the tool response.
+`index1` is the JSON-RPC method bucket. It is the sampling key. It is not a person, address, or client name.
 
-`wrangler.jsonc` binds `USAGE` to the dataset `vidfare_mcp_usage`. The dataset is created on the first write. Deploying that binding uses the existing Worker deploy token (Workers Scripts Edit or Workers Admin, Workers Routes Edit, and Zone Read). It does not need Analytics Read. Reading the counts does. Create a separate token with **Account → Account Analytics → Read**, scoped to the VidFare account, and run:
+| Field | Values |
+| --- | --- |
+| blob1 `method` | `initialize`, `tools/list`, `tools/call`, `notifications/*`, `other`, or `batch` |
+| blob2 `tool` | A known tool name on `tools/call`, otherwise `unknown`. `none` for every other method |
+| blob3 `client` | Coarse client bucket, at most 40 characters. See below |
+| blob4 `args` | Comma-separated argument names on `tools/call`, such as `model,seconds`. Empty when there are none. Never the values |
+| blob5 `http` | `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, or `other` |
+| blob6 `status` | `2xx`, `3xx`, `4xx`, `5xx`, or `other` |
+| blob7 `probe` | `1` when the user-agent bucket is a known probe, otherwise `0` |
+| double1 | The same probe flag as a number, `1` or `0` |
+| blob8 | Layout marker `v2` |
+
+On `initialize`, blob3 comes from `params.clientInfo.name` and a short version when those are present. The name is lowercased, punctuation becomes hyphens, and the label is cut to 40 characters. A recognisable product becomes a fixed bucket such as `ai:cursor`, `ai:claude`, `ai:chatgpt`, or `ai:openai`. An email address, IP, or UUID becomes `other`. Every other request uses the user-agent bucket instead, and the raw user agent is never stored.
+
+User-agent buckets:
+
+- `probe:<name>` for directory and liveness probes: mcpbeat, AgentRank, alalanet, histor, EveryMCP, mcptry, Glama, MCPWatch, and similar checkers (Smithery, PulseMCP, mcp.so, UptimeRobot, Pingdom, Checkly, StatusCake, Better Stack, kube-probe, GoogleHC).
+- `ai:<name>` for known AI clients: ChatGPT, OpenAI, Claude, Anthropic, Cursor, Copilot, Perplexity, Windsurf, Gemini, DeepSeek, Mistral, Grok, Cline, Replit, Devin, Aider.
+- `generic:<lib>` for node, python-httpx, python-requests, Go-http-client, undici, coda-agent-runtime, Talaria, and curl.
+- `other` when none of those match.
+
+`likely_probe` follows the user-agent bucket, including when `initialize` also sent a client name. An empty user agent is `other` and not a probe.
+
+Not stored: IP addresses, the raw user agent, any other header, the request or response body, argument values, the question, session ids, and country. Counts are requests, not unique people, visits, or sponsor impressions. A retry adds another point. Requests with `X-VidFare-Test: 1`, and requests to localhost or `127.0.0.1` (`wrangler dev`), are not written.
+
+`wrangler.jsonc` binds `USAGE` to the dataset `vidfare_mcp_usage`. Deploying that binding uses the existing Worker deploy token (Workers Scripts Edit or Workers Admin, Workers Routes Edit, and Zone Read). It does not need Analytics Read. Reading the counts does. Create a separate token with **Account → Account Analytics → Read**, scoped to the VidFare account. Do not put that token in the repo.
+
+Daily counts for the last 7 days, by method, tool, and client bucket, with probe and non-probe splits. `SUM(_sample_interval)` is the count:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/analytics_engine/sql" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data "SELECT toDate(timestamp) AS day, blob1 AS method, blob2 AS tool, blob3 AS client, SUM(_sample_interval) AS requests, SUM(_sample_interval * double1) AS probes, SUM(_sample_interval) - SUM(_sample_interval * double1) AS non_probes FROM vidfare_mcp_usage WHERE blob8 = 'v2' AND timestamp > NOW() - INTERVAL '7' DAY GROUP BY day, method, tool, client ORDER BY day, method, tool, client"
+```
+
+The same query is what `scripts/mcp_usage.py` runs (default 30 days):
 
 ```bash
 CLOUDFLARE_ACCOUNT_ID=... CLOUDFLARE_API_TOKEN=... python3 scripts/mcp_usage.py
 ```
-
-Do not put that token in the repo.
 
 ## Local
 
@@ -72,7 +105,7 @@ Token, one Cloudflare account (the account that owns vidfare.com) and one zone (
 | Zone `vidfare.com` | Workers Routes → Edit | Attaches the custom domain `mcp.vidfare.com`. Current docs call this Workers Routes Write. |
 | Zone `vidfare.com` | Zone → Read | Wrangler looks up the zone id for `vidfare.com`. |
 
-Do not add Workers KV, R2, Tail, Account Settings, DNS, or user membership permissions. The Worker has no bindings.
+Do not add Workers KV, R2, Tail, Account Settings, DNS, or user membership permissions. The only binding is the Analytics Engine dataset `vidfare_mcp_usage`.
 
 DNS record on `vidfare.com`, created in the dashboard (the token above does not edit DNS):
 

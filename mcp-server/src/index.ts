@@ -4,7 +4,7 @@ import { z } from "zod";
 import { CatalogError, loadLiveCatalog } from "./catalog.ts";
 import { DEALS_URL, PRICES_URL, runTool, SITE } from "./tools.ts";
 import { withUtm } from "./links.ts";
-import { skipUsage, tallyResponse, toolCallsFromText, type UsageDataset } from "./usage.ts";
+import { buildUsagePoints, skipUsage, writeUsagePoints, type UsageDataset } from "./usage.ts";
 
 export interface Env {
   USAGE?: UsageDataset;
@@ -162,60 +162,81 @@ function glamaClaim(request: Request): Response | null {
   return new Response(request.method === "HEAD" ? null : GLAMA_CLAIM, { status: 200, headers });
 }
 
-function scheduleUsage(
-  request: Request,
-  response: Response,
-  env: Env,
-  ctx: { waitUntil?: (promise: Promise<unknown>) => void },
-  bodyText: string,
-): void {
+const USAGE_BODY_MAX = 65_536;
+
+/** Classify a POST /mcp body. The original request body is left for the transport. */
+async function usageBody(request: Request): Promise<string> {
+  if (skipUsage(request) || request.method !== "POST") return "";
+  let path = "";
+  try {
+    path = new URL(request.url).pathname;
+  } catch {
+    return "";
+  }
+  if (path !== "/mcp") return "";
+  const declared = Number(request.headers.get("content-length") || "");
+  if (Number.isFinite(declared) && declared > USAGE_BODY_MAX) return "";
+  try {
+    const text = await request.clone().text();
+    return text.length > USAGE_BODY_MAX ? "" : text;
+  } catch {
+    return "";
+  }
+}
+
+function logUsage(request: Request, status: number, env: Env, bodyText: string): void {
   if (skipUsage(request)) return;
-  const tools = toolCallsFromText(bodyText);
-  if (!tools.length) return;
-  const copy = response.clone();
-  const job = tallyResponse(copy, tools, env.USAGE).catch(() => {});
-  if (ctx.waitUntil) ctx.waitUntil(job);
-  else void job;
+  try {
+    writeUsagePoints(env.USAGE, buildUsagePoints({
+      httpMethod: request.method,
+      status,
+      userAgent: request.headers.get("user-agent"),
+      bodyText,
+    }));
+  } catch {
+    // Classification failed. The response is already decided.
+  }
 }
 
 export default {
   async fetch(request: Request, env: Env = {}, ctx: { waitUntil?: (promise: Promise<unknown>) => void } = {}): Promise<Response> {
-    const url = new URL(request.url);
-    const claim = glamaClaim(request);
-    if (claim) return claim;
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: corsHeaders(request) });
-    }
-    if (url.pathname === "/") {
-      const headers = corsHeaders(request);
-      headers.set("content-type", "text/plain; charset=utf-8");
-      return new Response(
-        "VidFare MCP server. Streamable HTTP endpoint: /mcp\nDocs: https://vidfare.com/mcp/\n",
-        { headers },
-      );
-    }
-    if (url.pathname !== "/mcp") {
-      const headers = corsHeaders(request);
-      headers.set("content-type", "text/plain; charset=utf-8");
-      return new Response("Not found. The MCP endpoint is /mcp\n", { status: 404, headers });
-    }
-    let bodyText = "";
-    if (!skipUsage(request)) {
-      try {
-        bodyText = await request.clone().text();
-      } catch {
-        bodyText = "";
-      }
-    }
-    const mcp = createServer();
-    const transport = new WebStandardStreamableHTTPServerTransport({
-      sessionIdGenerator: undefined,
-      enableJsonResponse: true,
-    });
-    await mcp.connect(transport);
-    const response = await transport.handleRequest(request);
-    scheduleUsage(request, response, env, ctx, bodyText);
-    ctx.waitUntil?.(mcp.close());
-    return withCors(response, request);
+    const bodyText = await usageBody(request);
+    const response = await dispatch(request, ctx);
+    logUsage(request, response.status, env, bodyText);
+    return response;
   },
 };
+
+async function dispatch(
+  request: Request,
+  ctx: { waitUntil?: (promise: Promise<unknown>) => void },
+): Promise<Response> {
+  const url = new URL(request.url);
+  const claim = glamaClaim(request);
+  if (claim) return claim;
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders(request) });
+  }
+  if (url.pathname === "/") {
+    const headers = corsHeaders(request);
+    headers.set("content-type", "text/plain; charset=utf-8");
+    return new Response(
+      "VidFare MCP server. Streamable HTTP endpoint: /mcp\nDocs: https://vidfare.com/mcp/\n",
+      { headers },
+    );
+  }
+  if (url.pathname !== "/mcp") {
+    const headers = corsHeaders(request);
+    headers.set("content-type", "text/plain; charset=utf-8");
+    return new Response("Not found. The MCP endpoint is /mcp\n", { status: 404, headers });
+  }
+  const mcp = createServer();
+  const transport = new WebStandardStreamableHTTPServerTransport({
+    sessionIdGenerator: undefined,
+    enableJsonResponse: true,
+  });
+  await mcp.connect(transport);
+  const response = await transport.handleRequest(request);
+  ctx.waitUntil?.(mcp.close());
+  return withCors(response, request);
+}

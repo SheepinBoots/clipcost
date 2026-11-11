@@ -1,8 +1,12 @@
 /**
- * Anonymous tool-request counts.
+ * Anonymous request counts for Workers Analytics Engine.
  *
- * A point is the tool name and success or error. The engine adds the time.
- * Nothing from the caller is stored: no arguments, prompt, address, or header.
+ * A point is a coarse bucket: JSON-RPC method, tool name, client class,
+ * argument names, HTTP method, and status class. The engine adds the time.
+ * The sampling index is the method bucket. It is not a person or address.
+ *
+ * Never stored: IP addresses, the raw user agent, header values, request or
+ * response bodies, argument values, session ids, or account names.
  */
 
 export const KNOWN_TOOLS = [
@@ -15,15 +19,144 @@ export const KNOWN_TOOLS = [
 
 const KNOWN = new Set<string>(KNOWN_TOOLS);
 
-export type UsageOutcome = "success" | "error";
+/** Above this many JSON-RPC messages, one point with method `batch` is written. */
+export const BATCH_LOG_LIMIT = 20;
+
+const CLIENT_MAX = 40;
+const UA_SCAN_MAX = 512;
+const LAYOUT = "v2";
+
+const HTTP_METHODS = new Set(["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]);
+const ARG_NAME = /^[a-z][a-z0-9_]{0,31}$/;
+
+export interface UsageDataPoint {
+  indexes?: string[];
+  blobs?: string[];
+  doubles?: number[];
+}
 
 export interface UsageDataset {
-  writeDataPoint(event: { blobs?: string[]; doubles?: number[] }): void;
+  writeDataPoint(event: UsageDataPoint): void;
 }
+
+export interface UsageInput {
+  httpMethod: string;
+  status: number;
+  userAgent: string | null;
+  bodyText: string;
+}
+
+type MessageLog = {
+  method: string;
+  tool: string;
+  args: string;
+  client: string | null;
+};
+
+const PROBE_KEYS: ReadonlyArray<readonly [string, string]> = [
+  ["mcpbeat", "mcpbeat"],
+  ["agentrank", "agentrank"],
+  ["alalanet", "alalanet"],
+  ["everymcp", "everymcp"],
+  ["mcptry", "mcptry"],
+  ["mcpwatch", "mcpwatch"],
+  ["glama", "glama"],
+  ["smithery", "smithery"],
+  ["pulsemcp", "pulsemcp"],
+  ["mcp-so", "mcpso"],
+  ["mcpso", "mcpso"],
+  ["histor", "histor"],
+  ["uptimerobot", "uptimerobot"],
+  ["pingdom", "pingdom"],
+  ["kube-probe", "kube-probe"],
+  ["googlehc", "googlehc"],
+  ["checkly", "checkly"],
+  ["statuscake", "statuscake"],
+  ["betterstack", "betterstack"],
+  ["better-uptime", "betterstack"],
+];
+
+const AI_KEYS: ReadonlyArray<readonly [string, string]> = [
+  ["chatgpt", "chatgpt"],
+  ["openai", "openai"],
+  ["anthropic", "claude"],
+  ["claude", "claude"],
+  ["cursor", "cursor"],
+  ["github-copilot", "copilot"],
+  ["copilot", "copilot"],
+  ["perplexity", "perplexity"],
+  ["windsurf", "windsurf"],
+  ["gemini", "gemini"],
+  ["deepseek", "deepseek"],
+  ["mistral", "mistral"],
+  ["grok", "grok"],
+  ["xai", "grok"],
+  ["cline", "cline"],
+  ["replit", "replit"],
+  ["devin", "devin"],
+  ["aider", "aider"],
+  ["codex", "codex"],
+];
+
+const GENERIC_KEYS: ReadonlyArray<readonly [string, string]> = [
+  ["python-httpx", "python-httpx"],
+  ["python-requests", "python-requests"],
+  ["go-http-client", "go-http-client"],
+  ["coda-agent-runtime", "coda-agent-runtime"],
+  ["undici", "undici"],
+  ["talaria", "talaria"],
+  ["node-fetch", "node"],
+  ["node", "node"],
+  ["curl", "curl"],
+];
+
+const UA_RULES: ReadonlyArray<{ re: RegExp; label: string; probe: boolean }> = [
+  { re: /mcpbeat/i, label: "probe:mcpbeat", probe: true },
+  { re: /agentrank/i, label: "probe:agentrank", probe: true },
+  { re: /alalanet/i, label: "probe:alalanet", probe: true },
+  { re: /everymcp/i, label: "probe:everymcp", probe: true },
+  { re: /mcptry/i, label: "probe:mcptry", probe: true },
+  { re: /mcpwatch/i, label: "probe:mcpwatch", probe: true },
+  { re: /glama/i, label: "probe:glama", probe: true },
+  { re: /smithery/i, label: "probe:smithery", probe: true },
+  { re: /pulsemcp/i, label: "probe:pulsemcp", probe: true },
+  { re: /mcp\.so/i, label: "probe:mcpso", probe: true },
+  { re: /(?:^|[^a-z0-9])histor(?:[^a-z0-9]|$)/i, label: "probe:histor", probe: true },
+  { re: /uptimerobot/i, label: "probe:uptimerobot", probe: true },
+  { re: /pingdom/i, label: "probe:pingdom", probe: true },
+  { re: /kube-probe/i, label: "probe:kube-probe", probe: true },
+  { re: /googlehc/i, label: "probe:googlehc", probe: true },
+  { re: /checkly/i, label: "probe:checkly", probe: true },
+  { re: /statuscake/i, label: "probe:statuscake", probe: true },
+  { re: /better\s*uptime|betterstack/i, label: "probe:betterstack", probe: true },
+  { re: /chatgpt/i, label: "ai:chatgpt", probe: false },
+  { re: /openai/i, label: "ai:openai", probe: false },
+  { re: /anthropic|claude/i, label: "ai:claude", probe: false },
+  { re: /cursor/i, label: "ai:cursor", probe: false },
+  { re: /copilot/i, label: "ai:copilot", probe: false },
+  { re: /perplexity/i, label: "ai:perplexity", probe: false },
+  { re: /windsurf/i, label: "ai:windsurf", probe: false },
+  { re: /gemini/i, label: "ai:gemini", probe: false },
+  { re: /deepseek/i, label: "ai:deepseek", probe: false },
+  { re: /mistral/i, label: "ai:mistral", probe: false },
+  { re: /(?:^|[^a-z0-9])grok(?:[^a-z0-9]|$)/i, label: "ai:grok", probe: false },
+  { re: /(?:^|[^a-z0-9])xai(?:[^a-z0-9]|$)/i, label: "ai:grok", probe: false },
+  { re: /cline/i, label: "ai:cline", probe: false },
+  { re: /replit/i, label: "ai:replit", probe: false },
+  { re: /devin/i, label: "ai:devin", probe: false },
+  { re: /aider/i, label: "ai:aider", probe: false },
+  { re: /python-httpx/i, label: "generic:python-httpx", probe: false },
+  { re: /python-requests/i, label: "generic:python-requests", probe: false },
+  { re: /go-http-client/i, label: "generic:go-http-client", probe: false },
+  { re: /coda-agent-runtime/i, label: "generic:coda-agent-runtime", probe: false },
+  { re: /undici/i, label: "generic:undici", probe: false },
+  { re: /talaria/i, label: "generic:talaria", probe: false },
+  { re: /(?:^|[^a-z0-9])curl(?:\/|\s|$)/i, label: "generic:curl", probe: false },
+  { re: /node-fetch|(?:^|[^a-z0-9])node(?:\/|\s|$)/i, label: "generic:node", probe: false },
+];
 
 export function skipUsage(request: Request): boolean {
   if (request.headers.get("x-vidfare-test") === "1") return true;
-  if (request.method !== "POST") return true;
   let host = "";
   try {
     host = new URL(request.url).hostname.toLowerCase();
@@ -33,94 +166,197 @@ export function skipUsage(request: Request): boolean {
   return host === "localhost" || host === "127.0.0.1" || host === "::1" || host === "[::1]" || host === "0.0.0.0";
 }
 
-export function toolCalls(body: unknown): string[] {
-  const messages = Array.isArray(body) ? body : [body];
-  const names: string[] = [];
-  for (const message of messages) {
-    if (!message || typeof message !== "object") continue;
-    if ((message as { method?: unknown }).method !== "tools/call") continue;
-    const params = (message as { params?: { name?: unknown } }).params;
-    const name = params && typeof params.name === "string" ? params.name : "";
-    names.push(KNOWN.has(name) ? name : "unknown");
+export function bucketUserAgent(userAgent: string | null): { label: string; likelyProbe: boolean } {
+  if (!userAgent) return { label: "other", likelyProbe: false };
+  const sample = userAgent.trim().slice(0, UA_SCAN_MAX);
+  if (!sample) return { label: "other", likelyProbe: false };
+  for (const rule of UA_RULES) {
+    if (rule.re.test(sample)) return { label: rule.label, likelyProbe: rule.probe };
   }
-  return names;
+  return { label: "other", likelyProbe: false };
 }
 
-export function toolCallsFromText(text: string): string[] {
-  if (!text.trim()) return [];
-  try {
-    return toolCalls(JSON.parse(text));
-  } catch {
-    return [];
+/**
+ * Coarse label from initialize `clientInfo`, or null when name and version
+ * are both absent. Known products map to a fixed bucket. Anything else is
+ * `client:` plus a normalised slug, truncated to 40 characters. An email,
+ * IP address, or UUID becomes `other`.
+ */
+export function clientLabelFromInfo(name: unknown, version: unknown): string | null {
+  const nameText = clipString(name, 80);
+  const versionText = clipString(version, 32);
+  if (!nameText && !versionText) return null;
+  if (!nameText || isPersonal(nameText)) return "other";
+  const slug = normalizeSlug(nameText);
+  if (!slug) return "other";
+  const known = knownBucket(slug);
+  if (known) return known;
+  let label = `client:${slug}`;
+  const versionSlug = versionText ? safeVersion(versionText) : "";
+  if (versionSlug) {
+    const withVersion = `${label}@${versionSlug}`;
+    if (withVersion.length <= CLIENT_MAX) label = withVersion;
   }
+  return fitClient(label);
 }
 
-export function outcomesFrom(body: unknown, count: number): UsageOutcome[] {
-  const messages = Array.isArray(body) ? body : [body];
-  const outcomes: UsageOutcome[] = [];
-  for (const message of messages) {
-    if (!message || typeof message !== "object") continue;
-    const record = message as { error?: unknown; result?: { isError?: unknown } };
-    if (!("result" in record) && !("error" in record)) continue;
-    if (record.error) {
-      outcomes.push("error");
-      continue;
+export function buildUsagePoints(input: UsageInput): UsageDataPoint[] {
+  const ua = bucketUserAgent(input.userAgent);
+  const httpMethod = httpBucket(input.httpMethod);
+  const status = statusBucket(input.status);
+  const probeBlob = ua.likelyProbe ? "1" : "0";
+  const messages = messagesFrom(input.bodyText);
+  return messages.map((message) => {
+    const client = message.client || ua.label;
+    const method = message.method;
+    return {
+      indexes: [method],
+      blobs: [method, message.tool, fitClient(client), message.args, httpMethod, status, probeBlob, LAYOUT],
+      doubles: [ua.likelyProbe ? 1 : 0],
+    };
+  });
+}
+
+/** Fire-and-forget. A missing binding or a throw is ignored. Nothing is awaited. */
+export function writeUsagePoints(dataset: UsageDataset | undefined, points: UsageDataPoint[]): void {
+  for (const point of points) {
+    try {
+      const result = dataset?.writeDataPoint(point) as unknown;
+      if (result && typeof (result as { then?: unknown }).then === "function") {
+        void (result as Promise<unknown>).catch(() => {});
+      }
+    } catch {
+      // The count is optional. The response is already decided.
     }
-    if (record.result && typeof record.result === "object" && record.result.isError === true) {
-      outcomes.push("error");
-      continue;
-    }
-    outcomes.push("success");
-  }
-  if (outcomes.length !== count) return Array.from({ length: count }, () => "error");
-  return outcomes;
-}
-
-export function outcomesFromText(text: string, contentType: string, count: number): UsageOutcome[] {
-  try {
-    let body: unknown;
-    if (contentType.includes("text/event-stream")) {
-      const parsed = text.split("\n")
-        .filter((line) => line.startsWith("data:"))
-        .map((line) => line.slice(5).trim())
-        .filter(Boolean)
-        .map((line) => JSON.parse(line) as unknown);
-      body = parsed.length === 1 ? parsed[0] : parsed;
-    } else {
-      body = JSON.parse(text);
-    }
-    return outcomesFrom(body, count);
-  } catch {
-    return Array.from({ length: count }, () => "error");
   }
 }
 
-/** One point per tool call. A throw or a missing binding is ignored. */
-export function writeUsage(dataset: UsageDataset | undefined, tool: string, outcome: UsageOutcome): void {
+function messagesFrom(text: string): MessageLog[] {
+  const trimmed = text.trim();
+  if (!trimmed) return [blankMessage("other")];
   try {
-    dataset?.writeDataPoint({
-      blobs: [tool, outcome],
-      doubles: [1],
-    });
+    const parsed = JSON.parse(trimmed) as unknown;
+    if (Array.isArray(parsed)) {
+      if (parsed.length === 0) return [blankMessage("other")];
+      if (parsed.length > BATCH_LOG_LIMIT) return [blankMessage("batch")];
+      return parsed.map((message) => messageLog(message));
+    }
+    return [messageLog(parsed)];
   } catch {
-    // The count is optional. The tool response is already decided.
+    return [blankMessage("other")];
   }
 }
 
-export async function tallyResponse(
-  response: Response,
-  tools: string[],
-  dataset: UsageDataset | undefined,
-): Promise<void> {
-  try {
-    if (!response.ok) {
-      for (const tool of tools) writeUsage(dataset, tool, "error");
-      return;
-    }
-    const text = await response.text();
-    const outcomes = outcomesFromText(text, response.headers.get("content-type") || "", tools.length);
-    tools.forEach((tool, index) => writeUsage(dataset, tool, outcomes[index] ?? "error"));
-  } catch {
-    // Reading the copy failed. Do not write a guess, and do not surface this.
+function blankMessage(method: string): MessageLog {
+  return { method, tool: "none", args: "", client: null };
+}
+
+function messageLog(message: unknown): MessageLog {
+  if (!message || typeof message !== "object" || Array.isArray(message)) return blankMessage("other");
+  const record = message as { method?: unknown; params?: unknown };
+  const method = rpcBucket(record.method);
+  const params = record.params;
+  if (method === "tools/call") {
+    const name = params && typeof params === "object"
+      ? (params as { name?: unknown }).name
+      : undefined;
+    const tool = typeof name === "string" && KNOWN.has(name) ? name : "unknown";
+    const args = params && typeof params === "object"
+      ? argumentNames((params as { arguments?: unknown }).arguments)
+      : "";
+    return { method, tool, args, client: null };
   }
+  if (method === "initialize" && params && typeof params === "object") {
+    const info = (params as { clientInfo?: unknown }).clientInfo;
+    if (info && typeof info === "object") {
+      const client = clientLabelFromInfo(
+        (info as { name?: unknown }).name,
+        (info as { version?: unknown }).version,
+      );
+      return { method, tool: "none", args: "", client };
+    }
+  }
+  return { method, tool: "none", args: "", client: null };
+}
+
+function rpcBucket(method: unknown): string {
+  if (method === "initialize" || method === "tools/list" || method === "tools/call") return method;
+  if (typeof method === "string" && method.startsWith("notifications/")) return "notifications/*";
+  return "other";
+}
+
+function argumentNames(args: unknown): string {
+  if (!args || typeof args !== "object" || Array.isArray(args)) return "";
+  const names = [...new Set(Object.keys(args).map((key) => key.toLowerCase()).filter((key) => ARG_NAME.test(key)))].sort();
+  let joined = "";
+  for (const name of names) {
+    const next = joined ? `${joined},${name}` : name;
+    if (next.length > 80 || joined.split(",").length >= 12) break;
+    joined = next;
+  }
+  return joined;
+}
+
+function httpBucket(method: string): string {
+  const upper = method.toUpperCase();
+  return HTTP_METHODS.has(upper) ? upper : "other";
+}
+
+function statusBucket(status: number): string {
+  if (status >= 200 && status < 300) return "2xx";
+  if (status >= 300 && status < 400) return "3xx";
+  if (status >= 400 && status < 500) return "4xx";
+  if (status >= 500 && status < 600) return "5xx";
+  return "other";
+}
+
+function knownBucket(slug: string): string | null {
+  return matchKeys(slug, PROBE_KEYS, "probe:")
+    || matchKeys(slug, GENERIC_KEYS, "generic:")
+    || matchKeys(slug, AI_KEYS, "ai:");
+}
+
+function matchKeys(slug: string, entries: ReadonlyArray<readonly [string, string]>, prefix: string): string | null {
+  let best: { key: string; name: string } | null = null;
+  for (const [key, name] of entries) {
+    if (slug === key || slug.startsWith(`${key}-`)) {
+      if (!best || key.length > best.key.length) best = { key, name };
+    }
+  }
+  return best ? `${prefix}${best.name}` : null;
+}
+
+function clipString(value: unknown, max: number): string {
+  if (typeof value !== "string") return "";
+  return value.trim().slice(0, max);
+}
+
+function isPersonal(value: string): boolean {
+  if (value.includes("@")) return true;
+  if (/\b(?:\d{1,3}\.){3}\d{1,3}\b/.test(value)) return true;
+  if (/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(value)) return true;
+  return false;
+}
+
+function normalizeSlug(raw: string): string {
+  let text = raw;
+  try {
+    text = raw.normalize("NFKC");
+  } catch {
+    text = raw;
+  }
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+function safeVersion(raw: string): string {
+  let value = raw.trim().toLowerCase();
+  if (/^v[0-9]/.test(value)) value = value.slice(1);
+  if (!/^[0-9][0-9a-z._-]{0,15}$/.test(value)) return "";
+  return value;
+}
+
+function fitClient(label: string): string {
+  if (label.length <= CLIENT_MAX) return label;
+  const cut = label.slice(0, CLIENT_MAX).replace(/[-@._:]+$/g, "");
+  return cut || "other";
 }

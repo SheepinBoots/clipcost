@@ -12,6 +12,7 @@
       "custom_domain": true
     }
   ],
+  // Anonymous counts only. See README "Usage counts". No IPs, raw user agents, or bodies.
   "analytics_engine_datasets": [
     {
       "binding": "USAGE",
