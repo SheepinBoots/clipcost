@@ -48,10 +48,15 @@ MISSING_RESOLUTIONS = {"", "—", "-", "–"}
 COUNT_KINDS = {"price", "promo_started", "promo_ended"}
 CATALOG_KINDS = {"promo_started", "promo_ended", "added"}
 INDEX_H1 = "AI video price change reports"
-INDEX_DESCRIPTION = (
+# Visible lead. The meta description is the shorter INDEX_DESCRIPTION.
+INDEX_LEAD = (
     "Friday reports of AI video price changes and promo starts and ends for each ISO week. "
     "A week is published when VidFare has checked at least two of those changes. "
     "A week with fewer changes is skipped, and those changes are included in the next report that reaches two."
+)
+INDEX_DESCRIPTION = (
+    "Friday reports of AI video price changes, promo starts, and promo ends. "
+    "A week is published when at least two checked changes are recorded."
 )
 NO_PRICE_NOTE = "No per-second price changes this week"
 
@@ -371,13 +376,25 @@ def change_counts(report):
     }
 
 
-def report_description(report):
+def _count_sentence(report):
     counts = change_counts(report)
-    sentence = (
+    return (
         f"This report covers {range_phrase(report['covered_from'], report['covered_through'])}. "
         f"Counted changes: {counts['price']} per-second price changes, "
         f"{counts['promo_started']} promos started, and {counts['promo_ended']} promos ended."
     )
+
+
+def report_meta(report):
+    """Meta, Open Graph, and Twitter description. 160 characters or fewer."""
+    sentence = _count_sentence(report)
+    if len(sentence) > 160:
+        raise SystemExit(f"report meta description is {len(sentence)} characters: {sentence}")
+    return sentence
+
+
+def report_description(report):
+    sentence = _count_sentence(report)
     if report.get("first"):
         sentence += (
             " No earlier weekly report was published, so this first edition includes verified "
@@ -853,7 +870,7 @@ def render_report_body(report, events, prior_through=None, link_fn=None):
 def render_index_body(result, events, href_fn=None, public_log=False):
     parts = [
         f"<h1>{_escape(INDEX_H1)}</h1>",
-        f'<p class="lead">{_escape(INDEX_DESCRIPTION)}</p>',
+        f'<p class="lead">{_escape(INDEX_LEAD)}</p>',
     ]
     for paragraph in index_paragraphs(result, events):
         parts.append(f"<p>{_escape(paragraph)}</p>")

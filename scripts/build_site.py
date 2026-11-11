@@ -400,7 +400,7 @@ def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
     for report in result["reports"]:
         path = f"/reports/{report['id']}/"
         headline = weekly_report.report_h1(report)
-        description = weekly_report.report_description(report)
+        description = weekly_report.report_meta(report)
         modified = weekly_report.report_content_date(report, events, prior)
         if record_dates:
             SITEMAP_LASTMOD[path] = modified
@@ -2234,7 +2234,7 @@ def _stated_rows(deal):
     matched.sort(key=lambda row: (row.get("usd_per_second") or 0, row.get("id") or ""))
     return matched
 
-def _rate_table(pairs, dates):
+def _rate_table(pairs, dates, before_label="Before $/s", after_label="After $/s", extra_note=""):
     if not pairs:
         return "<p>The catalog does not have a before and after dollars per second for this offer.</p>"
     body = []
@@ -2261,7 +2261,10 @@ def _rate_table(pairs, dates):
             "</tr>"
         )
     labels = {rate_label(row) for row, _before, _after in pairs}
-    note = "Before and after are dollars per second of finished video."
+    note = extra_note
+    if note and not note.endswith(" "):
+        note += " "
+    note += "Before and after are dollars per second of finished video."
     if any("credit plan" in label for label in labels):
         note += (
             " A credit-plan row is plan price ÷ credits × credits per clip ÷ seconds, "
@@ -2271,7 +2274,7 @@ def _rate_table(pairs, dates):
         note += " A promo row's before figure is the list rate stored on that row."
     return (
         '<div class="tblwrap"><table><thead><tr>'
-        "<th>Row</th><th>Before $/s</th><th>After $/s</th>"
+        f"<th>Row</th><th>{e(before_label)}</th><th>{e(after_label)}</th>"
         "<th>How the rate is labeled</th><th>Checked</th><th>Source</th>"
         "</tr></thead><tbody>"
         + "".join(body)
@@ -2282,10 +2285,17 @@ def _rate_table(pairs, dates):
 def _plan_facts(deal, dates):
     if deal.get("verified_date"):
         dates.append(deal["verified_date"])
-    items = [
-        f"<li>Plan price before: {_money_field(deal.get('price_before'))}</li>",
-        f"<li>Plan price after: {_money_field(deal.get('price_after'))}</li>",
-    ]
+    sale_11 = bool(_note_sentence(deal.get("notes") or "", "11.11"))
+    if sale_11:
+        items = [
+            f"<li>Monthly billing: {_money_field(deal.get('price_before'))}</li>",
+            f"<li>Annual billing under the 11.11 sale: {_money_field(deal.get('price_after'))}</li>",
+        ]
+    else:
+        items = [
+            f"<li>Plan price before: {_money_field(deal.get('price_before'))}</li>",
+            f"<li>Plan price after: {_money_field(deal.get('price_after'))}</li>",
+        ]
     full = plans.get(deal.get("full_plan_id") or "") or {}
     annual = plans.get(deal.get("deal_plan_id") or "") or {}
     if isinstance(full.get("usd_month"), (int, float)) and not isinstance(full.get("usd_month"), bool):
@@ -2298,12 +2308,14 @@ def _plan_facts(deal, dates):
     if deal.get("percent") is not None:
         items.append(f"<li>Percent on the deal record: {deal['percent']:g}%</li>")
     items.append(f"<li>Start date: {e(_plain_date(deal.get('start')))}</li>")
-    if deal.get("end"):
+    if sale_11:
+        items.append("<li>The 11.11 sale ends Nov 15, per Higgsfield's pricing page.</li>")
+    elif deal.get("end"):
         items.append(f"<li>End date: {e(_plain_date(deal.get('end'), deal.get('end_is_estimate')))}</li>")
     else:
         items.append("<li>End date: not stated in the end field</li>")
     note = _note_sentence(deal.get("notes") or "", "11.11")
-    if note:
+    if note and not sale_11:
         items.append(f"<li>Check note: {e(note)}</li>")
     items.append(f"<li>Verified: {e(deal.get('verified_date') or 'not stated')}</li>")
     if dealmod.conditions(deal).get("standing"):
@@ -2350,8 +2362,17 @@ for deal in holiday_live:
     holiday_html.append(_plan_facts(deal, bf_dates))
     pairs = _deal_pairs(deal)
     if pairs:
-        holiday_html.append("<p><b>Per second, from the price catalog</b></p>")
-        holiday_html.append(_rate_table(pairs, bf_dates))
+        if _note_sentence(deal.get("notes") or "", "11.11"):
+            holiday_html.append("<p><b>Per second, monthly billing vs annual billing under the 11.11 sale</b></p>")
+            holiday_html.append(_rate_table(
+                pairs, bf_dates,
+                "Monthly billing $/s",
+                "Annual billing $/s",
+                "Before is monthly billing. After is annual billing under the 11.11 sale, which ends Nov 15 per Higgsfield's pricing page.",
+            ))
+        else:
+            holiday_html.append("<p><b>Per second, from the price catalog</b></p>")
+            holiday_html.append(_rate_table(pairs, bf_dates))
     else:
         holiday_html.append("<p>The catalog does not have a before and after dollars per second for this offer.</p>")
 dated_html = [
@@ -2431,9 +2452,22 @@ status_bits = []
 if not titled:
     status_bits.append("No live deal is titled Black Friday or Cyber Monday.")
 if note_11:
-    status_bits.append("Higgsfield pricing note: " + note_11)
-status_bits.append("Dated live deals are listed with sources and a per-second before and after when the catalog has both.")
+    status_bits.append("Higgsfield's 11.11 sale ends Nov 15.")
+eleven = [
+    deal for deal in holiday_live
+    if _note_sentence(deal.get("notes") or "", "11.11")
+    and isinstance(deal.get("price_before"), (int, float)) and not isinstance(deal.get("price_before"), bool)
+    and isinstance(deal.get("price_after"), (int, float)) and not isinstance(deal.get("price_after"), bool)
+]
+if eleven:
+    bits = []
+    for deal in eleven:
+        plan_name = (deal.get("plans") or ["Plan"])[0]
+        bits.append(f"{plan_name} ${deal['price_before']:g} to ${deal['price_after']:g}/mo")
+    status_bits.append(", ".join(bits) + ", monthly vs annual.")
 bf_desc = " ".join(status_bits)
+if len(bf_desc) > 160:
+    raise SystemExit(f"black friday description is {len(bf_desc)} characters")
 bf_faqs = [
     (
         "How are prices checked?",
