@@ -4,6 +4,7 @@ import { z } from "zod";
 import { CatalogError, loadLiveCatalog } from "./catalog.ts";
 import { DEALS_URL, PRICES_URL, runTool, SITE } from "./tools.ts";
 import { withUtm } from "./links.ts";
+import { prepareToolCall, presentToolCall } from "./tool-call.ts";
 import { buildUsagePoints, skipUsage, writeUsagePoints, type UsageDataset } from "./usage.ts";
 
 export interface Env {
@@ -236,7 +237,9 @@ async function dispatch(
     enableJsonResponse: true,
   });
   await mcp.connect(transport);
-  const response = await transport.handleRequest(request);
+  const prepared = await prepareToolCall(request);
+  const response = await transport.handleRequest(prepared.request);
+  const presented = await presentToolCall(response, prepared.unknown);
   ctx.waitUntil?.(mcp.close());
-  return withCors(response, request);
+  return withCors(presented, request);
 }

@@ -23,6 +23,12 @@ Responses are cached for 5 minutes. If a fetch fails, or the catalog does not st
 | `cheapest_options` | `seconds`, `resolution` (both required). Optional: `audio`, `input`, `used`, `apply_deals` |
 | `list_deals` | `status`: `live` (default), `upcoming`, `ended`, or `all` |
 
+A `tools/call` whose name is not one of those five returns a tool result with `isError: true`. The text names the five tools, tells the model to call `tools/list`, and links to `https://vidfare.com/mcp/`. The same fields are in `structuredContent`: `requested_tool` (sanitized), `valid_tools`, `hint` (`tools/list`), and `docs`. The echoed name has control characters removed, keeps only `A-Z`, `a-z`, digits, `_`, `.`, and `-`, and is cut at 64 characters.
+
+The server negotiates protocol `2025-11-25`. That revision lists an unknown tool as JSON-RPC error `-32602`. This Worker returns a tool result instead. Claude Desktop replaces a JSON-RPC error with a generic line, so the model never sees the tool list. `isError` text is the channel the spec says clients should give the model. Cursor and Claude Code can read a protocol error's message; Claude Code drops `error.data`, so the list is in the text.
+
+A name that differs only by case, or by hyphens, underscores, and spaces, calls the real tool. CamelCase is included: `cheapest-options`, `CheapestOptions`, and `GET_MODEL_PRICES` all resolve. Separators are removed and the remaining letters and digits must equal the canonical name. A dot, any other character, or a different spelling does not match. There is no edit-distance matching. `tools/list` still returns the five canonical names. All five stay read-only.
+
 `estimate_cost` uses the same row filter as the credit calculator (`scripts/variations.py`) and the same plan math as the calculator script: plan price ÷ credits × credits per clip, divided again by the share of credits actually used. API rows are billed seconds times the stated dollars per second. `scripts/test_mcp_parity.py` checks that against the site code.
 
 ## Usage counts
@@ -36,7 +42,7 @@ Points written before this layout used blob1 as the tool name and blob2 as `succ
 | Field | Values |
 | --- | --- |
 | blob1 `method` | `initialize`, `tools/list`, `tools/call`, `notifications/*`, `other`, or `batch` |
-| blob2 `tool` | A known tool name on `tools/call`, otherwise `unknown`. `none` for every other method |
+| blob2 `tool` | The canonical tool name on `tools/call`, otherwise `unknown`. An alias is stored as that canonical name. The raw spelling is never stored. `none` for every other method |
 | blob3 `client` | Coarse client bucket, at most 40 characters. See below |
 | blob4 `args` | Comma-separated argument names on `tools/call`, such as `model,seconds`. Empty when there are none. Never the values |
 | blob5 `http` | `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, or `other` |
@@ -44,6 +50,7 @@ Points written before this layout used blob1 as the tool name and blob2 as `succ
 | blob7 `probe` | `1` when the user-agent bucket is a known probe, otherwise `0` |
 | double1 | The same probe flag as a number, `1` or `0` |
 | blob8 | Layout marker `v2` |
+| blob9 | `alias` when `tools/call` used a safe alias. Omitted on every other v2 row, so blob1–blob8 stay in place |
 
 On `initialize`, blob3 comes from `params.clientInfo.name` and a short version when those are present. The name is lowercased, punctuation becomes hyphens, and the label is cut to 40 characters. A recognisable product becomes a fixed bucket such as `ai:cursor`, `ai:claude`, `ai:chatgpt`, or `ai:openai`. An email address, IP, or UUID becomes `other`. Every other request uses the user-agent bucket instead, and the raw user agent is never stored.
 
@@ -56,7 +63,7 @@ User-agent buckets:
 
 `likely_probe` follows the user-agent bucket, including when `initialize` also sent a client name. An empty user agent is `other` and not a probe.
 
-Not stored: IP addresses, the raw user agent, any other header, the request or response body, argument values, the question, session ids, and country. Counts are requests, not unique people, visits, or sponsor impressions. A retry adds another point. Requests with `X-VidFare-Test: 1`, and requests to localhost or `127.0.0.1` (`wrangler dev`), are not written.
+Not stored: IP addresses, the raw user agent, any other header, the request or response body, argument values, the question, session ids, country, and the raw tool name. An unknown name is the bucket `unknown`. An alias is the canonical tool name, with blob9 set to `alias`. Counts are requests, not unique people, visits, or sponsor impressions. A retry adds another point. Requests with `X-VidFare-Test: 1`, and requests to localhost or `127.0.0.1` (`wrangler dev`), are not written.
 
 `wrangler.jsonc` binds `USAGE` to the dataset `vidfare_mcp_usage`. Deploying that binding uses the existing Worker deploy token (Workers Scripts Edit or Workers Admin, Workers Routes Edit, and Zone Read). It does not need Analytics Read. Reading the counts does. Create a separate token with **Account → Account Analytics → Read**, scoped to the VidFare account. Do not put that token in the repo.
 

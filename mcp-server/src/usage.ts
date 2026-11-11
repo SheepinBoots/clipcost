@@ -6,18 +6,13 @@
  * The sampling index is the method bucket. It is not a person or address.
  *
  * Never stored: IP addresses, the raw user agent, header values, request or
- * response bodies, argument values, session ids, or account names.
+ * response bodies, argument values, session ids, account names, or the raw
+ * tool name. An alias is stored as the canonical tool plus an "alias" marker.
  */
 
-export const KNOWN_TOOLS = [
-  "list_models",
-  "get_model_prices",
-  "estimate_cost",
-  "cheapest_options",
-  "list_deals",
-] as const;
+import { resolveToolName, type KnownTool } from "./tool-names.ts";
 
-const KNOWN = new Set<string>(KNOWN_TOOLS);
+export { KNOWN_TOOLS } from "./tool-names.ts";
 
 /** Above this many JSON-RPC messages, one point with method `batch` is written. */
 export const BATCH_LOG_LIMIT = 20;
@@ -51,6 +46,7 @@ type MessageLog = {
   tool: string;
   args: string;
   client: string | null;
+  alias: boolean;
 };
 
 const PROBE_KEYS: ReadonlyArray<readonly [string, string]> = [
@@ -209,9 +205,11 @@ export function buildUsagePoints(input: UsageInput): UsageDataPoint[] {
   return messages.map((message) => {
     const client = message.client || ua.label;
     const method = message.method;
+    const blobs = [method, message.tool, fitClient(client), message.args, httpMethod, status, probeBlob, LAYOUT];
+    if (message.alias) blobs.push("alias");
     return {
       indexes: [method],
-      blobs: [method, message.tool, fitClient(client), message.args, httpMethod, status, probeBlob, LAYOUT],
+      blobs,
       doubles: [ua.likelyProbe ? 1 : 0],
     };
   });
@@ -248,7 +246,7 @@ function messagesFrom(text: string): MessageLog[] {
 }
 
 function blankMessage(method: string): MessageLog {
-  return { method, tool: "none", args: "", client: null };
+  return { method, tool: "none", args: "", client: null, alias: false };
 }
 
 function messageLog(message: unknown): MessageLog {
@@ -260,11 +258,12 @@ function messageLog(message: unknown): MessageLog {
     const name = params && typeof params === "object"
       ? (params as { name?: unknown }).name
       : undefined;
-    const tool = typeof name === "string" && KNOWN.has(name) ? name : "unknown";
+    const resolved = typeof name === "string" ? resolveToolName(name) : null;
+    const tool: KnownTool | "unknown" = resolved && resolved.kind !== "unknown" ? resolved.name : "unknown";
     const args = params && typeof params === "object"
       ? argumentNames((params as { arguments?: unknown }).arguments)
       : "";
-    return { method, tool, args, client: null };
+    return { method, tool, args, client: null, alias: resolved?.kind === "alias" };
   }
   if (method === "initialize" && params && typeof params === "object") {
     const info = (params as { clientInfo?: unknown }).clientInfo;
@@ -273,10 +272,10 @@ function messageLog(message: unknown): MessageLog {
         (info as { name?: unknown }).name,
         (info as { version?: unknown }).version,
       );
-      return { method, tool: "none", args: "", client };
+      return { method, tool: "none", args: "", client, alias: false };
     }
   }
-  return { method, tool: "none", args: "", client: null };
+  return { method, tool: "none", args: "", client: null, alias: false };
 }
 
 function rpcBucket(method: unknown): string {
