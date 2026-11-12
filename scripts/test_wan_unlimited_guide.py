@@ -99,8 +99,8 @@ def main():
         if 'href="/guides/wan-3-0-unlimited/"' not in page:
             errors.append(f"{rel} does not link the guide")
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
-    if "Eight comparisons" not in guides and "eight comparisons" not in guides:
-        errors.append("guides index count text was not updated")
+    if "comparisons built from the same price rows" not in guides:
+        errors.append("guides index is missing the comparisons lead")
     if errors:
         raise SystemExit("wan unlimited guide:\n- " + "\n- ".join(errors))
     print("ok wan 3.0 unlimited guide")

@@ -43,6 +43,10 @@ def main():
     assert up.check(billed, {"needle": "720p: ${N} per second", "expect": 0.07}) == ("ok", 0.07)
     assert up.check(billed, {"needle": "1080p: ${N} per second", "expect": 0.14}) == ("ok", 0.14)
     assert up.billing_tier_text("<html><p>no billing</p></html>") == ""
+    # Tiers with a null title (Replicate Seedance 2.5) use criteria as the label.
+    untitled = '<script type="application/json">{"billingConfig":{"current_tiers":[{"title":null,"criteria":[{"title":"model variant","description":"non_video_in","value":"non_video_in"},{"title":"target resolution","description":"480p","value":"480p"}],"prices":[{"price":"$0.1028","title":"per second of output video"}]}]}}</script>'
+    untitled_text = up.billing_tier_text(untitled)
+    assert up.check(untitled_text, {"needle": "model variant is non_video_in, target resolution is 480p: ${N} per second of output video", "expect": 0.1028}) == ("ok", 0.1028)
     assert up.check("if voice control is used you will be charged $0.196 .", {"needle": "you will be charged $0.196", "phrase": True})[0] == "ok"
     assert up.check("no voice price", {"needle": "you will be charged $0.196", "phrase": True})[0] == "missing"
     # A missed phrase has no expect. The report must record it instead of raising.

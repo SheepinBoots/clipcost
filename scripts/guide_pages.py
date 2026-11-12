@@ -212,6 +212,7 @@ def render(g):
             ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/", g["hf_blurb"]()),
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/", project_cost_sentence(3)),
             ("Is there a truly unlimited Seedance 2.5 plan?", "/guides/seedance-2-5-unlimited/", g["seedance_unlimited_blurb"]()),
+            ("What is the cheapest way to use Seedance 2.5?", "/guides/cheapest-seedance-2-5/", g["cheapest_seedance_blurb"]()),
             ("Higgsfield Black Friday 2026: what you save per second", "/guides/higgsfield-black-friday/", g["hf_black_friday_blurb"]()),
         ]
         if db.get("flow"):

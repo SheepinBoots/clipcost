@@ -49,6 +49,7 @@ GUIDE_LINKS = [
     ("/guides/is-higgsfield-worth-it/", "Higgsfield plans"),
     ("/guides/ai-video-project-budget/", "Project budget"),
     ("/guides/seedance-2-5-unlimited/", "Unlimited Seedance 2.5"),
+    ("/guides/cheapest-seedance-2-5/", "Cheapest Seedance 2.5"),
     ("/guides/higgsfield-black-friday/", "Higgsfield Black Friday"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
@@ -1077,6 +1078,7 @@ GUIDE_CRUMBS = {
     "/guides/ai-video-project-budget/": "Project budget",
     "/guides/google-flow-credits-calculator/": "Google Flow credits",
     "/guides/seedance-2-5-unlimited/": "Unlimited Seedance 2.5",
+    "/guides/cheapest-seedance-2-5/": "Cheapest Seedance 2.5",
     "/guides/higgsfield-black-friday/": "Higgsfield Black Friday",
 }
 
@@ -1119,6 +1121,7 @@ def guide_page(path, title, desc, body, faqs):
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/"),
             ("How many Google Flow credits does a Veo 3.1 or Omni Flash video cost?", "/guides/google-flow-credits-calculator/"),
             ("Is there a truly unlimited Seedance 2.5 plan?", "/guides/seedance-2-5-unlimited/"),
+            ("What is the cheapest way to use Seedance 2.5?", "/guides/cheapest-seedance-2-5/"),
             ("Higgsfield Black Friday 2026: what you save per second?", "/guides/higgsfield-black-friday/"),
         ]))
     elif path in GUIDE_CRUMBS:
@@ -1646,7 +1649,12 @@ for slug, m in models.items():
     if model_deals:
         deals_html = '<h2>Live deals for this model</h2><div class="dealgrid">' + "".join(deal_card(d, rowset=rs) for d in model_deals) + "</div>"
     if slug == "seedance-2-5":
-        deals_html += f'<p class="small">How the unlimited windows compare in seconds: <a href="{root("/guides/seedance-2-5-unlimited/")}">unlimited Seedance 2.5 plans compared</a>.</p>'
+        deals_html += (
+            f'<p class="small">How the unlimited windows compare in seconds: '
+            f'<a href="{root("/guides/seedance-2-5-unlimited/")}">unlimited Seedance 2.5 plans compared</a>. '
+            f'Every way to buy the model, ranked: '
+            f'<a href="{root("/guides/cheapest-seedance-2-5/")}">the cheapest way to use Seedance 2.5</a>.</p>'
+        )
     if slug in ("wan-3-0", "wan-3-0-prime"):
         deals_html += f'<p class="small">Is a plan that calls Wan 3.0 unlimited actually unlimited? <a href="{root("/guides/wan-3-0-unlimited/")}">Is Wan 3.0 unlimited really unlimited?</a></p>'
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
@@ -2886,6 +2894,7 @@ def write_llms():
         f"- [Higgsfield plan rates]({SITE_URL}/guides/is-higgsfield-worth-it/): {hf_blurb()}",
         f"- [Project budget]({SITE_URL}/guides/ai-video-project-budget/): {budget_blurb()}",
         f"- [Unlimited Seedance 2.5 plans compared]({SITE_URL}/guides/seedance-2-5-unlimited/): {seedance_unlimited_blurb()}",
+        f"- [The cheapest way to use Seedance 2.5]({SITE_URL}/guides/cheapest-seedance-2-5/): {cheapest_seedance_blurb()}",
         f"- [Higgsfield Black Friday 2026: what you save per second]({SITE_URL}/guides/higgsfield-black-friday/): {hf_black_friday_blurb()}",
         "",
         "## Data",
@@ -2924,6 +2933,9 @@ def hf_black_friday_blurb():
 import wan_unlimited_guide
 def wan_unlimited_blurb():
     return wan_unlimited_guide.blurb(globals())
+import cheapest_seedance_guide
+def cheapest_seedance_blurb():
+    return cheapest_seedance_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -2932,6 +2944,8 @@ import hf_black_friday_guide
 hf_black_friday_guide.render(globals())
 import wan_unlimited_guide
 wan_unlimited_guide.render(globals())
+import cheapest_seedance_guide
+cheapest_seedance_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers

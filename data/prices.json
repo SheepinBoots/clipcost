@@ -54,6 +54,12 @@
    "fetch": "static",
    "billing_json": true
   },
+  "rep_seed25": {
+   "name": "Replicate: Seedance 2.5",
+   "url": "https://replicate.com/bytedance/seedance-2.5",
+   "fetch": "static",
+   "billing_json": true
+  },
   "runway": {
    "name": "Runway API pricing",
    "url": "https://docs.dev.runwayml.com/guides/pricing/",
@@ -9193,6 +9199,190 @@
     "audio_changes_price": true,
     "length_changes_price": false,
     "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "seedance-2-5",
+   "variant": "non_video_in",
+   "platform": "Replicate",
+   "kind": "api",
+   "resolution": "480p",
+   "audio": null,
+   "usd_per_second": 0.1028,
+   "status": "verified",
+   "promo_until": null,
+   "source": "rep_seed25",
+   "math": null,
+   "checks": [
+    {
+     "needle": "model variant is non_video_in, target resolution is 480p: ${N} per second of output video",
+     "expect": 0.1028
+    },
+    {
+     "needle": "per second of output video",
+     "phrase": true
+    },
+    {
+     "needle": "non_video_in",
+     "phrase": true
+    }
+   ],
+   "note": "Official billed-by-property rate: model variant is non_video_in (no video input). The vendor page lists $0.1028 per second of output video.",
+   "id": "r202",
+   "checked": "2026-11-12",
+   "source_url": "https://replicate.com/bytedance/seedance-2.5",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": 4,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "seedance-2-5",
+   "variant": "video_in",
+   "platform": "Replicate",
+   "kind": "api",
+   "resolution": "480p",
+   "audio": null,
+   "usd_per_second": 0.4304,
+   "status": "verified",
+   "promo_until": null,
+   "source": "rep_seed25",
+   "math": null,
+   "checks": [
+    {
+     "needle": "model variant is video_in, target resolution is 480p: ${N} per second of output video",
+     "expect": 0.4304
+    },
+    {
+     "needle": "per second of output video",
+     "phrase": true
+    },
+    {
+     "needle": "video_in",
+     "phrase": true
+    }
+   ],
+   "note": "Official billed-by-property rate: model variant is video_in (with video input). The vendor page lists $0.4304 per second of output video.",
+   "id": "r203",
+   "checked": "2026-11-12",
+   "source_url": "https://replicate.com/bytedance/seedance-2.5",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": 4,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "seedance-2-5",
+   "variant": "non_video_in",
+   "platform": "Replicate",
+   "kind": "api",
+   "resolution": "720p",
+   "audio": null,
+   "usd_per_second": 0.2312,
+   "status": "verified",
+   "promo_until": null,
+   "source": "rep_seed25",
+   "math": null,
+   "checks": [
+    {
+     "needle": "model variant is non_video_in, target resolution is 720p: ${N} per second of output video",
+     "expect": 0.2312
+    },
+    {
+     "needle": "per second of output video",
+     "phrase": true
+    },
+    {
+     "needle": "non_video_in",
+     "phrase": true
+    }
+   ],
+   "note": "Official billed-by-property rate: model variant is non_video_in (no video input). The vendor page lists $0.2312 per second of output video.",
+   "id": "r204",
+   "checked": "2026-11-12",
+   "source_url": "https://replicate.com/bytedance/seedance-2.5",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": 4,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "seedance-2-5",
+   "variant": "video_in",
+   "platform": "Replicate",
+   "kind": "api",
+   "resolution": "720p",
+   "audio": null,
+   "usd_per_second": 0.9676,
+   "status": "verified",
+   "promo_until": null,
+   "source": "rep_seed25",
+   "math": null,
+   "checks": [
+    {
+     "needle": "model variant is video_in, target resolution is 720p: ${N} per second of output video",
+     "expect": 0.9676
+    },
+    {
+     "needle": "per second of output video",
+     "phrase": true
+    },
+    {
+     "needle": "video_in",
+     "phrase": true
+    }
+   ],
+   "note": "Official billed-by-property rate: model variant is video_in (with video input). The vendor page lists $0.9676 per second of output video.",
+   "id": "r205",
+   "checked": "2026-11-12",
+   "source_url": "https://replicate.com/bytedance/seedance-2.5",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": 4,
+     "max_seconds": 30,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
     "modifiers": "not stated"
    }
   }
