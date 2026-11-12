@@ -60,6 +60,17 @@ def billing_tier_text(html):
         tiers = (data.get("billingConfig") or {}).get("current_tiers") or []
         for tier in tiers:
             title = str(tier.get("title") or "").strip()
+            # Seedance 2.5 (and other multi-property models) leave title null
+            # and put the mode in criteria. Compose a stable label so the
+            # daily static check can still read the rate.
+            if not title:
+                bits = []
+                for c in tier.get("criteria") or []:
+                    ct = str(c.get("title") or "").strip()
+                    cv = str(c.get("description") or c.get("value") or "").strip()
+                    if ct and cv:
+                        bits.append(f"{ct} is {cv}")
+                title = ", ".join(bits)
             for price in tier.get("prices") or []:
                 amount = str(price.get("price") or "").strip()
                 label = str(price.get("title") or "").strip()
