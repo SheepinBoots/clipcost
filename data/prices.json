@@ -65,6 +65,11 @@
    "url": "https://docs.dev.runwayml.com/guides/pricing/",
    "fetch": "static"
   },
+  "xai_imagine": {
+   "name": "xAI API: Grok Imagine pricing",
+   "url": "https://docs.x.ai/developers/pricing",
+   "fetch": "static"
+  },
   "kling_api": {
    "name": "Kling official API pricing",
    "url": "https://kling.ai/document-api/pricing/base/video.md",
@@ -9384,6 +9389,351 @@
     "length_changes_price": false,
     "input_changes_price": true,
     "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "grok-imagine-video-1.5",
+   "platform": "xAI API",
+   "kind": "api",
+   "resolution": "480p",
+   "audio": null,
+   "usd_per_second": 0.08,
+   "status": "verified",
+   "promo_until": null,
+   "source": "xai_imagine",
+   "math": null,
+   "checks": [
+    {
+     "needle": "grok-imagine-video-1.5 Text, Image, Audio → Video $0.01 / img 480p ${N} / sec",
+     "expect": 0.08
+    },
+    {
+     "needle": "$0.01 / img",
+     "phrase": true
+    }
+   ],
+   "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
+   "id": "r206",
+   "checked": "2026-11-12",
+   "source_url": "https://docs.x.ai/developers/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v", "i2v"
+    ],
+    "duration": {
+     "min_seconds": 1,
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus $0.01 per input image",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "grok-imagine-video-1.5",
+   "platform": "xAI API",
+   "kind": "api",
+   "resolution": "720p",
+   "audio": null,
+   "usd_per_second": 0.14,
+   "status": "verified",
+   "promo_until": null,
+   "source": "xai_imagine",
+   "math": null,
+   "checks": [
+    {
+     "needle": "grok-imagine-video-1.5 Text, Image, Audio → Video $0.01 / img 480p $0.08 / sec 720p ${N} / sec",
+     "expect": 0.14
+    },
+    {
+     "needle": "$0.01 / img",
+     "phrase": true
+    }
+   ],
+   "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
+   "id": "r207",
+   "checked": "2026-11-12",
+   "source_url": "https://docs.x.ai/developers/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v", "i2v"
+    ],
+    "duration": {
+     "min_seconds": 1,
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus $0.01 per input image",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "grok-imagine-video-1.5",
+   "platform": "xAI API",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.25,
+   "status": "verified",
+   "promo_until": null,
+   "source": "xai_imagine",
+   "math": null,
+   "checks": [
+    {
+     "needle": "grok-imagine-video-1.5 Text, Image, Audio → Video $0.01 / img 480p $0.08 / sec 720p $0.14 / sec 1080p ${N} / sec",
+     "expect": 0.25
+    },
+    {
+     "needle": "$0.01 / img",
+     "phrase": true
+    }
+   ],
+   "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
+   "id": "r208",
+   "checked": "2026-11-12",
+   "source_url": "https://docs.x.ai/developers/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v", "i2v"
+    ],
+    "duration": {
+     "min_seconds": 1,
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus $0.01 per input image",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "grok-imagine-video-1.5-lite",
+   "platform": "xAI API",
+   "kind": "api",
+   "resolution": "480p",
+   "audio": null,
+   "usd_per_second": 0.02,
+   "status": "verified",
+   "promo_until": null,
+   "source": "xai_imagine",
+   "math": null,
+   "checks": [
+    {
+     "needle": "grok-imagine-video-1.5-lite Text, Image → Video $0.01 / img 480p ${N} / sec",
+     "expect": 0.02
+    },
+    {
+     "needle": "$0.01 / img",
+     "phrase": true
+    }
+   ],
+   "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image.",
+   "id": "r209",
+   "checked": "2026-11-12",
+   "source_url": "https://docs.x.ai/developers/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v", "i2v"
+    ],
+    "duration": {
+     "min_seconds": 1,
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus $0.01 per input image",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "grok-imagine-video-1.5-lite",
+   "platform": "xAI API",
+   "kind": "api",
+   "resolution": "720p",
+   "audio": null,
+   "usd_per_second": 0.03,
+   "status": "verified",
+   "promo_until": null,
+   "source": "xai_imagine",
+   "math": null,
+   "checks": [
+    {
+     "needle": "grok-imagine-video-1.5-lite Text, Image → Video $0.01 / img 480p $0.02 / sec 720p ${N} / sec",
+     "expect": 0.03
+    },
+    {
+     "needle": "$0.01 / img",
+     "phrase": true
+    }
+   ],
+   "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image.",
+   "id": "r210",
+   "checked": "2026-11-12",
+   "source_url": "https://docs.x.ai/developers/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v", "i2v"
+    ],
+    "duration": {
+     "min_seconds": 1,
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus $0.01 per input image",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "grok-imagine-video-1.5-lite",
+   "platform": "xAI API",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.14,
+   "status": "verified",
+   "promo_until": null,
+   "source": "xai_imagine",
+   "math": null,
+   "checks": [
+    {
+     "needle": "grok-imagine-video-1.5-lite Text, Image → Video $0.01 / img 480p $0.02 / sec 720p $0.03 / sec 1080p ${N} / sec",
+     "expect": 0.14
+    },
+    {
+     "needle": "$0.01 / img",
+     "phrase": true
+    }
+   ],
+   "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image. 1080p is upscaled from 720p.",
+   "id": "r211",
+   "checked": "2026-11-12",
+   "source_url": "https://docs.x.ai/developers/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": [
+     "t2v", "i2v"
+    ],
+    "duration": {
+     "min_seconds": 1,
+     "max_seconds": 15,
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus $0.01 per input image",
+      "usd_per_second": "not stated"
+     }
+    ]
+   }
+  },
+  {
+   "model": "grok-imagine",
+   "variant": "grok_imagine_1_5_lite (1080p)",
+   "platform": "Runway API",
+   "kind": "api",
+   "resolution": "1080p",
+   "audio": null,
+   "usd_per_second": 0.14,
+   "status": "verified",
+   "promo_until": null,
+   "source": "runway",
+   "math": "14 credits/s × $0.01 = $0.140/s",
+   "checks": [
+    {
+     "needle": "grok_imagine_1_5_lite (1080p) {N} credits",
+     "expect": 14
+    },
+    {
+     "needle": "credits per second",
+     "phrase": true
+    },
+    {
+     "needle": "image or audio reference",
+     "phrase": true
+    }
+   ],
+   "note": "Runway credits are $0.01 each. Lite 1080p is 14 credits per second. An image-to-video start frame adds 1 credit.",
+   "id": "r212",
+   "checked": "2026-11-12",
+   "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": "not stated",
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": false,
+    "input_changes_price": true,
+    "modifiers": [
+     {
+      "label": "plus 1 credit for an image-to-video start frame",
+      "usd_per_second": "not stated"
+     }
+    ]
    }
   }
  ],

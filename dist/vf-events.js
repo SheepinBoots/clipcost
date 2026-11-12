@@ -11,7 +11,7 @@
 (function () {
   'use strict';
   if (!document.addEventListener) return;
-  var HOSTS = {"ai.google.dev":"google-gemini-api","atlascloud.ai":"atlas-cloud","docs.dev.runwayml.com":"runway-api","fal.ai":"fal","higgsfield.ai":"higgsfield","kling.ai":"kling-api","krea.ai":"krea","magnific.com":"magnific","open.higgsfield.ai":"higgsfield-api","replicate.com":"replicate","runwayml.com":"runway"};
+  var HOSTS = {"ai.google.dev":"google-gemini-api","atlascloud.ai":"atlas-cloud","docs.dev.runwayml.com":"runway-api","docs.x.ai":"xai-api","fal.ai":"fal","higgsfield.ai":"higgsfield","kling.ai":"kling-api","krea.ai":"krea","magnific.com":"magnific","open.higgsfield.ai":"higgsfield-api","replicate.com":"replicate","runwayml.com":"runway"};
   var SITE = { 'vidfare.com': 1, 'www.vidfare.com': 1 };
   var me = document.currentScript || document.querySelector('script[data-vf-page]');
   function slug(s, n) {

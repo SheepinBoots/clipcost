@@ -2,7 +2,7 @@
 
 > What every AI video second costs, everywhere.
 
-VidFare compares AI video generation prices in dollars per second of finished video, across APIs and credit plans. Figures are copied from each vendor's own pricing page. Audio, input type, and clip length are filled in only when that page states them. Otherwise the field is not stated. Last full check: 2026-11-12. 193 current prices.
+VidFare compares AI video generation prices in dollars per second of finished video, across APIs and credit plans. Figures are copied from each vendor's own pricing page. Audio, input type, and clip length are filled in only when that page states them. Otherwise the field is not stated. Last full check: 2026-11-12. 200 current prices.
 
 ## Cheapest current price by model and platform
 
@@ -83,6 +83,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 
 - [Grok Imagine Video 1.5 prices](https://vidfare.com/models/grok-imagine/): cheapest overall $0.02/s on Runway API for grok_imagine_1_5_lite (480p), plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated, a published rate (checked 2026-11-12, https://docs.dev.runwayml.com/guides/pricing/).
 - Runway API: $0.02/s for grok_imagine_1_5_lite (480p), plan tier not listed, resolution 480p, audio not stated, input not stated, length not stated, a published rate (checked 2026-11-12, https://docs.dev.runwayml.com/guides/pricing/).
+- xAI API: $0.02/s for grok-imagine-video-1.5-lite, plan tier not listed, resolution 480p, audio not stated, input text-to-video, image-to-video, 1–15s, a published rate (checked 2026-11-12, https://docs.x.ai/developers/pricing).
 - fal: $0.08/s for Grok Imagine Video 1.5, plan tier not listed, resolution 480p, with audio, input text-to-video, length not stated, a published rate (checked 2026-11-12, https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video).
 
 ## Deals
@@ -100,6 +101,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [Unlimited Seedance 2.5 plans compared](https://vidfare.com/guides/seedance-2-5-unlimited/): No plan is truly unlimited. The live windows run 7 to 30 days, with clip and resolution caps, from $47 at checkout.
 - [The cheapest way to use Seedance 2.5](https://vidfare.com/guides/cheapest-seedance-2-5/): The cheapest published Seedance 2.5 rate in the catalog is $0.103/s on Replicate (480p, non_video_in). Credit-plan rates assume every paid credit is used. Unlimited windows are capped; they are not $0/s.
 - [Higgsfield Black Friday 2026: what you save per second](https://vidfare.com/guides/higgsfield-black-friday/): No Black Friday 2026 sale is listed yet. The 11.11 offer lists Plus annual at $35/mo and Ultra 3K at $65/mo.
+- [How much does a Grok Imagine video cost?](https://vidfare.com/guides/grok-imagine-video-cost/): The lowest Grok Imagine rate in the catalog is $0.02/s on xAI API (480p, grok-imagine-video-1.5-lite). Paid-plan video limits are a weekly usage pool, not a published credits-per-clip figure.
 
 ## Data
 
