@@ -51,6 +51,7 @@ GUIDE_LINKS = [
     ("/guides/seedance-2-5-unlimited/", "Unlimited Seedance 2.5"),
     ("/guides/cheapest-seedance-2-5/", "Cheapest Seedance 2.5"),
     ("/guides/higgsfield-black-friday/", "Higgsfield Black Friday"),
+    ("/guides/grok-imagine-video-cost/", "Grok Imagine cost"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1080,6 +1081,7 @@ GUIDE_CRUMBS = {
     "/guides/seedance-2-5-unlimited/": "Unlimited Seedance 2.5",
     "/guides/cheapest-seedance-2-5/": "Cheapest Seedance 2.5",
     "/guides/higgsfield-black-friday/": "Higgsfield Black Friday",
+    "/guides/grok-imagine-video-cost/": "Grok Imagine video cost",
 }
 
 def guide_crosslinks(path):
@@ -1123,6 +1125,7 @@ def guide_page(path, title, desc, body, faqs):
             ("Is there a truly unlimited Seedance 2.5 plan?", "/guides/seedance-2-5-unlimited/"),
             ("What is the cheapest way to use Seedance 2.5?", "/guides/cheapest-seedance-2-5/"),
             ("Higgsfield Black Friday 2026: what you save per second?", "/guides/higgsfield-black-friday/"),
+            ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1657,6 +1660,11 @@ for slug, m in models.items():
         )
     if slug in ("wan-3-0", "wan-3-0-prime"):
         deals_html += f'<p class="small">Is a plan that calls Wan 3.0 unlimited actually unlimited? <a href="{root("/guides/wan-3-0-unlimited/")}">Is Wan 3.0 unlimited really unlimited?</a></p>'
+    if slug == "grok-imagine":
+        deals_html += (
+            f'<p class="small">Official API rates, paid-plan limits, and vendor prices: '
+            f'<a href="{root("/guides/grok-imagine-video-cost/")}">How much does a Grok Imagine video cost?</a></p>'
+        )
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
     if soon:
         deals_html += '<h2>Starting soon</h2><div class="dealgrid">' + "".join(deal_card(d, rowset=rs) for d in soon) + "</div>"
@@ -2896,6 +2904,7 @@ def write_llms():
         f"- [Unlimited Seedance 2.5 plans compared]({SITE_URL}/guides/seedance-2-5-unlimited/): {seedance_unlimited_blurb()}",
         f"- [The cheapest way to use Seedance 2.5]({SITE_URL}/guides/cheapest-seedance-2-5/): {cheapest_seedance_blurb()}",
         f"- [Higgsfield Black Friday 2026: what you save per second]({SITE_URL}/guides/higgsfield-black-friday/): {hf_black_friday_blurb()}",
+        f"- [How much does a Grok Imagine video cost?]({SITE_URL}/guides/grok-imagine-video-cost/): {grok_imagine_blurb()}",
         "",
         "## Data",
         "",
@@ -2936,6 +2945,9 @@ def wan_unlimited_blurb():
 import cheapest_seedance_guide
 def cheapest_seedance_blurb():
     return cheapest_seedance_guide.blurb(globals())
+import grok_imagine_guide
+def grok_imagine_blurb():
+    return grok_imagine_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -2946,6 +2958,8 @@ import wan_unlimited_guide
 wan_unlimited_guide.render(globals())
 import cheapest_seedance_guide
 cheapest_seedance_guide.render(globals())
+import grok_imagine_guide
+grok_imagine_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers

@@ -214,10 +214,11 @@ def render(g):
             ("Is there a truly unlimited Seedance 2.5 plan?", "/guides/seedance-2-5-unlimited/", g["seedance_unlimited_blurb"]()),
             ("What is the cheapest way to use Seedance 2.5?", "/guides/cheapest-seedance-2-5/", g["cheapest_seedance_blurb"]()),
             ("Higgsfield Black Friday 2026: what you save per second", "/guides/higgsfield-black-friday/", g["hf_black_friday_blurb"]()),
+            ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/", g["grok_imagine_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
-        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"}.get(len(entries), str(len(entries)))
+        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven"}.get(len(entries), str(len(entries)))
         blocks = []
         faqs = []
         for question, path, answer in entries:

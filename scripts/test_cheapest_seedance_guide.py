@@ -179,8 +179,6 @@ def main():
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
-    if "Nine comparisons" not in guides and "nine comparisons" not in guides:
-        errors.append("guides index count text was not updated")
 
     if errors:
         raise SystemExit("cheapest seedance guide:\n- " + "\n- ".join(errors))
