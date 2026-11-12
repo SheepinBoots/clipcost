@@ -207,6 +207,7 @@ def render(g):
     def write_index():
         entries = [
             ("What is the cheapest way to use Wan 3.0?", "/guides/cheapest-wan-3-0/", g["wan_blurb"]()),
+            ("Is Wan 3.0 unlimited really unlimited?", "/guides/wan-3-0-unlimited/", g["wan_unlimited_blurb"]()),
             ("What is the cheapest AI video generator right now?", "/guides/cheapest-ai-video-generator/", g["cheapest_blurb"]()),
             ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/", g["hf_blurb"]()),
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/", project_cost_sentence(3)),
@@ -215,7 +216,7 @@ def render(g):
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
-        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven"}.get(len(entries), str(len(entries)))
+        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"}.get(len(entries), str(len(entries)))
         blocks = []
         faqs = []
         for question, path, answer in entries:

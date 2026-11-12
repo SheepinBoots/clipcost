@@ -120,10 +120,27 @@
    "source_url": "https://x.com/higgsfield_ai/status/2110074247569924489",
    "source_kind": "x_post",
    "source_quote": "Wan 3.0 is now UNLIMITED on Higgsfield for 7 days.",
-   "verified_date": "2026-10-21",
+   "verified_date": "2026-11-12",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "unlimited",
-   "notes": "Checked 2026-10-21. higgsfield.ai/pricing lists Wan 3.0 only at credit rates, and the Wan 3.0 Prime model page does not say unlimited. The Oct 20 end was an estimate. Archived. Unlimited generations on Higgsfield work on higgsfield.ai only, not on MCP, CLI, Canvas, or Supercomputer."
+   "notes": "Checked 2026-10-21. higgsfield.ai/pricing lists Wan 3.0 only at credit rates, and the Wan 3.0 Prime model page does not say unlimited. The Oct 20 end was an estimate. Archived. Unlimited generations on Higgsfield work on higgsfield.ai only, not on MCP, CLI, Canvas, or Supercomputer. Rechecked 2026-11-12 on higgsfield.ai/pricing (rendered) and Higgsfield's changelog. The pricing-page Plus and Ultra cards list 14-day unlimited Seedance 2.5 and 60-day unlimited image models (Nano Banana Pro, Seedream 5.0 Pro, GPT Image 2.5, GPT Image 2.6, plus five other image models when expanded: Nano Banana, Kling O1 Image, Seedream 4.5, Seedream 5.0 Lite, Flux.2 Pro). Wan 3.0 and Wan 3.0 Prime appear only in the credit-rate compare table (5/8.75/17.5 and 7.5/15/30 credits per 5s). The Oct 13, 2026 changelog entry, titled 'Unlimited Wan 3.0 for 7 days and 60% off on the API,' states terms as of October 13, 2026: a free week of Wan 3.0 and Wan 3.0 Prime for subscribers; clips up to 30 seconds at up to 1080p, in a shared queue, so speed depends on load; upgrades from Basic or Starter start the 7 days from that moment; availability is individual plans from Pro and above, monthly or annual. The separate API discount was until October 31, 2026. The Oct 20 end date for the unlimited week remains an estimate. Higgsfield's help article on unlimited models (checked 2026-11-12) says unlimited access applies only on higgsfield.ai, uses a toggle, runs in the standard queue, and is for personal, human use.",
+   "sources": [
+    {
+     "url": "https://higgsfield.ai/creator-hub/changelog",
+     "kind": "changelog",
+     "quote": "Unlimited Wan 3.0 for 7 days and 60% off on the API. Terms as of October 13, 2026. Limits: clips up to 30 seconds at up to 1080p, in a shared queue, so speed depends on load. Availability: individual plans from Pro and above, monthly or annual."
+    },
+    {
+     "url": "https://higgsfield.ai/pricing",
+     "kind": "pricing_page",
+     "quote": "Wan 3.0 480p 5 credits/5s. Plus and Ultra unlimited cards list Seedance 2.5, not Wan 3.0."
+    },
+    {
+     "url": "https://higgsfield.ai/creator-hub/help-center/credits/what-are-unlimited-models-and-which-plans-include-them",
+     "kind": "help_article",
+     "quote": "Unlimited access applies only on higgsfield.ai: outside it, generations always deduct credits."
+    }
+   ]
   },
   {
    "id": "hf-banner-30",

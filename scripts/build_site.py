@@ -44,6 +44,7 @@ BASE = urlparse(SITE_URL).path.rstrip("/")
 GUIDE_LINKS = [
     ("/guides/", "All guides"),
     ("/guides/cheapest-wan-3-0/", "Cheapest Wan 3.0"),
+    ("/guides/wan-3-0-unlimited/", "Wan 3.0 unlimited"),
     ("/guides/cheapest-ai-video-generator/", "Cheapest by model"),
     ("/guides/is-higgsfield-worth-it/", "Higgsfield plans"),
     ("/guides/ai-video-project-budget/", "Project budget"),
@@ -1070,6 +1071,7 @@ def guide_faq_ld(path, faqs):
 
 GUIDE_CRUMBS = {
     "/guides/cheapest-wan-3-0/": "Wan 3.0",
+    "/guides/wan-3-0-unlimited/": "Wan 3.0 unlimited",
     "/guides/cheapest-ai-video-generator/": "Cheapest by model",
     "/guides/is-higgsfield-worth-it/": "Higgsfield",
     "/guides/ai-video-project-budget/": "Project budget",
@@ -1111,6 +1113,7 @@ def guide_page(path, title, desc, body, faqs):
     if path == "/guides/":
         blocks.append(item_list_ld("Guides", [
             ("What is the cheapest way to use Wan 3.0?", "/guides/cheapest-wan-3-0/"),
+            ("Is Wan 3.0 unlimited really unlimited?", "/guides/wan-3-0-unlimited/"),
             ("What is the cheapest AI video generator right now?", "/guides/cheapest-ai-video-generator/"),
             ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/"),
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/"),
@@ -1644,6 +1647,8 @@ for slug, m in models.items():
         deals_html = '<h2>Live deals for this model</h2><div class="dealgrid">' + "".join(deal_card(d, rowset=rs) for d in model_deals) + "</div>"
     if slug == "seedance-2-5":
         deals_html += f'<p class="small">How the unlimited windows compare in seconds: <a href="{root("/guides/seedance-2-5-unlimited/")}">unlimited Seedance 2.5 plans compared</a>.</p>'
+    if slug in ("wan-3-0", "wan-3-0-prime"):
+        deals_html += f'<p class="small">Is a plan that calls Wan 3.0 unlimited actually unlimited? <a href="{root("/guides/wan-3-0-unlimited/")}">Is Wan 3.0 unlimited really unlimited?</a></p>'
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
     if soon:
         deals_html += '<h2>Starting soon</h2><div class="dealgrid">' + "".join(deal_card(d, rowset=rs) for d in soon) + "</div>"
@@ -2876,6 +2881,7 @@ def write_llms():
         "",
         f"- [Guides]({SITE_URL}/guides/): comparisons built from the same price rows.",
         f"- [Cheapest way to use Wan 3.0]({SITE_URL}/guides/cheapest-wan-3-0/): {wan_blurb()}",
+        f"- [Is Wan 3.0 unlimited really unlimited?]({SITE_URL}/guides/wan-3-0-unlimited/): {wan_unlimited_blurb()}",
         f"- [Cheapest AI video generator]({SITE_URL}/guides/cheapest-ai-video-generator/): {cheapest_blurb()}",
         f"- [Higgsfield plan rates]({SITE_URL}/guides/is-higgsfield-worth-it/): {hf_blurb()}",
         f"- [Project budget]({SITE_URL}/guides/ai-video-project-budget/): {budget_blurb()}",
@@ -2915,12 +2921,17 @@ def seedance_unlimited_blurb():
 import hf_black_friday_guide
 def hf_black_friday_blurb():
     return hf_black_friday_guide.blurb(globals())
+import wan_unlimited_guide
+def wan_unlimited_blurb():
+    return wan_unlimited_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
 SEEDANCE_UNLIMITED = seedance_unlimited_guide.render(globals())
 import hf_black_friday_guide
 hf_black_friday_guide.render(globals())
+import wan_unlimited_guide
+wan_unlimited_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers
