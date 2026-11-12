@@ -48,6 +48,7 @@ GUIDE_LINKS = [
     ("/guides/is-higgsfield-worth-it/", "Higgsfield plans"),
     ("/guides/ai-video-project-budget/", "Project budget"),
     ("/guides/seedance-2-5-unlimited/", "Unlimited Seedance 2.5"),
+    ("/guides/higgsfield-black-friday/", "Higgsfield Black Friday"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1074,6 +1075,7 @@ GUIDE_CRUMBS = {
     "/guides/ai-video-project-budget/": "Project budget",
     "/guides/google-flow-credits-calculator/": "Google Flow credits",
     "/guides/seedance-2-5-unlimited/": "Unlimited Seedance 2.5",
+    "/guides/higgsfield-black-friday/": "Higgsfield Black Friday",
 }
 
 def guide_crosslinks(path):
@@ -1114,6 +1116,7 @@ def guide_page(path, title, desc, body, faqs):
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/"),
             ("How many Google Flow credits does a Veo 3.1 or Omni Flash video cost?", "/guides/google-flow-credits-calculator/"),
             ("Is there a truly unlimited Seedance 2.5 plan?", "/guides/seedance-2-5-unlimited/"),
+            ("Higgsfield Black Friday 2026: what you save per second?", "/guides/higgsfield-black-friday/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -2121,7 +2124,7 @@ deals_body = f"""<h1>AI video deals</h1>
 {upcoming_html}
 <div class="dealgrid" id="liveDeals">{live_html}</div>
 <h2>When these vendors run sales</h2>
-<p>Launch weeks are the usual pattern: a new video model is unlimited on credit plans and 30–75% off on APIs for one to four weeks. The holiday window, about Nov 20 through Jan 8, is the long one. In 2025 Higgsfield posted several waves, Magnific used a 50% code, and Krea posted 40% off yearly plans. End dates move. They get extended, reopened, or left as "limited time." If a page does not name an end date, this site does not invent one. <a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a>.</p>
+<p>Launch weeks are the usual pattern: a new video model is unlimited on credit plans and 30–75% off on APIs for one to four weeks. The holiday window, about Nov 20 through Jan 8, is the long one. In 2025 Higgsfield posted several waves, Magnific used a 50% code, and Krea posted 40% off yearly plans. End dates move. They get extended, reopened, or left as "limited time." If a page does not name an end date, this site does not invent one. <a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a> · <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a>.</p>
 <p class="small">Spending Google AI plan credits on Veo 3.1 or Omni Flash? The <a href="{root("/guides/google-flow-credits-calculator/")}">Google Flow credits calculator</a> turns them into videos and dollars per second.</p>
 <h2>Past deals</h2>
 <div class="dealgrid" id="archive">{archive_html}</div>
@@ -2474,9 +2477,12 @@ if not titled:
     status_bits.append("No live deal is titled Black Friday or Cyber Monday.")
 if note_11:
     status_bits.append("Higgsfield's 11.11 sale ends Nov 15.")
+# Description only lists 11.11 plan prices that map to catalog plans, so it
+# stays under 160 characters when extra tiers (Ultra 6K/9K) are also recorded.
 eleven = [
     deal for deal in holiday_live
     if _note_sentence(deal.get("notes") or "", "11.11")
+    and deal.get("full_plan_id")
     and isinstance(deal.get("price_before"), (int, float)) and not isinstance(deal.get("price_before"), bool)
     and isinstance(deal.get("price_after"), (int, float)) and not isinstance(deal.get("price_after"), bool)
 ]
@@ -2530,6 +2536,7 @@ bf_body = (
     "<h1>AI video Black Friday and holiday deals</h1>"
     f'<p class="lead">{e(lead)}</p>'
     f"<p>{e(updated_line)}</p>"
+    f'<p>How the current Higgsfield 11.11 prices convert to dollars per second: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>.</p>'
     "<h2>Holiday-sale wording in the current deals</h2>"
     + "".join(holiday_html)
     + "<h2>Other live deals with an end date</h2>"
@@ -2873,6 +2880,7 @@ def write_llms():
         f"- [Higgsfield plan rates]({SITE_URL}/guides/is-higgsfield-worth-it/): {hf_blurb()}",
         f"- [Project budget]({SITE_URL}/guides/ai-video-project-budget/): {budget_blurb()}",
         f"- [Unlimited Seedance 2.5 plans compared]({SITE_URL}/guides/seedance-2-5-unlimited/): {seedance_unlimited_blurb()}",
+        f"- [Higgsfield Black Friday 2026: what you save per second]({SITE_URL}/guides/higgsfield-black-friday/): {hf_black_friday_blurb()}",
         "",
         "## Data",
         "",
@@ -2904,10 +2912,15 @@ import guide_pages
 import seedance_unlimited_guide
 def seedance_unlimited_blurb():
     return seedance_unlimited_guide.blurb(globals())
+import hf_black_friday_guide
+def hf_black_friday_blurb():
+    return hf_black_friday_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
 SEEDANCE_UNLIMITED = seedance_unlimited_guide.render(globals())
+import hf_black_friday_guide
+hf_black_friday_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers

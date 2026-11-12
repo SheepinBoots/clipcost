@@ -26,6 +26,7 @@ GUIDE_URLS = (
     "https://vidfare.com/guides/is-higgsfield-worth-it/",
     "https://vidfare.com/guides/ai-video-project-budget/",
     "https://vidfare.com/guides/seedance-2-5-unlimited/",
+    "https://vidfare.com/guides/higgsfield-black-friday/",
 )
 
 
