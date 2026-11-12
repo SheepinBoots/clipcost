@@ -9420,7 +9420,8 @@
    "variation": {
     "audio": "not stated",
     "input": [
-     "t2v", "i2v"
+     "t2v",
+     "i2v"
     ],
     "duration": {
      "min_seconds": 1,
@@ -9469,7 +9470,8 @@
    "variation": {
     "audio": "not stated",
     "input": [
-     "t2v", "i2v"
+     "t2v",
+     "i2v"
     ],
     "duration": {
      "min_seconds": 1,
@@ -9518,7 +9520,8 @@
    "variation": {
     "audio": "not stated",
     "input": [
-     "t2v", "i2v"
+     "t2v",
+     "i2v"
     ],
     "duration": {
      "min_seconds": 1,
@@ -9567,7 +9570,8 @@
    "variation": {
     "audio": "not stated",
     "input": [
-     "t2v", "i2v"
+     "t2v",
+     "i2v"
     ],
     "duration": {
      "min_seconds": 1,
@@ -9616,7 +9620,8 @@
    "variation": {
     "audio": "not stated",
     "input": [
-     "t2v", "i2v"
+     "t2v",
+     "i2v"
     ],
     "duration": {
      "min_seconds": 1,
@@ -9665,7 +9670,8 @@
    "variation": {
     "audio": "not stated",
     "input": [
-     "t2v", "i2v"
+     "t2v",
+     "i2v"
     ],
     "duration": {
      "min_seconds": 1,
