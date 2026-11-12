@@ -106,11 +106,9 @@ def main():
         if f'href="{PATH}"' not in page:
             errors.append(f"{rel} does not link the guide")
 
-    if "Seven" not in open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read():
-        # count word is used in the index heading
-        idx = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
-        if "Seven comparisons" not in idx and "7 comparisons" not in idx:
-            errors.append("guides index does not say Seven comparisons")
+    idx = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
+    if "comparisons built from the same price rows" not in idx:
+        errors.append("guides index is missing the comparisons lead")
 
     if errors:
         raise SystemExit("higgsfield black friday guide check failed:\n- " + "\n- ".join(errors))
