@@ -37,8 +37,8 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Unlimited for 14 days. Unlimited Seedance 2.5 30s 720p. 11.11 sale ends on Nov 15.",
-   "verified_date": "2026-11-11",
-   "notes": "Checked 2026-11-11 on higgsfield.ai/pricing (Annual and Monthly toggles, rendered). Annual Plus ($35/mo billed yearly): 14 days of unlimited Seedance 2.5, 30-second clips, 720p. Annual Ultra ($65/mo billed yearly): 14 days, 30s, 1080p. Monthly Plus ($47 first month, renews at $59): 7 days, 20s, 480p. Monthly Ultra ($79 first month, renews at $129): 14 days, 20s, 720p. Starter lists no Seedance 2.5 unlimited window. The page does not say new users only or when the days start. The cards say 'Unlimited sale ends in' with a countdown that reached zero at Nov 15 00:00 UTC (Nov 14, 4 pm PT) when checked, and the header says '11.11 sale ends on Nov 15.' Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods. Seedance 2.5 on Higgsfield plans is not in the price catalog, so this is not turned into a $/s.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-11 on higgsfield.ai/pricing (Annual and Monthly toggles, rendered). Annual Plus ($35/mo billed yearly): 14 days of unlimited Seedance 2.5, 30-second clips, 720p. Annual Ultra ($65/mo billed yearly): 14 days, 30s, 1080p. Monthly Plus ($47 first month, renews at $59): 7 days, 20s, 480p. Monthly Ultra ($79 first month, renews at $129): 14 days, 20s, 720p. Starter lists no Seedance 2.5 unlimited window. The page does not say new users only or when the days start. The cards say 'Unlimited sale ends in' with a countdown that reached zero at Nov 15 00:00 UTC (Nov 14, 4 pm PT) when checked, and the header says '11.11 sale ends on Nov 15.' Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods. Seedance 2.5 on Higgsfield plans is not in the price catalog, so this is not turned into a $/s. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
    "examples": []
   },
   {
@@ -74,11 +74,85 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "$59 $47 billed monthly, renews at $59. 20% OFF.",
-   "verified_date": "2026-11-11",
-   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing. Plus is $47 the first month and renews at $59, labeled 20% OFF, with 1,200 credits / month. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 20% figure is the first-month checkout math, not the 'up to 60% off' banner. $/s uses the first-month $47 and a 12-month blend with the $59 renewal.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing. Plus is $47 the first month and renews at $59, labeled 20% OFF, with 1,200 credits / month. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 20% figure is the first-month checkout math, not the 'up to 60% off' banner. $/s uses the first-month $47 and a 12-month blend with the $59 renewal. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
    "examples": [
     "Plus: $59 → $47/mo · Wan 3.0, Wan 3.0, 480p: $0.03917/s vs $0.04917/s (from credit plan) · 12-month blended $0.04833/s"
    ]
+  },
+  {
+   "id": "hf-ultra-6k-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra 6K monthly first month, $250 to $150",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 40,
+   "bonus_credits": null,
+   "price_before": 250,
+   "price_after": 150,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "Ultra 6K $250 $150 billed monthly, renews at $250. 6,000 credits / month.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-12 on the Monthly toggle, Ultra 6K, at higgsfield.ai/pricing, and on the public plans API the page loads. Ultra 6K is $150 the first month and renews at $250. The API labels this 40% off for one payment. The 11.11 sale ends on Nov 15. This tier is not in the price catalog, so this is not turned into a catalog $/s.",
+   "examples": []
+  },
+  {
+   "id": "hf-ultra-9k-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra 9K monthly first month, $375 to $209",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 45,
+   "bonus_credits": null,
+   "price_before": 375,
+   "price_after": 209,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "Ultra 9K −45% $375 $209 billed monthly, renews at $375. 45% OFF. 9,000 credits / month.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-12 on the Monthly toggle, Ultra 9K, at higgsfield.ai/pricing, and on the public plans API the page loads. Ultra 9K is $209 the first month and renews at $375, labeled 45% OFF. The 11.11 sale ends on Nov 15. This tier is not in the price catalog, so this is not turned into a catalog $/s.",
+   "examples": []
   },
   {
    "id": "hf-ultra-monthly-first",
@@ -113,8 +187,8 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "$129 $79 billed monthly, renews at $129. 40% OFF.",
-   "verified_date": "2026-11-11",
-   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing, Ultra 3K (3,000 credits / month). Ultra is $79 the first month and renews at $129, labeled 40% OFF. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 40% figure is the first-month checkout math on the 3K tier, not the 'up to 60% off' banner. A separate −45% badge sits next to the 3K/6K/9K selector; 6K and 9K monthly prices were not opened. $/s uses the first-month $79 and a 12-month blend with the $129 renewal.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing, Ultra 3K (3,000 credits / month). Ultra is $79 the first month and renews at $129, labeled 40% OFF. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 40% figure is the first-month checkout math on the 3K tier, not the 'up to 60% off' banner. A separate −45% badge sits next to the 3K/6K/9K selector; 6K and 9K monthly prices were not opened. $/s uses the first-month $79 and a 12-month blend with the $129 renewal. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
    "examples": [
     "Ultra: $129 → $79/mo · Wan 3.0, Wan 3.0, 480p: $0.02633/s vs $0.043/s (from credit plan) · 12-month blended $0.04161/s"
    ]
@@ -430,8 +504,8 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Plus $35/month Billed annually",
-   "verified_date": "2026-11-11",
-   "notes": "On 2026-11-11 the pricing page shows Plus annual at $35/mo beside monthly $59, labeled −41%, and Save $288. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $35 ÷ 1,200 credits.",
+   "verified_date": "2026-11-12",
+   "notes": "On 2026-11-11 the pricing page shows Plus annual at $35/mo beside monthly $59, labeled −41%, and Save $288. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $35 ÷ 1,200 credits. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
    "examples": [
     "Plus: $59 → $35/mo · MiniMax Hailuo / H3, Hailuo 2.3, 768p: $0.02917/s vs $0.04917/s (estimated from credit plan)"
    ]
@@ -471,8 +545,82 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Scale $80 /seat/mo, yearly. 30-day unlimited with business verification. Unlimited Seedance 2.5 Special 25s, 720p.",
-   "verified_date": "2026-11-11",
-   "notes": "Checked 2026-11-11 on the Business plans tab of higgsfield.ai/pricing. Scale annual is $80 per seat per month, billed yearly (list $215), with 30 days of unlimited Seedance 2.5 at up to 25-second clips and 720p, after business verification. Scale monthly is $120 per seat per month with 7 days of the same Seedance 2.5 window. The cards show 5 seats and say Scale workspaces are 5 to 15 members. Team ($45 annual, $55 monthly per seat) lists unlimited Seedance 2.0 at 15s, 720p, not Seedance 2.5. Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods. Business plan prices are not in the price catalog, so this is not turned into a $/s.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-11 on the Business plans tab of higgsfield.ai/pricing. Scale annual is $80 per seat per month, billed yearly (list $215), with 30 days of unlimited Seedance 2.5 at up to 25-second clips and 720p, after business verification. Scale monthly is $120 per seat per month with 7 days of the same Seedance 2.5 window. The cards show 5 seats and say Scale workspaces are 5 to 15 members. Team ($45 annual, $55 monthly per seat) lists unlimited Seedance 2.0 at 15s, 720p, not Seedance 2.5. Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods. Business plan prices are not in the price catalog, so this is not turned into a $/s. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown. The business tab banner and the Scale annual card say up to 63% off, with Scale annual labeled −63% ($215 to $80 /seat/mo, yearly) and Scale monthly $120 labeled 45% OFF. Team monthly is $55 (30% OFF $79) and Team annual $45 (−43%).",
+   "examples": []
+  },
+  {
+   "id": "hf-ultra-6k-annual",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra 6K annual billing, $258 to $110/mo",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": true,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": true
+   },
+   "percent": 57,
+   "bonus_credits": null,
+   "price_before": 258,
+   "price_after": 110,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": null,
+   "end": null,
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "Ultra 6K $258 $110 /mo, billed yearly. −57%. Save $1,680. 6,000 credits / month.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-12 on the Annual toggle, Ultra 6K, at higgsfield.ai/pricing, and on the public plans API the page loads. Ultra 6K annual is $110/mo billed yearly beside a $258 list, labeled −57%, and Save $1,680. The $1,680 figure equals ($250 − $110) × 12, using the monthly 6K list, not the $258 annual list. The 11.11 sale ends on Nov 15. It is not confirmed whether this listed annual price reverts after that date. This tier is not in the price catalog, so this is not turned into a catalog $/s.",
+   "examples": []
+  },
+  {
+   "id": "hf-ultra-9k-annual",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra 9K annual billing, $387 to $150/mo",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": true,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": true
+   },
+   "percent": 60,
+   "bonus_credits": null,
+   "price_before": 387,
+   "price_after": 150,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": null,
+   "end": null,
+   "end_is_estimate": false,
+   "status": "live",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "Ultra 9K −60% $387 $150 /mo, billed yearly. −60%. Save $2,700. 9,000 credits / month.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-12 on the Annual toggle, Ultra 9K, at higgsfield.ai/pricing, and on the public plans API the page loads. This is the individual plan the page labels up to 60% off. Ultra 9K annual is $150/mo billed yearly beside a $387 list, labeled −60%, and Save $2,700. The 60% and the $2,700 equal ($375 − $150) / $375 and ($375 − $150) × 12, using the monthly 9K list, not the $387 annual list. The 11.11 sale ends on Nov 15. It is not confirmed whether this listed annual price reverts after that date. This tier is not in the price catalog, so this is not turned into a catalog $/s.",
    "examples": []
   },
   {
@@ -508,8 +656,8 @@
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Ultra BEST VALUE $65/month Billed annually",
-   "verified_date": "2026-11-11",
-   "notes": "On 2026-11-11 the pricing page shows Ultra annual at $65/mo beside monthly $129, labeled −50%, and Save $768. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $65 ÷ 3,000 credits.",
+   "verified_date": "2026-11-12",
+   "notes": "On 2026-11-11 the pricing page shows Ultra annual at $65/mo beside monthly $129, labeled −50%, and Save $768. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $65 ÷ 3,000 credits. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
    "examples": [
     "Ultra: $129 → $65/mo · Wan 3.0, Wan 3.0, 480p: $0.02167/s vs $0.043/s (from credit plan)"
    ]
