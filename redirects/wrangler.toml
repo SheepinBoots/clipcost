@@ -1,0 +1,13 @@
+name = "vidfare-redirects"
+main = "src/index.js"
+compatibility_date = "2026-11-11"
+workers_dev = false
+# Exact patterns (vidfare.com/about-us and vidfare.com/about-us/) do not
+# match query strings. Cloudflare matches the entire URL, including `?…`,
+# and patterns cannot include query parameters, so a trailing * is required
+# for /about-us?utm=… to reach this Worker. That * also matches suffixes
+# such as /about-user and /about-us/foo; the Worker only redirects the two
+# exact paths and passes everything else through.
+routes = [
+  { pattern = "vidfare.com/about-us*", zone_name = "vidfare.com" }
+]
