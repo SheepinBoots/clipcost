@@ -126,6 +126,9 @@ def main():
         "price:2026-11-11:r127:0.132:0.08667",
         "price:2026-11-11:r130:0.03917:0.02917",
         "price:2026-11-11:r132:0.033:0.02167",
+        "price:2026-11-13:r164:0.7975:0.57275",
+        "price:2026-11-13:r165:0.7425:0.53325",
+        "price:2026-11-13:r166:0.726:0.5214",
     }
     assert {event["id"] for event in log if event["kind"] == "price"} == price_ids
     assert any(event["kind"] == "note" and "a4f84a1" in event["text"] for event in log)

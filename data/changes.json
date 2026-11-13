@@ -730,5 +730,44 @@
   "vendor": "Higgsfield API",
   "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
   "text": "Wan API Prime 40% off and Wan 3.0 50% off is no longer on the pricing pages as of 2026-11-11."
+ },
+ {
+  "date": "2026-11-13",
+  "row": "r164",
+  "model": "seedance-2-5",
+  "platform": "Magnific",
+  "variant": "Seedance 2.5",
+  "resolution": "1080p",
+  "old_usd_per_second": 0.7975,
+  "new_usd_per_second": 0.57275,
+  "source_url": "https://www.magnific.com/pricing",
+  "type": "price",
+  "plan": "mag-premium"
+ },
+ {
+  "date": "2026-11-13",
+  "row": "r165",
+  "model": "seedance-2-5",
+  "platform": "Magnific",
+  "variant": "Seedance 2.5",
+  "resolution": "1080p",
+  "old_usd_per_second": 0.7425,
+  "new_usd_per_second": 0.53325,
+  "source_url": "https://www.magnific.com/pricing",
+  "type": "price",
+  "plan": "mag-premium-plus"
+ },
+ {
+  "date": "2026-11-13",
+  "row": "r166",
+  "model": "seedance-2-5",
+  "platform": "Magnific",
+  "variant": "Seedance 2.5",
+  "resolution": "1080p",
+  "old_usd_per_second": 0.726,
+  "new_usd_per_second": 0.5214,
+  "source_url": "https://www.magnific.com/pricing",
+  "type": "price",
+  "plan": "mag-pro"
  }
 ]
