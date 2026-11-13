@@ -1,9 +1,9 @@
 {
- "run": "2026-11-12T21:52:22",
+ "run": "2026-11-13T20:36:59",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 15676
+   "chars": 16212
   },
   "hf_api": {
    "status": "fetched",
@@ -35,19 +35,19 @@
   },
   "fal_pricing": {
    "status": "fetched",
-   "chars": 7802
+   "chars": 7810
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1621
+   "chars": 1623
   },
   "rep_seed25": {
    "status": "fetched",
-   "chars": 4434
+   "chars": 4446
   },
   "runway": {
    "status": "fetched",
-   "chars": 23309
+   "chars": 23880
   },
   "xai_imagine": {
    "status": "fetched",
@@ -59,19 +59,19 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 105371
+   "chars": 102707
   },
   "atlas": {
    "status": "fetched",
-   "chars": 2463206
+   "chars": 2474937
   },
   "krea": {
    "status": "fetched",
-   "chars": 31710
+   "chars": 30688
   },
   "magnific": {
    "status": "fetched",
-   "chars": 9580
+   "chars": 9786
   },
   "kling_app": {
    "status": "manual",
@@ -92,160 +92,441 @@
   },
   "gflow_credits": {
    "status": "fetched",
-   "chars": 8663
+   "chars": 8664
   },
   "google_ai_plans": {
    "status": "fetched",
-   "chars": 22307
+   "chars": 22053
   }
  },
  "findings": [
   {
+   "kind": "row",
+   "id": "r073",
+   "source": "atlas",
+   "status": "missing",
+   "needle": "480p Estimated → /s (estimated) ${N}",
+   "old": 0.1397,
+   "new": null,
+   "model": "seedance-2-5",
+   "platform": "Atlas Cloud",
+   "variant": "Seedance 2.5 T2V"
+  },
+  {
+   "kind": "row",
+   "id": "r074",
+   "source": "atlas",
+   "status": "missing",
+   "needle": "720p Estimated → /s (estimated) ${N}",
+   "old": 0.3005,
+   "new": null,
+   "model": "seedance-2-5",
+   "platform": "Atlas Cloud",
+   "variant": "Seedance 2.5 T2V"
+  },
+  {
+   "kind": "row",
+   "id": "r075",
+   "source": "atlas",
+   "status": "missing",
+   "needle": "1080p Estimated → /s (estimated) ${N}",
+   "old": 0.5914,
+   "new": null,
+   "model": "seedance-2-5",
+   "platform": "Atlas Cloud",
+   "variant": "Seedance 2.5 T2V"
+  },
+  {
+   "kind": "row",
+   "id": "r164",
+   "source": "magnific",
+   "status": "changed",
+   "needle": "Seedance 2.5 1080p {N} credits/4s",
+   "old": 4400,
+   "new": 3160.0,
+   "model": "seedance-2-5",
+   "platform": "Magnific",
+   "variant": "Seedance 2.5"
+  },
+  {
+   "kind": "row",
+   "id": "r165",
+   "source": "magnific",
+   "status": "changed",
+   "needle": "Seedance 2.5 1080p {N} credits/4s",
+   "old": 4400,
+   "new": 3160.0,
+   "model": "seedance-2-5",
+   "platform": "Magnific",
+   "variant": "Seedance 2.5"
+  },
+  {
+   "kind": "row",
+   "id": "r166",
+   "source": "magnific",
+   "status": "changed",
+   "needle": "Seedance 2.5 1080p {N} credits/4s",
+   "old": 4400,
+   "new": 3160.0,
+   "model": "seedance-2-5",
+   "platform": "Magnific",
+   "variant": "Seedance 2.5"
+  },
+  {
+   "kind": "row",
+   "id": "r167",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Seedance 2.5 Draft 480p New {N} credits/4s",
+   "old": 800,
+   "new": null,
+   "model": "seedance-2-5",
+   "platform": "Magnific",
+   "variant": "Seedance 2.5 Draft"
+  },
+  {
+   "kind": "row",
+   "id": "r168",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Seedance 2.5 Draft 480p New {N} credits/4s",
+   "old": 800,
+   "new": null,
+   "model": "seedance-2-5",
+   "platform": "Magnific",
+   "variant": "Seedance 2.5 Draft"
+  },
+  {
+   "kind": "row",
+   "id": "r169",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Seedance 2.5 Draft 480p New {N} credits/4s",
+   "old": 800,
+   "new": null,
+   "model": "seedance-2-5",
+   "platform": "Magnific",
+   "variant": "Seedance 2.5 Draft"
+  },
+  {
+   "kind": "row",
+   "id": "r173",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Gemini Omni 1.1 New {N} credits/3s",
+   "old": 720,
+   "new": null,
+   "model": "gemini-omni-flash",
+   "platform": "Magnific",
+   "variant": "Gemini Omni 1.1"
+  },
+  {
+   "kind": "row",
+   "id": "r174",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Gemini Omni 1.1 New {N} credits/3s",
+   "old": 720,
+   "new": null,
+   "model": "gemini-omni-flash",
+   "platform": "Magnific",
+   "variant": "Gemini Omni 1.1"
+  },
+  {
+   "kind": "row",
+   "id": "r175",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Gemini Omni 1.1 New {N} credits/3s",
+   "old": 720,
+   "new": null,
+   "model": "gemini-omni-flash",
+   "platform": "Magnific",
+   "variant": "Gemini Omni 1.1"
+  },
+  {
+   "kind": "row",
+   "id": "r176",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "MiniMax H3 Max Turbo 768p New {N} credits/5s",
+   "old": 200,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Magnific",
+   "variant": "MiniMax H3 Max Turbo"
+  },
+  {
+   "kind": "row",
+   "id": "r177",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "MiniMax H3 Max Turbo 768p New {N} credits/5s",
+   "old": 200,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Magnific",
+   "variant": "MiniMax H3 Max Turbo"
+  },
+  {
+   "kind": "row",
+   "id": "r178",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "MiniMax H3 Max Turbo 768p New {N} credits/5s",
+   "old": 200,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Magnific",
+   "variant": "MiniMax H3 Max Turbo"
+  },
+  {
+   "kind": "plan",
+   "id": "krea-basic-yearly",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Basic {N} units / month",
+   "old": 5000,
+   "new": null,
+   "model": null,
+   "platform": "Krea",
+   "variant": "Basic (yearly)"
+  },
+  {
+   "kind": "plan",
+   "id": "krea-pro-monthly",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Pro {N} units / month",
+   "old": 20000,
+   "new": null,
+   "model": null,
+   "platform": "Krea",
+   "variant": "Pro (monthly)"
+  },
+  {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "New Playable Supercomputer Community Academy Plugins Canvas Enterprise Pricing 60% OFF Login Get started SEEDANCE 2.5 UNLIMITED FOR UP TO 14 DAYS & 60 DAYS OF UNLIMIT"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ED NANO BANANA PRO, GPT IMAGE 2.5, SEEDREAM 5.0 PRO NANO BANANA PRO Unlimited up to 14 days of Seedance 2.5 & 60 days of Nano Banana Pro, GPT Image 2.5, Seed"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "r ends in... 27 hours 21 minutes 11 seconds Best prices in GenAI industry 11.11 sale ends on Nov 15. Don’t miss your chance to get up to 60% OFF. Individual Seedanc"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "e 2.5 Unlimited 30 days Business plans Monthly Annual Up to 60% OFF Starter For first-time AI creators $19 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "nana Pro 80 videos Seedance 2.5 Unlimited sale ends in 27h 21m 11s Unlimited for 14 days Unlimited Seedance 2.5 30s 720p Unlimited for 60 days Unlimited Nan"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "Banana Pro 200 videos Seedance 2.5 Unlimited sale ends in 27h 21m 11s Unlimited for 14 days Unlimited Seedance 2.5 30s 1080p Unlimited for 60 days Unlimited Na"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "able Supercomputer Community Contests Academy Plugins Canvas Enterprise Pricing 60% OFF Login Get started SEEDANCE 2.5 UNLIMITED FOR UP TO 14 DAYS & 60 DAYS OF UNLIMIT"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "ED NANO BANANA PRO, GPT IMAGE 2.5, SEEDREAM 5.0 PRO SEEDREAM 5.0 PRO Unlimited up to 14 days of Seedance 2.5 & 60 days of Nano Banana Pro, GPT Image 2.5, Seed"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "ream 5.0 Pro 11.11 unlimited sale ends in... 50 hours 06 minutes 01 seconds Best prices in GenAI industry 11.11 s"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ale ends on Nov 15. Don’t miss your chance to get up to 60% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "60% OFF Starter For first-time AI creators $19 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "ected models only & features Early access to advanced AI features 11.11 special sale 50h 06m 01s Plus Most popular For everyday AI creation $59 $35 $ 0 1 2 3 4 5 6"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "nana Pro 80 videos Seedance 2.5 Unlimited sale ends in 50h 06m 01s Unlimited for 14 days Unlimited Seedance 2.5 30s 720p Unlimited for 60 days Unlimited Nan"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "arly access to advanced AI features 11.11 special sale 50h 06m 01s Ultra 3K 6K 9K −60% For ambitious AI projects $129 $65 $ 0 1 2 3 4"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "Banana Pro 200 videos Seedance 2.5 Unlimited sale ends in 50h 06m 01s Unlimited for 14 days Unlimited Seedance 2.5 30s 1080p Unlimited for 60 days Unlimited Na"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "eration Starter MCP & Supercomputer Monthly Annual Save up to 60% 11.11 special sale 50h 06m 01s Plus $59 $35 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ED NANO BANANA PRO, GPT IMAGE 2.5, SEEDREAM 5.0 PRO GPT IMAGE 2.5 Unlimited up to 14 days of Seedance 2.5 & 60 days of Nano Banana Pro, GPT Image 2.5, Seed"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ream 5.0 Pro 11.11 unlimited sale ends in... 56 hours 10 minutes 44 seconds Best prices in GenAI industry 11.11 s"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ected models only & features Early access to advanced AI features 11.11 special sale 56h 10m 44s Plus Most popular For everyday AI creation $59 $35 $ 0 1 2 3 4 5 6"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "nana Pro 80 videos Seedance 2.5 Unlimited sale ends in 56h 10m 44s Unlimited for 14 days Unlimited Seedance 2.5 30s 720p Unlimited for 60 days Unlimited Nan"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "arly access to advanced AI features 11.11 special sale 56h 10m 44s Ultra 3K 6K 9K −60% For ambitious AI projects $129 $65 $ 0 1 2 3 4"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "Banana Pro 200 videos Seedance 2.5 Unlimited sale ends in 56h 10m 44s Unlimited for 14 days Unlimited Seedance 2.5 30s 1080p Unlimited for 60 days Unlimited Na"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "eration Starter MCP & Supercomputer Monthly Annual Save up to 60% 11.11 special sale 56h 10m 44s Plus $59 $35 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5"
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Model Licensing Looking for API? Free 100 units / day $0 /month Get Free No dif"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "to see your discount before checkout. Redeem Need More Compute? Purchase one-time compute packs for"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Need help choosing a plan? Model Licensing Looking for API? Free 100 units / da"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Max 60,"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "to see your discount before checkout. Redeem Find the best plan for you Tell us what you make and ho"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "na 2.1 generations ~131 Seedance 2.5 videos 40k 60k 80k 100k $70 /month Get Max Unlimited LoRA training (2,000 images) Bulk discounts on compute unit packs Unlimited rel"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "w to Krea? Save up to 50% on your first plan Sign up free and we'll offer you a discount on your first plan. Sign up free Monthly Yearly 40% off Model Licensing Looking"
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "projects and folders New Early access to AI features Metadata export & lineage Unlimited Save credits on 30+ models Nano Banana 2 All year Kling 2.5 All year Nano Banan"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "es Compare plans: AI video, image, and audio plus stock AI video Kling 2.5 720p Unlimited 140 credits/5s 1,714 videos Wan 3.0 720p 200 credits/2s 1,200 videos 3,000 vide"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "ts/image 3,200 images 8,000 images 20,000 images Google Nano Banana Pro (1K/2K) Unlimited 75 credits/image 3,200 images 8,000 images Google Nano Banana 2.1 2K 65 credits"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "/image 3,692 images 9,230 images 23,076 images Google Nano Banana 2 2K Unlimited 75 credits/image 3,200 images 8,000 images Google Nano Banana 2 1K Unlimited 75"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "dits/image 1,600 images 4,000 images 10,000 images Google Nano Banana 2 Lite 1K Unlimited 60 credits/image 4,000 images Google Nano Banana 2 4K 150 credits/image 1,600 i"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "m 2K New 65 credits/image 3,692 images 9,230 images 23,076 images Flux.2 Pro 1K Unlimited 50 credits/image 4,800 images Recraft V4.1 Mid Unlimited 60 credits/image 4,000"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Max 40,"
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "ideo input New 990 credits/3s 242 videos 606 videos 1,515 videos Kling 2.5 720p Unlimited 140 credits/5s 1,714 videos Kling 3.0 Pro 1080p 450 credits/5s 533 videos 1,333"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "to see your discount before checkout. Redeem Need More Compute? Purchase one-time compute packs for"
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "250 credits/image 960 images 2,400 images 6,000 images Google Nano Banana 2 2K Unlimited 75 credits/image 3,200 images 8,000 images Google Nano Banana Pro (1K/2K) Unlim"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "ited 75 credits/image 3,200 images 8,000 images Google Nano Banana 2 1K Unlimited 75 credits/image 3,200 images Google Nano Banana 2 4K 150 credits/image 1,600 i"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "mages 4,000 images 10,000 images Google Nano Banana 2 Lite 1K Unlimited 60 credits/image 4,000 images Google Nano Banana Pro 4K 150 credits/image 1,600"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "edium 2K 180 credits/image 1,333 images 3,333 images 8,333 images Flux.2 Pro 1K Unlimited 50 credits/image 4,800 images Recraft V4.1 Mid Unlimited 60 credits/image 4,000"
   }
  ],
  "deal_scan": {
@@ -255,21 +536,21 @@
     "vendor": "Higgsfield",
     "url": "https://higgsfield.ai/pricing",
     "status": "fetched",
-    "snippets": 27
+    "snippets": 23
    },
    {
     "id": "krea",
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 17
+    "snippets": 16
    },
    {
     "id": "magnific",
     "vendor": "Magnific",
     "url": "https://www.magnific.com/pricing",
     "status": "fetched",
-    "snippets": 11
+    "snippets": 12
    },
    {
     "id": "runway_plans",
@@ -286,12 +567,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 21
+  "candidates": 32
  },
  "counts": {
-  "ok": 453,
-  "changed": 0,
-  "missing": 0,
+  "ok": 436,
+  "changed": 3,
+  "missing": 14,
   "skipped": 6
  }
 }
