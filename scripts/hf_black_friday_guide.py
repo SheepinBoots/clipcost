@@ -403,7 +403,7 @@ def render(g):
 <h2>What to recheck</h2>
 <p>After Nov 15 (the sale countdown reaches zero at Nov 14, 4:00 PM PT): whether the annual list prices stay at {_usd_month(plus_a['price_after'])} and {_usd_month(ultra_a['price_after'])}, and whether the unlimited windows are gone. On or after Nov 27: whether Higgsfield has posted a Black Friday 2026 offer on its own pricing page or blog. This page does not invent that offer.</p>
 {g["faq_html"](faqs)}
-<p>Related: <a href="{root("/guides/is-higgsfield-worth-it/")}">Is Higgsfield worth it?</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a> · <a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a> · <a href="{root("/calculator/")}">credit calculator</a>.</p>
+<p>Related: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a> · <a href="{root("/guides/is-higgsfield-worth-it/")}">Is Higgsfield worth it?</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a> · <a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a> · <a href="{root("/calculator/")}">credit calculator</a>.</p>
 """
     # news box like other guides? seedance doesn't use news_box in the snippet I saw. skip to avoid layout change issues.
 

@@ -215,6 +215,7 @@ def render(g):
             ("What is the cheapest way to use Seedance 2.5?", "/guides/cheapest-seedance-2-5/", g["cheapest_seedance_blurb"]()),
             ("Higgsfield Black Friday 2026: what you save per second", "/guides/higgsfield-black-friday/", g["hf_black_friday_blurb"]()),
             ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/", g["grok_imagine_blurb"]()),
+            ("Higgsfield pricing explained", "/guides/higgsfield-pricing/", g["hf_pricing_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
@@ -801,6 +802,7 @@ def render(g):
 <h1>Is Higgsfield worth it? Every plan's real cost per second</h1>
 <p class="lead">{e(lead)}</p>
 {checked_line()}
+<p>Related: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a> · <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>.</p>
 {cards}
 <h2>{e(q_worth)}</h2><p>{e(a_worth)}</p>
 {thousand_html}

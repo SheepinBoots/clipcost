@@ -30,6 +30,7 @@ GUIDE_URLS = (
     "https://vidfare.com/guides/wan-3-0-unlimited/",
     "https://vidfare.com/guides/higgsfield-black-friday/",
     "https://vidfare.com/guides/grok-imagine-video-cost/",
+    "https://vidfare.com/guides/higgsfield-pricing/",
 )
 
 

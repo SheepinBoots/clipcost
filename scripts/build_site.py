@@ -52,6 +52,7 @@ GUIDE_LINKS = [
     ("/guides/cheapest-seedance-2-5/", "Cheapest Seedance 2.5"),
     ("/guides/higgsfield-black-friday/", "Higgsfield Black Friday"),
     ("/guides/grok-imagine-video-cost/", "Grok Imagine cost"),
+    ("/guides/higgsfield-pricing/", "Higgsfield pricing"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1082,6 +1083,7 @@ GUIDE_CRUMBS = {
     "/guides/cheapest-seedance-2-5/": "Cheapest Seedance 2.5",
     "/guides/higgsfield-black-friday/": "Higgsfield Black Friday",
     "/guides/grok-imagine-video-cost/": "Grok Imagine video cost",
+    "/guides/higgsfield-pricing/": "Higgsfield pricing",
 }
 
 def guide_crosslinks(path):
@@ -1126,6 +1128,7 @@ def guide_page(path, title, desc, body, faqs):
             ("What is the cheapest way to use Seedance 2.5?", "/guides/cheapest-seedance-2-5/"),
             ("Higgsfield Black Friday 2026: what you save per second?", "/guides/higgsfield-black-friday/"),
             ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/"),
+            ("Higgsfield pricing explained", "/guides/higgsfield-pricing/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -2557,7 +2560,7 @@ bf_body = (
     "<h1>AI video Black Friday and holiday deals</h1>"
     f'<p class="lead">{e(lead)}</p>'
     f"<p>{e(updated_line)}</p>"
-    f'<p>How the current Higgsfield 11.11 prices convert to dollars per second: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>.</p>'
+    f'<p>How the current Higgsfield 11.11 prices convert to dollars per second: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>. Every current plan, including list vs sale: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a>.</p>'
     "<h2>Holiday-sale wording in the current deals</h2>"
     + "".join(holiday_html)
     + "<h2>Other live deals with an end date</h2>"
@@ -2905,6 +2908,7 @@ def write_llms():
         f"- [The cheapest way to use Seedance 2.5]({SITE_URL}/guides/cheapest-seedance-2-5/): {cheapest_seedance_blurb()}",
         f"- [Higgsfield Black Friday 2026: what you save per second]({SITE_URL}/guides/higgsfield-black-friday/): {hf_black_friday_blurb()}",
         f"- [How much does a Grok Imagine video cost?]({SITE_URL}/guides/grok-imagine-video-cost/): {grok_imagine_blurb()}",
+        f"- [Higgsfield pricing explained]({SITE_URL}/guides/higgsfield-pricing/): {hf_pricing_blurb()}",
         "",
         "## Data",
         "",
@@ -2948,6 +2952,9 @@ def cheapest_seedance_blurb():
 import grok_imagine_guide
 def grok_imagine_blurb():
     return grok_imagine_guide.blurb(globals())
+import hf_pricing_guide
+def hf_pricing_blurb():
+    return hf_pricing_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -2960,6 +2967,8 @@ import cheapest_seedance_guide
 cheapest_seedance_guide.render(globals())
 import grok_imagine_guide
 grok_imagine_guide.render(globals())
+import hf_pricing_guide
+hf_pricing_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers
