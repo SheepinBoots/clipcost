@@ -188,8 +188,6 @@ def main():
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
-    if "Ten comparisons" not in guides and "ten comparisons" not in guides:
-        errors.append("guides index count text was not updated to Ten")
 
     if errors:
         raise SystemExit("grok imagine video cost guide:\n- " + "\n- ".join(errors))

@@ -186,7 +186,7 @@
      "expect": 270
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "hf-plus-annual": {
@@ -206,7 +206,7 @@
      "expect": 1200
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "hf-plus-monthly": {
@@ -222,7 +222,7 @@
      "expect": 59
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "hf-ultra-annual": {
@@ -242,7 +242,7 @@
      "expect": 3000
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "hf-ultra-monthly": {
@@ -258,7 +258,7 @@
      "expect": 129
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "krea-basic-yearly": {
@@ -314,7 +314,7 @@
      "expect": 21
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing"
   },
   "mag-premium": {
@@ -335,7 +335,7 @@
      "expect": 240000
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing"
   },
   "mag-premium-plus": {
@@ -356,7 +356,7 @@
      "expect": 600000
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing"
   },
   "mag-pro": {
@@ -377,7 +377,7 @@
      "expect": 1500000
     }
    ],
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing"
   }
  },
@@ -426,7 +426,7 @@
    ],
    "note": "Standard self-serve rate on the model page: 480p $0.0510 per second. The same page states 720p $0.1050 and 1080p $0.2100. Total price = selected rate × output duration in seconds, for clips of 2–30s. The API pricing page lists Wan 3.0 Prime from $0.051/s. The page does not state a discount.",
    "id": "r001",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -492,7 +492,7 @@
    ],
    "note": "Standard self-serve rate on the model page: 720p $0.1050 per second. The same page states 480p $0.0510 and 1080p $0.2100. Total price = selected rate × output duration in seconds, for clips of 2–30s. The page does not state a discount.",
    "id": "r002",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -558,7 +558,7 @@
    ],
    "note": "Standard self-serve rate on the model page: 1080p $0.2100 per second. The same page states 480p $0.0510 and 720p $0.1050. Total price = selected rate × output duration in seconds, for clips of 2–30s. The page does not state a discount.",
    "id": "r003",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -600,7 +600,7 @@
    ],
    "note": "Undiscounted list price; 'from' = cheapest mode.",
    "id": "r004",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://open.higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -650,7 +650,7 @@
    ],
    "note": "Low end of the model page range Wan 3.0 Text to Video $0.0375–$0.15/sec, 480p–1080p, 2–30s. The API pricing page lists Wan 3.0 from $0.038/s. The page does not state a discount.",
    "id": "r005",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -704,7 +704,7 @@
    ],
    "note": "High end of the model page range Wan 3.0 Text to Video $0.0375–$0.15/sec, 480p–1080p, 2–30s. The API pricing page lists Wan 3.0 from $0.038/s and does not restate a 1080p rate. The page does not state a discount.",
    "id": "r006",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -746,7 +746,7 @@
    ],
    "note": "'From' price; resolution of cheapest mode not stated on the list.",
    "id": "r007",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://open.higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -784,7 +784,7 @@
    ],
    "note": "'From' price; resolution of cheapest mode not stated on the list.",
    "id": "r008",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://open.higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -830,7 +830,7 @@
    ],
    "note": "",
    "id": "r009",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -878,7 +878,7 @@
    ],
    "note": "",
    "id": "r010",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -926,7 +926,7 @@
    ],
    "note": "",
    "id": "r011",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -974,7 +974,7 @@
    ],
    "note": "",
    "id": "r012",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1022,7 +1022,7 @@
    ],
    "note": "",
    "id": "r013",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1070,7 +1070,7 @@
    ],
    "note": "",
    "id": "r014",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1118,7 +1118,7 @@
    ],
    "note": "",
    "id": "r015",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video",
    "variation": {
     "audio": "without",
@@ -1170,7 +1170,7 @@
    ],
    "note": "",
    "id": "r016",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video",
    "variation": {
     "audio": "with",
@@ -1231,7 +1231,7 @@
    ],
    "note": "fal says 'roughly': billed by tokens (16:9, 24fps).",
    "id": "r017",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -1287,7 +1287,7 @@
    ],
    "note": "fal says 'roughly': billed by tokens.",
    "id": "r018",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -1339,7 +1339,7 @@
    ],
    "note": "fal says 'roughly': billed by tokens.",
    "id": "r019",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1387,7 +1387,7 @@
    ],
    "note": "",
    "id": "r020",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/fal-ai/veo3.1",
    "variation": {
     "audio": "without",
@@ -1433,7 +1433,7 @@
    ],
    "note": "",
    "id": "r021",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/fal-ai/veo3.1",
    "variation": {
     "audio": "with",
@@ -1479,7 +1479,7 @@
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026. 480p list rate (the model page's default tier during the promo is 768p).",
    "id": "r022",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1527,7 +1527,7 @@
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r023",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1579,7 +1579,7 @@
    ],
    "note": "Grok Imagine Video 1.5. The older Grok Imagine Video (v1) is $0.05/s at 480p and is not this model.",
    "id": "r024",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -1627,7 +1627,7 @@
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r179",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1675,7 +1675,7 @@
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r180",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1723,7 +1723,7 @@
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r184",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1771,7 +1771,7 @@
    ],
    "note": "Standard rate. The model page says these rates resume November 16, 2026.",
    "id": "r185",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1819,7 +1819,7 @@
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
    "id": "r191",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "list_usd_per_second": 0.05,
    "deal_ids": [
@@ -1871,7 +1871,7 @@
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
    "id": "r192",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "list_usd_per_second": 0.08,
    "deal_ids": [
@@ -1923,7 +1923,7 @@
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
    "id": "r193",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "list_usd_per_second": 0.16,
    "deal_ids": [
@@ -1975,7 +1975,7 @@
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
    "id": "r194",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "list_usd_per_second": 0.025,
    "deal_ids": [
@@ -2027,7 +2027,7 @@
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
    "id": "r195",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "list_usd_per_second": 0.04,
    "deal_ids": [
@@ -2079,7 +2079,7 @@
    ],
    "note": "30% off from November 1 through November 15, 2026. Standard rates resume November 16, 2026.",
    "id": "r196",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "list_usd_per_second": 0.08,
    "deal_ids": [
@@ -2135,7 +2135,7 @@
    ],
    "note": "Grok Imagine Video 1.5.",
    "id": "r189",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -2187,7 +2187,7 @@
    ],
    "note": "Grok Imagine Video 1.5.",
    "id": "r190",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -2239,7 +2239,7 @@
    ],
    "note": "",
    "id": "r025",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://replicate.com/alibaba/wan-3",
    "variation": {
     "audio": "not stated",
@@ -2292,7 +2292,7 @@
    ],
    "note": "",
    "id": "r026",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://replicate.com/alibaba/wan-3",
    "variation": {
     "audio": "not stated",
@@ -2345,7 +2345,7 @@
    ],
    "note": "",
    "id": "r027",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://replicate.com/alibaba/wan-3",
    "variation": {
     "audio": "not stated",
@@ -2390,7 +2390,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r028",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2432,7 +2432,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r029",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2474,7 +2474,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r030",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2516,7 +2516,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r031",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2558,7 +2558,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r032",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2600,7 +2600,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r033",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2642,7 +2642,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r034",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "without",
@@ -2684,7 +2684,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r035",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "with",
@@ -2726,7 +2726,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r036",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "without",
@@ -2768,7 +2768,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r037",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "with",
@@ -2810,7 +2810,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r038",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2864,7 +2864,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r039",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2927,7 +2927,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r040",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2990,7 +2990,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r041",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3041,7 +3041,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r042",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "with",
@@ -3083,7 +3083,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r043",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "without",
@@ -3125,7 +3125,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r044",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "with",
@@ -3167,7 +3167,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r045",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "without",
@@ -3209,7 +3209,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r046",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3251,7 +3251,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r047",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3305,7 +3305,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r048",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3368,7 +3368,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r049",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3419,7 +3419,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r050",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3461,7 +3461,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r051",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3511,7 +3511,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r052",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3566,7 +3566,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r053",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3621,7 +3621,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r054",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3676,7 +3676,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r055",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3731,7 +3731,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r056",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3786,7 +3786,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r057",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3845,7 +3845,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r058",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3892,7 +3892,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r059",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "without",
@@ -3930,7 +3930,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r060",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "without",
@@ -3968,7 +3968,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r061",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "without",
@@ -4006,7 +4006,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r062",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "with",
@@ -4044,7 +4044,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r063",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "with",
@@ -4082,7 +4082,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r064",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "with",
@@ -4120,7 +4120,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r065",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "with",
@@ -4400,7 +4400,7 @@
    ],
    "note": "Token-billed; Google states 'approximately $0.10 per second' of 720p. Effective December 3, 2026, requests to gemini-omni-1.1-flash route to gemini-omni-1.2-flash and are billed at 1.2 rates.",
    "id": "r072",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
    "variation": {
     "audio": "not stated",
@@ -4446,7 +4446,7 @@
    ],
    "note": "Token-billed; Google states an effective price of approximately $0.07 per second of 720p ($12.00 per 1M video tokens, 5,792 tokens per second).",
    "id": "r199",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
    "variation": {
     "audio": "not stated",
@@ -4492,7 +4492,7 @@
    ],
    "note": "Token-billed; Google states $0.104/s for 1080p with upsampling at 8,688 tokens/s. Gemini Omni 1.1 Flash has no stated 1080p per-second rate on this page.",
    "id": "r200",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
    "variation": {
     "audio": "not stated",
@@ -4538,7 +4538,7 @@
    ],
    "note": "Token-billed; Google states $0.209/s for 4K with upsampling at 17,376 tokens/s. Gemini Omni 1.1 Flash has no stated 4K per-second rate on this page.",
    "id": "r201",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
    "variation": {
     "audio": "not stated",
@@ -4708,7 +4708,7 @@
    ],
    "note": "",
    "id": "r076",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.atlascloud.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4748,7 +4748,7 @@
    ],
    "note": "",
    "id": "r077",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.atlascloud.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4793,7 +4793,7 @@
    ],
    "note": "",
    "id": "r078",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4836,7 +4836,7 @@
    ],
    "note": "",
    "id": "r079",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4882,7 +4882,7 @@
    ],
    "note": "",
    "id": "r080",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4929,7 +4929,7 @@
    ],
    "note": "",
    "id": "r081",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4975,7 +4975,7 @@
    ],
    "note": "",
    "id": "r082",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5022,7 +5022,7 @@
    ],
    "note": "",
    "id": "r083",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5065,7 +5065,7 @@
    ],
    "note": "",
    "id": "r084",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5111,7 +5111,7 @@
    ],
    "note": "",
    "id": "r085",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5158,7 +5158,7 @@
    ],
    "note": "",
    "id": "r086",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5204,7 +5204,7 @@
    ],
    "note": "",
    "id": "r087",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5251,7 +5251,7 @@
    ],
    "note": "",
    "id": "r088",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5294,7 +5294,7 @@
    ],
    "note": "",
    "id": "r089",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5340,7 +5340,7 @@
    ],
    "note": "",
    "id": "r090",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5387,7 +5387,7 @@
    ],
    "note": "",
    "id": "r091",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5433,7 +5433,7 @@
    ],
    "note": "",
    "id": "r092",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5480,7 +5480,7 @@
    ],
    "note": "",
    "id": "r093",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5523,7 +5523,7 @@
    ],
    "note": "",
    "id": "r094",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5569,7 +5569,7 @@
    ],
    "note": "",
    "id": "r095",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5616,7 +5616,7 @@
    ],
    "note": "",
    "id": "r096",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5662,7 +5662,7 @@
    ],
    "note": "",
    "id": "r097",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5709,7 +5709,7 @@
    ],
    "note": "",
    "id": "r098",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5752,7 +5752,7 @@
    ],
    "note": "",
    "id": "r099",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5798,7 +5798,7 @@
    ],
    "note": "",
    "id": "r100",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5845,7 +5845,7 @@
    ],
    "note": "",
    "id": "r101",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5891,7 +5891,7 @@
    ],
    "note": "",
    "id": "r102",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5938,7 +5938,7 @@
    ],
    "note": "",
    "id": "r103",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5981,7 +5981,7 @@
    ],
    "note": "",
    "id": "r104",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6027,7 +6027,7 @@
    ],
    "note": "",
    "id": "r105",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6074,7 +6074,7 @@
    ],
    "note": "",
    "id": "r106",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6120,7 +6120,7 @@
    ],
    "note": "",
    "id": "r107",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6167,7 +6167,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r108",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6210,7 +6210,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r109",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6256,7 +6256,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r110",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6303,7 +6303,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r111",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6349,7 +6349,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r112",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6396,7 +6396,7 @@
    ],
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r113",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6442,7 +6442,7 @@
    ],
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r114",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6489,7 +6489,7 @@
    ],
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r115",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6535,7 +6535,7 @@
    ],
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r116",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6582,7 +6582,7 @@
    ],
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r117",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6628,7 +6628,7 @@
    ],
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r118",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6675,7 +6675,7 @@
    ],
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r119",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6721,7 +6721,7 @@
    ],
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r120",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6768,7 +6768,7 @@
    ],
    "note": "",
    "id": "r121",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6814,7 +6814,7 @@
    ],
    "note": "",
    "id": "r122",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6861,7 +6861,7 @@
    ],
    "note": "",
    "id": "r123",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6907,7 +6907,7 @@
    ],
    "note": "",
    "id": "r124",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6954,7 +6954,7 @@
    ],
    "note": "",
    "id": "r125",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7000,7 +7000,7 @@
    ],
    "note": "",
    "id": "r126",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7047,7 +7047,7 @@
    ],
    "note": "",
    "id": "r127",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7093,7 +7093,7 @@
    ],
    "note": "",
    "id": "r128",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7140,7 +7140,7 @@
    ],
    "note": "",
    "id": "r129",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7183,7 +7183,7 @@
    ],
    "note": "",
    "id": "r130",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7229,7 +7229,7 @@
    ],
    "note": "",
    "id": "r131",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7276,7 +7276,7 @@
    ],
    "note": "",
    "id": "r132",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7322,7 +7322,7 @@
    ],
    "note": "",
    "id": "r133",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7458,7 +7458,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r136",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7593,7 +7593,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r139",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7728,7 +7728,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r142",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "without",
@@ -7863,7 +7863,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r145",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "without",
@@ -7998,7 +7998,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r148",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -8133,7 +8133,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r151",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -8268,7 +8268,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r154",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -8403,7 +8403,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r157",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -8449,7 +8449,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r158",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8492,7 +8492,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r159",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8535,7 +8535,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r160",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8578,7 +8578,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r161",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8621,7 +8621,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r162",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8664,7 +8664,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r163",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8965,7 +8965,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r170",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "with",
@@ -9008,7 +9008,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r171",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "with",
@@ -9051,7 +9051,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r172",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "with",
@@ -9355,7 +9355,7 @@
    ],
    "note": "fal states the 4K rate in the same sentence as the 720p/1080p rates.",
    "id": "r197",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/fal-ai/veo3.1",
    "variation": {
     "audio": "without",
@@ -9405,7 +9405,7 @@
    ],
    "note": "fal states the 4K rate in the same sentence as the 720p/1080p rates.",
    "id": "r198",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://fal.ai/models/fal-ai/veo3.1",
    "variation": {
     "audio": "with",
@@ -9451,7 +9451,7 @@
    ],
    "note": "Official billed-by-property rate: model variant is non_video_in (no video input). The vendor page lists $0.1028 per second of output video.",
    "id": "r202",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://replicate.com/bytedance/seedance-2.5",
    "variation": {
     "audio": "not stated",
@@ -9497,7 +9497,7 @@
    ],
    "note": "Official billed-by-property rate: model variant is video_in (with video input). The vendor page lists $0.4304 per second of output video.",
    "id": "r203",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://replicate.com/bytedance/seedance-2.5",
    "variation": {
     "audio": "not stated",
@@ -9543,7 +9543,7 @@
    ],
    "note": "Official billed-by-property rate: model variant is non_video_in (no video input). The vendor page lists $0.2312 per second of output video.",
    "id": "r204",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://replicate.com/bytedance/seedance-2.5",
    "variation": {
     "audio": "not stated",
@@ -9589,7 +9589,7 @@
    ],
    "note": "Official billed-by-property rate: model variant is video_in (with video input). The vendor page lists $0.9676 per second of output video.",
    "id": "r205",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://replicate.com/bytedance/seedance-2.5",
    "variation": {
     "audio": "not stated",
@@ -9631,7 +9631,7 @@
    ],
    "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
    "id": "r206",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9681,7 +9681,7 @@
    ],
    "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
    "id": "r207",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9731,7 +9731,7 @@
    ],
    "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
    "id": "r208",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9781,7 +9781,7 @@
    ],
    "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image.",
    "id": "r209",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9831,7 +9831,7 @@
    ],
    "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image.",
    "id": "r210",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9881,7 +9881,7 @@
    ],
    "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image. 1080p is upscaled from 720p.",
    "id": "r211",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9935,7 +9935,7 @@
    ],
    "note": "Runway credits are $0.01 each. Lite 1080p is 14 credits per second. An image-to-video start frame adds 1 credit.",
    "id": "r212",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -9989,7 +9989,7 @@
    "reason": "official API page lists per-second rates, but input video changes the billed duration, so no single $/s is in the table"
   }
  ],
- "last_full_check": "2026-11-12",
+ "last_full_check": "2026-11-13",
  "variation_schema": {
   "audio": "with, without, or not stated. A separate price for each is a separate row.",
   "input": "not stated, or a list of t2v, i2v, ref2v, v2v, extend, lip-sync when the page names that mode for this price.",
@@ -10026,7 +10026,7 @@
       "expect": 200
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://one.google.com/about/google-ai-plans/"
    },
    "gflow-pro": {
@@ -10047,7 +10047,7 @@
       "expect": 1000
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://one.google.com/about/google-ai-plans/"
    },
    "gflow-pro-annual": {
@@ -10068,7 +10068,7 @@
       "expect": 1000
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "usd_year": 199.99,
     "credits_note": "Google states Flow credits per month for Pro. The $199.99 yearly price is divided by 12."
@@ -10091,7 +10091,7 @@
       "expect": 10000
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "help_name": "Google AI Ultra $100"
    },
@@ -10113,7 +10113,7 @@
       "expect": 25000
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "help_name": "Google AI Ultra $200"
    }
@@ -10122,7 +10122,7 @@
    "credits_day": 50,
    "source": "gflow_credits",
    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "checks": [
     {
      "needle": "With or without a subscription, you receive {N} Google Flow credits per day",
@@ -10141,7 +10141,7 @@
   "plan_credits_check": {
    "source": "gflow_credits",
    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-   "checked": "2026-11-12",
+   "checked": "2026-11-13",
    "checks": [
     {
      "needle": "Google AI Plus subscribers receive an extra {N} Google Flow credits each month",
@@ -10192,7 +10192,7 @@
       "phrase": true
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en"
    },
    {
@@ -10216,7 +10216,7 @@
       "expect": 0
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en"
    },
    {
@@ -10245,7 +10245,7 @@
       "expect": 10
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Google's table gives no resolution for Veo 3.1 Fast."
@@ -10269,7 +10269,7 @@
       "expect": 100
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Google's table gives no resolution for Veo 3.1 Quality."
@@ -10296,7 +10296,7 @@
       "expect": 2
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "credits_per_second": {
      "up_to_10s": 1,
@@ -10326,7 +10326,7 @@
       "expect": 6
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "credits_per_second": {
      "up_to_10s": 3,
@@ -10371,7 +10371,7 @@
       "expect": 15
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Does not include edits to uploaded and generated videos."
@@ -10413,7 +10413,7 @@
       "expect": 7
      }
     ],
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Does not include edits to uploaded and generated videos."
@@ -10427,7 +10427,7 @@
     "quote": "On December 5, 2026, Veo 3.1 Fast, Veo 3.1 Quality, and Omni Flash 1.1 will be retired. Until then, you can generate with these models at standard credit rates while transitioning your workflows to Omni Flash 1.2 or Veo 3.1 Lite.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "checks": [
      {
       "needle": "On December 5, 2026, Veo 3.1 Fast, Veo 3.1 Quality, and Omni Flash 1.1 will be retired. Until then, you can generate with these models at standard credit rates while transitioning your workflows to Omni Flash 1.2 or Veo 3.1 Lite.",
@@ -10441,7 +10441,7 @@
     "quote": "On November 5, 2026, Veo Extend was retired. To extend a video, you must be a Google AI Plus, Pro, or Ultra subscriber and use Omni Flash 1.2.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "checks": [
      {
       "needle": "On November 5, 2026, Veo Extend was retired. To extend a video, you must be a Google AI Plus, Pro, or Ultra subscriber and use Omni Flash 1.2.",
@@ -10454,7 +10454,7 @@
     "quote": "The Google Flow/AI credit costs below are per generation, not per request. Some product features will create multiple generations per request. For example, in Google Flow, you can make a single request that may generate 2 videos.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "checks": [
      {
       "needle": "The Google Flow/AI credit costs below are per generation, not per request. Some product features will create multiple generations per request. For example, in Google Flow, you can make a single request that may generate 2 videos.",
@@ -10467,7 +10467,7 @@
     "quote": "Google Flow credits for your Google AI Plus, Pro, or Ultra plan refresh at the start of your billing cycle. Unused monthly Google Flow credits do not roll over to the next month.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "checks": [
      {
       "needle": "Google Flow credits for your Google AI Plus, Pro, or Ultra plan refresh at the start of your billing cycle. Unused monthly Google Flow credits do not roll over to the next month.",
@@ -10480,7 +10480,7 @@
     "quote": "Your daily credit refresh is triggered by your first generation. For example, if you use your Google Flow credits for the first time on August 12, your next 50 Google Flow credits will become available on August 13. If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "checks": [
      {
       "needle": "Your daily credit refresh is triggered by your first generation. For example, if you use your Google Flow credits for the first time on August 12, your next 50 Google Flow credits will become available on August 13. If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over.",
@@ -10493,7 +10493,7 @@
     "quote": "During peak hours, roughly 2 PM to 5 PM UTC, you may not be able to generate videos without a subscription.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "checks": [
      {
       "needle": "During peak hours, roughly 2 PM to 5 PM UTC, you may not be able to generate videos without a subscription.",
@@ -10506,7 +10506,7 @@
     "quote": "Limits are subject to change at any time. To find the latest costs, at the top right of your prompt box, click Settings.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "checks": [
      {
       "needle": "Limits are subject to change at any time. To find the latest costs, at the top right of your prompt box, click",
@@ -10519,7 +10519,7 @@
     "quote": "In supported regions (except Japan), Plus, Pro, and Ultra subscribers can purchase AI credits.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-12",
+    "checked": "2026-11-13",
     "checks": [
      {
       "needle": "In supported regions (except Japan), Plus, Pro, and Ultra subscribers can purchase AI credits.",
