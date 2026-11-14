@@ -216,10 +216,11 @@ def render(g):
             ("Higgsfield Black Friday 2026: what you save per second", "/guides/higgsfield-black-friday/", g["hf_black_friday_blurb"]()),
             ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/", g["grok_imagine_blurb"]()),
             ("Higgsfield pricing explained", "/guides/higgsfield-pricing/", g["hf_pricing_blurb"]()),
+            ("Kling AI pricing and credits", "/guides/kling-ai-pricing/", g["kling_pricing_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
-        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven"}.get(len(entries), str(len(entries)))
+        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve"}.get(len(entries), str(len(entries)))
         blocks = []
         faqs = []
         for question, path, answer in entries:
@@ -417,6 +418,7 @@ def render(g):
 <h2>What prices are not in this list?</h2>
 <p>These prices are not in the table. The vendor page did not give a single dollars-per-second figure the check could confirm.</p>
 {gap_html}
+<p>Related: official Kling plans, API rates, and cheaper catalog routes: <a href="{root("/guides/kling-ai-pricing/")}">Kling AI pricing and credits</a>.</p>
 {how_block()}
 {tick_script()}"""
         guide_page(
@@ -802,7 +804,7 @@ def render(g):
 <h1>Is Higgsfield worth it? Every plan's real cost per second</h1>
 <p class="lead">{e(lead)}</p>
 {checked_line()}
-<p>Related: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a> · <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>.</p>
+<p>Related: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a> · <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a> · <a href="{root("/guides/kling-ai-pricing/")}">Kling AI pricing and credits</a>.</p>
 {cards}
 <h2>{e(q_worth)}</h2><p>{e(a_worth)}</p>
 {thousand_html}

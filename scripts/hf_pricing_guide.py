@@ -412,7 +412,7 @@ def render(g):
 <h1>{e(PHRASE)}</h1>
 <p class="lead">{lead}</p>
 {g["checked_line"]()}
-<p>Related: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a> · <a href="{root("/guides/is-higgsfield-worth-it/")}">Is Higgsfield worth it?</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a> · <a href="{root("/calculator/")}">credit calculator</a>.</p>
+<p>Related: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a> · <a href="{root("/guides/is-higgsfield-worth-it/")}">Is Higgsfield worth it?</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a> · <a href="{root("/guides/kling-ai-pricing/")}">Kling AI pricing and credits</a> · <a href="{root("/calculator/")}">credit calculator</a>.</p>
 
 <h2>{e(q1)}</h2>
 <p>{e(a1)} Sources: {src(HF_PRICING, "higgsfield.ai/pricing")} (Individual Annual / Monthly and Business tabs, rendered {checked_pt(CHECKED)}), the public plans API and 11.11 sale record that page loads, and {src(HELP_PLANS, "How do Higgsfield plans work?")}.</p>
