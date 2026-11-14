@@ -845,10 +845,18 @@ def retired_table(rs, thead=None):
 
 KIT_SUCCESS = "Thanks! Check your inbox to confirm your subscription."
 
-def news_box():
-    """Kit signup. ck.5.js fills data-element success and errors. The form still posts if that script does not load."""
+def news_box(heading=None, blurb=None):
+    """Kit signup. ck.5.js fills data-element success and errors. The form still posts if that script does not load.
+
+    heading and blurb change only the pitch. The Kit form id, uid, and action stay the same.
+    """
     if not NEWSLETTER_ENABLED:
         return ""
+    heading = heading or "Get the weekly price-drop email"
+    blurb = blurb or (
+        "VidFare Weekly: one email every Friday with the AI video models that "
+        "got cheaper that week. Free, unsubscribe anytime."
+    )
     # ck.5.js reads data-options and, on success, replaces [data-element=fields]
     # with a formkit-alert[data-element=success] whose text is success_message.
     # On failure it appends list items to [data-element=errors]. Double opt-in stays:
@@ -862,8 +870,8 @@ def news_box():
             }
         }
     }, separators=(",", ":")))
-    return f"""<section class="news" id="newsletter"><h2 style="margin-top:0">Get the weekly price-drop email</h2>
-<p class="small" style="margin:0">VidFare Weekly: one email every Friday with the AI video models that got cheaper that week. Free, unsubscribe anytime.</p>
+    return f"""<section class="news" id="newsletter"><h2 style="margin-top:0">{e(heading)}</h2>
+<p class="small" style="margin:0">{e(blurb)}</p>
 <form action="{KIT_FORM_ACTION}" class="seva-form formkit-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_FORM_UID}" data-format="inline" data-version="5" data-options="{options}">
 <div class="formkit-notices" aria-live="polite">
 <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
@@ -1132,6 +1140,11 @@ def guide_page(path, title, desc, body, faqs):
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
+    # One consistent spot on every guide: after the full answer, as the next
+    # step, immediately before the footer. See the newsletter signup PR.
+    box = news_box()
+    if box and box not in body:
+        body = body + box
     page(path, title, desc, body, "/guides/", ld_join(*blocks))
 
 def cheap_card(title, r, alt=None):
@@ -2147,13 +2160,19 @@ deals_body = f"""<h1>AI video deals</h1>
 </div>
 {upcoming_html}
 <div class="dealgrid" id="liveDeals">{live_html}</div>
+{news_box(
+    heading="Get price drops and deal deadlines every Friday",
+    blurb=(
+        "VidFare Weekly: one email every Friday with the models that got cheaper "
+        "and the deals that are ending. Free, unsubscribe anytime."
+    ),
+)}
 <h2>When these vendors run sales</h2>
 <p>Launch weeks are the usual pattern: a new video model is unlimited on credit plans and 30–75% off on APIs for one to four weeks. The holiday window, about Nov 20 through Jan 8, is the long one. In 2025 Higgsfield posted several waves, Magnific used a 50% code, and Krea posted 40% off yearly plans. End dates move. They get extended, reopened, or left as "limited time." If a page does not name an end date, this site does not invent one. <a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a> · <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a>.</p>
 <p class="small">Spending Google AI plan credits on Veo 3.1 or Omni Flash? The <a href="{root("/guides/google-flow-credits-calculator/")}">Google Flow credits calculator</a> turns them into videos and dollars per second.</p>
 <h2>Past deals</h2>
 <div class="dealgrid" id="archive">{archive_html}</div>
 <p class="small"><a href="{root("/deals.xml")}">Deals RSS</a> · {json_link("/deals.json", "deals.json")}</p>
-{news_box()}
 {tick_script()}
 <script>
 function filterDeals(){{
@@ -3727,7 +3746,32 @@ def audit_site():
             errors.append(f"{rel} is missing the last-checked date")
         if 'href="' + root("/about/") + '"' not in guide_html and path != "/guides/":
             errors.append(f"{rel} is missing the about-page link")
-        if "<form" in guide_html.lower():
+        if NEWSLETTER_ENABLED:
+            main = guide_html.split("<main", 1)[-1].split("</main>", 1)[0]
+            news_mark = '<section class="news" id="newsletter">'
+            news_at = main.find(news_mark)
+            if news_at < 0:
+                errors.append(f"{rel} is missing the newsletter signup")
+            elif main.find(news_mark, news_at + 1) != -1:
+                errors.append(f"{rel} has more than one newsletter signup")
+            else:
+                rest = main[news_at + len(news_mark):]
+                end = rest.find("</section>")
+                after = rest[end + len("</section>"):] if end != -1 else rest
+                leftover = re.sub(
+                    r"<script\b[\s\S]*?</script>|<noscript\b[\s\S]*?</noscript>|\s+",
+                    "",
+                    after,
+                    flags=re.I,
+                )
+                if leftover:
+                    errors.append(f"{rel} newsletter signup is not at the end of the guide")
+            forms = re.findall(r"<form\b", guide_html, flags=re.I)
+            if len(forms) != 1:
+                errors.append(f"{rel} should contain only the newsletter form, found {len(forms)}")
+            elif 'data-sv-form="' + KIT_FORM_ID + '"' not in guide_html:
+                errors.append(f"{rel} newsletter form is not the Kit form")
+        elif "<form" in guide_html.lower():
             errors.append(f"{rel} contains a form")
         if "fetch(" in guide_html:
             errors.append(f"{rel} makes a request")
@@ -3746,6 +3790,18 @@ def audit_site():
         errors.append("newsletter signup must stay under the price table")
     elif "<section" in home_html[prices_at:news_at]:
         errors.append("a section was inserted between the price table and the newsletter")
+    deals_html = open(os.path.join(DIST, "deals", "index.html"), encoding="utf-8").read()
+    live_at = deals_html.find('id="liveDeals"')
+    deals_news_at = deals_html.find('<section class="news" id="newsletter">')
+    sales_at = deals_html.find(">When these vendors run sales<")
+    past_at = deals_html.find(">Past deals<")
+    if NEWSLETTER_ENABLED:
+        if not (0 <= live_at < deals_news_at < sales_at < past_at):
+            errors.append("deals newsletter signup must sit after the live deals list and before past deals")
+        elif "Get price drops and deal deadlines every Friday" not in deals_html[deals_news_at:sales_at]:
+            errors.append("deals newsletter is missing the deadline pitch")
+        if deals_html.count('<section class="news" id="newsletter">') != 1:
+            errors.append("deals page should have one newsletter signup")
     if "sora" in home_html.lower() or "plugin" in home_html.lower():
         errors.append("home page names a plugin or Sora")
     home_nav = home_html.split("<nav>", 1)[-1].split("</nav>", 1)[0]
