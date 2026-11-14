@@ -53,6 +53,7 @@ GUIDE_LINKS = [
     ("/guides/higgsfield-black-friday/", "Higgsfield Black Friday"),
     ("/guides/grok-imagine-video-cost/", "Grok Imagine cost"),
     ("/guides/higgsfield-pricing/", "Higgsfield pricing"),
+    ("/guides/kling-ai-pricing/", "Kling AI pricing"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1092,6 +1093,7 @@ GUIDE_CRUMBS = {
     "/guides/higgsfield-black-friday/": "Higgsfield Black Friday",
     "/guides/grok-imagine-video-cost/": "Grok Imagine video cost",
     "/guides/higgsfield-pricing/": "Higgsfield pricing",
+    "/guides/kling-ai-pricing/": "Kling AI pricing",
 }
 
 def guide_crosslinks(path):
@@ -1137,6 +1139,7 @@ def guide_page(path, title, desc, body, faqs):
             ("Higgsfield Black Friday 2026: what you save per second?", "/guides/higgsfield-black-friday/"),
             ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/"),
             ("Higgsfield pricing explained", "/guides/higgsfield-pricing/"),
+            ("Kling AI pricing and credits", "/guides/kling-ai-pricing/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1680,6 +1683,11 @@ for slug, m in models.items():
         deals_html += (
             f'<p class="small">Official API rates, paid-plan limits, and vendor prices: '
             f'<a href="{root("/guides/grok-imagine-video-cost/")}">How much does a Grok Imagine video cost?</a></p>'
+        )
+    if slug == "kling-3-0":
+        deals_html += (
+            f'<p class="small">Official Kling plans, API rates, and cheaper catalog routes: '
+            f'<a href="{root("/guides/kling-ai-pricing/")}">Kling AI pricing and credits</a></p>'
         )
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
     if soon:
@@ -2928,6 +2936,7 @@ def write_llms():
         f"- [Higgsfield Black Friday 2026: what you save per second]({SITE_URL}/guides/higgsfield-black-friday/): {hf_black_friday_blurb()}",
         f"- [How much does a Grok Imagine video cost?]({SITE_URL}/guides/grok-imagine-video-cost/): {grok_imagine_blurb()}",
         f"- [Higgsfield pricing explained]({SITE_URL}/guides/higgsfield-pricing/): {hf_pricing_blurb()}",
+        f"- [Kling AI pricing and credits]({SITE_URL}/guides/kling-ai-pricing/): {kling_pricing_blurb()}",
         "",
         "## Data",
         "",
@@ -2974,6 +2983,9 @@ def grok_imagine_blurb():
 import hf_pricing_guide
 def hf_pricing_blurb():
     return hf_pricing_guide.blurb(globals())
+import kling_pricing_guide
+def kling_pricing_blurb():
+    return kling_pricing_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -2988,6 +3000,8 @@ import grok_imagine_guide
 grok_imagine_guide.render(globals())
 import hf_pricing_guide
 hf_pricing_guide.render(globals())
+import kling_pricing_guide
+kling_pricing_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers

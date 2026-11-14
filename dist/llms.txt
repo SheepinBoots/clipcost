@@ -103,6 +103,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [Higgsfield Black Friday 2026: what you save per second](https://vidfare.com/guides/higgsfield-black-friday/): No Black Friday 2026 sale is listed yet. The 11.11 offer lists Plus annual at $35/mo and Ultra 3K at $65/mo.
 - [How much does a Grok Imagine video cost?](https://vidfare.com/guides/grok-imagine-video-cost/): The lowest Grok Imagine rate in the catalog is $0.02/s on xAI API (480p, grok-imagine-video-1.5-lite). Paid-plan video limits are a weekly usage pool, not a published credits-per-clip figure.
 - [Higgsfield pricing explained](https://vidfare.com/guides/higgsfield-pricing/): The lowest Higgsfield plan rate we track is $0.0217/s (Wan 3.0, 480p). The 11.11 sale ends Nov 14, 2026, 4:00 PM PT.
+- [Kling AI pricing and credits](https://vidfare.com/guides/kling-ai-pricing/): Official Kling plans and credits, official API rates from $0.084/s at 720p without audio, and cheaper catalog routes we track.
 
 ## Data
 
