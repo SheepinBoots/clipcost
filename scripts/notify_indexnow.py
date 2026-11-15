@@ -32,6 +32,7 @@ GUIDE_URLS = (
     "https://vidfare.com/guides/grok-imagine-video-cost/",
     "https://vidfare.com/guides/higgsfield-pricing/",
     "https://vidfare.com/guides/kling-ai-pricing/",
+    "https://vidfare.com/guides/runway-pricing/",
 )
 
 
