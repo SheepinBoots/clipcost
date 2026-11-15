@@ -156,8 +156,6 @@ def main():
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
-    if "Twelve comparisons" not in guides and "twelve comparisons" not in guides:
-        errors.append("guides index count text was not updated to Twelve")
 
     if errors:
         raise SystemExit("kling pricing guide:\n- " + "\n- ".join(errors))

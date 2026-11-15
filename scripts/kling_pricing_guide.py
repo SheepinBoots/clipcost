@@ -402,7 +402,7 @@ def render(g):
 <p>These are the Kling 3.0 rows in our catalog, lowest $/s first. A credit-plan figure is plan price ÷ credits × credits per clip, and it assumes every credit you pay for is used. Unused credits make the real cost higher. Higgsfield links can be affiliate links; they never change this price order. Official API rows are included so you can see which third-party rates beat them.</p>
 {cmp_table}
 <p>fal also publishes Standard rates of {rate_money(0.084)}/s without audio and {rate_money(0.126)}/s with audio, matching the official 720p API, plus {rate_money(0.154)}/s with voice control, on {src("https://fal.ai/models/fal-ai/kling-video/v3/standard/text-to-video", "fal's Kling 3.0 Standard text-to-video page")}, checked {e(checked_pt(CHECKED))}. Our catalog currently stores fal's Pro rates ({rate_money(0.112)}/s off, {rate_money(0.168)}/s on, and a {rate_money(0.196)}/s voice-control modifier on the Pro row). Replicate is not in our Kling 3.0 catalog, so no Replicate rate is shown.</p>
-<p>Related: <a href="{e(cheap_href)}">cheapest rate we track for each model</a> · <a href="{e(hf_href)}">Higgsfield pricing explained</a> · <a href="{e(budget_href)}">project budget calculator</a> · <a href="{e(model_href)}">every Kling 3.0 row on the model page</a>.</p>
+<p>Related: <a href="{e(cheap_href)}">cheapest rate we track for each model</a> · <a href="{e(hf_href)}">Higgsfield pricing explained</a> · <a href="{root("/guides/runway-pricing/")}">Runway pricing per second</a> · <a href="{e(budget_href)}">project budget calculator</a> · <a href="{e(model_href)}">every Kling 3.0 row on the model page</a>.</p>
 
 <h2>{e(q_cheaper)}</h2>
 <p>{e(a_cheaper)}</p>
