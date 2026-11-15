@@ -105,6 +105,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [Higgsfield pricing explained](https://vidfare.com/guides/higgsfield-pricing/): The lowest Higgsfield plan rate we track is $0.0217/s (Wan 3.0, 480p). The 11.11 sale ends Nov 14, 2026, 4:00 PM PT.
 - [Kling AI pricing and credits](https://vidfare.com/guides/kling-ai-pricing/): Official Kling plans and credits, official API rates from $0.084/s at 720p without audio, and cheaper catalog routes we track.
 - [Runway pricing per second](https://vidfare.com/guides/runway-pricing/): Official Runway Free, Standard, Pro, Max, Team and Enterprise plans, official API rates from $0.05/s for Gen-4 Turbo, and cheaper catalog routes we track.
+- [Free AI video generators: what you get](https://vidfare.com/guides/free-ai-video-generators/): What each major tool's free tier actually includes: credits or daily allowance, watermarks, commercial use, and the cheapest paid step we track.
 
 ## Data
 

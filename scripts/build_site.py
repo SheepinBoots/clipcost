@@ -55,6 +55,7 @@ GUIDE_LINKS = [
     ("/guides/higgsfield-pricing/", "Higgsfield pricing"),
     ("/guides/kling-ai-pricing/", "Kling AI pricing"),
     ("/guides/runway-pricing/", "Runway pricing"),
+    ("/guides/free-ai-video-generators/", "Free AI video generators"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1096,6 +1097,7 @@ GUIDE_CRUMBS = {
     "/guides/higgsfield-pricing/": "Higgsfield pricing",
     "/guides/kling-ai-pricing/": "Kling AI pricing",
     "/guides/runway-pricing/": "Runway pricing",
+    "/guides/free-ai-video-generators/": "Free AI video generators",
 }
 
 def guide_crosslinks(path):
@@ -1143,6 +1145,7 @@ def guide_page(path, title, desc, body, faqs):
             ("Higgsfield pricing explained", "/guides/higgsfield-pricing/"),
             ("Kling AI pricing and credits", "/guides/kling-ai-pricing/"),
             ("Runway pricing per second", "/guides/runway-pricing/"),
+            ("Free AI video generators: what you get", "/guides/free-ai-video-generators/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1199,12 +1202,17 @@ def hf_blurb():
 def budget_blurb():
     return "Enter finished minutes and a retry multiplier to price each tracked dollars-per-second rate."
 
+def free_ai_video_blurb():
+    import free_ai_video_guide
+    return free_ai_video_guide.blurb(globals())
+
 def home_guides_html():
     blurbs = {
         "/guides/cheapest-wan-3-0/": wan_blurb,
         "/guides/cheapest-ai-video-generator/": cheapest_blurb,
         "/guides/is-higgsfield-worth-it/": hf_blurb,
         "/guides/ai-video-project-budget/": budget_blurb,
+        "/guides/free-ai-video-generators/": free_ai_video_blurb,
     }
     items = []
     for path, label in GUIDE_LINKS:
@@ -1696,6 +1704,21 @@ for slug, m in models.items():
         deals_html += (
             f'<p class="small">Official Runway plans, API rates, and cheaper catalog routes: '
             f'<a href="{root("/guides/runway-pricing/")}">Runway pricing per second</a></p>'
+        )
+    if slug in (
+        "veo-3-1",
+        "gemini-omni-flash",
+        "kling-3-0",
+        "runway-gen-4",
+        "grok-imagine",
+        "wan-3-0",
+        "wan-3-0-prime",
+        "seedance-2-5",
+        "minimax-hailuo",
+    ):
+        deals_html += (
+            f'<p class="small">What the official free tier actually includes: '
+            f'<a href="{root("/guides/free-ai-video-generators/")}">Free AI video generators: what you get</a></p>'
         )
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
     if soon:
@@ -2946,6 +2969,7 @@ def write_llms():
         f"- [Higgsfield pricing explained]({SITE_URL}/guides/higgsfield-pricing/): {hf_pricing_blurb()}",
         f"- [Kling AI pricing and credits]({SITE_URL}/guides/kling-ai-pricing/): {kling_pricing_blurb()}",
         f"- [Runway pricing per second]({SITE_URL}/guides/runway-pricing/): {runway_pricing_blurb()}",
+        f"- [Free AI video generators: what you get]({SITE_URL}/guides/free-ai-video-generators/): {free_ai_video_blurb()}",
         "",
         "## Data",
         "",
@@ -2998,6 +3022,9 @@ def kling_pricing_blurb():
 import runway_pricing_guide
 def runway_pricing_blurb():
     return runway_pricing_guide.blurb(globals())
+import free_ai_video_guide
+def free_ai_video_blurb():
+    return free_ai_video_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -3016,6 +3043,8 @@ import kling_pricing_guide
 kling_pricing_guide.render(globals())
 import runway_pricing_guide
 runway_pricing_guide.render(globals())
+import free_ai_video_guide
+free_ai_video_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers
