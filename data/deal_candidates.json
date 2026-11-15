@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-14",
+ "generated": "2026-11-15",
  "note": "Unconfirmed. These snippets are not published as deals.",
  "pages": [
   {
@@ -7,14 +7,14 @@
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "status": "fetched",
-   "snippets": 29
+   "snippets": 24
   },
   {
    "id": "krea",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "status": "fetched",
-   "snippets": 16
+   "snippets": 18
   },
   {
    "id": "magnific",
@@ -43,113 +43,361 @@
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "sha": "39dc42b94e22c111",
-   "snippet": "OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF 00 00 days 04 04 hours 00 00 min 07 08 08 07 sec All plans Don’t miss your chan",
-   "seen": "2026-11-14"
+   "sha": "ddf14a031e3c2a4a",
+   "snippet": "OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF 00 00 days 08 08 hours 01 01 min 47 48 48 47 sec All plans Don’t miss your chan",
+   "seen": "2026-11-15"
   },
   {
    "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "48893826f5f5b87d",
+   "snippet": "na Pro 15 videos Seedance 2.0 Fast Unlimited models Unlimited Seedream 5.0 Lite Unlimited Flux.2 Pro 1K Nano Banana Pro Seedream 5.0 Pro GPT Image 2.6 Availability Free",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "a68fa2506b4708ec",
+   "snippet": "nana Pro 80 videos Seedance 2.5 Unlimited models for 7 days Unlimited Nano Banana Pro 2K Unlimited Seedream 5.0 Pro 2K Unlimited GPT Image 2.6 2K 5 o",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "9f83f8c633d3a517",
+   "snippet": "ther unlimited models Availability Free generations Higgsfield Genjutsu 720p 3 free gens Soul",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "fe385559c96cadee",
+   "snippet": "V2 & Cinema 5,000 free gens Included in plan Credit top-ups with discount Unlimited paid parallel generations All Seedance models All models & features Early acces",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "ea29f4fe412fd7ae",
+   "snippet": "Banana Pro 200 videos Seedance 2.5 Unlimited models for 7 days Unlimited Nano Banana Pro 2K Unlimited Seedream 5.0 Pro 2K Unlimited GPT Image 2.6 2K 5 o",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "44538790364f506d",
+   "snippet": "V2 & Cinema 10,000 free gens Included in plan Credit top-ups with discount Unlimited paid parallel generations All Seedance models All models & features Early acces",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "f00641b2701bcf51",
+   "snippet": "s to advanced AI features Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "f80d5c304d253c8a",
+   "snippet": "820 of 1,200 credits Included in plan 1,200 credits / month Credit top-ups with discount 7-day unlimited GPT Image 2.6 2K 7-day unlimited Seedream 5.0 Pro 2K All models",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "8f9b42eba40b54e4",
+   "snippet": "Premium quality Compare features See in details what plan suits you best Annual 60% OFF Free Free Limited use Starter $19/month Billed annually Get Plan Plus $35/month",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "39dc42b94e22c111",
+   "snippet": "OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF 00 00 days 04 04 hours 00 00 min 07 08 08 07 sec All plans Don’t miss your chan",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "b6d0a55ee7933b9d",
+   "snippet": "na Pro 15 videos Seedance 2.0 Fast Unlimited models Unlimited Seedream 5.0 Lite Unlimited Flux.2 Pro 1K Seedance 2.5 Nano Banana Pro Seedream 5.0 Pro GPT Image 2.5 GPT I",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "sha": "6a11b0c05cab2cc2",
    "snippet": "selected models only & features Early access to advanced AI features Up to 60% sale ends in… 04h 00m 07s Plus Most popular For everyday AI creation $59 $35 $ 0 1 2",
-   "seen": "2026-11-14"
+   "seen": "2026-11-15"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "sha": "4b362031a8483105",
    "snippet": "nana Pro 80 videos Seedance 2.5 Unlimited sale ends in 04h 00m 07s Unlimited for 14 days Unlimited Seedance 2.5 30s 720p Unlimited for 60 days Unlimited Nan",
-   "seen": "2026-11-14"
+   "seen": "2026-11-15"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "50bd9abd3210d9ed",
+   "snippet": "o Banana Pro 2K Unlimited Seedream 5.0 Pro 2K Unlimited GPT Image 2.5 2K Unlimited GPT Image 2.6 2K 5 other unlimited models Availability Free generations Higgsfi",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "e39b02d688ed11b5",
+   "snippet": "free gens Soul V2 & Cinema 5,000 free gens Included in plan Credit top-ups with discount Unlimited paid parallel generations All Seedance models All models & features E",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "sha": "e0ba407c0491c1b1",
    "snippet": "arly access to advanced AI features Up to 60% sale ends in… 04h 00m 07s Ultra 3K 6K 9K −60% For ambitious AI projects $129 $65 $ 0",
-   "seen": "2026-11-14"
+   "seen": "2026-11-15"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "sha": "7017130568edf977",
    "snippet": "Banana Pro 200 videos Seedance 2.5 Unlimited sale ends in 04h 00m 07s Unlimited for 14 days Unlimited Seedance 2.5 30s 1080p Unlimited for 60 days Unlimited Na",
-   "seen": "2026-11-14"
+   "seen": "2026-11-15"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "48d1c6bb3f991fd4",
+   "snippet": "no Banana Pro 2K Unlimited Seedream 5.0 Pro 2K Unlimited GPT Image 2.5 2K Unlimited GPT Image 2.6 2K 5 other unlimited models Availability Free generations Higgsfi",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "d785917e0035443f",
+   "snippet": "ree gens Soul V2 & Cinema 10,000 free gens Included in plan Credit top-ups with discount Unlimited paid parallel generations All Seedance models All models & features E",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "e37f918c75830502",
+   "snippet": "arly access to advanced AI features Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "sha": "123f0f0e601a0271",
    "snippet": "generation Starter MCP & Supercomputer Monthly Annual Save up to 60% Up to 60% sale ends in… 04h 00m 07s Plus $59 $35 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1",
-   "seen": "2026-11-14"
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "21cff68861a6b494",
+   "snippet": "onthly usage 820 of 1,200 credits Included in plan 1,200 credits / month 14-day unlimited Seedance 2.5 30s 720p 60-day unlimited Nano Banana Pro 2K 60-day unlimited Seed",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "4969cfad96ceadca",
+   "snippet": "ream 5.0 Pro 2K 60-day unlimited GPT Image 2.5 2K 60-day unlimited GPT Image 2.6 2K Premium quality Compare features See in details what plan suit",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "e7c67f6720a0ec77",
+   "snippet": "s you best Annual 60% OFF Free Free Limited use Starter $19/month Billed annually Get Plan Plus $35/month",
+   "seen": "2026-11-15"
   },
   {
    "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "3c989f8272bf20a9",
-   "snippet": "Max 4 credits/image View More 1 concurrent generation 2 concurrent generations Unlimited concurrent generations Unlimited concurrent generations Not included Not includ",
-   "seen": "2026-11-14"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "db0262e5af3d56b1",
+   "snippet": "40M+ creators, enterprises, agencies, and studios New to Krea? Unlock a welcome discount Sign up free and we'll offer you a discount on your first plan. Sign up free Mo",
+   "seen": "2026-11-15"
   },
   {
    "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "63442eb6d2a9c47d",
-   "snippet": "videos 800 videos 2000 videos 1 concurrent generation 4 concurrent generations Unlimited concurrent generations Unlimited concurrent generations Included 1620 images 72",
-   "seen": "2026-11-14"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "e69156e25284e88f",
+   "snippet": "nthly Yearly 40% off Need help choosing a plan? Model Licensing Looking for API? Free For trying out",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "c709433a935f7860",
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Basic F",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "a9bc0dc9587df0d1",
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Pro Mos",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "9495c22111c45649",
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Max For",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "5f92114cc3a0efee",
+   "snippet": "3 NEW Krea Agent NEW All image models All video models All 3D & lipsync models Unlimited LoRA training (2,000 images) Image upscaling up to 22K Krea Nodes App Builder E",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "02f7d0bb48041954",
+   "snippet": "ication Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free For trying out Krea $0",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "e6d52fbe8cbefef4",
+   "snippet": "ance 2.5 videos 514 Nano Banana Pro images 1,111 Krea 3 images 40k 60k 80k 100k Unlimited LoRA training (2,000 images) Bulk discounts on compute unit packs Unlimited rel",
+   "seen": "2026-11-15"
   },
   {
    "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "4cb824cda951d10c",
-   "snippet": "OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF 00 00 days 08 08 hours 03 03 min 23 24 24 23 sec All plans Don’t miss your chan",
-   "seen": "2026-11-14"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "479ba248d2c701ae",
+   "snippet": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Need help choosing a plan? Model Licensing Looking for API? Free 100 units / da",
+   "seen": "2026-11-15"
   },
   {
    "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "b84450fc547f6d95",
-   "snippet": "selected models only & features Early access to advanced AI features Up to 60% sale ends in… 08h 03m 24s Plus Most popular For everyday AI creation $59 $35 $ 0 1 2",
-   "seen": "2026-11-14"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "dc558504d4fb5ba2",
+   "snippet": "y $0 /month Get Free No difference compared to monthly Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW",
+   "seen": "2026-11-15"
   },
   {
    "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "70f2f8c1ab1fbbe8",
-   "snippet": "nana Pro 80 videos Seedance 2.5 Unlimited sale ends in 08h 03m 24s Unlimited for 14 days Unlimited Seedance 2.5 30s 720p Unlimited for 60 days Unlimited Nan",
-   "seen": "2026-11-14"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "ff6fbd1e430616b1",
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Basic 5",
+   "seen": "2026-11-15"
   },
   {
    "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "2ef9c298388902b8",
-   "snippet": "arly access to advanced AI features Up to 60% sale ends in… 08h 03m 24s Ultra 3K 6K 9K −60% For ambitious AI projects $129 $65 $ 0",
-   "seen": "2026-11-14"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "38743817cdef662e",
+   "snippet": "ons ~16 Seedance 2.5 videos $9 $5 /month Get Basic Save $48 compared to monthly Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW",
+   "seen": "2026-11-15"
   },
   {
    "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "49e96d355170b038",
-   "snippet": "Banana Pro 200 videos Seedance 2.5 Unlimited sale ends in 08h 03m 24s Unlimited for 14 days Unlimited Seedance 2.5 30s 1080p Unlimited for 60 days Unlimited Na",
-   "seen": "2026-11-14"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "2916306af30e4055",
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Most po",
+   "seen": "2026-11-15"
   },
   {
    "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "ff2085a20ae0655d",
-   "snippet": "generation Starter MCP & Supercomputer Monthly Annual Save up to 60% Up to 60% sale ends in… 08h 03m 24s Plus $59 $35 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1",
-   "seen": "2026-11-14"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "ec5dc2c2186c6297",
+   "snippet": "ns ~65 Seedance 2.5 videos $35 $21 /month Get Pro Save $168 compared to monthly Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW Kre",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "7caace6325106242",
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Max 60,",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "f44fbd25f588fe8f",
+   "snippet": "5 videos 40k 60k 80k 100k $105 $63 /month Get Max Save $504 compared to monthly Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW Kre",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "89a284fa74d8da3f",
+   "snippet": "a Agent NEW All image models All video models All 3D & lipsync models Unlimited LoRA training (2,000 images) Image upscaling up to 22K Krea Nodes App Builder E",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "9b85b7559be0ea6d",
+   "snippet": "ication Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free 100 units / day $0 /mon",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "1a42382e810c8112",
+   "snippet": "th Get Free No difference compared to monthly Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW",
+   "seen": "2026-11-15"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "c31f7620d7106f20",
+   "snippet": ".5 videos 40k 60k 80k 100k $70 $42 /month Get Max Save $336 compared to monthly Unlimited LoRA training (2,000 images) Bulk discounts on compute unit packs Unlimited rel",
+   "seen": "2026-11-15"
   }
  ]
 }
