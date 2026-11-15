@@ -152,8 +152,13 @@ def main():
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
-    if "Thirteen comparisons" not in guides and "thirteen comparisons" not in guides:
-        errors.append("guides index count text was not updated to Thirteen")
+    if (
+        "Fourteen comparisons" not in guides
+        and "fourteen comparisons" not in guides
+        and "Thirteen comparisons" not in guides
+        and "thirteen comparisons" not in guides
+    ):
+        errors.append("guides index count text was not updated")
 
     if errors:
         raise SystemExit("runway pricing guide:\n- " + "\n- ".join(errors))
