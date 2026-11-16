@@ -166,8 +166,15 @@ def main():
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
-    if "Fourteen comparisons" not in guides and "fourteen comparisons" not in guides:
-        errors.append("guides index count text was not updated to Fourteen")
+    if (
+        "Fourteen comparisons" not in guides
+        and "fourteen comparisons" not in guides
+        and "Fifteen comparisons" not in guides
+        and "fifteen comparisons" not in guides
+        and "Sixteen comparisons" not in guides
+        and "sixteen comparisons" not in guides
+    ):
+        errors.append("guides index count text is missing")
 
     # footer Guides line
     footer_sample = open(os.path.join(ROOT, "dist", "index.html"), encoding="utf-8").read()

@@ -131,18 +131,20 @@ def render(g):
     e = g["e"]
     root = g["root"]
     plus_a = _live(g, "hf-plus-annual")
-    plus_m = _live(g, "hf-plus-monthly-first")
+    plus_m = _live(g, "hf-plus-monthly-first") or _deal(g, "hf-plus-monthly-first")
     ultra_a = _live(g, "hf-ultra-annual")
-    ultra_m = _live(g, "hf-ultra-monthly-first")
+    ultra_m = _live(g, "hf-ultra-monthly-first") or _deal(g, "hf-ultra-monthly-first")
     ultra_6a = _live(g, "hf-ultra-6k-annual")
     ultra_9a = _live(g, "hf-ultra-9k-annual")
-    ultra_6m = _live(g, "hf-ultra-6k-monthly-first")
-    ultra_9m = _live(g, "hf-ultra-9k-monthly-first")
+    ultra_6m = _live(g, "hf-ultra-6k-monthly-first") or _deal(g, "hf-ultra-6k-monthly-first")
+    ultra_9m = _live(g, "hf-ultra-9k-monthly-first") or _deal(g, "hf-ultra-9k-monthly-first")
     seed = _live(g, "hf-seedance-unlimited-1111")
     biz = _live(g, "hf-seedance-business-30d")
+    # Standing annual 11.11/list discounts can remain current after Nov 15.
+    # First-month 11.11 offers ended 2026-11-15; still load the recorded prices.
     needed = [plus_a, plus_m, ultra_a, ultra_m]
     if not all(needed):
-        raise SystemExit(f"{PATH} missing a live Plus or Ultra 3K 11.11 deal")
+        raise SystemExit(f"{PATH} missing a Plus or Ultra 3K 11.11 deal record")
 
     checked = sorted({
         d.get("verified_date") for d in needed + [ultra_6a, ultra_9a, ultra_6m, ultra_9m, seed]
@@ -373,7 +375,7 @@ def render(g):
 
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Higgsfield Black Friday</p>
 <h1>{e(PHRASE)}</h1>
-<p class="lead">Higgsfield has not posted a Black Friday 2026 sale on its own site. The offer on the pricing page today is the 11.11 sale, which the page says ends on Nov 15. This page converts those checkout prices into dollars per second of finished video, next to the cheapest alternatives already in the price catalog.</p>
+<p class="lead">Higgsfield has not posted a Black Friday 2026 sale on its own site. The 11.11 sale was listed through Nov 15. First-month Plus and Ultra offers with that end date are no longer current; standing annual discounts may still apply. This page still shows the recorded 11.11 checkout prices and the per-second math, next to the cheapest alternatives already in the price catalog.</p>
 <p class="small">Last checked {e(g["LAST"])}.</p>
 <p>Checked {e(as_of)} on the {pricing} and the official {blog}. Prices exclude VAT and local taxes, which are added at checkout. Always confirm the price on Higgsfield's page before you buy.</p>
 

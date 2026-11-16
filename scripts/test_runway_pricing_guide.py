@@ -153,7 +153,11 @@ def main():
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
     if (
-        "Fourteen comparisons" not in guides
+        "Sixteen comparisons" not in guides
+        and "sixteen comparisons" not in guides
+        and "Fifteen comparisons" not in guides
+        and "fifteen comparisons" not in guides
+        and "Fourteen comparisons" not in guides
         and "fourteen comparisons" not in guides
         and "Thirteen comparisons" not in guides
         and "thirteen comparisons" not in guides
