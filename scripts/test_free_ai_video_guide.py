@@ -106,6 +106,11 @@ def main():
         free_ai_video_guide.XAI_GROK,
         free_ai_video_guide.LUMA_PLANS,
         "id=\"free-tier-table\"",
+        "id=\"no-signup\"",
+        "Which free AI video generator works with no sign-up?",
+        "No credit card required",
+        "None of the official free video tiers",
+        free_ai_video_guide.SIGNUP_CHECKED_WHEN,
     ):
         if needle.lower() not in haystack:
             errors.append(f"guide needle missing: {needle}")
@@ -114,6 +119,7 @@ def main():
         free_ai_video_guide.QUESTION,
         free_ai_video_guide.PHRASE,
         "What does each major free tier actually include?",
+        "Which free AI video generator works with no sign-up?",
         "Which free option is best for each use?",
         "What are the usual catches on a “free” plan?",
         "When does paying become cheaper per second?",
