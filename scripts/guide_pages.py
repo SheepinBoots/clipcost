@@ -220,6 +220,7 @@ def render(g):
             ("Runway pricing per second", "/guides/runway-pricing/", g["runway_pricing_blurb"]()),
             ("Free AI video generators: what you get", "/guides/free-ai-video-generators/", g["free_ai_video_blurb"]()),
             ("What is the best AI video generator when you count quality and cost?", "/guides/best-ai-video-generator/", g["best_ai_video_blurb"]()),
+            ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/", g["free_image_to_video_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))

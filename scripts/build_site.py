@@ -57,6 +57,7 @@ GUIDE_LINKS = [
     ("/guides/runway-pricing/", "Runway pricing"),
     ("/guides/free-ai-video-generators/", "Free AI video generators"),
     ("/guides/best-ai-video-generator/", "Best AI video generator"),
+    ("/guides/free-image-to-video-ai/", "Free image to video"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1100,6 +1101,7 @@ GUIDE_CRUMBS = {
     "/guides/runway-pricing/": "Runway pricing",
     "/guides/free-ai-video-generators/": "Free AI video generators",
     "/guides/best-ai-video-generator/": "Best AI video generator",
+    "/guides/free-image-to-video-ai/": "Free image to video",
 }
 
 def guide_crosslinks(path):
@@ -1149,6 +1151,7 @@ def guide_page(path, title, desc, body, faqs):
             ("Runway pricing per second", "/guides/runway-pricing/"),
             ("Free AI video generators: what you get", "/guides/free-ai-video-generators/"),
             ("What is the best AI video generator when you count quality and cost?", "/guides/best-ai-video-generator/"),
+            ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1213,6 +1216,10 @@ def best_ai_video_blurb():
     import best_ai_video_guide
     return best_ai_video_guide.blurb(globals())
 
+def free_image_to_video_blurb():
+    import free_image_to_video_guide
+    return free_image_to_video_guide.blurb(globals())
+
 def home_guides_html():
     blurbs = {
         "/guides/cheapest-wan-3-0/": wan_blurb,
@@ -1221,6 +1228,7 @@ def home_guides_html():
         "/guides/ai-video-project-budget/": budget_blurb,
         "/guides/free-ai-video-generators/": free_ai_video_blurb,
         "/guides/best-ai-video-generator/": best_ai_video_blurb,
+        "/guides/free-image-to-video-ai/": free_image_to_video_blurb,
     }
     items = []
     for path, label in GUIDE_LINKS:
@@ -1731,6 +1739,19 @@ for slug, m in models.items():
         deals_html += (
             f'<p class="small">Quality scores and cost compared: '
             f'<a href="{root("/guides/best-ai-video-generator/")}">Best AI video generator by value</a></p>'
+        )
+    if slug in (
+        "veo-3-1",
+        "gemini-omni-flash",
+        "seedance-2-5",
+        "minimax-hailuo",
+        "wan-3-0",
+        "kling-3-0",
+        "grok-imagine",
+    ):
+        deals_html += (
+            f'<p class="small">Animate a photo on a free tier: '
+            f'<a href="{root("/guides/free-image-to-video-ai/")}">Free image to video AI</a></p>'
         )
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
     if soon:
@@ -2983,6 +3004,7 @@ def write_llms():
         f"- [Runway pricing per second]({SITE_URL}/guides/runway-pricing/): {runway_pricing_blurb()}",
         f"- [Free AI video generators: what you get]({SITE_URL}/guides/free-ai-video-generators/): {free_ai_video_blurb()}",
         f"- [Best AI video generator by value]({SITE_URL}/guides/best-ai-video-generator/): {best_ai_video_blurb()}",
+        f"- [Free image to video AI]({SITE_URL}/guides/free-image-to-video-ai/): {free_image_to_video_blurb()}",
         "",
         "## Data",
         "",
@@ -3041,6 +3063,9 @@ def free_ai_video_blurb():
 import best_ai_video_guide
 def best_ai_video_blurb():
     return best_ai_video_guide.blurb(globals())
+import free_image_to_video_guide
+def free_image_to_video_blurb():
+    return free_image_to_video_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -3063,6 +3088,8 @@ import free_ai_video_guide
 free_ai_video_guide.render(globals())
 import best_ai_video_guide
 best_ai_video_guide.render(globals())
+import free_image_to_video_guide
+free_image_to_video_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers
