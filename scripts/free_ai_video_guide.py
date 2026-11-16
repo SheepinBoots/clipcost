@@ -39,7 +39,7 @@ META_ABOUT = "https://ai.meta.com/meta-ai/"
 ROW_VEO = "r146"          # Krea Veo 3.1 Lite Basic yearly 720p estimate $0.02222/s
 ROW_KLING = "r111"        # Higgsfield Ultra annual Kling 3.0 720p estimate $0.0325/s
 ROW_WAN = "r096"          # Higgsfield Ultra annual Wan 3.0 480p verified $0.02167/s
-ROW_HAILUO = "r194"       # fal MiniMax H3 Max Turbo 480p promo $0.0175/s through Nov 15
+ROW_HAILUO = "r023"       # fal MiniMax H3 Max Turbo 480p standard $0.025/s (r194 promo ended Nov 15)
 ROW_GROK = "r055"         # Runway API grok_imagine_1_5_lite 480p verified $0.02/s
 ROW_RUNWAY = "r047"       # Runway API gen4_turbo verified $0.05/s
 ROW_SEEDANCE = "r202"     # Replicate seedance-2.5 non_video_in 480p verified $0.1028/s
@@ -136,7 +136,7 @@ def render(g):
             ("r146", veo),
             ("r111", kling),
             ("r096", wan),
-            ("r194", hailuo),
+            ("r023", hailuo),
             ("r055", grok),
             ("r047", runway),
             ("r202", seedance),
@@ -297,7 +297,7 @@ def render(g):
             "Not stated for free users. The terms grant commercial-use language for content generated and downloaded on a paid plan, and do not say the same for Free.",
             "Unknown on Free.",
             "Sign-in. Whether a card is required for Free is not stated.",
-            e(paid_phrase(g, hailuo)) + f'. {row_src(hailuo)}. That fal promo is listed through November 15, 2026, with standard rates resuming November 16. Official first paid Hailuo Standard is $14.99/month for 1,000 credits, with watermark-free downloads and queue priority, from {hailuo_terms_src} (terms last updated July 14, 2025). The homepage also showed a “from $9.99/mo” banner today; that figure is not in the terms and is not used as a plan price here.',
+            e(paid_phrase(g, hailuo)) + f'. {row_src(hailuo)}. The fal 30% off promo (catalog row r194, $0.0175/s) ended November 15, 2026; this is the standard rate that page said would resume November 16. Official first paid Hailuo Standard is $14.99/month for 1,000 credits, with watermark-free downloads and queue priority, from {hailuo_terms_src} (terms last updated July 14, 2025). The homepage also showed a “from $9.99/mo” banner on the last official check (Nov 15, 2026); that figure is not in the terms and is not used as a plan price here.',
         ]),
         tr([
             "Grok Imagine",
@@ -411,9 +411,9 @@ def render(g):
         f"{g['rate_money'](veo['usd_per_second'])}/s, "
         "a Higgsfield yearly plan estimate for Kling 3.0 at 720p is "
         f"{g['rate_money'](kling['usd_per_second'])}/s, "
-        "and a fal promo for MiniMax H3 Max Turbo at 480p is "
+        "and the standard fal rate for MiniMax H3 Max Turbo at 480p is "
         f"{g['rate_money'](hailuo['usd_per_second'])}/s "
-        "through November 15, 2026. Those figures assume you use the credits you "
+        "after the November 15, 2026 promo ended. Those figures assume you use the credits you "
         "pay for, and each row states its tier, resolution, and audio. A credit "
         "pack on a $0 plan can also cost more per clip than the first paid plan "
         "if the pack rate is worse; on Pika, packs and Starter are both listed "
