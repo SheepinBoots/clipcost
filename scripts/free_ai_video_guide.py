@@ -14,6 +14,10 @@ CHECKED = "2026-11-15"
 CHECKED_WHEN = (
     "Nov 15, 2026, 10:24–10:32 AM America/Caracas (6:24–6:32 AM PT)"
 )
+SIGNUP_CHECKED = "2026-11-16"
+SIGNUP_CHECKED_WHEN = (
+    "Nov 16, 2026, 9:24 AM America/Caracas (5:24 AM PT)"
+)
 
 # Official pages opened on CHECKED.
 FLOW_CREDITS = "https://support.google.com/flow/answer/16526234?hl=en"
@@ -90,8 +94,8 @@ def blurb(g):
 
 def description(g):
     text = (
-        "What you get on free AI video tiers: credits, watermarks, commercial "
-        "use, and the cheapest paid step we track. Last checked Nov 15, 2026."
+        "Which free AI video generators work with no sign-up, which need an "
+        "account but no card, and what you actually get. Last checked Nov 16, 2026."
     )
     if len(text) > 160:
         raise SystemExit(f"{PATH} meta description is over 160 characters: {len(text)}")
@@ -105,7 +109,7 @@ def render(g):
     outbound = g["outbound"]
     rows = g["rows"]
 
-    dates = [CHECKED, LAST]
+    dates = [CHECKED, SIGNUP_CHECKED, LAST]
     for rid in (
         ROW_VEO, ROW_KLING, ROW_WAN, ROW_HAILUO, ROW_GROK, ROW_RUNWAY, ROW_SEEDANCE, ROW_OMNI
     ):
@@ -248,7 +252,7 @@ def render(g):
             f'No. The FAQ says Free plan exports have no watermark. {pika_src}.',
             f'No. Commercial license is not included on Free. {pika_src}.',
             "Image+audio jobs are listed on Free. Whether a given video model writes a soundtrack depends on that model; the Free plan card does not add a single audio rule.",
-            "Sign-up. A card is not required to be on Free; a card is required only if you buy a pack.",
+            "Sign-up is offered (START FREE / Login). The Free plan is listed at $0 with credit packs available. Whether a card is required just to open that $0 plan is not stated on the pricing page today. Buying a pack is a paid step.",
             f'Pika is not a row in our catalog. Official first paid plan is Starter at $10/month or $8/month billed yearly, with 600 credits a month. On Starter, a 5-second Seedance 2.5 clip at 720p is listed at 122 credits, about $2.03, or about $0.407/s, if you use the month’s credits on that clip size. {pika_src}. The cheapest Seedance 2.5 row we track is {e(paid_phrase(g, seedance))}. {row_src(seedance)}.',
         ]),
         tr([
@@ -371,8 +375,32 @@ def render(g):
         "also omit a usable clip count on the public pages we could read today."
     )
 
+    q_nosignup = "Which free AI video generator works with no sign-up?"
+    a_nosignup = (
+        "None of the official free video tiers we opened today publish a way to "
+        "generate video with no account at all. The only plan that clearly says "
+        "no credit card is required is Krea Free, which still requires you to "
+        "sign up: the pricing page lists “Sign up for free” and “No credit card "
+        "required” on the $0 plan with 100 units a day. Google Flow’s 50 daily "
+        "credits are tied to a Google account (credits are shared across the "
+        "account and are checked from your profile). Several other $0 plans "
+        "offer sign-in or sign-up — Runway (“Start Free”), Pika (“START FREE” / "
+        "Login), Dreamina (“Sign in”), Wan (“Log in to grab daily bonus”), Kling "
+        "Basic (“Sign In to Claim Gift”), Higgsfield (Login / Get started, with "
+        "a Free plan listed), and Hailuo (“Sign In,” and terms that welcome "
+        "credits go to new registered accounts) — without saying whether a card "
+        "is required to open the free tier. grok.com showed Sign in and Sign up "
+        "next to a chat box; whether Grok video works without an account is "
+        "unknown. x.ai/grok and meta.ai returned 403 in this check, so those "
+        "remain unknown for no-account use. Luma still lists no public free plan."
+    )
+
     q_best = "Which free option is best for each use?"
     a_best = (
+        "If you need a free AI video generator with no sign-up, none of the official "
+        "tiers we checked today qualify. If you can create an account but do not "
+        "want to enter a card, Krea Free is the only one that says “No credit card "
+        "required.” "
         "For a repeating daily allowance you can count: Google Flow, at about five "
         "Veo 3.1 Lite clips a day if you use every credit on Lite, is the only row "
         "in this table with a published credits-per-clip figure. For a daily "
@@ -437,12 +465,19 @@ def render(g):
         "Hailuo’s welcome-credit amount; Wan’s check-in credit amount; which "
         "models Runway Free actually includes; Meta AI’s video free tier, which "
         "was not published on the pages that loaded; and any login-gated or "
-        "region-gated figure we could not read."
+        "region-gated figure we could not read. Re-checked "
+        + SIGNUP_CHECKED_WHEN +
+        " for sign-up and card rules: no official free video tier published a "
+        "no-account path; only Krea Free stated that no credit card is required; "
+        "whether a card is required to open the other $0 plans is unknown; "
+        "x.ai/grok and meta.ai returned 403, and whether grok.com video works "
+        "without an account is unknown."
     )
 
     faqs = [
         (QUESTION, a_table),
         (q_table, a_table),
+        (q_nosignup, a_nosignup),
         (q_best, a_best),
         (q_catches, a_catches),
         (q_pay, a_pay),
@@ -467,7 +502,7 @@ def render(g):
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Free AI video generators</p>
 <h1>{e(PHRASE)}</h1>
 <p class="lead">{lead}</p>
-<p class="small">Last checked {e(LAST)}. Official free-tier figures were read {e(CHECKED_WHEN)}. Catalog paid-step rows use the date on each row. Affiliate links never change this price order. Every dollar-per-second figure below states its usage assumption, tier, resolution, and audio.</p>
+<p class="small">Last checked {e(LAST)}. Official free-tier allotments were read {e(CHECKED_WHEN)}. Sign-up and card rules were re-checked {e(SIGNUP_CHECKED_WHEN)}. Catalog paid-step rows use the date on each row. Affiliate links never change this price order. Every dollar-per-second figure below states its usage assumption, tier, resolution, and audio.</p>
 
 <h2>{e(QUESTION)}</h2>
 <p>{e(a_table)}</p>
@@ -476,6 +511,14 @@ def render(g):
 <p>One row per tool. “Clips that equals” is filled only when the official page publishes both the free allotment and the credits (or seconds) a named clip costs. Paid-step rates are the cheapest matching row in our catalog, except where we have no catalog row and quote the official first paid plan instead.</p>
 {table}
 <p class="small">Sources and check time {e(CHECKED_WHEN)}: {flow_src} · {plans_src} · {krea_src} · {runway_src} · {dreamina_plans_src} · {dreamina_free_src} · {dreamina_price_src} · {kling_src} · {hf_src} · {pika_src} · {hailuo_terms_src} · {hailuo_plans_src} · {xai_src} · {grok_src} · {wan_src} · {luma_src} · {meta_src} · {meta_about_src}. Catalog rows are dated on each paid-step cell.</p>
+
+<h2 id="no-signup">{e(q_nosignup)}</h2>
+<p>{e(a_nosignup)} These sign-up and card facts were read {e(SIGNUP_CHECKED_WHEN)}.</p>
+<ul>
+<li><b>No account / no sign-up.</b> None confirmed. No official free video tier we opened today published a way to generate video without creating or signing into an account. {e(SIGNUP_CHECKED_WHEN)}.</li>
+<li><b>Account, no card.</b> Confirmed: Krea Free, “Sign up for free” and “No credit card required,” 100 units a day. {krea_src}. Google Flow’s free daily credits require a Google account; the help page does not say a card is required for the 50-credit no-plan allowance. {flow_src}.</li>
+<li><b>Account required; card unknown or paid.</b> Sign-up or sign-in is offered, and a card is not clearly required or waived on the public page, for Runway Free ({runway_src}), Pika Free ({pika_src}), Dreamina ({dreamina_plans_src}), Wan Free ({wan_src}), Kling Basic ({kling_src}), Higgsfield Free ({hf_src}), and Hailuo ({hailuo_terms_src} · {hailuo_plans_src}). Pika credit packs and Luma’s first listed plan are paid. Whether Grok Imagine video works with no account is unknown ({grok_src}; {xai_src} returned 403). Meta AI video limits are unknown ({meta_src} returned 403; {meta_about_src}).</li>
+</ul>
 
 <h2>{e(q_best)}</h2>
 <p>{e(a_best)}</p>
@@ -496,7 +539,7 @@ def render(g):
 
 <h2>{e(q_unknown)}</h2>
 <p>{e(a_unknown)}</p>
-<p><b>Confirmed {e(CHECKED_WHEN)} on official pages:</b> the free-tier facts in the table, each with its source link. <b>Confirmed in the catalog (rows last stored as checked 2026-11-14):</b> the paid-step $/s figures, each with its vendor URL, usage assumption, tier, resolution, and audio.</p>
+<p><b>Confirmed {e(CHECKED_WHEN)} on official pages:</b> the free-tier allotment facts in the table, each with its source link. <b>Confirmed {e(SIGNUP_CHECKED_WHEN)}:</b> the no-account, account-no-card, and card-unknown groupings above. <b>Confirmed in the catalog (rows last stored as checked 2026-11-15):</b> the paid-step $/s figures, each with its vendor URL, usage assumption, tier, resolution, and audio. The fal MiniMax H3 Max Turbo promo at $0.0175/s ended November 15, 2026; the paid-step cell now uses the standard rate.</p>
 <p class="small">Affiliate links never change this price order.</p>
 {g["how_block"]()}
 """
