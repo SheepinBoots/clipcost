@@ -149,6 +149,14 @@ def main():
     flux_end = "promo_ended:deal:fal-flux3-75:2026-11-07"
     krea_end = "promo_ended:deal:krea3-openrouter-50:2026-11-10"
     wan_api_end = "promo_ended:deal:hf-api-wan-60:2026-11-11"
+    nov15_ends = {f"promo_ended:row:r{n}:2026-11-15" for n in range(191, 197)} | {
+        "promo_ended:deal:hf-plus-monthly-first:2026-11-15",
+        "promo_ended:deal:hf-ultra-monthly-first:2026-11-15",
+        "promo_ended:deal:hf-ultra-6k-monthly-first:2026-11-15",
+        "promo_ended:deal:hf-ultra-9k-monthly-first:2026-11-15",
+        "promo_ended:deal:hf-seedance-unlimited-1111:2026-11-15",
+        "promo_ended:deal:fal-minimax-h3-30-nov:2026-11-15",
+    }
     promo_ids = {event["id"] for event in log if event["kind"] in ("promo_started", "promo_ended")}
     week_ids = {
         "promo_ended:deal:hf-wan3-unlimited-7d:2026-10-20",
@@ -160,7 +168,7 @@ def main():
         "promo_started:deal:hf-seedance-unlimited-7d:2026-10-30",
         "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
-    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end, krea_end, wan_api_end}
+    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end, krea_end, wan_api_end} | nov15_ends
     flux = next(event for event in log if event["id"] == flux_end)
     assert flux["date"] == "2026-11-08" and flux["ended"] == "2026-11-07"
     assert flux["end_is_estimate"] is False and flux["checked"] == "2026-11-08"

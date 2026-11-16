@@ -1,247 +1,6 @@
 {
- "updated": "2026-11-15",
+ "updated": "2026-11-16",
  "deals": [
-  {
-   "id": "hf-seedance-unlimited-1111",
-   "vendor": "Higgsfield",
-   "type": "unlimited_window",
-   "title": "11.11 sale: 7 to 14 days of unlimited Seedance 2.5 on Plus and Ultra",
-   "models": [
-    "seedance-2-5"
-   ],
-   "plans": [
-    "Plus",
-    "Ultra"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": true,
-    "code": null,
-    "standing": false
-   },
-   "percent": null,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "full_plan_id": null,
-   "deal_plan_id": null,
-   "math": "none",
-   "variants": [],
-   "start": null,
-   "end": "2026-11-15",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "Unlimited for 14 days. Unlimited Seedance 2.5 30s 720p. 11.11 sale ends on Nov 15.",
-   "verified_date": "2026-11-12",
-   "notes": "Checked 2026-11-11 on higgsfield.ai/pricing (Annual and Monthly toggles, rendered). Annual Plus ($35/mo billed yearly): 14 days of unlimited Seedance 2.5, 30-second clips, 720p. Annual Ultra ($65/mo billed yearly): 14 days, 30s, 1080p. Monthly Plus ($47 first month, renews at $59): 7 days, 20s, 480p. Monthly Ultra ($79 first month, renews at $129): 14 days, 20s, 720p. Starter lists no Seedance 2.5 unlimited window. The page does not say new users only or when the days start. The cards say 'Unlimited sale ends in' with a countdown that reached zero at Nov 15 00:00 UTC (Nov 14, 4 pm PT) when checked, and the header says '11.11 sale ends on Nov 15.' Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods. Seedance 2.5 on Higgsfield plans is not in the price catalog, so this is not turned into a $/s. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
-   "examples": []
-  },
-  {
-   "id": "hf-plus-monthly-first",
-   "vendor": "Higgsfield",
-   "type": "plan_sale",
-   "title": "Plus monthly first month, $59 to $47",
-   "models": [],
-   "plans": [
-    "Plus"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": 1,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 20,
-   "bonus_credits": null,
-   "price_before": 59,
-   "price_after": 47,
-   "price_pairs": null,
-   "full_plan_id": "hf-plus-monthly",
-   "deal_plan_id": null,
-   "math": "plan_price",
-   "variants": [],
-   "start": null,
-   "end": "2026-11-15",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "$59 $47 billed monthly, renews at $59. 20% OFF.",
-   "verified_date": "2026-11-12",
-   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing. Plus is $47 the first month and renews at $59, labeled 20% OFF, with 1,200 credits / month. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 20% figure is the first-month checkout math, not the 'up to 60% off' banner. $/s uses the first-month $47 and a 12-month blend with the $59 renewal. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
-   "examples": [
-    "Plus: $59 → $47/mo · Wan 3.0, Wan 3.0, 480p: $0.03917/s vs $0.04917/s (from credit plan) · 12-month blended $0.04833/s"
-   ]
-  },
-  {
-   "id": "hf-ultra-6k-monthly-first",
-   "vendor": "Higgsfield",
-   "type": "plan_sale",
-   "title": "Ultra 6K monthly first month, $250 to $150",
-   "models": [],
-   "plans": [
-    "Ultra"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": 1,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 40,
-   "bonus_credits": null,
-   "price_before": 250,
-   "price_after": 150,
-   "price_pairs": null,
-   "full_plan_id": null,
-   "deal_plan_id": null,
-   "math": "none",
-   "variants": [],
-   "start": null,
-   "end": "2026-11-15",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "Ultra 6K $250 $150 billed monthly, renews at $250. 6,000 credits / month.",
-   "verified_date": "2026-11-12",
-   "notes": "Checked 2026-11-12 on the Monthly toggle, Ultra 6K, at higgsfield.ai/pricing, and on the public plans API the page loads. Ultra 6K is $150 the first month and renews at $250. The API labels this 40% off for one payment. The 11.11 sale ends on Nov 15. This tier is not in the price catalog, so this is not turned into a catalog $/s.",
-   "examples": []
-  },
-  {
-   "id": "hf-ultra-9k-monthly-first",
-   "vendor": "Higgsfield",
-   "type": "plan_sale",
-   "title": "Ultra 9K monthly first month, $375 to $209",
-   "models": [],
-   "plans": [
-    "Ultra"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": 1,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 45,
-   "bonus_credits": null,
-   "price_before": 375,
-   "price_after": 209,
-   "price_pairs": null,
-   "full_plan_id": null,
-   "deal_plan_id": null,
-   "math": "none",
-   "variants": [],
-   "start": null,
-   "end": "2026-11-15",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "Ultra 9K −45% $375 $209 billed monthly, renews at $375. 45% OFF. 9,000 credits / month.",
-   "verified_date": "2026-11-12",
-   "notes": "Checked 2026-11-12 on the Monthly toggle, Ultra 9K, at higgsfield.ai/pricing, and on the public plans API the page loads. Ultra 9K is $209 the first month and renews at $375, labeled 45% OFF. The 11.11 sale ends on Nov 15. This tier is not in the price catalog, so this is not turned into a catalog $/s.",
-   "examples": []
-  },
-  {
-   "id": "hf-ultra-monthly-first",
-   "vendor": "Higgsfield",
-   "type": "plan_sale",
-   "title": "Ultra monthly first month, $129 to $79",
-   "models": [],
-   "plans": [
-    "Ultra"
-   ],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": 1,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 40,
-   "bonus_credits": null,
-   "price_before": 129,
-   "price_after": 79,
-   "price_pairs": null,
-   "full_plan_id": "hf-ultra-monthly",
-   "deal_plan_id": null,
-   "math": "plan_price",
-   "variants": [],
-   "start": null,
-   "end": "2026-11-15",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "$129 $79 billed monthly, renews at $129. 40% OFF.",
-   "verified_date": "2026-11-12",
-   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing, Ultra 3K (3,000 credits / month). Ultra is $79 the first month and renews at $129, labeled 40% OFF. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 40% figure is the first-month checkout math on the 3K tier, not the 'up to 60% off' banner. A separate −45% badge sits next to the 3K/6K/9K selector; 6K and 9K monthly prices were not opened. $/s uses the first-month $79 and a 12-month blend with the $129 renewal. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
-   "examples": [
-    "Ultra: $129 → $79/mo · Wan 3.0, Wan 3.0, 480p: $0.02633/s vs $0.043/s (from credit plan) · 12-month blended $0.04161/s"
-   ]
-  },
-  {
-   "id": "fal-minimax-h3-30-nov",
-   "vendor": "fal",
-   "type": "api_promo",
-   "title": "MiniMax H3 Max and H3 Max Turbo 30% off Nov 1 through Nov 15",
-   "models": [
-    "minimax-hailuo"
-   ],
-   "plans": [],
-   "conditions": {
-    "new_users_only": false,
-    "annual_only": false,
-    "first_months": null,
-    "max_resolution": null,
-    "web_only": false,
-    "code": null,
-    "standing": false
-   },
-   "percent": 30,
-   "bonus_credits": null,
-   "price_before": null,
-   "price_after": null,
-   "price_pairs": null,
-   "full_plan_id": null,
-   "deal_plan_id": null,
-   "math": "stated",
-   "variants": [],
-   "start": "2026-11-01",
-   "end": "2026-11-15",
-   "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
-   "source_quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026.",
-   "verified_date": "2026-10-31",
-   "notes": "The model pages state the 30% promo prices per second from November 1 through November 15, 2026: H3 Max $0.035 at 480p, $0.056 at 768p, and $0.112 at 1080p; H3 Max Turbo $0.0175 at 480p, $0.028 at 768p, and $0.056 at 1080p. Standard rates resume November 16, 2026: H3 Max $0.05, $0.08, and $0.16; H3 Max Turbo $0.025, $0.04, and $0.08. No code, and not limited to new users. This follows the 35% promo that ends October 31, 2026. The same billing message is on the H3 Max Turbo page.",
-   "examples": [
-    "MiniMax H3 Max Turbo 480p: $0.0175/s, list $0.025/s",
-    "MiniMax H3 Max Turbo 768p: $0.028/s, list $0.04/s",
-    "MiniMax H3 Max 480p: $0.035/s, list $0.05/s",
-    "MiniMax H3 Max 768p: $0.056/s, list $0.08/s"
-   ],
-   "sources": [
-    {
-     "url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
-     "kind": "pricing_page",
-     "quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026."
-    }
-   ]
-  },
   {
    "id": "fal-flux3-50",
    "vendor": "fal",
@@ -900,6 +659,238 @@
  ],
  "upcoming": [],
  "archive": [
+  {
+   "id": "hf-plus-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Plus monthly first month, $59 to $47",
+   "models": [],
+   "plans": [
+    "Plus"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 20,
+   "bonus_credits": null,
+   "price_before": 59,
+   "price_after": 47,
+   "price_pairs": null,
+   "full_plan_id": "hf-plus-monthly",
+   "deal_plan_id": null,
+   "math": "plan_price",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "$59 $47 billed monthly, renews at $59. 20% OFF.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing. Plus is $47 the first month and renews at $59, labeled 20% OFF, with 1,200 credits / month. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 20% figure is the first-month checkout math, not the 'up to 60% off' banner. $/s uses the first-month $47 and a 12-month blend with the $59 renewal. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
+   "examples": []
+  },
+  {
+   "id": "hf-ultra-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra monthly first month, $129 to $79",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 40,
+   "bonus_credits": null,
+   "price_before": 129,
+   "price_after": 79,
+   "price_pairs": null,
+   "full_plan_id": "hf-ultra-monthly",
+   "deal_plan_id": null,
+   "math": "plan_price",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "$129 $79 billed monthly, renews at $129. 40% OFF.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-11 on the Monthly toggle at higgsfield.ai/pricing, Ultra 3K (3,000 credits / month). Ultra is $79 the first month and renews at $129, labeled 40% OFF. The pricing page says the sale ends on Nov 15, and also 'Don't miss your chance to get up to 60% OFF.' The 40% figure is the first-month checkout math on the 3K tier, not the 'up to 60% off' banner. A separate −45% badge sits next to the 3K/6K/9K selector; 6K and 9K monthly prices were not opened. $/s uses the first-month $79 and a 12-month blend with the $129 renewal. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
+   "examples": []
+  },
+  {
+   "id": "hf-ultra-6k-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra 6K monthly first month, $250 to $150",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 40,
+   "bonus_credits": null,
+   "price_before": 250,
+   "price_after": 150,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "Ultra 6K $250 $150 billed monthly, renews at $250. 6,000 credits / month.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-12 on the Monthly toggle, Ultra 6K, at higgsfield.ai/pricing, and on the public plans API the page loads. Ultra 6K is $150 the first month and renews at $250. The API labels this 40% off for one payment. The 11.11 sale ends on Nov 15. This tier is not in the price catalog, so this is not turned into a catalog $/s.",
+   "examples": []
+  },
+  {
+   "id": "hf-ultra-9k-monthly-first",
+   "vendor": "Higgsfield",
+   "type": "plan_sale",
+   "title": "Ultra 9K monthly first month, $375 to $209",
+   "models": [],
+   "plans": [
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": 1,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 45,
+   "bonus_credits": null,
+   "price_before": 375,
+   "price_after": 209,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "Ultra 9K −45% $375 $209 billed monthly, renews at $375. 45% OFF. 9,000 credits / month.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-12 on the Monthly toggle, Ultra 9K, at higgsfield.ai/pricing, and on the public plans API the page loads. Ultra 9K is $209 the first month and renews at $375, labeled 45% OFF. The 11.11 sale ends on Nov 15. This tier is not in the price catalog, so this is not turned into a catalog $/s.",
+   "examples": []
+  },
+  {
+   "id": "hf-seedance-unlimited-1111",
+   "vendor": "Higgsfield",
+   "type": "unlimited_window",
+   "title": "11.11 sale: 7 to 14 days of unlimited Seedance 2.5 on Plus and Ultra",
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [
+    "Plus",
+    "Ultra"
+   ],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": true,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": null,
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_quote": "Unlimited for 14 days. Unlimited Seedance 2.5 30s 720p. 11.11 sale ends on Nov 15.",
+   "verified_date": "2026-11-12",
+   "notes": "Checked 2026-11-11 on higgsfield.ai/pricing (Annual and Monthly toggles, rendered). Annual Plus ($35/mo billed yearly): 14 days of unlimited Seedance 2.5, 30-second clips, 720p. Annual Ultra ($65/mo billed yearly): 14 days, 30s, 1080p. Monthly Plus ($47 first month, renews at $59): 7 days, 20s, 480p. Monthly Ultra ($79 first month, renews at $129): 14 days, 20s, 720p. Starter lists no Seedance 2.5 unlimited window. The page does not say new users only or when the days start. The cards say 'Unlimited sale ends in' with a countdown that reached zero at Nov 15 00:00 UTC (Nov 14, 4 pm PT) when checked, and the header says '11.11 sale ends on Nov 15.' Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and are not accessible on MCP/CLI, Canvas or Supercomputer. Unlimited usage may be subject to dynamic speed adjustments during high-traffic periods. Seedance 2.5 on Higgsfield plans is not in the price catalog, so this is not turned into a $/s. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown.",
+   "examples": []
+  },
+  {
+   "id": "fal-minimax-h3-30-nov",
+   "vendor": "fal",
+   "type": "api_promo",
+   "title": "MiniMax H3 Max and H3 Max Turbo 30% off Nov 1 through Nov 15",
+   "models": [
+    "minimax-hailuo"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": 30,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "stated",
+   "variants": [],
+   "start": "2026-11-01",
+   "end": "2026-11-15",
+   "end_is_estimate": false,
+   "status": "ended",
+   "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
+   "source_quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026.",
+   "verified_date": "2026-10-31",
+   "notes": "The model pages state the 30% promo prices per second from November 1 through November 15, 2026: H3 Max $0.035 at 480p, $0.056 at 768p, and $0.112 at 1080p; H3 Max Turbo $0.0175 at 480p, $0.028 at 768p, and $0.056 at 1080p. Standard rates resume November 16, 2026: H3 Max $0.05, $0.08, and $0.16; H3 Max Turbo $0.025, $0.04, and $0.08. No code, and not limited to new users. This follows the 35% promo that ends October 31, 2026. The same billing message is on the H3 Max Turbo page.",
+   "examples": [],
+   "sources": [
+    {
+     "url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
+     "kind": "pricing_page",
+     "quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026."
+    }
+   ]
+  },
   {
    "id": "hf-api-wan-60",
    "vendor": "Higgsfield API",

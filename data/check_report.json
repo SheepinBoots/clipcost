@@ -1,9 +1,9 @@
 {
- "run": "2026-11-15T20:26:05",
+ "run": "2026-11-16T12:02:22",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 16184
+   "chars": 15924
   },
   "hf_api": {
    "status": "fetched",
@@ -39,7 +39,7 @@
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1621
+   "chars": 1623
   },
   "rep_seed25": {
    "status": "fetched",
@@ -59,15 +59,15 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 102707
+   "chars": 102721
   },
   "atlas": {
    "status": "fetched",
-   "chars": 2468027
+   "chars": 2478385
   },
   "krea": {
    "status": "fetched",
-   "chars": 30737
+   "chars": 31907
   },
   "magnific": {
    "status": "fetched",
@@ -92,7 +92,7 @@
   },
   "gflow_credits": {
    "status": "fetched",
-   "chars": 8664
+   "chars": 8663
   },
   "google_ai_plans": {
    "status": "fetched",
@@ -101,91 +101,137 @@
  },
  "findings": [
   {
-   "kind": "plan",
-   "id": "krea-basic-yearly",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Basic {N} units / month",
-   "old": 5000,
-   "new": null,
-   "model": null,
-   "platform": "Krea",
-   "variant": "Basic (yearly)"
-  },
-  {
-   "kind": "plan",
-   "id": "krea-pro-monthly",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Pro {N} units / month",
-   "old": 20000,
-   "new": null,
-   "model": null,
-   "platform": "Krea",
-   "variant": "Pro (monthly)"
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "New Playable Supercomputer Community Academy Plugins Canvas Enterprise Pricing 65% OFF Login Get started Black Friday 65% off BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OF"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF 00 00 days 03 03 hours 32 32 min 15 16 16 15 sec All plans Don’t miss your chan"
+   "snippet": "F BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65%"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF 01 01 days 07 07 hours 56 56 min 01 02 02 01 sec All plans Don’t miss your chan"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF BLACK FRIDAY 60% OFF 00 00 days 08 08 hours 01 01 min 47 48 48 47 sec All plans Don’t miss your chan"
+   "snippet": "New Playable Supercomputer Community Academy Plugins Canvas Enterprise Pricing 65% OFF Login Sign up Black Friday 65% off BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BL"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65%"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF BLACK FRIDAY 65% OFF 01 01 days 07 07 hours 58 58 min 16 17 17 16 sec All plans Don’t miss your chan"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Model Licensing Looking for API? Free $0 /month 100 units / day Get Free No dif"
+   "snippet": "lan Trusted by 40M+ creators, enterprises, agencies, and studios Monthly Yearly 40% off Need help choosing a plan? Model Licensing Looking for API? Free For trying out"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "No credit card required Full access to real-time models Limited image upscaling Promo placeholder Basic $9 $5 /month Almost 5 months free Each month, make up to 16 S"
+   "snippet": "Krea $0 /month Get Free 100 units / day Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "c models LoRA training (50 images) Image upscaling up to 22K Commercial license Promo placeholder Pro Most popular $35 $21 /month Almost 5 months free Each month, ma"
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Basic F"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "n Basic, plus All video models App Builder Bulk discounts on compute unit packs Promo placeholder Max $105 $63 /month Almost 5 months free Each month, make up to 197"
+   "snippet": "nits / month 16 Seedance 2.5 videos 64 Nano Banana Pro images 138 Krea 3 images Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "40k 60k 80k 100k Get Max Save $504 compared to monthly Everything in Pro, plus Unlimited LoRA training (2,000 images) Unlimited relaxed generations Promo placeholder Se"
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Pro Mos"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "ication Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free $0 /month 100 units / d"
+   "snippet": "its / month 65 Seedance 2.5 videos 257 Nano Banana Pro images 555 Krea 3 images Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW Kre"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "to see your discount before checkout. Redeem Need More Compute? Purchase one-time compute packs for"
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Max For"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "ance 2.5 videos 771 Nano Banana Pro images 1,666 Krea 3 images 40k 60k 80k 100k Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW Kre"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "a Agent NEW All image models All video models All 3D & lipsync models Unlimited LoRA training (2,000 images) Image upscaling up to 22K Krea Nodes App Builder E"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder See all"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "ication Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free For trying out Krea $0"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "/month Get Free 100 units / day Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "ance 2.5 videos 514 Nano Banana Pro images 1,111 Krea 3 images 40k 60k 80k 100k Unlimited LoRA training (2,000 images) Bulk discounts on compute unit packs Unlimited rel"
   },
   {
    "kind": "deal_candidate",
@@ -199,63 +245,49 @@
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "nthly Yearly 40% off Need help choosing a plan? Model Licensing Looking for API? Free For trying out"
+   "snippet": "nthly Yearly 40% off Need help choosing a plan? Model Licensing Looking for API? Free $0 /month 100"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Basic F"
+   "snippet": "No credit card required Full access to real-time models Limited image upscaling Promo placeholder Basic $9 $5 /month Almost 5 months free Each month, make up to 16 S"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Pro Mos"
+   "snippet": "c models LoRA training (50 images) Image upscaling up to 22K Commercial license Promo placeholder Pro Most popular $35 $21 /month Almost 5 months free Each month, ma"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder Max For"
+   "snippet": "n Basic, plus All video models App Builder Bulk discounts on compute unit packs Promo placeholder Max $70 $42 /month Almost 5 months free Each month, make up to 131"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "3 NEW Krea Agent NEW All image models All video models All 3D & lipsync models Unlimited LoRA training (2,000 images) Image upscaling up to 22K Krea Nodes App Builder E"
+   "snippet": "40k 60k 80k 100k Get Max Save $336 compared to monthly Everything in Pro, plus Unlimited LoRA training (2,000 images) Unlimited relaxed generations Promo placeholder Se"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "access to new features Commercial license Bulk discounts on compute unit packs Unlimited relaxed generations Expanded concurrency and queueing Promo placeholder See all"
+   "snippet": "ication Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free $0 /month 100 units / d"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "ication Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Free For trying out Krea $0"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "to see your discount before checkout. Redeem Find the best plan for you Tell us what you make and ho"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "ance 2.5 videos 514 Nano Banana Pro images 1,111 Krea 3 images 40k 60k 80k 100k Unlimited LoRA training (2,000 images) Bulk discounts on compute unit packs Unlimited rel"
+   "snippet": "y mix, from 40,000 units 40k 60k 80k 100k Get Max Save $336 compared to monthly Unlimited LoRA training (2,000 images) Bulk discounts on compute unit packs Unlimited rel"
   }
  ],
  "deal_scan": {
@@ -272,7 +304,7 @@
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 15
+    "snippets": 22
    },
    {
     "id": "magnific",
@@ -296,12 +328,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 19
+  "candidates": 27
  },
  "counts": {
-  "ok": 451,
+  "ok": 435,
   "changed": 0,
-  "missing": 2,
+  "missing": 0,
   "skipped": 6
  }
 }

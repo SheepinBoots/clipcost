@@ -55,7 +55,13 @@ def main():
     adj = deals.adjustment(prior35_live, mini35, plans)
     close(adj["usd"], 0.01625)
     close(adj["list_usd"], 0.025)
-    turbo30 = rows["r194"]
+    # The 30% promo rows were removed when that promo ended on Nov 15. The math uses a frozen row.
+    turbo30 = {
+        "id": "r194", "model": "minimax-hailuo", "platform": "fal", "kind": "api",
+        "variant": "MiniMax H3 Max Turbo", "resolution": "480p",
+        "usd_per_second": 0.0175, "list_usd_per_second": 0.025,
+        "deal_ids": ["fal-minimax-h3-30-nov"],
+    }
     adj = deals.adjustment(next(d for d in doc["deals"] if d["id"] == "fal-minimax-h3-30-nov"), turbo30, plans)
     close(adj["usd"], 0.0175)
     close(adj["list_usd"], 0.025)
@@ -189,13 +195,14 @@ def main():
         raise SystemExit("fal-minimax-h3-30-nov dates")
     if nxt.get("models") != ["minimax-hailuo"] or nxt.get("vendor") != "fal":
         raise SystemExit("fal-minimax-h3-30-nov vendor or models")
-    if nxt.get("status") != "live":
-        raise SystemExit("fal-minimax-h3-30-nov should stay status live and flip by start date")
-    if deals.is_current(nxt, "2026-10-31") or not deals.is_upcoming(nxt, "2026-10-31"):
+    if nxt.get("status") != "ended":
+        raise SystemExit("fal-minimax-h3-30-nov should be archived after Nov 15")
+    nxt_live = dict(nxt, status="live")
+    if deals.is_current(nxt_live, "2026-10-31") or not deals.is_upcoming(nxt_live, "2026-10-31"):
         raise SystemExit("30% MiniMax promo should be upcoming on Oct 31")
-    if not deals.is_current(nxt, "2026-11-01") or deals.is_upcoming(nxt, "2026-11-01"):
+    if not deals.is_current(nxt_live, "2026-11-01") or deals.is_upcoming(nxt_live, "2026-11-01"):
         raise SystemExit("30% MiniMax promo should be live on Nov 1")
-    if deals.is_current(nxt, "2026-11-16"):
+    if deals.is_current(nxt_live, "2026-11-16") or deals.is_current(nxt, "2026-11-10"):
         raise SystemExit("30% MiniMax promo should end after Nov 15")
     prior = next(d for d in doc["deals"] if d["id"] == "fal-minimax-35")
     if prior.get("end") != "2026-10-31" or prior.get("status") != "ended":
@@ -204,11 +211,11 @@ def main():
         raise SystemExit("fal-minimax-35 should still be live on its end date")
     if deals.is_current(prior, "2026-11-01") or deals.is_current(dict(prior, status="live"), "2026-11-01"):
         raise SystemExit("fal-minimax-35 should not stay live on Nov 1")
-    if deals.adjustment(nxt, mini35, plans) is not None:
+    if deals.adjustment(nxt_live, mini35, plans) is not None:
         raise SystemExit("30% promo reused the 35% row price")
-    if deals.row_adjustments(rows["r194"], [nxt], plans, "2026-10-31"):
+    if deals.row_adjustments(turbo30, [nxt_live], plans, "2026-10-31"):
         raise SystemExit("30% promo badged a price row before Nov 1")
-    if not deals.row_adjustments(rows["r194"], [nxt], plans, "2026-11-01"):
+    if not deals.row_adjustments(turbo30, [nxt_live], plans, "2026-11-01"):
         raise SystemExit("30% promo should badge its row on Nov 1")
     if not deals.row_adjustments(mini35, [dict(prior, status="live")], plans, "2026-10-31"):
         raise SystemExit("35% promo should still badge its row on Oct 31")
