@@ -35,6 +35,7 @@ GUIDE_URLS = (
     "https://vidfare.com/guides/runway-pricing/",
     "https://vidfare.com/guides/free-ai-video-generators/",
     "https://vidfare.com/guides/best-ai-video-generator/",
+    "https://vidfare.com/guides/free-image-to-video-ai/",
 )
 
 

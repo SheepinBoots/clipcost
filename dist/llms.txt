@@ -107,6 +107,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [Runway pricing per second](https://vidfare.com/guides/runway-pricing/): Official Runway Free, Standard, Pro, Max, Team and Enterprise plans, official API rates from $0.05/s for Gen-4 Turbo, and cheaper catalog routes we track.
 - [Free AI video generators: what you get](https://vidfare.com/guides/free-ai-video-generators/): What each major tool's free tier actually includes: credits or daily allowance, watermarks, commercial use, and the cheapest paid step we track.
 - [Best AI video generator by value](https://vidfare.com/guides/best-ai-video-generator/): Nine models compared on Artificial Analysis Elo and our cost per second, so you can pick by value, not by price alone.
+- [Free image to video AI](https://vidfare.com/guides/free-image-to-video-ai/): Which official free tiers actually let you animate a photo, with the limits, watermark, and resolution the vendor published.
 
 ## Data
 
