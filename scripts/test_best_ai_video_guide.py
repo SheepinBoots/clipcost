@@ -143,8 +143,8 @@ def main():
         if f'href="{PATH}"' not in page:
             errors.append(f"{rel} does not link the guide")
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
-    if "Sixteen comparisons" not in guides and "sixteen comparisons" not in guides:
-        errors.append("guides index count text was not updated to Sixteen")
+    if "comparisons built from the same price rows" not in guides:
+        errors.append("guides index is missing the comparisons lead")
 
     if errors:
         raise SystemExit("best AI video guide:\n- " + "\n- ".join(errors))
