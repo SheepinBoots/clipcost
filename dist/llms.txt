@@ -114,6 +114,8 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [Higgsfield vs Kling](https://vidfare.com/guides/higgsfield-vs-kling/): Kling 3.0 on Higgsfield versus the official API and plans: cost per second, credits, and the limits we could verify.
 - [Higgsfield vs Runway](https://vidfare.com/guides/higgsfield-vs-runway/): Higgsfield vs Runway on plan and API rates, with a short Krea vs Runway note. Unlimited is not sold to new buyers.
 - [fal pricing vs Replicate and others](https://vidfare.com/guides/fal-ai-pricing/): fal AI pricing versus Replicate, WaveSpeed, and Runware, compared per second for the same models, with list and sale rates labelled.
+- [Kling 3.0 cost per second: where it’s cheapest](https://vidfare.com/guides/cheapest-kling-3-0/): Every Kling 3.0 route we track, cheapest first: from $0.025/s on Higgsfield, against $0.084/s on the official Kling API at 720p.
+- [Higgsfield promo code and current deals](https://vidfare.com/guides/higgsfield-promo-code/): No public Higgsfield promo code on its official pages or accounts. The current deals, each with its source, stated end date, and last check.
 
 ## Data
 

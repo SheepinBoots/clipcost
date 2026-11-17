@@ -65,6 +65,8 @@ GUIDE_LINKS = [
     ("/guides/higgsfield-vs-kling/", "Higgsfield vs Kling"),
     ("/guides/higgsfield-vs-runway/", "Higgsfield vs Runway"),
     ("/guides/fal-ai-pricing/", "fal AI pricing"),
+    ("/guides/cheapest-kling-3-0/", "Kling 3.0 cost"),
+    ("/guides/higgsfield-promo-code/", "Higgsfield promo codes"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1264,6 +1266,8 @@ GUIDE_CRUMBS = {
     "/guides/higgsfield-vs-kling/": "Higgsfield vs Kling",
     "/guides/higgsfield-vs-runway/": "Higgsfield vs Runway",
     "/guides/fal-ai-pricing/": "fal AI pricing",
+    "/guides/cheapest-kling-3-0/": "Kling 3.0 cost",
+    "/guides/higgsfield-promo-code/": "Higgsfield promo codes",
 }
 
 def guide_crosslinks(path):
@@ -1321,6 +1325,8 @@ def guide_page(path, title, desc, body, faqs):
             ("Is Kling cheaper on Higgsfield or on the official site?", "/guides/higgsfield-vs-kling/"),
             ("Is Runway cheaper than Higgsfield per second?", "/guides/higgsfield-vs-runway/"),
             ("How does fal pricing compare with Replicate, WaveSpeed, and Runware?", "/guides/fal-ai-pricing/"),
+            ("Where is Kling 3.0 cheapest right now?", "/guides/cheapest-kling-3-0/"),
+            ("Is there a Higgsfield promo code right now?", "/guides/higgsfield-promo-code/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1914,6 +1920,8 @@ for slug, m in models.items():
         deals_html += (
             f'<p class="small">Official Kling plans, API rates, and cheaper catalog routes: '
             f'<a href="{root("/guides/kling-ai-pricing/")}">Kling AI pricing and credits</a></p>'
+            f'<p class="small">Every Kling 3.0 route, cheapest first: '
+            f'<a href="{root("/guides/cheapest-kling-3-0/")}">Kling 3.0 cost per second: where it’s cheapest</a></p>'
         )
     if slug == "runway-gen-4":
         deals_html += (
@@ -3273,6 +3281,8 @@ def write_llms():
         f"- [Higgsfield vs Kling]({SITE_URL}/guides/higgsfield-vs-kling/): {hf_vs_kling_blurb()}",
         f"- [Higgsfield vs Runway]({SITE_URL}/guides/higgsfield-vs-runway/): {hf_vs_runway_blurb()}",
         f"- [fal pricing vs Replicate and others]({SITE_URL}/guides/fal-ai-pricing/): {fal_pricing_blurb()}",
+        f"- [Kling 3.0 cost per second: where it’s cheapest]({SITE_URL}/guides/cheapest-kling-3-0/): {kling_3_blurb()}",
+        f"- [Higgsfield promo code and current deals]({SITE_URL}/guides/higgsfield-promo-code/): {hf_promo_code_blurb()}",
         "",
         "## Data",
         "",
@@ -3352,6 +3362,12 @@ def hf_vs_runway_blurb():
 import fal_pricing_guide
 def fal_pricing_blurb():
     return fal_pricing_guide.blurb(globals())
+import kling_3_guide
+def kling_3_blurb():
+    return kling_3_guide.blurb(globals())
+import hf_promo_code_guide
+def hf_promo_code_blurb():
+    return hf_promo_code_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -3388,6 +3404,8 @@ import hf_vs_runway_guide
 hf_vs_runway_guide.render(globals())
 import fal_pricing_guide
 fal_pricing_guide.render(globals())
+kling_3_guide.render(globals())
+hf_promo_code_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers

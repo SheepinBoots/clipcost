@@ -227,10 +227,12 @@ def render(g):
             ("Is Kling cheaper on Higgsfield or on the official site?", "/guides/higgsfield-vs-kling/", g["hf_vs_kling_blurb"]()),
             ("Is Runway cheaper than Higgsfield per second?", "/guides/higgsfield-vs-runway/", g["hf_vs_runway_blurb"]()),
             ("How does fal pricing compare with Replicate, WaveSpeed, and Runware?", "/guides/fal-ai-pricing/", g["fal_pricing_blurb"]()),
+            ("Where is Kling 3.0 cheapest right now?", "/guides/cheapest-kling-3-0/", g["kling_3_blurb"]()),
+            ("Is there a Higgsfield promo code right now?", "/guides/higgsfield-promo-code/", g["hf_promo_code_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
-        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "Nineteen", 20: "Twenty", 21: "Twenty-one", 22: "Twenty-two"}.get(len(entries), str(len(entries)))
+        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "Nineteen", 20: "Twenty", 21: "Twenty-one", 22: "Twenty-two", 23: "Twenty-three", 24: "Twenty-four", 25: "Twenty-five"}.get(len(entries), str(len(entries)))
         blocks = []
         faqs = []
         for question, path, answer in entries:
