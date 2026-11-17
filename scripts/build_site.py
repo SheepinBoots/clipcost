@@ -61,6 +61,10 @@ GUIDE_LINKS = [
     ("/guides/free-image-to-video-ai/", "Free image to video"),
     ("/guides/free-text-to-video-ai/", "Free text to video"),
     ("/guides/ai-video-generator-apps/", "AI video generator apps"),
+    ("/guides/higgsfield-alternatives/", "Higgsfield alternatives"),
+    ("/guides/higgsfield-vs-kling/", "Higgsfield vs Kling"),
+    ("/guides/higgsfield-vs-runway/", "Higgsfield vs Runway"),
+    ("/guides/fal-ai-pricing/", "fal AI pricing"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1256,6 +1260,10 @@ GUIDE_CRUMBS = {
     "/guides/free-image-to-video-ai/": "Free image to video",
     "/guides/free-text-to-video-ai/": "Free text to video",
     "/guides/ai-video-generator-apps/": "AI video generator apps",
+    "/guides/higgsfield-alternatives/": "Higgsfield alternatives",
+    "/guides/higgsfield-vs-kling/": "Higgsfield vs Kling",
+    "/guides/higgsfield-vs-runway/": "Higgsfield vs Runway",
+    "/guides/fal-ai-pricing/": "fal AI pricing",
 }
 
 def guide_crosslinks(path):
@@ -1309,6 +1317,10 @@ def guide_page(path, title, desc, body, faqs):
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/"),
             ("Which free AI tools turn text into video?", "/guides/free-text-to-video-ai/"),
             ("Which AI video generators have an official app?", "/guides/ai-video-generator-apps/"),
+            ("Which Higgsfield alternatives are cheaper per second?", "/guides/higgsfield-alternatives/"),
+            ("Is Kling cheaper on Higgsfield or on the official site?", "/guides/higgsfield-vs-kling/"),
+            ("Is Runway cheaper than Higgsfield per second?", "/guides/higgsfield-vs-runway/"),
+            ("How does fal pricing compare with Replicate, WaveSpeed, and Runware?", "/guides/fal-ai-pricing/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1385,6 +1397,22 @@ def ai_video_generator_apps_blurb():
     import ai_video_generator_apps_guide
     return ai_video_generator_apps_guide.blurb(globals())
 
+def hf_alternatives_blurb():
+    import hf_alternatives_guide
+    return hf_alternatives_guide.blurb(globals())
+
+def hf_vs_kling_blurb():
+    import hf_vs_kling_guide
+    return hf_vs_kling_guide.blurb(globals())
+
+def hf_vs_runway_blurb():
+    import hf_vs_runway_guide
+    return hf_vs_runway_guide.blurb(globals())
+
+def fal_pricing_blurb():
+    import fal_pricing_guide
+    return fal_pricing_guide.blurb(globals())
+
 def home_guides_html():
     blurbs = {
         "/guides/cheapest-wan-3-0/": wan_blurb,
@@ -1396,6 +1424,10 @@ def home_guides_html():
         "/guides/free-image-to-video-ai/": free_image_to_video_blurb,
         "/guides/free-text-to-video-ai/": free_text_to_video_blurb,
         "/guides/ai-video-generator-apps/": ai_video_generator_apps_blurb,
+        "/guides/higgsfield-alternatives/": hf_alternatives_blurb,
+        "/guides/higgsfield-vs-kling/": hf_vs_kling_blurb,
+        "/guides/higgsfield-vs-runway/": hf_vs_runway_blurb,
+        "/guides/fal-ai-pricing/": fal_pricing_blurb,
     }
     items = []
     for path, label in GUIDE_LINKS:
@@ -1941,6 +1973,41 @@ for slug, m in models.items():
         deals_html += (
             f'<p class="small">Official iPhone and Android apps: '
             f'<a href="{root("/guides/ai-video-generator-apps/")}">AI video generator apps</a></p>'
+        )
+    if slug in (
+        "wan-3-0",
+        "wan-3-0-prime",
+        "kling-3-0",
+        "minimax-hailuo",
+        "veo-3-1",
+        "seedance-2-5",
+    ):
+        deals_html += (
+            f'<p class="small">Sites like Higgsfield, ranked by cost per second: '
+            f'<a href="{root("/guides/higgsfield-alternatives/")}">Higgsfield alternatives by cost</a></p>'
+        )
+    if slug == "kling-3-0":
+        deals_html += (
+            f'<p class="small">Kling on Higgsfield versus the official API and plans: '
+            f'<a href="{root("/guides/higgsfield-vs-kling/")}">Higgsfield vs Kling</a></p>'
+        )
+    if slug == "runway-gen-4":
+        deals_html += (
+            f'<p class="small">Higgsfield versus official Runway plans and API rates: '
+            f'<a href="{root("/guides/higgsfield-vs-runway/")}">Higgsfield vs Runway</a></p>'
+        )
+    if slug in (
+        "wan-3-0",
+        "wan-3-0-prime",
+        "seedance-2-5",
+        "minimax-hailuo",
+        "kling-3-0",
+        "veo-3-1",
+        "grok-imagine",
+    ):
+        deals_html += (
+            f'<p class="small">API rates on fal, Replicate, WaveSpeed, and Runware: '
+            f'<a href="{root("/guides/fal-ai-pricing/")}">fal pricing vs Replicate and others</a></p>'
         )
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
     if soon:
@@ -3196,6 +3263,10 @@ def write_llms():
         f"- [Free image to video AI]({SITE_URL}/guides/free-image-to-video-ai/): {free_image_to_video_blurb()}",
         f"- [Free text to video AI]({SITE_URL}/guides/free-text-to-video-ai/): {free_text_to_video_blurb()}",
         f"- [AI video generator apps]({SITE_URL}/guides/ai-video-generator-apps/): {ai_video_generator_apps_blurb()}",
+        f"- [Higgsfield alternatives by cost]({SITE_URL}/guides/higgsfield-alternatives/): {hf_alternatives_blurb()}",
+        f"- [Higgsfield vs Kling]({SITE_URL}/guides/higgsfield-vs-kling/): {hf_vs_kling_blurb()}",
+        f"- [Higgsfield vs Runway]({SITE_URL}/guides/higgsfield-vs-runway/): {hf_vs_runway_blurb()}",
+        f"- [fal pricing vs Replicate and others]({SITE_URL}/guides/fal-ai-pricing/): {fal_pricing_blurb()}",
         "",
         "## Data",
         "",
@@ -3263,6 +3334,18 @@ def free_text_to_video_blurb():
 import ai_video_generator_apps_guide
 def ai_video_generator_apps_blurb():
     return ai_video_generator_apps_guide.blurb(globals())
+import hf_alternatives_guide
+def hf_alternatives_blurb():
+    return hf_alternatives_guide.blurb(globals())
+import hf_vs_kling_guide
+def hf_vs_kling_blurb():
+    return hf_vs_kling_guide.blurb(globals())
+import hf_vs_runway_guide
+def hf_vs_runway_blurb():
+    return hf_vs_runway_guide.blurb(globals())
+import fal_pricing_guide
+def fal_pricing_blurb():
+    return fal_pricing_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -3291,6 +3374,14 @@ import free_text_to_video_guide
 free_text_to_video_guide.render(globals())
 import ai_video_generator_apps_guide
 ai_video_generator_apps_guide.render(globals())
+import hf_alternatives_guide
+hf_alternatives_guide.render(globals())
+import hf_vs_kling_guide
+hf_vs_kling_guide.render(globals())
+import hf_vs_runway_guide
+hf_vs_runway_guide.render(globals())
+import fal_pricing_guide
+fal_pricing_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers

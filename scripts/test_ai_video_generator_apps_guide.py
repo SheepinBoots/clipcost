@@ -120,8 +120,8 @@ def main():
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
-    if "Eighteen comparisons" not in guides and "eighteen comparisons" not in guides:
-        errors.append("guides index count text was not updated to Eighteen")
+    if "Twenty-two comparisons" not in guides and "twenty-two comparisons" not in guides:
+        errors.append("guides index count text was not updated to Twenty-two")
 
     if errors:
         raise SystemExit("AI video generator apps guide:\n- " + "\n- ".join(errors))
