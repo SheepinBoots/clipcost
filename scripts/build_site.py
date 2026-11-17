@@ -182,15 +182,79 @@ SPONSOR_REL = "sponsored nofollow noopener"
 EDITOR_NAME = "Emmanuel Gonzalez"
 EDITOR_LD = {"@type": "Person", "name": EDITOR_NAME}
 
+def _resolve_sponsor(rec, seen=None):
+    """Follow a slot's ref to the shared partner record, then overlay local keys."""
+    rec = rec or {}
+    ref = (rec.get("ref") or "").strip()
+    if not ref:
+        return rec
+    if seen is None:
+        seen = set()
+    if ref in seen or ref not in sponsors:
+        return rec
+    seen.add(ref)
+    base = dict(_resolve_sponsor(sponsors.get(ref) or {}, seen))
+    for key, value in rec.items():
+        if key == "ref":
+            continue
+        base[key] = value
+    return base
+
+def _slot_allows_house(slot_id):
+    """The open-spot house ad fills home, model, and guide slots. Not the deals page."""
+    return (
+        slot_id == "home"
+        or slot_id.startswith("model:")
+        or slot_id == "guide"
+        or slot_id.startswith("guide:")
+    )
+
 def sponsor_record(slot_id):
-    """home, deals, or model:<slug>. A missing model slot uses model:default."""
+    """home, deals, model:<slug>, or guide:<slug>. Model and guide slots fall back to model:default and guide.
+
+    An unfilled partner ref on home, model, or guide uses the shared house open-spot ad.
+    The deals slot never falls back to house.
+    """
     rec = sponsors.get(slot_id)
     if rec is None and slot_id.startswith("model:"):
         rec = sponsors.get("model:default")
-    return rec or {}
+    if rec is None and (slot_id == "guide" or slot_id.startswith("guide:")):
+        rec = sponsors.get("guide")
+    resolved = _resolve_sponsor(rec)
+    if not sponsor_filled(resolved) and _slot_allows_house(slot_id):
+        house = _resolve_sponsor(sponsors.get("house") or {})
+        if sponsor_filled(house):
+            return house
+    return resolved
 
 def sponsor_filled(rec):
+    rec = _resolve_sponsor(rec)
     return bool(rec.get("active") and (rec.get("name") or "").strip() and (rec.get("url") or "").strip())
+
+def sponsor_is_house(rec):
+    """Open-spot ad: kind=house, or an internal /advertise/ link with no paid disclosure."""
+    rec = _resolve_sponsor(rec)
+    if (rec.get("kind") or "").strip().lower() == "house":
+        return True
+    url = (rec.get("url") or "").strip()
+    path = url.split("?")[0].rstrip("/")
+    return path.endswith("/advertise") and not (rec.get("disclosure") or "").strip()
+
+def sponsor_track_id(slot_id, rec=None):
+    """GoatCounter event slot: home, model-<slug>, guide-<slug>, or house- plus those ids."""
+    import re as _re
+    s = _re.sub(r"[^a-z0-9]+", "-", str(slot_id or "").lower()).strip("-") or "unknown"
+    if rec is not None and sponsor_is_house(rec):
+        return s if s.startswith("house-") else "house-" + s
+    return s
+
+def sponsor_href(rec):
+    url = (rec.get("url") or "").strip()
+    if not url:
+        return ""
+    if url.startswith("/") and not url.startswith("//"):
+        return root(url)
+    return url
 
 def sponsor_logo_src(rec):
     """Site-root path for an optional logo stored under src/."""
@@ -204,35 +268,59 @@ def sponsor_logo_src(rec):
     return logo
 
 def render_sponsor(slot_id, rec, featured=False):
+    rec = _resolve_sponsor(rec)
+    filled = sponsor_filled(rec)
     cls = "sponsor"
     if featured:
         cls += " sponsor-featured"
-    if not sponsor_filled(rec):
-        cls += " is-open"
-    bits = ['<span class="sponsor-label">Sponsor</span>']
-    if featured:
-        bits.append('<span class="sponsor-kicker">Featured</span>')
-    if sponsor_filled(rec):
-        name = rec["name"].strip()
-        href = rec["url"].strip()
-        logo_path = sponsor_logo_src(rec)
-        logo_html = ""
-        if logo_path:
-            logo_html = (
-                f'<img class="sponsor-logo" src="{e(root(logo_path))}" alt="" width="32" height="32">'
-            )
-        bits.append(
-            f'<a href="{e(href)}" rel="{SPONSOR_REL}" target="_blank">{logo_html}{e(name)}</a>'
-        )
-        tagline = (rec.get("tagline") or "").strip()
-        if tagline:
-            bits.append(f'<span class="sponsor-line">{e(tagline)}</span>')
-        disclosure = (rec.get("disclosure") or "").strip()
-        if disclosure:
-            bits.append(f'<span class="sponsor-disclose">{e(disclosure)}</span>')
+    if filled:
+        cls += " sponsor-box"
     else:
+        cls += " is-open"
+    if not filled:
+        bits = ['<span class="sponsor-label">Sponsor</span>']
+        if featured:
+            bits.append('<span class="sponsor-kicker">Featured</span>')
         bits.append(f'<a class="sponsor-open" href="{root("/advertise/")}">{HOUSE_LINE}</a>')
-    return f'<aside class="{cls}" data-sponsor="{e(slot_id)}">{"".join(bits)}</aside>'
+        return f'<aside class="{cls}" data-sponsor="{e(slot_id)}">{"".join(bits)}</aside>'
+
+    name = rec["name"].strip()
+    href = sponsor_href(rec)
+    house = sponsor_is_house(rec)
+    if house:
+        cls += " sponsor-house"
+    track = sponsor_track_id(slot_id, rec)
+    logo_path = sponsor_logo_src(rec)
+    logo_html = ""
+    if logo_path:
+        logo_html = (
+            f'<img class="sponsor-logo" src="{e(root(logo_path))}" alt="" width="64" height="64">'
+        )
+    tagline = (rec.get("tagline") or "").strip()
+    disclosure = "" if house else (rec.get("disclosure") or "").strip()
+    default_cta = "Advertise here" if house else f"Try {name}"
+    cta = (rec.get("cta") or "").strip() or default_cta
+    label = (rec.get("label") or "").strip() or ("This spot is open" if house else "Sponsor")
+    inner = [f'<span class="sponsor-label">{e(label)}</span>']
+    if featured:
+        inner.append('<span class="sponsor-kicker">Featured</span>')
+    body = logo_html
+    body += '<span class="sponsor-copy">'
+    body += f'<strong class="sponsor-name">{e(name)}</strong>'
+    if tagline:
+        body += f'<span class="sponsor-line">{e(tagline)}</span>'
+    if disclosure:
+        body += f'<span class="sponsor-disclose">{e(disclosure)}</span>'
+    body += "</span>"
+    body += f'<span class="sponsor-cta">{e(cta)}</span>'
+    # One anchor for the whole box. The CTA is a span, not a nested control.
+    # House ads are internal /advertise/ links: no rel=sponsored, no new tab.
+    extra = "" if house else f' rel="{SPONSOR_REL}" target="_blank"'
+    link = (
+        f'<a class="sponsor-hit" href="{e(href)}"{extra} '
+        f'data-vf-sponsor="{e(track)}">{"".join(inner)}{body}</a>'
+    )
+    return f'<aside class="{cls}" data-sponsor="{e(slot_id)}">{link}</aside>'
 
 def sponsor_slot(slot_id, featured=False, rec=None):
     """Filled placements stay. An empty house placeholder is not rendered."""
@@ -240,6 +328,38 @@ def sponsor_slot(slot_id, featured=False, rec=None):
     if not sponsor_filled(rec):
         return ""
     return render_sponsor(slot_id, rec, featured)
+
+def guide_sponsor_html(path):
+    """One box on each /guides/<slug>/ page. None on the /guides/ index."""
+    if path == "/guides/" or not path.startswith("/guides/"):
+        return ""
+    slug = path.strip("/").rstrip("/").split("/")[-1]
+    if not slug or slug == "guides":
+        return ""
+    return sponsor_slot(f"guide:{slug}")
+
+def insert_guide_sponsor(path, body):
+    """After the lead (and takeaways, if any), above the first heading or table."""
+    import re as _re
+    html = guide_sponsor_html(path)
+    if not html:
+        return body
+    if 'class="sponsor' in body or "class='sponsor" in body:
+        return body
+    take = _re.search(r'<div\b[^>]*\bid="takeaways"[^>]*>.*?</div>\s*', body, _re.S)
+    if take:
+        return body[:take.end()] + html + body[take.end():]
+    lead = _re.search(r'<p class="lead">.*?</p>', body, _re.S)
+    if lead:
+        end = lead.end()
+        small = _re.match(r'\s*<p class="small">.*?</p>', body[end:], _re.S)
+        if small:
+            end += small.end()
+        return body[:end] + "\n" + html + "\n" + body[end:]
+    h2 = body.find("<h2")
+    if h2 != -1:
+        return body[:h2] + html + "\n" + body[h2:]
+    return body + html
 
 def public_gap(item):
     """Public wording for a price the catalog does not include. The data reason stays in the file."""
@@ -921,7 +1041,7 @@ with open(os.path.join(ROOT, "src", "vf-events.js"), encoding="utf-8") as _src, 
         open(os.path.join(DIST, analytics.SCRIPT_PATH.lstrip("/")), "w", encoding="utf-8") as _out:
     _out.write(analytics.js_source(_src.read(), VF_HOSTS))
 shutil.copy(os.path.join(ROOT, "src", "og.png"), os.path.join(DIST, "og.png"))
-for _f in ("favicon-32.png", "logo.svg", "logo-512.png", "logo-240.png", "pixeldojo.png"):
+for _f in ("favicon-32.png", "logo.svg", "logo-512.png", "logo-240.png"):
     shutil.copy(os.path.join(ROOT, "src", _f), os.path.join(DIST, _f))
 
 def write_favicon_ico(src_png, dest_ico):
@@ -1156,6 +1276,7 @@ def guide_page(path, title, desc, body, faqs):
             body = body.replace(marker, marker + note, 1)
         else:
             body = note + body
+    body = insert_guide_sponsor(path, body)
     raw = json.dumps(faqs, ensure_ascii=False).lower()
     for bad in ("subscribe", "newsletter", "buttondown"):
         if bad in raw:
@@ -3443,17 +3564,55 @@ def check_sponsor_renderer():
             "name": "Example Tool",
             "url": "https://example.com/tool",
             "tagline": "A short line",
-            "logo": "/pixeldojo.png",
+            "logo": "/logo-240.png",
             "disclosure": "Affiliate link: VidFare may earn a commission.",
             "active": True,
         },
     )
-    if 'class="sponsor-logo"' not in with_logo or 'src="' + root("/pixeldojo.png") + '"' not in with_logo:
+    if 'class="sponsor-logo"' not in with_logo or 'src="' + root("/logo-240.png") + '"' not in with_logo:
         raise SystemExit("active sponsor markup is missing the logo image")
     if "Affiliate link: VidFare may earn a commission." not in with_logo:
         raise SystemExit("active sponsor markup is missing the disclosure line")
     if "<table" in with_logo:
         raise SystemExit("sponsor markup with a logo must not be a table")
+    if with_logo.lower().count("<a ") != 1 or "<button" in with_logo.lower() or "<form" in with_logo.lower():
+        raise SystemExit("filled sponsor markup must be a single link with no nested controls")
+    if 'class="sponsor-hit"' not in with_logo or 'data-vf-sponsor="home"' not in with_logo:
+        raise SystemExit("filled sponsor markup is missing the clickable box or tracking attribute")
+    cta_box = render_sponsor(
+        "home",
+        {
+            "name": "Example Tool",
+            "url": "https://example.com/tool",
+            "tagline": "A short line",
+            "cta": "Try Example Tool",
+            "active": True,
+        },
+    )
+    if 'class="sponsor-cta"' not in cta_box or "Try Example Tool" not in cta_box:
+        raise SystemExit("sponsor markup is missing the CTA from sponsor data")
+    house_box = render_sponsor(
+        "home",
+        {
+            "kind": "house",
+            "name": "Advertise on VidFare",
+            "label": "This spot is open",
+            "url": "/advertise/",
+            "tagline": "Reach people who are comparing AI video prices.",
+            "cta": "Advertise here",
+            "active": True,
+        },
+    )
+    if 'data-vf-sponsor="house-home"' not in house_box:
+        raise SystemExit("house ad is missing data-vf-sponsor=house-home")
+    if "This spot is open" not in house_box or "Advertise on VidFare" not in house_box:
+        raise SystemExit("house ad is missing the open-spot label or heading")
+    if "Advertise here" not in house_box or 'href="' + root("/advertise/") + '"' not in house_box:
+        raise SystemExit("house ad is missing the Advertise here link to /advertise/")
+    if "sponsored" in house_box or 'target="_blank"' in house_box:
+        raise SystemExit("house ad must not use rel=sponsored or target=_blank")
+    if "Affiliate link" in house_box or "commission" in house_box.lower():
+        raise SystemExit("house ad must not include an affiliate disclosure")
     empty = render_sponsor("deals", {"name": "", "url": "", "tagline": "", "active": False}, featured=True)
     if HOUSE_LINE not in empty or f'href="{root("/advertise/")}"' not in empty or "Featured" not in empty:
         raise SystemExit("empty sponsor markup should still describe the advertise page")
@@ -3467,8 +3626,13 @@ def check_sponsor_renderer():
         raise SystemExit("an active slot with an empty name is treated as empty")
     if sponsor_slot("home", rec={"name": " ", "url": "https://example.com", "tagline": "", "active": True}):
         raise SystemExit("home placeholder should be omitted while the slot is empty")
-    if sponsor_record("model:not-a-real-model") is not sponsors.get("model:default"):
+    fallback = sponsor_record("model:not-a-real-model")
+    default = sponsor_record("model:default")
+    if (fallback.get("name") != default.get("name") or fallback.get("url") != default.get("url")
+            or fallback.get("active") != default.get("active")):
         raise SystemExit("model pages should fall back to model:default")
+    if sponsor_filled(default) and (not fallback.get("name") or not fallback.get("url")):
+        raise SystemExit("model:default resolved to an empty partner record")
 
 def mcp_link_errors():
     """Site links to /mcp/ or the registry file must be files this build wrote."""
@@ -3563,16 +3727,29 @@ def audit_site():
     check_sponsor_renderer()
     errors = []
     required = ("name", "url", "tagline", "active")
+    shared_ids = {"partner", "house"}
+    placement_ok = lambda sid: (
+        sid in ("home", "deals", "guide") or sid in shared_ids
+        or str(sid).startswith("model:") or str(sid).startswith("guide:")
+    )
     if not isinstance(sponsors, dict) or not sponsors:
         errors.append("data/sponsors.json must be a non-empty object of slots")
     for slot_id, rec in sponsors.items():
-        if slot_id not in ("home", "deals") and not str(slot_id).startswith("model:"):
+        if not placement_ok(slot_id):
             errors.append(f"unknown sponsor slot id {slot_id}")
             continue
-        if not isinstance(rec, dict) or any(key not in rec for key in required):
+        if not isinstance(rec, dict):
+            errors.append(f"sponsor slot {slot_id} must be an object")
+            continue
+        if rec.get("ref"):
+            if rec["ref"] not in sponsors:
+                errors.append(f"sponsor slot {slot_id} ref {rec['ref']!r} is missing")
+                continue
+            rec = _resolve_sponsor(rec)
+        elif any(key not in rec for key in required):
             errors.append(f"sponsor slot {slot_id} needs name, url, tagline, and active")
             continue
-        if not isinstance(rec.get("active"), bool):
+        if "active" in rec and not isinstance(rec.get("active"), bool):
             errors.append(f"sponsor slot {slot_id} active must be true or false")
         logo_path = sponsor_logo_src(rec)
         if (rec.get("logo") or "").strip().startswith(("http://", "https://")):
@@ -3693,6 +3870,11 @@ def audit_site():
                 rest = rel[len(prefix):-len("index.html")].strip("/")
                 if rest and "/" not in rest:
                     ids = ["model:" + rest]
+            gprefix = "guides/"
+            if rel.startswith(gprefix) and rel.endswith("/index.html"):
+                rest = rel[len(gprefix):-len("index.html")].strip("/")
+                if rest and "/" not in rest:
+                    ids = ["guide:" + rest]
         return [slot for slot in ids if sponsor_filled(sponsor_record(slot))]
 
     for dirpath, _, filenames in os.walk(DIST):
@@ -3770,8 +3952,8 @@ def audit_site():
                 errors.append(f"{rel} sponsor slots {parser.sponsor_ids} != {want}")
             for slot_id, chunks, links in zip(parser.sponsor_ids, parser.sponsor_chunks, parser.sponsor_links):
                 text = "".join(chunks)
-                if "Sponsor" not in text:
-                    errors.append(f"{rel} slot {slot_id} is not labelled Sponsor")
+                if "Sponsor" not in text and "This spot is open" not in text and "Advertise on VidFare" not in text:
+                    errors.append(f"{rel} slot {slot_id} is missing a Sponsor or open-spot label")
                 if slot_id == "deals" and "Featured" not in text:
                     errors.append(f"{rel} deals slot is missing Featured")
                 if not links:
@@ -3780,12 +3962,18 @@ def audit_site():
                     href = link["href"]
                     ltext = "".join(link["text"]).strip()
                     if href.rstrip("/").endswith("/advertise"):
-                        if ltext != HOUSE_LINE:
-                            errors.append(f"{rel} slot {slot_id} placeholder text is {ltext!r}")
-                        if href != root("/advertise/"):
-                            errors.append(f"{rel} slot {slot_id} placeholder href is {href}")
                         if "sponsored" in link["rel"]:
-                            errors.append(f"{rel} slot {slot_id} placeholder must not be rel=sponsored")
+                            errors.append(f"{rel} slot {slot_id} advertise link must not be rel=sponsored")
+                        if href != root("/advertise/"):
+                            errors.append(f"{rel} slot {slot_id} advertise href is {href}")
+                        house_text = "This spot is open" in ltext or "Advertise on VidFare" in ltext or "Advertise here" in ltext
+                        if ltext == HOUSE_LINE:
+                            pass
+                        elif house_text:
+                            if link["rel"]:
+                                errors.append(f"{rel} slot {slot_id} house ad must not have a rel attribute")
+                        else:
+                            errors.append(f"{rel} slot {slot_id} advertise link text is {ltext!r}")
                     else:
                         if link["rel"] != SPONSOR_REL:
                             errors.append(f"{rel} slot {slot_id} sponsor link rel is {link['rel']!r}")

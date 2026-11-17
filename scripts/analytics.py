@@ -164,7 +164,10 @@ def annotate(doc, path, hosts, advertise_path="/advertise/", model=None):
             in_footer = footer_at != -1 and m.start() > footer_at
             if aside is not None:
                 slot = slug(aside.group(1)) or "unknown"
-                if href.rstrip("/").endswith(advertise_path.rstrip("/")):
+                classes = (attrs.get("class") or "").split()
+                if "sponsor-hit" in classes and href.rstrip("/").endswith(advertise_path.rstrip("/")):
+                    new["data-vf-sponsor"] = slot if slot.startswith("house-") else "house-" + slot
+                elif href.rstrip("/").endswith(advertise_path.rstrip("/")):
                     new["data-vf-cta"] = "sponsor-slot-" + slot
                 else:
                     new["data-vf-sponsor"] = slot

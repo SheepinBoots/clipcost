@@ -85,6 +85,9 @@ def test_pages():
             if href.startswith("http") and analytics.vendor_known(href, analytics_hosts):
                 check("data-vf-vendor=" in a, f"{rel} vendor link not marked: {a[:120]}")
             if href.rstrip("/") == "/advertise":
+                # House open-spot ads are counted as sponsor-click via data-vf-sponsor.
+                if 'data-vf-sponsor="house-' in a:
+                    continue
                 want = "footer-link" if m.start() > footer_at > -1 else None
                 check("data-vf-cta=" in a, f"{rel} /advertise/ link has no data-vf-cta")
                 if want:
@@ -121,6 +124,15 @@ def test_annotate_sponsor_and_layout():
     check('data-vf-sponsor="model-kling-3-0"' in out, "sponsor slot link not marked")
     check('Example</a>' in out and 'data-vf-affiliate' not in out.split("Example")[0], "sponsor link marked as affiliate")
     check('data-vf-cta="sponsor-slot-home"' in out, "house sponsor link CTA id")
+    house = analytics.annotate(
+        '<body><aside class="sponsor sponsor-box sponsor-house" data-sponsor="guide:demo">'
+        '<a class="sponsor-hit" href="/advertise/">Advertise here</a></aside></body>',
+        "/guides/demo/",
+        hosts,
+        "/advertise/",
+    )
+    check('data-vf-sponsor="house-guide-demo"' in house, "house ad link not marked data-vf-sponsor=house-guide-...")
+    check("data-vf-cta" not in house, "house ad link was also marked advertise-cta")
     check('data-vf-vendor="higgsfield" data-vf-model="kling-3-0" data-vf-affiliate="1"' in out, "affiliate attrs")
     check('<a href="https://www.krea.ai/pricing" rel="nofollow noopener" data-vf-vendor="krea" data-vf-model="kling-3-0">' in out, "vendor attrs")
     check('<a href="https://twelve.tools">Twelve</a>' in out, "unknown hosts must stay unchanged")
