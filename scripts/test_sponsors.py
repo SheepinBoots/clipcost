@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""PixelDojo partner slot: placement, markup, and unchanged price order.
+"""House open-spot ad: placement, markup, no paid partner, unchanged price order.
 
 Run after the build: python3 scripts/build_site.py && python3 scripts/test_sponsors.py
 """
 import json
 import os
 import re
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -14,14 +13,23 @@ from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
-DESC = (
-    "PixelDojo is an all-in-one AI studio with Kling, Veo, Seedance, Hailuo, WAN, Flux and GPT Image "
-    "under one subscription, so you can try and compare models in one place instead of paying for several "
-    "separate tools. Plans start at $10 a month, and unused credits roll over while you stay subscribed."
-)
-DISCLOSE = "Affiliate link: VidFare may earn a commission."
-HREF = "https://pixeldojo.ai/?a=pdnpo8l5"
-REL = "sponsored nofollow noopener"
+LABEL = "This spot is open"
+HEADING = "Advertise on VidFare"
+PITCH = "Reach people who are comparing AI video prices."
+CTA = "Advertise here"
+HREF = "/advertise/"
+DISCLOSE_NOTE = "Some links on this page are affiliate links."
+# Example of the paid partner record (not rendered). Filling this in and
+# setting active to true is the one edit that replaces the house ad.
+EXAMPLE_PARTNER = {
+    "name": "Example Tool",
+    "url": "https://example.com/?ref=vidfare",
+    "tagline": "A short description the partner approved, kept verbatim.",
+    "logo": "/example.png",
+    "disclosure": "Affiliate link: VidFare may earn a commission.",
+    "cta": "Try Example Tool",
+    "active": True,
+}
 errors = []
 
 
@@ -110,20 +118,15 @@ def parse_page(html):
 
 def slot_ok(html, slot_id, rel_path):
     check(f'data-sponsor="{slot_id}"' in html, f"{rel_path} is missing the {slot_id} sponsor slot")
-    check('class="sponsor-label"' in html and ">Sponsor<" in html, f"{rel_path} is missing the Sponsor label")
-    check(f'href="{HREF}"' in html, f"{rel_path} is missing the PixelDojo affiliate link")
-    check(f'rel="{REL}"' in html and 'target="_blank"' in html, f"{rel_path} PixelDojo link rel/target is wrong")
-    check("PixelDojo" in html, f"{rel_path} is missing the PixelDojo name")
-    check(DESC in html, f"{rel_path} does not keep the approved PixelDojo description verbatim")
-    check(DISCLOSE in html, f"{rel_path} is missing the disclosure line")
-    check('src="/pixeldojo.png"' in html, f"{rel_path} is missing the logo")
-    check('class="sponsor-logo"' in html, f"{rel_path} is missing the logo class")
-    check('class="sponsor-cta"' in html and "Try PixelDojo" in html, f"{rel_path} is missing the Try PixelDojo CTA")
+    check('class="sponsor-label"' in html and LABEL in html, f"{rel_path} is missing the open-spot label")
+    check(HEADING in html, f"{rel_path} is missing the Advertise on VidFare heading")
+    check(PITCH in html, f"{rel_path} is missing the house-ad pitch")
+    check(f'href="{HREF}"' in html, f"{rel_path} is missing the /advertise/ link")
+    check('class="sponsor-cta"' in html and CTA in html, f"{rel_path} is missing the Advertise here CTA")
     check('class="sponsor-hit"' in html, f"{rel_path} is missing the whole-box link")
-    track = slot_id.replace(":", "-")
+    track = "house-" + slot_id.replace(":", "-")
     check(f'data-vf-sponsor="{track}"' in html, f"{rel_path} is missing data-vf-sponsor={track}")
     check("sora" not in html.lower(), f"{rel_path} names Sora")
-    # The slot must sit outside the price table, and the box is one link with no nested controls.
     parsed = parse_page(html)
     check(slot_id in parsed.asides, f"{rel_path} parser missed slot {slot_id}")
     check(not parsed.sponsor_in_table, f"{rel_path} has a sponsor inside a table: {parsed.sponsor_in_table}")
@@ -134,6 +137,10 @@ def slot_ok(html, slot_id, rel_path):
         chunk = html[start:end]
         check(chunk.lower().count("<a ") == 1, f"{rel_path} sponsor box does not have exactly one link")
         check("<button" not in chunk.lower(), f"{rel_path} sponsor box has a nested button")
+        check("sponsored" not in chunk, f"{rel_path} house ad uses rel=sponsored")
+        check('target="_blank"' not in chunk, f"{rel_path} house ad uses target=_blank")
+        check("Affiliate link" not in chunk, f"{rel_path} house ad includes an affiliate disclosure")
+        check("commission" not in chunk.lower(), f"{rel_path} house ad mentions a commission")
     return parsed
 
 
@@ -141,14 +148,20 @@ def price_table_rows(parsed, preferred_ids):
     for key in preferred_ids:
         if parsed.rows_by_table.get(key):
             return key, parsed.rows_by_table[key]
-    # Fallback: the longest tbody (the all-prices table).
     if not parsed.rows_by_table:
         return None, []
     key = max(parsed.rows_by_table, key=lambda k: len(parsed.rows_by_table[k]))
     return key, parsed.rows_by_table[key]
 
 
+def without_sponsor(html):
+    return re.sub(r"<aside\b[^>]*\bclass=\"[^\"]*\bsponsor\b[\s\S]*?</aside>", "", html, flags=re.I)
+
+
 def main():
+    # The example partner shape is documented for a later one-file edit.
+    check(all(k in EXAMPLE_PARTNER for k in ("name", "url", "tagline", "cta", "active")), "example partner record is missing fields")
+
     home = read("index.html")
     model = read(os.path.join("models", "wan-3-0", "index.html"))
     deals = read(os.path.join("deals", "index.html"))
@@ -156,14 +169,13 @@ def main():
     home_parsed = slot_ok(home, "home", "index.html")
     model_parsed = slot_ok(model, "model:wan-3-0", "models/wan-3-0/index.html")
 
-    check('data-sponsor="deals"' not in deals, "deals page has a sponsor slot; PixelDojo must not appear there")
-    check("PixelDojo" not in deals, "deals page names PixelDojo")
-    check(HREF not in deals, "deals page has the PixelDojo link")
+    check('data-sponsor="deals"' not in deals, "deals page has a sponsor slot; the house ad must not appear there")
+    check(LABEL not in deals and HEADING not in deals, "deals page shows the house ad")
 
     guides_root = os.path.join(DIST, "guides")
     index_guides = read(os.path.join("guides", "index.html"))
     check('data-sponsor="' not in index_guides, "/guides/ index has a sponsor slot; it must not")
-    check('data-vf-sponsor="guide-' not in index_guides, "/guides/ index has a guide sponsor tracking attribute")
+    check('data-vf-sponsor="house-guide-' not in index_guides, "/guides/ index has a guide sponsor tracking attribute")
     guide_pages = []
     for name in sorted(os.listdir(guides_root)):
         page = os.path.join(guides_root, name, "index.html")
@@ -178,7 +190,7 @@ def main():
         boxes = re.findall(r'data-sponsor="([^"]*)"', html)
         check(boxes == [f"guide:{slug}"], f"{rel} sponsor slots {boxes} != [guide:{slug}]")
         tracks = re.findall(r'data-vf-sponsor="([^"]*)"', html)
-        check(tracks == [f"guide-{slug}"], f"{rel} data-vf-sponsor values {tracks}")
+        check(tracks == [f"house-guide-{slug}"], f"{rel} data-vf-sponsor values {tracks}")
         h1 = html.find("<h1")
         lead = re.search(r'<p class="lead">.*?</p>', html, re.S)
         slot_at = html.find(f'data-sponsor="guide:{slug}"')
@@ -187,22 +199,48 @@ def main():
         take = re.search(r'id="takeaways"', html)
         if take:
             check(slot_at > take.start(), f"{rel} sponsor box is not after the takeaways")
+        # The affiliate note stays only when the page has a real affiliate link
+        # outside the house ad (for example a Higgsfield fpr= link).
+        rest = without_sponsor(html)
+        has_aff = bool(re.search(r'<a\b[^>]*(rel="sponsored|fpr=)', rest))
+        if not has_aff:
+            check(DISCLOSE_NOTE not in html, f"{rel} has the affiliate disclosure note with only the house ad")
         if slug == "cheapest-ai-video-generator":
             guide_sample = (slug, parsed, html)
-    check(guide_sample is not None, "cheapest-ai-video-generator guide was not built")
 
-    logo = os.path.join(DIST, "pixeldojo.png")
-    check(os.path.isfile(logo), "dist/pixeldojo.png was not built")
-    if os.path.isfile(logo):
-        png = open(logo, "rb").read()
-        check(png[:8] == b"\x89PNG\r\n\x1a\n", "dist/pixeldojo.png is not a PNG")
+    check(guide_sample is not None, "cheapest-ai-video-generator guide was not built")
+    flow = read(os.path.join("guides", "google-flow-credits-calculator", "index.html"))
+    check(DISCLOSE_NOTE not in flow, "Flow credits guide has the affiliate note with only the house ad")
+    check(DISCLOSE_NOTE in home, "home is missing the affiliate disclosure note next to real affiliate links")
+
+    # No paid partner strings or assets in the built site.
+    forbidden = "pixeldojo"
+    for dirpath, _, filenames in os.walk(DIST):
+        for name in filenames:
+            if forbidden in name.lower():
+                errors.append(f"built file name contains {forbidden}: {os.path.relpath(os.path.join(dirpath, name), DIST)}")
+                continue
+            path = os.path.join(dirpath, name)
+            ext = os.path.splitext(name)[1].lower()
+            if ext in {".png", ".jpg", ".jpeg", ".ico", ".webp", ".woff", ".woff2"}:
+                continue
+            try:
+                text = open(path, encoding="utf-8").read()
+            except (UnicodeDecodeError, OSError):
+                continue
+            if forbidden in text.lower():
+                errors.append(f"built file contains {forbidden}: {os.path.relpath(path, DIST)}")
+    src_logo = os.path.join(ROOT, "src", "pixeldojo.png")
+    dist_logo = os.path.join(DIST, "pixeldojo.png")
+    check(not os.path.isfile(src_logo), "src/pixeldojo.png is still in the repo")
+    check(not os.path.isfile(dist_logo), "dist/pixeldojo.png was still built")
 
     home_key, home_rows = price_table_rows(home_parsed, ["prices"])
     model_key, model_rows = price_table_rows(model_parsed, ["prices"])
     check(len(home_rows) > 10, f"home price table has too few rows: {len(home_rows)}")
     check(len(model_rows) > 1, f"model price table has too few rows: {len(model_rows)}")
 
-    # Rebuild the site with every sponsor slot turned off, then compare table order.
+    # Rebuild with every sponsor slot turned off, then compare table order.
     with tempfile.TemporaryDirectory(prefix="vf-sponsor-off-") as tmp:
         off_path = os.path.join(tmp, "sponsors.json")
         src = json.load(open(os.path.join(ROOT, "data", "sponsors.json"), encoding="utf-8"))
@@ -235,7 +273,8 @@ def main():
             check(not off_model.asides, "model page still has a sponsor slot when every slot is inactive")
             check(home_rows == off_home_rows, "home price order changed when the sponsor was added")
             check(model_rows == off_model_rows, "Wan 3.0 price order changed when the sponsor was added")
-            check("PixelDojo" not in open(os.path.join(off_dist, "index.html"), encoding="utf-8").read(), "off build still names PixelDojo")
+            off_home_html = open(os.path.join(off_dist, "index.html"), encoding="utf-8").read()
+            check(HEADING not in off_home_html and LABEL not in off_home_html, "off build still shows the house ad")
             if guide_sample:
                 slug, guide_parsed, _ = guide_sample
                 guide_key, guide_rows = price_table_rows(guide_parsed, ["prices"])
@@ -252,7 +291,7 @@ def main():
         for item in errors:
             print("-", item)
         return 1
-    print("ok sponsors: PixelDojo box on home, models, and every guide, deals empty, price order unchanged")
+    print("ok sponsors: house open-spot ad on home, models, and every guide, deals empty, price order unchanged")
     return 0
 
 

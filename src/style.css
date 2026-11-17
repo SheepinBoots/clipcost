@@ -147,9 +147,11 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0;color:var
 .sponsor-box .sponsor-cta{grid-area:cta;display:inline-flex;align-items:center;justify-content:center;justify-self:start;min-height:40px;padding:8px 16px;border-radius:10px;background:var(--acc);color:#0b0d12;font-size:14.5px;font-weight:800;letter-spacing:.01em}
 .sponsor-box > .sponsor-hit:hover .sponsor-cta{filter:brightness(1.08)}
 .sponsor-box > .sponsor-hit:focus-visible{outline:2px solid var(--acc2);outline-offset:3px}
+.sponsor-house > .sponsor-hit{grid-template-columns:minmax(0,1fr);grid-template-areas:"label" "copy" "cta"}
 @media (min-width:640px){
  .sponsor-box > .sponsor-hit{grid-template-columns:64px minmax(0,1fr) auto;grid-template-areas:"label label label" "logo copy cta";align-items:center}
  .sponsor-box .sponsor-cta{justify-self:end}
+ .sponsor-house > .sponsor-hit{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"label label" "copy cta"}
 }
 .log li{margin:0 0 12px}.pill{font-size:12px;background:#1b2130;border-radius:6px;padding:1px 6px;color:var(--mut)}
 p,.small,li,.sub,.lead,.disclose,.byline,.card{overflow-wrap:anywhere}

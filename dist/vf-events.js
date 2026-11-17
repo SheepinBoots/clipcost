@@ -63,8 +63,12 @@
     try { u = new URL(a.href, location.href); } catch (e) { return; }
     var slot = a.closest('[data-sponsor]');
     var cta = a.getAttribute('data-vf-cta');
-    if (slot && !cta && u.pathname.replace(/\/$/, '') !== '/advertise') {
-      var s = a.getAttribute('data-vf-sponsor') || slug(slot.getAttribute('data-sponsor')) || 'unknown';
+    var sponsor = a.getAttribute('data-vf-sponsor');
+    // House open-spot ads link to /advertise/ and carry data-vf-sponsor="house-...".
+    // Count them as sponsor-click so placements stay comparable. Other /advertise/
+    // links (footer, compact is-open placeholders) stay advertise-cta.
+    if (sponsor || (slot && !cta && u.pathname.replace(/\/$/, '') !== '/advertise')) {
+      var s = sponsor || slug(slot && slot.getAttribute('data-sponsor')) || 'unknown';
       send('sponsor-click/' + s + '/' + PAGE, 'Sponsor click: ' + s + ' on ' + PAGE);
       return;
     }

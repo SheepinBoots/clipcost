@@ -1,12 +1,21 @@
 {
- "partner": {
-  "name": "PixelDojo",
-  "url": "https://pixeldojo.ai/?a=pdnpo8l5",
-  "tagline": "PixelDojo is an all-in-one AI studio with Kling, Veo, Seedance, Hailuo, WAN, Flux and GPT Image under one subscription, so you can try and compare models in one place instead of paying for several separate tools. Plans start at $10 a month, and unused credits roll over while you stay subscribed.",
-  "logo": "/pixeldojo.png",
-  "disclosure": "Affiliate link: VidFare may earn a commission.",
-  "cta": "Try PixelDojo",
+ "house": {
+  "kind": "house",
+  "name": "Advertise on VidFare",
+  "label": "This spot is open",
+  "url": "/advertise/",
+  "tagline": "Reach people who are comparing AI video prices.",
+  "cta": "Advertise here",
   "active": true
+ },
+ "partner": {
+  "name": "",
+  "url": "",
+  "tagline": "",
+  "logo": "",
+  "disclosure": "",
+  "cta": "",
+  "active": false
  },
  "home": {
   "ref": "partner"
