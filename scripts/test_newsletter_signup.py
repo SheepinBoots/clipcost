@@ -11,6 +11,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
 NEWS_MARK = '<section class="news" id="newsletter">'
 KIT_ACTION = "https://app.kit.com/forms/10170819/subscriptions"
+# Unique unescaped phrase from the shared confirmation / spam-folder note.
+NOTE_PHRASE = "check your spam or Promotions folder"
 errors = []
 
 
@@ -60,6 +62,7 @@ def test_guides():
         check(html.count("<form") == 1, f"{rel} should contain only the newsletter form")
         check(KIT_ACTION in html, f"{rel} is not the existing Kit form")
         check('data-vf-event="newsletter-signup"' in html, f"{rel} form is not marked newsletter-signup")
+        check_note(html, rel)
         # Default guide pitch; deals gets its own heading.
         check("Get the weekly price-drop email" in main, f"{rel} is missing the default newsletter heading")
         # FAQ JSON-LD must still not mention a newsletter.
@@ -87,8 +90,41 @@ def test_deals():
           "deals newsletter is missing the deadline pitch")
     check(KIT_ACTION in html, "deals page is not the existing Kit form")
     check('data-vf-event="newsletter-signup"' in html, "deals form is not marked newsletter-signup")
+    check_note(html, "deals/index.html")
     # The archived list stays below the signup, so the form is not buried after past deals.
     check(past_at > news_at, "past deals should stay below the newsletter signup")
+
+
+def check_note(html, rel):
+    """Every signup box shows the shared spam-folder note next to the button and in the Kit success message."""
+    news = html
+    if NEWS_MARK in html:
+        start = html.find(NEWS_MARK)
+        rest = html[start:]
+        end = rest.find("</section>")
+        news = rest[: end + len("</section>")] if end != -1 else rest
+    check(NOTE_PHRASE in news, f"{rel} newsletter box is missing the confirmation / spam-folder note")
+    # Once in the visible line by the button, once in data-options success_message.
+    check(news.count(NOTE_PHRASE) >= 2, f"{rel} is missing the note on the form or in the success message ({news.count(NOTE_PHRASE)})")
+    check('class="small news-confirm"' in news, f"{rel} note is not next to the subscribe button")
+    check("sora" not in html.lower(), f"{rel} names Sora")
+
+
+def test_home_and_newsletter_page():
+    home = os.path.join(DIST, "index.html")
+    check(os.path.isfile(home), "home page was not built")
+    if os.path.isfile(home):
+        html = open(home, encoding="utf-8").read()
+        check(NEWS_MARK in html, "home page is missing the newsletter signup")
+        check(html.count(NEWS_MARK) == 1, "home page should have one newsletter signup")
+        check_note(html, "index.html")
+    path = os.path.join(DIST, "newsletter", "index.html")
+    check(os.path.isfile(path), "/newsletter/ was not built")
+    if os.path.isfile(path):
+        html = open(path, encoding="utf-8").read()
+        check(NEWS_MARK in html, "/newsletter/ is missing the newsletter signup")
+        check(html.count(NEWS_MARK) == 1, "/newsletter/ should have one newsletter signup")
+        check_note(html, "newsletter/index.html")
 
 
 def test_kit_form_unchanged():
@@ -104,9 +140,10 @@ if __name__ == "__main__":
     test_kit_form_unchanged()
     test_guides()
     test_deals()
+    test_home_and_newsletter_page()
     if errors:
         print("FAIL")
         for e in errors:
             print(" -", e)
         sys.exit(1)
-    print(f"ok: newsletter signup placement ({len(list(guide_pages()))} guides + /deals/)")
+    print(f"ok: newsletter signup placement and spam-folder note ({len(list(guide_pages()))} guides + /deals/ + home + /newsletter/)")

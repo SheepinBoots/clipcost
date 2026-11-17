@@ -993,7 +993,13 @@ def retired_table(rs, thead=None):
             f'<p class="small">These rates are off sale. The last price we recorded stays here, and these rows are left out of cheapest picks and the live table.</p>'
             f'{wide_table(head + "<tbody>" + body + "</tbody>", " id=\"retired\"")}')
 
-KIT_SUCCESS = "Thanks! Check your inbox to confirm your subscription."
+# Shared copy for the signup box and the Kit after-submit message.
+# The sender address is omitted unless it can be verified in Kit.
+KIT_CONFIRM_NOTE = (
+    "We'll email you a confirmation link. If you don't see it in a minute, "
+    "check your spam or Promotions folder and mark it 'Not spam'."
+)
+KIT_SUCCESS = "Thanks! " + KIT_CONFIRM_NOTE
 
 def news_box(heading=None, blurb=None):
     """Kit signup. ck.5.js fills data-element success and errors. The form still posts if that script does not load.
@@ -1028,10 +1034,11 @@ def news_box(heading=None, blurb=None):
 <div data-element="fields" class="seva-fields formkit-fields">
 <label class="small" for="newsEmail">Email address</label>
 <div class="news-row"><input id="newsEmail" type="email" name="email_address" required placeholder="you@email.com" aria-label="Email address"><button class="btn" data-element="submit" type="submit">Subscribe</button></div>
+<p class="small news-confirm">{e(KIT_CONFIRM_NOTE)}</p>
 </div>
 </div>
 </form>
-<p class="small">Check your inbox to confirm. You are not subscribed until you confirm.</p>
+<p class="small">You are not subscribed until you confirm.</p>
 <script src="https://f.convertkit.com/ckjs/ck.5.js"></script></section>"""
 
 shutil.rmtree(DIST, ignore_errors=True); os.makedirs(DIST)
@@ -4323,8 +4330,9 @@ def audit_site():
         news_html = open(news_path, encoding="utf-8").read() if os.path.isfile(news_path) else ""
         if f'action="{KIT_FORM_ACTION}"' not in news_html or "ck.5.js" not in news_html:
             errors.append("newsletter page is missing the Kit form")
-        if "Check your inbox to confirm." not in news_html:
-            errors.append("newsletter page is missing the confirm-inbox line")
+        # Apostrophes in the note are HTML-escaped in the page; this phrase is unique and unescaped.
+        if news_html.count("check your spam or Promotions folder") < 2:
+            errors.append("newsletter page is missing the confirmation / spam-folder note on the form or in the success message")
         if "TODO-newsletter-endpoint" in news_html or "preventDefault" in news_html:
             errors.append("newsletter page still blocks the Kit form")
         if 'name="email_address"' not in news_html:
@@ -4335,7 +4343,7 @@ def audit_site():
             errors.append("newsletter form is missing Kit success and error targets")
         if 'aria-live="polite"' not in news_html:
             errors.append("newsletter form is missing an aria-live region")
-        if KIT_SUCCESS not in news_html:
+        if "Thanks!" not in news_html or "check your spam or Promotions folder" not in news_html:
             errors.append("newsletter form is missing the Kit success message")
         home_form = open(os.path.join(DIST, "index.html"), encoding="utf-8").read()
         for rel, text in (("home", home_form), ("newsletter", news_html)):
