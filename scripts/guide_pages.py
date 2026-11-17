@@ -223,10 +223,12 @@ def render(g):
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/", g["free_image_to_video_blurb"]()),
             ("Which free AI tools turn text into video?", "/guides/free-text-to-video-ai/", g["free_text_to_video_blurb"]()),
             ("Which AI video generators have an official app?", "/guides/ai-video-generator-apps/", g["ai_video_generator_apps_blurb"]()),
+            ("Where is Kling 3.0 cheapest right now?", "/guides/cheapest-kling-3-0/", g["kling_3_blurb"]()),
+            ("Is there a Higgsfield promo code right now?", "/guides/higgsfield-promo-code/", g["hf_promo_code_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
-        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen"}.get(len(entries), str(len(entries)))
+        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "Nineteen", 20: "Twenty", 21: "Twenty-one", 22: "Twenty-two", 23: "Twenty-three", 24: "Twenty-four", 25: "Twenty-five"}.get(len(entries), str(len(entries)))
         blocks = []
         faqs = []
         for question, path, answer in entries:

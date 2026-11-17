@@ -61,6 +61,8 @@ GUIDE_LINKS = [
     ("/guides/free-image-to-video-ai/", "Free image to video"),
     ("/guides/free-text-to-video-ai/", "Free text to video"),
     ("/guides/ai-video-generator-apps/", "AI video generator apps"),
+    ("/guides/cheapest-kling-3-0/", "Kling 3.0 cost"),
+    ("/guides/higgsfield-promo-code/", "Higgsfield promo codes"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1256,6 +1258,8 @@ GUIDE_CRUMBS = {
     "/guides/free-image-to-video-ai/": "Free image to video",
     "/guides/free-text-to-video-ai/": "Free text to video",
     "/guides/ai-video-generator-apps/": "AI video generator apps",
+    "/guides/cheapest-kling-3-0/": "Kling 3.0 cost",
+    "/guides/higgsfield-promo-code/": "Higgsfield promo codes",
 }
 
 def guide_crosslinks(path):
@@ -1309,6 +1313,8 @@ def guide_page(path, title, desc, body, faqs):
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/"),
             ("Which free AI tools turn text into video?", "/guides/free-text-to-video-ai/"),
             ("Which AI video generators have an official app?", "/guides/ai-video-generator-apps/"),
+            ("Where is Kling 3.0 cheapest right now?", "/guides/cheapest-kling-3-0/"),
+            ("Is there a Higgsfield promo code right now?", "/guides/higgsfield-promo-code/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1882,6 +1888,8 @@ for slug, m in models.items():
         deals_html += (
             f'<p class="small">Official Kling plans, API rates, and cheaper catalog routes: '
             f'<a href="{root("/guides/kling-ai-pricing/")}">Kling AI pricing and credits</a></p>'
+            f'<p class="small">Every Kling 3.0 route, cheapest first: '
+            f'<a href="{root("/guides/cheapest-kling-3-0/")}">Kling 3.0 cost per second: where it’s cheapest</a></p>'
         )
     if slug == "runway-gen-4":
         deals_html += (
@@ -3196,6 +3204,8 @@ def write_llms():
         f"- [Free image to video AI]({SITE_URL}/guides/free-image-to-video-ai/): {free_image_to_video_blurb()}",
         f"- [Free text to video AI]({SITE_URL}/guides/free-text-to-video-ai/): {free_text_to_video_blurb()}",
         f"- [AI video generator apps]({SITE_URL}/guides/ai-video-generator-apps/): {ai_video_generator_apps_blurb()}",
+        f"- [Kling 3.0 cost per second: where it’s cheapest]({SITE_URL}/guides/cheapest-kling-3-0/): {kling_3_blurb()}",
+        f"- [Higgsfield promo code and current deals]({SITE_URL}/guides/higgsfield-promo-code/): {hf_promo_code_blurb()}",
         "",
         "## Data",
         "",
@@ -3263,6 +3273,12 @@ def free_text_to_video_blurb():
 import ai_video_generator_apps_guide
 def ai_video_generator_apps_blurb():
     return ai_video_generator_apps_guide.blurb(globals())
+import kling_3_guide
+def kling_3_blurb():
+    return kling_3_guide.blurb(globals())
+import hf_promo_code_guide
+def hf_promo_code_blurb():
+    return hf_promo_code_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -3291,6 +3307,8 @@ import free_text_to_video_guide
 free_text_to_video_guide.render(globals())
 import ai_video_generator_apps_guide
 ai_video_generator_apps_guide.render(globals())
+kling_3_guide.render(globals())
+hf_promo_code_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers

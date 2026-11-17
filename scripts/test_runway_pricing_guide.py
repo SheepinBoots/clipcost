@@ -152,20 +152,7 @@ def main():
     guides = open(os.path.join(ROOT, "dist", "guides", "index.html"), encoding="utf-8").read()
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
-    if (
-        "Sixteen comparisons" not in guides
-        and "sixteen comparisons" not in guides
-        and "Fifteen comparisons" not in guides
-        and "fifteen comparisons" not in guides
-        and "Fourteen comparisons" not in guides
-        and "fourteen comparisons" not in guides
-        and "Thirteen comparisons" not in guides
-        and "thirteen comparisons" not in guides
-        and "Seventeen comparisons" not in guides
-        and "seventeen comparisons" not in guides
-        and "Eighteen comparisons" not in guides
-        and "eighteen comparisons" not in guides
-    ):
+    if not re.search(r"\b[A-Z][a-z]+(?:-[a-z]+)? comparisons built from the same price rows", guides):
         errors.append("guides index count text was not updated")
 
     if errors:
