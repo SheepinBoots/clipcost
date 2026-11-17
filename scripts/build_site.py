@@ -661,10 +661,10 @@ def affiliate_note_html():
 
 def ends_fallback(deal):
     cond = dealmod.conditions(deal)
-    if not deal.get("end"):
+    label = dealmod.format_end_display(deal, short=True)
+    if not label:
         return "standing price" if cond.get("standing") else "no end date given"
-    est = " (estimated)" if deal.get("end_is_estimate") else ""
-    return f"until {deal['end']}{est}"
+    return f"until {label}"
 
 def when_label(deal):
     """Upcoming offers show the start date. Live offers show the end."""
@@ -2581,6 +2581,10 @@ def _plain_date(value, estimate=False):
         text += " (estimated)"
     return text
 
+def _deal_end_label(deal):
+    label = dealmod.format_end_display(deal)
+    return label or "not stated"
+
 def _money_field(value):
     if isinstance(value, (int, float)) and not isinstance(value, bool):
         return f"${value:g}/mo"
@@ -2680,11 +2684,11 @@ def _rate_table(pairs, dates, before_label="Before $/s", after_label="After $/s"
 def _plan_facts(deal, dates):
     if deal.get("verified_date"):
         dates.append(deal["verified_date"])
-    sale_11 = bool(_note_sentence(deal.get("notes") or "", "11.11"))
-    if sale_11:
+    sale_bf = "black friday" in ((deal.get("title") or "") + " " + (deal.get("notes") or "")).lower()
+    if sale_bf:
         items = [
             f"<li>Monthly billing: {_money_field(deal.get('price_before'))}</li>",
-            f"<li>Annual billing under the 11.11 sale: {_money_field(deal.get('price_after'))}</li>",
+            f"<li>Annual billing under the Black Friday sale: {_money_field(deal.get('price_after'))}</li>",
         ]
     else:
         items = [
@@ -2703,15 +2707,15 @@ def _plan_facts(deal, dates):
     if deal.get("percent") is not None:
         items.append(f"<li>Percent on the deal record: {deal['percent']:g}%</li>")
     items.append(f"<li>Start date: {e(_plain_date(deal.get('start')))}</li>")
-    if sale_11:
-        items.append("<li>The 11.11 sale ends Nov 15, per Higgsfield's pricing page.</li>")
-    elif deal.get("end"):
-        items.append(f"<li>End date: {e(_plain_date(deal.get('end'), deal.get('end_is_estimate')))}</li>")
+    if sale_bf and deal.get("ends_at"):
+        items.append(
+            f"<li>Official end: {e(_deal_end_label(deal))}. "
+            "The visible banner is a countdown only. Vendors sometimes extend sales.</li>"
+        )
+    elif deal.get("end") or deal.get("ends_at"):
+        items.append(f"<li>End date: {e(_deal_end_label(deal))}</li>")
     else:
         items.append("<li>End date: not stated in the end field</li>")
-    note = _note_sentence(deal.get("notes") or "", "11.11")
-    if note and not sale_11:
-        items.append(f"<li>Check note: {e(note)}</li>")
     items.append(f"<li>Verified: {e(deal.get('verified_date') or 'not stated')}</li>")
     if dealmod.conditions(deal).get("standing"):
         items.append("<li>The deal record marks this as a standing price.</li>")
@@ -2757,13 +2761,15 @@ for deal in holiday_live:
     holiday_html.append(_plan_facts(deal, bf_dates))
     pairs = _deal_pairs(deal)
     if pairs:
-        if _note_sentence(deal.get("notes") or "", "11.11"):
-            holiday_html.append("<p><b>Per second, monthly billing vs annual billing under the 11.11 sale</b></p>")
+        if "black friday" in ((deal.get("title") or "") + " " + (deal.get("notes") or "")).lower():
+            holiday_html.append("<p><b>Per second, monthly billing vs annual billing under the Black Friday sale</b></p>")
             holiday_html.append(_rate_table(
                 pairs, bf_dates,
                 "Monthly billing $/s",
                 "Annual billing $/s",
-                "Before is monthly billing. After is annual billing under the 11.11 sale, which ends Nov 15 per Higgsfield's pricing page.",
+                "Before is monthly billing. After is annual billing under the Black Friday sale. "
+                "The official sale record ends at 2026-11-18T00:00:00Z (November 17, 2026, 4:00 PM PT / 8:00 PM America/Caracas). "
+                "Vendors sometimes extend sales.",
             ))
         else:
             holiday_html.append("<p><b>Per second, from the price catalog</b></p>")
@@ -2784,7 +2790,7 @@ for deal in dated_live:
         plain_rows.append(deal)
         continue
     start = _plain_date(deal.get("start"))
-    end = _plain_date(deal.get("end"), deal.get("end_is_estimate"))
+    end = _deal_end_label(deal)
     source_url = deal.get("source_url") or deal.get("link_url")
     source = ""
     if source_url:
@@ -2813,7 +2819,7 @@ if plain_rows:
             f'<td><a href="{root("/deals/")}#{e(deal["id"])}">{e(deal.get("title") or deal["id"])}</a>'
             f'<div class="small">{e(deal.get("vendor") or "")}</div></td>'
             f"<td>{e(_plain_date(deal.get('start')))}</td>"
-            f"<td>{e(_plain_date(deal.get('end'), deal.get('end_is_estimate')))}</td>"
+            f"<td>{e(_deal_end_label(deal))}</td>"
             f"<td>{e(deal.get('verified_date') or '')}</td>"
             f'<td class="small">{source}</td>'
             "<td>not stored</td>"
@@ -2846,20 +2852,20 @@ else:
 status_bits = []
 if not titled:
     status_bits.append("No live deal is titled Black Friday or Cyber Monday.")
-if note_11:
-    status_bits.append("Higgsfield's 11.11 sale ends Nov 15.")
-# Description only lists 11.11 plan prices that map to catalog plans, so it
+if any("black friday" in ((d.get("title") or "") + " " + (d.get("notes") or "")).lower() for d in holiday_live):
+    status_bits.append("Higgsfield Black Friday 65% off ends Nov 17, 2026, 4:00 PM PT.")
+# Description only lists Black Friday plan prices that map to catalog plans, so it
 # stays under 160 characters when extra tiers (Ultra 6K/9K) are also recorded.
-eleven = [
+bf_priced = [
     deal for deal in holiday_live
-    if _note_sentence(deal.get("notes") or "", "11.11")
+    if "black friday" in ((deal.get("title") or "") + " " + (deal.get("notes") or "")).lower()
     and deal.get("full_plan_id")
     and isinstance(deal.get("price_before"), (int, float)) and not isinstance(deal.get("price_before"), bool)
     and isinstance(deal.get("price_after"), (int, float)) and not isinstance(deal.get("price_after"), bool)
 ]
-if eleven:
+if bf_priced:
     bits = []
-    for deal in eleven:
+    for deal in bf_priced:
         plan_name = (deal.get("plans") or ["Plan"])[0]
         bits.append(f"{plan_name} ${deal['price_before']:g} to ${deal['price_after']:g}/mo")
     status_bits.append(", ".join(bits) + ", monthly vs annual.")
@@ -2907,7 +2913,7 @@ bf_body = (
     "<h1>AI video Black Friday and holiday deals</h1>"
     f'<p class="lead">{e(lead)}</p>'
     f"<p>{e(updated_line)}</p>"
-    f'<p>How the current Higgsfield 11.11 prices convert to dollars per second: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>. Every current plan, including list vs sale: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a>.</p>'
+    f'<p>How the current Higgsfield Black Friday prices convert to dollars per second: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>. Every current plan, including list vs sale: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a>.</p>'
     "<h2>Holiday-sale wording in the current deals</h2>"
     + "".join(holiday_html)
     + "<h2>Other live deals with an end date</h2>"

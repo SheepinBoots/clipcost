@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-11-12",
+ "updated": "2026-11-17",
  "watch": [
   {
    "id": "hf_plans",
@@ -177,7 +177,7 @@
    "id": "hf-plus-annual",
    "vendor": "Higgsfield",
    "type": "plan_sale",
-   "title": "Plus annual billing, $59 to $35/mo",
+   "title": "Black Friday: Plus annual billing, $59 to $33/mo",
    "models": [],
    "plans": [
     "Plus"
@@ -191,29 +191,31 @@
     "max_resolution": null,
     "web_only": false,
     "code": null,
-    "standing": true
+    "standing": false
    },
-   "percent": 41,
+   "percent": 45,
    "bonus_credits": null,
    "price_before": 59,
-   "price_after": 35,
-   "start": null,
-   "end": null,
+   "price_after": 33,
+   "start": "2026-11-16",
+   "end": "2026-11-17",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Plus $35/month Billed annually",
-   "verified_date": "2026-11-12",
+   "source_quote": "Plus $59 $33 /mo, billed yearly. Save $312. 1,200 credits / month.",
+   "verified_date": "2026-11-17",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "plan_price",
-   "notes": "On 2026-11-11 the pricing page shows Plus annual at $35/mo beside monthly $59, labeled −41%, and Save $288. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $35 ÷ 1,200 credits. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown."
+   "notes": "Checked 2026-11-17, 1:16 PM PT (5:16 PM America/Caracas) on higgsfield.ai/pricing and on the public plans API that page loads (fnf-api-gw.higgsfield.ai/fnf/subscriptions/v2/plans). The visible Individual Annual Plus card shows $59 struck through, $33/mo billed yearly, labeled −45%, and Save $312, for 1,200 credits / month. The banner title is “Black Friday 65% OFF,” with countdown label “Offer ends in” (about 2 hours 43 minutes remaining at 1:16 PM PT, consistent with a 4:00 PM PT end). The official sale record on that page, still named sale_11_11 with phase pre_black_friday, has starts_at 2026-11-16T00:00:00Z and ends_at 2026-11-18T00:00:00Z (endsAtMs 1794960000000), which is November 17, 2026, 4:00 PM PT / 8:00 PM America/Caracas. Vendors sometimes extend sales, so this end should be rechecked after that time. The earlier 11.11 annual price of $35/mo is no longer on the card. $/s uses $33 ÷ 1,200 credits. The plans API records renew_monthly_price at $33 with discount duration “forever”; the card does not print a post-sale price.",
+   "starts_at": "2026-11-16T00:00:00Z",
+   "ends_at": "2026-11-18T00:00:00Z"
   },
   {
    "id": "hf-ultra-annual",
    "vendor": "Higgsfield",
    "type": "plan_sale",
-   "title": "Ultra annual billing, $129 to $65/mo",
+   "title": "Black Friday: Ultra annual billing, $129 to $50/mo",
    "models": [],
    "plans": [
     "Ultra"
@@ -227,23 +229,25 @@
     "max_resolution": null,
     "web_only": false,
     "code": null,
-    "standing": true
+    "standing": false
    },
-   "percent": 50,
+   "percent": 60,
    "bonus_credits": null,
    "price_before": 129,
-   "price_after": 65,
-   "start": null,
-   "end": null,
+   "price_after": 50,
+   "start": "2026-11-16",
+   "end": "2026-11-17",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Ultra BEST VALUE $65/month Billed annually",
-   "verified_date": "2026-11-12",
+   "source_quote": "Ultra $129 $50 /mo, billed yearly. Save $948. 3,000 credits / month.",
+   "verified_date": "2026-11-17",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "plan_price",
-   "notes": "On 2026-11-11 the pricing page shows Ultra annual at $65/mo beside monthly $129, labeled −50%, and Save $768. The 11.11 sale ends on Nov 15. The 'up to 60% off' banner is not the checkout math. $/s uses $65 ÷ 3,000 credits. Rechecked 2026-11-12 on higgsfield.ai/pricing; checkout prices above were still shown."
+   "notes": "Checked 2026-11-17, 1:16 PM PT (5:16 PM America/Caracas) on higgsfield.ai/pricing and on the public plans API that page loads. The visible Individual Annual Ultra 3K card shows $129 struck through, $50/mo billed yearly, labeled −60%, and Save $948, for 3,000 credits / month. The official sale record ends_at is 2026-11-18T00:00:00Z (November 17, 2026, 4:00 PM PT / 8:00 PM America/Caracas). The visible banner is a countdown only. Vendors sometimes extend sales. The earlier 11.11 annual price of $65/mo is no longer on the card. $/s uses $50 ÷ 3,000 credits. The plans API records renew_monthly_price at $50 with discount duration “forever”; the card does not print a post-sale price.",
+   "starts_at": "2026-11-16T00:00:00Z",
+   "ends_at": "2026-11-18T00:00:00Z"
   },
   {
    "id": "hf-plus-monthly-first",
@@ -321,7 +325,7 @@
    "id": "hf-ultra-6k-annual",
    "vendor": "Higgsfield",
    "type": "plan_sale",
-   "title": "Ultra 6K annual billing, $258 to $110/mo",
+   "title": "Black Friday: Ultra 6K annual billing, $258 to $90/mo",
    "models": [],
    "plans": [
     "Ultra"
@@ -336,30 +340,32 @@
     "max_resolution": null,
     "web_only": false,
     "code": null,
-    "standing": true
+    "standing": false
    },
-   "percent": 57,
+   "percent": 65,
    "bonus_credits": null,
    "price_before": 258,
-   "price_after": 110,
-   "start": null,
-   "end": null,
+   "price_after": 90,
+   "start": "2026-11-16",
+   "end": "2026-11-17",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Ultra 6K $258 $110 /mo, billed yearly. −57%. Save $1,680. 6,000 credits / month.",
-   "verified_date": "2026-11-12",
+   "source_quote": "Ultra 6K $258 $90 /mo, billed yearly. −65%. Save $1,920. 6,000 credits / month.",
+   "verified_date": "2026-11-17",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Checked 2026-11-12 on the Annual toggle, Ultra 6K, at higgsfield.ai/pricing, and on the public plans API the page loads. Ultra 6K annual is $110/mo billed yearly beside a $258 list, labeled −57%, and Save $1,680. The $1,680 figure equals ($250 − $110) × 12, using the monthly 6K list, not the $258 annual list. The 11.11 sale ends on Nov 15. It is not confirmed whether this listed annual price reverts after that date. This tier is not in the price catalog, so this is not turned into a catalog $/s."
+   "notes": "Checked 2026-11-17, 1:17 PM PT (5:17 PM America/Caracas) on the Annual toggle, Ultra 6K tab, at higgsfield.ai/pricing, and on the public plans API that page loads. Ultra 6K annual is $90/mo billed yearly beside a $258 list, labeled −65%, and Save $1,920, for 6,000 credits / month. The $1,920 figure equals ($250 − $90) × 12, using the monthly 6K list, not the $258 annual list. The official sale record ends_at is 2026-11-18T00:00:00Z (November 17, 2026, 4:00 PM PT / 8:00 PM America/Caracas). Vendors sometimes extend sales. The earlier 11.11 annual price of $110/mo is no longer on the card. This tier is not in the price catalog, so this is not turned into a catalog $/s. The plans API records renew_monthly_price at $90 with discount duration “forever”; the card does not print a post-sale price.",
+   "starts_at": "2026-11-16T00:00:00Z",
+   "ends_at": "2026-11-18T00:00:00Z"
   },
   {
    "id": "hf-ultra-9k-annual",
    "vendor": "Higgsfield",
    "type": "plan_sale",
-   "title": "Ultra 9K annual billing, $387 to $150/mo",
+   "title": "Black Friday: Ultra 9K annual billing, $387 to $135/mo",
    "models": [],
    "plans": [
     "Ultra"
@@ -374,24 +380,26 @@
     "max_resolution": null,
     "web_only": false,
     "code": null,
-    "standing": true
+    "standing": false
    },
-   "percent": 60,
+   "percent": 65,
    "bonus_credits": null,
    "price_before": 387,
-   "price_after": 150,
-   "start": null,
-   "end": null,
+   "price_after": 135,
+   "start": "2026-11-16",
+   "end": "2026-11-17",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Ultra 9K −60% $387 $150 /mo, billed yearly. −60%. Save $2,700. 9,000 credits / month.",
-   "verified_date": "2026-11-12",
+   "source_quote": "Ultra 9K −65% $387 $135 /mo, billed yearly. −65%. Save $2,880. 9,000 credits / month.",
+   "verified_date": "2026-11-17",
    "link_url": "https://higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Checked 2026-11-12 on the Annual toggle, Ultra 9K, at higgsfield.ai/pricing, and on the public plans API the page loads. This is the individual plan the page labels up to 60% off. Ultra 9K annual is $150/mo billed yearly beside a $387 list, labeled −60%, and Save $2,700. The 60% and the $2,700 equal ($375 − $150) / $375 and ($375 − $150) × 12, using the monthly 9K list, not the $387 annual list. The 11.11 sale ends on Nov 15. It is not confirmed whether this listed annual price reverts after that date. This tier is not in the price catalog, so this is not turned into a catalog $/s."
+   "notes": "Checked 2026-11-17, 1:17 PM PT (5:17 PM America/Caracas) on the Annual toggle, Ultra 9K tab, at higgsfield.ai/pricing, and on the public plans API that page loads. Ultra 9K annual is $135/mo billed yearly beside a $387 list, labeled −65%, and Save $2,880, for 9,000 credits / month. The $2,880 figure equals ($375 − $135) × 12, using the monthly 9K list, not the $387 annual list. The official sale record ends_at is 2026-11-18T00:00:00Z (November 17, 2026, 4:00 PM PT / 8:00 PM America/Caracas). Vendors sometimes extend sales. The earlier 11.11 annual price of $150/mo is no longer on the card. This tier is not in the price catalog, so this is not turned into a catalog $/s. The plans API records renew_monthly_price at $135 with discount duration “forever”; the card does not print a post-sale price.",
+   "starts_at": "2026-11-16T00:00:00Z",
+   "ends_at": "2026-11-18T00:00:00Z"
   },
   {
    "id": "hf-ultra-6k-monthly-first",
@@ -769,17 +777,26 @@
    "percent": null,
    "bonus_credits": null,
    "start": "2026-10-21",
-   "end": null,
+   "end": "2026-10-29",
    "end_is_estimate": false,
-   "status": "live",
-   "source_url": "https://higgsfield.ai/creator-hub/changelog#kling-4",
-   "source_kind": "changelog",
-   "source_quote": "A launch discount is applied for a limited time, as of October 21, 2026; the exact price is on the Generate button.",
-   "verified_date": "2026-10-30",
-   "link_url": "https://higgsfield.ai/creator-hub/changelog#kling-4",
+   "status": "ended",
+   "source_url": "https://higgsfield.ai/pricing",
+   "source_kind": "pricing_page",
+   "source_quote": "kling_4_release starts_at 2026-10-21T15:00:00Z, ends_at 2026-10-29T00:00:00Z.",
+   "verified_date": "2026-11-17",
+   "link_url": "https://higgsfield.ai/pricing",
    "math": "none",
    "show_on_rows": false,
-   "notes": "Kling 4.0 is not in the price catalog, so this is not turned into a $/s. The changelog does not state a percent. The exact price is on the Generate button."
+   "notes": "The official sale record kling_4_release on higgsfield.ai/pricing (and the datetime-settings payload that page loads) starts at 2026-10-21T15:00:00Z and ends at 2026-10-29T00:00:00Z, which is October 28, 2026, 5:00 PM PT / 8:00 PM America/Caracas. Rechecked 2026-11-17, 1:16 PM PT. That window has already passed, and the record’s max_discount_percent is null. The October 21, 2026 changelog entry at higgsfield.ai/creator-hub/changelog#kling-4 still contains the original sentence “A launch discount is applied for a limited time, as of October 21, 2026; the exact price is on the Generate button.” That is historical announcement text on a dated entry, not a current end date. The Generate-button checkout price was not re-checked (it requires a signed-in generate view). Kling 4.0 is not in the price catalog, so this was never turned into a $/s.",
+   "ends_at": "2026-10-29T00:00:00Z",
+   "starts_at": "2026-10-21T15:00:00Z",
+   "sources": [
+    {
+     "url": "https://higgsfield.ai/creator-hub/changelog#kling-4",
+     "kind": "changelog",
+     "quote": "A launch discount is applied for a limited time, as of October 21, 2026; the exact price is on the Generate button."
+    }
+   ]
   },
   {
    "id": "hf-genjutsu-api-50",
@@ -1019,16 +1036,18 @@
    "percent": null,
    "bonus_credits": null,
    "start": null,
-   "end": "2026-12-04",
+   "end": "2025-12-17",
    "end_is_estimate": false,
-   "status": "live",
+   "status": "ended",
    "source_url": "https://www.magnific.com/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Kling 2.5 at 720p is unlimited from December 4, 2025 to December 4, 2026.",
-   "verified_date": "2026-11-06",
+   "source_quote": "Kling 2.5 720p is unlimited for Premium+ and Pro until December 17, 2025 (inclusive).",
+   "verified_date": "2026-11-17",
    "link_url": "https://www.magnific.com/pricing",
    "math": "unlimited",
-   "notes": "Capped at 720p. Kling 2.5 is not in the VidFare catalog (VidFare tracks Kling 3.0), so there is no $/s. The pricing page badge says Until Dec. 4, and the tooltip dates the window December 4, 2025 to December 4, 2026. That Dec 4, 2026 date is the end, not an estimate. The page calls the plan Plus; the catalog records it as Premium+. Plus and Pro both show the badge."
+   "notes": "Checked 2026-11-17, 1:16 PM PT (5:16 PM America/Caracas) on magnific.com/pricing. The earlier “Until Dec. 4” badge is not in the page HTML. The current tooltip string (kling25-720p-tooltip) is “Kling 2.5 720p is unlimited for Premium+ and Pro until December 17, 2025 (inclusive).” That end has already passed, and the page does not state a clock time or time zone, so this deal is marked ended on that date. The earlier VidFare listing used a pricing-page badge of “Until Dec. 4” and a tooltip window of December 4, 2025 to December 4, 2026, last checked Nov 6; that wording is no longer on the page. A different visible banner, Seedream 5.5 “Save 40% on Credits,” says “Ends Dec 10. Individual subscriptions only” (no year or time) and is not listed as a VidFare deal. Capped at 720p. Kling 2.5 is not in the VidFare catalog, so there is no $/s.",
+   "starts_at": null,
+   "ends_at": null
   },
   {
    "id": "mag-hailuo-fast-unlimited",
@@ -1347,10 +1366,10 @@
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "source_kind": "pricing_page",
    "source_quote": "From November 1 through November 15, 2026, the promotional discount is 30%. Standard rates resume November 16, 2026.",
-   "verified_date": "2026-10-31",
+   "verified_date": "2026-11-17",
    "link_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "math": "stated",
-   "notes": "The model pages state the 30% promo prices per second from November 1 through November 15, 2026: H3 Max $0.035 at 480p, $0.056 at 768p, and $0.112 at 1080p; H3 Max Turbo $0.0175 at 480p, $0.028 at 768p, and $0.056 at 1080p. Standard rates resume November 16, 2026: H3 Max $0.05, $0.08, and $0.16; H3 Max Turbo $0.025, $0.04, and $0.08. No code, and not limited to new users. This follows the 35% promo that ends October 31, 2026. The same billing message is on the H3 Max Turbo page.",
+   "notes": "The official fal MiniMax H3 Max and H3 Max Turbo model pages still print the historical schedule, with no clock time: a 35% promotional discount through October 31, 2026; 30% off from November 1 through November 15, 2026; and standard rates from November 16, 2026. Rechecked 2026-11-17, 1:16 PM PT (5:16 PM America/Caracas). That 30% window has already passed, and this deal stays archived (ended Nov 15, 2026). The same billing text now states the standard rates that apply from November 16, 2026: H3 Max $0.05 at 480p, $0.08 at 768p, and $0.16 at 1080p; H3 Max Turbo $0.025 at 480p, $0.04 at 768p, and $0.08 at 1080p. Those match the catalog standard-rate rows. No code, and not limited to new users.",
    "sources": [
     {
      "url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",

@@ -37,6 +37,8 @@ def main():
         errors.append("description does not name the $33 and $50 annual sale prices")
     if "unknown" not in desc_txt.lower():
         errors.append("description does not mark unknown facts as unknown")
+    if "4:00 PM PT" not in desc_txt and "Nov 17" not in desc_txt:
+        errors.append("description does not state the official Nov 17, 4:00 PM PT end")
     if "No Black Friday 2026 sale is up yet" in desc_txt or "has not posted a Black Friday 2026 sale" in text:
         errors.append("guide still says no Black Friday 2026 sale is posted")
 
@@ -51,11 +53,14 @@ def main():
         "billed yearly",
         "ended Nov 15",
         "11.11",
-        "sale end date",
+        "2026-11-18T00:00:00Z",
+        "November 17, 2026, 4:00 PM PT",
+        "8:00 PM America/Caracas",
         "calculated at checkout",
         "audio not stated",
         "assuming every paid credit is used",
-        "Ultra 9K annual card price was not verified",
+        "$135",
+        "Save $2,880",
         hf_black_friday_guide.CHECKED_WHEN,
         "id=\"newsletter\"",
     ):
@@ -90,6 +95,15 @@ def main():
         n = rate(computed)
         if n not in text and n not in raw:
             errors.append(f"computed Ultra 6K annual rate {n} missing")
+        computed9 = (
+            hf_black_friday_guide.ULTRA_9K_ANNUAL_MO
+            / hf_black_friday_guide.ULTRA_9K_CREDITS
+            * sample["credits_per_clip"]
+            / sample["clip_seconds"]
+        )
+        n9 = rate(computed9)
+        if n9 not in text and n9 not in raw:
+            errors.append(f"computed Ultra 9K annual rate {n9} missing")
 
     if 'href="https://higgsfield.ai/pricing?fpr=emmanuel-bbfe0e"' not in raw:
         errors.append("pricing page affiliate link missing")
