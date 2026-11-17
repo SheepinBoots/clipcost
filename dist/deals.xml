@@ -5,7 +5,35 @@
   <link>https://vidfare.com/deals/</link>
   <atom:link href="https://vidfare.com/deals.xml" rel="self" type="application/rss+xml"/>
   <description>Live AI video deals from vendor pages and official accounts.</description>
-  <lastBuildDate>Tue, 17 Nov 2026 15:56:54 GMT</lastBuildDate>
+  <lastBuildDate>Tue, 17 Nov 2026 21:24:29 GMT</lastBuildDate>
+  <item>
+    <title>Black Friday: Plus annual billing, $59 to $33/mo</title>
+    <link>https://vidfare.com/deals/#hf-plus-annual</link>
+    <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-annual</guid>
+    <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
+    <description>Plus $59 $33 /mo, billed yearly. Save $312. 1,200 credits / month. Ends 2026-11-17.</description>
+  </item>
+  <item>
+    <title>Black Friday: Ultra 6K annual billing, $258 to $90/mo</title>
+    <link>https://vidfare.com/deals/#hf-ultra-6k-annual</link>
+    <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-6k-annual</guid>
+    <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
+    <description>Ultra 6K $258 $90 /mo, billed yearly. −65%. Save $1,920. 6,000 credits / month. Ends 2026-11-17.</description>
+  </item>
+  <item>
+    <title>Black Friday: Ultra 9K annual billing, $387 to $135/mo</title>
+    <link>https://vidfare.com/deals/#hf-ultra-9k-annual</link>
+    <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-9k-annual</guid>
+    <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
+    <description>Ultra 9K −65% $387 $135 /mo, billed yearly. −65%. Save $2,880. 9,000 credits / month. Ends 2026-11-17.</description>
+  </item>
+  <item>
+    <title>Black Friday: Ultra annual billing, $129 to $50/mo</title>
+    <link>https://vidfare.com/deals/#hf-ultra-annual</link>
+    <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-annual</guid>
+    <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
+    <description>Ultra $129 $50 /mo, billed yearly. Save $948. 3,000 credits / month. Ends 2026-11-17.</description>
+  </item>
   <item>
     <title>FLUX 3 Max 50% off until November 21</title>
     <link>https://vidfare.com/deals/#fal-flux3-50</link>
@@ -28,13 +56,6 @@
     <description>Build with Kling 4.0 on Runway Dev. ... Get 20% off Kling 4 through November 30. Ends 2026-11-30.</description>
   </item>
   <item>
-    <title>Kling 2.5 720p unlimited until Dec 4, 2026</title>
-    <link>https://vidfare.com/deals/#mag-kling25-unlimited</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#mag-kling25-unlimited</guid>
-    <pubDate>Fri, 06 Nov 2026 00:00:00 GMT</pubDate>
-    <description>Kling 2.5 at 720p is unlimited from December 4, 2025 to December 4, 2026. Ends 2026-12-04.</description>
-  </item>
-  <item>
     <title>MiniMax H3 Lite and Highspeed 50% off on Replicate until Dec 31</title>
     <link>https://vidfare.com/deals/#replicate-minimax-h3-lite-highspeed-50</link>
     <guid isPermaLink="true">https://vidfare.com/deals/#replicate-minimax-h3-lite-highspeed-50</guid>
@@ -42,46 +63,11 @@
     <description>Minimax H3 Lite and Highspeed are now 50% off until the end of the year. Exclusively on Replicate and @Cloudflare AI Gateway. Ends 2026-12-31.</description>
   </item>
   <item>
-    <title>Kling 4.0 limited-time launch discount (amount shown at checkout)</title>
-    <link>https://vidfare.com/deals/#hf-kling4-launch</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#hf-kling4-launch</guid>
-    <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
-    <description>A launch discount is applied for a limited time, as of October 21, 2026; the exact price is on the Generate button. No end date given.</description>
-  </item>
-  <item>
-    <title>Plus annual billing, $59 to $35/mo</title>
-    <link>https://vidfare.com/deals/#hf-plus-annual</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-annual</guid>
-    <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
-    <description>Plus $35/month Billed annually No end date given.</description>
-  </item>
-  <item>
     <title>Seedance 2.5 unlimited for 30 days on Business Scale (annual)</title>
     <link>https://vidfare.com/deals/#hf-seedance-business-30d</link>
     <guid isPermaLink="true">https://vidfare.com/deals/#hf-seedance-business-30d</guid>
     <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
     <description>Scale $80 /seat/mo, yearly. 30-day unlimited with business verification. Unlimited Seedance 2.5 Special 25s, 720p. No end date given.</description>
-  </item>
-  <item>
-    <title>Ultra 6K annual billing, $258 to $110/mo</title>
-    <link>https://vidfare.com/deals/#hf-ultra-6k-annual</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-6k-annual</guid>
-    <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
-    <description>Ultra 6K $258 $110 /mo, billed yearly. −57%. Save $1,680. 6,000 credits / month. No end date given.</description>
-  </item>
-  <item>
-    <title>Ultra 9K annual billing, $387 to $150/mo</title>
-    <link>https://vidfare.com/deals/#hf-ultra-9k-annual</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-9k-annual</guid>
-    <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
-    <description>Ultra 9K −60% $387 $150 /mo, billed yearly. −60%. Save $2,700. 9,000 credits / month. No end date given.</description>
-  </item>
-  <item>
-    <title>Ultra annual billing, $129 to $65/mo</title>
-    <link>https://vidfare.com/deals/#hf-ultra-annual</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-annual</guid>
-    <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
-    <description>Ultra BEST VALUE $65/month Billed annually No end date given.</description>
   </item>
   <item>
     <title>Unlimited Krea 3 for 14 days with Pro or Max annual</title>

@@ -1477,7 +1477,7 @@
      "phrase": true
     }
    ],
-   "note": "Standard rate. The model page says these rates resume November 16, 2026. 480p list rate (the model page's default tier during the promo is 768p).",
+   "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated). 480p list rate (the model page's default tier during the promo is 768p).",
    "id": "r022",
    "checked": "2026-11-17",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
@@ -1525,7 +1525,7 @@
      "phrase": true
     }
    ],
-   "note": "Standard rate. The model page says these rates resume November 16, 2026.",
+   "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r023",
    "checked": "2026-11-17",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
@@ -1625,7 +1625,7 @@
      "phrase": true
     }
    ],
-   "note": "Standard rate. The model page says these rates resume November 16, 2026.",
+   "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r179",
    "checked": "2026-11-17",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
@@ -1673,7 +1673,7 @@
      "phrase": true
     }
    ],
-   "note": "Standard rate. The model page says these rates resume November 16, 2026.",
+   "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r180",
    "checked": "2026-11-17",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
@@ -1721,7 +1721,7 @@
      "phrase": true
     }
    ],
-   "note": "Standard rate. The model page says these rates resume November 16, 2026.",
+   "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r184",
    "checked": "2026-11-17",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
@@ -1769,7 +1769,7 @@
      "phrase": true
     }
    ],
-   "note": "Standard rate. The model page says these rates resume November 16, 2026.",
+   "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r185",
    "checked": "2026-11-17",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
