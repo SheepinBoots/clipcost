@@ -71,15 +71,25 @@ def main():
     for row in db["rows"]:
         if deals.adjustment(banner, row, plans) is not None:
             raise SystemExit("banner percent leaked onto a row")
-    kling25 = by_id(live, "mag-kling25-unlimited")
+    kling25 = by_id(doc["deals"], "mag-kling25-unlimited")
+    if kling25.get("status") != "ended" or kling25.get("end") != "2025-12-17":
+        raise SystemExit("mag-kling25-unlimited should be archived on the tooltip date December 17, 2025")
     for row in db["rows"]:
-        if deals.adjustment(kling25, row, plans) is not None:
+        if deals.adjustment(dict(kling25, status="live"), row, plans) is not None:
             raise SystemExit(f"Kling 2.5 unlimited matched {row['id']}")
     # Annual checkout price / credits, not 20% off the row.
+    # The Black Friday window starts 2026-11-16, so this deal is upcoming on the frozen TODAY.
+    plus_deal = by_id(doc["deals"], "hf-plus-annual")
+    if plus_deal.get("price_after") != 33 or plus_deal.get("end") != "2026-11-17" or plus_deal.get("ends_at") != "2026-11-18T00:00:00Z":
+        raise SystemExit("hf-plus-annual should be the Black Friday $33/mo price ending 2026-11-18T00:00:00Z")
+    if deals.is_current(plus_deal, TODAY) or not deals.is_upcoming(plus_deal, TODAY):
+        raise SystemExit("hf-plus-annual should be upcoming on the frozen Oct 20 test date")
+    if not deals.is_current(plus_deal, "2026-11-17") or deals.is_current(plus_deal, "2026-11-18"):
+        raise SystemExit("hf-plus-annual should be live on Nov 17 and archived after that date")
     plus = next(r for r in db["rows"] if r["id"] == "r080")
-    adj = deals.adjustment(by_id(live, "hf-plus-annual"), plus, plans)
-    close(adj["usd"], 35 / 1200 * 7.5 / 5)
-    close(adj["usd"], 0.04375)
+    adj = deals.adjustment(plus_deal, plus, plans)
+    close(adj["usd"], 33 / 1200 * 7.5 / 5)
+    close(adj["usd"], 0.04125)
     # Krea yearly 40% uses $21, not a second discount on the yearly row's neighbors.
     krea = next(r for r in db["rows"] if r.get("plan") == "krea-pro-monthly" and r["model"] == "wan-3-0-prime")
     adj = deals.adjustment(by_id(live, "krea-yearly-40"), krea, plans)
@@ -182,12 +192,14 @@ def main():
     if "40%" not in wan60.get("notes", "") or "50%" not in wan60.get("notes", ""):
         raise SystemExit("hf-api-wan-60 missing the Nov 1 Prime 40% and Wan 3.0 50% rates")
     kling4 = next(d for d in doc["deals"] if d["id"] == "hf-kling4-launch")
-    if kling4.get("percent") is not None or kling4.get("type") != "percent_off" or kling4.get("status") != "live":
-        raise SystemExit("hf-kling4-launch should be a live percent_off deal with no percent")
-    if kling4.get("models") != ["kling-4-0"] or kling4.get("start") != "2026-10-21" or kling4.get("end") is not None:
+    if kling4.get("percent") is not None or kling4.get("type") != "percent_off" or kling4.get("status") != "ended":
+        raise SystemExit("hf-kling4-launch should be an ended percent_off deal with no percent")
+    if kling4.get("models") != ["kling-4-0"] or kling4.get("start") != "2026-10-21" or kling4.get("end") != "2026-10-29":
         raise SystemExit("hf-kling4-launch models, start, or end")
-    if kling4.get("source_kind") != "changelog":
-        raise SystemExit("hf-kling4-launch source_kind")
+    if kling4.get("ends_at") != "2026-10-29T00:00:00Z" or kling4.get("source_kind") != "pricing_page":
+        raise SystemExit("hf-kling4-launch ends_at or source_kind")
+    if deals.is_current(kling4, "2026-11-17"):
+        raise SystemExit("hf-kling4-launch should not stay live after the official window ended")
     nxt = next(d for d in doc["deals"] if d["id"] == "fal-minimax-h3-30-nov")
     if nxt.get("percent") != 30 or nxt.get("type") != "api_promo" or nxt.get("math") != "stated":
         raise SystemExit("fal-minimax-h3-30-nov percent, type, or math")

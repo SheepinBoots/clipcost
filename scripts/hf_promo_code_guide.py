@@ -20,9 +20,9 @@ COUNTDOWN_READ = (
 )
 # As the pricing page's embedded sale record (source "sale_11_11", phase "pre_black_friday") states it.
 BF_ENDS_UTC = "2026-11-18T00:00:00Z"
-BF_ENDS_LOCAL = "Nov 17, 2026, 4:00 PM PT (8:00 PM America/Caracas)"
+BF_ENDS_LOCAL = "Nov 17, 2026, 4:00 PM PT; 8:00 PM America/Caracas"
 KLING4_ENDS_UTC = "2026-10-29T00:00:00Z"
-KLING4_ENDS_LOCAL = "Oct 28, 2026, 5:00 PM PT (8:00 PM America/Caracas)"
+KLING4_ENDS_LOCAL = "Oct 28, 2026, 5:00 PM PT; 8:00 PM America/Caracas"
 
 PRICING = "https://higgsfield.ai/pricing"
 HELP_CODES = "https://higgsfield.ai/creator-hub/help-center/credits/how-promo-codes-work"

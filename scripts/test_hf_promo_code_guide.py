@@ -63,6 +63,11 @@ def main():
     old = re.search(r'id="expired-deals".*?</table>', raw, re.S).group(0)
     if "11.11" not in old or "Expired" not in old:
         errors.append("the 11.11 sale is not marked expired")
+    if "Kling 4.0" in cur:
+        errors.append("the ended Kling 4.0 launch discount is listed as current")
+    k4 = re.search(r"<tr><td><b>Kling 4\.0 launch discount</b></td><td>(.*?)</td><td>(.*?)</td>", old)
+    if not k4 or k4.group(1) != "Expired" or "2026-10-29T00:00:00Z" not in k4.group(2):
+        errors.append("the Kling 4.0 launch discount is not expired with its official end")
 
     for needle in (
         "No public code",
@@ -71,7 +76,11 @@ def main():
         "$50",
         "$90",
         "End date not stated",
-        "0 days, 2 hours, 55 minutes",
+        "$135",
+        "2026-11-18T00:00:00Z",
+        "4:00 PM PT",
+        "8:00 PM America/Caracas",
+        "sometimes extend",
         "PT",
         "Last checked",
         "Affiliate disclosure",
