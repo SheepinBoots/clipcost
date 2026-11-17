@@ -59,6 +59,8 @@ GUIDE_LINKS = [
     ("/guides/free-ai-video-generators/", "Free AI video generators"),
     ("/guides/best-ai-video-generator/", "Best AI video generator"),
     ("/guides/free-image-to-video-ai/", "Free image to video"),
+    ("/guides/free-text-to-video-ai/", "Free text to video"),
+    ("/guides/ai-video-generator-apps/", "AI video generator apps"),
 ]
 HF_PLATFORMS = {"Higgsfield", "Higgsfield API"}
 
@@ -1125,6 +1127,8 @@ GUIDE_CRUMBS = {
     "/guides/free-ai-video-generators/": "Free AI video generators",
     "/guides/best-ai-video-generator/": "Best AI video generator",
     "/guides/free-image-to-video-ai/": "Free image to video",
+    "/guides/free-text-to-video-ai/": "Free text to video",
+    "/guides/ai-video-generator-apps/": "AI video generator apps",
 }
 
 def guide_crosslinks(path):
@@ -1175,6 +1179,8 @@ def guide_page(path, title, desc, body, faqs):
             ("Free AI video generators: what you get", "/guides/free-ai-video-generators/"),
             ("What is the best AI video generator when you count quality and cost?", "/guides/best-ai-video-generator/"),
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/"),
+            ("Which free AI tools turn text into video?", "/guides/free-text-to-video-ai/"),
+            ("Which AI video generators have an official app?", "/guides/ai-video-generator-apps/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1243,6 +1249,14 @@ def free_image_to_video_blurb():
     import free_image_to_video_guide
     return free_image_to_video_guide.blurb(globals())
 
+def free_text_to_video_blurb():
+    import free_text_to_video_guide
+    return free_text_to_video_guide.blurb(globals())
+
+def ai_video_generator_apps_blurb():
+    import ai_video_generator_apps_guide
+    return ai_video_generator_apps_guide.blurb(globals())
+
 def home_guides_html():
     blurbs = {
         "/guides/cheapest-wan-3-0/": wan_blurb,
@@ -1252,6 +1266,8 @@ def home_guides_html():
         "/guides/free-ai-video-generators/": free_ai_video_blurb,
         "/guides/best-ai-video-generator/": best_ai_video_blurb,
         "/guides/free-image-to-video-ai/": free_image_to_video_blurb,
+        "/guides/free-text-to-video-ai/": free_text_to_video_blurb,
+        "/guides/ai-video-generator-apps/": ai_video_generator_apps_blurb,
     }
     items = []
     for path, label in GUIDE_LINKS:
@@ -1775,6 +1791,28 @@ for slug, m in models.items():
         deals_html += (
             f'<p class="small">Animate a photo on a free tier: '
             f'<a href="{root("/guides/free-image-to-video-ai/")}">Free image to video AI</a></p>'
+        )
+    if slug in (
+        "veo-3-1",
+        "gemini-omni-flash",
+        "wan-3-0",
+        "grok-imagine",
+        "minimax-hailuo",
+    ):
+        deals_html += (
+            f'<p class="small">Free tiers that turn a prompt into video: '
+            f'<a href="{root("/guides/free-text-to-video-ai/")}">Free text to video AI</a></p>'
+        )
+    if slug in (
+        "kling-3-0",
+        "runway-gen-4",
+        "veo-3-1",
+        "grok-imagine",
+        "seedance-2-5",
+    ):
+        deals_html += (
+            f'<p class="small">Official iPhone and Android apps: '
+            f'<a href="{root("/guides/ai-video-generator-apps/")}">AI video generator apps</a></p>'
         )
     soon = [d for d in UPCOMING_DEALS if slug in (d.get("models") or [])]
     if soon:
@@ -3028,6 +3066,8 @@ def write_llms():
         f"- [Free AI video generators: what you get]({SITE_URL}/guides/free-ai-video-generators/): {free_ai_video_blurb()}",
         f"- [Best AI video generator by value]({SITE_URL}/guides/best-ai-video-generator/): {best_ai_video_blurb()}",
         f"- [Free image to video AI]({SITE_URL}/guides/free-image-to-video-ai/): {free_image_to_video_blurb()}",
+        f"- [Free text to video AI]({SITE_URL}/guides/free-text-to-video-ai/): {free_text_to_video_blurb()}",
+        f"- [AI video generator apps]({SITE_URL}/guides/ai-video-generator-apps/): {ai_video_generator_apps_blurb()}",
         "",
         "## Data",
         "",
@@ -3089,6 +3129,12 @@ def best_ai_video_blurb():
 import free_image_to_video_guide
 def free_image_to_video_blurb():
     return free_image_to_video_guide.blurb(globals())
+import free_text_to_video_guide
+def free_text_to_video_blurb():
+    return free_text_to_video_guide.blurb(globals())
+import ai_video_generator_apps_guide
+def ai_video_generator_apps_blurb():
+    return ai_video_generator_apps_guide.blurb(globals())
 guide_pages.render(globals())
 import flow_guide
 flow_guide.render(globals())
@@ -3113,6 +3159,10 @@ import best_ai_video_guide
 best_ai_video_guide.render(globals())
 import free_image_to_video_guide
 free_image_to_video_guide.render(globals())
+import free_text_to_video_guide
+free_text_to_video_guide.render(globals())
+import ai_video_generator_apps_guide
+ai_video_generator_apps_guide.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers

@@ -179,6 +179,10 @@ def main():
         and "fifteen comparisons" not in guides
         and "Sixteen comparisons" not in guides
         and "sixteen comparisons" not in guides
+        and "Seventeen comparisons" not in guides
+        and "seventeen comparisons" not in guides
+        and "Eighteen comparisons" not in guides
+        and "eighteen comparisons" not in guides
     ):
         errors.append("guides index count text is missing")
 
