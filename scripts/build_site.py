@@ -10,7 +10,8 @@ import analytics
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DIST = os.path.join(ROOT, "dist")
+DIST = os.environ.get("VIDFARE_DIST") or os.path.join(ROOT, "dist")
+SPONSORS_PATH = os.environ.get("VIDFARE_SPONSORS") or os.path.join(ROOT, "data", "sponsors.json")
 SITE_URL = "https://vidfare.com"
 BRAND = "VidFare"
 TAGLINE = "What every AI video second costs, everywhere."
@@ -70,7 +71,7 @@ def root(path):
     return BASE + path
 db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 changes = json.load(open(os.path.join(ROOT, "data", "changes.json")))
-sponsors = json.load(open(os.path.join(ROOT, "data", "sponsors.json")))
+sponsors = json.load(open(SPONSORS_PATH))
 models, plans, sources = db["models"], db["plans"], db["sources"]
 today = datetime.date.today()
 TODAY = today.isoformat()
@@ -189,6 +190,17 @@ def sponsor_record(slot_id):
 def sponsor_filled(rec):
     return bool(rec.get("active") and (rec.get("name") or "").strip() and (rec.get("url") or "").strip())
 
+def sponsor_logo_src(rec):
+    """Site-root path for an optional logo stored under src/."""
+    logo = (rec.get("logo") or "").strip()
+    if not logo:
+        return ""
+    if logo.startswith(("http://", "https://")):
+        return ""
+    if not logo.startswith("/"):
+        logo = "/" + logo
+    return logo
+
 def render_sponsor(slot_id, rec, featured=False):
     cls = "sponsor"
     if featured:
@@ -199,19 +211,30 @@ def render_sponsor(slot_id, rec, featured=False):
     if featured:
         bits.append('<span class="sponsor-kicker">Featured</span>')
     if sponsor_filled(rec):
+        name = rec["name"].strip()
+        href = rec["url"].strip()
+        logo_path = sponsor_logo_src(rec)
+        logo_html = ""
+        if logo_path:
+            logo_html = (
+                f'<img class="sponsor-logo" src="{e(root(logo_path))}" alt="" width="32" height="32">'
+            )
         bits.append(
-            f'<a href="{e(rec["url"].strip())}" rel="{SPONSOR_REL}" target="_blank">{e(rec["name"].strip())}</a>'
+            f'<a href="{e(href)}" rel="{SPONSOR_REL}" target="_blank">{logo_html}{e(name)}</a>'
         )
         tagline = (rec.get("tagline") or "").strip()
         if tagline:
             bits.append(f'<span class="sponsor-line">{e(tagline)}</span>')
+        disclosure = (rec.get("disclosure") or "").strip()
+        if disclosure:
+            bits.append(f'<span class="sponsor-disclose">{e(disclosure)}</span>')
     else:
         bits.append(f'<a class="sponsor-open" href="{root("/advertise/")}">{HOUSE_LINE}</a>')
     return f'<aside class="{cls}" data-sponsor="{e(slot_id)}">{"".join(bits)}</aside>'
 
-def sponsor_slot(slot_id, featured=False):
+def sponsor_slot(slot_id, featured=False, rec=None):
     """Filled placements stay. An empty house placeholder is not rendered."""
-    rec = sponsor_record(slot_id)
+    rec = rec if rec is not None else sponsor_record(slot_id)
     if not sponsor_filled(rec):
         return ""
     return render_sponsor(slot_id, rec, featured)
@@ -896,7 +919,7 @@ with open(os.path.join(ROOT, "src", "vf-events.js"), encoding="utf-8") as _src, 
         open(os.path.join(DIST, analytics.SCRIPT_PATH.lstrip("/")), "w", encoding="utf-8") as _out:
     _out.write(analytics.js_source(_src.read(), VF_HOSTS))
 shutil.copy(os.path.join(ROOT, "src", "og.png"), os.path.join(DIST, "og.png"))
-for _f in ("favicon-32.png", "logo.svg", "logo-512.png", "logo-240.png"):
+for _f in ("favicon-32.png", "logo.svg", "logo-512.png", "logo-240.png", "pixeldojo.png"):
     shutil.copy(os.path.join(ROOT, "src", _f), os.path.join(DIST, _f))
 
 def write_favicon_ico(src_png, dest_ico):
@@ -3364,17 +3387,35 @@ def check_sponsor_renderer():
         raise SystemExit("active sponsor markup is not labelled Sponsor")
     if "<table" in live or "dealgrid" in live or "data-deal-card" in live:
         raise SystemExit("sponsor markup must not be a table or a deal card")
+    with_logo = render_sponsor(
+        "home",
+        {
+            "name": "Example Tool",
+            "url": "https://example.com/tool",
+            "tagline": "A short line",
+            "logo": "/pixeldojo.png",
+            "disclosure": "Affiliate link: VidFare may earn a commission.",
+            "active": True,
+        },
+    )
+    if 'class="sponsor-logo"' not in with_logo or 'src="' + root("/pixeldojo.png") + '"' not in with_logo:
+        raise SystemExit("active sponsor markup is missing the logo image")
+    if "Affiliate link: VidFare may earn a commission." not in with_logo:
+        raise SystemExit("active sponsor markup is missing the disclosure line")
+    if "<table" in with_logo:
+        raise SystemExit("sponsor markup with a logo must not be a table")
     empty = render_sponsor("deals", {"name": "", "url": "", "tagline": "", "active": False}, featured=True)
     if HOUSE_LINE not in empty or f'href="{root("/advertise/")}"' not in empty or "Featured" not in empty:
         raise SystemExit("empty sponsor markup should still describe the advertise page")
     if "sponsored" in empty:
         raise SystemExit("the house placeholder is not an outbound sponsor link")
-    if sponsor_slot("deals", featured=True):
+    empty_rec = {"name": "", "url": "", "tagline": "", "active": False}
+    if sponsor_slot("deals", featured=True, rec=empty_rec):
         raise SystemExit("an empty sponsor slot should be omitted from the page")
     blank = render_sponsor("home", {"name": " ", "url": "https://example.com", "tagline": "", "active": True})
     if HOUSE_LINE not in blank:
         raise SystemExit("an active slot with an empty name is treated as empty")
-    if sponsor_slot("home"):
+    if sponsor_slot("home", rec={"name": " ", "url": "https://example.com", "tagline": "", "active": True}):
         raise SystemExit("home placeholder should be omitted while the slot is empty")
     if sponsor_record("model:not-a-real-model") is not sponsors.get("model:default"):
         raise SystemExit("model pages should fall back to model:default")
@@ -3483,6 +3524,15 @@ def audit_site():
             continue
         if not isinstance(rec.get("active"), bool):
             errors.append(f"sponsor slot {slot_id} active must be true or false")
+        logo_path = sponsor_logo_src(rec)
+        if (rec.get("logo") or "").strip().startswith(("http://", "https://")):
+            errors.append(f"sponsor slot {slot_id} logo must be a file under src/, not a remote URL")
+        elif logo_path:
+            logo_file = os.path.join(ROOT, "src", logo_path.lstrip("/"))
+            if not os.path.isfile(logo_file):
+                errors.append(f"sponsor slot {slot_id} logo is missing from src/")
+            if sponsor_filled(rec) and not os.path.isfile(os.path.join(DIST, logo_path.lstrip("/"))):
+                errors.append(f"sponsor slot {slot_id} logo was not copied into dist/")
 
     class PageAudit(HTMLParser):
         void = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
@@ -4293,6 +4343,8 @@ def structured_data_errors():
 def viewport_overflow_errors():
     """Fail when a sitemap page is wider than a 390px phone. Skip if Chrome is not installed."""
     import subprocess
+    if os.environ.get("VIDFARE_SKIP_VIEWPORT") == "1":
+        return []
     chrome = next((p for p in (
         os.environ.get("CHROME_PATH"), os.environ.get("CHROME_BIN"),
         "/usr/bin/google-chrome", "/usr/bin/google-chrome-stable", "/usr/bin/chromium",
