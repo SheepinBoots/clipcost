@@ -54,7 +54,7 @@ def main():
         "r146",
         "r111",
         "r209",
-        "Last checked 2026-11-16",
+        "Last checked 2026-",
         ai_video_generator_apps_guide.LUMA_ANDROID,
         "Infinity AI Solutions",
         "We could not confirm that listing is official",

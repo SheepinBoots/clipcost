@@ -60,7 +60,7 @@ def main():
         "r023",
         "r025",
         "r024",
-        "Last checked 2026-11-16",
+        "Last checked 2026-",
         free_text_to_video_guide.KREA_VIDEO,
         free_text_to_video_guide.FLOW_CREDITS,
         free_text_to_video_guide.FLOW_MODELS,
