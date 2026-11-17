@@ -116,15 +116,24 @@ def slot_ok(html, slot_id, rel_path):
     check("PixelDojo" in html, f"{rel_path} is missing the PixelDojo name")
     check(DESC in html, f"{rel_path} does not keep the approved PixelDojo description verbatim")
     check(DISCLOSE in html, f"{rel_path} is missing the disclosure line")
-    check('src="/pixeldojo.png"' in html or 'src="/pixeldojo.png"' in html, f"{rel_path} is missing the logo")
+    check('src="/pixeldojo.png"' in html, f"{rel_path} is missing the logo")
     check('class="sponsor-logo"' in html, f"{rel_path} is missing the logo class")
+    check('class="sponsor-cta"' in html and "Try PixelDojo" in html, f"{rel_path} is missing the Try PixelDojo CTA")
+    check('class="sponsor-hit"' in html, f"{rel_path} is missing the whole-box link")
+    track = slot_id.replace(":", "-")
+    check(f'data-vf-sponsor="{track}"' in html, f"{rel_path} is missing data-vf-sponsor={track}")
     check("sora" not in html.lower(), f"{rel_path} names Sora")
-    # The slot must sit outside the price table.
+    # The slot must sit outside the price table, and the box is one link with no nested controls.
     parsed = parse_page(html)
     check(slot_id in parsed.asides, f"{rel_path} parser missed slot {slot_id}")
     check(not parsed.sponsor_in_table, f"{rel_path} has a sponsor inside a table: {parsed.sponsor_in_table}")
-    check("dealgrid" not in html[html.find("data-sponsor"):html.find("data-sponsor") + 200] or True, "noop")
-    # Deals page must not get this partner.
+    start = html.find(f'data-sponsor="{slot_id}"')
+    check(start != -1, f"{rel_path} could not slice slot {slot_id}")
+    if start != -1:
+        end = html.find("</aside>", start)
+        chunk = html[start:end]
+        check(chunk.lower().count("<a ") == 1, f"{rel_path} sponsor box does not have exactly one link")
+        check("<button" not in chunk.lower(), f"{rel_path} sponsor box has a nested button")
     return parsed
 
 
@@ -150,6 +159,37 @@ def main():
     check('data-sponsor="deals"' not in deals, "deals page has a sponsor slot; PixelDojo must not appear there")
     check("PixelDojo" not in deals, "deals page names PixelDojo")
     check(HREF not in deals, "deals page has the PixelDojo link")
+
+    guides_root = os.path.join(DIST, "guides")
+    index_guides = read(os.path.join("guides", "index.html"))
+    check('data-sponsor="' not in index_guides, "/guides/ index has a sponsor slot; it must not")
+    check('data-vf-sponsor="guide-' not in index_guides, "/guides/ index has a guide sponsor tracking attribute")
+    guide_pages = []
+    for name in sorted(os.listdir(guides_root)):
+        page = os.path.join(guides_root, name, "index.html")
+        if os.path.isfile(page):
+            guide_pages.append(name)
+    check(len(guide_pages) >= 10, f"expected many guide pages, found {len(guide_pages)}")
+    guide_sample = None
+    for slug in guide_pages:
+        rel = os.path.join("guides", slug, "index.html")
+        html = read(rel)
+        parsed = slot_ok(html, f"guide:{slug}", rel)
+        boxes = re.findall(r'data-sponsor="([^"]*)"', html)
+        check(boxes == [f"guide:{slug}"], f"{rel} sponsor slots {boxes} != [guide:{slug}]")
+        tracks = re.findall(r'data-vf-sponsor="([^"]*)"', html)
+        check(tracks == [f"guide-{slug}"], f"{rel} data-vf-sponsor values {tracks}")
+        h1 = html.find("<h1")
+        lead = re.search(r'<p class="lead">.*?</p>', html, re.S)
+        slot_at = html.find(f'data-sponsor="guide:{slug}"')
+        check(h1 != -1 and slot_at > h1, f"{rel} sponsor box is not after the H1")
+        check(lead and slot_at > lead.end(), f"{rel} sponsor box is not after the lead")
+        take = re.search(r'id="takeaways"', html)
+        if take:
+            check(slot_at > take.start(), f"{rel} sponsor box is not after the takeaways")
+        if slug == "cheapest-ai-video-generator":
+            guide_sample = (slug, parsed, html)
+    check(guide_sample is not None, "cheapest-ai-video-generator guide was not built")
 
     logo = os.path.join(DIST, "pixeldojo.png")
     check(os.path.isfile(logo), "dist/pixeldojo.png was not built")
@@ -196,13 +236,23 @@ def main():
             check(home_rows == off_home_rows, "home price order changed when the sponsor was added")
             check(model_rows == off_model_rows, "Wan 3.0 price order changed when the sponsor was added")
             check("PixelDojo" not in open(os.path.join(off_dist, "index.html"), encoding="utf-8").read(), "off build still names PixelDojo")
+            if guide_sample:
+                slug, guide_parsed, _ = guide_sample
+                guide_key, guide_rows = price_table_rows(guide_parsed, ["prices"])
+                off_guide = parse_page(
+                    open(os.path.join(off_dist, "guides", slug, "index.html"), encoding="utf-8").read()
+                )
+                _, off_guide_rows = price_table_rows(off_guide, [guide_key or "prices"])
+                check(not off_guide.asides, "guide still has a sponsor slot when every slot is inactive")
+                if guide_rows:
+                    check(guide_rows == off_guide_rows, f"{slug} price order changed when the sponsor was added")
 
     if errors:
         print("FAIL")
         for item in errors:
             print("-", item)
         return 1
-    print("ok sponsors: PixelDojo partner slot on home and model pages, deals empty, price order unchanged")
+    print("ok sponsors: PixelDojo box on home, models, and every guide, deals empty, price order unchanged")
     return 0
 
 

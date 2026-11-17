@@ -30,7 +30,7 @@ The build writes it on the script tag (`data-vf-page`).
 | `newsletter-signup/<page>` | The Kit newsletter form (`data-vf-event="newsletter-signup"`) is submitted on `<page>`. This counts submit attempts that pass the browser's email check. It does not count confirmed subscribers; Kit's double opt-in still applies. |
 | `outbound/<vendor>/<page>` | Click (or middle-click) on a link to a vendor or deal page that is not an affiliate link. |
 | `outbound-affiliate/<vendor>/<page>` | Same, but the link is an affiliate link: `rel="sponsored"` (outside a sponsor slot) or a referral `fpr=` parameter. Today that is the Higgsfield referral links. |
-| `sponsor-click/<slot>/<page>` | Click on a paid link inside a sponsor slot (`aside[data-sponsor]`). Slot ids: `home`, `deals`, `model-<slug>`. |
+| `sponsor-click/<slot>/<page>` | Click on a paid link inside a sponsor slot (`aside[data-sponsor]`). Slot ids: `home`, `deals`, `model-<slug>`, `guide-<slug>`. Clicks are counted by `/vf-events.js` with `goatcounter.count({path, title, event: true})`, using the link's `data-vf-sponsor` attribute (set from the slot id, with `:` turned into `-`). Do not also add GoatCounter's `data-goatcounter-click` attribute; that would double-count the same click. |
 | `advertise-cta/<cta>/<page>` | Click on a link to `/advertise/` or on the sponsorship email. `<cta>` is `footer-link`, `inline-link`, `email` (the email on /advertise/), `sponsorship-email` (on /contact/), or `sponsor-slot-<slot>` (an empty "sponsor this spot" placeholder). |
 | `campaign/<source>/<medium>/<campaign>` | A page is opened with `utm_campaign` (or `campaign`) in the URL. Keeps `utm_medium`, which GoatCounter does not store. Sent again if the same tagged URL is reloaded. |
 
