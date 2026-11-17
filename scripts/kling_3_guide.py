@@ -399,7 +399,7 @@ def render(g):
 <h2>Every Kling 3.0 price we track</h2>
 <p>All {len(rows)} current Kling 3.0 rows in our catalog, cheapest first. Resolution says “not listed” where the vendor gives a tier name instead of a resolution.</p>
 {all_table}
-<p class="small">{PLATFORM_ORDER_NOTE} Related: <a href="{e(cheap_href)}">cheapest rate we track for each model</a> · <a href="{e(best_href)}">best AI video generator by value</a> · <a href="{e(runway_guide)}">Runway pricing per second</a>.</p>
+<p class="small">{PLATFORM_ORDER_NOTE} Related: <a href="{e(cheap_href)}">cheapest rate we track for each model</a> · <a href="{e(best_href)}">best AI video generator by value</a> · <a href="{e(runway_guide)}">Runway pricing per second</a> · <a href="{e(root("/guides/higgsfield-vs-kling/"))}">Higgsfield vs Kling</a> · <a href="{e(root("/guides/fal-ai-pricing/"))}">fal pricing vs Replicate and others</a>.</p>
 
 <h2>What is confirmed, and what is not?</h2>
 <p>{e(a_unknown)}</p>

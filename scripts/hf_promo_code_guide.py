@@ -360,7 +360,7 @@ def render(g):
 <p>{e(a_where)} Source: {help_codes}.</p>
 
 <h2>Does the discount last after the first payment?</h2>
-<p>{e(a_renew)} Sources: {help_prices}, dated Aug 1, 2026 · {changelog}, Nov 11, 2026. What each plan costs at its standard price is in <a href="{e(pricing_href)}">Higgsfield pricing explained</a> and <a href="{e(worth_href)}">is Higgsfield worth it?</a></p>
+<p>{e(a_renew)} Sources: {help_prices}, dated Aug 1, 2026 · {changelog}, Nov 11, 2026. What each plan costs at its standard price is in <a href="{e(pricing_href)}">Higgsfield pricing explained</a> and <a href="{e(worth_href)}">is Higgsfield worth it?</a>. To compare other tools by cost per second, see <a href="{e(root("/guides/higgsfield-alternatives/"))}">Higgsfield alternatives</a>.</p>
 
 <h2>Which Higgsfield deals have ended?</h2>
 <p>{e(a_old)}</p>

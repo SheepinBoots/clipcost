@@ -223,6 +223,10 @@ def render(g):
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/", g["free_image_to_video_blurb"]()),
             ("Which free AI tools turn text into video?", "/guides/free-text-to-video-ai/", g["free_text_to_video_blurb"]()),
             ("Which AI video generators have an official app?", "/guides/ai-video-generator-apps/", g["ai_video_generator_apps_blurb"]()),
+            ("Which Higgsfield alternatives are cheaper per second?", "/guides/higgsfield-alternatives/", g["hf_alternatives_blurb"]()),
+            ("Is Kling cheaper on Higgsfield or on the official site?", "/guides/higgsfield-vs-kling/", g["hf_vs_kling_blurb"]()),
+            ("Is Runway cheaper than Higgsfield per second?", "/guides/higgsfield-vs-runway/", g["hf_vs_runway_blurb"]()),
+            ("How does fal pricing compare with Replicate, WaveSpeed, and Runware?", "/guides/fal-ai-pricing/", g["fal_pricing_blurb"]()),
             ("Where is Kling 3.0 cheapest right now?", "/guides/cheapest-kling-3-0/", g["kling_3_blurb"]()),
             ("Is there a Higgsfield promo code right now?", "/guides/higgsfield-promo-code/", g["hf_promo_code_blurb"]()),
         ]
