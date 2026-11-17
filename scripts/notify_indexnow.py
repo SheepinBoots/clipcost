@@ -38,6 +38,10 @@ GUIDE_URLS = (
     "https://vidfare.com/guides/free-image-to-video-ai/",
     "https://vidfare.com/guides/free-text-to-video-ai/",
     "https://vidfare.com/guides/ai-video-generator-apps/",
+    "https://vidfare.com/guides/higgsfield-alternatives/",
+    "https://vidfare.com/guides/higgsfield-vs-kling/",
+    "https://vidfare.com/guides/higgsfield-vs-runway/",
+    "https://vidfare.com/guides/fal-ai-pricing/",
 )
 
 

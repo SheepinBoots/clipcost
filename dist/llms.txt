@@ -110,6 +110,10 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [Free image to video AI](https://vidfare.com/guides/free-image-to-video-ai/): Which official free tiers actually let you animate a photo, with the limits, watermark, and resolution the vendor published.
 - [Free text to video AI](https://vidfare.com/guides/free-text-to-video-ai/): Which official free tiers actually turn a text prompt into video, with the limits, watermark, resolution, and audio the vendor published.
 - [AI video generator apps](https://vidfare.com/guides/ai-video-generator-apps/): Which AI video tools have an official iPhone or Android app, what the US listings charge in-app, and how that compares with the web price.
+- [Higgsfield alternatives by cost](https://vidfare.com/guides/higgsfield-alternatives/): Higgsfield alternatives ranked by cost per second, with the models where Krea or Replicate is cheaper, and a short OpenArt comparison.
+- [Higgsfield vs Kling](https://vidfare.com/guides/higgsfield-vs-kling/): Kling 3.0 on Higgsfield versus the official API and plans: cost per second, credits, and the limits we could verify.
+- [Higgsfield vs Runway](https://vidfare.com/guides/higgsfield-vs-runway/): Higgsfield vs Runway on plan and API rates, with a short Krea vs Runway note. Unlimited is not sold to new buyers.
+- [fal pricing vs Replicate and others](https://vidfare.com/guides/fal-ai-pricing/): fal AI pricing versus Replicate, WaveSpeed, and Runware, compared per second for the same models, with list and sale rates labelled.
 
 ## Data
 

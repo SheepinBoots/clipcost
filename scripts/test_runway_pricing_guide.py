@@ -165,6 +165,8 @@ def main():
         and "seventeen comparisons" not in guides
         and "Eighteen comparisons" not in guides
         and "eighteen comparisons" not in guides
+        and "Twenty-two comparisons" not in guides
+        and "twenty-two comparisons" not in guides
     ):
         errors.append("guides index count text was not updated")
 

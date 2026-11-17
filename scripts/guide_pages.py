@@ -223,10 +223,14 @@ def render(g):
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/", g["free_image_to_video_blurb"]()),
             ("Which free AI tools turn text into video?", "/guides/free-text-to-video-ai/", g["free_text_to_video_blurb"]()),
             ("Which AI video generators have an official app?", "/guides/ai-video-generator-apps/", g["ai_video_generator_apps_blurb"]()),
+            ("Which Higgsfield alternatives are cheaper per second?", "/guides/higgsfield-alternatives/", g["hf_alternatives_blurb"]()),
+            ("Is Kling cheaper on Higgsfield or on the official site?", "/guides/higgsfield-vs-kling/", g["hf_vs_kling_blurb"]()),
+            ("Is Runway cheaper than Higgsfield per second?", "/guides/higgsfield-vs-runway/", g["hf_vs_runway_blurb"]()),
+            ("How does fal pricing compare with Replicate, WaveSpeed, and Runware?", "/guides/fal-ai-pricing/", g["fal_pricing_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
-        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen"}.get(len(entries), str(len(entries)))
+        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "Nineteen", 20: "Twenty", 21: "Twenty-one", 22: "Twenty-two"}.get(len(entries), str(len(entries)))
         blocks = []
         faqs = []
         for question, path, answer in entries:
