@@ -106,28 +106,14 @@ def expire_deals(doc, today, log):
 
 def format_end_display(deal, short=False):
     """Exact official end when ends_at is present, else the date-only end field."""
-    from datetime import datetime
-    from zoneinfo import ZoneInfo
-
     ends_at = deal.get("ends_at")
     if ends_at:
-        moment = datetime.fromisoformat(str(ends_at).replace("Z", "+00:00"))
-        def _clock(when, label):
-            hour = when.strftime("%I").lstrip("0") or "12"
-            return f"{hour}:{when.strftime('%M %p')} {label}"
+        from timefmt import et_pt
 
-        def _full(when, label):
-            return f"{when.strftime('%B')} {when.day}, {when.year}, {_clock(when, label)}"
-
-        pt = moment.astimezone(ZoneInfo("America/Los_Angeles"))
-        caracas = moment.astimezone(ZoneInfo("America/Caracas"))
+        local = et_pt(str(ends_at), long_month=True)
         if short:
-            return _full(pt, "PT")
-        if (pt.year, pt.month, pt.day) == (caracas.year, caracas.month, caracas.day):
-            local = f"{_full(pt, 'PT')} / {_clock(caracas, 'America/Caracas')}"
-        else:
-            local = f"{_full(pt, 'PT')} / {_full(caracas, 'America/Caracas')}"
-        return f"{ends_at} ({local})"
+            return local
+        return f"{local} ({ends_at})"
     end = deal.get("end")
     if not end:
         return None

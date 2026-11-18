@@ -87,7 +87,7 @@ def main():
         "Affiliate links never change this price order",
         "Confirmed",
         "Unknown",
-        "America/Caracas",
+        " ET (",
         best_ai_video_guide.AA_T2V,
         best_ai_video_guide.AA_I2V,
         "/guides/cheapest-ai-video-generator/",

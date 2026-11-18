@@ -14,7 +14,7 @@ QUESTION = "What is the best AI video generator when you count quality and cost?
 CHECKED = "2026-11-16"
 POLICY_CHECKED = "2026-11-18"
 POLICY_CHECKED_WHEN = "Nov 18, 2026"
-CHECKED_WHEN = "Nov 16, 2026, 9:08 AM America/Caracas (5:08 AM PT)"
+CHECKED_WHEN = "Nov 16, 2026, 8:08 AM ET (5:08 AM PT)"
 
 AA_T2V = "https://artificialanalysis.ai/video/leaderboard/text-to-video"
 AA_I2V = "https://artificialanalysis.ai/video/leaderboard/image-to-video"

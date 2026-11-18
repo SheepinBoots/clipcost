@@ -13,16 +13,16 @@ LABEL = "Higgsfield promo codes"
 PHRASE = "Higgsfield promo code and current deals"
 QUESTION = "Is there a Higgsfield promo code right now?"
 CHECKED = "2026-11-17"
-CHECKED_WHEN = "Nov 17, 2026, 8:16 PM America/Caracas (4:16 PM PT)"
-RECHECK_WHEN = "Nov 17, 2026, 8:16 PM America/Caracas (4:16 PM PT)"
+CHECKED_WHEN = "Nov 17, 2026, 7:16 PM ET (4:16 PM PT)"
+RECHECK_WHEN = "Nov 17, 2026, 7:16 PM ET (4:16 PM PT)"
 COUNTDOWN_READ = (
-    "47 hours, 43 minutes at 4:16 PM PT (8:16 PM America/Caracas) on Nov 17, 2026"
+    "47 hours, 43 minutes at 7:16 PM ET (4:16 PM PT) on Nov 17, 2026"
 )
 # As the pricing page's embedded sale record (source "sale_11_11", phase "pre_black_friday_64") states it.
 BF_ENDS_UTC = "2026-11-20T00:00:00Z"
-BF_ENDS_LOCAL = "Nov 19, 2026, 4:00 PM PT; 8:00 PM America/Caracas"
+BF_ENDS_LOCAL = "Nov 19, 2026, 7:00 PM ET (4:00 PM PT)"
 KLING4_ENDS_UTC = "2026-10-29T00:00:00Z"
-KLING4_ENDS_LOCAL = "Oct 28, 2026, 5:00 PM PT; 8:00 PM America/Caracas"
+KLING4_ENDS_LOCAL = "Oct 28, 2026, 8:00 PM ET (5:00 PM PT)"
 
 PRICING = "https://higgsfield.ai/pricing"
 HELP_CODES = "https://higgsfield.ai/creator-hub/help-center/credits/how-promo-codes-work"
@@ -80,7 +80,7 @@ EXPIRED = [
     {
         "title": "11.11 sale (up to 60% off, first-month offers)",
         "status": "Expired",
-        "ends": "Ended. The first-month offers ended Nov 15, 2026 in our deal record; the public sale record ended at 2026-11-15T00:00:00Z (Nov 14, 2026, 4:00 PM PT).",
+        "ends": "Ended. The first-month offers ended Nov 15, 2026 in our deal record; the public sale record ended at 2026-11-15T00:00:00Z (Nov 14, 2026, 7:00 PM ET (4:00 PM PT)).",
         "source": (BLOG_1111, "Higgsfield 11.11 deals blog post"),
         "checked": CHECKED_WHEN,
     },
@@ -253,7 +253,7 @@ def render(g):
     a_q = (
         "No. We found no public Higgsfield promo code on Higgsfield’s pricing page, help center, "
         "changelog, or its official X accounts @higgsfield_ai and @higgsfield, checked Nov 17, 2026, "
-        "4:16 PM PT. The current discount needs no code: Higgsfield’s Black Friday prices are on "
+        "7:16 PM ET (4:16 PM PT). The current discount needs no code: Higgsfield’s Black Friday prices are on "
         "the plan cards, with Plus at $33 a month and Ultra 3K at $50 a month, billed yearly, Ultra "
         "6K at $95, and Ultra 9K at $136. Higgsfield’s help center says promo codes are announced on its official social "
         "channels first, handed out at Discord community events, or issued case by case by Support. "
@@ -267,8 +267,8 @@ def render(g):
     )
     a_end = (
         "The sale record embedded in Higgsfield’s pricing page ends at 2026-11-20T00:00:00Z, which is "
-        "Nov 19, 2026, 4:00 PM PT (8:00 PM America/Caracas). The page itself prints no date, only a "
-        "countdown, which read 47 hours, 43 minutes at 4:16 PM PT on Nov 17, 2026, matching that time. "
+        "Nov 19, 2026, 7:00 PM ET (4:00 PM PT). The page itself prints no date, only a "
+        "countdown, which read 47 hours, 43 minutes at 7:16 PM ET (4:16 PM PT) on Nov 17, 2026, matching that time. "
         "The record is labelled as a pre-Black Friday phase (pre_black_friday_64), and vendors sometimes extend sales, so "
         "check the pricing page before you buy."
     )
@@ -296,7 +296,7 @@ def render(g):
     )
     a_old = (
         "The 11.11 sale ended, with its first-month offers ending Nov 15, 2026. The Kling 4.0 launch "
-        "discount ended at 2026-10-29T00:00:00Z (Oct 28, 2026, 5:00 PM PT). The Wan 3.0 API 60% off "
+        "discount ended at 2026-10-29T00:00:00Z (Oct 28, 2026, 8:00 PM ET (5:00 PM PT)). The Wan 3.0 API 60% off "
         "ended October 31, 2026, and the Genjutsu API 50% off ended Oct 31, 2026. A free 72-hour MCP "
         "trial posted Nov 10–11 is not confirmed as current, so it is not listed as a live deal."
     )
@@ -320,7 +320,7 @@ def render(g):
         f"There is no public Higgsfield promo code on Higgsfield’s own pages or official accounts right "
         f"now. The current discount needs no code: Black Friday prices are on the plan cards on "
         f"{pricing}, with Plus at $33 a month and Ultra 3K at $50 a month, billed yearly. The sale "
-        f"record on that page ends Nov 19, 2026, 4:00 PM PT (2026-11-20T00:00:00Z), unless Higgsfield "
+        f"record on that page ends Nov 19, 2026, 7:00 PM ET (4:00 PM PT) (2026-11-20T00:00:00Z), unless Higgsfield "
         f"extends it. Every deal below has its source, its end date exactly as "
         f"the source states it, and when we last checked it, {e(CHECKED_WHEN)}."
     )
@@ -330,7 +330,7 @@ def render(g):
 <ul>
 <li><b>No public code.</b> None on Higgsfield’s pricing page, help center, changelog, {x_ai}, or {x_hf}, checked {e(CHECKED_WHEN)}.</li>
 <li><b>No code needed for the sale.</b> Plus $33/mo, Ultra 3K $50/mo, Ultra 6K $95/mo, Ultra 9K $136/mo, billed yearly, before tax.</li>
-<li><b>Ends Nov 19, 4:00 PM PT.</b> That is 2026-11-20T00:00:00Z (8:00 PM America/Caracas), from the sale record in the pricing page; the visible countdown matches. Vendors sometimes extend sales.</li>
+<li><b>Ends Nov 19, 7:00 PM ET (4:00 PM PT).</b> That is 2026-11-20T00:00:00Z, from the sale record in the pricing page; the visible countdown matches. Vendors sometimes extend sales.</li>
 <li><b>Renewals.</b> Monthly sale prices cover the first month, then renew at the standard price. For annual plans, the help center says standard price after the first year, but the plan data lists the discount as “forever,” so that is not confirmed.</li>
 <li><b>Per second.</b> At the sale price, Kling 3.0 at 720p works out to {e(rate_money(r111['usd_per_second']))}/s on Ultra 3K annual if you use every credit.</li>
 </ul>

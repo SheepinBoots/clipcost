@@ -12,11 +12,11 @@ PHRASE = "Free AI video generators: what you get"
 QUESTION = "What do you actually get from a free AI video generator?"
 CHECKED = "2026-11-15"
 CHECKED_WHEN = (
-    "Nov 15, 2026, 10:24–10:32 AM America/Caracas (6:24–6:32 AM PT)"
+    "Nov 15, 2026, 9:24–9:32 AM ET (6:24–6:32 AM PT)"
 )
 SIGNUP_CHECKED = "2026-11-16"
 SIGNUP_CHECKED_WHEN = (
-    "Nov 16, 2026, 9:24 AM America/Caracas (5:24 AM PT)"
+    "Nov 16, 2026, 8:24 AM ET (5:24 AM PT)"
 )
 
 # Official pages opened on CHECKED.

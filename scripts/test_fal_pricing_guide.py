@@ -86,7 +86,7 @@ def main():
     print("ok fal pricing guide")
 
 
-NEEDLES = ['Key takeaways', 'What to do next', 'unknown', 'America/Caracas', 'WaveSpeed', 'Runware', 'Replicate', 'r009', 'r025', 'r202', 'r017', '$0.035', '$0.05', '$0.1028', '$0.015', 'November 23, 2026', '/guides/higgsfield-alternatives/', '/guides/higgsfield-vs-kling/', '/guides/higgsfield-vs-runway/', 'id="takeaways"', 'id="next-steps"', 'id="newsletter"', 'id="wan-catalog-table"', 'id="wan-live-table"', 'https://wavespeed.ai/models/alibaba/wan-3.0/text-to-video', 'https://runware.ai/wan-3-0', 'https://replicate.com/alibaba/wan-3']
+NEEDLES = ['Key takeaways', 'What to do next', 'unknown', ' ET (', 'WaveSpeed', 'Runware', 'Replicate', 'r009', 'r025', 'r202', 'r017', '$0.035', '$0.05', '$0.1028', '$0.015', 'November 23, 2026', '/guides/higgsfield-alternatives/', '/guides/higgsfield-vs-kling/', '/guides/higgsfield-vs-runway/', 'id="takeaways"', 'id="next-steps"', 'id="newsletter"', 'id="wan-catalog-table"', 'id="wan-live-table"', 'https://wavespeed.ai/models/alibaba/wan-3.0/text-to-video', 'https://runware.ai/wan-3-0', 'https://replicate.com/alibaba/wan-3']
 QUESTIONS = ['How does fal pricing compare with Replicate, WaveSpeed, and Runware?', 'How does this API comparison work?', 'Which API is best for each use?', 'What is confirmed, and what is not?']
 RELS = ['guides/index.html', 'index.html', 'models/wan-3-0/index.html', 'models/wan-3-0-prime/index.html', 'models/seedance-2-5/index.html', 'models/minimax-hailuo/index.html', 'models/kling-3-0/index.html', 'models/veo-3-1/index.html', 'models/grok-imagine/index.html']
 

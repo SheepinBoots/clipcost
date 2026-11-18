@@ -102,7 +102,7 @@ def main():
         "What is confirmed, and what is not?",
         "Unknown",
         "Last checked 2026-",
-        "America/Caracas",
+        " ET (",
         "/guides/kling-ai-pricing/",
         "/models/kling-3-0/",
         "/guides/higgsfield-pricing/",

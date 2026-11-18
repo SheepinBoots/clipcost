@@ -11,7 +11,7 @@ LABEL = "Higgsfield vs Runway"
 PHRASE = "Higgsfield vs Runway"
 QUESTION = "Is Runway cheaper than Higgsfield per second?"
 CHECKED = "2026-11-17"
-CHECKED_WHEN = "Nov 17, 2026, 4:50–4:53 PM America/Caracas (12:50–12:53 PM PT)"
+CHECKED_WHEN = "Nov 17, 2026, 3:50–3:53 PM ET (12:50–12:53 PM PT)"
 UNLIMITED_CHECKED = "2026-11-15"
 
 HF_PLANS = "https://higgsfield.ai/pricing"

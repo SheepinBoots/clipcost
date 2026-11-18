@@ -13,7 +13,7 @@ QUESTION = "How does fal pricing compare with Replicate, WaveSpeed, and Runware?
 CHECKED = "2026-11-17"
 POLICY_CHECKED = "2026-11-18"
 HF_API = "https://open.higgsfield.ai/pricing"
-CHECKED_WHEN = "Nov 17, 2026, 4:50–4:53 PM America/Caracas (12:50–12:53 PM PT)"
+CHECKED_WHEN = "Nov 17, 2026, 3:50–3:53 PM ET (12:50–12:53 PM PT)"
 
 FAL_PRICING = "https://fal.ai/pricing"
 FAL_WAN = "https://fal.ai/models/alibaba/wan-3.0/text-to-video"

@@ -86,7 +86,7 @@ def main():
     print("ok higgsfield vs runway guide")
 
 
-NEEDLES = ['Key takeaways', 'What to do next', 'unknown', 'Affiliate links never change this price order', 'America/Caracas', 'Unlimited', 'November 30, 2026', 'r096', 'r055', 'r047', 'r155', '/guides/runway-pricing/', '/guides/higgsfield-pricing/', '/guides/higgsfield-alternatives/', '/guides/higgsfield-vs-kling/', 'id="takeaways"', 'id="next-steps"', 'id="newsletter"', 'id="overall-table"', 'https://runway.com/pricing', 'Krea']
+NEEDLES = ['Key takeaways', 'What to do next', 'unknown', 'Affiliate links never change this price order', ' ET (', 'Unlimited', 'November 30, 2026', 'r096', 'r055', 'r047', 'r155', '/guides/runway-pricing/', '/guides/higgsfield-pricing/', '/guides/higgsfield-alternatives/', '/guides/higgsfield-vs-kling/', 'id="takeaways"', 'id="next-steps"', 'id="newsletter"', 'id="overall-table"', 'https://runway.com/pricing', 'Krea']
 QUESTIONS = ['Is Runway cheaper than Higgsfield per second?', 'What do Runway and Higgsfield plans cost, and what happened to Unlimited?', 'How does Krea compare with Runway, and what other alternatives are there?', 'Which option is best for each use?', 'What is confirmed, and what is not?']
 RELS = ['guides/index.html', 'index.html', 'guides/runway-pricing/index.html', 'models/runway-gen-4/index.html', 'models/wan-3-0/index.html', 'models/veo-3-1/index.html']
 

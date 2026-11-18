@@ -86,7 +86,7 @@ def main():
     print("ok higgsfield vs kling guide")
 
 
-NEEDLES = ['Key takeaways', 'What to do next', 'unknown', 'Affiliate links never change this price order', 'America/Caracas', 'r111', 'r059', 'r007', '$0.0250', '$0.084', '/guides/kling-ai-pricing/', '/guides/higgsfield-pricing/', '/guides/higgsfield-alternatives/', '/guides/higgsfield-vs-runway/', 'id="takeaways"', 'id="next-steps"', 'id="newsletter"', 'id="kling-720p-table"', 'https://kling.ai/document-api/pricing/base/video.md']
+NEEDLES = ['Key takeaways', 'What to do next', 'unknown', 'Affiliate links never change this price order', ' ET (', 'r111', 'r059', 'r007', '$0.0250', '$0.084', '/guides/kling-ai-pricing/', '/guides/higgsfield-pricing/', '/guides/higgsfield-alternatives/', '/guides/higgsfield-vs-runway/', 'id="takeaways"', 'id="next-steps"', 'id="newsletter"', 'id="kling-720p-table"', 'https://kling.ai/document-api/pricing/base/video.md']
 QUESTIONS = ['Is Kling cheaper on Higgsfield or on the official site?', 'How does this comparison work?', 'What do official Kling plans and Higgsfield plans cost?', 'Which option is best for each use?', 'What is confirmed, and what is not?']
 RELS = ['guides/index.html', 'index.html', 'guides/kling-ai-pricing/index.html', 'models/kling-3-0/index.html']
 

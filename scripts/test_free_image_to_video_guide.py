@@ -50,7 +50,7 @@ def main():
         "Affiliate links never change this price order",
         "Confirmed",
         "Unknown",
-        "America/Caracas",
+        " ET (",
         free_image_to_video_guide.KREA_I2V,
         free_image_to_video_guide.FLOW_CREATE,
         free_image_to_video_guide.FLOW_MODELS,
