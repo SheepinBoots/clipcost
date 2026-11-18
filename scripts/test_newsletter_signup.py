@@ -75,7 +75,11 @@ def test_guides():
         check(html.count("<form") == 2, f"{rel} should contain the inline and end-of-guide newsletter forms")
         check(html.count(KIT_ACTION) == 2, f"{rel} inline form is not the existing Kit form")
         check('data-vf-event="newsletter-signup-inline"' in html, f"{rel} inline form is not marked newsletter-signup-inline")
-        check("Get Friday's price-drop email." in main, f"{rel} is missing the compact inline signup line")
+        check("Prices change every week. Get the changes by email." in main, f"{rel} is missing the compact inline signup heading")
+        check("One free email every Friday with price drops, new deals and when they end. Unsubscribe anytime." in main, f"{rel} is missing the compact inline signup line")
+        inline = main[main.find(INLINE_MARK):]
+        inline = inline[:inline.find("</section>") + len("</section>")]
+        check("<h1" not in inline and "<h2" not in inline, f"{rel} inline signup should not add an h1 or h2")
         inline_at = main.find(INLINE_MARK)
         news_at = main.find(NEWS_MARK)
         check(0 <= inline_at < news_at, f"{rel} inline signup must sit before the end-of-guide box")

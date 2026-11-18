@@ -114,13 +114,16 @@ button.btn{min-height:40px}
 .news [data-element="fields"]>label{display:block;margin:0 0 6px}
 .news-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .news input{flex:1;min-width:220px}
-.news-inline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:14px 0 22px;padding:12px 14px}
-.news-inline .news-inline-copy{margin:0;flex:1 1 16rem;min-width:0;line-height:1.4;font-size:14px;color:var(--txt)}
-.news-inline form{margin:0;flex:1 1 16rem;min-width:0;max-width:100%}
-.news-inline .news-row{flex-wrap:nowrap;gap:8px;max-width:100%}
+.news-inline{display:block;margin:28px 0 24px;padding:16px 18px;max-width:100%;box-sizing:border-box}
+.news-inline .news-inline-heading{margin:0 0 6px;font-size:16px;font-weight:700;line-height:1.35;color:var(--txt)}
+.news-inline .news-inline-heading strong{font-weight:700}
+.news-inline .news-inline-copy{margin:0 0 12px;font-size:13.5px;line-height:1.45;color:var(--mut);min-width:0}
+.news-inline form{margin:0;max-width:100%}
+.news-inline .news-row{flex-wrap:nowrap;gap:8px;max-width:32rem}
 .news-inline input{min-width:0;width:auto;max-width:100%}
 .news-inline button.btn{flex:none;padding:8px 14px}
 @media (max-width:600px){
+.news-inline{margin:24px 0 20px;padding:14px}
 .news-inline .news-row{flex-wrap:wrap}
 .news-inline input,.news-inline button.btn{flex:1 1 100%}
 }

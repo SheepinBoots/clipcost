@@ -1160,7 +1160,8 @@ def news_box_inline():
             }
         }
     }, separators=(",", ":")))
-    return f"""{INLINE_NEWS_MARK}<p class="news-inline-copy">Get Friday's price-drop email.</p>
+    return f"""{INLINE_NEWS_MARK}<p class="news-inline-heading"><strong>Prices change every week. Get the changes by email.</strong></p>
+<p class="news-inline-copy">One free email every Friday with price drops, new deals and when they end. Unsubscribe anytime.</p>
 <form action="{KIT_FORM_ACTION}" class="seva-form formkit-form news-inline-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_FORM_UID}" data-format="inline" data-version="5" data-options="{options}" data-vf-event="newsletter-signup-inline">
 <div class="formkit-notices" aria-live="polite">
 <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
