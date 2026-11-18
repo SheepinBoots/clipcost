@@ -13,14 +13,14 @@ LABEL = "Higgsfield promo codes"
 PHRASE = "Higgsfield promo code and current deals"
 QUESTION = "Is there a Higgsfield promo code right now?"
 CHECKED = "2026-11-17"
-CHECKED_WHEN = "Nov 17, 2026, 5:04–5:15 PM America/Caracas (1:04–1:15 PM PT)"
-RECHECK_WHEN = "Nov 17, 2026, 5:34–5:36 PM America/Caracas (1:34–1:36 PM PT)"
+CHECKED_WHEN = "Nov 17, 2026, 8:16 PM America/Caracas (4:16 PM PT)"
+RECHECK_WHEN = "Nov 17, 2026, 8:16 PM America/Caracas (4:16 PM PT)"
 COUNTDOWN_READ = (
-    "0 days, 2 hours, 24 minutes, 53 seconds at 1:35 PM PT (5:35 PM America/Caracas) on Nov 17, 2026"
+    "47 hours, 43 minutes at 4:16 PM PT (8:16 PM America/Caracas) on Nov 17, 2026"
 )
-# As the pricing page's embedded sale record (source "sale_11_11", phase "pre_black_friday") states it.
-BF_ENDS_UTC = "2026-11-18T00:00:00Z"
-BF_ENDS_LOCAL = "Nov 17, 2026, 4:00 PM PT; 8:00 PM America/Caracas"
+# As the pricing page's embedded sale record (source "sale_11_11", phase "pre_black_friday_64") states it.
+BF_ENDS_UTC = "2026-11-20T00:00:00Z"
+BF_ENDS_LOCAL = "Nov 19, 2026, 4:00 PM PT; 8:00 PM America/Caracas"
 KLING4_ENDS_UTC = "2026-10-29T00:00:00Z"
 KLING4_ENDS_LOCAL = "Oct 28, 2026, 5:00 PM PT; 8:00 PM America/Caracas"
 
@@ -40,7 +40,7 @@ CURRENT = [
     {
         "id": "bf-annual",
         "title": "Black Friday sale: annual plans",
-        "offer": "Plus $33/mo billed yearly (was $59, card says −45%, “Save $312”). Ultra 3K $50/mo billed yearly (was $129, −60%, “Save $948”). Ultra 6K $90/mo billed yearly (card shows $258 crossed out, −65%, “Save $1,920”). Ultra 9K $135/mo billed yearly (was $387, −65%, “Save $2,880”). Starter stays $19/mo.",
+        "offer": "Plus $33/mo billed yearly (was $59, card says −45%, “Save $312”). Ultra 3K $50/mo billed yearly (was $129, −60%, “Save $948”). Ultra 6K $95/mo billed yearly (card shows $258 crossed out, −63%, “Save $1,860”). Ultra 9K $136/mo billed yearly (was $387, −64%, “Save $2,868”). Starter stays $19/mo.",
         "code": "No code. The price is on the plan card.",
         "ends": "Ends " + BF_ENDS_UTC + " (" + BF_ENDS_LOCAL + "), the end time in the sale record embedded in the pricing page. The page itself shows only a countdown, which read " + COUNTDOWN_READ + ", matching that time. Vendors sometimes extend sales.",
         "source": (PRICING, "Higgsfield pricing page"),
@@ -49,9 +49,9 @@ CURRENT = [
     {
         "id": "monthly-first",
         "title": "First month off on monthly plans",
-        "offer": "Plus $47 for the first month, “renews at $59” (20% off). Ultra 3K $79, “renews at $129” (40% off). Ultra 6K $150, “renews at $250” (40% off). Ultra 9K $209, then $375 (45% off), from the plan data the pricing page loads.",
+        "offer": "Plus $47 for the first month, “renews at $59” (20% off). Ultra 3K $79, “renews at $129” (40% off). Ultra 6K $150, “renews at $250” (40% off). Ultra 9K $209, “renews at $375” (45% off).",
         "code": "No code. The price is on the plan card.",
-        "ends": "End date not stated. The page does not say whether these monthly prices end with the Black Friday countdown.",
+        "ends": "The official sale record ends at " + BF_ENDS_UTC + " (" + BF_ENDS_LOCAL + "). The monthly cards print the renewal list price but do not print a separate calendar end.",
         "source": (PRICING, "Higgsfield pricing page, Monthly tab"),
         "checked": RECHECK_WHEN,
     },
@@ -182,8 +182,8 @@ def render(g):
         if plan and float(plan.get("usd_month") or 0) != float(usd):
             raise SystemExit(f"{PATH} copy assumes {r['plan']} is ${usd}/mo; catalog says {plan.get('usd_month')}")
     credits_clip = 7.5
-    six_k = 90.0 / 6000 * credits_clip / 5
-    nine_k = 135.0 / 9000 * credits_clip / 5
+    six_k = 95.0 / 6000 * credits_clip / 5
+    nine_k = 136.0 / 9000 * credits_clip / 5
     plus_first = 47.0 / 1200 * credits_clip / 5
     ultra_first = 79.0 / 3000 * credits_clip / 5
 
@@ -192,7 +192,7 @@ def render(g):
             return (
                 f"Plus annual {e(rate_money(r109['usd_per_second']))}/s (catalog row r109); "
                 f"Ultra 3K annual {e(rate_money(r111['usd_per_second']))}/s (row r111); "
-                f"Ultra 6K annual {e(rate_money(six_k))}/s, computed from the $90 card and 6,000 credits; Ultra 9K annual {e(rate_money(nine_k))}/s, computed from the $135 card and 9,000 credits. Neither is a catalog row."
+                f"Ultra 6K annual {e(rate_money(six_k))}/s, computed from the $95 card and 6,000 credits; Ultra 9K annual {e(rate_money(nine_k))}/s, computed from the $136 card and 9,000 credits. Neither is a catalog row."
             )
         if entry_id == "monthly-first":
             return (
@@ -253,23 +253,23 @@ def render(g):
     a_q = (
         "No. We found no public Higgsfield promo code on Higgsfield’s pricing page, help center, "
         "changelog, or its official X accounts @higgsfield_ai and @higgsfield, checked Nov 17, 2026, "
-        "1:04–1:15 PM PT. The current discount needs no code: Higgsfield’s Black Friday prices are on "
+        "4:16 PM PT. The current discount needs no code: Higgsfield’s Black Friday prices are on "
         "the plan cards, with Plus at $33 a month and Ultra 3K at $50 a month, billed yearly, Ultra "
-        "6K at $90, and Ultra 9K at $135. Higgsfield’s help center says promo codes are announced on its official social "
+        "6K at $95, and Ultra 9K at $136. Higgsfield’s help center says promo codes are announced on its official social "
         "channels first, handed out at Discord community events, or issued case by case by Support. "
         "This page lists no code until one appears on an official channel."
     )
     a_discount = (
-        "Not a code. The Black Friday sale is applied on the pricing page itself: up to 65% off, with "
+        "Not a code. The Black Friday sale is applied on the pricing page itself: up to 64% off, with "
         "Plus annual at $33 a month (was $59), Ultra 3K annual at $50 (was $129), Ultra 6K annual "
-        "at $90, and Ultra 9K annual at $135 (was $387). Monthly plans show a first-month price instead: Plus $47, then $59; Ultra 3K $79, then "
+        "at $95, and Ultra 9K annual at $136 (was $387). Monthly plans show a first-month price instead: Plus $47, then $59; Ultra 3K $79, then "
         "$129. Prices exclude VAT and local taxes, which are added at checkout."
     )
     a_end = (
-        "The sale record embedded in Higgsfield’s pricing page ends at 2026-11-18T00:00:00Z, which is "
-        "Nov 17, 2026, 4:00 PM PT (8:00 PM America/Caracas). The page itself prints no date, only a "
-        "countdown, which read 2 hours, 24 minutes at 1:35 PM PT on Nov 17, 2026, matching that time. "
-        "The record is labelled as a pre-Black Friday phase, and vendors sometimes extend sales, so "
+        "The sale record embedded in Higgsfield’s pricing page ends at 2026-11-20T00:00:00Z, which is "
+        "Nov 19, 2026, 4:00 PM PT (8:00 PM America/Caracas). The page itself prints no date, only a "
+        "countdown, which read 47 hours, 43 minutes at 4:16 PM PT on Nov 17, 2026, matching that time. "
+        "The record is labelled as a pre-Black Friday phase (pre_black_friday_64), and vendors sometimes extend sales, so "
         "check the pricing page before you buy."
     )
     a_how = (
@@ -320,7 +320,7 @@ def render(g):
         f"There is no public Higgsfield promo code on Higgsfield’s own pages or official accounts right "
         f"now. The current discount needs no code: Black Friday prices are on the plan cards on "
         f"{pricing}, with Plus at $33 a month and Ultra 3K at $50 a month, billed yearly. The sale "
-        f"record on that page ends Nov 17, 2026, 4:00 PM PT (2026-11-18T00:00:00Z), unless Higgsfield "
+        f"record on that page ends Nov 19, 2026, 4:00 PM PT (2026-11-20T00:00:00Z), unless Higgsfield "
         f"extends it. Every deal below has its source, its end date exactly as "
         f"the source states it, and when we last checked it, {e(CHECKED_WHEN)}."
     )
@@ -329,8 +329,8 @@ def render(g):
 <h2>Key takeaways</h2>
 <ul>
 <li><b>No public code.</b> None on Higgsfield’s pricing page, help center, changelog, {x_ai}, or {x_hf}, checked {e(CHECKED_WHEN)}.</li>
-<li><b>No code needed for the sale.</b> Plus $33/mo, Ultra 3K $50/mo, Ultra 6K $90/mo, Ultra 9K $135/mo, billed yearly, before tax.</li>
-<li><b>Ends Nov 17, 4:00 PM PT.</b> That is 2026-11-18T00:00:00Z (8:00 PM America/Caracas), from the sale record in the pricing page; the visible countdown matches. Vendors sometimes extend sales.</li>
+<li><b>No code needed for the sale.</b> Plus $33/mo, Ultra 3K $50/mo, Ultra 6K $95/mo, Ultra 9K $136/mo, billed yearly, before tax.</li>
+<li><b>Ends Nov 19, 4:00 PM PT.</b> That is 2026-11-20T00:00:00Z (8:00 PM America/Caracas), from the sale record in the pricing page; the visible countdown matches. Vendors sometimes extend sales.</li>
 <li><b>Renewals.</b> Monthly sale prices cover the first month, then renew at the standard price. For annual plans, the help center says standard price after the first year, but the plan data lists the discount as “forever,” so that is not confirmed.</li>
 <li><b>Per second.</b> At the sale price, Kling 3.0 at 720p works out to {e(rate_money(r111['usd_per_second']))}/s on Ultra 3K annual if you use every credit.</li>
 </ul>
@@ -358,7 +358,7 @@ def render(g):
 <h2>Current Higgsfield deals</h2>
 <p>Only deals from Higgsfield’s own pages or official accounts. Each per-second example is Kling 3.0 at 720p, audio not stated, and assumes every credit you pay for is used, at about 7.5 credits per 5-second clip (Higgsfield labels it ~7). Prices exclude VAT and local taxes, which Higgsfield adds at checkout.</p>
 {current_table}
-<p class="small">The Ultra 6K annual card shows $258 crossed out, while 12 × ($258 − $90) would be $2,016, not the “Save $1,920” on the same card; the monthly 6K list price is $250. Both figures are copied as shown. Per-second rates for every model on the sale are in <a href="{e(bf_href)}">Higgsfield Black Friday 2026: what you save per second</a>.</p>
+<p class="small">The Ultra 6K annual card shows $258 crossed out, while 12 × ($258 − $95) would be $1,956, not the “Save $1,860” on the same card; the monthly 6K list price is $250. Both figures are copied as shown. Per-second rates for every model on the sale are in <a href="{e(bf_href)}">Higgsfield Black Friday 2026: what you save per second</a>.</p>
 
 <h2>Is there a Higgsfield AI discount code for Black Friday?</h2>
 <p>{e(a_discount)}</p>
