@@ -11,6 +11,8 @@ LABEL = "fal AI pricing"
 PHRASE = "fal pricing vs Replicate and others"
 QUESTION = "How does fal pricing compare with Replicate, WaveSpeed, and Runware?"
 CHECKED = "2026-11-17"
+POLICY_CHECKED = "2026-11-18"
+HF_API = "https://open.higgsfield.ai/pricing"
 CHECKED_WHEN = "Nov 17, 2026, 4:50–4:53 PM America/Caracas (12:50–12:53 PM PT)"
 
 FAL_PRICING = "https://fal.ai/pricing"
@@ -273,10 +275,24 @@ def render(g):
         f"on WaveSpeed or Runware is billed as the same product as fal’s H3 Max Turbo."
     )
 
+    q_video_api = "How do video generation API prices compare?"
+    a_video_api = (
+        "This page already compares catalog API rows for Seedance 2.5, MiniMax, Kling 3.0, Veo 3.1, and Grok Imagine, next to Replicate, WaveSpeed, and Runware where we have a verified rate. "
+        "Higgsfield API list rates for the same models are also in our catalog. "
+        "Seedance 2.0 is not in this catalog, so no Seedance 2.0 API rate is shown. "
+        "Affiliate links never change this price order."
+    )
+    q_coupon = "Is there a fal coupon code?"
+    a_coupon = (
+        f"No public coupon or promo code was listed on fal's official pricing page when it was opened {checked_pt(POLICY_CHECKED)}. "
+        "This guide does not invent a code."
+    )
     faqs = [
         (QUESTION, a_q),
         ("How does this API comparison work?", a_how),
+        (q_video_api, a_video_api),
         ("Which API is best for each use?", a_best),
+        (q_coupon, a_coupon),
         ("What is confirmed, and what is not?", a_unknown),
     ]
     for q, a in faqs:
@@ -354,6 +370,9 @@ def render(g):
 <p>fal’s catalog row is the 1.5 model at 480p with audio. The cheaper official xAI and Runway API rows are Grok Imagine 1.5 Lite, a different variant, at 480p with audio not stated.</p>
 {catalog_table(GROK_ROWS, "grok-catalog-table")}
 
+<h2>{e(q_video_api)}</h2>
+<p>{e(a_video_api)} The Seedance 2.5, MiniMax, Kling 3.0, Veo 3.1, and Grok tables above are the fal and other-API rows we already track. Higgsfield API list rates, from {src(HF_API, "open.higgsfield.ai/pricing")} and our catalog, sit on the <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing</a> page and on each model page. A general “video generation API” price does not exist as one number: it depends on the model, resolution, audio, and vendor.</p>
+
 <h2>Which API is best for each use?</h2>
 <p>{e(a_best)}</p>
 <ul>
@@ -363,6 +382,9 @@ def render(g):
 <li><b>fal.</b> Best for: staying on one endpoint you already use, with catalog coverage across Wan, Seedance, Kling, Veo, MiniMax, and Grok. Not for: the lowest verified Wan 3.0 or Seedance 2.5 rate in this comparison. {fal_wan}.</li>
 </ul>
 <p>No line given for Runware Seedance 2.5, or for Kling 3.0 on WaveSpeed or Runware, because those rates were not verified at a stated resolution.</p>
+
+<h2>{e(q_coupon)}</h2>
+<p>{e(a_coupon)} Source: {src(FAL_PRICING, "fal.ai/pricing")}, opened {e(checked_pt(POLICY_CHECKED))}.</p>
 
 <h2>What is confirmed, and what is not?</h2>
 <p>{e(a_unknown)}</p>

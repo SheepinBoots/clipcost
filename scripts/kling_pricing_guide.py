@@ -12,6 +12,7 @@ KLING_PLANS = "https://kling.ai/app/membership/membership-plan"
 KLING_API = "https://kling.ai/document-api/pricing/base/video.md"
 KLING_MARKETING = "https://kling.ai/pricing"
 PAID_TERMS = "https://kling.ai/docs/payment-policy"
+TERMS_CHECKED = "2026-11-18"
 MODEL_PATH = "/models/kling-3-0/"
 CALC_PATH = "/calculator/?model=kling-3-0&seconds=10"
 CHECKED = "2026-11-14"
@@ -345,12 +346,59 @@ def render(g):
     )
 
     # Avoid the substring "subscribe" in FAQ JSON-LD (it also matches "subscription").
+    seedance_rows = [r for r in g["rows"] if r.get("model") == "seedance-2-5"]
+    cheapest_seedance = min(seedance_rows, key=lambda r: (r["usd_per_second"], r["id"])) if seedance_rows else None
+
+    q_cancel = "How do I cancel a Kling paid plan?"
+    a_cancel = (
+        f"Kling's Terms of Paid Service, effective Oct 10, 2026, and re-read {checked_pt(TERMS_CHECKED)}, "
+        "tell you to cancel a Stripe-billed plan in Stripe, an iOS plan in the iPhone or iPad Settings app or the App Store purchase history, "
+        "and a Google Play plan in Google Play. After a paid plan is activated, fees are not refundable unless those terms specifically allow it. "
+        "Turning off credit auto-recharge is a separate step inside Kling (Profile, then Credits, then Auto-Recharge Management) and does not cancel a paid plan."
+    )
+    q_credits_how = "How do official Kling credits work?"
+    a_credits_how = (
+        f"The same terms, re-read {checked_pt(TERMS_CHECKED)}, distinguish plan credits from purchased credit packs. "
+        "Credits that come with a paid plan are distributed each month and, as of those terms, are valid for 1 month from the date they are added to your account. "
+        "Credits you buy (including auto-recharge purchases) are valid for 2 years from the date they are added. "
+        "Credits with the shorter remaining validity period are used first. "
+        "The official membership page still does not publish how many credits a Kling 3.0 clip uses, so this guide does not invent a cost per second from app credits."
+    )
+    q_vs_seedance = "How does Kling 3.0 compare with Seedance 2.5 on price?"
+    if cheapest_seedance:
+        a_vs_seedance = (
+            f"In our catalog, the cheapest Kling 3.0 rate we track is {rate_money(cheapest['usd_per_second'])}/s "
+            f"on {cheapest['platform']} ({cheapest['variant']}, {shown_resolution(cheapest)}), "
+            f"checked {checked_pt(cheapest.get('checked'))}. The cheapest Seedance 2.5 rate we track is "
+            f"{rate_money(cheapest_seedance['usd_per_second'])}/s on {cheapest_seedance['platform']} "
+            f"({cheapest_seedance['variant']}, {shown_resolution(cheapest_seedance)}), "
+            f"checked {checked_pt(cheapest_seedance.get('checked'))}. "
+            "Those figures are not a quality ranking. A credit-plan rate only holds if you use the credits you pay for. "
+            "Affiliate links never change this price order."
+        )
+    else:
+        a_vs_seedance = (
+            f"The cheapest Kling 3.0 rate we track is {rate_money(cheapest['usd_per_second'])}/s "
+            f"on {cheapest['platform']}. A Seedance 2.5 comparison row was not available in the catalog when this page was built."
+        )
+    q_free = "Is Kling free?"
+    a_free = (
+        "Kling sells paid Standard, Pro, Premier, and Ultra+ plans, which are listed on this page from the official membership page. "
+        f"The Terms of Paid Service, re-read {checked_pt(TERMS_CHECKED)}, describe those paid plans and do not describe a free plan. "
+        "How many clips you can make without paying is not published as a credits-per-clip figure, so this guide does not invent a free-clip count. "
+        "A short dedicated page on whether Kling is free is planned."
+    )
+
     faqs = [
         (QUESTION, a_plans),
         (q_plans, a_plans),
         (q_credits, a_credits),
+        (q_credits_how, a_credits_how),
         (q_api, a_api),
         (q_cheaper, a_cheaper),
+        (q_cancel, a_cancel),
+        (q_vs_seedance, a_vs_seedance),
+        (q_free, a_free),
         (q_unknown, a_unknown),
     ]
     for q, a in faqs:
@@ -392,6 +440,8 @@ def render(g):
 
 <h2>{e(q_credits)}</h2>
 <p>{e(a_credits)} Benefits the page does list for paid plans include a generation queue, 1080p/4K video generation, watermark removal, and commercial use of generated content. It also mentions daily free credits for members and, during promotional periods, discounts that use fewer credits on eligible models, without a credits-per-clip table.</p>
+<h2>{e(q_credits_how)}</h2>
+<p>{e(a_credits_how)} Source: {terms}, re-read {e(checked_pt(TERMS_CHECKED))}.</p>
 
 <h2>{e(q_api)}</h2>
 <p>{e(a_api)}</p>
@@ -406,6 +456,16 @@ def render(g):
 
 <h2>{e(q_cheaper)}</h2>
 <p>{e(a_cheaper)}</p>
+
+<h2>{e(q_cancel)}</h2>
+<p>{e(a_cancel)}</p>
+<p>The official unsubscription steps in those terms are: for Stripe payments, use “Manage my subscription,” then “Cancel subscription,” then go to Stripe to manage the plan; for iOS 12 and above, open Settings, tap your name, open Subscriptions, choose the KLING AI plan, and tap Cancel Subscription (or cancel it from the App Store account purchase history); for older iOS, use Settings → iTunes Store &amp; App Store → Apple ID → Subscriptions; for Google Play, open subscriptions, select the plan, and tap Cancel subscription. Source: {terms}, re-read {e(checked_pt(TERMS_CHECKED))}.</p>
+
+<h2>{e(q_vs_seedance)}</h2>
+<p>{e(a_vs_seedance)} Related: <a href="{root("/models/seedance-2-5/")}">Seedance 2.5 model page</a> · <a href="{root("/guides/cheapest-seedance-2-5/")}">cheapest Seedance 2.5 rates we track</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans</a> · <a href="{e(model_href)}">Kling 3.0 model page</a>.<!-- Future guide: /guides/is-seedance-free/ --></p>
+
+<h2>{e(q_free)}</h2>
+<p>{e(a_free)}<!-- Future guide: /guides/is-kling-ai-free/ --></p>
 
 <h2>{e(q_unknown)}</h2>
 <p>{e(a_unknown)}</p>

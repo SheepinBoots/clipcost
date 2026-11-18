@@ -451,9 +451,46 @@ def render(g):
         "API rates are the current API rows in VidFare's price data, each with its own source and checked date. "
         "The daily price check re-reads every Flow number on Google's pages."
     )
+    def credit_summary(c):
+        if not c:
+            return ""
+        table = c.get("credits_per_generation") or {}
+        if "all" in table:
+            cr = f"{num(table['all'])} credits for all users"
+        elif "non_ultra" in table and "ultra" in table:
+            cr = f"{num(table['non_ultra'])} credits ({num(table['ultra'])} on Ultra)"
+        elif "ultra_20x" in table:
+            who = (c.get("eligible") or "the users Google lists")
+            who = who.replace("subscribers", "plan members").replace("subscriber", "plan member")
+            cr = f"{num(table['ultra_20x'])} credits, for {who}"
+        else:
+            cr = "the credits listed in the table below"
+        secs = c.get("clip_seconds")
+        if isinstance(secs, list):
+            sl = ", ".join(f"{s}s" for s in secs)
+        else:
+            sl = "the lengths Google lists"
+        res = c.get("resolution") or "resolution not stated"
+        ret = f" It retires on {c['retiring_on']}." if c.get("retiring_on") else ""
+        return f"{c['variant']} at {res} for {sl} costs {cr}.{ret}"
+
+    veo_costs = [next((c for c in flow["credit_costs"] if c["id"] == i), None) for i in (
+        "flow-veo31-lite", "flow-veo31-fast", "flow-veo31-quality", "flow-veo31-lite-lower-priority",
+    )]
+    veo_bits = [credit_summary(c) for c in veo_costs if c]
+    veo_checked = next((c["checked"] for c in veo_costs if c and c.get("checked")), updated)
+    q_veo = "How much does Veo 3.1 cost?"
+    a_veo = (
+        "In Google Flow, Veo 3.1 is billed in credits per generated video, not as one public dollar price. "
+        + " ".join(veo_bits) + " "
+        f"Those figures were re-read {veo_checked} on Google's Flow help page. "
+        "API routes for Veo 3.1 are in the comparison table on this page and on the Veo 3.1 model page. "
+        "A short dedicated page on Google Flow pricing and free use is planned."
+    )
+    faqs.insert(0, (q_veo, a_veo))
     faqs.append(("How do we calculate this?", how))
 
-    faq_html = "".join(f"<h2>{e(q)}</h2><p>{e(a)}</p>" for q, a in faqs)
+    faq_html = "".join(f"<h2>{e(q)}</h2><p>{e(a)}</p>" for q, a in faqs if q != q_veo)
     faq_html = faq_html.replace(e(f"{SITE_URL}/calculator/"), f'<a href="{root("/calculator/")}">{e(SITE_URL + "/calculator/")}</a>', 1)
     faq_html = faq_html.replace(
         e(f"{SITE_URL}/guides/ai-video-project-budget/"),
@@ -470,6 +507,8 @@ def render(g):
 <p class="small">Last updated {e(updated)}. Flow numbers checked {e(updated)} on {help_link()} and the {plans_link()}. API prices last checked {e(LAST)}.</p>
 {banner}
 <p class="small">{e(assumptions)}</p>
+<h2>{e(q_veo)}</h2>
+<p>{e(a_veo)} Source: {help_link("Manage your Google Flow credits")}. See also the <a href="{root("/models/veo-3-1/")}">Veo 3.1 model page</a>.<!-- Future guide: /guides/google-flow-pricing/ --></p>
 <h2>Flow credits calculator</h2>
 {calc_html}
 <p class="small">Using a Higgsfield, Krea, or Magnific plan instead? Use the <a href="{root("/calculator/")}">credit calculator</a>. Pricing a whole project from dollars per second? Use the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a>.</p>

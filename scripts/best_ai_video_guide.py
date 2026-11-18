@@ -12,6 +12,8 @@ LABEL = "Best AI video generator"
 PHRASE = "Best AI video generator by value"
 QUESTION = "What is the best AI video generator when you count quality and cost?"
 CHECKED = "2026-11-16"
+POLICY_CHECKED = "2026-11-18"
+POLICY_CHECKED_WHEN = "Nov 18, 2026"
 CHECKED_WHEN = "Nov 16, 2026, 9:08 AM America/Caracas (5:08 AM PT)"
 
 AA_T2V = "https://artificialanalysis.ai/video/leaderboard/text-to-video"
@@ -418,11 +420,32 @@ def render(g):
         "Elo intervals that overlap are not treated as a settled rank order."
     )
 
+    q_audio = "Which of the models we cover can add audio or sound?"
+    a_audio = (
+        f"The official length and audio table on this page, last read {CHECKED_WHEN}, is the source for these yes-or-no calls. "
+        "Of the nine models we cover, only Kling 3.0 has a clear official yes: native audio is a billed option on the official API pricing table. "
+        "Veo 3.1 is mixed: some official and catalog rows are labeled with audio, some without. "
+        "For Wan 3.0, Wan 3.0 Prime, Seedance 2.5 on the cheapest catalog row, Gemini Omni Flash, MiniMax Hailuo, Runway Gen-4, and Grok Imagine, "
+        "the official pages used for that table do not state a single yes-or-no audio rule. "
+        "Those vendor audio pages were not all re-opened today."
+    )
+    q_longest = "Which of the models we cover can make the longest clip?"
+    a_longest = (
+        f"The official length table on this page, last read {CHECKED_WHEN}, lists a 30-second maximum for Wan 3.0, Wan 3.0 Prime, and Seedance 2.5. "
+        "Those three vendor pages were not re-opened today. "
+        f"We re-checked two shorter official caps on {POLICY_CHECKED_WHEN}: "
+        "Grok Imagine is up to 15 seconds on the official product page, and Google Flow Help lists Veo 3.1 Lite and Fast at 4, 6, or 8 seconds, "
+        "and Veo 3.1 Quality at 8 seconds. "
+        "Gemini Omni Flash is listed at up to 10 seconds for all users, and up to 15 seconds on Google AI Plus, Pro, and Ultra, from that same Nov 16 Flow-help citation. "
+        "Official maximum clip lengths for Kling 3.0, MiniMax Hailuo, and Runway Gen-4 were not printed on the vendor pages used for that table."
+    )
     faqs = [
         (QUESTION, a_best),
         ("How do you measure quality?", a_quality),
         ("How do you measure cost?", a_cost),
         ("Which model is best for each use?", a_use),
+        (q_audio, a_audio),
+        (q_longest, a_longest),
         ("What is confirmed, and what is not?", a_unknown),
     ]
     for q, a in faqs:
@@ -469,6 +492,12 @@ def render(g):
 <li><b>No public quality score.</b> <a href="{e(model_hrefs['runway-gen-4'])}">Runway Gen-4</a> and <a href="{e(model_hrefs['wan-3-0-prime'])}">Wan 3.0 Prime</a> were not on the Artificial Analysis boards we opened today, so their quality is unknown here. Their catalog rates are still listed in the table. See <a href="{e(runway_href)}">Runway pricing per second</a>.</li>
 </ul>
 <p>Related: <a href="{e(kling_href)}">Kling AI pricing and credits</a> · <a href="{e(hf_href)}">Higgsfield pricing explained</a> · <a href="{e(flow_href)}">Google Flow credits calculator</a> · <a href="{e(free_href)}">free AI video generators: what you get</a> · <a href="{e(budget_href)}">project budget calculator</a> · <a href="{e(calc_href)}">credit calculator</a>.</p>
+
+<h2>{e(q_audio)}</h2>
+<p>{e(a_audio)} The cell-by-cell sources are in the official length, resolution, and audio table above, last read {e(CHECKED_WHEN)}.</p>
+
+<h2>{e(q_longest)}</h2>
+<p>{e(a_longest)} Sources re-read {e(POLICY_CHECKED_WHEN)}: {xai_src} for the 15-second Grok Imagine cap, and {flow_src} for Veo 3.1 Lite, Fast, and Quality lengths. Wan, Seedance, and Omni Flash length citations stay dated {e(CHECKED_WHEN)} in the table above.</p>
 
 <h2>What is confirmed, and what is not?</h2>
 <p>{e(a_unknown)}</p>

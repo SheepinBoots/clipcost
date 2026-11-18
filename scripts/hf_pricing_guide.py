@@ -13,6 +13,13 @@ HF_API = "https://open.higgsfield.ai/pricing"
 HELP_PLANS = "https://higgsfield.ai/creator-hub/help-center/plans-and-subscriptions/how-do-higgsfield-plans-work"
 HELP_UNLIM = "https://higgsfield.ai/creator-hub/help-center/credits/what-are-unlimited-models-and-which-plans-include-them"
 HELP_PROMO = "https://higgsfield.ai/creator-hub/help-center/plans/how-do-promo-prices-work"
+HELP_CREDITS = "https://higgsfield.ai/creator-hub/help-center/credits/how-credits-work"
+HELP_EXPIRE = "https://higgsfield.ai/creator-hub/help-center/credits/top-up-credits-expire"
+HELP_PACKS = "https://higgsfield.ai/creator-hub/help-center/credits/how-credit-packs-work"
+HELP_CANCEL = "https://higgsfield.ai/creator-hub/help-center/refunds/how-do-i-cancel-my-subscription"
+HELP_REFUND = "https://higgsfield.ai/creator-hub/help-center/refunds/how-do-i-request-a-refund"
+HELP_FREE = "https://higgsfield.ai/creator-hub/help-center/plans/what-does-the-free-plan-include"
+POLICY_CHECKED = "2026-11-18"
 CHECKED = "2026-11-13"
 # Official 11.11 sale record, now ended: ends_at 2026-11-15T00:00:00Z.
 # That instant is Nov 14, 2026, 4:00 PM PT. The page header said "11.11 sale ends on Nov 15."
@@ -228,9 +235,58 @@ def render(g):
         "Team’s unlimited video window is Seedance 2.0 (15s, 720p), not Seedance 2.5: 14 days on annual, 7 days on monthly, also after business verification. "
         "The page does not say when those day counts start."
     )
+    q_credits_how = "How do Higgsfield credits work?"
+    a_credits_how = (
+        f"Official help, re-read {checked_pt(POLICY_CHECKED)}, says credits are what Higgsfield charges for image and video generations. "
+        "The cost depends on the model, resolution, and duration, and is shown on the Generate button before you confirm. "
+        "Plan credits reset and do not roll over: on monthly plans at each paid renewal, and on annual plans every 30 days. "
+        "Credit Pack, Auto-Refill, and Boost credits are one-time balances that expire 90 days from purchase. "
+        "Promo credits expire on the date shown when they are issued. "
+        "Plan credits are spent first; then any remaining credits are spent by the earliest expiry date. "
+        "Credits per clip for the models we track are in the compare-table section on this page, not in the help article."
+    )
+    q_refund = "What is Higgsfield's refund policy?"
+    a_refund = (
+        f"Official help, re-read {checked_pt(POLICY_CHECKED)}, says refunds are for initial purchases only, "
+        "within 7 days or as permitted by the law in your jurisdiction, and only if no credits have been used. "
+        "Renewals are not refundable. Credit Packs and Auto-Refill charges can be refunded on the same 7-day, unused-credit conditions. "
+        "Offers that unlock access or features rather than credits are not refundable once that access is granted. "
+        "Using free generations or Unlimited model generations does not count as credit use. "
+        "A service fee of up to 6% is deducted, and if a refund is approved the plan is cancelled immediately, with funds returning to the original payment method in 5–10 business days. "
+        "Cancelling a plan does not, by itself, issue a refund. Request a refund through Higgsfield's contact form with your account email, purchase date, amount, and a short reason."
+    )
+    q_cancel = "How do I cancel a Higgsfield plan?"
+    a_cancel = (
+        f"Official help, re-read {checked_pt(POLICY_CHECKED)}, says cancelling turns off auto-renewal. "
+        "The plan stays active until the end of the current paid period, then the account moves to the free plan. "
+        "Cancel from Manage Account, then the plan section, then Plan Settings, then Manage the plan, then Show, then Cancel the plan. "
+        "This does not delete your account or your generations, and it does not automatically refund the current period. "
+        "Plan credits remain usable until the paid period ends, then they expire. Credit Pack, Auto-Refill, promo, and Boost credits stay available on the free plan until their own expiry dates, and can be spent on the models the free plan includes."
+    )
+    cheapest_api = sorted(hf_api_rows, key=lambda r: (r["usd_per_second"], r["id"]))[0] if hf_api_rows else None
+    q_api_cost = "What does the Higgsfield API cost?"
+    if cheapest_api:
+        a_api_cost = (
+            f"Higgsfield's official API is billed pay-as-you-go, separately from plan credits. "
+            f"In our catalog, the cheapest Higgsfield API row is {rate_money(cheapest_api['usd_per_second'])}/s "
+            f"for {cheapest_api['model']} ({cheapest_api.get('variant') or 'listed rate'}, {shown_resolution(cheapest_api)}), "
+            f"checked {checked_pt(cheapest_api.get('checked'))}. "
+            "Other catalog API rows on this page include Wan 3.0 Prime, Wan 3.0, Kling 3.0, and Seedance 2.5 list rates from the official API pricing page. "
+            "Those API list prices are not plan-sale prices. Affiliate links never change this price order."
+        )
+    else:
+        a_api_cost = "Higgsfield's official API is billed pay-as-you-go. Catalog API rows were not available when this page was built."
+    q_free = "Is Higgsfield free?"
+    a_free = (
+        f"Yes, there is a free plan. Official help, re-read {checked_pt(POLICY_CHECKED)}, says every new account starts on it at no cost. "
+        "It opens a limited set of models, runs one generation at a time, does not include monthly credits or Unlimited models, "
+        "and generations can carry a visible Higgsfield watermark. Models on the free plan still deduct credits, so you need credits or free generations already on the account to generate. "
+        "Credit Packs cannot be bought on the free plan. Current plan prices and which models sit in the Free column are on Higgsfield's pricing page. "
+        "A short dedicated page on whether Higgsfield is free is planned."
+    )
     q5 = "How do we calculate this?"
     a5 = g["HOW_PLAIN"]
-    faqs = [(q1, a1), (q2, a2), (q3, a3), (q4, a4), (q5, a5)]
+    faqs = [(q1, a1), (q2, a2), (q_credits_how, a_credits_how), (q3, a3), (q_api_cost, a_api_cost), (q4, a4), (q_refund, a_refund), (q_cancel, a_cancel), (q_free, a_free), (q5, a5)]
 
     # Catalog plan table
     plan_head = (
@@ -434,6 +490,8 @@ def render(g):
 
 <h2>{e(q2)}</h2>
 <p>{e(a2)} Source: the Video category of the compare table on {src(HF_PRICING, "higgsfield.ai/pricing")}, from the compare API that page loads, checked {checked_pt(CHECKED)}.</p>
+<h2>{e(q_credits_how)}</h2>
+<p>{e(a_credits_how)} Sources: {src(HELP_CREDITS, "How do credits work?")}, {src(HELP_EXPIRE, "Do my top-up credits expire, and what happens if I cancel?")}, and {src(HELP_PACKS, "How do Credit Packs work?")}, re-read {e(checked_pt(POLICY_CHECKED))}. Current sale prices for paid plans are in the plan table above and on the <a href="{root("/deals/")}">live deals page</a>; they are not repeated here.</p>
 <p>The catalog already converts those official (or official-estimate) credit figures into $/s for Starter, Plus, and Ultra 3K, using each plan’s dollars and credits and assuming every paid credit is used. Those tracked rates are below, with a 10-second total only when the official unit is 5 seconds.</p>
 {cat_table}
 <p>Seedance 2.5 and Grok are on the official compare table but do not have Higgsfield plan rows in the catalog (Seedance 2.5 on plans was left out of earlier guides for the same reason; Grok Video has no stated resolution). The next table applies the same credit-use math to today’s official credits and to the Starter / Plus / Ultra 3K catalog plan prices, plus Ultra 6K annual, which is the cheapest sale credit price verified on Nov 17. These derived figures are not catalog rows.</p>
@@ -446,11 +504,22 @@ def render(g):
 <p>Higgsfield API pay-as-you-go, from {src(HF_API, "open.higgsfield.ai/pricing")} and the catalog rows last checked {checked_pt(CHECKED)} (the API “from” figures for Wan 3.0, Kling 3.0, and Seedance 2.5 on that index today still match these rows; the cheapest mode’s resolution is still not stated for the “from” list prices):</p>
 {api_table}
 <p class="small">Affiliate links never change this price order.</p>
+<h2>{e(q_api_cost)}</h2>
+<p>{e(a_api_cost)} Source: {src(HF_API, "open.higgsfield.ai/pricing")} and the catalog API rows in the table above. These are list API rates, not Black Friday plan-sale prices.</p>
 
 <h2>{e(q4)}</h2>
 <p>{e(a4)} Sources: {src(HELP_UNLIM, "What are Unlimited models?")}, the pricing-page footer and plan cards on {src(HF_PRICING, "higgsfield.ai/pricing")}, re-read {checked_pt(BF_CHECKED)}, and the ended 11.11 sale record checked {checked_pt(CHECKED)}.</p>
 <p>The same help article describes a longer “365 Unlimited” style of access on mid and top plans: generations on listed models do not deduct credits for a stated period, only while the paid plan stays active, and only on higgsfield.ai. Plus and Ultra cards also say “5 other unlimited models” without naming them on the card. This guide does not invent those five names or treat any Unlimited window as $0/s.</p>
 <p>{src(HELP_PROMO, "How promo prices work")} says a promo price applies to the first payment or the period stated in the offer, and that the plan then renews at the standard price. Monthly Plus and Ultra first-month cards already print the renewal list price. Annual Black Friday cards re-read on Nov 17, 4:16 PM PT do not print a post-sale price. It is not confirmed whether Plus annual $33/mo, Ultra 3K annual $50/mo, Ultra 6K annual $95/mo, or Ultra 9K annual $136/mo remain after the sale for new buyers. The plans API records renew_monthly_price at those sale rates with duration “forever.” The 11.11 sale already ended at {SALE_ENDS_PT}. The official Black Friday record ends at {BF_ENDS_UTC} ({BF_ENDS_PT} / {BF_ENDS_CARACAS}).</p>
+
+<h2>{e(q_refund)}</h2>
+<p>{e(a_refund)} Sources: {src(HELP_REFUND, "How do I request a refund?")} and {src(HELP_CANCEL, "How do I cancel my subscription?")}, re-read {e(checked_pt(POLICY_CHECKED))}. The full terms are also in Section 9.3 of Higgsfield's Terms of Use, linked from that help article. Consumers in the EEA or UK may have a 14-day withdrawal window, per the same refund article.</p>
+
+<h2>{e(q_cancel)}</h2>
+<p>{e(a_cancel)} The official menu labels are “Subscription,” “Manage Subscription,” and “Cancel Subscription.” Source: {src(HELP_CANCEL, "How do I cancel my subscription?")}, re-read {e(checked_pt(POLICY_CHECKED))}. Team, Scale, and Enterprise plans are cancelled by the workspace Owner from Organization settings, per that article. Canceling and refunding are separate actions.</p>
+
+<h2>{e(q_free)}</h2>
+<p>{e(a_free)} Source: {src(HELP_FREE, "What does the Higgsfield free plan include?")}, re-read {e(checked_pt(POLICY_CHECKED))}.<!-- Future guide: /guides/is-higgsfield-free/ --></p>
 
 <h2>What is confirmed, and what is not</h2>
 <p><b>Confirmed {checked_pt(BF_CHECKED)} on Higgsfield’s own pricing page:</b> the Black Friday banner; Individual Annual card prices for Starter, Plus, Ultra 3K, Ultra 6K, and Ultra 9K, and Individual Monthly first-month prices for Plus and Ultra 3K, in the table above; Ultra 6K and 9K monthly first-month prices on the public plans API; business Team and Scale card prices, which still matched the earlier standing discounts; official credits-per-clip in the compare table. The official Black Friday sale record ends at {BF_ENDS_UTC} ({BF_ENDS_PT} / {BF_ENDS_CARACAS}); the visible banner is a countdown only, and vendors sometimes extend sales. The 11.11 sale ended at {SALE_ENDS_UTC} ({SALE_ENDS_PT}); the earlier page header said “11.11 sale ends on Nov 15.” Catalog Starter / Plus / Ultra 3K dollar-per-second rows now use the $19 / $33 / $59 / $50 / $129 plan math last checked {LAST}. Higgsfield API “from” list prices were last checked {checked_pt(CHECKED)}.</p>
