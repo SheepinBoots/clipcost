@@ -1187,8 +1187,64 @@ def _is_price_table(chunk):
     text = re.sub(r"<[^>]+>", " ", chunk)
     return bool(_PRICE_TABLE_RE.search(text))
 
+def _tag_block_end(html, start):
+    """Index just after the closing tag of the element opening at `start`."""
+    m = re.match(r"<([a-zA-Z0-9]+)\b[^>]*>", html[start:])
+    if not m:
+        return None
+    tag = m.group(1)
+    if html[start:start + m.end()].rstrip().endswith("/>"):
+        return start + m.end()
+    depth = 1
+    pos = start + m.end()
+    for mm in re.finditer(rf"<{tag}\b[^>]*>|</{tag}>", html[pos:], flags=re.I):
+        if mm.group(0)[1] == "/":
+            depth -= 1
+            if depth == 0:
+                return pos + mm.end()
+        elif not mm.group(0).rstrip().endswith("/>"):
+            depth += 1
+    return None
+
+
+def _after_table_note(html, at):
+    """Move past caption/note paragraphs that belong to the table that ended at `at`.
+
+    Consumes immediate <p class="small">, <p class="math">, <noscript>, and plain
+    <p> footnotes. A plain <p> that is immediately followed by another table or a
+    <details> block is treated as a lead-in to that next block and is left in place.
+    """
+    had_note = False
+    while at < len(html):
+        m = re.match(r"\s*", html[at:])
+        nxt = at + (m.end() if m else 0)
+        if nxt >= len(html) or html[nxt] != "<":
+            break
+        open_m = re.match(r"<([a-zA-Z0-9]+)(\s[^>]*)?>", html[nxt:])
+        if not open_m:
+            break
+        tag = open_m.group(1).lower()
+        attrs = open_m.group(2) or ""
+        cls = re.search(r'\bclass="([^"]*)"', attrs)
+        classes = (cls.group(1).split() if cls else [])
+        is_note_p = tag == "p" and (not classes or classes == ["small"] or classes == ["math"])
+        is_noscript = tag == "noscript"
+        if not (is_note_p or is_noscript):
+            break
+        end = _tag_block_end(html, nxt)
+        if end is None:
+            break
+        if tag == "p" and "small" not in classes and "math" not in classes:
+            after = html[end:].lstrip()
+            if re.match(r'<(?:div\b[^>]*class="(?:widewrap|tblwrap)\b|table\b|details\b)', after, flags=re.I):
+                break
+        at = end
+        had_note = True
+    return at, had_note
+
+
 def insert_guide_inline_signup(path, body):
-    """After the first price table on a guide, or the first table / major section if there isn't one."""
+    """After the first price table (and any attached note) on a guide."""
     box = news_box_inline()
     if not box or INLINE_NEWS_MARK in body:
         return body
@@ -1216,8 +1272,13 @@ def insert_guide_inline_signup(path, body):
             kind, at = "first-section", len(body)
         else:
             return body
+    if kind in ("price-table", "first-table"):
+        at, had_note = _after_table_note(body, at)
+        if had_note:
+            kind = kind + "-note"
     GUIDE_INLINE_PLACEMENTS.append((path, kind))
     return body[:at] + box + body[at:]
+
 
 shutil.rmtree(DIST, ignore_errors=True); os.makedirs(DIST)
 shutil.copy(os.path.join(ROOT, "src", "style.css"), DIST)

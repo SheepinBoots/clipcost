@@ -81,6 +81,11 @@ def test_guides():
         check(0 <= inline_at < news_at, f"{rel} inline signup must sit before the end-of-guide box")
         before = main[:inline_at]
         check("</table>" in before or "<h2" in before, f"{rel} inline signup was not placed after a table or major section")
+        if rel.replace("\\", "/") == "guides/grok-imagine-video-cost/index.html":
+            check("Worked clip totals are official output" in before,
+                  f"{rel} table note should stay attached above the inline signup")
+            check("Worked clip totals are official output" not in main[inline_at:news_at],
+                  f"{rel} table note was left below the inline signup")
         # FAQ JSON-LD must still not mention a newsletter.
         for m in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', html, re.S):
             raw = m.group(1).lower()
