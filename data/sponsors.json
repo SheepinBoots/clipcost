@@ -36,7 +36,7 @@
   {
    "id": "pixeldojo",
    "name": "PixelDojo",
-   "active": false,
+   "active": true,
    "url": "https://pixeldojo.ai/?a=pdnpo8l5",
    "label": "Partner",
    "blurb": "PixelDojo is an AI image and video generator.",
