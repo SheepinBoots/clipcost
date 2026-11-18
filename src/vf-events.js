@@ -4,6 +4,7 @@
  *   outbound/<vendor>/<page>             click to a vendor or deal page
  *   outbound-affiliate/<vendor>/<page>   same, when the link is an affiliate link
  *   sponsor-click/<slot>/<page>          click inside a sponsor slot
+ *   partner-click/<partner>/<page>       click on a labelled Partner line (not a sponsor slot)
  *   advertise-cta/<cta>/<page>           click on an /advertise/ link or the advertise email
  *   campaign/<source>/<medium>/<campaign> landing with utm_* parameters
  * See docs/analytics.md. If count.js is blocked or not loaded, nothing happens
@@ -61,6 +62,18 @@
     if (!a) return;
     var u;
     try { u = new URL(a.href, location.href); } catch (e) { return; }
+    var partner = a.getAttribute('data-vf-partner');
+    if (!partner) {
+      var partnerSlot = a.closest && a.closest('[data-partner]');
+      if (partnerSlot) partner = partnerSlot.getAttribute('data-partner');
+    }
+    // Partner lines are affiliate links, but they get their own event so
+    // they can be counted separately from sponsor-click and outbound-affiliate.
+    if (partner) {
+      var p = slug(partner) || 'unknown';
+      send('partner-click/' + p + '/' + PAGE, 'Partner click: ' + p + ' on ' + PAGE);
+      return;
+    }
     var slot = a.closest('[data-sponsor]');
     var cta = a.getAttribute('data-vf-cta');
     var sponsor = a.getAttribute('data-vf-sponsor');

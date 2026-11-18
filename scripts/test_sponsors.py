@@ -213,7 +213,8 @@ def main():
     check(DISCLOSE_NOTE not in flow, "Flow credits guide has the affiliate note with only the house ad")
     check(DISCLOSE_NOTE in home, "home is missing the affiliate disclosure note next to real affiliate links")
 
-    # No paid partner strings or assets in the built site.
+    # PixelDojo may only appear in the labelled Partner line, never as a logo
+    # and never inside the paid/house Sponsor box.
     forbidden = "pixeldojo"
     for dirpath, _, filenames in os.walk(DIST):
         for name in filenames:
@@ -228,8 +229,17 @@ def main():
                 text = open(path, encoding="utf-8").read()
             except (UnicodeDecodeError, OSError):
                 continue
-            if forbidden in text.lower():
-                errors.append(f"built file contains {forbidden}: {os.path.relpath(path, DIST)}")
+            remainder = re.sub(
+                r'<aside\b[^>]*\bclass="[^"]*\bpartner-line\b[^"]*"[^>]*>.*?</aside>',
+                "",
+                text,
+                flags=re.S | re.I,
+            )
+            if forbidden in remainder.lower():
+                errors.append(f"built file contains {forbidden} outside a partner line: {os.path.relpath(path, DIST)}")
+            for chunk in re.findall(r'<aside\b[^>]*\bclass="[^"]*\bsponsor\b[^"]*"[^>]*>.*?</aside>', text, flags=re.S | re.I):
+                if forbidden in chunk.lower():
+                    errors.append(f"sponsor box contains {forbidden}: {os.path.relpath(path, DIST)}")
     src_logo = os.path.join(ROOT, "src", "pixeldojo.png")
     dist_logo = os.path.join(DIST, "pixeldojo.png")
     check(not os.path.isfile(src_logo), "src/pixeldojo.png is still in the repo")
@@ -244,8 +254,16 @@ def main():
     with tempfile.TemporaryDirectory(prefix="vf-sponsor-off-") as tmp:
         off_path = os.path.join(tmp, "sponsors.json")
         src = json.load(open(os.path.join(ROOT, "data", "sponsors.json"), encoding="utf-8"))
-        for rec in src.values():
-            rec["active"] = False
+        def deactivate(obj):
+            if isinstance(obj, dict):
+                if "active" in obj:
+                    obj["active"] = False
+                for val in obj.values():
+                    deactivate(val)
+            elif isinstance(obj, list):
+                for val in obj:
+                    deactivate(val)
+        deactivate(src)
         json.dump(src, open(off_path, "w", encoding="utf-8"), indent=1)
         off_dist = os.path.join(tmp, "dist")
         env = os.environ.copy()
