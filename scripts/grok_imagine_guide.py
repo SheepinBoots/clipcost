@@ -8,6 +8,7 @@ PATH = "/guides/grok-imagine-video-cost/"
 LABEL = "Grok Imagine video cost"
 PHRASE = "How much does a Grok Imagine video cost?"
 QUESTION = "How much does a Grok Imagine video cost?"
+POLICY_CHECKED = "2026-11-18"
 MODEL = "grok-imagine"
 
 XAI_PRICING = "https://docs.x.ai/developers/pricing"
@@ -286,9 +287,18 @@ def render(g):
         f"If you need native 1080p, references, or voice references, grok-imagine-video-1.5 is {rate_money(0.08)}/{rate_money(0.14)}/{rate_money(0.25)} per second at 480p/720p/1080p on the official API and on fal. "
         "A paid Premium-or-higher plan can be cheaper per clip only if you stay inside the included weekly pool, but this guide cannot convert that pool into dollars per second because the official pages do not give the numbers."
     )
+    q_free = "Is Grok Imagine free, or still free?"
+    a_free = (
+        f"Grok is free to try on the web and in the apps, from the official product page opened {checked_pt(POLICY_CHECKED)}. "
+        "Grok Imagine video is not free. The official pricing comparison, opened the same day, marks Video generation as not included on the Free ($0/month) and Plus ($8/month) plans, "
+        "and as included on Premium, Super, Ultra, Teams, and Enterprise. "
+        "Super's plan card also says you can create 1080p, 15-second videos. "
+        "The official API still bills Imagine video from $0.02/s for grok-imagine-video-1.5-lite at 480p. "
+        "Those pages do not publish how many videos are in a paid plan's weekly pool, so this guide does not invent a free or included clip count."
+    )
     q5 = "How do we calculate this?"
     a5 = g["HOW_PLAIN"]
-    faqs = [(q1, a1), (q2, a2), (q3, a3), (q4, a4), (q5, a5)]
+    faqs = [(q1, a1), (q2, a2), (q_free, a_free), (q3, a3), (q4, a4), (q5, a5)]
 
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Grok Imagine video cost</p>
 <h1>{e(PHRASE)}</h1>
@@ -307,6 +317,9 @@ def render(g):
 <h2>Official API rates</h2>
 <p>These catalog rows are the official list prices from {src(XAI_PRICING, "docs.x.ai/developers/pricing")}, checked {checked_pt("2026-11-12")}. Duration is 1 to 15 seconds. Image input is $0.01 per image. On 1.5, preset-voice audio input is free ({src(XAI_15, "1.5 model page")}). Lite 1080p is upscaled from 720p ({src(XAI_VIDEO, "video overview")}). Batch API accepts image and video but bills them at standard rates, with no batch discount. Image and video generation are not in the text-model batch discount table.</p>
 {table_for(xai_rows, "Official xAI API rows are missing from the catalog.")}
+
+<h2>{e(q_free)}</h2>
+<p>{e(a_free)} Sources: {src("https://x.ai/grok", "x.ai/grok")} and {src("https://x.ai/pricing", "x.ai/pricing")}, opened {e(checked_pt(POLICY_CHECKED))}. The comparison table's Video generation row uses “Not included” and “Included” labels on that pricing page.</p>
 
 <h2>{e(q3)}</h2>
 <p>{e(a3)} Sources: {src(XAI_PLANS, "x.ai/pricing")} feature grid and plan cards; {src(XSUB_PRICING, "X plan list prices")} (Plus $8/mo or $80/yr, Premium $30/mo or $300/yr, Super $100/mo or $1,000/yr, Ultra $200/mo or $2,000/yr; prices exclude tax); {src(GROK_FAQ, "Grok FAQ")} on the weekly pool, Extra Usage Credits, and the 720p fallback; {src(XSUB_LIMITS, "usage limits")} and {src(XSUB_EXTRA, "extra usage credits")}, checked {checked_pt("2026-11-12")}.</p>

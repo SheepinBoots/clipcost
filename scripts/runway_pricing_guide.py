@@ -22,6 +22,7 @@ HELP_MODE = "https://help.runwayml.com/hc/en-us/articles/54428296933011-Generati
 MODEL_PATH = "/models/runway-gen-4/"
 CALC_PATH = "/calculator/?model=runway-gen-4&seconds=10"
 CHECKED = "2026-11-15"
+POLICY_CHECKED = "2026-11-18"
 
 # Individual plans from runway.com/pricing, checked 2026-11-15.
 # Yearly prices are the per-month figures shown under Yearly (20% off), billed annually.
@@ -491,6 +492,18 @@ def render(g):
         "compare table's 25 credits per 5 seconds."
     )
 
+    q_promo = "Is there a Runway promo code?"
+    a_promo = (
+        f"No public promo or coupon code was listed on Runway's official pricing page when it was opened {checked_pt(POLICY_CHECKED)}. "
+        "An Enterprise-tab offer of up to two months of usage free, with a sign-by date, is not a public promo code. "
+        "This guide does not invent a code."
+    )
+    q_free = "Is Runway free?"
+    a_free = (
+        f"Yes. The official pricing page, opened {checked_pt(POLICY_CHECKED)}, lists a Free plan at $0/month, labelled Free forever, "
+        "with 125 one-time credits and 5 GB of storage, plus a selection of generative models. "
+        "The page does not publish a complete public list of which models the Free plan includes."
+    )
     faqs = [
         (QUESTION, a_plans),
         (q_plans, a_plans),
@@ -498,6 +511,8 @@ def render(g):
         (q_api, a_api),
         (q_unlimited, a_unlimited),
         (q_cheaper, a_cheaper),
+        (q_promo, a_promo),
+        (q_free, a_free),
         (q_unknown, a_unknown),
     ]
     for q, a in faqs:
@@ -558,6 +573,12 @@ def render(g):
 
 <h2>{e(q_cheaper)}</h2>
 <p>{e(a_cheaper)}</p>
+
+<h2>{e(q_promo)}</h2>
+<p>{e(a_promo)} Source: {src(RUNWAY_PLANS, "runway.com/pricing")}, opened {e(checked_pt(POLICY_CHECKED))}.</p>
+
+<h2>{e(q_free)}</h2>
+<p>{e(a_free)} Source: {src(RUNWAY_PLANS, "runway.com/pricing")}, opened {e(checked_pt(POLICY_CHECKED))}. The Free card is labelled “Free forever.”</p>
 
 <h2>{e(q_unknown)}</h2>
 <p>{e(a_unknown)}</p>
