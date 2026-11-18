@@ -27,7 +27,8 @@ The build writes it on the script tag (`data-vf-page`).
 
 | Event path | Trigger |
 |---|---|
-| `newsletter-signup/<page>` | The Kit newsletter form (`data-vf-event="newsletter-signup"`) is submitted on `<page>`. This counts submit attempts that pass the browser's email check. It does not count confirmed subscribers; Kit's double opt-in still applies. |
+| `newsletter-signup/<page>` | The end-of-page Kit newsletter form (`data-vf-event="newsletter-signup"`) is submitted on `<page>`. This counts submit attempts that pass the browser's email check. It does not count confirmed subscribers; Kit's double opt-in still applies. |
+| `newsletter-signup-inline/<page>` | The compact mid-guide Kit form (`data-vf-event="newsletter-signup-inline"`), placed after the first price table, is submitted on `<page>`. Same form and confirmation flow; a separate event so the two boxes can be compared. The build writes this attribute in the markup so `annotate()` does not relabel it as `newsletter-signup`. |
 | `outbound/<vendor>/<page>` | Click (or middle-click) on a link to a vendor or deal page that is not an affiliate link. |
 | `outbound-affiliate/<vendor>/<page>` | Same, but the link is an affiliate link: `rel="sponsored"` (outside a sponsor slot) or a referral `fpr=` parameter. Today that is the Higgsfield referral links. |
 | `sponsor-click/<slot>/<page>` | Click inside a sponsor slot (`aside[data-sponsor]`). Slot ids: `home`, `deals`, `model-<slug>`, `guide-<slug>` for a paid partner, and `house-home`, `house-model-<slug>`, `house-guide-<slug>` for the open-spot house ad. Clicks are counted by `/vf-events.js` with `goatcounter.count({path, title, event: true})`, using the link's `data-vf-sponsor` attribute. A house ad links to `/advertise/` but is still counted as `sponsor-click/house-...` when that attribute is present, so placements stay comparable. Other `/advertise/` links (footer, compact placeholders) stay `advertise-cta`. Do not also add GoatCounter's `data-goatcounter-click` attribute; that would double-count the same click. |
@@ -44,7 +45,7 @@ clicked link sits in a model's price row or on a model page, the model slug is i
 - `scripts/build_site.py` calls `scripts/analytics.py` `annotate()` on every page it
   writes. It only adds attributes (layout is unchanged):
   `data-vf-vendor`, `data-vf-model` (model pages), `data-vf-affiliate="1"`,
-  `data-vf-sponsor`, `data-vf-partner` (written by the partner-line markup, not by `annotate()`), `data-vf-cta`, and `data-vf-event` on the newsletter form.
+  `data-vf-sponsor`, `data-vf-partner` (written by the partner-line markup, not by `annotate()`), `data-vf-cta`, and `data-vf-event` on newsletter forms (`newsletter-signup` on the end-of-page box, added by `annotate()`; `newsletter-signup-inline` on the compact mid-guide box, written in the markup).
 - Vendor slugs come from the hostnames in `data/prices.json` (`platform`) and
   `data/deals.json` (`vendor`), for example `higgsfield`, `higgsfield-api`,
   `krea`, `magnific`, `fal`, `runway`, `runway-api`, `kling-api`, `replicate`,
@@ -60,7 +61,8 @@ Sign in at <https://vidfare.goatcounter.com> (box browser, owner account).
 
 - **Dashboard → Pages widget.** Events are listed in the same list as page
   paths; event paths are the ones without a leading `/`. Type a prefix in the path filter box to narrow them, for example:
-  - `newsletter-signup` → sign-up submits; the part after `/` is the page.
+  - `newsletter-signup` → end-of-page sign-up submits; the part after `/` is the page.
+  - `newsletter-signup-inline` → compact mid-guide sign-up submits, so the two boxes can be compared after a week.
   - `outbound-affiliate` → affiliate clicks by vendor and page.
   - `outbound/` → non-affiliate vendor and deal clicks.
   - `sponsor-click` and `advertise-cta` → sponsor and /advertise/ interest.
