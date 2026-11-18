@@ -230,7 +230,7 @@ def main():
     rec = next((r for r in partners if isinstance(r, dict) and r.get("id") == "pixeldojo"), None)
     check(rec is not None, "data/sponsors.json has no pixeldojo partner record")
     if rec:
-        check(rec.get("active") is True, "pixeldojo partner record is not active")
+        check(rec.get("active") is False, "pixeldojo partner record is still active; it should be switched off")
         check(rec.get("url") == PARTNER_URL, "pixeldojo url does not match the approved affiliate link")
         check(rec.get("label") == LABEL, "pixeldojo label is not Partner")
         check(rec.get("disclosure") == DISCLOSURE, "pixeldojo disclosure text does not match")
@@ -279,38 +279,37 @@ def main():
         rel = os.path.join("models", slug, "index.html")
         html = read(rel)
         title_ok(html, rel)
-        parsed = line_ok(html, rel)
+        absent(html, rel)
+        parsed = parse(html)
         key, rows = price_rows(parsed, ["prices"])
         model_rows[slug] = (key, rows)
         check(len(rows) >= 1, f"{rel} has no price-table rows to compare")
+        check("This spot is open" in html or "Advertise on VidFare" in html,
+              f"{rel} lost the house ad when the partner line was switched off")
 
     guide_rows = {}
-    for slug in OPT_IN_GUIDES:
+    for slug in OPT_IN_GUIDES + EXCLUDED_GUIDES:
         rel = os.path.join("guides", slug, "index.html")
         html = read(rel)
         title_ok(html, rel)
-        parsed = line_ok(html, rel)
+        absent(html, rel)
+        parsed = parse(html)
         key, rows = price_rows(parsed, ["prices"])
         guide_rows[slug] = (key, rows)
 
-    for slug in EXCLUDED_GUIDES:
-        rel = os.path.join("guides", slug, "index.html")
-        html = read(rel)
-        absent(html, rel)
-        title_ok(html, rel)
-
-    # Rebuild with only the partners list turned off; house ads stay on.
-    with tempfile.TemporaryDirectory(prefix="vf-partners-off-") as tmp:
-        off = json.loads(json.dumps(src))
-        for rec in off.get("partners") or []:
-            if isinstance(rec, dict):
-                rec["active"] = False
-        off_path = os.path.join(tmp, "sponsors.json")
-        json.dump(off, open(off_path, "w", encoding="utf-8"), indent=1)
-        off_dist = os.path.join(tmp, "dist")
+    # The switch must still work: rebuild with pixeldojo active and confirm the
+    # partner line returns without changing price order or the house ad.
+    with tempfile.TemporaryDirectory(prefix="vf-partners-on-") as tmp:
+        on = json.loads(json.dumps(src))
+        for rec in on.get("partners") or []:
+            if isinstance(rec, dict) and rec.get("id") == "pixeldojo":
+                rec["active"] = True
+        on_path = os.path.join(tmp, "sponsors.json")
+        json.dump(on, open(on_path, "w", encoding="utf-8"), indent=1)
+        on_dist = os.path.join(tmp, "dist")
         env = os.environ.copy()
-        env["VIDFARE_DIST"] = off_dist
-        env["VIDFARE_SPONSORS"] = off_path
+        env["VIDFARE_DIST"] = on_dist
+        env["VIDFARE_SPONSORS"] = on_path
         env["VIDFARE_SKIP_VIEWPORT"] = "1"
         proc = subprocess.run(
             [sys.executable, os.path.join(ROOT, "scripts", "build_site.py")],
@@ -321,34 +320,40 @@ def main():
             timeout=180,
         )
         if proc.returncode != 0:
-            errors.append("rebuild without partners failed: " + (proc.stderr or proc.stdout)[-500:])
+            errors.append("rebuild with partners on failed: " + (proc.stderr or proc.stdout)[-500:])
         else:
-            def off_html(rel):
-                return open(os.path.join(off_dist, rel), encoding="utf-8").read()
+            def on_html(rel):
+                return open(os.path.join(on_dist, rel), encoding="utf-8").read()
 
-            off_home = off_html("index.html")
-            check('class="partner-line"' not in off_home, "home gained a partner line when partners were off")
-            check("This spot is open" in off_home and "Advertise on VidFare" in off_home,
-                  "turning partners off removed the house ad from home")
+            on_home = on_html("index.html")
+            check('class="partner-line"' not in on_home, "home gained a partner line when partners were turned on")
+            check("This spot is open" in on_home and "Advertise on VidFare" in on_home,
+                  "turning partners on removed the house ad from home")
 
             for slug, (key, rows) in model_rows.items():
                 rel = os.path.join("models", slug, "index.html")
-                html = off_html(rel)
-                check('class="partner-line"' not in html, f"{rel} still has a partner line when partners are off")
+                html = on_html(rel)
+                line_ok(html, rel)
                 check("This spot is open" in html or "Advertise on VidFare" in html,
-                      f"{rel} lost the house ad when partners were turned off")
+                      f"{rel} lost the house ad when the partner line was turned on")
                 parsed = parse(html)
-                _, off_rows = price_rows(parsed, [key or "prices"])
-                check(rows == off_rows, f"{rel} price order or ranking changed when the partner line was added")
+                _, on_rows = price_rows(parsed, [key or "prices"])
+                check(rows == on_rows, f"{rel} price order or ranking changed when the partner line was turned on")
 
-            for slug, (key, rows) in guide_rows.items():
+            for slug in OPT_IN_GUIDES:
+                key, rows = guide_rows[slug]
                 rel = os.path.join("guides", slug, "index.html")
-                html = off_html(rel)
-                check('class="partner-line"' not in html, f"{rel} still has a partner line when partners are off")
+                html = on_html(rel)
+                line_ok(html, rel)
                 parsed = parse(html)
-                _, off_rows = price_rows(parsed, [key or "prices"])
+                _, on_rows = price_rows(parsed, [key or "prices"])
                 if rows:
-                    check(rows == off_rows, f"{rel} price order or ranking changed when the partner line was added")
+                    check(rows == on_rows, f"{rel} price order or ranking changed when the partner line was turned on")
+
+            for slug in EXCLUDED_GUIDES:
+                rel = os.path.join("guides", slug, "index.html")
+                html = on_html(rel)
+                absent(html, rel)
 
     if errors:
         print("FAIL")
@@ -356,8 +361,9 @@ def main():
             print("-", item)
         return 1
     print(
-        "ok partners: PixelDojo Partner line on every model page and "
-        f"{len(OPT_IN_GUIDES)} guides, house ad untouched, price order unchanged"
+        "ok partners: PixelDojo partner record is present and inactive; "
+        "no partner line on model pages or guides; house ad untouched; "
+        "the active switch still works; price order unchanged"
     )
     return 0
 

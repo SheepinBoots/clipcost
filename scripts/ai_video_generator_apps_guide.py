@@ -135,7 +135,7 @@ def render(g):
     kling_plans = src(KLING_PLANS, "Kling membership plans")
     kling_api = src(KLING_API, "official Kling API pricing")
     luma_src = src(LUMA_PLANS, "Luma’s pricing page")
-    hf_src = src(HF_PLANS, "Higgsfield’s pricing page")
+    hf_ultra = src(HF_PLANS, "Higgsfield Ultra (annual)")
     hailuo_terms = src(HAILUO_TERMS, "Hailuo subscription service terms")
     dreamina_plans = src(DREAMINA_PLANS, "Dreamina plans")
     aa_t2v = src(AA_T2V, "Artificial Analysis AA-Video-T2V v2.1 leaderboard")
@@ -460,7 +460,7 @@ def render(g):
             "unknown",
             "unknown",
             "Unknown",
-            f"Credits per clip in the app are not published on a page we could read, so no plan figure is given. Cheapest catalog route for Kling 3.0: {e(rate_money(r111['usd_per_second']))}/s {e(rate_label(r111))} · Higgsfield Ultra (annual) · {e(shown_resolution(r111))} · audio {e(shown_audio(r111))}, if every credit is used. The official API is {e(rate_money(r059['usd_per_second']))}/s at {e(shown_resolution(r059))} without audio and {e(rate_money(r062['usd_per_second']))}/s with audio.",
+            f"Credits per clip in the app are not published on a page we could read, so no plan figure is given. Cheapest catalog route for Kling 3.0: {e(rate_money(r111['usd_per_second']))}/s {e(rate_label(r111))} · {hf_ultra} · {e(shown_resolution(r111))} · audio {e(shown_audio(r111))}, if every credit is used. The official API is {e(rate_money(r059['usd_per_second']))}/s at {e(shown_resolution(r059))} without audio and {e(rate_money(r062['usd_per_second']))}/s with audio.",
             f"{cat_source(r111)} · {kling_api}, checked {e(r059['checked'])} PT.",
         )
         + trow(
