@@ -367,6 +367,95 @@ def insert_guide_sponsor(path, body):
         return body[:h2] + html + "\n" + body[h2:]
     return body + html
 
+def partner_records():
+    """Active affiliate partner lines from data/sponsors.json. Independent of the paid Sponsor box."""
+    raw = sponsors.get("partners") or []
+    if isinstance(raw, dict):
+        raw = [dict(v, id=v.get("id") or k) for k, v in raw.items()]
+    out = []
+    for rec in raw:
+        if not isinstance(rec, dict):
+            continue
+        pid = (rec.get("id") or "").strip()
+        name = (rec.get("name") or "").strip()
+        url = (rec.get("url") or "").strip()
+        if rec.get("active") and pid and name and url:
+            out.append(rec)
+    return out
+
+def partner_applies(rec, path):
+    """Model pages are /models/<slug>/. Guides are opted in by slug in the record."""
+    path = path if path.endswith("/") else path + "/"
+    if rec.get("on_models") and re.match(r"^/models/[a-z0-9-]+/$", path):
+        return True
+    if path.startswith("/guides/") and path != "/guides/":
+        slug = path.strip("/").split("/")[-1]
+        return slug in (rec.get("guides") or [])
+    return False
+
+def render_partner_line(rec):
+    """A compact Partner line. Not a sponsor box and not a price row."""
+    pid = e((rec.get("id") or "").strip())
+    name = e((rec.get("name") or "").strip())
+    href = e((rec.get("url") or "").strip())
+    label = e((rec.get("label") or "Partner").strip() or "Partner")
+    blurb = (rec.get("blurb") or "").strip()
+    disclosure = e((rec.get("disclosure") or "Affiliate link: VidFare may earn a commission").strip())
+    # Keep the name as the only link so the line stays a sentence, not a second ad box.
+    if blurb:
+        # If the blurb starts with the partner name, link just that name.
+        if blurb.startswith((rec.get("name") or "").strip()):
+            rest = blurb[len((rec.get("name") or "").strip()):]
+            copy = (
+                f'<a class="partner-hit" href="{href}" rel="{SPONSOR_REL}" target="_blank" '
+                f'data-vf-partner="{pid}">{name}</a>{e(rest)}'
+            )
+        else:
+            copy = (
+                f'<a class="partner-hit" href="{href}" rel="{SPONSOR_REL}" target="_blank" '
+                f'data-vf-partner="{pid}">{name}</a> {e(blurb)}'
+            )
+    else:
+        copy = (
+            f'<a class="partner-hit" href="{href}" rel="{SPONSOR_REL}" target="_blank" '
+            f'data-vf-partner="{pid}">{name}</a>'
+        )
+    return (
+        f'<aside class="partner-line" data-partner="{pid}">'
+        f'<span class="partner-label">{label}</span> '
+        f'<span class="partner-copy">{copy} '
+        f'<span class="partner-disclose">{disclosure}</span></span></aside>'
+    )
+
+def partner_lines_html(path):
+    return "".join(render_partner_line(rec) for rec in partner_records() if partner_applies(rec, path))
+
+def insert_guide_partner(path, body):
+    """After the house/sponsor box (or after the lead) on opted-in guides."""
+    import re as _re
+    html = partner_lines_html(path)
+    if not html:
+        return body
+    if 'class="partner-line"' in body or "class='partner-line'" in body:
+        return body
+    box = _re.search(r'<aside\b[^>]*\bclass="[^"]*\bsponsor\b[^"]*"[^>]*>.*?</aside>\s*', body, _re.S)
+    if box:
+        return body[:box.end()] + html + body[box.end():]
+    take = _re.search(r'<div\b[^>]*\bid="takeaways"[^>]*>.*?</div>\s*', body, _re.S)
+    if take:
+        return body[:take.end()] + html + body[take.end():]
+    lead = _re.search(r'<p class="lead">.*?</p>', body, _re.S)
+    if lead:
+        end = lead.end()
+        small = _re.match(r'\s*<p class="small">.*?</p>', body[end:], _re.S)
+        if small:
+            end += small.end()
+        return body[:end] + "\n" + html + "\n" + body[end:]
+    h2 = body.find("<h2")
+    if h2 != -1:
+        return body[:h2] + html + "\n" + body[h2:]
+    return body + html
+
 def public_gap(item):
     """Public wording for a price the catalog does not include. The data reason stays in the file."""
     name = (item.get("item") or "").strip().rstrip(".")
@@ -1296,6 +1385,7 @@ def guide_page(path, title, desc, body, faqs):
         else:
             body = note + body
     body = insert_guide_sponsor(path, body)
+    body = insert_guide_partner(path, body)
     raw = json.dumps(faqs, ensure_ascii=False).lower()
     for bad in ("subscribe", "newsletter", "buttondown"):
         if bad in raw:
@@ -2040,6 +2130,7 @@ for slug, m in models.items():
 <div class="card"><h3>Cheapest by resolution</h3><ul class="small" style="padding-left:18px;margin:6px 0">{resl}</ul></div></div>
 {summary}
 {sponsor_slot("model:" + slug)}
+{partner_lines_html("/models/" + slug + "/")}
 {deals_html}
 <h2>All {e(m['name'])} prices</h2>
 {wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
@@ -3857,7 +3948,23 @@ def audit_site():
     )
     if not isinstance(sponsors, dict) or not sponsors:
         errors.append("data/sponsors.json must be a non-empty object of slots")
+    raw_partners = sponsors.get("partners") or []
+    if raw_partners and not isinstance(raw_partners, (list, dict)):
+        errors.append("data/sponsors.json partners must be a list or object")
+    partner_list = list(raw_partners.values()) if isinstance(raw_partners, dict) else (raw_partners if isinstance(raw_partners, list) else [])
+    for rec in partner_list:
+        if not isinstance(rec, dict):
+            errors.append("partners entries must be objects")
+            continue
+        if any(not (rec.get(key) or "").strip() for key in ("id", "name", "url")):
+            errors.append("partners entry needs id, name, and url")
+        if "active" in rec and not isinstance(rec.get("active"), bool):
+            errors.append(f"partners entry {rec.get('id')!r} active must be true or false")
+        if rec.get("guides") is not None and not isinstance(rec.get("guides"), list):
+            errors.append(f"partners entry {rec.get('id')!r} guides must be a list of slugs")
     for slot_id, rec in sponsors.items():
+        if slot_id == "partners":
+            continue
         if not placement_ok(slot_id):
             errors.append(f"unknown sponsor slot id {slot_id}")
             continue

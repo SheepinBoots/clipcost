@@ -56,7 +56,7 @@ def test_script_file():
     check("event: true" in js and "goatcounter.count" in js, "vf-events.js does not send goatcounter events")
     check("typeof window.goatcounter.count === 'function'" in js, "vf-events.js has no guard for a missing count.js")
     check("preventDefault" not in js, "vf-events.js must not block navigation or form submit")
-    for pattern in ("newsletter-signup/", "'outbound-affiliate'", "'outbound'", "sponsor-click/", "advertise-cta/", "campaign/"):
+    for pattern in ("newsletter-signup/", "'outbound-affiliate'", "'outbound'", "sponsor-click/", "partner-click/", "advertise-cta/", "campaign/"):
         check(pattern in js, f"vf-events.js is missing the {pattern} event")
     hosts = json.loads(re.search(r"var HOSTS = (\{.*?\});", js).group(1))
     check(hosts.get("higgsfield.ai") == "higgsfield", "host map lacks higgsfield.ai")
@@ -81,7 +81,10 @@ def test_pages():
             a = m.group(0)
             href = (re.search(r'href="([^"]*)"', a) or [None, ""])[1]
             if "sponsored" in (re.search(r'rel="([^"]*)"', a) or [None, ""])[1] and "data-sponsor" not in body[max(0, m.start() - 400):m.start()]:
-                check('data-vf-affiliate="1"' in a and "data-vf-vendor=" in a, f"{rel} affiliate link not marked: {a[:120]}")
+                # Partner lines already carry data-vf-partner and are counted as
+                # partner-click, not outbound-affiliate.
+                if 'data-vf-partner="' not in a:
+                    check('data-vf-affiliate="1"' in a and "data-vf-vendor=" in a, f"{rel} affiliate link not marked: {a[:120]}")
             if href.startswith("http") and analytics.vendor_known(href, analytics_hosts):
                 check("data-vf-vendor=" in a, f"{rel} vendor link not marked: {a[:120]}")
             if href.rstrip("/") == "/advertise":
@@ -140,6 +143,16 @@ def test_annotate_sponsor_and_layout():
     check('data-vf-cta="footer-link"' in out, "footer advertise link")
     # Only attributes are added: removing data-vf-* gives back the input.
     check(re.sub(r' data-vf-[a-z-]+="[^"]*"', "", out) == doc, "annotate changed more than data-vf-* attributes")
+    partner_doc = (
+        '<html><body><aside class="partner-line" data-partner="pixeldojo">'
+        '<a class="partner-hit" href="https://pixeldojo.ai/?a=pdnpo8l5" '
+        'rel="sponsored nofollow noopener" target="_blank" data-vf-partner="pixeldojo">PixelDojo</a>'
+        '</aside></body></html>'
+    )
+    partner_out = analytics.annotate(partner_doc, "/models/wan-3-0/", hosts, model="wan-3-0")
+    check(partner_out == partner_doc, "annotate changed a partner-line link that already has data-vf-partner")
+    check("data-vf-affiliate" not in partner_out, "partner-line link marked as outbound-affiliate")
+    check("data-vf-sponsor" not in partner_out, "partner-line link marked as a sponsor click")
 
 
 def test_slugs():
@@ -182,7 +195,7 @@ def test_docs():
     check(os.path.isfile(path), "docs/analytics.md is missing")
     if os.path.isfile(path):
         doc = open(path, encoding="utf-8").read()
-        for needle in ("newsletter-signup/", "outbound/", "outbound-affiliate/", "sponsor-click/", "advertise-cta/", "campaign/", "utm_campaign", "Campaigns", "scripts/utm.py"):
+        for needle in ("newsletter-signup/", "outbound/", "outbound-affiliate/", "sponsor-click/", "partner-click/", "advertise-cta/", "campaign/", "utm_campaign", "Campaigns", "scripts/utm.py"):
             check(needle in doc, f"docs/analytics.md does not mention {needle}")
         check("sora" not in doc.lower(), "docs mention Sora")
 

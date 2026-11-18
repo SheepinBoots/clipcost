@@ -31,6 +31,7 @@ The build writes it on the script tag (`data-vf-page`).
 | `outbound/<vendor>/<page>` | Click (or middle-click) on a link to a vendor or deal page that is not an affiliate link. |
 | `outbound-affiliate/<vendor>/<page>` | Same, but the link is an affiliate link: `rel="sponsored"` (outside a sponsor slot) or a referral `fpr=` parameter. Today that is the Higgsfield referral links. |
 | `sponsor-click/<slot>/<page>` | Click inside a sponsor slot (`aside[data-sponsor]`). Slot ids: `home`, `deals`, `model-<slug>`, `guide-<slug>` for a paid partner, and `house-home`, `house-model-<slug>`, `house-guide-<slug>` for the open-spot house ad. Clicks are counted by `/vf-events.js` with `goatcounter.count({path, title, event: true})`, using the link's `data-vf-sponsor` attribute. A house ad links to `/advertise/` but is still counted as `sponsor-click/house-...` when that attribute is present, so placements stay comparable. Other `/advertise/` links (footer, compact placeholders) stay `advertise-cta`. Do not also add GoatCounter's `data-goatcounter-click` attribute; that would double-count the same click. |
+| `partner-click/<partner>/<page>` | Click on a labelled Partner line (`aside.partner-line[data-partner]`, link `data-vf-partner`). Today that is PixelDojo (`partner-click/pixeldojo/<page>`). These links also have `rel="sponsored"`, but `/vf-events.js` counts them as `partner-click` and returns before `outbound-affiliate` or `sponsor-click`, so PixelDojo clicks stay separate from the paid Sponsor box and from other affiliate links. The build writes `data-vf-partner` in the markup; `annotate()` leaves those tags alone. |
 | `advertise-cta/<cta>/<page>` | Click on a link to `/advertise/` or on the sponsorship email. `<cta>` is `footer-link`, `inline-link`, `email` (the email on /advertise/), `sponsorship-email` (on /contact/), or `sponsor-slot-<slot>` (an empty "sponsor this spot" placeholder). |
 | `campaign/<source>/<medium>/<campaign>` | A page is opened with `utm_campaign` (or `campaign`) in the URL. Keeps `utm_medium`, which GoatCounter does not store. Sent again if the same tagged URL is reloaded. |
 
@@ -43,7 +44,7 @@ clicked link sits in a model's price row or on a model page, the model slug is i
 - `scripts/build_site.py` calls `scripts/analytics.py` `annotate()` on every page it
   writes. It only adds attributes (layout is unchanged):
   `data-vf-vendor`, `data-vf-model` (model pages), `data-vf-affiliate="1"`,
-  `data-vf-sponsor`, `data-vf-cta`, and `data-vf-event` on the newsletter form.
+  `data-vf-sponsor`, `data-vf-partner` (written by the partner-line markup, not by `annotate()`), `data-vf-cta`, and `data-vf-event` on the newsletter form.
 - Vendor slugs come from the hostnames in `data/prices.json` (`platform`) and
   `data/deals.json` (`vendor`), for example `higgsfield`, `higgsfield-api`,
   `krea`, `magnific`, `fal`, `runway`, `runway-api`, `kling-api`, `replicate`,
@@ -63,6 +64,7 @@ Sign in at <https://vidfare.goatcounter.com> (box browser, owner account).
   - `outbound-affiliate` → affiliate clicks by vendor and page.
   - `outbound/` → non-affiliate vendor and deal clicks.
   - `sponsor-click` and `advertise-cta` → sponsor and /advertise/ interest.
+  - `partner-click` → labelled Partner line clicks, for example `partner-click/pixeldojo/models-wan-3-0`.
   - `campaign/` → landings per source/medium/campaign.
   Click a row to see its title and its chart over the selected date range.
 - **Campaigns widget.** GoatCounter reads `utm_campaign` (or `campaign`) from
@@ -122,6 +124,6 @@ Existing `utm_*`, `ref` and `campaign` parameters are replaced. In Python:
 ## Tests
 
 `python3 scripts/test_analytics.py` (after `python3 scripts/build_site.py`) checks
-that every counted page loads `/vf-events.js`, that vendor, affiliate, sponsor,
+that every counted page loads `/vf-events.js`, that vendor, affiliate, sponsor, partner,
 /advertise/ links and newsletter forms carry their attributes, that the script
 stores nothing in the browser, and the `utm.py` output.

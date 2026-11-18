@@ -31,5 +31,37 @@
  },
  "guide": {
   "ref": "partner"
- }
+ },
+ "partners": [
+  {
+   "id": "pixeldojo",
+   "name": "PixelDojo",
+   "active": true,
+   "url": "https://pixeldojo.ai/?a=pdnpo8l5",
+   "label": "Partner",
+   "blurb": "PixelDojo is an AI image and video generator.",
+   "disclosure": "Affiliate link: VidFare may earn a commission",
+   "source_url": "https://pixeldojo.ai/",
+   "checked": "2026-11-17",
+   "on_models": true,
+   "guides": [
+    "ai-video-generator-apps",
+    "best-ai-video-generator",
+    "cheapest-ai-video-generator",
+    "cheapest-kling-3-0",
+    "cheapest-seedance-2-5",
+    "cheapest-wan-3-0",
+    "free-ai-video-generators",
+    "free-image-to-video-ai",
+    "free-text-to-video-ai",
+    "grok-imagine-video-cost",
+    "higgsfield-alternatives",
+    "higgsfield-vs-kling",
+    "higgsfield-vs-runway",
+    "is-higgsfield-worth-it",
+    "seedance-2-5-unlimited",
+    "wan-3-0-unlimited"
+   ]
+  }
+ ]
 }
