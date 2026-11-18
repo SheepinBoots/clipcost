@@ -11,7 +11,7 @@ LABEL = "Higgsfield vs Kling"
 PHRASE = "Higgsfield vs Kling"
 QUESTION = "Is Kling cheaper on Higgsfield or on the official site?"
 CHECKED = "2026-11-17"
-CHECKED_WHEN = "Nov 17, 2026, 4:50–4:53 PM America/Caracas (12:50–12:53 PM PT)"
+CHECKED_WHEN = "Nov 17, 2026, 3:50–3:53 PM ET (12:50–12:53 PM PT)"
 KLING_PLANS_CHECKED = "2026-11-14"
 
 HF_PLANS = "https://higgsfield.ai/pricing"

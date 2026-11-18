@@ -10,7 +10,7 @@ PHRASE = "AI video generator apps"
 H1 = "AI video generator apps: official listings and prices"
 QUESTION = "Which AI video generators have an official app?"
 CHECKED = "2026-11-17"
-CHECKED_WHEN = "Nov 17, 2026, 10:49–10:57 AM America/Caracas (6:49–6:57 AM PT)"
+CHECKED_WHEN = "Nov 17, 2026, 9:49–9:57 AM ET (6:49–6:57 AM PT)"
 
 # Official iPhone listings (US App Store IDs), confirmed via Apple’s public lookup.
 IOS = {

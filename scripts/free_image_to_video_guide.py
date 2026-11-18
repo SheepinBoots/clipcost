@@ -10,7 +10,7 @@ LABEL = "Free image to video"
 PHRASE = "Free image to video AI"
 QUESTION = "Which tools let you animate a photo for free?"
 CHECKED = "2026-11-16"
-CHECKED_WHEN = "Nov 16, 2026, 9:34 AM America/Caracas (5:34 AM PT)"
+CHECKED_WHEN = "Nov 16, 2026, 8:34 AM ET (5:34 AM PT)"
 
 KREA_I2V = "https://www.krea.ai/apps/image-to-video"
 KREA_PLANS = "https://www.krea.ai/pricing"

@@ -9,7 +9,7 @@ LABEL = "Free text to video"
 PHRASE = "Free text to video AI"
 QUESTION = "Which free AI tools turn text into video?"
 CHECKED = "2026-11-17"
-CHECKED_WHEN = "Nov 17, 2026, 10:49–10:57 AM America/Caracas (6:49–6:57 AM PT)"
+CHECKED_WHEN = "Nov 17, 2026, 9:49–9:57 AM ET (6:49–6:57 AM PT)"
 
 FLOW_CREATE = "https://support.google.com/flow/answer/16353334?hl=en"
 FLOW_MODELS = "https://support.google.com/flow/answer/16352836?hl=en"

@@ -1,7 +1,7 @@
 """Guide: Higgsfield Black Friday 2026 — what you save per second.
 
 Imported by scripts/build_site.py. Current Black Friday plan prices come from
-a Nov 17, 2026, 4:16 PM PT reading of https://higgsfield.ai/pricing. Per-second rates in
+a Nov 17, 2026, 7:16 PM ET (4:16 PM PT) reading of https://higgsfield.ai/pricing. Per-second rates in
 the main table come from data/prices.json Higgsfield plan rows. Ultra 6K and
 Ultra 9K dollars-per-second are computed from the verified card prices and the
 same catalog credit rates, and are labeled computed, not catalog rows.
@@ -13,11 +13,12 @@ SOURCE = "https://higgsfield.ai/pricing"
 BLOG = "https://higgsfield.ai/blog/higgsfield-11-11-deals"
 # When the pricing page was re-read for this update.
 CHECKED = "2026-11-17"
-CHECKED_WHEN = "Nov 17, 2026, 4:16 PM PT (8:16 PM America/Caracas)"
+CHECKED_WHEN = "Nov 17, 2026, 7:16 PM ET (4:16 PM PT)"
 # Official Black Friday sale record on higgsfield.ai/pricing (sale_11_11).
 BF_ENDS_UTC = "2026-11-20T00:00:00Z"
-BF_ENDS_PT = "November 19, 2026, 4:00 PM PT"
-BF_ENDS_CARACAS = "November 19, 2026, 8:00 PM America/Caracas"
+from timefmt import et_pt  # noqa: E402
+
+BF_ENDS_PT = et_pt(BF_ENDS_UTC, long_month=True)  # November 19, 2026, 7:00 PM ET (4:00 PM PT)
 # Recorded 11.11 / standing annual prices, last verified Nov 12, now ended.
 HIST_11_11_PLUS_MO = 35
 HIST_11_11_ULTRA_3K_MO = 65
@@ -166,7 +167,7 @@ def render(g):
 
     desc = (
         "Higgsfield Black Friday: Plus annual $33/mo and Ultra 3K $50/mo, billed yearly. "
-        "Official end Nov 19, 2026, 4:00 PM PT. Checkout totals are unknown."
+        "Official end Nov 19, 2026, 7:00 PM ET (4:00 PM PT). Checkout totals are unknown."
     )
     if len(desc) > 160:
         raise SystemExit(f"{PATH} description is {len(desc)} characters")
@@ -283,13 +284,13 @@ def render(g):
         "and “up to 64% OFF” on the Individual Annual cards. Plus annual was "
         f"{_usd_month(PLUS_ANNUAL_MO)}/mo billed yearly, and Ultra 3K annual was "
         f"{_usd_month(ULTRA_3K_ANNUAL_MO)}/mo billed yearly. The official sale record ends at "
-        f"{BF_ENDS_UTC}, which is {BF_ENDS_PT} / {BF_ENDS_CARACAS}. The 11.11 sale is over. "
+        f"{BF_ENDS_UTC}, which is {BF_ENDS_PT}. The 11.11 sale is over. "
         "The same Monthly cards still show first-month Plus and Ultra prices during this extended Black Friday window."
     )
     q_end = "When does the Black Friday sale end?"
     a_end = (
         f"The official sale record on the pricing page (still named sale_11_11, with phase pre_black_friday_64) "
-        f"ends at {BF_ENDS_UTC}, which is {BF_ENDS_PT} / {BF_ENDS_CARACAS}. The visible banner is only a "
+        f"ends at {BF_ENDS_UTC}, which is {BF_ENDS_PT}. The visible banner is only a "
         "countdown (“Offer ends in”); it does not print that calendar date. Vendors sometimes extend sales, "
         "so the banner should be rechecked after that time. Checkout totals remain unknown."
     )
@@ -312,7 +313,7 @@ def render(g):
 
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Higgsfield Black Friday</p>
 <h1>{e(PHRASE)}</h1>
-<p class="lead">Higgsfield has posted a Black Friday 2026 sale on its own pricing page. As of {e(CHECKED_WHEN)}, Plus annual is {_usd_month(PLUS_ANNUAL_MO)}/mo billed yearly and Ultra 3K annual is {_usd_month(ULTRA_3K_ANNUAL_MO)}/mo billed yearly. The official sale record ends at {e(BF_ENDS_UTC)}, which is {e(BF_ENDS_PT)} / {e(BF_ENDS_CARACAS)}. The tax-inclusive checkout totals are unknown.</p>
+<p class="lead">Higgsfield has posted a Black Friday 2026 sale on its own pricing page. As of {e(CHECKED_WHEN)}, Plus annual is {_usd_month(PLUS_ANNUAL_MO)}/mo billed yearly and Ultra 3K annual is {_usd_month(ULTRA_3K_ANNUAL_MO)}/mo billed yearly. The official sale record ends at {e(BF_ENDS_UTC)}, which is {e(BF_ENDS_PT)}. The tax-inclusive checkout totals are unknown.</p>
 <p class="small">Last checked {e(g["LAST"])}. Official card prices were read {e(CHECKED_WHEN)}. Catalog per-second rows use the date on each row.</p>
 <p>Checked {e(CHECKED_WHEN)} on the {pricing}. The page banner says “Black Friday 64% off” and “Don’t miss your chance to get up to 64% OFF.” Prices exclude VAT and local taxes, calculated at checkout. Always confirm the price on Higgsfield's page before you buy. Affiliate links never change this price order.</p>
 
@@ -333,7 +334,7 @@ def render(g):
 <p>Unknown: the tax-inclusive amount charged at checkout; whether annual sale prices remain after the sale for new buyers or at renewal (the help article {promo_help} says a promo price applies to the first payment or the period stated in the offer, then the plan renews at the standard price; the annual cards do not spell out a post-sale price; the plans API records renew_monthly_price at the sale rate with duration “forever”). A plans API response without the plan-set key the page uses (ps_a3) returned lower Plus and Starter prices ($27/$39 and $15); those figures are not what the visible Individual cards show. The official end is stated above; vendors sometimes extend sales.</p>
 
 <h2>The 11.11 sale, now ended</h2>
-<p>The 11.11 sale is over. First-month Plus and Ultra offers in the deal record were marked ended Nov 15, 2026, then appeared again on the Monthly cards during this extended Black Friday window. The official {blog} and the earlier sale countdown pointed at that window (the public sale record ended at 2026-11-15T00:00:00Z, which is November 14, 4:00 PM PT; that older ends_at is no longer the live sale_11_11 record on the pricing page, which now holds the Black Friday window). Recorded 11.11 / standing prices, last verified Nov 12 in the deal record, were Plus annual {e(hist_plus)}/mo and Ultra 3K annual {e(hist_ultra)}/mo, and first-month Plus {e(hist_plus_m)} / Ultra 3K {e(hist_ultra_m)}. Those annual figures are not the cards shown today. The monthly first-month amounts on today’s cards happen to match the old first-month figures, but this page does not treat them as a continuation of 11.11.</p>
+<p>The 11.11 sale is over. First-month Plus and Ultra offers in the deal record were marked ended Nov 15, 2026, then appeared again on the Monthly cards during this extended Black Friday window. The official {blog} and the earlier sale countdown pointed at that window (the public sale record ended at 2026-11-15T00:00:00Z, which is November 14, 7:00 PM ET (4:00 PM PT); that older ends_at is no longer the live sale_11_11 record on the pricing page, which now holds the Black Friday window). Recorded 11.11 / standing prices, last verified Nov 12 in the deal record, were Plus annual {e(hist_plus)}/mo and Ultra 3K annual {e(hist_ultra)}/mo, and first-month Plus {e(hist_plus_m)} / Ultra 3K {e(hist_ultra_m)}. Those annual figures are not the cards shown today. The monthly first-month amounts on today’s cards happen to match the old first-month figures, but this page does not treat them as a continuation of 11.11.</p>
 
 <h2>What you actually save per second</h2>
 <p>The formula is the same one the rest of VidFare uses for credit plans: plan dollars per month, divided by credits per month, times credits per clip, divided by seconds in the clip, assuming every paid credit is used. Unused credits make the real cost per second higher. Wan 3.0 and Wan 3.0 Prime credit rates on the pricing-page compare table have no tilde. Kling 3.0, Veo 3.1, and Hailuo 2.3 are marked approximate on that table, so those rows are estimates. VidFare's Kling 3.0 catalog rows use 7.5 credits per 5 seconds at 720p and 8.75 at 1080p, from Higgsfield's yearly clip counts, not the "~7" / "~8" shorthand.</p>

@@ -93,7 +93,7 @@ def main():
         "Affiliate links never change this price order",
         "Confirmed",
         "Unknown",
-        "America/Caracas",
+        " ET (",
         free_ai_video_guide.FLOW_CREDITS,
         free_ai_video_guide.KREA_PLANS,
         free_ai_video_guide.RUNWAY_PLANS,

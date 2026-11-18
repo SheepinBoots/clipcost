@@ -48,7 +48,7 @@ def main():
         "Affiliate links never change this price order",
         "Confirmed",
         "Unknown",
-        "America/Caracas",
+        " ET (",
         "Key takeaways",
         "What to do next",
         "r146",

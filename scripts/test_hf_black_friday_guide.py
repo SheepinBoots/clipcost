@@ -37,8 +37,8 @@ def main():
         errors.append("description does not name the $33 and $50 annual sale prices")
     if "unknown" not in desc_txt.lower():
         errors.append("description does not mark unknown facts as unknown")
-    if "4:00 PM PT" not in desc_txt and "Nov 19" not in desc_txt:
-        errors.append("description does not state the official Nov 19, 4:00 PM PT end")
+    if "7:00 PM ET (4:00 PM PT)" not in desc_txt and "Nov 19" not in desc_txt:
+        errors.append("description does not state the official Nov 19, 7:00 PM ET (4:00 PM PT) end")
     if "No Black Friday 2026 sale is up yet" in desc_txt or "has not posted a Black Friday 2026 sale" in text:
         errors.append("guide still says no Black Friday 2026 sale is posted")
 
@@ -54,8 +54,8 @@ def main():
         "ended Nov 15",
         "11.11",
         "2026-11-20T00:00:00Z",
-        "November 19, 2026, 4:00 PM PT",
-        "8:00 PM America/Caracas",
+        "November 19, 2026, 7:00 PM ET (4:00 PM PT)",
+        "7:00 PM ET (4:00 PM PT)",
         "calculated at checkout",
         "audio not stated",
         "assuming every paid credit is used",

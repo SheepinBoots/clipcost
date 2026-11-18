@@ -2,7 +2,7 @@
 
 Imported by scripts/build_site.py. Individual Black Friday card prices were
 re-read on Higgsfield's own pricing page on 2026-11-17. The 11.11 sale ended
-Nov 14, 2026, 4:00 PM PT. Tracked $/s rows come from data/prices.json.
+Nov 14, 2026, 7:00 PM ET (4:00 PM PT). Tracked $/s rows come from data/prices.json.
 """
 PATH = "/guides/higgsfield-pricing/"
 LABEL = "Higgsfield pricing"
@@ -22,15 +22,16 @@ HELP_FREE = "https://higgsfield.ai/creator-hub/help-center/plans/what-does-the-f
 POLICY_CHECKED = "2026-11-18"
 CHECKED = "2026-11-13"
 # Official 11.11 sale record, now ended: ends_at 2026-11-15T00:00:00Z.
-# That instant is Nov 14, 2026, 4:00 PM PT. The page header said "11.11 sale ends on Nov 15."
+# That instant is Nov 14, 2026, 7:00 PM ET (4:00 PM PT). The page header said "11.11 sale ends on Nov 15."
 # The live sale_11_11 record on 2026-11-17 is the Black Friday window below.
 SALE_ENDS_UTC = "2026-11-15T00:00:00Z"
-SALE_ENDS_PT = "Nov 14, 2026, 4:00 PM PT"
+SALE_ENDS_PT = "Nov 14, 2026, 7:00 PM ET (4:00 PM PT)"
 BF_CHECKED = "2026-11-17"
-BF_CHECKED_WHEN = "Nov 17, 2026, 4:16 PM PT (8:16 PM America/Caracas)"
+BF_CHECKED_WHEN = "Nov 17, 2026, 7:16 PM ET (4:16 PM PT)"
 BF_ENDS_UTC = "2026-11-20T00:00:00Z"
-BF_ENDS_PT = "November 19, 2026, 4:00 PM PT"
-BF_ENDS_CARACAS = "November 19, 2026, 8:00 PM America/Caracas"
+from timefmt import et_pt  # noqa: E402
+
+BF_ENDS_PT = et_pt(BF_ENDS_UTC, long_month=True)  # November 19, 2026, 7:00 PM ET (4:00 PM PT)
 
 # Official credits per clip from the pricing-page compare table (annual payload
 # the page loads), checked 2026-11-13. Tildes are Higgsfield's own.
@@ -190,9 +191,9 @@ def render(g):
         "Ultra 9K annual $136/mo billed yearly (list $387, −64%, Save $2,868). Save $2,868 uses the $375 monthly list, not $387. Earlier 11.11 / standing "
         "annual figures, from 2026-11-13, were Plus $35, Ultra 3K $65, Ultra 6K $110, and Ultra 9K $150 per month billed yearly. "
         "Monthly first-month prices still shown on the Plus and Ultra 3K cards, then renewal at list: Plus $47 then $59 (20% off once); "
-        "Ultra 3K $79 then $129 (40% off once). Ultra 6K $150 then $250 and Ultra 9K $209 then $375 were also on the Monthly 6K and 9K cards re-read Nov 17, 4:16 PM PT. "
+        "Ultra 3K $79 then $129 (40% off once). Ultra 6K $150 then $250 and Ultra 9K $209 then $375 were also on the Monthly 6K and 9K cards re-read Nov 17, 7:16 PM ET (4:16 PM PT). "
         "the Nov 13 figures were Ultra 6K $150 then $250 (40% off once) and Ultra 9K $209 then $375 (45% off once). "
-        "The official Black Friday sale record ends at {BF_ENDS_UTC}, which is {BF_ENDS_PT} / {BF_ENDS_CARACAS}. The visible banner is a countdown only, and vendors sometimes extend sales. Checkout totals are unknown (VAT and local taxes are calculated at checkout). "
+        "The official Black Friday sale record ends at {BF_ENDS_UTC}, which is {BF_ENDS_PT}. The visible banner is a countdown only, and vendors sometimes extend sales. Checkout totals are unknown (VAT and local taxes are calculated at checkout). "
         "Business, shown per seat: Team annual $45/seat/mo billed yearly (list $79, −43%, 1,000 credits/seat); "
         "Team monthly $55/seat then listed as 30% off (list $79); "
         "Scale annual $80/seat/mo billed yearly (list $215, −63%, 2,500 credits/seat); "
@@ -302,9 +303,9 @@ def render(g):
         ("Ultra 3K", "monthly", "3,000", "$129", "$79 first month (40% off once)", "$129", "card + plans API"),
         ("Ultra 3K", "annual", "3,000", "$129/mo ($1,548/yr)", "$50/mo billed yearly, −60%, Save $948", "unknown after the sale; the card does not print a post-sale price", "Black Friday card, Nov 17; earlier 11.11 / standing annual was $65/mo billed yearly, −50%, Save $768"),
         ("Ultra 6K", "monthly", "6,000", "$250", "$150 first month (40% off once), plans API re-read Nov 17; Monthly 6K card not opened", "$250", "plans API the page loads, Nov 17; earlier Nov 13 card + API figure was the same $150"),
-        ("Ultra 6K", "annual", "6,000", "$258/mo billed yearly", "$95/mo billed yearly, −63%, Save $1,860", "unknown after the sale; the card does not print a post-sale price", "Black Friday 6K card, Nov 17, 4:16 PM PT; Save $1,860 uses the $250 monthly list, not $258; earlier Black Friday card was $90/mo, −65%, Save $1,920; 11.11 / standing annual was $110/mo, −57%, Save $1,680"),
+        ("Ultra 6K", "annual", "6,000", "$258/mo billed yearly", "$95/mo billed yearly, −63%, Save $1,860", "unknown after the sale; the card does not print a post-sale price", "Black Friday 6K card, Nov 17, 7:16 PM ET (4:16 PM PT); Save $1,860 uses the $250 monthly list, not $258; earlier Black Friday card was $90/mo, −65%, Save $1,920; 11.11 / standing annual was $110/mo, −57%, Save $1,680"),
         ("Ultra 9K", "monthly", "9,000", "$375", "$209 first month (45% off once), plans API re-read Nov 17; Monthly 9K card not opened", "$375", "plans API the page loads, Nov 17"),
-        ("Ultra 9K", "annual", "9,000", "$387/mo billed yearly", "$136/mo billed yearly, −64%, Save $2,868", "unknown after the sale; the card does not print a post-sale price", "Black Friday 9K card, Nov 17, 4:16 PM PT; Save $2,868 uses the $375 monthly list, not $387; earlier Black Friday card was $135/mo, −65%, Save $2,880; 11.11 / standing annual was $150/mo, −60%, Save $2,700"),
+        ("Ultra 9K", "annual", "9,000", "$387/mo billed yearly", "$136/mo billed yearly, −64%, Save $2,868", "unknown after the sale; the card does not print a post-sale price", "Black Friday 9K card, Nov 17, 7:16 PM ET (4:16 PM PT); Save $2,868 uses the $375 monthly list, not $387; earlier Black Friday card was $135/mo, −65%, Save $2,880; 11.11 / standing annual was $150/mo, −60%, Save $2,700"),
         ("Team (per seat)", "monthly", "1,000 / seat", "$79", "$55 (30% off)", "$55 on the plans API (duration “forever”)", "business tab; default card shows 5 seats = 5,000 plan credits, plus 1,200 bonus credits that expire in 30 days"),
         ("Team (per seat)", "annual", "1,000 / seat", "$79/seat/mo", "$45/seat/mo billed yearly, −43%, Save $120", "$45/seat/mo billed yearly on the card and plans API (duration “forever”)", "2–9 members; card default 5 seats"),
         ("Scale (per seat)", "monthly", "2,500 / seat", "$215", "$120 / seat/mo (45% off)", "plans API final price is $119.99; the card shows $120", "7-day Seedance 2.5 window, 25s 720p, after business verification"),
@@ -471,7 +472,7 @@ def render(g):
 
     lead = (
         "Higgsfield’s current individual and business plan prices, including the Black Friday card prices re-read on Nov 17, 2026, "
-        "are taken from the official pricing page. The 11.11 sale has ended. The official Black Friday sale record ends at November 19, 2026, 4:00 PM PT / 8:00 PM America/Caracas (2026-11-20T00:00:00Z). "
+        "are taken from the official pricing page. The 11.11 sale has ended. The official Black Friday sale record ends at November 19, 2026, 7:00 PM ET (4:00 PM PT) (2026-11-20T00:00:00Z). "
         f"The lowest Higgsfield plan rate already in this catalog is {rate_money(best_plan['usd_per_second'])}/s "
         f"({best_plan['variant']}, {shown_resolution(best_plan)}), assuming every paid credit is used. "
         "Unlimited bonuses apply only on higgsfield.ai. Affiliate links never change this price order."
@@ -510,7 +511,7 @@ def render(g):
 <h2>{e(q4)}</h2>
 <p>{e(a4)} Sources: {src(HELP_UNLIM, "What are Unlimited models?")}, the pricing-page footer and plan cards on {src(HF_PRICING, "higgsfield.ai/pricing")}, re-read {checked_pt(BF_CHECKED)}, and the ended 11.11 sale record checked {checked_pt(CHECKED)}.</p>
 <p>The same help article describes a longer “365 Unlimited” style of access on mid and top plans: generations on listed models do not deduct credits for a stated period, only while the paid plan stays active, and only on higgsfield.ai. Plus and Ultra cards also say “5 other unlimited models” without naming them on the card. This guide does not invent those five names or treat any Unlimited window as $0/s.</p>
-<p>{src(HELP_PROMO, "How promo prices work")} says a promo price applies to the first payment or the period stated in the offer, and that the plan then renews at the standard price. Monthly Plus and Ultra first-month cards already print the renewal list price. Annual Black Friday cards re-read on Nov 17, 4:16 PM PT do not print a post-sale price. It is not confirmed whether Plus annual $33/mo, Ultra 3K annual $50/mo, Ultra 6K annual $95/mo, or Ultra 9K annual $136/mo remain after the sale for new buyers. The plans API records renew_monthly_price at those sale rates with duration “forever.” The 11.11 sale already ended at {SALE_ENDS_PT}. The official Black Friday record ends at {BF_ENDS_UTC} ({BF_ENDS_PT} / {BF_ENDS_CARACAS}).</p>
+<p>{src(HELP_PROMO, "How promo prices work")} says a promo price applies to the first payment or the period stated in the offer, and that the plan then renews at the standard price. Monthly Plus and Ultra first-month cards already print the renewal list price. Annual Black Friday cards re-read on Nov 17, 7:16 PM ET (4:16 PM PT) do not print a post-sale price. It is not confirmed whether Plus annual $33/mo, Ultra 3K annual $50/mo, Ultra 6K annual $95/mo, or Ultra 9K annual $136/mo remain after the sale for new buyers. The plans API records renew_monthly_price at those sale rates with duration “forever.” The 11.11 sale already ended at {SALE_ENDS_PT}. The official Black Friday record ends at {BF_ENDS_UTC} ({BF_ENDS_PT}).</p>
 
 <h2>{e(q_refund)}</h2>
 <p>{e(a_refund)} Sources: {src(HELP_REFUND, "How do I request a refund?")} and {src(HELP_CANCEL, "How do I cancel my subscription?")}, re-read {e(checked_pt(POLICY_CHECKED))}. The full terms are also in Section 9.3 of Higgsfield's Terms of Use, linked from that help article. Consumers in the EEA or UK may have a 14-day withdrawal window, per the same refund article.</p>
@@ -522,7 +523,7 @@ def render(g):
 <p>{e(a_free)} Source: {src(HELP_FREE, "What does the Higgsfield free plan include?")}, re-read {e(checked_pt(POLICY_CHECKED))}.<!-- Future guide: /guides/is-higgsfield-free/ --></p>
 
 <h2>What is confirmed, and what is not</h2>
-<p><b>Confirmed {checked_pt(BF_CHECKED)} on Higgsfield’s own pricing page:</b> the Black Friday banner; Individual Annual card prices for Starter, Plus, Ultra 3K, Ultra 6K, and Ultra 9K, and Individual Monthly first-month prices for Plus and Ultra 3K, in the table above; Ultra 6K and 9K monthly first-month prices on the public plans API; business Team and Scale card prices, which still matched the earlier standing discounts; official credits-per-clip in the compare table. The official Black Friday sale record ends at {BF_ENDS_UTC} ({BF_ENDS_PT} / {BF_ENDS_CARACAS}); the visible banner is a countdown only, and vendors sometimes extend sales. The 11.11 sale ended at {SALE_ENDS_UTC} ({SALE_ENDS_PT}); the earlier page header said “11.11 sale ends on Nov 15.” Catalog Starter / Plus / Ultra 3K dollar-per-second rows now use the $19 / $33 / $59 / $50 / $129 plan math last checked {LAST}. Higgsfield API “from” list prices were last checked {checked_pt(CHECKED)}.</p>
+<p><b>Confirmed {checked_pt(BF_CHECKED)} on Higgsfield’s own pricing page:</b> the Black Friday banner; Individual Annual card prices for Starter, Plus, Ultra 3K, Ultra 6K, and Ultra 9K, and Individual Monthly first-month prices for Plus and Ultra 3K, in the table above; Ultra 6K and 9K monthly first-month prices on the public plans API; business Team and Scale card prices, which still matched the earlier standing discounts; official credits-per-clip in the compare table. The official Black Friday sale record ends at {BF_ENDS_UTC} ({BF_ENDS_PT}); the visible banner is a countdown only, and vendors sometimes extend sales. The 11.11 sale ended at {SALE_ENDS_UTC} ({SALE_ENDS_PT}); the earlier page header said “11.11 sale ends on Nov 15.” Catalog Starter / Plus / Ultra 3K dollar-per-second rows now use the $19 / $33 / $59 / $50 / $129 plan math last checked {LAST}. Higgsfield API “from” list prices were last checked {checked_pt(CHECKED)}.</p>
 <p><b>Unknown:</b> tax-inclusive checkout totals; whether annual sale prices stay at $33 / $50 / $95 / $136 after the sale for new buyers or for renewals (the cards do not print a post-sale price); a plans API response without the plan-set key the page uses (ps_a3) returned lower Plus and Starter prices that the visible Individual cards do not show; when the “Unlimited models for 7 days” window starts; the five unnamed “other” unlimited models on the Plus/Ultra cards; a published credit cost or Higgsfield plan $/s for Gemini Omni Flash or Runway Gen-4; the resolution of “Grok Video”; credit-pack list prices (the cards say top-ups exist, with a discount on paid plans, but this check did not capture a pack price table); a failed-generation refund rule for plan credits. Invented figures are not shown for those gaps. The official Black Friday end is stated above; vendors sometimes extend sales.</p>
 
 <h2>{e(q5)}</h2>
