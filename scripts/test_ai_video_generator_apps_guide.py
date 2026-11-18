@@ -123,6 +123,15 @@ def main():
     if not re.search(r"\b[A-Z][a-z]+(?:-[a-z]+)? comparisons built from the same price rows", guides):
         errors.append("guides index count text is missing")
 
+    aff = "https://higgsfield.ai/pricing?fpr=emmanuel-bbfe0e"
+    if raw.count(aff) != 2:
+        errors.append(f"expected 2 Higgsfield affiliate pricing links, found " + str(raw.count(aff)))
+    if 'data-vf-affiliate="1"' not in raw or 'data-vf-vendor="higgsfield"' not in raw:
+        errors.append("Higgsfield affiliate link is missing data-vf-affiliate / data-vf-vendor tracking")
+    if 'rel="sponsored nofollow noopener"' not in raw:
+        errors.append("Higgsfield affiliate link is missing rel=sponsored nofollow noopener")
+    if 'Higgsfield Ultra (annual)' not in raw:
+        errors.append("missing expected affiliate context: Higgsfield Ultra (annual)")
     if errors:
         raise SystemExit("AI video generator apps guide:\n- " + "\n- ".join(errors))
     print("ok AI video generator apps guide")

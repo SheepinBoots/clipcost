@@ -167,7 +167,7 @@ def render(g):
 )}
 {row(
     "Runway, Kling, Higgsfield, Grok Imagine, Luma, Meta AI",
-    "Unknown for a published free image-to-video path, except Luma, which still lists no public free plan. Runway Free is 125 one-time credits for “a selection of generative creative models,” without naming image-to-video. Kling Basic is $0 with no monthly credits. Higgsfield lists a Free plan with limited use. grok.com/imagine loaded a chat box with Sign in and Sign up; x.ai/grok returned 403.",
+    f"Unknown for a published free image-to-video path, except Luma, which still lists no public free plan. Runway Free is 125 one-time credits for “a selection of generative creative models,” without naming image-to-video. Kling Basic is $0 with no monthly credits. Higgsfield lists a Free plan with limited use ({hf_src}). grok.com/imagine loaded a chat box with Sign in and Sign up; x.ai/grok returned 403.",
     "Unknown, or no public free plan (Luma).",
     "Unknown.",
     "Unknown.",

@@ -105,6 +105,15 @@ def main():
     if "comparisons built from the same price rows" not in guides:
         errors.append("guides index is missing the comparisons lead")
 
+    aff = "https://higgsfield.ai/pricing?fpr=emmanuel-bbfe0e"
+    if raw.count(aff) != 2:
+        errors.append(f"expected 2 Higgsfield affiliate pricing links, found " + str(raw.count(aff)))
+    if 'data-vf-affiliate="1"' not in raw or 'data-vf-vendor="higgsfield"' not in raw:
+        errors.append("Higgsfield affiliate link is missing data-vf-affiliate / data-vf-vendor tracking")
+    if 'rel="sponsored nofollow noopener"' not in raw:
+        errors.append("Higgsfield affiliate link is missing rel=sponsored nofollow noopener")
+    if 'Higgsfield lists a Free plan with limited use' not in raw:
+        errors.append("missing expected affiliate context: Higgsfield lists a Free plan with limited use")
     if errors:
         raise SystemExit("free image to video guide:\n- " + "\n- ".join(errors))
     print("ok free image to video guide")
