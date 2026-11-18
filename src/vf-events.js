@@ -1,6 +1,7 @@
 /* VidFare GoatCounter events. Cookie-free: nothing is stored in the browser.
  * Sends goatcounter.count({path, title, event:true}) for:
- *   newsletter-signup/<page>             newsletter form submit
+ *   newsletter-signup/<page>             end-of-page newsletter form submit
+ *   newsletter-signup-inline/<page>      compact mid-guide newsletter form submit
  *   outbound/<vendor>/<page>             click to a vendor or deal page
  *   outbound-affiliate/<vendor>/<page>   same, when the link is an affiliate link
  *   sponsor-click/<slot>/<page>          click inside a sponsor slot
@@ -105,7 +106,12 @@
   function onSubmit(ev) {
     var f = ev.target;
     if (!f || f.tagName !== 'FORM') return;
-    if (f.getAttribute('data-vf-event') !== 'newsletter-signup' && !f.hasAttribute('data-sv-form')) return;
+    var kind = f.getAttribute('data-vf-event');
+    if (kind === 'newsletter-signup-inline') {
+      send('newsletter-signup-inline/' + PAGE, 'Inline newsletter sign-up submit on ' + PAGE);
+      return;
+    }
+    if (kind !== 'newsletter-signup' && !f.hasAttribute('data-sv-form')) return;
     send('newsletter-signup/' + PAGE, 'Newsletter sign-up submit on ' + PAGE);
   }
   document.addEventListener('click', onClick, true);

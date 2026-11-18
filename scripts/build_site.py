@@ -1136,6 +1136,89 @@ def news_box(heading=None, blurb=None):
 <p class="small">You are not subscribed until you confirm.</p>
 <script src="https://f.convertkit.com/ckjs/ck.5.js"></script></section>"""
 
+INLINE_NEWS_MARK = '<section class="news news-inline" id="newsletter-inline">'
+GUIDE_INLINE_PLACEMENTS = []  # (path, kind) kind is price-table, first-table, or first-section
+_PRICE_TABLE_RE = re.compile(
+    r"\$|per second|\bprices?\b|\bcredits?\b|\bcost\b|\brates?\b|\busd\b|"
+    r"\$\s*/\s*credit|\$\s*/\s*clip|list / month",
+    re.I,
+)
+
+def news_box_inline():
+    """Compact Kit signup for the mid-guide slot. Same form id, uid, action, and success message as news_box().
+
+    The existing end-of-guide box stays unchanged and is the one that loads ck.5.js.
+    """
+    if not NEWSLETTER_ENABLED:
+        return ""
+    options = e(json.dumps({
+        "settings": {
+            "after_subscribe": {
+                "action": "message",
+                "success_message": KIT_SUCCESS,
+                "redirect_url": "",
+            }
+        }
+    }, separators=(",", ":")))
+    return f"""{INLINE_NEWS_MARK}<p class="news-inline-copy">Get Friday's price-drop email.</p>
+<form action="{KIT_FORM_ACTION}" class="seva-form formkit-form news-inline-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_FORM_UID}" data-format="inline" data-version="5" data-options="{options}" data-vf-event="newsletter-signup-inline">
+<div class="formkit-notices" aria-live="polite">
+<ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
+<div data-element="fields" class="seva-fields formkit-fields">
+<div class="news-row"><input id="newsEmailInline" type="email" name="email_address" required placeholder="you@email.com" aria-label="Email address"><button class="btn" data-element="submit" type="submit">Subscribe</button></div>
+</div>
+</div>
+</form>
+</section>"""
+
+def _div_block_end(html, start):
+    """Index just after the </div> that closes the div opening at `start`."""
+    depth = 0
+    for m in re.finditer(r"<div\b[^>]*>|</div>", html[start:], flags=re.I):
+        if m.group(0)[:4].lower() == "<div":
+            depth += 1
+        else:
+            depth -= 1
+            if depth == 0:
+                return start + m.end()
+    return None
+
+def _is_price_table(chunk):
+    text = re.sub(r"<[^>]+>", " ", chunk)
+    return bool(_PRICE_TABLE_RE.search(text))
+
+def insert_guide_inline_signup(path, body):
+    """After the first price table on a guide, or the first table / major section if there isn't one."""
+    box = news_box_inline()
+    if not box or INLINE_NEWS_MARK in body:
+        return body
+    wrappers = []
+    for m in re.finditer(r'<div class="(?:widewrap|tblwrap)\b[^"]*"', body):
+        end = _div_block_end(body, m.start())
+        if end is None:
+            continue
+        if wrappers and m.start() < wrappers[-1][1]:
+            continue  # inner tblwrap already covered by a widewrap
+        wrappers.append((m.start(), end, body[m.start():end]))
+    kind = None
+    at = None
+    for start, end, chunk in wrappers:
+        if _is_price_table(chunk):
+            kind, at = "price-table", end
+            break
+    if at is None and wrappers:
+        kind, at = "first-table", wrappers[0][1]
+    if at is None:
+        h2s = [m.start() for m in re.finditer(r"<h2\b", body)]
+        if len(h2s) >= 2:
+            kind, at = "first-section", h2s[1]
+        elif body.strip():
+            kind, at = "first-section", len(body)
+        else:
+            return body
+    GUIDE_INLINE_PLACEMENTS.append((path, kind))
+    return body[:at] + box + body[at:]
+
 shutil.rmtree(DIST, ignore_errors=True); os.makedirs(DIST)
 shutil.copy(os.path.join(ROOT, "src", "style.css"), DIST)
 # Cookie-free GoatCounter events. The vendor host map is filled in at build time.
@@ -1386,6 +1469,8 @@ def guide_page(path, title, desc, body, faqs):
             body = note + body
     body = insert_guide_sponsor(path, body)
     body = insert_guide_partner(path, body)
+    if path.startswith("/guides/") and path != "/guides/":
+        body = insert_guide_inline_signup(path, body)
     raw = json.dumps(faqs, ensure_ascii=False).lower()
     for bad in ("subscribe", "newsletter", "buttondown"):
         if bad in raw:
@@ -4387,10 +4472,21 @@ def audit_site():
                 if leftover:
                     errors.append(f"{rel} newsletter signup is not at the end of the guide")
             forms = re.findall(r"<form\b", guide_html, flags=re.I)
-            if len(forms) != 1:
-                errors.append(f"{rel} should contain only the newsletter form, found {len(forms)}")
-            elif 'data-sv-form="' + KIT_FORM_ID + '"' not in guide_html:
+            if path == "/guides/":
+                if len(forms) != 1:
+                    errors.append(f"{rel} should contain only the newsletter form, found {len(forms)}")
+            elif len(forms) != 2:
+                errors.append(f"{rel} should contain the inline and end-of-guide newsletter forms, found {len(forms)}")
+            elif guide_html.count('data-sv-form="' + KIT_FORM_ID + '"') != (1 if path == "/guides/" else 2):
                 errors.append(f"{rel} newsletter form is not the Kit form")
+            if path != "/guides/":
+                inline_at = main.find(INLINE_NEWS_MARK)
+                if inline_at < 0:
+                    errors.append(f"{rel} is missing the inline newsletter signup")
+                elif not (0 <= inline_at < news_at):
+                    errors.append(f"{rel} inline newsletter must sit after the first table and before the end-of-guide signup")
+                if 'data-vf-event="newsletter-signup-inline"' not in guide_html:
+                    errors.append(f"{rel} inline form is not marked newsletter-signup-inline")
         elif "<form" in guide_html.lower():
             errors.append(f"{rel} contains a form")
         if "fetch(" in guide_html:

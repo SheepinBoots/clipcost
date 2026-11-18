@@ -10,6 +10,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
 NEWS_MARK = '<section class="news" id="newsletter">'
+INLINE_MARK = '<section class="news news-inline" id="newsletter-inline">'
 KIT_ACTION = "https://app.kit.com/forms/10170819/subscriptions"
 # Unique unescaped phrase from the shared confirmation / spam-folder note.
 NOTE_PHRASE = "check your spam or Promotions folder"
@@ -55,16 +56,31 @@ def test_guides():
     check(len(found) >= 10, f"expected at least 10 guide pages, found {len(found)}")
     for rel, html in found:
         main = main_inner(html)
+        is_index = rel.replace("\\", "/") == "guides/index.html"
         check(NEWS_MARK in main, f"{rel} is missing the newsletter signup")
-        check(main.count(NEWS_MARK) == 1, f"{rel} should have one newsletter signup")
+        check(main.count(NEWS_MARK) == 1, f"{rel} should have one end-of-guide newsletter signup")
         leftover = leftover_after_news(main)
         check(leftover == "", f"{rel} newsletter signup is not at the end of the guide: {leftover!r}")
-        check(html.count("<form") == 1, f"{rel} should contain only the newsletter form")
         check(KIT_ACTION in html, f"{rel} is not the existing Kit form")
-        check('data-vf-event="newsletter-signup"' in html, f"{rel} form is not marked newsletter-signup")
+        check('data-vf-event="newsletter-signup"' in html, f"{rel} end-of-guide form is not marked newsletter-signup")
         check_note(html, rel)
         # Default guide pitch; deals gets its own heading.
         check("Get the weekly price-drop email" in main, f"{rel} is missing the default newsletter heading")
+        if is_index:
+            check(INLINE_MARK not in main, f"{rel} should not have the mid-guide newsletter signup")
+            check(html.count("<form") == 1, f"{rel} should contain only the newsletter form")
+            continue
+        check(INLINE_MARK in main, f"{rel} is missing the inline newsletter signup")
+        check(main.count(INLINE_MARK) == 1, f"{rel} should have one inline newsletter signup")
+        check(html.count("<form") == 2, f"{rel} should contain the inline and end-of-guide newsletter forms")
+        check(html.count(KIT_ACTION) == 2, f"{rel} inline form is not the existing Kit form")
+        check('data-vf-event="newsletter-signup-inline"' in html, f"{rel} inline form is not marked newsletter-signup-inline")
+        check("Get Friday's price-drop email." in main, f"{rel} is missing the compact inline signup line")
+        inline_at = main.find(INLINE_MARK)
+        news_at = main.find(NEWS_MARK)
+        check(0 <= inline_at < news_at, f"{rel} inline signup must sit before the end-of-guide box")
+        before = main[:inline_at]
+        check("</table>" in before or "<h2" in before, f"{rel} inline signup was not placed after a table or major section")
         # FAQ JSON-LD must still not mention a newsletter.
         for m in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', html, re.S):
             raw = m.group(1).lower()
@@ -146,4 +162,4 @@ if __name__ == "__main__":
         for e in errors:
             print(" -", e)
         sys.exit(1)
-    print(f"ok: newsletter signup placement and spam-folder note ({len(list(guide_pages()))} guides + /deals/ + home + /newsletter/)")
+    print(f"ok: newsletter signup placement and spam-folder note ({len(list(guide_pages()))} guides + /deals/ + home + /newsletter/, with inline mid-guide box)")

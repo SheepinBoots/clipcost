@@ -5,7 +5,7 @@ Checks the built dist/ (run scripts/build_site.py first):
 - every HTML page that loads count.js also loads /vf-events.js with its page slug
 - outbound vendor links carry data-vf-vendor, affiliate links data-vf-affiliate
 - sponsor slot links and /advertise/ CTAs carry data-vf-sponsor / data-vf-cta
-- every newsletter form is marked data-vf-event="newsletter-signup"
+- newsletter forms are marked data-vf-event="newsletter-signup" or newsletter-signup-inline
 - the events script stores nothing in the browser and uses no Google Analytics
 - scripts/utm.py output and validation
 """
@@ -56,7 +56,7 @@ def test_script_file():
     check("event: true" in js and "goatcounter.count" in js, "vf-events.js does not send goatcounter events")
     check("typeof window.goatcounter.count === 'function'" in js, "vf-events.js has no guard for a missing count.js")
     check("preventDefault" not in js, "vf-events.js must not block navigation or form submit")
-    for pattern in ("newsletter-signup/", "'outbound-affiliate'", "'outbound'", "sponsor-click/", "partner-click/", "advertise-cta/", "campaign/"):
+    for pattern in ("newsletter-signup/", "newsletter-signup-inline/", "'outbound-affiliate'", "'outbound'", "sponsor-click/", "partner-click/", "advertise-cta/", "campaign/"):
         check(pattern in js, f"vf-events.js is missing the {pattern} event")
     hosts = json.loads(re.search(r"var HOSTS = (\{.*?\});", js).group(1))
     check(hosts.get("higgsfield.ai") == "higgsfield", "host map lacks higgsfield.ai")
@@ -98,10 +98,15 @@ def test_pages():
         for m in re.finditer(r"<form\b[^>]*>", body):
             f = m.group(0)
             if "kit.com/forms" in f or "data-sv-form" in f:
-                check('data-vf-event="newsletter-signup"' in f, f"{rel} newsletter form not marked")
+                ev = re.search(r'data-vf-event="([^"]+)"', f)
+                check(ev and ev.group(1) in ("newsletter-signup", "newsletter-signup-inline"), f"{rel} newsletter form not marked: {f[:160]}")
     check(counted >= 25, f"only {counted} pages load count.js")
     home = pages.get("/", "")
     check(home.count('data-vf-event="newsletter-signup"') == 1, "home newsletter form not marked once")
+    check('data-vf-event="newsletter-signup-inline"' not in home, "home should not have the mid-guide newsletter signup")
+    kling_guide = pages.get("/guides/kling-ai-pricing/", "")
+    check(kling_guide.count('data-vf-event="newsletter-signup-inline"') == 1, "kling guide missing inline newsletter event")
+    check(kling_guide.count('data-vf-event="newsletter-signup"') == 1, "kling guide missing end-of-guide newsletter event")
     check('data-vf-affiliate="1"' in home, "home has no affiliate-marked link")
     kling = pages.get("/models/kling-3-0/", "")
     check('data-vf-model="kling-3-0"' in kling, "model page links lack data-vf-model")
