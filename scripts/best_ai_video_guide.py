@@ -330,13 +330,19 @@ def render(g):
                 f"not the MiniMax H3 row on the leaderboard."
             )
         name = f'<a href="{e(model_hrefs[slug])}">{e(names[slug])}</a>'
+        if sk == "flow":
+            length_cell, res_cell, audio_cell = e(length), e(res), e(audio)
+        else:
+            length_cell = f"{e(length)}. {official}."
+            res_cell = f"{e(res)}. {official}."
+            audio_cell = f"{e(audio)}. {official}."
         body_rows.append(
             "<tr>"
             f"<td>{name}</td>"
             f"<td>{quality}</td>"
-            f"<td>{e(length)}. {official}.</td>"
-            f"<td>{e(res)}. {official}.</td>"
-            f"<td>{e(audio)}. {official}.</td>"
+            f"<td>{length_cell}</td>"
+            f"<td>{res_cell}</td>"
+            f"<td>{audio_cell}</td>"
             f"<td>{cost}</td>"
             "</tr>"
         )

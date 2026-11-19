@@ -254,13 +254,13 @@ def render(g):
 <h2>Free image-to-video tools, limits, watermark, and resolution</h2>
 <p>One row per tool. A “yes” means an official page published a free way to start from an image. Anything those pages do not state is marked unknown.</p>
 {table}
-<p class="small">Sources and check time {e(CHECKED_WHEN)}.</p>
+<p class="small">Sources and check time {e(CHECKED_WHEN)}: {flow_create} · {flow_models} · {flow_credits}.</p>
 
 <h2>Which free image-to-video option is best for each use?</h2>
 <p>{e(a_best)}</p>
 <ul>
 <li><b>A documented free photo-to-video path, no card.</b> Krea Free. {krea_i2v} · {krea_plans}. Related: <a href="{e(hailuo_href)}">MiniMax Hailuo model page</a>.</li>
-<li><b>Official frames-to-video on a daily credit grant.</b> Google Flow, with a Google account and 50 daily credits. {flow_create} · {flow_models} · {flow_credits}. Related: <a href="{e(flow_calc)}">Google Flow credits calculator</a> · <a href="{e(veo_href)}">Veo 3.1</a> · <a href="{e(omni_href)}">Gemini Omni Flash</a>.</li>
+<li><b>Official frames-to-video on a daily credit grant.</b> Google Flow, with a Google account and 50 daily credits. Related: <a href="{e(flow_calc)}">Google Flow credits calculator</a> · <a href="{e(veo_href)}">Veo 3.1</a> · <a href="{e(omni_href)}">Gemini Omni Flash</a>.</li>
 <li><b>Seedance in a consumer app.</b> Dreamina’s image-to-video page, with free or trial credits that can vary. {dreamina_i2v} · {dreamina_plans}. <a href="{e(seedance_href)}">Seedance 2.5 model page</a>.</li>
 <li><b>If you only wanted a watermark-free $0 plan.</b> Pika Free has no watermark and 0 monthly credits, so it is not a published free I2V allotment. {pika_src}.</li>
 </ul>

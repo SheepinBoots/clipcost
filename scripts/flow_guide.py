@@ -508,7 +508,7 @@ def render(g):
 {banner}
 <p class="small">{e(assumptions)}</p>
 <h2>{e(q_veo)}</h2>
-<p>{e(a_veo)} Source: {help_link("Manage your Google Flow credits")}. See also the <a href="{root("/models/veo-3-1/")}">Veo 3.1 model page</a>.<!-- Future guide: /guides/google-flow-pricing/ --></p>
+<p>{e(a_veo)} See also the <a href="{root("/models/veo-3-1/")}">Veo 3.1 model page</a>.<!-- Future guide: /guides/google-flow-pricing/ --></p>
 <h2>Flow credits calculator</h2>
 {calc_html}
 <p class="small">Using a Higgsfield, Krea, or Magnific plan instead? Use the <a href="{root("/calculator/")}">credit calculator</a>. Pricing a whole project from dollars per second? Use the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a>.</p>

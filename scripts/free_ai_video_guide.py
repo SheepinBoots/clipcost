@@ -196,11 +196,11 @@ def render(g):
 
     table_rows = [
         tr([
-            f'Google Flow (Veo 3.1 Lite, Omni Flash 1.2)',
-            f'50 Flow credits each day, with or without a paid Google AI plan. Unused daily credits do not roll over. Refresh is triggered by the first generation of the day. {flow_src}.',
-            f'About 5 Veo 3.1 Lite clips a day, if every credit goes to Lite: Lite is 10 credits per 4s, 6s, or 8s clip at 720p for non-Ultra users. Or about 50s of Omni Flash 1.2 at 360p (1 credit/s), or about 16s at 720p (3 credits/s, 48 credits). During about 2–5 PM UTC, people without a paid plan may be unable to generate video. {flow_src}.',
-            f'Veo 3.1 Lite: 4s, 6s, or 8s. Omni Flash 1.2: up to 10s for all users. {flow_src}.',
-            f'Veo 3.1 Lite: 720p. Omni Flash 1.2: 360p or 720p. {flow_src}.',
+            f'<a href="{e(flow_href)}">Google Flow</a> (Veo 3.1 Lite, Omni Flash 1.2)',
+            f'50 Flow credits each day, with or without a paid Google AI plan. Unused daily credits do not roll over. Refresh is triggered by the first generation of the day.',
+            f'About 5 Veo 3.1 Lite clips a day, if every credit goes to Lite: Lite is 10 credits per 4s, 6s, or 8s clip at 720p for non-Ultra users. Or about 50s of Omni Flash 1.2 at 360p (1 credit/s), or about 16s at 720p (3 credits/s, 48 credits). During about 2–5 PM UTC, people without a paid plan may be unable to generate video.',
+            f'Veo 3.1 Lite: 4s, 6s, or 8s. Omni Flash 1.2: up to 10s for all users.',
+            f'Veo 3.1 Lite: 720p. Omni Flash 1.2: 360p or 720p.',
             "Unknown. The help article does not say.",
             "Unknown. The help article does not say.",
             "Lite and Omni Flash 1.2 are billed as video generations; the help article does not say whether those outputs include a soundtrack.",
@@ -492,9 +492,9 @@ def render(g):
     lead = (
         f"Most “free” AI video tools give you a tight cap, a watermark, or both, "
         f"and several $0 plans publish no clip count at all. Official pages were "
-        f"read {e(CHECKED_WHEN)}. Google Flow still gives 50 credits a day, about "
-        f"five Veo 3.1 Lite clips at 720p if you spend every credit on Lite, from "
-        f"{flow_src}. Krea’s Free plan is 100 units a day with no credit card, from "
+        f"read {e(CHECKED_WHEN)}. <a href=\"{e(flow_href)}\">Google Flow</a> still gives 50 credits a day, about "
+        f"five Veo 3.1 Lite clips at 720p if you spend every credit on Lite. "
+        f"Krea’s Free plan is 100 units a day with no credit card, from "
         f"{krea_src}. Pika’s Free plan has no watermark and 0 monthly credits, from "
         f"{pika_src}. Anything a vendor did not publish is marked unknown."
     )
@@ -516,14 +516,14 @@ def render(g):
 <p>{e(a_nosignup)} These sign-up and card facts were read {e(SIGNUP_CHECKED_WHEN)}.</p>
 <ul>
 <li><b>No account / no sign-up.</b> None confirmed. No official free video tier we opened today published a way to generate video without creating or signing into an account. {e(SIGNUP_CHECKED_WHEN)}.</li>
-<li><b>Account, no card.</b> Confirmed: Krea Free, “Sign up for free” and “No credit card required,” 100 units a day. {krea_src}. Google Flow’s free daily credits require a Google account; the help page does not say a card is required for the 50-credit no-plan allowance. {flow_src}.</li>
+<li><b>Account, no card.</b> Confirmed: Krea Free, “Sign up for free” and “No credit card required,” 100 units a day. {krea_src}. <a href="{e(flow_href)}">Google Flow</a>’s free daily credits require a Google account; the help page does not say a card is required for the 50-credit no-plan allowance.</li>
 <li><b>Account required; card unknown or paid.</b> Sign-up or sign-in is offered, and a card is not clearly required or waived on the public page, for Runway Free ({runway_src}), Pika Free ({pika_src}), Dreamina ({dreamina_plans_src}), Wan Free ({wan_src}), Kling Basic ({kling_src}), Higgsfield Free ({hf_src}), and Hailuo ({hailuo_terms_src} · {hailuo_plans_src}). Pika credit packs and Luma’s first listed plan are paid. Whether Grok Imagine video works with no account is unknown ({grok_src}; {xai_src} returned 403). Meta AI video limits are unknown ({meta_src} returned 403; {meta_about_src}).</li>
 </ul>
 
 <h2>{e(q_best)}</h2>
 <p>{e(a_best)}</p>
 <ul>
-<li><b>A daily cap you can count.</b> Google Flow is the only row with a published credits-per-clip figure: 50 daily credits ÷ 10 credits per Veo 3.1 Lite generation ≈ 5 clips a day at 720p, in 4s, 6s, or 8s, if you use every credit on Lite and you can generate (see the peak-hour note). {flow_src}. Details: <a href="{e(flow_href)}">Google Flow credits calculator</a> · <a href="{e(veo_href)}">Veo 3.1 model page</a> · <a href="{e(omni_href)}">Gemini Omni Flash model page</a>.</li>
+<li><b>A daily cap you can count.</b> Google Flow is the only row with a published credits-per-clip figure: 50 daily credits ÷ 10 credits per Veo 3.1 Lite generation ≈ 5 clips a day at 720p, in 4s, 6s, or 8s, if you use every credit on Lite and you can generate (see the peak-hour note). Details: <a href="{e(flow_href)}">Google Flow credits calculator</a> · <a href="{e(veo_href)}">Veo 3.1 model page</a> · <a href="{e(omni_href)}">Gemini Omni Flash model page</a>.</li>
 <li><b>No credit card, daily refill.</b> Krea Free: 100 units a day, no card. Clip count unknown. {krea_src}.</li>
 <li><b>No watermark on a $0 plan.</b> Pika Free exports have no watermark and include all models, but 0 monthly credits and no commercial license. {pika_src}.</li>
 <li><b>Seedance in a consumer app.</b> Dreamina publishes free daily credits. A Dreamina guide says 120 a day in the US, with other regions differing. Clip count unknown. {dreamina_plans_src} · {dreamina_free_src}. <a href="{e(seedance_model)}">Seedance 2.5 model page</a>.</li>
