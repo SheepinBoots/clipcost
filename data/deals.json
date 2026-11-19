@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-11-17",
+ "updated": "2026-11-19",
  "watch": [
   {
    "id": "hf_plans",
@@ -1575,6 +1575,40 @@
    "math": "none",
    "show_on_rows": false,
    "notes": "Checked 2026-11-11 on Higgsfield's blog post (published 2026-08-06). Seedance 2.5 at up to 720p for 22 to 33 days by plan and billing, with max clips from 10 seconds (monthly Plus) to 30 seconds (annual Ultra 9000). Monthly Pro was not included. The clock started when access was activated, and the post says the Unlimited toggle in the model menu had to be on, or generations drew from credits. The end date is the activation deadline, not when the last window closed."
+  },
+  {
+   "id": "krea-bf-seedance-75",
+   "vendor": "Krea",
+   "type": "percent_off",
+   "title": "Black Friday: Seedance 2.5 up to 75% off on Krea",
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": false,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": false,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "start": null,
+   "end": "2026-11-19",
+   "end_is_estimate": true,
+   "status": "live",
+   "source_url": "https://www.krea.ai/pricing",
+   "source_kind": "pricing_page",
+   "source_quote": "Black Friday. Up to 75% off. The best Seedance 2.5 price on the market. Ends in 15 Hours 26 Minutes 53 Seconds",
+   "verified_date": "2026-11-19",
+   "link_url": "https://www.krea.ai/pricing",
+   "math": "none",
+   "notes": "Checked Nov 19, 2026, 11:33 AM ET (8:33 AM PT) on krea.ai/pricing. The page banner says Seedance 2.5 up to 75% off with a countdown of 15 hours 26 minutes at that check, which points to about Nov 20, 2026, 3:00 AM ET (12:00 AM PT). The end is our estimate from the countdown, not a printed date. The plan toggle also shows Monthly 25% off and Yearly 70% off badges. The page gives no per-second Seedance price, so VidFare does not change any $/s for this. Which discount applies to which plan is not stated."
   }
  ],
  "history": [
