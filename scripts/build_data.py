@@ -160,7 +160,7 @@ PLANS = {
    "checks":[{"needle":"stock content ${X} ${N} /month","expect":14.50},{"needle":"Premium assets {N} credits /year","expect":240000}]},
  "mag-premium-plus":{"platform":"Magnific","plan":"Premium+ (annual)","usd_month":33.75,"billing":"annual","credits_month":50000,"source":"magnific",
    "credits_note":"600K credits/year (= 50,000/month avg)",
-   "checks":[{"needle":"full AI access ${X} ${N} /month","expect":33.75},{"needle":"UNLIMITED generations {N} credits /year","expect":600000}]},
+   "checks":[{"needle":"full AI access ${X} ${N} /month","expect":33.75},{"needle":"Relax mode generations {N} credits /year","expect":600000}]},
  "mag-pro":{"platform":"Magnific","plan":"Pro (annual)","usd_month":82.50,"billing":"annual","credits_month":125000,"source":"magnific",
    "credits_note":"1.5M credits/year (= 125,000/month avg)",
    "checks":[{"needle":"content production ${X} ${N} /month","expect":82.50},{"needle":"Everything in Premium+ , and: {N} credits /year","expect":1500000}]},
