@@ -1,0 +1,31 @@
+Layout regression vs live (Playwright /tmp/pw, channel=chrome)
+Date: 2026-11-18 PT
+Before: https://vidfare.com (cache-busted)
+After: local build at http://127.0.0.1:8765 from branch content/flow-citation-footnotes
+Viewports: desktop 1280x900, mobile 390x900
+
+Control pages (unchanged code) — page height and width identical:
+- / (home): 1280 → height 49320, width 1280; 390 → height 48415, width 390. Delta 0.
+- /guides/kling-ai-pricing/: 1280 → height 10145; 390 → height 41608. Delta 0.
+
+No horizontal overflow on changed pages: pageWidth equals the viewport at both widths.
+
+Changed-page height deltas are explained by shorter body copy (inline support.google.com citations removed) or slightly longer source/next-step lines:
+
+- free-ai-video-generators page: desktop -72px, mobile -98px
+  lead: -28px both widths; nosignup mobile -25px; sources and best-for heights unchanged on desktop
+- free-text-to-video-ai page: desktop -33px, mobile -7px
+  lead -28px; best-for desktop -25px / mobile -50px
+  sources +20px (footnote now lists the three Google help URLs)
+  next-steps mobile +50px (vendor-check sentence now points at the Sources line instead of an inline help link)
+- free-image-to-video-ai page: desktop 0, mobile -55px
+  sources mobile +20px (footnote now lists the three Google help URLs)
+  best-for mobile -74px
+- ai-video-generator-apps page: desktop -25px, mobile -50px (takeaway citations removed)
+- best-ai-video-generator page: both widths -45px (Flow official-spec cells no longer append the help link)
+  longest-clip sources footnote height unchanged
+- google-flow-credits-calculator page: both widths -25px
+  lead, updated dateline, and gotchas footnote heights unchanged
+  "How much does Veo 3.1 cost?" -25px (inline "Source:" help link removed)
+
+Conclusion: layout is unchanged aside from the expected short-text reflow. Sticky header, nav, signup cards, sponsor boxes, and tables keep their existing structure. No control-page regression.

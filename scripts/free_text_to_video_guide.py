@@ -418,9 +418,9 @@ def render(g):
                 raise SystemExit(f"{PATH} FAQ text contains {bad}")
 
     lead = (
-        f"Google Flow and Krea are the two free tiers that clearly publish "
+        f'<a href="{e(flow_calc)}">Google Flow</a> and Krea are the two free tiers that clearly publish '
         f"text-to-video today. Flow gives 50 credits a day, about five Veo 3.1 "
-        f"Lite clips at 720p if every credit goes to Lite, from {flow_credits}. "
+        f"Lite clips at 720p if every credit goes to Lite. "
         f"Krea gives 100 compute units a day with no credit card and no "
         f"watermark, for personal use, from {krea_video}. Official pages were "
         f"read {e(CHECKED_WHEN)}. Anything a vendor did not publish is marked "
@@ -446,7 +446,7 @@ def render(g):
     next_steps = f"""<div class="card" id="next-steps">
 <h2>What to do next</h2>
 <ul>
-<li><b>Check the vendor page.</b> Free allowances change without notice. Confirm today’s numbers on {flow_credits} or {krea_plans} before you plan around them.</li>
+<li><b>Check the vendor page.</b> Free allowances change without notice. Confirm today’s Google Flow numbers on the help page cited under Sources below, or {krea_plans} before you plan around them.</li>
 <li><b>Try the calculator.</b> Put your clip length into the <a href="{e(calc_veo)}">credit calculator for Veo 3.1 at 8 seconds</a>, or the <a href="{e(flow_calc)}">Google Flow credits calculator</a>, to see what the paid step costs you.</li>
 <li><b>Open the model page.</b> Every current rate, with its source and date: <a href="{e(veo_href)}">Veo 3.1</a> · <a href="{e(omni_href)}">Gemini Omni Flash</a> · <a href="{e(wan_href)}">Wan 3.0</a> · <a href="{e(grok_model)}">Grok Imagine</a>.</li>
 </ul>
@@ -467,12 +467,12 @@ def render(g):
 <h2>Free text-to-video tools: limits, resolution, audio, and watermark</h2>
 <p>One row per tool. A “yes” means an official page published a free way to make a video from a text prompt. Anything those pages do not state is marked unknown.</p>
 {free_table}
-<p class="small">Sources and check time {e(CHECKED_WHEN)}, except where a cell gives an earlier date.</p>
+<p class="small">Sources and check time {e(CHECKED_WHEN)}, except where a cell gives an earlier date: {flow_credits} · {flow_models} · {flow_create}.</p>
 
 <h2>Which free text-to-video option is best for each use?</h2>
 <p>{e(a_best)}</p>
 <ul>
-<li><b>Google Flow.</b> Best for: a daily allowance you can count (50 credits, about five Veo 3.1 Lite clips), and the highest published text-to-video score we could confirm on a free allowance: Gemini Omni Flash 1.2 at Elo 1151 ±14 (rank range 3–9, 5,634 samples) on {aa_t2v}. Not for: a top score from Lite, since Veo 3.1 Lite is Elo 949 ±14 (rank range 26–30) on the same board; generating between roughly 2 PM and 5 PM UTC without a paid plan; or clips longer than 10 seconds. {flow_models} · {flow_credits}. Related: <a href="{e(flow_calc)}">Google Flow credits calculator</a> · <a href="{e(veo_href)}">Veo 3.1</a> · <a href="{e(omni_href)}">Gemini Omni Flash</a>.</li>
+<li><b>Google Flow.</b> Best for: a daily allowance you can count (50 credits, about five Veo 3.1 Lite clips), and the highest published text-to-video score we could confirm on a free allowance: Gemini Omni Flash 1.2 at Elo 1151 ±14 (rank range 3–9, 5,634 samples) on {aa_t2v}. Not for: a top score from Lite, since Veo 3.1 Lite is Elo 949 ±14 (rank range 26–30) on the same board; generating between roughly 2 PM and 5 PM UTC without a paid plan; or clips longer than 10 seconds. Related: <a href="{e(flow_calc)}">Google Flow credits calculator</a> · <a href="{e(veo_href)}">Veo 3.1</a> · <a href="{e(omni_href)}">Gemini Omni Flash</a>.</li>
 <li><b>Krea Free.</b> Best for: no credit card and no watermark, both stated by Krea. Not for: commercial work, since Krea says videos made on the free plan are for personal use, or for Seedance 2.5 and Veo 3.1, which need Pro or higher. {krea_video} · {krea_plans}. MiniMax H3 (768p) is Elo 1159 ±13 (rank range 2–7) on the same board, and Krea’s image-to-video page marks MiniMax H3 as Free plan during the current MiniMax promotion; whether it accepts a text-only prompt on Free is unknown. Related: <a href="{e(hailuo_href)}">MiniMax Hailuo model page</a>.</li>
 <li><b>Dreamina.</b> Best for: the Seedance family in a consumer app with daily credits, as Dreamina states. Not for: planning a clip count ahead of time, since credits per clip are not published, or a clean file from the free example, which Dreamina’s own guide says had a watermark and no audio track. {dreamina_t2v} · {dreamina_plans}. Related: <a href="{e(seedance_href)}">Seedance 2.5 model page</a>.</li>
 <li><b>Pika.</b> Best for: a watermark-free export on a $0 plan once you buy a pack; Pika H3 Flex is Elo 1124 ±14 (rank range 11–15) on the same board. Not for: free clips, since Free has 0 monthly credits and no commercial license. {pika_src}.</li>
