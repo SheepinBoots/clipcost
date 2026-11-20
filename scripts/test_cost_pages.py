@@ -86,6 +86,15 @@ models = db["models"]
 check(cost.res_key({"resolution": "480P"}) == "480p", "480P counts as 480p")
 check(cost.res_key({"resolution": "720p/1080p"}) is None, "combined resolution is not ranked")
 check(cost.res_key({"resolution": "—"}) is None, "dash is not a resolution")
+check(cost.variant_suffix({"variant": "grok_imagine_1_5_lite (1080p)"}, "Grok Imagine Video 1.5") == "Lite", "variant Lite")
+check(cost.variant_suffix({"variant": "MiniMax H3 Max Turbo"}, "MiniMax Hailuo / H3") == "Max Turbo", "variant Max Turbo")
+check(cost.variant_suffix({"variant": "gemini-omni-1.2-flash"}, "Gemini Omni Flash 1.1") == "", "Flash is in the model name")
+check(cost.variant_suffix({"variant": "Kling 3.0"}, "Kling 3.0") == "", "no variant")
+_pp = cost.per_platform([{"model": "m", "platform": "b", "resolution": "1080p", "usd_per_second": 0.2},
+                         {"model": "m", "platform": "a", "resolution": "1080P", "usd_per_second": 0.3},
+                         {"model": "m", "platform": "b", "resolution": "1080p", "usd_per_second": 0.1},
+                         {"model": "m", "platform": "c", "resolution": "720p/1080p", "usd_per_second": 0.05}], "m", "1080p")
+check([(p, r["usd_per_second"], k) for p, r, k in _pp] == [("b", 0.1, 2), ("a", 0.3, 1)], "per_platform")
 check(cost.combined_note([{"model": "m", "platform": "fal", "resolution": "720p/1080p"}], "m", "1080p")
       == " fal lists it only as one 720p/1080p rate, which is not ranked here.", "combined_note")
 check(cost.combined_note([{"model": "m", "platform": "fal", "resolution": "720p/1080p"}], "m", "480p") == "", "combined_note other res")
@@ -138,6 +147,10 @@ for pg in cost.COST_PAGES:
             shown.append(best)
             t = text(tr)
             check(t.strip().startswith(mname), f"{path}: {res} rank {rank} is not {mname}: {t[:60]}")
+            if pg.get("variant_in_name"):
+                want = cost.display_name(best, mname)
+                link = text(re.search(r'<th scope="row"><a [^>]*>(.*?)</a>', tr).group(1))
+                check(link == want, f"{path}: {res} rank {rank} names {link!r}, want {want!r} (variant)")
             cell = text(re.search(rf'data-label="{secs}s clip" class="num">(.*?)</td>', tr, re.S).group(1))
             check(cell.strip().startswith(two(total)), f"{path}: {res} {mname} total")
             check(best["platform"] in cell, f"{path}: {res} {mname} total without its seller")
@@ -163,6 +176,43 @@ for pg in cost.COST_PAGES:
             if not any(x[2] == slug for x in expect):
                 check(re.search(rf'{re.escape(models[slug]["name"])}</a></th><td[^>]*>Not listed: no {res} price in our data\.', tab) is not None,
                       f"{path}: {slug} should be not listed at {res}")
+    if pg.get("by_platform"):
+        for res in pg["resolutions"]:
+            for slug in models:
+                sec = re.search(rf'<h3 id="p{res.lower()}-{slug}">(.*?)(?=<h3 |<h2 |<ul class="small">)', page, re.S)
+                check(sec is not None, f"{path}: no {res} platform section for {slug}")
+                if not sec:
+                    continue
+                sec = sec.group(1)
+                rs = [r for r in cur if r["model"] == slug and str(r.get("resolution")).strip().lower() == res.lower()]
+                plats = sorted({r["platform"] for r in rs}, key=lambda p: (min(r["usd_per_second"] for r in rs if r["platform"] == p), p))
+                if not plats:
+                    check(f"Not listed: no {res} price in our data." in text(sec), f"{path}: {slug} platform section should say not listed")
+                    for r in cur:
+                        if r["model"] == slug and "/" in str(r.get("resolution")):
+                            check(f"{r['platform']} lists it only as one {r['resolution']} rate" in text(sec), f"{path}: {slug} combined rate not noted")
+                    continue
+                trs = re.findall(r"<tr><th scope=\"row\">(.*?)</tr>", sec, re.S)
+                check(len(trs) == len(plats), f"{path}: {slug} has {len(trs)} platform rows, data has {len(plats)}")
+                for tr, p in zip(trs, plats):
+                    best = min((r for r in rs if r["platform"] == p), key=lambda r: r["usd_per_second"])
+                    t = text(tr)
+                    check(t.strip().startswith(p), f"{path}: {slug} platform order: {t[:40]} != {p}")
+                    check("Plan or tier: " in t, f"{path}: {slug} {p} without plan or tier")
+                    price = text(re.search(r'data-label="\$/s">(.*?)</td>', tr, re.S).group(1))
+                    check(f"{rate_money(best['usd_per_second'])}/s on {p} (" in price, f"{path}: {slug} {p} price without its seller")
+                    check(re.search(r"(published rate|estimated rate|estimated from credit plan|from credit plan|promo)", price) is not None,
+                          f"{path}: {slug} {p} without a rate label")
+                    sale = is_sale(best)
+                    has = re.search(r"; (regular \$[\d.]+/s on |cheapest without a sale: \$[\d.]+/s on |no regular price in our data)", price)
+                    check(bool(has) == sale, f"{path}: {slug} {p} sale price {'without' if sale else 'with'} a regular price")
+                    cell = text(re.search(rf'data-label="{secs}s clip" class="num">(.*?)</td>', tr, re.S).group(1))
+                    check(cell.strip().startswith(two(best["usd_per_second"] * secs)), f"{path}: {slug} {p} clip total")
+                    check(bool(re.search(r"(regular|cheapest without a sale:) \$[\d.]+ on ", cell)) == sale, f"{path}: {slug} {p} total sale without regular")
+                    for lab in ("Resolution", "Audio", "Checked"):
+                        m = re.search(rf'data-label="{lab}"[^>]*>(.*?)</td>', tr, re.S)
+                        check(m is not None and text(m.group(1)).strip() != "", f"{path}: {slug} {p} without {lab}")
+                    shown.append(best)
     # Footnotes for every shown model capped below the clip length.
     for slug in {r["model"] for r in shown}:
         cap = next((stated_cap(r) for r in cur if r["model"] == slug and stated_cap(r)), None) or cost.CAPS.get(slug)

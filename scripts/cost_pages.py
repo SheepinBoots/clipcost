@@ -19,6 +19,7 @@ Rules
 - Stale guard: same as /compare/ (compare_pages.STALE_DAYS).
 """
 import math
+import re
 
 import compare_pages as cp
 
@@ -37,7 +38,25 @@ COST_PAGES = [
         "seconds": 10,
         "resolutions": ("480p", "720p", "1080p"),
     },
+    {
+        "path": "/cost/1080p/",
+        "title": "1080p AI Video Cost by Model and Platform",
+        "h1": "1080p AI video cost by model and platform",
+        "description": ("The cheapest 1080p price per second and per 10-second clip for 9 AI video models, "
+                        "plus each model's 1080p price on every platform. Rebuilt daily."),
+        "seconds": 10,
+        "resolutions": ("1080p",),
+        # Ranking heading; {res}, {n} and {total} are filled in.
+        "rank_h2": "Cheapest {res} price for each model: {n} of {total} models listed",
+        # Name a cheaper variant (Lite, Turbo, ...) next to the model in ranking rows and the lead.
+        "variant_in_name": True,
+        # One table per model with its cheapest row at the resolution on each platform.
+        "by_platform": True,
+    },
 ]
+
+# Words in a row's variant that name a cheaper or different tier of the model.
+VARIANT_WORDS = ("lite", "fast", "turbo", "max", "pro", "plus", "mini", "flash")
 
 
 def title_of(page):
@@ -80,6 +99,34 @@ def ranking(rows, models, res, secs):
     return ranked, missing
 
 
+def variant_suffix(r, model_name):
+    """'Lite' for grok_imagine_1_5_lite, 'Max Turbo' for MiniMax H3 Max Turbo; '' when the variant
+    names no tier word beyond the model's own name."""
+    have = set(re.split(r"[^a-z0-9.]+", model_name.lower()))
+    words = []
+    for w in re.split(r"[^a-z0-9.]+", str(r.get("variant") or "").lower()):
+        if w in VARIANT_WORDS and w not in have and w.title() not in words:
+            words.append(w.title())
+    return " ".join(words)
+
+
+def display_name(r, model_name, on=True):
+    v = variant_suffix(r, model_name) if on else ""
+    return f"{model_name} {v}" if v else model_name
+
+
+def per_platform(rows, slug, res):
+    """[(platform, cheapest row there, number of rows there)] at exactly `res`, cheapest first."""
+    best, count = {}, {}
+    for r in rows:
+        if r["model"] == slug and res_key(r) == res.lower():
+            p = r["platform"]
+            count[p] = count.get(p, 0) + 1
+            if p not in best or r["usd_per_second"] < best[p]["usd_per_second"]:
+                best[p] = r
+    return sorted(((p, best[p], count[p]) for p in best), key=lambda x: (x[1]["usd_per_second"], x[0]))
+
+
 def combined_note(rows, slug, res):
     """' fal lists it only as one 720p/1080p rate.' when a combined resolution includes `res`."""
     hits = []
@@ -112,13 +159,19 @@ def render_page(g, page):
 
     ranks = {res: ranking(rows, models, res, secs) for res in page["resolutions"]}
     shown = [x[1] for res in page["resolutions"] for x in ranks[res][0]]
+    plat = {}
+    if page.get("by_platform"):
+        plat = {(res, s): per_platform(rows, s, res) for res in page["resolutions"] for s in models}
+        shown += [x[1] for v in plat.values() for x in v if x[1] not in shown]
+    vname = lambda r, slug: display_name(r, name[slug], page.get("variant_in_name", False))
     stale = cp.is_stale(shown, TODAY, cp.STALE_DAYS)
     old = cp.oldest_checked(shown)
     run = cp.run_text(g.get("CHECK_RUN"), LAST)
 
     # Cap footnotes: models capped below the clip length, and models with no known cap.
     caps = {s: model_cap(rows, s) for s in models}
-    short = [s for s in models if caps[s][0] is not None and caps[s][0] < secs]
+    on_page = {r["model"] for r in shown}
+    short = [s for s in models if caps[s][0] is not None and caps[s][0] < secs and s in on_page]
     unknown = [s for s in models if caps[s][0] is None and any(cheapest_at(rows, s, res) for res in page["resolutions"])]
     marks = {s: "†" for s in short}
     marks.update({s: "‡" for s in unknown})
@@ -137,7 +190,7 @@ def render_page(g, page):
         more = f'<br><span class="small">{n} clips (max {cap:g}s each){marks.get(slug, "")}</span>' if n > 1 else (
             f'<span class="small">{marks[slug]}</span>' if slug in marks else "")
         return (f'<tr><td data-label="Rank" class="num">{i}</td>'
-                f'<th scope="row"><a href="{root("/models/" + slug + "/")}">{e(name[slug])}</a><br>'
+                f'<th scope="row"><a href="{root("/models/" + slug + "/")}">{e(vname(r, slug))}</a><br>'
                 f'<span class="small">Plan or tier: {e(lab.plan_text(r))} · {e(r["variant"])}</span></th>'
                 f'<td data-label="{secs}s clip" class="num"><b>{two(total, 2)}</b>{more}'
                 f'<br><span class="small">{e(lab.seller_short(r))}</span>{reg_html}</td>'
@@ -161,7 +214,9 @@ def render_page(g, page):
             f'<thead><tr><th scope="col">Rank</th><th scope="col">Model, plan or tier</th><th scope="col">{secs}s clip</th>'
             f'<th scope="col">$/s, seller, plan and label</th><th scope="col">Resolution</th><th scope="col">Audio</th>'
             f'<th scope="col">Checked</th></tr></thead><tbody>{body_rows}</tbody>', tid)
-        sections.append(f'<h2 id="r{res.lower()}">{secs}-second clip at {e(res)}: {len(ranked)} of {len(models)} models listed</h2>\n{table}')
+        h2 = page.get("rank_h2", "{secs}-second clip at {res}: {n} of {total} models listed").format(
+            secs=secs, res=res, n=len(ranked), total=len(models))
+        sections.append(f'<h2 id="r{res.lower()}">{e(h2)}</h2>\n{table}')
 
     def lead_bit(res):
         ranked, _ = ranks[res]
@@ -170,7 +225,7 @@ def render_page(g, page):
         slug, r, total, n, _cap = ranked[0]
         reg = lab.regular_text(r, secs)
         clip = f", {n} clips" if n > 1 else ""
-        return (f"At {res}, the cheapest {secs}-second clip is {name[slug]} at {two(total, 2)} on {r['platform']}"
+        return (f"At {res}, the cheapest {secs}-second clip is {vname(r, slug)} at {two(total, 2)} on {r['platform']}"
                 + (f" ({reg})" if reg else "") + f"{clip}: {rate_money(r['usd_per_second'])}/s {lab.seller(r)}. ")
     lead = "".join(lead_bit(res) for res in reversed(page["resolutions"])) + f"Prices last checked {run}."
 
@@ -179,6 +234,40 @@ def render_page(g, page):
         stale_html = (f'<p class="disclose"><b>Stale data:</b> at least one price on this page was last checked '
                       f'{e(cp.day_text(old)) if old else "never"}, more than {cp.STALE_DAYS} days ago. Check the vendor pages before you buy. '
                       f'This page is hidden from search until the prices are re-checked.</p>')
+    if page.get("by_platform"):
+        for res in page["resolutions"]:
+            sections.append(f'<h2 id="p{res.lower()}">Every {e(res)} price by model and platform</h2>\n'
+                            f'<p class="small">Each model\'s cheapest {e(res)} row on each platform we track, cheapest first.</p>')
+            for slug in models:
+                got = plat[(res, slug)]
+                h3 = f'<h3 id="p{res.lower()}-{slug}"><a href="{root("/models/" + slug + "/")}">{e(name[slug])}</a> at {e(res)}</h3>'
+                if not got:
+                    sections.append(h3 + f'\n<p>Not listed: no {e(res)} price in our data.{e(combined_note(rows, slug, res))}</p>')
+                    continue
+                trs = ""
+                for p_, r, k in got:
+                    cap = cp.stated_max(r) or caps[slug][0]
+                    n = cp.clips_needed(secs, cap)
+                    reg = lab.regular_text(r, secs)
+                    reg_html = f'<br><span class="small regular">{e(reg)}</span>' if reg else ""
+                    more = f'<br><span class="small">{n} clips (max {cap:g}s each){marks.get(slug, "")}</span>' if n > 1 else (
+                        f'<span class="small">{marks[slug]}</span>' if slug in marks else "")
+                    many = f'<br><span class="small">cheapest of {k} {e(res)} rows here</span>' if k > 1 else ""
+                    trs += (f'<tr><th scope="row">{e(p_)}<br><span class="small">Plan or tier: {e(lab.plan_text(r))} · {e(r["variant"])}</span>{many}</th>'
+                            f'<td data-label="$/s"><b>{rate_money(r["usd_per_second"])}/s</b> {lab.seller_html(r, regular=True)}'
+                            f'{g["deal_badges"](r)}{g["assumption_html"](r)}</td>'
+                            f'<td data-label="{secs}s clip" class="num"><b>{two(r["usd_per_second"] * secs, 2)}</b>{more}{reg_html}</td>'
+                            f'<td data-label="Resolution">{e(cp.res_of(r))}</td>'
+                            f'<td data-label="Audio">{e(g["shown_audio"](r))}</td>'
+                            f'<td data-label="Checked" class="small">{e(r["checked"])}<br>{g["source_link"](r)}</td></tr>')
+                tid = f"cost-p{res.lower()}-{slug}"
+                tids.append("#" + tid)
+                note = combined_note(rows, slug, res)
+                sections.append(h3 + "\n" + cp._table(
+                    f'<thead><tr><th scope="col">Platform, plan or tier</th><th scope="col">$/s, seller, plan and label</th>'
+                    f'<th scope="col">{secs}s clip</th><th scope="col">Resolution</th><th scope="col">Audio</th>'
+                    f'<th scope="col">Checked</th></tr></thead><tbody>{trs}</tbody>', tid)
+                    + (f'\n<p class="small">{e(note.strip())}</p>' if note else ""))
     foot = ("<ul class=\"small\">" + "".join(f"<li>{e(n)}</li>" for n in notes) + "</ul>") if notes else ""
     method = f"""<h2 id="method">How these numbers work</h2>
 <ul>
@@ -212,8 +301,9 @@ def render_page(g, page):
         "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
     }
     # Row headers carry long variant names (e.g. "gemini-omni-1.2-flash (1080p with upsampling)"); let them wrap
-    # so the 1080p table fits the desktop column instead of scrolling sideways.
-    head = cp._css(tuple(tids)) + "<style>" + ",".join(f"{t} tbody th" for t in tids) + "{white-space:normal;min-width:180px}" + ",".join(f"{t} td:nth-child(3)" for t in tids) + "{min-width:150px}</style>" + g["ld_join"](ld, g["breadcrumb_ld"]([("Prices", "/"), (page["h1"], page["path"])]))
+    # so the 1080p table fits the desktop column instead of scrolling sideways. The clip column gets room only on
+    # wide screens; at 1024px the minimum width pushed the table 29px past its column.
+    head = cp._css(tuple(tids)) + "<style>" + ",".join(f"{t} tbody th" for t in tids) + "{white-space:normal;min-width:180px}@media(min-width:1100px){" + ",".join(f"{t} td:nth-child(3)" for t in tids if not t.startswith("#cost-p")) + "{min-width:150px}}</style>" + g["ld_join"](ld, g["breadcrumb_ld"]([("Prices", "/"), (page["h1"], page["path"])]))
     g["page"](page["path"], title_of(page), page["description"], body, "", head,
               robots="noindex,follow" if stale else "index,follow")
     if not stale:
@@ -245,6 +335,7 @@ def llms_lines(g):
                 slug, r, total, n, reg = top[0]
                 bits.append(f"{res} from {g['_money_places'](total, 2)} ({g['models'][slug]['name']} on {r['platform']}"
                             + (f"; {reg}" if reg else "") + ")")
+        tail = f"Ranked for all {len(g['models'])} models" + (", with every platform's price" if page.get("by_platform") else "")
         lines.append(f"- [{page['title']}]({g['SITE_URL']}{page['path']}): cheapest {page['seconds']}-second clip: "
-                     f"{'; '.join(bits)}. Ranked for all {len(g['models'])} models.")
+                     f"{'; '.join(bits)}. {tail}.")
     return lines
