@@ -59,6 +59,22 @@ PAIRS = [
         "note": ("Wan 3.0 has a 480p option. We have no Kling 3.0 price at 480p, "
                  "so the 480p rows are Wan 3.0 only."),
     },
+    {
+        "path": "/compare/kling-3-0-vs-veo-3-1/",
+        "a": "kling-3-0",
+        "b": "veo-3-1",
+        "title": "Kling 3.0 vs Veo 3.1 Prices Compared",
+        "h1": "Kling 3.0 vs Veo 3.1 prices compared",
+        "description": ("Kling 3.0 and Veo 3.1 price per second at 720p and 4K, with 5s to 30s "
+                        "clip totals, on the platforms that sell both. Rebuilt daily."),
+        "resolutions": ("720p", "4K"),
+        "seconds": SECONDS,
+        "caps": {"kling-3-0": 15, "veo-3-1": 8},
+        "note": ("This page compares 720p and 4K. No platform that sells both models has a 1080p-only Veo 3.1 price: "
+                 "fal and the Google Gemini API price Veo 3.1 Standard as one 720p/1080p rate, and the only "
+                 "1080p-only Veo 3.1 rows are Veo 3.1 Fast and Lite on the Google Gemini API, which does not sell "
+                 "Kling 3.0. Veo 3.1 makes clips of up to 8 seconds, so its 10s, 15s and 30s totals need more than one clip."),
+    },
 ]
 
 
@@ -360,7 +376,7 @@ def render_pair(g, pair):
             return ""
         if info["kind"] == "regular":
             amt = two(info["usd"] * secs, 2) if secs else f"{rate_money(info['usd'])}/s"
-            plan = plan_short(info.get("plan_before") or "")
+            plan = plan_short(info.get("plan_before") or plan_text(r))  # no separate full-price plan: same plan
             where = r["platform"] + (f", {plan}" if plan else "")
             before = f" at ${info['price_before']:g}/mo" if info.get("price_before") and not secs else ""
             return f"regular {amt} on {where}{before}"
