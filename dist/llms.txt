@@ -134,6 +134,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 ## Platforms
 
 - [Krea AI Video Prices by Model and Plan](https://vidfare.com/platforms/krea/): 6 models, 24 plan rows, all estimated from Krea's plans. Cheapest: Veo 3.1 Lite $0.0222/s (Basic yearly; regular $0.0311/s on Krea, Basic yearly at $7/mo).
+- [Magnific AI Video Prices by Model and Plan](https://vidfare.com/platforms/magnific/): 5 models, 21 plan rows, all worked out from Magnific's plans. Cheapest: MiniMax H3 Max Turbo $0.0264/s (Pro annual).
 
 ## Data
 
