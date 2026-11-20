@@ -673,7 +673,12 @@ def render_pair(g, pair):
         "about": [{"@type": "Thing", "name": name[A]}, {"@type": "Thing", "name": name[B]}],
         "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
     }
-    head = _css(("#cmp-headline", "#cmp-platforms")) + g["ld_join"](
+    # Desktop and tablet: the platform table's row headers ("Plan or tier: ..."), column headings and deal
+    # badges wrap, so the table fits its column at 1280 and 1024 instead of scrolling sideways. Phones keep
+    # the stacked layout from _css unchanged.
+    fit = ("<style>@media(min-width:601px){#cmp-platforms tbody th,#cmp-platforms thead th,#cmp-platforms .tag"
+           "{white-space:normal}#cmp-platforms tbody th{min-width:160px}}</style>")
+    head = _css(("#cmp-headline", "#cmp-platforms")) + fit + g["ld_join"](
         ld, g["breadcrumb_ld"]([("Prices", "/"), (pair["h1"], pair["path"])]))
     g["page"](pair["path"], title_of(pair), pair["description"], body, "", head,
               robots="noindex,follow" if stale else "index,follow")
