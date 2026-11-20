@@ -45,6 +45,20 @@ PAIRS = [
         # Longest single clip, used when the rows do not state one.
         "caps": {"kling-3-0": 15, "seedance-2-5": 30},
     },
+    {
+        "path": "/compare/wan-3-0-vs-kling-3-0/",
+        "a": "wan-3-0",
+        "b": "kling-3-0",
+        "title": "Wan 3.0 vs Kling 3.0: Which Is Cheaper?",
+        "h1": "Wan 3.0 vs Kling 3.0: which is cheaper?",
+        "description": ("Wan 3.0 and Kling 3.0 price per second at 480p, 720p and 1080p, with 5s to 30s "
+                        "clip totals, on the platforms that sell both. Rebuilt daily."),
+        "resolutions": ("480p",) + RESOLUTIONS,
+        "seconds": SECONDS,
+        "caps": {"wan-3-0": 30, "kling-3-0": 15},
+        "note": ("Wan 3.0 has a 480p option. We have no Kling 3.0 price at 480p, "
+                 "so the 480p rows are Wan 3.0 only."),
+    },
 ]
 
 
@@ -180,9 +194,66 @@ def seller_bits(r, tier, deal_names, rate_label):
     return bits
 
 
-def seller_text(r, tier, deal_names, rate_label):
-    """'on Higgsfield (Ultra annual, Black Friday price, estimated from credit plan)'."""
-    return f"on {r['platform']} ({', '.join(seller_bits(r, tier, deal_names, rate_label))})"
+def seller_text(r, tier, deal_names, rate_label, regular=""):
+    """'on Higgsfield (Ultra annual, Black Friday price, estimated from credit plan)'.
+
+    A sale price gets its regular price after a semicolon:
+    '... Black Friday price, estimated from credit plan; regular $0.1505/s on Higgsfield, Ultra monthly at $129/mo)'."""
+    tail = f"; {regular}" if regular else ""
+    return f"on {r['platform']} ({', '.join(seller_bits(r, tier, deal_names, rate_label))}{tail})"
+
+
+def sale_adjustment(r, adjs):
+    """The deal adjustment that sets this row's own price, when that deal is a sale.
+
+    A sale is a deal that is not standing (an end date or a time-limited offer) and
+    whose deal price is the row's price, with a higher regular price. Standing annual
+    discounts and unlimited windows are not sales. A deal that only touches the row
+    through its full-price plan (e.g. the monthly row of an annual sale) is not either.
+    """
+    for adj in adjs:
+        if adj.get("type") == "unlimited_window" or adj.get("standing"):
+            continue
+        usd, reg = adj.get("usd"), adj.get("list_usd")
+        if usd is None or reg is None or reg <= usd:
+            continue
+        if abs(usd - r["usd_per_second"]) <= 1e-4 * max(1.0, usd) + 5e-6:
+            return adj
+    return None
+
+
+def is_promo(r, adjs):
+    """True when the row's price is a sale or promo price."""
+    return bool(r.get("promo_until")) or sale_adjustment(r, adjs) is not None
+
+
+def regular_for(r, adjs, rows, adjs_of):
+    """What a promo row costs without the sale, from the data only.
+
+    Returns None for a row that is not on sale, else one of
+      {"kind": "regular", "usd": list $/s, "price_before": $/mo or None, "plan_before": plan name or None}
+        (the deal's prior price, or the row's own list rate)
+      {"kind": "nosale", "row": cheapest non-promo row of the same model and resolution}
+      {"kind": "none"} (the data has neither; nothing is invented)
+    """
+    if not is_promo(r, adjs):
+        return None
+    adj = sale_adjustment(r, adjs)
+    if adj is not None:
+        return {"kind": "regular", "usd": adj["list_usd"], "price_before": adj.get("price_before"),
+                "plan_before": adj.get("plan_before")}
+    if r.get("list_usd_per_second") and r["list_usd_per_second"] > r["usd_per_second"]:
+        return {"kind": "regular", "usd": r["list_usd_per_second"], "price_before": None, "plan_before": None}
+    res = res_of(r)
+    best = None
+    for x in rows:
+        if x is r or x["model"] != r["model"] or res_of(x) != res:
+            continue
+        if is_promo(x, adjs_of(x)):
+            continue
+        if best is None or x["usd_per_second"] < best["usd_per_second"]:
+            best = x
+    return {"kind": "nosale", "row": best} if best else {"kind": "none"}
 
 
 def same_seller(rows, pair):
@@ -257,15 +328,52 @@ def render_pair(g, pair):
         cap = stated_max(r) or caps[r["model"]]
         total, n = clip_total(r["usd_per_second"], secs, cap)
         more = f'<br><span class="small">{n} clips (max {cap:g}s each)</span>' if n > 1 else ""
+        reg = regular_text(r, secs) if who else ""
+        reg_html = f'<br><span class="small regular">{e(reg)}</span>' if reg else ""
         return (f'<td data-label="{label}" class="num">{two(total, 2)}'
-                + (f'<br><span class="small">{e(seller_short(r))}</span>' if who else "") + f'{more}</td>')
+                + (f'<br><span class="small">{e(seller_short(r))}</span>' if who else "") + f'{reg_html}{more}</td>')
 
     def plan_text(r):
         return g["shown_tier"](r)
 
+    adj_cache = {}
+
+    def adjs_of(r):
+        """Deal adjustments for a row, with the deal's pre-sale plan price added."""
+        if id(r) not in adj_cache:
+            out = []
+            for adj in g["dealmod"].row_adjustments(r, g["LIVE_DEALS"], g["plans"], TODAY):
+                adj = dict(adj)
+                deal = g["DEAL_BY_ID"].get(adj["deal_id"]) or {}
+                pair_ = g["dealmod"]._pair_for_row(deal, r) if deal else None
+                adj["price_before"] = (pair_ or {}).get("price_before")
+                full = g["plans"].get((pair_ or {}).get("full_plan_id") or "") or {}
+                adj["plan_before"] = full.get("plan")
+                out.append(adj)
+            adj_cache[id(r)] = out
+        return adj_cache[id(r)]
+
+    def regular_text(r, secs=None):
+        """'' for a row not on sale; else its regular price, or the cheapest non-sale row, from the data."""
+        info = regular_for(r, adjs_of(r), rows, adjs_of)
+        if info is None:
+            return ""
+        if info["kind"] == "regular":
+            amt = two(info["usd"] * secs, 2) if secs else f"{rate_money(info['usd'])}/s"
+            plan = plan_short(info.get("plan_before") or "")
+            where = r["platform"] + (f", {plan}" if plan else "")
+            before = f" at ${info['price_before']:g}/mo" if info.get("price_before") and not secs else ""
+            return f"regular {amt} on {where}{before}"
+        if info["kind"] == "nosale":
+            x = info["row"]
+            amt = two(x["usd_per_second"] * secs, 2) if secs else f"{rate_money(x['usd_per_second'])}/s"
+            p = plan_short(plan_text(x))
+            return f"cheapest without a sale: {amt} on {x['platform']}" + (f" ({p})" if p else "")
+        return "no regular price in our data"
+
     def deals_of(r):
         names = []
-        for adj in g["dealmod"].row_adjustments(r, g["LIVE_DEALS"], g["plans"], TODAY):
+        for adj in adjs_of(r):
             if adj["type"] == "unlimited_window":
                 names.append("unlimited window on sale")
             else:
@@ -273,12 +381,15 @@ def render_pair(g, pair):
         return names
 
     def seller(r):
-        return seller_text(r, plan_text(r), deals_of(r), g["rate_label"](r))
+        return seller_text(r, plan_text(r), deals_of(r), g["rate_label"](r), regular_text(r))
 
-    def seller_html(r):
-        """'on <a>Higgsfield</a> (Ultra annual, Black Friday price, ...)' with the vendor link."""
+    def seller_html(r, regular=False):
+        """'on <a>Higgsfield</a> (Ultra annual, Black Friday price, ...)' with the vendor link.
+        regular=True (headline) adds the regular price of a sale row."""
         bits = seller_bits(r, plan_text(r), deals_of(r), g["rate_label"](r))
-        return f'on {g["plat_link"](r["platform"], r["source_url"])} <span class="small">({e(", ".join(bits))})</span>'
+        reg = regular_text(r) if regular else ""
+        return (f'on {g["plat_link"](r["platform"], r["source_url"])} <span class="small">({e(", ".join(bits))}'
+                + (f'; <span class="regular">{e(reg)}</span>' if reg else "") + ')</span>')
 
     def seller_short(r):
         p = plan_short(plan_text(r))
@@ -294,7 +405,7 @@ def render_pair(g, pair):
                 continue
             hrows.append(
                 f'<tr><th scope="row">{e(name[s])}, {e(res)}</th>'
-                f'<td data-label="Cheapest $/s"><b>{rate_money(r["usd_per_second"])}/s</b> {seller_html(r)}{g["deal_badges"](r)}'
+                f'<td data-label="Cheapest $/s"><b>{rate_money(r["usd_per_second"])}/s</b> {seller_html(r, regular=True)}{g["deal_badges"](r)}'
                 f'<div class="small">Resolution {e(res)} · audio {e(g["shown_audio"](r))} · checked {e(r["checked"])} · {g["source_link"](r)}</div></td>'
                 + "".join(total_cell(r, secs, f"{secs}s clip") for secs in pair["seconds"]) + "</tr>"
             )
@@ -331,6 +442,11 @@ def render_pair(g, pair):
                  else "None of them list both models at the same resolution.")
     unlisted = sum(1 for r in prow if res_of(r) is None)
 
+    def clip_cost(r, secs, where):
+        """'$0.58 on Higgsfield (regular $1.51)' for the lead's clip totals."""
+        reg = regular_text(r, secs)
+        return f"{two(r['usd_per_second'] * secs, 2)} on {where}" + (f" ({reg})" if reg else "")
+
     # Lead
     def pick_text(res):
         ra, rb = picks[(res, A)], picks[(res, B)]
@@ -339,15 +455,15 @@ def render_pair(g, pair):
         secs = 10 if 10 in pair["seconds"] else pair["seconds"][0]
         return (f"At {res}, the cheapest {name[A]} is {rate_money(ra['usd_per_second'])}/s {seller(ra)} "
                 f"and the cheapest {name[B]} is {rate_money(rb['usd_per_second'])}/s {seller(rb)}, "
-                f"so a {secs}-second clip costs {two(ra['usd_per_second'] * secs, 2)} on {ra['platform']} "
-                f"vs {two(rb['usd_per_second'] * secs, 2)} on {rb['platform']}. ")
+                f"so a {secs}-second clip costs {clip_cost(ra, secs, ra['platform'])} "
+                f"vs {clip_cost(rb, secs, rb['platform'])}. ")
     lead = "".join(pick_text(res) for res in reversed(pair["resolutions"])) + f"Prices last checked {run}."
     secs10 = 10 if 10 in pair["seconds"] else pair["seconds"][0]
     if like:
         same_line = "On the same seller: " + " ".join(
             f"At {res}, {name[A]} is {rate_money(ra['usd_per_second'])}/s {seller(ra)} and {name[B]} is "
             f"{rate_money(rb['usd_per_second'])}/s {seller(rb)}, so a {secs10}-second clip costs "
-            f"{two(ra['usd_per_second'] * secs10, 2)} on {p} vs {two(rb['usd_per_second'] * secs10, 2)} on {p}."
+            f"{clip_cost(ra, secs10, p)} vs {clip_cost(rb, secs10, p)}."
             for res, p, ra, rb in like)
     else:
         same_line = (f"On the same seller: no platform in our data sells both {name[A]} and {name[B]} at the same "
@@ -383,7 +499,7 @@ def render_pair(g, pair):
 <p class="lead">{e(lead)}</p>
 <p id="same-seller">{e(same_line)}</p>
 <p class="small">{e(pair["description"])}</p>
-{g["partner_lines_html"](pair["path"])}
+{f'<p>{e(pair["note"])}</p>' + chr(10) if pair.get("note") else ""}{g["partner_lines_html"](pair["path"])}
 <h2 id="cheapest">Cheapest price at {and_list(pair["resolutions"])}</h2>
 <p class="small">The lowest price per second for each model at each resolution, on any platform we track, and what a {", ".join(f"{s}s" for s in pair["seconds"])} clip costs at that rate.</p>
 {headline}
@@ -410,7 +526,10 @@ def render_pair(g, pair):
               robots="noindex,follow" if stale else "index,follow")
     if not stale:
         g["SITEMAP_LASTMOD"][pair["path"]] = LAST
+    regulars = {k: regular_text(r) for k, r in picks.items() if r is not None}
+    sales = {k: deals_of(r) for k, r in picks.items() if r is not None and regulars.get(k)}
     return {"path": pair["path"], "stale": stale, "platforms": plats, "picks": picks,
+            "regulars": regulars, "sales": sales,
             "caps": caps, "mismatches": {s: m for s, m in mismatches.items() if m}, "oldest": old}
 
 
@@ -435,9 +554,14 @@ def llms_lines(g):
             for s in (pair["a"], pair["b"]):
                 r = built["picks"].get((res, s))
                 if r:
-                    plan = plan_short(g["shown_tier"](r))
+                    extra = [plan_short(g["shown_tier"](r))] + built.get("sales", {}).get((res, s), [])
+                    if r.get("promo_until"):
+                        extra.append(f"promo until {r['promo_until']}")
+                    extra = ", ".join(x for x in extra if x)
+                    reg = built.get("regulars", {}).get((res, s), "")
+                    inner = extra + (f"; {reg}" if reg and extra else reg)
                     bits.append(f"{g['models'][s]['name']} {res} from {rm(r['usd_per_second'])}/s on {r['platform']}"
-                                + (f" ({plan})" if plan else ""))
+                                + (f" ({inner})" if inner else ""))
         lines.append(f"- [{pair['title']}]({g['SITE_URL']}{pair['path']}): {'; '.join(bits)}. "
                      f"5s to 30s clip totals on the {len(built['platforms'])} platforms that sell both.")
     return lines

@@ -77,6 +77,24 @@ check(cp.plan_short("Ultra (annual)") == "Ultra annual" and cp.plan_short("not l
 check(cp.deal_name("Black Friday: Ultra annual billing") == "Black Friday price" and cp.deal_name("50% off") == "deal price", "deal_name")
 check(cp.seller_text({"platform": "Higgsfield"}, "Ultra (annual)", ["Black Friday price"], "estimated from credit plan")
       == "on Higgsfield (Ultra annual, Black Friday price, estimated from credit plan)", "seller_text")
+check(cp.seller_text({"platform": "Higgsfield"}, "Ultra (annual)", ["Black Friday price"], "from credit plan",
+                     "regular $0.151/s on Higgsfield, Ultra monthly at $129/mo")
+      == "on Higgsfield (Ultra annual, Black Friday price, from credit plan; regular $0.151/s on Higgsfield, Ultra monthly at $129/mo)",
+      "seller_text with a regular price")
+# Sale rows get a regular price from the data, or the cheapest non-sale row, never an invented one.
+_sale = {"type": "plan_sale", "standing": False, "usd": 0.05, "list_usd": 0.15}
+_r1 = {"platform": "H", "model": "m", "resolution": "720p", "usd_per_second": 0.05}
+check(cp.regular_for(_r1, [_sale], [_r1], lambda x: [])["usd"] == 0.15, "regular from the deal's prior price")
+check(cp.regular_for(_r1, [dict(_sale, standing=True)], [_r1], lambda x: []) is None, "standing discount is not a sale")
+check(cp.regular_for(_r1, [dict(_sale, usd=0.04)], [_r1], lambda x: []) is None, "deal that is not the row's price")
+check(cp.regular_for(_r1, [dict(_sale, type="unlimited_window")], [_r1], lambda x: []) is None, "unlimited window is not a sale price")
+_p = {"platform": "P", "model": "m", "resolution": "720p", "usd_per_second": 0.02, "promo_until": "2026-12-01"}
+_n1 = {"platform": "Q", "model": "m", "resolution": "720p", "usd_per_second": 0.09}
+_n2 = {"platform": "R", "model": "m", "resolution": "720p", "usd_per_second": 0.07}
+_n3 = {"platform": "S", "model": "m", "resolution": "1080p", "usd_per_second": 0.01}
+check(cp.regular_for(_p, [], [_p, _n1, _n2, _n3], lambda x: [])["row"] is _n2, "cheapest without a sale, same model and resolution")
+check(cp.regular_for(_p, [], [_p, _n3], lambda x: []) == {"kind": "none"}, "no regular price is not invented")
+check(cp.regular_for(dict(_p, list_usd_per_second=0.08), [], [_p], lambda x: [])["usd"] == 0.08, "row's own list rate")
 check(cp.and_list(["720p", "1080p"]) == "720p and 1080p" and cp.and_list(["480p", "720p", "1080p"]) == "480p, 720p and 1080p", "and_list")
 _like = cp.same_seller(rows, {"a": "a", "b": "b", "resolutions": ("720p",)})
 check([(x[0], x[1]) for x in _like] == [("720p", "Higgsfield"), ("720p", "fal")], "same_seller")
@@ -87,6 +105,27 @@ check(cp.run_text("2026-11-19T08:00:44", "2026-11-20") == "Nov 20, 2026", "old r
 # ---------- built pages ----------
 db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 today = db["last_full_check"]
+_deals = json.load(open(os.path.join(ROOT, "data", "deals.json")))
+_deals = _deals["deals"] if isinstance(_deals, dict) else _deals
+
+
+def is_sale(r):
+    """Recomputed from the data: a promo row, a row with a higher list rate, or the sale plan of a
+    live, non-standing plan sale whose price went down."""
+    if r.get("promo_until") or (r.get("list_usd_per_second") or 0) > r["usd_per_second"]:
+        return True
+    for d in _deals:
+        if d.get("status") != "live" or d.get("type") != "plan_sale" or d.get("math") != "plan_price":
+            continue
+        if (d.get("conditions") or {}).get("standing") or (d.get("end") and d["end"] < today):
+            continue
+        if d.get("start") and d["start"] > today:
+            continue
+        for pr in d.get("price_pairs") or [d]:
+            if r.get("plan") and r["plan"] == pr.get("deal_plan_id") and (pr.get("price_after") or 0) < (pr.get("price_before") or 0):
+                return True
+    return False
+
 cur = [r for r in db["rows"] if live(r, today)]
 sitemap = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
 llms = open(os.path.join(DIST, "llms.txt"), encoding="utf-8").read()
@@ -183,7 +222,9 @@ for pair in cp.PAIRS:
     check(lead is not None and same is not None, f"{path}: lead or same-seller line missing")
     if lead and same:
         for para in (text(lead.group(1)), text(same.group(1))):
-            for m in re.finditer(r"\$[\d.]*\d(/s)?", para):
+            for m in re.finditer(r"\$[\d.]*\d(?![\d.])(/s)?", para):
+                if para[m.end():].startswith("/mo"):
+                    continue  # a plan's monthly price inside a regular-price note, e.g. "at $129/mo"
                 check(para[m.end():].startswith(" on "), f"{path}: price {m.group(0)} in the lead has no seller next to it")
         like = [(res, p) for res in pair["resolutions"] for p in sorted(plats)
                 if all(any(r["platform"] == p and r["model"] == m and str(r.get("resolution")).strip() == res for r in cur) for m in (A, B))]
@@ -193,6 +234,46 @@ for pair in cp.PAIRS:
                 check(f"At {res}," in st and f"/s on {p} (" in st, f"{path}: same-seller line misses {p} {res}")
         else:
             check("no like-for-like price" in st, f"{path}: same-seller line should say there is none")
+    # Every sale or promo price in a headline or summary has a regular or non-sale price next to it,
+    # and a price that is not on sale gets none.
+    for res in pair["resolutions"]:
+        for s in (A, B):
+            best = None
+            for r in cur:
+                if r["model"] == s and str(r.get("resolution")).strip() == res:
+                    if best is None or r["usd_per_second"] < best["usd_per_second"]:
+                        best = r
+            if best is None:
+                continue
+            name = db["models"][s]["name"]
+            on_sale = is_sale(best)
+            row = re.search(rf'<tr><th scope="row">{re.escape(name)}, {res}</th>(.*?)</tr>', head, re.S)
+            if not row:
+                continue
+            price_cell = text(re.search(r'data-label="Cheapest \$/s">(.*?)</td>', row.group(1), re.S).group(1))
+            has = re.search(r"; (regular \$[\d.]+/s on |cheapest without a sale: \$[\d.]+/s on |no regular price in our data)", price_cell)
+            check(bool(has) == on_sale, f"{path}: {name} {res} sale price {'without' if on_sale else 'with'} a regular price: {price_cell[:160]}")
+            for secs in pair["seconds"]:
+                cell = text(re.search(rf'data-label="{secs}s clip" class="num">(.*?)</td>', row.group(1), re.S).group(1))
+                has = re.search(r"(regular|cheapest without a sale:) \$[\d.]+ on ", cell)
+                check(bool(has) == on_sale, f"{path}: {name} {res} {secs}s total sale price without a regular price")
+            if on_sale and lead and same:
+                rate = rate_money(best["usd_per_second"])
+                for label, para in (("lead", text(lead.group(1))), ("same-seller", text(same.group(1)))):
+                    for m in re.finditer(rf"{re.escape(rate)}/s on {re.escape(best['platform'])} \(([^()]*)\)", para):
+                        check(re.search(r"; (regular \$|cheapest without a sale: \$|no regular price)", m.group(1)) is not None,
+                              f"{path}: {label} sale price {rate}/s without a regular price")
+                    tot = two(best["usd_per_second"] * 10)
+                    for m in re.finditer(rf"{re.escape(tot)} on {re.escape(best['platform'])}( \(([^()]*)\))?", para):
+                        check(m.group(2) is not None and re.match(r"(regular|cheapest without a sale:) \$", m.group(2)) is not None,
+                              f"{path}: {label} 10s total {tot} on a sale price without a regular price")
+    if pair.get("note"):
+        check(pair["note"] in body, f"{path}: note not shown")
+    # No invented rows: a model with no price at a resolution says so.
+    for res in pair["resolutions"]:
+        for s in (A, B):
+            if not any(r["model"] == s and str(r.get("resolution")).strip() == res for r in cur):
+                check(f"No {res} price in our data." in head, f"{path}: {s} {res} should say no price")
     for s in (A, B):
         mp = open(os.path.join(DIST, "models", s, "index.html"), encoding="utf-8").read()
         check(f'href="{path}"' in mp, f"{path}: no link from /models/{s}/")
