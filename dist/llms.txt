@@ -119,7 +119,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 
 ## Comparisons
 
-- [Kling 3.0 vs Seedance 2.5 Prices Compared](https://vidfare.com/compare/kling-3-0-vs-seedance-2-5/): Kling 3.0 720p from $0.025/s (Higgsfield); Seedance 2.5 720p from $0.231/s (Replicate); Kling 3.0 1080p from $0.0292/s (Higgsfield); Seedance 2.5 1080p from $0.521/s (Magnific). 5s to 30s clip totals on the 4 platforms that sell both.
+- [Kling 3.0 vs Seedance 2.5 Prices Compared](https://vidfare.com/compare/kling-3-0-vs-seedance-2-5/): Kling 3.0 720p from $0.025/s on Higgsfield (Ultra annual); Seedance 2.5 720p from $0.231/s on Replicate; Kling 3.0 1080p from $0.0292/s on Higgsfield (Ultra annual); Seedance 2.5 1080p from $0.521/s on Magnific (Pro annual). 5s to 30s clip totals on the 4 platforms that sell both.
 
 ## Data
 

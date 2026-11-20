@@ -73,6 +73,14 @@ rows = [{"platform": "Higgsfield", "model": "a", "resolution": "720p", "usd_per_
 plats, got = cp.page_rows(rows, {"a": "a", "b": "b", "resolutions": ("720p",)})
 check(plats == ["Higgsfield", "fal"], "shared platforms")
 check([r["usd_per_second"] for r in got] == [0.1, 0.2, 0.3, 0.4], "rows sorted by $/s only")
+check(cp.plan_short("Ultra (annual)") == "Ultra annual" and cp.plan_short("not listed") == "", "plan_short")
+check(cp.deal_name("Black Friday: Ultra annual billing") == "Black Friday price" and cp.deal_name("50% off") == "deal price", "deal_name")
+check(cp.seller_text({"platform": "Higgsfield"}, "Ultra (annual)", ["Black Friday price"], "estimated from credit plan")
+      == "on Higgsfield (Ultra annual, Black Friday price, estimated from credit plan)", "seller_text")
+check(cp.and_list(["720p", "1080p"]) == "720p and 1080p" and cp.and_list(["480p", "720p", "1080p"]) == "480p, 720p and 1080p", "and_list")
+_like = cp.same_seller(rows, {"a": "a", "b": "b", "resolutions": ("720p",)})
+check([(x[0], x[1]) for x in _like] == [("720p", "Higgsfield"), ("720p", "fal")], "same_seller")
+check(cp.same_seller(rows[:1] + rows[3:], {"a": "a", "b": "b", "resolutions": ("720p",)}) == [], "same_seller none")
 check(cp.run_text("2026-11-20T08:00:44", "2026-11-20") == "Nov 20, 2026, 11:00 AM ET (8:00 AM PT)", "run time ET first")
 check(cp.run_text("2026-11-19T08:00:44", "2026-11-20") == "Nov 20, 2026", "old run falls back to the date")
 
@@ -129,11 +137,14 @@ for pair in cp.PAIRS:
             if not row or best is None:
                 continue
             cells = row.group(1)
-            check(f"<b>{rate_money(best['usd_per_second'])}</b>" in cells, f"{path}: {name} {res} $/s")
-            check(best["platform"] in text(cells), f"{path}: {name} {res} platform")
+            check(f"<b>{rate_money(best['usd_per_second'])}/s</b>" in cells, f"{path}: {name} {res} $/s")
+            price_cell = re.search(r'data-label="Cheapest \$/s">(.*?)</td>', cells, re.S).group(1)
+            check(f"{rate_money(best['usd_per_second'])}/s on {best['platform']} (" in text(price_cell),
+                  f"{path}: {name} {res} price does not name its seller next to it")
             for secs in pair["seconds"]:
                 cell = re.search(rf'data-label="{secs}s clip" class="num">(.*?)</td>', cells, re.S).group(1)
                 check(cell.startswith(two(best["usd_per_second"] * secs)), f"{path}: {name} {res} {secs}s total")
+                check(best["platform"] in text(cell), f"{path}: {name} {res} {secs}s total without its seller")
                 n = math.ceil(secs / caps[s])
                 check((f"{n} clips" in cell) == (n > 1), f"{path}: {name} {res} {secs}s clip count")
     # Platform table: every row shows plan/tier, resolution, audio and a label.
@@ -144,12 +155,44 @@ for pair in cp.PAIRS:
     trs = re.findall(r"<tr><th scope=\"row\">.*?</tr>", ptab, re.S)
     check(len(trs) > 0, f"{path}: platform table empty")
     for tr in trs:
-        for lab in ("Plan or tier", "Resolution", "Audio", "Label", "Checked"):
+        check("Plan or tier: " in text(tr.split("</th>")[0]), f"{path}: row without plan or tier")
+        for lab in ("Resolution", "Audio", "Checked"):
             m = re.search(rf'data-label="{lab}"[^>]*>(.*?)</td>', tr, re.S)
             check(m is not None and text(m.group(1)).strip() != "", f"{path}: row without {lab}")
-        check(re.search(r'class="tag (verified|estimate|promo)"', tr) is not None, f"{path}: row without a rate label")
+        check(re.search(r"\((?:[^()]*, )?(published rate|estimated rate|estimated from credit plan|from credit plan|promo)\)", text(tr)) is not None,
+              f"{path}: row without a rate label next to the price")
         if "credit plan" in text(tr):
             check("Assumes every credit you pay for is used." in tr, f"{path}: plan row without the usage assumption")
+    # Seller next to every price.
+    platforms = {r["platform"] for r in db["rows"]}
+    for tid in ("cmp-headline",):
+        tab = page[page.find(f'id="{tid}"'):]
+        tab = tab[:tab.find("</table>")]
+        for td in re.findall(r"<td\b[^>]*>(.*?)</td>", tab, re.S):
+            t = text(td)
+            if re.search(r"\$\d", t):
+                check(any(p in t for p in platforms), f"{path}: {tid} price without a seller: {t.strip()[:80]}")
+    for tr in trs:
+        plat = text(re.search(r'<th scope="row">(.*?)<br>', tr, re.S).group(1)).strip()
+        # Totals in a platform row sit in the row headed by that seller and plan.
+        check(plat in platforms, f"{path}: row header is not a seller: {plat}")
+        cell = text(re.search(r'data-label="\$/s"[^>]*>(.*?)</td>', tr, re.S).group(1))
+        check(re.search(rf"\$[\d.]+/s on {re.escape(plat)} \(", cell) is not None, f"{path}: row $/s without its seller {plat}")
+    lead = re.search(r'<p class="lead">(.*?)</p>', page, re.S)
+    same = re.search(r'<p id="same-seller">(.*?)</p>', page, re.S)
+    check(lead is not None and same is not None, f"{path}: lead or same-seller line missing")
+    if lead and same:
+        for para in (text(lead.group(1)), text(same.group(1))):
+            for m in re.finditer(r"\$[\d.]*\d(/s)?", para):
+                check(para[m.end():].startswith(" on "), f"{path}: price {m.group(0)} in the lead has no seller next to it")
+        like = [(res, p) for res in pair["resolutions"] for p in sorted(plats)
+                if all(any(r["platform"] == p and r["model"] == m and str(r.get("resolution")).strip() == res for r in cur) for m in (A, B))]
+        st = text(same.group(1))
+        if like:
+            for res, p in like:
+                check(f"at {res}," in st and f"/s on {p} (" in st, f"{path}: same-seller line misses {p} {res}")
+        else:
+            check("no like-for-like price" in st, f"{path}: same-seller line should say there is none")
     for s in (A, B):
         mp = open(os.path.join(DIST, "models", s, "index.html"), encoding="utf-8").read()
         check(f'href="{path}"' in mp, f"{path}: no link from /models/{s}/")
