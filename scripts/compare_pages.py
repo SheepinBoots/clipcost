@@ -116,6 +116,12 @@ def is_stale(rows, today, days=STALE_DAYS):
     return (datetime.date.fromisoformat(today) - datetime.date.fromisoformat(old)).days > days
 
 
+def and_list(items):
+    """'720p and 1080p'; '480p, 720p and 1080p'."""
+    items = list(items)
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def day_text(day):
     d = datetime.date.fromisoformat(day)
     return f"{d.strftime('%b')} {d.day}, {d.year}"
@@ -150,6 +156,49 @@ def page_rows(rows, pair):
     return plats, [r for _, r in out]
 
 
+def plan_short(tier):
+    """'Ultra (annual)' -> 'Ultra annual'. 'not listed' -> ''."""
+    t = (tier or "").strip()
+    if not t or t == "not listed":
+        return ""
+    return t.replace(" (", " ").replace("(", "").replace(")", "")
+
+
+def deal_name(title):
+    """'Black Friday: Ultra annual ...' -> 'Black Friday price'. No prefix -> 'deal price'."""
+    head = (title or "").split(":", 1)
+    return (head[0].strip() + " price") if len(head) == 2 and head[0].strip() else "deal price"
+
+
+def seller_bits(r, tier, deal_names, rate_label):
+    """Plan, deal, promo end and rate label, in that order, for the text next to a price."""
+    bits = [b for b in [plan_short(tier)] if b]
+    bits += deal_names
+    if r.get("promo_until"):
+        bits.append(f"promo until {r['promo_until']}")
+    bits.append(rate_label)
+    return bits
+
+
+def seller_text(r, tier, deal_names, rate_label):
+    """'on Higgsfield (Ultra annual, Black Friday price, estimated from credit plan)'."""
+    return f"on {r['platform']} ({', '.join(seller_bits(r, tier, deal_names, rate_label))})"
+
+
+def same_seller(rows, pair):
+    """[(res, platform, row_a, row_b)]: cheapest row of each model on one platform at one resolution."""
+    out = []
+    plats = shared_platforms(rows, pair["a"], pair["b"])
+    for res in reversed(pair["resolutions"]):
+        for p in plats:
+            on = [r for r in rows if r["platform"] == p and res_of(r) == res]
+            ra = cheapest_at(on, pair["a"], res)
+            rb = cheapest_at(on, pair["b"], res)
+            if ra and rb:
+                out.append((res, p, ra, rb))
+    return out
+
+
 def links_html(slug, root, nl=False):
     """Small link line for a model page or the calculator ('*' = every pair)."""
     hits = [p for p in PAIRS if slug == "*" or slug in (p["a"], p["b"])]
@@ -169,7 +218,8 @@ def _table(inner, tid):
 def _css(ids):
     sel = lambda suf: ",".join(f"{t}{suf}" for t in ids)
     return (
-        "<style>@media(max-width:600px){"
+        "<style>" + sel(" td.num .small") + "{white-space:normal}"
+        + "@media(max-width:600px){"
         + sel(" thead") + "{display:none}"
         + ",".join(f"{t},{t} tbody,{t} tr,{t} th,{t} td" for t in ids) + "{display:block;width:auto}"
         + sel(" tr") + "{border-bottom:1px solid var(--line);padding:8px 0}"
@@ -203,14 +253,36 @@ def render_pair(g, pair):
         promo = f' <span class="small">until {e(r["promo_until"])}</span>' if r.get("promo_until") else ""
         return g["tag"](r) + promo + g["deal_badges"](r)
 
-    def total_cell(r, secs, label):
+    def total_cell(r, secs, label, who=True):
         cap = stated_max(r) or caps[r["model"]]
         total, n = clip_total(r["usd_per_second"], secs, cap)
         more = f'<br><span class="small">{n} clips (max {cap:g}s each)</span>' if n > 1 else ""
-        return f'<td data-label="{label}" class="num">{two(total, 2)}{more}</td>'
+        return (f'<td data-label="{label}" class="num">{two(total, 2)}'
+                + (f'<br><span class="small">{e(seller_short(r))}</span>' if who else "") + f'{more}</td>')
 
     def plan_text(r):
         return g["shown_tier"](r)
+
+    def deals_of(r):
+        names = []
+        for adj in g["dealmod"].row_adjustments(r, g["LIVE_DEALS"], g["plans"], TODAY):
+            if adj["type"] == "unlimited_window":
+                names.append("unlimited window on sale")
+            else:
+                names.append(deal_name(g["DEAL_BY_ID"][adj["deal_id"]].get("title")))
+        return names
+
+    def seller(r):
+        return seller_text(r, plan_text(r), deals_of(r), g["rate_label"](r))
+
+    def seller_html(r):
+        """'on <a>Higgsfield</a> (Ultra annual, Black Friday price, ...)' with the vendor link."""
+        bits = seller_bits(r, plan_text(r), deals_of(r), g["rate_label"](r))
+        return f'on {g["plat_link"](r["platform"], r["source_url"])} <span class="small">({e(", ".join(bits))})</span>'
+
+    def seller_short(r):
+        p = plan_short(plan_text(r))
+        return r["platform"] + (f", {p}" if p else "")
 
     # Headline: cheapest per model per resolution, anywhere.
     hrows = []
@@ -218,17 +290,17 @@ def render_pair(g, pair):
         for s in (A, B):
             r = picks[(res, s)]
             if r is None:
-                hrows.append(f'<tr><th scope="row">{e(name[s])}, {e(res)}</th><td data-label="Cheapest $/s" colspan="{2 + len(pair["seconds"])}">No {e(res)} price in our data.</td></tr>')
+                hrows.append(f'<tr><th scope="row">{e(name[s])}, {e(res)}</th><td data-label="Cheapest $/s" colspan="{1 + len(pair["seconds"])}">No {e(res)} price in our data.</td></tr>')
                 continue
             hrows.append(
                 f'<tr><th scope="row">{e(name[s])}, {e(res)}</th>'
-                f'<td data-label="Cheapest $/s"><b>{rate_money(r["usd_per_second"])}</b> {labels(r)}</td>'
-                f'<td data-label="Where">{g["plat_link"](r["platform"], r["source_url"])}<br><span class="small">Plan or tier: {e(plan_text(r))} · audio {e(g["shown_audio"](r))} · checked {e(r["checked"])}</span></td>'
+                f'<td data-label="Cheapest $/s"><b>{rate_money(r["usd_per_second"])}/s</b> {seller_html(r)}{g["deal_badges"](r)}'
+                f'<div class="small">Resolution {e(res)} · audio {e(g["shown_audio"](r))} · checked {e(r["checked"])} · {g["source_link"](r)}</div></td>'
                 + "".join(total_cell(r, secs, f"{secs}s clip") for secs in pair["seconds"]) + "</tr>"
             )
     sec_heads = "".join(f'<th scope="col">{s}s clip</th>' for s in pair["seconds"])
     headline = _table(
-        f'<thead><tr><th scope="col">Model, resolution</th><th scope="col">Cheapest $/s</th><th scope="col">Where</th>{sec_heads}</tr></thead>'
+        f'<thead><tr><th scope="col">Model, resolution</th><th scope="col">Cheapest $/s</th>{sec_heads}</tr></thead>'
         f'<tbody>{"".join(hrows)}</tbody>', "cmp-headline")
 
     # Platform table
@@ -236,25 +308,25 @@ def render_pair(g, pair):
     for r in prow:
         res = res_of(r) or "not listed"
         prow_html.append(
-            f'<tr><th scope="row">{g["plat_link"](r["platform"], r["source_url"])}<br><span class="small">{e(r["variant"])}</span></th>'
+            f'<tr><th scope="row">{e(r["platform"])}<br><span class="small">Plan or tier: {e(plan_text(r))} · {e(r["variant"])}</span></th>'
             f'<td data-label="Model"><a href="{root("/models/" + r["model"] + "/")}">{e(name[r["model"]])}</a></td>'
-            f'<td data-label="Plan or tier">{e(plan_text(r))}</td><td data-label="Resolution">{e(res)}</td>'
+            f'<td data-label="Resolution">{e(res)}</td>'
             f'<td data-label="Audio">{e(g["shown_audio"](r))}</td>'
-            f'<td data-label="$/s" class="num"><b>{rate_money(r["usd_per_second"])}</b>{g["assumption_html"](r)}</td>'
-            f'<td data-label="Label">{labels(r)}</td>'
-            + "".join(total_cell(r, secs, f"{secs}s clip") for secs in pair["seconds"])
+            f'<td data-label="$/s"><b>{rate_money(r["usd_per_second"])}/s</b> {seller_html(r)}{g["deal_badges"](r)}{g["assumption_html"](r)}</td>'
+            + "".join(total_cell(r, secs, f"{secs}s clip", who=False) for secs in pair["seconds"])
             + f'<td data-label="Checked" class="small">{e(r["checked"])}<br>{g["source_link"](r)}</td></tr>'
         )
     ptable = _table(
-        '<thead><tr><th scope="col">Platform</th><th scope="col">Model</th><th scope="col">Plan or tier</th>'
-        '<th scope="col">Resolution</th><th scope="col">Audio</th><th scope="col">$/s</th><th scope="col">Label</th>'
+        '<thead><tr><th scope="col">Seller and plan</th><th scope="col">Model</th>'
+        '<th scope="col">Resolution</th><th scope="col">Audio</th><th scope="col">$/s, seller, plan and label</th>'
         f'{sec_heads}<th scope="col">Checked</th></tr></thead><tbody>{"".join(prow_html)}</tbody>', "cmp-platforms")
 
+    like = same_seller(rows, pair)
     same_res = []
     for p in plats:
-        for res in pair["resolutions"]:
-            if all(any(r["platform"] == p and r["model"] == s and res_of(r) == res for r in prow) for s in (A, B)):
-                same_res.append(f"{p} ({res})")
+        both = [res for res in pair["resolutions"] if any(x[0] == res and x[1] == p for x in like)]
+        if both:
+            same_res.append(f"{p} ({', '.join(both)})")
     same_text = (f"{len(same_res)} of them {'lists' if len(same_res) == 1 else 'list'} both models at the same resolution: {', '.join(same_res)}." if same_res
                  else "None of them list both models at the same resolution.")
     unlisted = sum(1 for r in prow if res_of(r) is None)
@@ -265,10 +337,21 @@ def render_pair(g, pair):
         if not ra or not rb:
             return ""
         secs = 10 if 10 in pair["seconds"] else pair["seconds"][0]
-        return (f"At {res}, the cheapest {name[A]} is {rate_money(ra['usd_per_second'])}/s on {ra['platform']} "
-                f"and the cheapest {name[B]} is {rate_money(rb['usd_per_second'])}/s on {rb['platform']}, "
-                f"so a {secs}-second clip costs {two(ra['usd_per_second'] * secs, 2)} vs {two(rb['usd_per_second'] * secs, 2)}. ")
+        return (f"At {res}, the cheapest {name[A]} is {rate_money(ra['usd_per_second'])}/s {seller(ra)} "
+                f"and the cheapest {name[B]} is {rate_money(rb['usd_per_second'])}/s {seller(rb)}, "
+                f"so a {secs}-second clip costs {two(ra['usd_per_second'] * secs, 2)} on {ra['platform']} "
+                f"vs {two(rb['usd_per_second'] * secs, 2)} on {rb['platform']}. ")
     lead = "".join(pick_text(res) for res in reversed(pair["resolutions"])) + f"Prices last checked {run}."
+    secs10 = 10 if 10 in pair["seconds"] else pair["seconds"][0]
+    if like:
+        same_line = "On the same seller: " + " ".join(
+            f"At {res}, {name[A]} is {rate_money(ra['usd_per_second'])}/s {seller(ra)} and {name[B]} is "
+            f"{rate_money(rb['usd_per_second'])}/s {seller(rb)}, so a {secs10}-second clip costs "
+            f"{two(ra['usd_per_second'] * secs10, 2)} on {p} vs {two(rb['usd_per_second'] * secs10, 2)} on {p}."
+            for res, p, ra, rb in like)
+    else:
+        same_line = (f"On the same seller: no platform in our data sells both {name[A]} and {name[B]} at the same "
+                     f"resolution ({and_list(pair['resolutions'])}), so there is no like-for-like price.")
 
     cap_lines = []
     for s in (A, B):
@@ -298,9 +381,10 @@ def render_pair(g, pair):
 {g["byline_html"]()}
 {stale_html}
 <p class="lead">{e(lead)}</p>
+<p id="same-seller">{e(same_line)}</p>
 <p class="small">{e(pair["description"])}</p>
 {g["partner_lines_html"](pair["path"])}
-<h2 id="cheapest">Cheapest price at {" and ".join(pair["resolutions"])}</h2>
+<h2 id="cheapest">Cheapest price at {and_list(pair["resolutions"])}</h2>
 <p class="small">The lowest price per second for each model at each resolution, on any platform we track, and what a {", ".join(f"{s}s" for s in pair["seconds"])} clip costs at that rate.</p>
 {headline}
 <h2 id="platforms">Platforms that sell both: {len(plats)}</h2>
@@ -351,7 +435,9 @@ def llms_lines(g):
             for s in (pair["a"], pair["b"]):
                 r = built["picks"].get((res, s))
                 if r:
-                    bits.append(f"{g['models'][s]['name']} {res} from {rm(r['usd_per_second'])}/s ({r['platform']})")
+                    plan = plan_short(g["shown_tier"](r))
+                    bits.append(f"{g['models'][s]['name']} {res} from {rm(r['usd_per_second'])}/s on {r['platform']}"
+                                + (f" ({plan})" if plan else ""))
         lines.append(f"- [{pair['title']}]({g['SITE_URL']}{pair['path']}): {'; '.join(bits)}. "
                      f"5s to 30s clip totals on the {len(built['platforms'])} platforms that sell both.")
     return lines
