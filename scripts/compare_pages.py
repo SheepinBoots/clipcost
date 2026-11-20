@@ -45,6 +45,20 @@ PAIRS = [
         # Longest single clip, used when the rows do not state one.
         "caps": {"kling-3-0": 15, "seedance-2-5": 30},
     },
+    {
+        "path": "/compare/wan-3-0-vs-kling-3-0/",
+        "a": "wan-3-0",
+        "b": "kling-3-0",
+        "title": "Wan 3.0 vs Kling 3.0: Which Is Cheaper?",
+        "h1": "Wan 3.0 vs Kling 3.0: which is cheaper?",
+        "description": ("Wan 3.0 and Kling 3.0 price per second at 480p, 720p and 1080p, with 5s to 30s "
+                        "clip totals, on the platforms that sell both. Rebuilt daily."),
+        "resolutions": ("480p",) + RESOLUTIONS,
+        "seconds": SECONDS,
+        "caps": {"wan-3-0": 30, "kling-3-0": 15},
+        "note": ("Wan 3.0 has a 480p option. We have no Kling 3.0 price at 480p, "
+                 "so the 480p rows are Wan 3.0 only."),
+    },
 ]
 
 
@@ -383,7 +397,7 @@ def render_pair(g, pair):
 <p class="lead">{e(lead)}</p>
 <p id="same-seller">{e(same_line)}</p>
 <p class="small">{e(pair["description"])}</p>
-{g["partner_lines_html"](pair["path"])}
+{f'<p>{e(pair["note"])}</p>' + chr(10) if pair.get("note") else ""}{g["partner_lines_html"](pair["path"])}
 <h2 id="cheapest">Cheapest price at {and_list(pair["resolutions"])}</h2>
 <p class="small">The lowest price per second for each model at each resolution, on any platform we track, and what a {", ".join(f"{s}s" for s in pair["seconds"])} clip costs at that rate.</p>
 {headline}

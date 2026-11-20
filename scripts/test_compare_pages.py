@@ -193,6 +193,13 @@ for pair in cp.PAIRS:
                 check(f"At {res}," in st and f"/s on {p} (" in st, f"{path}: same-seller line misses {p} {res}")
         else:
             check("no like-for-like price" in st, f"{path}: same-seller line should say there is none")
+    if pair.get("note"):
+        check(pair["note"] in body, f"{path}: note not shown")
+    # No invented rows: a model with no price at a resolution says so.
+    for res in pair["resolutions"]:
+        for s in (A, B):
+            if not any(r["model"] == s and str(r.get("resolution")).strip() == res for r in cur):
+                check(f"No {res} price in our data." in head, f"{path}: {s} {res} should say no price")
     for s in (A, B):
         mp = open(os.path.join(DIST, "models", s, "index.html"), encoding="utf-8").read()
         check(f'href="{path}"' in mp, f"{path}: no link from /models/{s}/")
