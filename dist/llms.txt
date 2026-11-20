@@ -126,6 +126,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - JSON files at those URLs are data downloads for scripts and agents, not HTML pages.
 - [Connect an agent](https://vidfare.com/mcp/): the live read-only MCP server at https://mcp.vidfare.com/mcp for ChatGPT, Claude, and Cursor. An agent can check current prices and deals before it recommends or generates a video. It reads prices.json and deals.json and does not invent a price.
 - MCP tools: list_models (each model and its cheapest current dollars per second); get_model_prices (one model, with an optional provider and resolution); estimate_cost (one clip, using the credit calculator's inputs); cheapest_options (lowest stated price for a length and resolution); list_deals (live deals, or upcoming, ended, or all).
+- [AI Video Price Index](https://vidfare.com/price-index/): median and cheapest $/s across the 9 models by resolution, daily since 2026-10-20. Now: median $0.025/s, cheapest $0.0167/s. Downloads: https://vidfare.com/data/price-index.csv and https://vidfare.com/data/price-index.json.
 - [feed.xml](https://vidfare.com/feed.xml): RSS of price changes, weekly reports, and live deals.
 
 Advertise: https://vidfare.com/advertise/ — labelled sponsor placements. They never change the price order.

@@ -629,7 +629,7 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
 <footer><div class="wrap"><p><b>Models:</b> {modlinks}</p>
 <p><b>Guides:</b> {guidelinks}</p>
 <p>Prices are copied from each vendor's own pricing page, with the date we checked. Always confirm on the vendor's page before you buy. Some links are affiliate links (<a class="disc" href="{root("/about/#disclosure")}">disclosure</a>).</p>
-<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/data/")}">Price data</a> · <a href="{root("/advertise/")}">Advertise</a> · <a href="{root("/contact/")}">Contact</a> · <a href="https://twelve.tools">Twelve Tools</a></p></div></footer>
+<p>© {today.year} {BRAND} · Data last checked {LAST} · <a href="{root("/data/")}">Price data</a> · <a href="{root("/price-index/")}">Price index</a> · <a href="{root("/advertise/")}">Advertise</a> · <a href="{root("/contact/")}">Contact</a> · <a href="https://twelve.tools">Twelve Tools</a></p></div></footer>
 {before_count}<script data-goatcounter="https://vidfare.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 {analytics.script_tag(path, root)}
@@ -641,6 +641,9 @@ def page(path, title, desc, body, active="", extra_head="", dest=None, reports_n
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w").write(doc)
 
+PRICE_INDEX_NOTE = (f'<p class="small">For the median and cheapest $/s across all {len(models)} models over time, '
+                    f'see the <a href="{root("/price-index/")}">AI Video Price Index</a>.</p>')
+
 def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
     """Write /reports/ and any week that has at least two qualifying changes."""
     events = weekly_report.load()
@@ -649,8 +652,10 @@ def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
     record_dates = dest in (None, DIST)
     if record_dates:
         SITEMAP_LASTMOD["/reports/"] = weekly_report.index_content_date(result, events, as_of) or LAST
+    index_body = weekly_report.render_index_body(result, events, href_fn=root, public_log=public_log)
+    index_body = index_body.replace("</p>", "</p>" + PRICE_INDEX_NOTE, 1)
     page("/reports/", f"{weekly_report.INDEX_H1} | {BRAND}", weekly_report.INDEX_DESCRIPTION,
-         weekly_report.render_index_body(result, events, href_fn=root, public_log=public_log),
+         index_body,
          "/reports/", ld_script(weekly_report.index_jsonld(SITE_URL + "/reports/")),
          dest=dest, reports_nav=reports_nav)
     prior = None
@@ -2671,6 +2676,7 @@ for c in sorted(changes, key=lambda c: c["date"], reverse=True):
 page("/changes/", f"AI Video Price Changes Log ({MONTH}) | {BRAND}",
      "Every AI video price change we detect, with dates and sources: Wan, Kling, Veo, Seedance, Runway, Higgsfield and more.",
      f"""<h1>Price changes log</h1><p class="lead">A daily script re-checks every source and logs each price change here with the date and a link to the source.</p>
+<p class="small">For the median and cheapest $/s over time, see the <a href="{root("/price-index/")}">AI Video Price Index</a>.</p>
 <ul class="log" style="padding-left:0;list-style:none">{items}</ul>{news_box()}""", "/changes/")
 
 # ---------- Newsletter ----------
@@ -3564,6 +3570,7 @@ def write_llms():
         "- JSON files at those URLs are data downloads for scripts and agents, not HTML pages.",
         f"- [Connect an agent]({SITE_URL}/mcp/): the live read-only MCP server at {MCP_ENDPOINT} for ChatGPT, Claude, and Cursor. An agent can check current prices and deals before it recommends or generates a video. It reads prices.json and deals.json and does not invent a price.",
         "- MCP tools: list_models (each model and its cheapest current dollars per second); get_model_prices (one model, with an optional provider and resolution); estimate_cost (one clip, using the credit calculator's inputs); cheapest_options (lowest stated price for a length and resolution); list_deals (live deals, or upcoming, ended, or all).",
+        price_index.llms_line(globals()),
         f"- [feed.xml]({SITE_URL}/feed.xml): RSS of price changes, weekly reports, and live deals.",
         "",
         f"Advertise: {SITE_URL}/advertise/ — labelled sponsor placements. They never change the price order.",
@@ -3677,6 +3684,8 @@ import fal_pricing_guide
 fal_pricing_guide.render(globals())
 kling_3_guide.render(globals())
 hf_promo_code_guide.render(globals())
+import price_index
+price_index.render(globals())
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers
@@ -3929,7 +3938,7 @@ mcp_body = f"""<h1>{e(AGENT_H1)}</h1>
 """
 page("/mcp/", MCP_TITLE, MCP_DESC, mcp_body, "", ld_script(mcp_ld))
 
-urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/", "/mcp/"]
+urls = ["/", "/deals/", "/deals/black-friday/", "/calculator/", "/data/", "/price-index/", "/mcp/"]
 urls += [path for path, _label in GUIDE_LINKS]
 urls.append("/guides/google-flow-credits-calculator/")
 if NEWSLETTER_ENABLED:
