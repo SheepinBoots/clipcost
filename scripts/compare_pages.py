@@ -345,7 +345,7 @@ def render_pair(g, pair):
     secs10 = 10 if 10 in pair["seconds"] else pair["seconds"][0]
     if like:
         same_line = "On the same seller: " + " ".join(
-            f"at {res}, {name[A]} is {rate_money(ra['usd_per_second'])}/s {seller(ra)} and {name[B]} is "
+            f"At {res}, {name[A]} is {rate_money(ra['usd_per_second'])}/s {seller(ra)} and {name[B]} is "
             f"{rate_money(rb['usd_per_second'])}/s {seller(rb)}, so a {secs10}-second clip costs "
             f"{two(ra['usd_per_second'] * secs10, 2)} on {p} vs {two(rb['usd_per_second'] * secs10, 2)} on {p}."
             for res, p, ra, rb in like)

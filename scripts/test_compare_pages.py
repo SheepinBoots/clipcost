@@ -190,7 +190,7 @@ for pair in cp.PAIRS:
         st = text(same.group(1))
         if like:
             for res, p in like:
-                check(f"at {res}," in st and f"/s on {p} (" in st, f"{path}: same-seller line misses {p} {res}")
+                check(f"At {res}," in st and f"/s on {p} (" in st, f"{path}: same-seller line misses {p} {res}")
         else:
             check("no like-for-like price" in st, f"{path}: same-seller line should say there is none")
     for s in (A, B):
