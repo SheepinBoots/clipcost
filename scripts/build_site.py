@@ -7,6 +7,7 @@ import notify_indexnow
 import variations as variations
 import weekly_report
 import analytics
+import compare_pages
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -2319,7 +2320,7 @@ for slug, m in models.items():
 <h2>All {e(m['name'])} prices</h2>
 {wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
 <p class="small">A row labelled estimated from credit plan is not a list price. Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.{flow_note}</p>
-{news_box()}
+{compare_pages.links_html(slug, root, nl=True)}{news_box()}
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {faq_html(faqs)}
 {tick_script()}
@@ -2655,7 +2656,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
  const slim=x=>JSON.stringify({{plans:x.plans,rows:(x.rows||[]).filter(r=>r.plan)}});
  if(slim(d)!==slim(EMBED)) start(d);
 }}).catch(()=>{{}});
-</script>{news_box()}"""
+</script>{compare_pages.links_html("*", root)}{news_box()}"""
 page("/calculator/", page_title("AI Video Credit Calculator"),
      "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/",
      '<script>if(location.search){var k=["model","seconds","sec","resolution","res","audio","input","plan","provider","platform","used"],q=new URLSearchParams(location.search);for(var i=0;i<k.length;i++){if(q.get(k[i])){document.documentElement.classList.add("calc-hold");break}}}</script><style>html.calc-hold body{visibility:hidden}</style>' + ld_script(calc_ld))
@@ -3561,6 +3562,10 @@ def write_llms():
         f"- [Kling 3.0 cost per second: where it’s cheapest]({SITE_URL}/guides/cheapest-kling-3-0/): {kling_3_blurb()}",
         f"- [Higgsfield promo code and current deals]({SITE_URL}/guides/higgsfield-promo-code/): {hf_promo_code_blurb()}",
         "",
+        "## Comparisons",
+        "",
+        *compare_pages.llms_lines(globals()),
+        "",
         "## Data",
         "",
         f"- [Price data]({SITE_URL}/data/): how to read prices.json, share a calculator link, and credit VidFare.",
@@ -3686,6 +3691,12 @@ kling_3_guide.render(globals())
 hf_promo_code_guide.render(globals())
 import price_index
 price_index.render(globals())
+try:
+    CHECK_RUN = json.load(open(os.path.join(ROOT, "data", "check_report.json"))).get("run")
+except (OSError, ValueError):
+    CHECK_RUN = None
+compare_pages.render(globals())
+STALE_COMPARE = {p["path"] for p in COMPARE_PAGES if p["stale"]}
 write_llms()
 # GitHub Pages serves vidfare.com and ignores a _headers file. JSON stays
 # fetchable. A noindex response header has to be set on the host that answers
@@ -3943,6 +3954,7 @@ urls += [path for path, _label in GUIDE_LINKS]
 urls.append("/guides/google-flow-credits-calculator/")
 if NEWSLETTER_ENABLED:
     urls.append("/newsletter/")
+urls += compare_pages.sitemap_paths(globals())
 urls += ["/changes/", "/about/", "/advertise/", "/contact/"]
 if report_paths:
     urls.extend(report_paths)
@@ -4310,7 +4322,9 @@ def audit_site():
                 continue
             coming_soon = rel == "newsletter/index.html" and not NEWSLETTER_ENABLED
             missing = rel == "404.html"
-            if "nosnippet" in low or ("noindex" in low and not (coming_soon or missing)):
+            # A /compare/ page whose rows went stale is noindex on purpose (scripts/compare_pages.py).
+            stale_compare = ("/" + rel[:-len("index.html")]) in STALE_COMPARE
+            if "nosnippet" in low or ("noindex" in low and not (coming_soon or missing or stale_compare)):
                 errors.append(f"{rel} contains noindex or nosnippet")
             parser = PageAudit()
             parser.feed(raw)
@@ -4334,6 +4348,9 @@ def audit_site():
                     errors.append(f"{rel} robots must be noindex")
                 if parser.canonical != SITE_URL + "/newsletter/":
                     errors.append(f"{rel} is missing a canonical")
+            elif stale_compare:
+                if parser.robots != "noindex,follow" or "Stale data:" not in raw:
+                    errors.append(f"{rel} is stale but lacks noindex,follow or the stale notice")
             else:
                 if not parser.canonical or not parser.canonical.startswith(SITE_URL):
                     errors.append(f"{rel} is missing a canonical")
