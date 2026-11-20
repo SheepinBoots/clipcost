@@ -1204,7 +1204,7 @@ _PRICE_TABLE_RE = re.compile(
 )
 
 def news_box_inline():
-    """Compact Kit signup for the mid-page slot (guides, model pages, home, /compare/, /cost/, /price-index/).
+    """Compact Kit signup for the mid-page slot (guides, model pages, /compare/, /cost/, /price-index/; not home).
     Same form id, uid, action, and success message as news_box(). GoatCounter counts it as
     newsletter-signup-inline/<page>, the end box as newsletter-signup/<page>.
 
@@ -1890,7 +1890,6 @@ home = f"""<h1>{e(AGENT_H1)}</h1>
 <span class="small" id="count"></span></div>
 {wide_table(THEAD + "<tbody>" + "".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"])) + "</tbody>", ' id="prices"')}
 <p class="small"><span class="tag verified">published rate</span> = the vendor states this dollars per second, or states an API credit count and a credit price (Runway credits are $0.01). <span class="tag verified">from credit plan</span> = plan price ÷ credits × credits per clip ÷ seconds, using a credit count the vendor stated exactly. It is not a list price per second. <span class="tag estimate">estimated from credit plan</span> = the same credit-plan math when the vendor marks the count with "~", "roughly", or "estimated". <span class="tag estimate">estimated rate</span> = an API price the vendor calls approximate. <span class="tag promo">promo</span> = a temporary discount, with the end date when the vendor gave one. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. Of {len(rows)} live rows: {n_published} published rates, {n_plan} from a credit plan, {n_plan_est} estimated from a credit plan, {n_api_est} estimated API rates, {n_promo} promos.</p>
-{news_box_inline()}
 {news_box()}
 {retired_table(retired_rows)}
 <script>
@@ -4658,8 +4657,7 @@ def audit_site():
         errors.append("agent section must stay above the price table")
     if news_at < 0 or prices_at < 0 or not prices_at < news_at:
         errors.append("newsletter signup must stay under the price table")
-    elif "<section" in home_html[prices_at:news_at].replace(INLINE_NEWS_MARK, "", 1):
-        # Only the mid-page signup may sit there (after the table and its legend, Emmanuel 2026-11-20).
+    elif "<section" in home_html[prices_at:news_at]:
         errors.append("a section was inserted between the price table and the newsletter")
     deals_html = open(os.path.join(DIST, "deals", "index.html"), encoding="utf-8").read()
     live_at = deals_html.find('id="liveDeals"')
@@ -4822,9 +4820,8 @@ def audit_site():
         if "VidFare Weekly lands on Fridays" not in news_html or "check Promotions or spam" not in news_html:
             errors.append("newsletter form is missing the Kit success message")
         home_form = open(os.path.join(DIST, "index.html"), encoding="utf-8").read()
-        # Home has the mid-page signup above All prices and the end box under the table.
-        for rel, text, n in (("home", home_form, 2), ("newsletter", news_html, 1)):
-            if text.count(KIT_FORM_ACTION) != n or text.count('name="email_address"') != n:
+        for rel, text in (("home", home_form), ("newsletter", news_html)):
+            if text.count(KIT_FORM_ACTION) != 1 or text.count('name="email_address"') != 1:
                 errors.append(f"{rel} Kit form action or email field was duplicated or dropped")
     if weekly_report.format_usd("0.0272") != money("0.0272") or weekly_report.format_usd("0.1") != money("0.1"):
         errors.append("report dollar format drifted from the price table")

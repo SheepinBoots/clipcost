@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mid-page signup and sponsor box on model pages, home, /compare/, /cost/ and /price-index/.
+"""Mid-page signup and sponsor box on model pages, /compare/, /cost/ and /price-index/ (home has only the end signup).
 
 Run after the build: python3 scripts/build_site.py && python3 scripts/test_mid_signup.py
 - one mid signup (newsletter-signup-inline) and one end signup (newsletter-signup) per page,
@@ -82,12 +82,13 @@ for slug, m in db["models"].items():
     if "<h2>Live deals for this model</h2>" in html:
         check(before.rstrip().endswith("</div>") and "Live deals for this model" in before, f"{path}: mid signup should follow the live deals section")
 
-# Home: after the All prices table and its legend note, before the end signup (moved one section down).
+# Home: no mid signup (Emmanuel 2026-11-20); one end signup under the price table, sponsor box unchanged.
 html = read("/")
-before, after = common("/", html)
-check(next_tag(after).startswith('<section class="news" id="newsletter">'), "/: mid signup must sit right above the end signup")
-check('id="prices"' in before and before.rstrip().endswith("promos.</p>"), "/: mid signup must follow the price table and its legend")
-check('data-sponsor="home"' in before, "/: sponsor box should stay above the mid signup")
+m = main_of(html)
+check(MID not in html and 'data-vf-event="newsletter-signup-inline"' not in html, "/: home should not have a mid signup")
+check(m.count(END) == 1 and len(re.findall(r"<form\b", m)) == 1, "/: home should have exactly the end signup")
+check(m.find('id="prices"') < m.find(END), "/: end signup must stay under the price table")
+check('data-sponsor="home"' in m, "/: home sponsor box missing")
 
 # New data pages: sponsor box like the model pages, partner line right after it, then the mid signup at a section boundary.
 pages = [(p["path"], '<h2 id="platforms">') for p in cp.PAIRS]
@@ -111,4 +112,4 @@ for path, nxt in pages:
 if errors:
     print("\n".join(errors))
     sys.exit(1)
-print(f"mid signup ok ({len(db['models'])} model pages, home, {len(pages)} data pages)")
+print(f"mid signup ok ({len(db['models'])} model pages, {len(pages)} data pages; home has none)")
