@@ -72,6 +72,22 @@ def main():
     lite = next(rec for kind, rec in flow if rec["id"] == "flow-veo31-lite")
     text = "Veo 3.1 - Lite 4s, 6s, 8s videos Non-Ultra subscribers: 10 Ultra subscribers: 5 Veo 3.1 - Fast"
     assert [up.check(text, c)[0] for c in lite["checks"] if not c.get("phrase")] == ["ok", "ok"]
+    # Krea's plan cards come in several A/B layouts. The embedded SvelteKit plan data
+    # is read instead, and only amounts marked currency="usd" are emitted.
+    krea_html = ('(function(a,b,c,d,e,f,g,h){a.amount=9;a.currency="usd";b.amount=63;b.currency="usd";'
+                 'c.amount=9;c.currency="usd";d.amount=84;d.currency="usd";e.amount=35;e.currency="usd";'
+                 'f.amount=252;f.currency="usd";g.amount=35;g.currency="usd";h.amount=336;h.currency="usd";'
+                 'return {plansAndPrices:{creator_basic:{monthly:a,yearly:b,yearlyDiscountPercent:40,originalMonthly:c,originalYearly:d},'
+                 'creator_pro:{monthly:e,yearly:f,yearlyDiscountPercent:50,originalMonthly:g,originalYearly:h}},'
+                 'planCards:[{planId:"creator_basic",computeUnits:5000,name:"Basic"},{planId:"creator_pro",computeUnits:20000,name:"Pro"}]}}')
+    krea_text = up.krea_plan_text(krea_html)
+    for pid in ("krea-basic-yearly", "krea-pro-monthly", "krea-pro-yearly"):
+        for c in db["plans"][pid]["checks"]:
+            if c["needle"].startswith("Krea USD"):
+                assert up.check(krea_text, c)[0] == "ok", (pid, c, krea_text)
+    euro_text = up.krea_plan_text(krea_html.replace('currency="usd"', 'currency="eur"'))
+    assert "$" not in euro_text and "monthly" not in euro_text, euro_text
+    assert up.check(euro_text, {"needle": "Krea USD Pro monthly ${N}/month", "expect": 35})[0] == "missing"
     print("ok")
 
 

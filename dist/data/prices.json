@@ -90,7 +90,8 @@
    "name": "Krea plans",
    "url": "https://www.krea.ai/pricing",
    "fetch": "static",
-   "number_flow": "Yearly"
+   "number_flow": "Yearly",
+   "krea_plans": true
   },
   "magnific": {
    "name": "Magnific (ex-Freepik) plans",
@@ -274,11 +275,15 @@
      "expect": 5
     },
     {
-     "needle": "Basic {N} units / month",
+     "needle": "Krea USD Basic yearly ${N}/year",
+     "expect": 63
+    },
+    {
+     "needle": "Krea USD Basic {N} units / month",
      "expect": 5000
     }
    ],
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing"
   },
   "krea-pro-monthly": {
@@ -290,15 +295,15 @@
    "source": "krea",
    "checks": [
     {
-     "needle": "Pro yearly was ${N}/month",
+     "needle": "Krea USD Pro monthly ${N}/month",
      "expect": 35
     },
     {
-     "needle": "Pro {N} units / month",
+     "needle": "Krea USD Pro {N} units / month",
      "expect": 20000
     }
    ],
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing"
   },
   "krea-pro-yearly": {
@@ -312,6 +317,10 @@
     {
      "needle": "Pro yearly card ${N}/month",
      "expect": 21
+    },
+    {
+     "needle": "Krea USD Pro yearly ${N}/year",
+     "expect": 252
     }
    ],
    "checked": "2026-11-20",
@@ -7057,7 +7066,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r134",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7100,7 +7109,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r135",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7192,7 +7201,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r137",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7235,7 +7244,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r138",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7327,7 +7336,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r140",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "without",
@@ -7370,7 +7379,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r141",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "without",
@@ -7462,7 +7471,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r143",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "without",
@@ -7505,7 +7514,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r144",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "without",
@@ -7597,7 +7606,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r146",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7640,7 +7649,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r147",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7732,7 +7741,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r149",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7775,7 +7784,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r150",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7852,22 +7861,22 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 5,
-   "credits_per_clip": 129.87012987012986,
-   "usd_per_clip": 0.1299,
-   "usd_per_second": 0.02597,
+   "credits_per_clip": 138.88888888888889,
+   "usd_per_clip": 0.1389,
+   "usd_per_second": 0.02778,
    "status": "estimate",
    "promo_until": null,
    "source": "krea",
-   "math": "Krea says ~154 clips on Pro (20,000 units) → ~130 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~129.9 units/clip (5s) → $0.130/clip → $0.0260/s",
+   "math": "Krea says ~144 clips on Pro (20,000 units) → ~139 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~138.9 units/clip (5s) → $0.139/clip → $0.0278/s",
    "checks": [
     {
      "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-     "expect": 154
+     "expect": 144
     }
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r152",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7895,22 +7904,22 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 5,
-   "credits_per_clip": 129.87012987012986,
-   "usd_per_clip": 0.2273,
-   "usd_per_second": 0.04545,
+   "credits_per_clip": 138.88888888888889,
+   "usd_per_clip": 0.2431,
+   "usd_per_second": 0.04861,
    "status": "estimate",
    "promo_until": null,
    "source": "krea",
-   "math": "Krea says ~154 clips on Pro (20,000 units) → ~130 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~129.9 units/clip (5s) → $0.227/clip → $0.0455/s",
+   "math": "Krea says ~144 clips on Pro (20,000 units) → ~139 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~138.9 units/clip (5s) → $0.243/clip → $0.0486/s",
    "checks": [
     {
      "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-     "expect": 154
+     "expect": 144
     }
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r153",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7941,22 +7950,22 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 5,
-   "credits_per_clip": 129.87012987012986,
-   "usd_per_clip": 0.1364,
-   "usd_per_second": 0.02727,
+   "credits_per_clip": 138.88888888888889,
+   "usd_per_clip": 0.1458,
+   "usd_per_second": 0.02917,
    "status": "estimate",
    "promo_until": null,
    "source": "krea",
-   "math": "Krea says ~154 clips on Pro (20,000 units) → ~130 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~129.9 units/clip (5s) → $0.136/clip → $0.0273/s",
+   "math": "Krea says ~144 clips on Pro (20,000 units) → ~139 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~138.9 units/clip (5s) → $0.146/clip → $0.0292/s",
    "checks": [
     {
      "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-     "expect": 154
+     "expect": 144
     }
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r154",
-   "checked": "2026-11-18",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -8002,7 +8011,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r155",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -8045,7 +8054,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r156",
-   "checked": "2026-11-17",
+   "checked": "2026-11-20",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",

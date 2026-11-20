@@ -189,7 +189,7 @@ CLIPS = {
   ("veo-3-1","Veo 3.1 Fast","720p",20000/84,4,"Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",True,False,84),
   ("veo-3-1","Veo 3.1 Lite","720p",20000/225,4,"Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",True,None,225),
   ("minimax-hailuo","Hailuo 2.3","768p",20000/96,6,"Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",True,None,96),
-  ("minimax-hailuo","MiniMax H3 Max","480p",20000/154,5,"MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",True,None,154),
+  ("minimax-hailuo","MiniMax H3 Max","480p",20000/144,5,"MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",True,None,144),
   ("runway-gen-4","Runway Gen-4.5","—",20000/112,2,"Runway Gen-4.5 2s ~{X} videos ~{N} videos",True,None,112),
  ],
  "Magnific":[

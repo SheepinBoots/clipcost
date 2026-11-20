@@ -83,6 +83,46 @@ def billing_tier_text(html):
                 lines.append(line)
     return collapse(" ".join(lines)) if lines else ""
 
+KREA_PLANS = {"creator_basic": "Basic", "creator_pro": "Pro"}
+
+def krea_plan_text(html):
+    """Read Krea's plan prices and units from the SvelteKit data in the page.
+
+    The visible plan cards come in several A/B layouts, so "Pro 20,000 units /
+    month" is not always one phrase. The embedded plansAndPrices block is the
+    same in every layout and says currency="usd" next to each amount. Only USD
+    amounts are emitted. Anything else gives no line, so the check reports
+    missing instead of reading another currency.
+    """
+    start = html.find("plansAndPrices:{")
+    if start < 0:
+        return ""
+    head = html.rfind("(function(", 0, start)
+    block = html[head if head >= 0 else 0:start]
+    money = {}
+    for var, amount, cur in re.findall(r'(?<![\w$.])([A-Za-z_$][\w$]*)\.amount=([\d.]+);\1\.currency="(\w+)"', block):
+        money[var] = (float(amount), cur)
+    def usd(var):
+        got = money.get(var)
+        return got[0] if got and got[1] == "usd" else None
+    def fmt(v):
+        return f"{v:,.2f}".rstrip("0").rstrip(".")
+    lines = []
+    for pid, name in KREA_PLANS.items():
+        m = re.search(r'\b' + pid + r':\{monthly:([A-Za-z_$][\w$]*),yearly:([A-Za-z_$][\w$]*),[^}]*?originalMonthly:([A-Za-z_$][\w$]*),originalYearly:([A-Za-z_$][\w$]*)\}', html[start:])
+        if m:
+            mon, yr, omon, oyr = (usd(v) for v in m.groups())
+            if mon is not None:
+                lines.append(f"Krea USD {name} monthly ${fmt(mon)}/month")
+            if yr is not None:
+                lines.append(f"Krea USD {name} yearly ${fmt(yr)}/year")
+            if oyr is not None:
+                lines.append(f"Krea USD {name} yearly without coupon ${fmt(oyr)}/year")
+        u = re.search(r'planId:"' + pid + r'",computeUnits:(\d+)', html)
+        if u:
+            lines.append(f"Krea USD {name} {int(u.group(1)):,} units / month")
+    return collapse(" ".join(lines)) if lines else ""
+
 def fetch(src):
     if src["fetch"] == "static":
         r = requests.get(src["url"], headers={"User-Agent": UA}, timeout=40)
@@ -95,6 +135,10 @@ def fetch(src):
                 text = text + " " + extra
         if src.get("billing_json"):
             extra = billing_tier_text(r.text)
+            if extra:
+                text = text + " " + extra
+        if src.get("krea_plans"):
+            extra = krea_plan_text(r.text)
             if extra:
                 text = text + " " + extra
         if src.get("number_flow"):

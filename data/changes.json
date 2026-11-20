@@ -1209,5 +1209,44 @@
   "vendor": "Krea",
   "source_url": "https://www.krea.ai/pricing",
   "text": "Black Friday: Seedance 2.5 up to 75% off on Krea ended 2026-11-19."
+ },
+ {
+  "date": "2026-11-20",
+  "row": "r152",
+  "model": "minimax-hailuo",
+  "platform": "Krea",
+  "variant": "MiniMax H3 Max",
+  "resolution": "480p",
+  "old_usd_per_second": 0.02597,
+  "new_usd_per_second": 0.02778,
+  "source_url": "https://www.krea.ai/pricing",
+  "type": "price",
+  "plan": "krea-basic-yearly"
+ },
+ {
+  "date": "2026-11-20",
+  "row": "r153",
+  "model": "minimax-hailuo",
+  "platform": "Krea",
+  "variant": "MiniMax H3 Max",
+  "resolution": "480p",
+  "old_usd_per_second": 0.04545,
+  "new_usd_per_second": 0.04861,
+  "source_url": "https://www.krea.ai/pricing",
+  "type": "price",
+  "plan": "krea-pro-monthly"
+ },
+ {
+  "date": "2026-11-20",
+  "row": "r154",
+  "model": "minimax-hailuo",
+  "platform": "Krea",
+  "variant": "MiniMax H3 Max",
+  "resolution": "480p",
+  "old_usd_per_second": 0.02727,
+  "new_usd_per_second": 0.02917,
+  "source_url": "https://www.krea.ai/pricing",
+  "type": "price",
+  "plan": "krea-pro-yearly"
  }
 ]
