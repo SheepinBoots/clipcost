@@ -1,0 +1,22 @@
+reCAPTCHA submit test (Playwright /tmp/pw, channel=chrome), Nov 19, 2026 PT
+Local build served as https://vidfare.com/guides/kling-ai-pricing/ via page.route.
+Every POST to app.kit.com was captured with page.route and then aborted. Nothing reached Kit.
+
+- normal: reCAPTCHA loads, inline form
+    reCAPTCHA requests before any interaction: 0
+    POST after 0.16s as fetch (multipart/form-data); fields: email_address=recaptcha-test@example.invalid, token=<2596 chars> 0cAFcWeA4H8s_2EDcnCPqf-h..., ckjs_version=6
+- normal: end-of-page form
+    reCAPTCHA requests before any interaction: 0
+    POST after 0.15s as fetch (multipart/form-data); fields: email_address=recaptcha-test@example.invalid, token=<2574 chars> 0cAFcWeA7qHkEtxIO4klpwAA..., ckjs_version=6
+- api.js blocked (google.com/recaptcha)
+    reCAPTCHA requests before any interaction: 0
+    POST after 8.02s as document (application/x-www-form-urlencoded); fields: email_address=recaptcha-test@example.invalid, token=None
+- gstatic blocked (api.js loads, recaptcha__*.js fails)
+    reCAPTCHA requests before any interaction: 0
+    POST after 8.02s as document (application/x-www-form-urlencoded); fields: email_address=recaptcha-test@example.invalid, token=None
+- ck.5.js blocked
+    reCAPTCHA requests before any interaction: 0
+    POST after 0.03s as document (application/x-www-form-urlencoded); fields: email_address=recaptcha-test@example.invalid, token=None
+- control: Kit config only, no helper, api.js blocked
+    reCAPTCHA requests before any interaction: 1
+    no POST within 25s (form stuck)

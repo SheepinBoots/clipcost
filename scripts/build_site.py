@@ -1088,13 +1088,61 @@ def retired_table(rs, thead=None):
             f'<p class="small">These rates are off sale. The last price we recorded stays here, and these rows are left out of cheapest picks and the live table.</p>'
             f'{wide_table(head + "<tbody>" + body + "</tbody>", " id=\"retired\"")}')
 
-# Shared copy for the signup box and the Kit after-submit message.
-# The sender address is omitted unless it can be verified in Kit.
-KIT_CONFIRM_NOTE = (
-    "We'll email you a confirmation link. If you don't see it in a minute, "
-    "check your spam or Promotions folder and mark it 'Not spam'."
+# Kit after-submit message. Auto-confirm is on for form 10170819, so a signup
+# counts as soon as Kit accepts it. Kit still sends a welcome/confirmation email.
+KIT_SUCCESS = (
+    "You're in! VidFare Weekly lands on Fridays. "
+    "If it isn't in your inbox, check Promotions or spam."
 )
-KIT_SUCCESS = "Thanks! " + KIT_CONFIRM_NOTE
+
+# Invisible reCAPTCHA (v3), the way Kit's own embeds do it: data-options
+# settings.recaptcha.enabled = true. ck.5.js then loads Google's api.js with
+# Kit's site key (hardcoded in ck.5.js), runs grecaptcha.execute(key,
+# {action: "formsubmit"}) on submit, and posts the result as the "token" field.
+# Kit only checks the token when reCAPTCHA is switched on for the form in Kit.
+KIT_RECAPTCHA_SITE_KEY = "6LdkIV0UAAAAABtNVAAP99TC6f_18LiETnPK6ziX"
+KIT_RECAPTCHA_API = "https://www.google.com/recaptcha/api.js?render=" + KIT_RECAPTCHA_SITE_KEY
+# Seconds to wait for a reCAPTCHA token before posting the form without one.
+KIT_RECAPTCHA_WAIT_MS = 8000
+
+def kit_options():
+    """data-options for both Kit forms. Same keys ck.5.js reads from a Kit embed."""
+    return e(json.dumps({
+        "settings": {
+            "after_subscribe": {
+                "action": "message",
+                "success_message": KIT_SUCCESS,
+                "redirect_url": "",
+            },
+            "recaptcha": {"enabled": True},
+        }
+    }, separators=(",", ":")))
+
+# The badge is hidden in style.css (.grecaptcha-badge), so Google requires this
+# line in the signup flow. It sits inside [data-element=fields], so ck.5.js
+# swaps it out with the fields when the success message appears.
+RECAPTCHA_NOTE = (
+    '<p class="small news-legal">This site is protected by reCAPTCHA and the Google '
+    '<a href="https://policies.google.com/privacy" rel="noopener">Privacy Policy</a> and '
+    '<a href="https://policies.google.com/terms" rel="noopener">Terms of Service</a> apply.</p>'
+)
+
+# Runs before ck.5.js. ck.5.js loads api.js as soon as a page opens unless a
+# script with that src is already in the page, so a non-running placeholder
+# defers it until someone focuses, taps, or submits a signup form. If no token
+# arrives (api.js blocked or slow), ck.5.js would wait forever, so after
+# KIT_RECAPTCHA_WAIT_MS a still-pending form is posted the plain HTML way.
+RECAPTCHA_JS = (
+    "(function(){var A=%s,W=%d,go=0,d=document;"
+    "var h=d.createElement('script');h.type='text/plain';h.src=A;d.head.appendChild(h);"
+    "function load(){if(go)return;go=1;var s=d.createElement('script');s.src=A;s.async=true;d.head.appendChild(s)}"
+    "function kit(t){return t&&t.closest?t.closest('form[data-sv-form]'):null}"
+    "['focusin','pointerdown','touchstart'].forEach(function(n){d.addEventListener(n,function(ev){if(kit(ev.target))load()},{capture:true,passive:true})});"
+    "d.addEventListener('submit',function(ev){var f=kit(ev.target);if(!f)return;load();"
+    "setTimeout(function(){if(!ev.defaultPrevented||!f.isConnected)return;"
+    "var b=f.querySelector('[data-element=submit]'),er=f.querySelector('[data-element=errors]');"
+    "if(f.querySelector('[data-element=fields]')&&!(b&&b.hasAttribute('data-active'))&&!(er&&er.children.length))HTMLFormElement.prototype.submit.call(f)},W)},true)})();"
+) % (json.dumps(KIT_RECAPTCHA_API), KIT_RECAPTCHA_WAIT_MS)
 
 def news_box(heading=None, blurb=None):
     """Kit signup. ck.5.js fills data-element success and errors. The form still posts if that script does not load.
@@ -1110,17 +1158,8 @@ def news_box(heading=None, blurb=None):
     )
     # ck.5.js reads data-options and, on success, replaces [data-element=fields]
     # with a formkit-alert[data-element=success] whose text is success_message.
-    # On failure it appends list items to [data-element=errors]. Double opt-in stays:
-    # the message asks for the confirmation email, and the form action is unchanged.
-    options = e(json.dumps({
-        "settings": {
-            "after_subscribe": {
-                "action": "message",
-                "success_message": KIT_SUCCESS,
-                "redirect_url": "",
-            }
-        }
-    }, separators=(",", ":")))
+    # On failure it appends list items to [data-element=errors]. The form action is unchanged.
+    options = kit_options()
     return f"""<section class="news" id="newsletter"><h2 style="margin-top:0">{e(heading)}</h2>
 <p class="small" style="margin:0">{e(blurb)}</p>
 <form action="{KIT_FORM_ACTION}" class="seva-form formkit-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_FORM_UID}" data-format="inline" data-version="5" data-options="{options}">
@@ -1129,11 +1168,11 @@ def news_box(heading=None, blurb=None):
 <div data-element="fields" class="seva-fields formkit-fields">
 <label class="small" for="newsEmail">Email address</label>
 <div class="news-row"><input id="newsEmail" type="email" name="email_address" required placeholder="you@email.com" aria-label="Email address"><button class="btn" data-element="submit" type="submit">Subscribe</button></div>
-<p class="small news-confirm">{e(KIT_CONFIRM_NOTE)}</p>
+{RECAPTCHA_NOTE}
 </div>
 </div>
 </form>
-<p class="small">You are not subscribed until you confirm.</p>
+<script>{RECAPTCHA_JS}</script>
 <script src="https://f.convertkit.com/ckjs/ck.5.js"></script></section>"""
 
 INLINE_NEWS_MARK = '<section class="news news-inline" id="newsletter-inline">'
@@ -1147,19 +1186,11 @@ _PRICE_TABLE_RE = re.compile(
 def news_box_inline():
     """Compact Kit signup for the mid-guide slot. Same form id, uid, action, and success message as news_box().
 
-    The existing end-of-guide box stays unchanged and is the one that loads ck.5.js.
+    The end-of-guide box is the one that loads ck.5.js and the reCAPTCHA helper.
     """
     if not NEWSLETTER_ENABLED:
         return ""
-    options = e(json.dumps({
-        "settings": {
-            "after_subscribe": {
-                "action": "message",
-                "success_message": KIT_SUCCESS,
-                "redirect_url": "",
-            }
-        }
-    }, separators=(",", ":")))
+    options = kit_options()
     return f"""{INLINE_NEWS_MARK}<p class="news-inline-heading"><strong>Prices change every week. Get the changes by email.</strong></p>
 <p class="news-inline-copy">One free email every Friday with price drops, new deals and when they end. Unsubscribe anytime.</p>
 <form action="{KIT_FORM_ACTION}" class="seva-form formkit-form news-inline-form" method="post" data-sv-form="{KIT_FORM_ID}" data-uid="{KIT_FORM_UID}" data-format="inline" data-version="5" data-options="{options}" data-vf-event="newsletter-signup-inline">
@@ -1167,6 +1198,7 @@ def news_box_inline():
 <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert"></ul>
 <div data-element="fields" class="seva-fields formkit-fields">
 <div class="news-row"><input id="newsEmailInline" type="email" name="email_address" required placeholder="you@email.com" aria-label="Email address"><button class="btn" data-element="submit" type="submit">Subscribe</button></div>
+{RECAPTCHA_NOTE}
 </div>
 </div>
 </form>
@@ -4711,9 +4743,11 @@ def audit_site():
         news_html = open(news_path, encoding="utf-8").read() if os.path.isfile(news_path) else ""
         if f'action="{KIT_FORM_ACTION}"' not in news_html or "ck.5.js" not in news_html:
             errors.append("newsletter page is missing the Kit form")
-        # Apostrophes in the note are HTML-escaped in the page; this phrase is unique and unescaped.
-        if news_html.count("check your spam or Promotions folder") < 2:
-            errors.append("newsletter page is missing the confirmation / spam-folder note on the form or in the success message")
+        for gone in ("You are not subscribed until you confirm", "confirmation link", "news-confirm"):
+            if gone in news_html:
+                errors.append(f"newsletter page still has the old double opt-in copy: {gone}")
+        if "protected by reCAPTCHA" not in news_html or "&quot;recaptcha&quot;:{&quot;enabled&quot;:true}" not in news_html:
+            errors.append("newsletter page is missing the reCAPTCHA setting or notice")
         if "TODO-newsletter-endpoint" in news_html or "preventDefault" in news_html:
             errors.append("newsletter page still blocks the Kit form")
         if 'name="email_address"' not in news_html:
@@ -4724,7 +4758,7 @@ def audit_site():
             errors.append("newsletter form is missing Kit success and error targets")
         if 'aria-live="polite"' not in news_html:
             errors.append("newsletter form is missing an aria-live region")
-        if "Thanks!" not in news_html or "check your spam or Promotions folder" not in news_html:
+        if "VidFare Weekly lands on Fridays" not in news_html or "check Promotions or spam" not in news_html:
             errors.append("newsletter form is missing the Kit success message")
         home_form = open(os.path.join(DIST, "index.html"), encoding="utf-8").read()
         for rel, text in (("home", home_form), ("newsletter", news_html)):
