@@ -279,12 +279,34 @@
      "expect": 63
     },
     {
+     "needle": "Krea USD Basic yearly without coupon ${N}/year",
+     "expect": 84
+    },
+    {
      "needle": "Krea USD Basic {N} units / month",
      "expect": 5000
     }
    ],
    "checked": "2026-11-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "sale": {
+    "deal_id": "krea-yearly-40",
+    "ends_at": "2026-11-22T08:00:00Z",
+    "note": "Black Friday coupon S7vd5tcX on Krea's yearly plans. Krea bills $63/yr ($5.25/mo; the card rounds to $5). Without the coupon Krea lists $84/yr ($7/mo).",
+    "regular": {
+     "usd_month": 7,
+     "checks": [
+      {
+       "needle": "Krea USD Basic yearly ${N}/year",
+       "expect": 84
+      },
+      {
+       "needle": "Krea USD Basic {N} units / month",
+       "expect": 5000
+      }
+     ]
+    }
+   }
   },
   "krea-pro-monthly": {
    "platform": "Krea",
@@ -321,10 +343,32 @@
     {
      "needle": "Krea USD Pro yearly ${N}/year",
      "expect": 252
+    },
+    {
+     "needle": "Krea USD Pro yearly without coupon ${N}/year",
+     "expect": 336
     }
    ],
    "checked": "2026-11-20",
-   "source_url": "https://www.krea.ai/pricing"
+   "source_url": "https://www.krea.ai/pricing",
+   "sale": {
+    "deal_id": "krea-yearly-40",
+    "ends_at": "2026-11-22T08:00:00Z",
+    "note": "Black Friday coupon S7vd5tcX on Krea's yearly plans: $252/yr ($21/mo). Without the coupon Krea lists $336/yr ($28/mo).",
+    "regular": {
+     "usd_month": 28,
+     "checks": [
+      {
+       "needle": "Krea USD Pro yearly ${N}/year",
+       "expect": 336
+      },
+      {
+       "needle": "Krea USD Pro {N} units / month",
+       "expect": 20000
+      }
+     ]
+    }
+   }
   },
   "mag-premium": {
    "platform": "Magnific",

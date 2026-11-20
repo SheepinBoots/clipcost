@@ -260,6 +260,74 @@ def stamp_checked(db, texts, findings, today):
         if rec.get("source") in texts and (kind, rid) not in bad_flow:
             rec["checked"] = today
 
+def rederive_plan_row(row, plan):
+    """Recompute a credit-plan row from its plan's price. Units per clip stay as they are."""
+    per = plan["usd_month"] / plan["credits_month"]
+    clip = per * row["credits_per_clip"]
+    ups = clip / row["clip_seconds"]
+    unit = "units" if plan.get("platform") == "Krea" else "credits"
+    math = row.get("math") or ""
+    prefix = math.split(". $", 1)[0] + ". " if ". $" in math else ""
+    approx = "~" if row.get("status") == "estimate" else ""
+    row["usd_per_clip"] = round(clip, 4)
+    row["usd_per_second"] = round(ups, 5)
+    row["math"] = (prefix + f"${plan['usd_month']:g}/mo ÷ {plan['credits_month']:,} {unit} = ${per:.5f}/{unit[:-1]}; "
+                   f"{approx}{row['credits_per_clip']:.1f} {unit}/clip ({row['clip_seconds']}s) → ${clip:.3f}/clip → ${ups:.4f}/s")
+
+
+def apply_plan_sales(db, texts, findings, log, now, today):
+    """Switch a sale-priced plan to its regular price once the sale's official end has passed.
+
+    A plan with a "sale" block ({"deal_id", "ends_at", "regular": {"usd_month", "checks"}}) keeps its
+    sale price until ends_at (UTC). On the first run after that, the vendor page is re-read: only when
+    every regular check matches the page are the regular price and checks applied, the plan's rows
+    re-derived and each $/s change logged. Otherwise nothing changes and a "sale_end_unconfirmed"
+    finding asks for a human check. Rows are never deleted. Returns the ids of plans switched.
+    """
+    switched = []
+    for pid, plan in db["plans"].items():
+        sale = plan.get("sale")
+        if not sale or plan.get("source") not in texts:
+            continue
+        ends = datetime.datetime.fromisoformat(sale["ends_at"].replace("Z", "+00:00"))
+        if now < ends:
+            continue
+        regular = sale["regular"]
+        text = texts[plan["source"]]
+        results = [(c, check(text, c)) for c in regular["checks"]]
+        if not all(st == "ok" for _, (st, _) in results):
+            findings.append({"kind": "plan", "id": pid, "source": plan["source"], "status": "sale_end_unconfirmed",
+                             "deal": sale.get("deal_id"), "ends_at": sale["ends_at"],
+                             "regular_checks": [{"needle": c["needle"], "expect": c["expect"], "status": st, "found": v}
+                                                for c, (st, v) in results]})
+            continue
+        # The sale-price checks are expected to fail now. Drop those findings for this plan.
+        findings[:] = [f for f in findings if not (f.get("kind") == "plan" and f.get("id") == pid)]
+        old_month = plan["usd_month"]
+        plan["usd_month"] = regular["usd_month"]
+        plan["checks"] = [dict(c) for c in regular["checks"]]
+        plan["sale_ended"] = {"deal_id": sale.get("deal_id"), "ends_at": sale["ends_at"],
+                              "sale_usd_month": old_month, "switched": today}
+        del plan["sale"]
+        plan["checked"] = today
+        for r in db["rows"]:
+            if r.get("plan") != pid or r.get("kind") != "plan":
+                continue
+            old = r["usd_per_second"]
+            rederive_plan_row(r, plan)
+            r["checked"] = today
+            if abs(r["usd_per_second"] - old) > 1e-12:
+                log.append({"date": today, "row": r["id"], "model": r["model"], "platform": r["platform"],
+                            "variant": r["variant"], "resolution": r["resolution"], "old_usd_per_second": old,
+                            "new_usd_per_second": r["usd_per_second"], "source_url": r["source_url"], "type": "price",
+                            "plan": pid, "reason": "sale_ended"})
+                weekly_report.append_event(weekly_report.price_record(db, r, old, r["usd_per_second"], today))
+        findings.append({"kind": "plan", "id": pid, "source": plan["source"], "status": "changed", "applied": True,
+                         "reason": "sale_ended", "old": old_month, "new": plan["usd_month"]})
+        switched.append(pid)
+    return switched
+
+
 def expire_promos(db, today, log):
     """Remove promo rows whose end date has passed and record that in the change log."""
     kept, expired = [], []
@@ -336,6 +404,8 @@ def main():
                             "variant": row["variant"], "resolution": row["resolution"], "old_usd_per_second": old_usd,
                             "new_usd_per_second": row["usd_per_second"], "source_url": row["source_url"], "type": "price"})
                 weekly_report.append_event(weekly_report.price_record(db, row, old_usd, row["usd_per_second"], today))
+    # A sale-priced plan past its official end switches to its regular price, if the page confirms it.
+    apply_plan_sales(db, texts, report["findings"], log, datetime.datetime.now(datetime.timezone.utc), today)
     # Re-date only rows whose own checks passed. Plan rows stay stale when the plan price itself changed.
     stamp_checked(db, texts, report["findings"], today)
     expired = expire_promos(db, today, log)

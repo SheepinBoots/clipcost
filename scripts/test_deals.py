@@ -93,10 +93,18 @@ def main():
     adj = deals.adjustment(plus_deal, plus, plans)
     close(adj["usd"], 33 / 1200 * 7.5 / 5)
     close(adj["usd"], 0.04125)
-    # Krea yearly 40% uses $21, not a second discount on the yearly row's neighbors.
-    krea = next(r for r in db["rows"] if r.get("plan") == "krea-pro-monthly" and r["model"] == "wan-3-0-prime")
-    adj = deals.adjustment(by_id(live, "krea-yearly-40"), krea, plans)
+    # Krea's Black Friday yearly coupon: the yearly row is the $21 sale price against the $28 regular
+    # yearly price, and the monthly row is not touched by the deal.
+    kdeal = by_id(live, "krea-yearly-40")
+    krea = next(r for r in db["rows"] if r.get("plan") == "krea-pro-yearly" and r["model"] == "wan-3-0-prime")
+    adj = deals.adjustment(kdeal, krea, plans)
     close(adj["usd"], 21 / 20000 * krea["credits_per_clip"] / krea["clip_seconds"])
+    close(adj["list_usd"], 28 / 20000 * krea["credits_per_clip"] / krea["clip_seconds"])
+    monthly = next(r for r in db["rows"] if r.get("plan") == "krea-pro-monthly" and r["model"] == "wan-3-0-prime")
+    if deals.adjustment(kdeal, monthly, plans) is not None:
+        raise SystemExit("the Krea yearly sale must not apply to the monthly row")
+    if kdeal.get("ends_at") != "2026-11-22T08:00:00Z" or not deals.is_current(kdeal, "2026-11-21") or deals.is_current(kdeal, "2026-11-22"):
+        raise SystemExit("the Krea yearly sale ends Nov 22, 2026, 3:00 AM ET (12:00 AM PT)")
     # Blended 12-month price for a first-N-months code.
     close(deals.blended_price(50, 100, 3), 87.5)
     synthetic = {

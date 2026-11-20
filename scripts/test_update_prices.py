@@ -88,6 +88,42 @@ def main():
     euro_text = up.krea_plan_text(krea_html.replace('currency="usd"', 'currency="eur"'))
     assert "$" not in euro_text and "monthly" not in euro_text, euro_text
     assert up.check(euro_text, {"needle": "Krea USD Pro monthly ${N}/month", "expect": 35})[0] == "missing"
+    # A sale-priced plan keeps its sale price until the official end, then switches to the
+    # regular price only when the vendor page shows it. Rows are re-derived, never deleted.
+    import copy, datetime as dt
+    real_append = up.weekly_report.append_event
+    up.weekly_report.append_event = lambda event: True
+    try:
+        base = {"plans": {"kp": {"platform": "Krea", "usd_month": 21, "credits_month": 20000, "source": "krea",
+                                 "checks": [{"needle": "Krea USD Pro yearly ${N}/year", "expect": 252}],
+                                 "sale": {"deal_id": "d", "ends_at": "2026-11-22T08:00:00Z",
+                                          "regular": {"usd_month": 28, "checks": [{"needle": "Krea USD Pro yearly ${N}/year", "expect": 336}]}}}},
+                "rows": [{"id": "x1", "model": "m", "platform": "Krea", "variant": "v", "resolution": "480p", "kind": "plan",
+                          "plan": "kp", "credits_per_clip": 100.0, "clip_seconds": 2, "status": "estimate",
+                          "usd_per_clip": 0.105, "usd_per_second": 0.0525, "source_url": "u", "checked": "2026-11-20",
+                          "math": "Krea says ~200 clips on Pro (20,000 units) → ~100 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~100.0 units/clip (2s) → $0.105/clip → $0.0525/s"}],
+                "models": {}}
+        before = dt.datetime(2026, 11, 22, 7, 59, tzinfo=dt.timezone.utc)
+        after = dt.datetime(2026, 11, 22, 16, 0, tzinfo=dt.timezone.utc)
+        db1, f1, log1 = copy.deepcopy(base), [], []
+        assert up.apply_plan_sales(db1, {"krea": "Krea USD Pro yearly $336/year"}, f1, log1, before, "2026-11-21") == []
+        assert db1 == base and not f1 and not log1
+        db2, f2, log2 = copy.deepcopy(base), [{"kind": "plan", "id": "kp", "status": "changed"}], []
+        assert up.apply_plan_sales(db2, {"krea": "Krea USD Pro yearly $336/year"}, f2, log2, after, "2026-11-22") == ["kp"]
+        assert db2["plans"]["kp"]["usd_month"] == 28 and "sale" not in db2["plans"]["kp"]
+        assert db2["plans"]["kp"]["checks"][0]["expect"] == 336
+        assert len(db2["rows"]) == 1 and db2["rows"][0]["usd_per_second"] == 0.07 and db2["rows"][0]["checked"] == "2026-11-22"
+        assert "$28/mo ÷ 20,000 units" in db2["rows"][0]["math"] and db2["rows"][0]["math"].startswith("Krea says ~200 clips")
+        assert log2 and log2[0]["new_usd_per_second"] == 0.07 and up.exit_code(f2, False) == 0
+        db3, f3, log3 = copy.deepcopy(base), [], []
+        assert up.apply_plan_sales(db3, {"krea": "Krea USD Pro yearly $300/year"}, f3, log3, after, "2026-11-22") == []
+        assert db3 == base and f3[0]["status"] == "sale_end_unconfirmed" and up.exit_code(f3, False) == 1
+    finally:
+        up.weekly_report.append_event = real_append
+    # The Krea yearly plans in the catalog carry a sale block that ends at Krea's own deadline.
+    for pid, month in (("krea-basic-yearly", 7), ("krea-pro-yearly", 28)):
+        sale = db["plans"][pid]["sale"]
+        assert sale["ends_at"] == "2026-11-22T08:00:00Z" and sale["regular"]["usd_month"] == month
     print("ok")
 
 
