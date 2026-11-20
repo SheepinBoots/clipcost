@@ -215,6 +215,7 @@ def _slot_allows_house(slot_id):
         or slot_id.startswith("model:")
         or slot_id == "guide"
         or slot_id.startswith("guide:")
+        or slot_id.startswith("page:")
     )
 
 def sponsor_record(slot_id):
@@ -228,6 +229,9 @@ def sponsor_record(slot_id):
         rec = sponsors.get("model:default")
     if rec is None and (slot_id == "guide" or slot_id.startswith("guide:")):
         rec = sponsors.get("guide")
+    if rec is None and slot_id.startswith("page:"):
+        # /compare/, /cost/ and /price-index/ pages show the same box as the model pages.
+        rec = sponsors.get("model:default")
     resolved = _resolve_sponsor(rec)
     if not sponsor_filled(resolved) and _slot_allows_house(slot_id):
         house = _resolve_sponsor(sponsors.get("house") or {})
@@ -337,6 +341,14 @@ def sponsor_slot(slot_id, featured=False, rec=None):
         return ""
     return render_sponsor(slot_id, rec, featured)
 
+def page_sponsor_slot_id(path):
+    """page:compare-kling-3-0-vs-veo-3-1, page:cost-1080p, page:price-index."""
+    return "page:" + re.sub(r"[^a-z0-9]+", "-", path.strip("/").lower()).strip("-")
+
+def page_sponsor_html(path):
+    """The model-page sponsor box (with its house fallback) on a /compare/, /cost/ or /price-index/ page."""
+    return sponsor_slot(page_sponsor_slot_id(path))
+
 def guide_sponsor_html(path):
     """One box on each /guides/<slug>/ page. None on the /guides/ index."""
     if path == "/guides/" or not path.startswith("/guides/"):
@@ -393,7 +405,8 @@ def partner_applies(rec, path):
     if path.startswith("/guides/") and path != "/guides/":
         slug = path.strip("/").split("/")[-1]
         return slug in (rec.get("guides") or [])
-    return False
+    # Data pages opted in by path prefix, e.g. "/compare/", "/cost/", "/price-index/".
+    return any(path.startswith(p) for p in (rec.get("pages") or []))
 
 def render_partner_line(rec):
     """A compact Partner line. Not a sponsor box and not a price row."""
@@ -1191,7 +1204,9 @@ _PRICE_TABLE_RE = re.compile(
 )
 
 def news_box_inline():
-    """Compact Kit signup for the mid-guide slot. Same form id, uid, action, and success message as news_box().
+    """Compact Kit signup for the mid-page slot (guides, model pages, /compare/, /cost/, /price-index/; not home).
+    Same form id, uid, action, and success message as news_box(). GoatCounter counts it as
+    newsletter-signup-inline/<page>, the end box as newsletter-signup/<page>.
 
     The end-of-guide box is the one that loads ck.5.js and the reCAPTCHA helper.
     """
@@ -2178,6 +2193,9 @@ for slug, m in models.items():
     deals_html = ""
     if model_deals:
         deals_html = '<h2>Live deals for this model</h2><div class="dealgrid">' + "".join(deal_card(d, rowset=rs) for d in model_deals) + "</div>"
+    # Mid-page signup goes here: after the live deals section (or the sponsor box when there are no deals),
+    # before the related-guide links and the long price table.
+    deals_split = len(deals_html)
     if slug == "seedance-2-5":
         deals_html += (
             f'<p class="small">How the unlimited windows compare in seconds: '
@@ -2317,7 +2335,9 @@ for slug, m in models.items():
 {summary}
 {sponsor_slot("model:" + slug)}
 {partner_lines_html("/models/" + slug + "/")}
-{deals_html}
+{deals_html[:deals_split]}
+{news_box_inline()}
+{deals_html[deals_split:]}
 <h2>All {e(m['name'])} prices</h2>
 {wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
 <p class="small">A row labelled estimated from credit plan is not a list price. Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.{flow_note}</p>
@@ -4151,7 +4171,7 @@ def audit_site():
     shared_ids = {"partner", "house"}
     placement_ok = lambda sid: (
         sid in ("home", "deals", "guide") or sid in shared_ids
-        or str(sid).startswith("model:") or str(sid).startswith("guide:")
+        or str(sid).startswith("model:") or str(sid).startswith("guide:") or str(sid).startswith("page:")
     )
     if not isinstance(sponsors, dict) or not sponsors:
         errors.append("data/sponsors.json must be a non-empty object of slots")
@@ -4169,6 +4189,9 @@ def audit_site():
             errors.append(f"partners entry {rec.get('id')!r} active must be true or false")
         if rec.get("guides") is not None and not isinstance(rec.get("guides"), list):
             errors.append(f"partners entry {rec.get('id')!r} guides must be a list of slugs")
+        pages = rec.get("pages")
+        if pages is not None and not (isinstance(pages, list) and all(isinstance(p, str) and p.startswith("/") and p.endswith("/") for p in pages)):
+            errors.append(f"partners entry {rec.get('id')!r} pages must be a list of path prefixes like /compare/")
     for slot_id, rec in sponsors.items():
         if slot_id == "partners":
             continue
@@ -4312,6 +4335,9 @@ def audit_site():
                 rest = rel[len(gprefix):-len("index.html")].strip("/")
                 if rest and "/" not in rest:
                     ids = ["guide:" + rest]
+            page_path = "/" + rel[:-len("index.html")] if rel.endswith("/index.html") else ""
+            if page_path == "/price-index/" or re.match(r"^/(compare|cost)/[a-z0-9-]+/$", page_path):
+                ids = [page_sponsor_slot_id(page_path)]
         return [slot for slot in ids if sponsor_filled(sponsor_record(slot))]
 
     for dirpath, _, filenames in os.walk(DIST):

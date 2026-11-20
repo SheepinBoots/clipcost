@@ -61,6 +61,11 @@
     "is-higgsfield-worth-it",
     "seedance-2-5-unlimited",
     "wan-3-0-unlimited"
+   ],
+   "pages": [
+    "/compare/",
+    "/cost/",
+    "/price-index/"
    ]
   }
  ]

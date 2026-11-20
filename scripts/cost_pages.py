@@ -284,8 +284,9 @@ def render_page(g, page):
 {stale_html}
 <p class="lead">{e(lead)}</p>
 <p class="small">{e(page["description"])}</p>
+{g["page_sponsor_html"](page["path"])}
 {g["partner_lines_html"](page["path"])}
-{chr(10).join(sections)}
+{chr(10).join(sections[:1] + [g["news_box_inline"]()] + sections[1:])}
 {foot}
 <p class="small">See every price on the model pages, or check a credit plan in the <a href="{root("/calculator/")}">credit calculator</a>.</p>
 {method}
