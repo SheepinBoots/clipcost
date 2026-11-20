@@ -1,0 +1,41 @@
+Layout regression (Playwright /tmp/pw, channel=chrome), Nov 19, 2026 PT
+live   = https://vidfare.com, cache-busted
+main   = local build of origin/main db79596 (same code as live; isolates data drift since live's last build)
+branch = local build of site/newsletter-autoconfirm-recaptcha
+Local builds served as https://vidfare.com via page.route. Viewports: desktop 1280x900, mobile 390x844
+
+page                                        live    main  branch  br-main      width l/m/b   #newsletter l/m/b    #inline l/m/b  title
+desktop /                                  49320   49469   49404      -65   1280/1280/1280         279/279/214   None/None/None  49 ok
+desktop /deals/                            11595   11881   11816      -65   1280/1280/1280         279/279/214   None/None/None  35 ok
+desktop /newsletter/                         900     900     900       +0   1280/1280/1280         279/279/214   None/None/None  49 ok
+desktop /guides/                            4132    4132    4067      -65   1280/1280/1280         279/279/214   None/None/None  31 ok
+desktop /guides/kling-ai-pricing/          10145   10145   10105      -40   1280/1280/1280         279/279/214      136/136/162  49 ok
+desktop /guides/higgsfield-pricing/        20327   20327   20288      -39   1280/1280/1280         279/279/214      136/136/162  49 ok
+desktop /models/wan-3-0/                    9026    9026    8962      -64   1280/1280/1280         279/279/214   None/None/None  45 ok
+desktop /calculator/                        1859    1859    1794      -65   1280/1280/1280         279/279/214   None/None/None  47 ok
+desktop /changes/                           5044    5044    4979      -65   1280/1280/1280         279/279/214   None/None/None  47 ok
+desktop /about/                             2707    2707    2707       +0   1280/1280/1280      None/None/None   None/None/None  49 ok
+mobile /                                   48142   48291   48226      -65      390/390/390         423/423/358   None/None/None  49 ok
+mobile /deals/                             27440   27440   27375      -65      390/390/390         423/423/358   None/None/None  35 ok
+mobile /newsletter/                         1424    1424    1359      -65      390/390/390         423/423/358   None/None/None  49 ok
+mobile /guides/                             7593    7593    7528      -65      390/390/390         423/423/358   None/None/None  31 ok
+mobile /guides/kling-ai-pricing/           41608   41608   41586      -22      390/390/390         423/423/358      222/222/264  49 ok
+mobile /guides/higgsfield-pricing/        114226  114226  114203      -23      390/390/390         423/423/358      222/222/264  49 ok
+mobile /models/wan-3-0/                    14714   14734   14669      -65      390/390/390         423/423/358   None/None/None  45 ok
+mobile /calculator/                         4419    4419    4354      -65      390/390/390         423/423/358   None/None/None  47 ok
+mobile /changes/                            9819    9819    9754      -65      390/390/390         423/423/358   None/None/None  47 ok
+mobile /about/                              5206    5206    5206       +0      390/390/390      None/None/None   None/None/None  49 ok
+
+Success message shown by ck.5.js (Kit POST answered by a local mock, nothing sent to Kit):
+  desktop success-inline
+    live:   Thanks! We'll email you a confirmation link. If you don't see it in a minute, check your spam or Promotions folder and mark it 'Not spam'.
+    branch: You're in! VidFare Weekly lands on Fridays. If it isn't in your inbox, check Promotions or spam.
+  desktop success-end
+    live:   Thanks! We'll email you a confirmation link. If you don't see it in a minute, check your spam or Promotions folder and mark it 'Not spam'.
+    branch: You're in! VidFare Weekly lands on Fridays. If it isn't in your inbox, check Promotions or spam.
+  mobile success-inline
+    live:   Thanks! We'll email you a confirmation link. If you don't see it in a minute, check your spam or Promotions folder and mark it 'Not spam'.
+    branch: You're in! VidFare Weekly lands on Fridays. If it isn't in your inbox, check Promotions or spam.
+  mobile success-end
+    live:   Thanks! We'll email you a confirmation link. If you don't see it in a minute, check your spam or Promotions folder and mark it 'Not spam'.
+    branch: You're in! VidFare Weekly lands on Fridays. If it isn't in your inbox, check Promotions or spam.

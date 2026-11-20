@@ -12,8 +12,13 @@ DIST = os.path.join(ROOT, "dist")
 NEWS_MARK = '<section class="news" id="newsletter">'
 INLINE_MARK = '<section class="news news-inline" id="newsletter-inline">'
 KIT_ACTION = "https://app.kit.com/forms/10170819/subscriptions"
-# Unique unescaped phrase from the shared confirmation / spam-folder note.
-NOTE_PHRASE = "check your spam or Promotions folder"
+# Auto-confirm is on in Kit: the success message says the signup counted.
+SUCCESS_PHRASE = "VidFare Weekly lands on Fridays. If it isn&#x27;t in your inbox, check Promotions or spam."
+RECAPTCHA_OPTION = "&quot;recaptcha&quot;:{&quot;enabled&quot;:true}"
+RECAPTCHA_NOTE = "This site is protected by reCAPTCHA and the Google"
+# Double opt-in copy that must not come back.
+OLD_COPY = ("You are not subscribed until you confirm", "confirmation link", "news-confirm",
+            "check your spam or Promotions folder")
 errors = []
 
 
@@ -75,6 +80,8 @@ def test_guides():
         check(html.count("<form") == 2, f"{rel} should contain the inline and end-of-guide newsletter forms")
         check(html.count(KIT_ACTION) == 2, f"{rel} inline form is not the existing Kit form")
         check('data-vf-event="newsletter-signup-inline"' in html, f"{rel} inline form is not marked newsletter-signup-inline")
+        check(html.count(RECAPTCHA_OPTION) == 2, f"{rel} both forms need reCAPTCHA enabled in data-options")
+        check(html.count(RECAPTCHA_NOTE) == 2, f"{rel} both forms need the reCAPTCHA notice")
         check("Prices change every week. Get the changes by email." in main, f"{rel} is missing the compact inline signup heading")
         check("One free email every Friday with price drops, new deals and when they end. Unsubscribe anytime." in main, f"{rel} is missing the compact inline signup line")
         inline = main[main.find(INLINE_MARK):]
@@ -121,17 +128,20 @@ def test_deals():
 
 
 def check_note(html, rel):
-    """Every signup box shows the shared spam-folder note next to the button and in the Kit success message."""
+    """Every signup box has the auto-confirm success message, reCAPTCHA on in data-options, and the notice by the button."""
     news = html
     if NEWS_MARK in html:
         start = html.find(NEWS_MARK)
         rest = html[start:]
         end = rest.find("</section>")
         news = rest[: end + len("</section>")] if end != -1 else rest
-    check(NOTE_PHRASE in news, f"{rel} newsletter box is missing the confirmation / spam-folder note")
-    # Once in the visible line by the button, once in data-options success_message.
-    check(news.count(NOTE_PHRASE) >= 2, f"{rel} is missing the note on the form or in the success message ({news.count(NOTE_PHRASE)})")
-    check('class="small news-confirm"' in news, f"{rel} note is not next to the subscribe button")
+    check(SUCCESS_PHRASE in news, f"{rel} newsletter box is missing the auto-confirm success message")
+    check(RECAPTCHA_OPTION in news, f"{rel} newsletter box does not enable reCAPTCHA in data-options")
+    check('class="small news-legal"' in news and RECAPTCHA_NOTE in news, f"{rel} reCAPTCHA notice is not next to the subscribe button")
+    check("api.js?render=" in news and "ck.5.js" in news, f"{rel} reCAPTCHA helper or ck.5.js is missing")
+    check(news.find("api.js?render=") < news.find("ck.5.js"), f"{rel} reCAPTCHA helper must run before ck.5.js")
+    for old in OLD_COPY:
+        check(old not in html, f"{rel} still has the old double opt-in copy: {old}")
     check("sora" not in html.lower(), f"{rel} names Sora")
 
 
@@ -171,4 +181,4 @@ if __name__ == "__main__":
         for e in errors:
             print(" -", e)
         sys.exit(1)
-    print(f"ok: newsletter signup placement and spam-folder note ({len(list(guide_pages()))} guides + /deals/ + home + /newsletter/, with inline mid-guide box)")
+    print(f"ok: newsletter signup placement, auto-confirm copy and reCAPTCHA ({len(list(guide_pages()))} guides + /deals/ + home + /newsletter/, with inline mid-guide box)")
