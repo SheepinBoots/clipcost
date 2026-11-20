@@ -103,7 +103,7 @@ def test_pages():
     check(counted >= 25, f"only {counted} pages load count.js")
     home = pages.get("/", "")
     check(home.count('data-vf-event="newsletter-signup"') == 1, "home newsletter form not marked once")
-    check('data-vf-event="newsletter-signup-inline"' not in home, "home should not have the mid-guide newsletter signup")
+    check(home.count('data-vf-event="newsletter-signup-inline"') == 1, "home should have one mid-page newsletter signup (newsletter-signup-inline)")
     kling_guide = pages.get("/guides/kling-ai-pricing/", "")
     check(kling_guide.count('data-vf-event="newsletter-signup-inline"') == 1, "kling guide missing inline newsletter event")
     check(kling_guide.count('data-vf-event="newsletter-signup"') == 1, "kling guide missing end-of-guide newsletter event")

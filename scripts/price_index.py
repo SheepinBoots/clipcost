@@ -539,11 +539,14 @@ def render(g):
     body = f"""<h1>{e(H1)}</h1>
 <p class="lead">{lead}</p>
 <p class="small">{e(DESCRIPTION)} Series since {day_text(start["date"])}. {e(week_note)}</p>
+{g["page_sponsor_html"](PATH)}
+{g["partner_lines_html"](PATH)}
 <h2 id="headline">Median and cheapest $/s by resolution</h2>
 {headline}
 {thin_note}
 <h2 id="chart">Median and cheapest over time</h2>
 {chart}
+{g["news_box_inline"]()}
 <h2 id="models">Cheapest price per model: now, a week ago, at the start</h2>
 <p class="small">Each model's cheapest $/s at any resolution and where it is. The change columns compare with the cheapest price on that day, which may have been on another platform.</p>
 {model_table}

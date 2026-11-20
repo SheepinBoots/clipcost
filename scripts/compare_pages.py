@@ -592,10 +592,12 @@ def render_pair(g, pair):
 <p class="lead">{e(lead)}</p>
 <p id="same-seller">{e(same_line)}</p>
 <p class="small">{e(pair["description"])}</p>
-{f'<p>{e(note)}</p>' + chr(10) if note else ""}{g["partner_lines_html"](pair["path"])}
+{f'<p>{e(note)}</p>' + chr(10) if note else ""}{g["page_sponsor_html"](pair["path"])}
+{g["partner_lines_html"](pair["path"])}
 <h2 id="cheapest">Cheapest price at {and_list(pair["resolutions"])}</h2>
 <p class="small">The lowest price per second for each model at each resolution, on any platform we track, and what a {", ".join(f"{s}s" for s in pair["seconds"])} clip costs at that rate.</p>
 {headline}
+{g["news_box_inline"]()}
 <h2 id="platforms">Platforms that sell both: {len(plats)}</h2>
 <p>{e(plat_list)} sell both {e(name[A])} and {e(name[B])}. {e(same_text)} {unlisted and e(f"{unlisted} rows on these platforms name a tier but not a resolution, so they are shown as not listed.") or ""}</p>
 {ptable}
