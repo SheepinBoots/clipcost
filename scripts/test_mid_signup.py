@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mid-page signup and sponsor box on model pages, /compare/, /cost/ and /price-index/ (home has only the end signup).
+"""Mid-page signup and sponsor box on model pages, /compare/, /cost/, /platforms/ and /price-index/ (home has only the end signup).
 
 Run after the build: python3 scripts/build_site.py && python3 scripts/test_mid_signup.py
 - one mid signup (newsletter-signup-inline) and one end signup (newsletter-signup) per page,
@@ -14,6 +14,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import compare_pages as cp
 import cost_pages as cost
+import platform_pages as plat
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
@@ -96,6 +97,8 @@ for p in cost.COST_PAGES:
     ids = re.findall(r'<h2 id="([^"]+)"', main_of(read(p["path"])))
     pages.append((p["path"], f'<h2 id="{ids[1]}">'))
 pages.append(("/price-index/", '<h2 id="models">'))
+for p in plat.PLATFORM_PAGES:
+    pages.append((p["path"], '<h2 id="plans">'))
 for path, nxt in pages:
     html = read(path)
     before, after = common(path, html)
