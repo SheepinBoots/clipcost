@@ -55,8 +55,7 @@ COST_PAGES = [
     },
 ]
 
-# Words in a row's variant that name a cheaper or different tier of the model.
-VARIANT_WORDS = ("lite", "fast", "turbo", "max", "pro", "plus", "mini", "flash")
+VARIANT_WORDS = cp.VARIANT_WORDS
 
 
 def title_of(page):
@@ -99,20 +98,9 @@ def ranking(rows, models, res, secs):
     return ranked, missing
 
 
-def variant_suffix(r, model_name):
-    """'Lite' for grok_imagine_1_5_lite, 'Max Turbo' for MiniMax H3 Max Turbo; '' when the variant
-    names no tier word beyond the model's own name."""
-    have = set(re.split(r"[^a-z0-9.]+", model_name.lower()))
-    words = []
-    for w in re.split(r"[^a-z0-9.]+", str(r.get("variant") or "").lower()):
-        if w in VARIANT_WORDS and w not in have and w.title() not in words:
-            words.append(w.title())
-    return " ".join(words)
-
-
-def display_name(r, model_name, on=True):
-    v = variant_suffix(r, model_name) if on else ""
-    return f"{model_name} {v}" if v else model_name
+# Shared with /compare/ pages; defined in compare_pages.
+variant_suffix = cp.variant_suffix
+display_name = cp.display_name
 
 
 def per_platform(rows, slug, res):
