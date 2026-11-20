@@ -141,40 +141,62 @@ for pg in cost.COST_PAGES:
             if best:
                 expect.append((best["usd_per_second"] * secs, models[slug]["name"], slug, best))
         expect.sort(key=lambda x: (x[0], x[1]))
-        trs = re.findall(r"<tr><td data-label=\"Rank\" class=\"num\">(\d+)</td>(.*?)</tr>", tab, re.S)
-        check(len(trs) == len(expect), f"{path}: {res} ranks {len(trs)} models, data has {len(expect)}")
-        for (rank, tr), (total, mname, slug, best) in zip(trs, expect):
-            shown.append(best)
-            t = text(tr)
-            check(t.strip().startswith(mname), f"{path}: {res} rank {rank} is not {mname}: {t[:60]}")
-            if pg.get("variant_in_name"):
-                want = cost.display_name(best, mname)
-                link = text(re.search(r'<th scope="row"><a [^>]*>(.*?)</a>', tr).group(1))
-                check(link == want, f"{path}: {res} rank {rank} names {link!r}, want {want!r} (variant)")
-            cell = text(re.search(rf'data-label="{secs}s clip" class="num">(.*?)</td>', tr, re.S).group(1))
-            check(cell.strip().startswith(two(total)), f"{path}: {res} {mname} total")
-            check(best["platform"] in cell, f"{path}: {res} {mname} total without its seller")
-            cap = stated_cap(best) or cost.CAPS.get(slug)
-            n = math.ceil(secs / cap) if cap else 1
-            check((f"{n} clips" in cell) == (n > 1), f"{path}: {res} {mname} clip count")
-            if cap and cap < secs:
-                check("†" in cell, f"{path}: {res} {mname} capped below {secs}s without a footnote mark")
-            price = text(re.search(r'data-label="\$/s">(.*?)</td>', tr, re.S).group(1))
-            check(f"{rate_money(best['usd_per_second'])}/s on {best['platform']} (" in price, f"{path}: {res} {mname} price without its seller")
-            check("Plan or tier: " in t, f"{path}: {res} {mname} without plan or tier")
-            for lab in ("Resolution", "Audio", "Checked"):
-                m = re.search(rf'data-label="{lab}"[^>]*>(.*?)</td>', tr, re.S)
-                check(m is not None and text(m.group(1)).strip() != "", f"{path}: {res} {mname} without {lab}")
-            check(re.search(r"(published rate|estimated rate|estimated from credit plan|from credit plan|promo)", price) is not None,
-                  f"{path}: {res} {mname} without a rate label")
-            sale = is_sale(best)
-            has = re.search(r"; (regular \$[\d.]+/s on |cheapest without a sale: \$[\d.]+/s on |no regular price in our data)", price)
-            check(bool(has) == sale, f"{path}: {res} {mname} sale price {'without' if sale else 'with'} a regular price")
-            has = re.search(r"(regular|cheapest without a sale:) \$[\d.]+ on ", cell)
-            check(bool(has) == sale, f"{path}: {res} {mname} {secs}s total sale without a regular price")
+        groups = [(tab, expect)]
+        if pg.get("split_multi"):
+            def cap_of(slug, best):
+                return stated_cap(best) or next((stated_cap(r) for r in cur if r["model"] == slug and stated_cap(r)), None) or cost.CAPS.get(slug)
+            multi = [x for x in expect if cap_of(x[2], x[3]) and cap_of(x[2], x[3]) < secs]
+            single = [x for x in expect if x not in multi]
+            mtab = page.find(f'<table id="cost-{res.lower()}-multi">')
+            check((mtab >= 0) == bool(multi), f"{path}: {res} multi-clip table present={mtab >= 0}, models {len(multi)}")
+            h3 = re.search(rf'<h3 id="r{res.lower()}-multi">(.*?)</h3>', page)
+            check((h3 is not None) == bool(multi) and (not h3 or text(h3.group(1)).startswith("Needs more than one clip")),
+                  f"{path}: {res} multi-clip group heading")
+            mtab = page[mtab:page.find("</table>", mtab)] if mtab >= 0 else ""
+            groups = [(tab, single), (mtab, multi)]
+            for x in single:
+                c = cap_of(x[2], x[3])
+                check(c is None or c >= secs, f"{path}: {res} {x[1]} in the one-clip group with a {c}s cap")
+        for tab, expect in groups:
+          trs = re.findall(r"<tr><td data-label=\"Rank\" class=\"num\">(\d+)</td>(.*?)</tr>", tab, re.S)
+          check(len(trs) == len(expect), f"{path}: {res} ranks {len(trs)} models, data has {len(expect)}")
+          check([int(r_) for r_, _ in trs] == list(range(1, len(trs) + 1)), f"{path}: {res} ranks not 1..n")
+          for (rank, tr), (total, mname, slug, best) in zip(trs, expect):
+              shown.append(best)
+              t = text(tr)
+              check(t.strip().startswith(mname), f"{path}: {res} rank {rank} is not {mname}: {t[:60]}")
+              if pg.get("variant_in_name"):
+                  want = cost.display_name(best, mname)
+                  link = text(re.search(r'<th scope="row"><a [^>]*>(.*?)</a>', tr).group(1))
+                  check(link == want, f"{path}: {res} rank {rank} names {link!r}, want {want!r} (variant)")
+              cell = text(re.search(rf'data-label="{secs}s clip" class="num">(.*?)</td>', tr, re.S).group(1))
+              check(cell.strip().startswith(two(total)), f"{path}: {res} {mname} total")
+              check(best["platform"] in cell, f"{path}: {res} {mname} total without its seller")
+              cap = stated_cap(best) or cost.CAPS.get(slug)
+              n = math.ceil(secs / cap) if cap else 1
+              check((f"{n} clips" in cell) == (n > 1), f"{path}: {res} {mname} clip count")
+              if cap and cap < secs:
+                  check("†" in cell, f"{path}: {res} {mname} capped below {secs}s without a footnote mark")
+              if pg.get("split_multi") and not (stated_cap(best) or next((stated_cap(r) for r in cur if r["model"] == slug and stated_cap(r)), None) or cost.CAPS.get(slug)):
+                  check("‡" in cell and f"‡ Our price data does not state the longest single clip for {mname}." in body,
+                        f"{path}: {res} {mname} has no known cap but no ‡ footnote")
+              price = text(re.search(r'data-label="\$/s">(.*?)</td>', tr, re.S).group(1))
+              check(f"{rate_money(best['usd_per_second'])}/s on {best['platform']} (" in price, f"{path}: {res} {mname} price without its seller")
+              check("Plan or tier: " in t, f"{path}: {res} {mname} without plan or tier")
+              for lab in ("Resolution", "Audio", "Checked"):
+                  m = re.search(rf'data-label="{lab}"[^>]*>(.*?)</td>', tr, re.S)
+                  check(m is not None and text(m.group(1)).strip() != "", f"{path}: {res} {mname} without {lab}")
+              check(re.search(r"(published rate|estimated rate|estimated from credit plan|from credit plan|promo)", price) is not None,
+                    f"{path}: {res} {mname} without a rate label")
+              sale = is_sale(best)
+              has = re.search(r"; (regular \$[\d.]+/s on |cheapest without a sale: \$[\d.]+/s on |no regular price in our data)", price)
+              check(bool(has) == sale, f"{path}: {res} {mname} sale price {'without' if sale else 'with'} a regular price")
+              has = re.search(r"(regular|cheapest without a sale:) \$[\d.]+ on ", cell)
+              check(bool(has) == sale, f"{path}: {res} {mname} {secs}s total sale without a regular price")
+        everyone = {x[2] for _t, ex in groups for x in ex}
         for slug in models:
-            if not any(x[2] == slug for x in expect):
-                check(re.search(rf'{re.escape(models[slug]["name"])}</a></th><td[^>]*>Not listed: no {res} price in our data\.', tab) is not None,
+            if slug not in everyone:
+                check(re.search(rf'{re.escape(models[slug]["name"])}</a></th><td[^>]*>Not listed: no {res} price in our data\.', groups[0][0]) is not None,
                       f"{path}: {slug} should be not listed at {res}")
     if pg.get("by_platform"):
         for res in pg["resolutions"]:

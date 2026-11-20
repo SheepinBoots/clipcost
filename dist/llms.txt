@@ -129,6 +129,7 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 
 - [How Much a 10-Second AI Video Costs](https://vidfare.com/cost/10-second/): cheapest 10-second clip: 480p from $0.17 (Wan 3.0 on Higgsfield; regular $0.43 on Higgsfield, Ultra monthly); 720p from $0.22 (Veo 3.1 on Krea; regular $0.31 on Krea, Basic yearly); 1080p from $0.29 (Kling 3.0 on Higgsfield; regular $0.75 on Higgsfield, Ultra monthly). Ranked for all 9 models.
 - [1080p AI Video Cost by Model and Platform](https://vidfare.com/cost/1080p/): cheapest 10-second clip: 1080p from $0.29 (Kling 3.0 on Higgsfield; regular $0.75 on Higgsfield, Ultra monthly). Ranked for all 9 models, with every platform's price.
+- [How Much a 30-Second AI Video Costs](https://vidfare.com/cost/30-second/): cheapest 30-second clip: 480p from $0.50 in one clip (Wan 3.0 on Higgsfield; regular $1.29 on Higgsfield, Ultra monthly), from $0.60 needing more than one clip (Grok Imagine Video 1.5 Lite on Runway API, 2 clips); 720p from $0.87 in one clip (Wan 3.0 on Higgsfield; regular $2.26 on Higgsfield, Ultra monthly), from $0.67 needing more than one clip (Veo 3.1 Lite on Krea, 4 clips; regular $0.93 on Krea, Basic yearly); 1080p from $1.75 in one clip (Wan 3.0 on Higgsfield; regular $4.52 on Higgsfield, Ultra monthly), from $0.87 needing more than one clip (Kling 3.0 on Higgsfield, 2 clips; regular $2.26 on Higgsfield, Ultra monthly). Ranked for all 9 models, with models whose longest clip is under 30 seconds ranked apart.
 
 ## Platforms
 

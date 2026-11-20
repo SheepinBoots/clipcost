@@ -53,6 +53,18 @@ COST_PAGES = [
         # One table per model with its cheapest row at the resolution on each platform.
         "by_platform": True,
     },
+    {
+        "path": "/cost/30-second/",
+        "title": "How Much a 30-Second AI Video Costs",
+        "h1": "How much a 30-second AI video costs",
+        "description": ("What a 30-second AI video costs on the cheapest platform for each of 9 models at 480p, 720p "
+                        "and 1080p; multi-clip models ranked apart. Rebuilt daily."),
+        "seconds": 30,
+        "resolutions": ("480p", "720p", "1080p"),
+        "variant_in_name": True,
+        # Models whose longest clip is shorter than `seconds` are ranked in their own group per resolution.
+        "split_multi": True,
+    },
 ]
 
 VARIANT_WORDS = cp.VARIANT_WORDS
@@ -188,28 +200,67 @@ def render_page(g, page):
                 f'<td data-label="Audio">{e(g["shown_audio"](r))}</td>'
                 f'<td data-label="Checked" class="small">{e(r["checked"])}<br>{g["source_link"](r)}</td></tr>')
 
+    def is_multi(x):
+        return page.get("split_multi") and x[4] is not None and x[4] < secs
+
+    thead = (f'<thead><tr><th scope="col">Rank</th><th scope="col">Model, plan or tier</th><th scope="col">{secs}s clip</th>'
+             f'<th scope="col">$/s, seller, plan and label</th><th scope="col">Resolution</th><th scope="col">Audio</th>'
+             f'<th scope="col">Checked</th></tr></thead>')
     sections, tids = [], []
     for res in page["resolutions"]:
         ranked, missing = ranks[res]
+        multi = [x for x in ranked if is_multi(x)]
+        single = [x for x in ranked if not is_multi(x)]
         tid = f"cost-{res.lower()}"
         tids.append("#" + tid)
-        body_rows = "".join(row_html(i + 1, *x) for i, x in enumerate(ranked))
+        body_rows = "".join(row_html(i + 1, *x) for i, x in enumerate(single))
         body_rows += "".join(
             f'<tr><td data-label="Rank" class="num">–</td><th scope="row"><a href="{root("/models/" + s + "/")}">{e(name[s])}</a></th>'
             f'<td data-label="{secs}s clip" colspan="5">Not listed: no {e(res)} price in our data.{e(combined_note(rows, s, res))}</td></tr>'
             for s in missing)
-        table = cp._table(
-            f'<thead><tr><th scope="col">Rank</th><th scope="col">Model, plan or tier</th><th scope="col">{secs}s clip</th>'
-            f'<th scope="col">$/s, seller, plan and label</th><th scope="col">Resolution</th><th scope="col">Audio</th>'
-            f'<th scope="col">Checked</th></tr></thead><tbody>{body_rows}</tbody>', tid)
+        table = cp._table(f'{thead}<tbody>{body_rows}</tbody>', tid)
         h2 = page.get("rank_h2", "{secs}-second clip at {res}: {n} of {total} models listed").format(
             secs=secs, res=res, n=len(ranked), total=len(models))
-        sections.append(f'<h2 id="r{res.lower()}">{e(h2)}</h2>\n{table}')
+        if not page.get("split_multi"):
+            sections.append(f'<h2 id="r{res.lower()}">{e(h2)}</h2>\n{table}')
+            continue
+        unk = any(x[0] in unknown for x in single)
+        intro = (f'<p class="small">Models that make a {secs}-second video in one clip'
+                 + (", or whose longest clip our data does not state (‡)" if unk else "")
+                 + f', ranked by the {secs}-second total.</p>')
+        mtid = f"cost-{res.lower()}-multi"
+        group = ""
+        if multi:
+            tids.append("#" + mtid)
+            caps_txt = cp.and_list([f"{name[x[0]]} ({x[4]:g}s)" for x in multi])
+            group = (f'\n<h3 id="r{res.lower()}-multi">Needs more than one clip at {e(res)}: {len(multi)} '
+                     f'{"model" if len(multi) == 1 else "models"}</h3>\n'
+                     f'<p class="small">Their longest clip is under {secs} seconds: {e(caps_txt)}. Each total is the price per second × {secs}, '
+                     f'which covers all the clips; the row says how many.</p>\n'
+                     + cp._table(f'{thead}<tbody>' + "".join(row_html(i + 1, *x) for i, x in enumerate(multi)) + '</tbody>', mtid))
+        sections.append(f'<h2 id="r{res.lower()}">{e(h2)}</h2>\n{intro}\n{table}{group}')
 
     def lead_bit(res):
         ranked, _ = ranks[res]
         if not ranked:
             return f"At {res}, no model has a price in our data. "
+        if page.get("split_multi"):
+            single = [x for x in ranked if not is_multi(x)]
+            multi = [x for x in ranked if is_multi(x)]
+            out = ""
+            if single:
+                slug, r, total, n, _cap = single[0]
+                reg = lab.regular_text(r, secs)
+                out += (f"At {res}, the cheapest {secs}-second video in one clip is {vname(r, slug)} at {two(total, 2)} on {r['platform']}"
+                        + (f" ({reg})" if reg else "") + f": {rate_money(r['usd_per_second'])}/s {lab.seller(r)}. ")
+            else:
+                out += f"At {res}, no model in our data makes a {secs}-second video in one clip. "
+            if multi:
+                slug, r, total, n, _cap = multi[0]
+                reg = lab.regular_text(r, secs)
+                out += (f"Among models that need more than one clip, the cheapest is {vname(r, slug)} at {two(total, 2)} on {r['platform']}"
+                        + (f" ({reg})" if reg else "") + f" for {n} clips. ")
+            return out
         slug, r, total, n, _cap = ranked[0]
         reg = lab.regular_text(r, secs)
         clip = f", {n} clips" if n > 1 else ""
@@ -298,7 +349,11 @@ def render_page(g, page):
     if not stale:
         g["SITEMAP_LASTMOD"][page["path"]] = LAST
     tops = {res: [(x[0], x[1], x[2], x[3], lab.regular_text(x[1], secs)) for x in ranks[res][0][:3]] for res in page["resolutions"]}
-    return {"path": page["path"], "stale": stale, "oldest": old, "short": short, "unknown": unknown,
+    groups = {}
+    if page.get("split_multi"):
+        groups = {res: {k: [(x[0], x[1], x[2], x[3], lab.regular_text(x[1], secs), vname(x[1], x[0])) for x in ranks[res][0] if is_multi(x) == m][:3]
+                        for k, m in (("single", False), ("multi", True))} for res in page["resolutions"]}
+    return {"groups": groups, "path": page["path"], "stale": stale, "oldest": old, "short": short, "unknown": unknown,
             "missing": {res: ranks[res][1] for res in page["resolutions"]}, "tops": tops}
 
 
@@ -319,12 +374,25 @@ def llms_lines(g):
             continue
         bits = []
         for res in page["resolutions"]:
+            if built.get("groups"):
+                part = []
+                for k, label in (("single", "in one clip"), ("multi", "needing more than one clip")):
+                    top = built["groups"][res][k]
+                    if top:
+                        slug, r, total, n, reg, nm = top[0]
+                        part.append(f"from {g['_money_places'](total, 2)} {label} ({nm} on {r['platform']}"
+                                    + (f", {n} clips" if n > 1 else "") + (f"; {reg}" if reg else "") + ")")
+                if part:
+                    bits.append(f"{res} " + ", ".join(part))
+                continue
             top = built["tops"][res]
             if top:
                 slug, r, total, n, reg = top[0]
                 bits.append(f"{res} from {g['_money_places'](total, 2)} ({g['models'][slug]['name']} on {r['platform']}"
                             + (f"; {reg}" if reg else "") + ")")
         tail = f"Ranked for all {len(g['models'])} models" + (", with every platform's price" if page.get("by_platform") else "")
+        if page.get("split_multi"):
+            tail += ", with models whose longest clip is under " + f"{page['seconds']} seconds ranked apart"
         lines.append(f"- [{page['title']}]({g['SITE_URL']}{page['path']}): cheapest {page['seconds']}-second clip: "
                      f"{'; '.join(bits)}. {tail}.")
     return lines
