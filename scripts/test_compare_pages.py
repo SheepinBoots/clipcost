@@ -73,6 +73,7 @@ rows = [{"platform": "Higgsfield", "model": "a", "resolution": "720p", "usd_per_
 plats, got = cp.page_rows(rows, {"a": "a", "b": "b", "resolutions": ("720p",)})
 check(plats == ["Higgsfield", "fal"], "shared platforms")
 check([r["usd_per_second"] for r in got] == [0.1, 0.2, 0.3, 0.4], "rows sorted by $/s only")
+check(cp.and_list(["720p", "1080p"]) == "720p and 1080p" and cp.and_list(["480p", "720p", "1080p"]) == "480p, 720p and 1080p", "and_list")
 check(cp.run_text("2026-11-20T08:00:44", "2026-11-20") == "Nov 20, 2026, 11:00 AM ET (8:00 AM PT)", "run time ET first")
 check(cp.run_text("2026-11-19T08:00:44", "2026-11-20") == "Nov 20, 2026", "old run falls back to the date")
 
@@ -139,6 +140,10 @@ for pair in cp.PAIRS:
     # Platform table: every row shows plan/tier, resolution, audio and a label.
     plats = {r["platform"] for r in cur if r["model"] == A} & {r["platform"] for r in cur if r["model"] == B}
     check(f"Platforms that sell both: {len(plats)}" in body, f"{path}: platform count {len(plats)}")
+    same = [p for p in plats if any(
+        all(any(r["platform"] == p and r["model"] == m and str(r.get("resolution")).strip() == res for r in cur) for m in (A, B))
+        for res in pair["resolutions"])]
+    check((f"{len(same)} of them list" in body) if same else ("None of them list" in body), f"{path}: same-resolution platform count {len(same)}")
     ptab = page[page.find('id="cmp-platforms"'):]
     ptab = ptab[:ptab.find("</table>")]
     trs = re.findall(r"<tr><th scope=\"row\">.*?</tr>", ptab, re.S)
@@ -150,6 +155,13 @@ for pair in cp.PAIRS:
         check(re.search(r'class="tag (verified|estimate|promo)"', tr) is not None, f"{path}: row without a rate label")
         if "credit plan" in text(tr):
             check("Assumes every credit you pay for is used." in tr, f"{path}: plan row without the usage assumption")
+    if pair.get("note"):
+        check(pair["note"] in body, f"{path}: note not shown")
+    # No invented rows: a model with no price at a resolution says so.
+    for res in pair["resolutions"]:
+        for s in (A, B):
+            if not any(r["model"] == s and str(r.get("resolution")).strip() == res for r in cur):
+                check(f"No {res} price in our data." in head, f"{path}: {s} {res} should say no price")
     for s in (A, B):
         mp = open(os.path.join(DIST, "models", s, "index.html"), encoding="utf-8").read()
         check(f'href="{path}"' in mp, f"{path}: no link from /models/{s}/")
