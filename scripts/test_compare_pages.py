@@ -190,11 +190,17 @@ for pair in cp.PAIRS:
                     if best is None or r["usd_per_second"] < best["usd_per_second"]:
                         best = r
             name = db["models"][s]["name"]
-            row = re.search(rf'<tr><th scope="row">{re.escape(name)}, {res}</th>(.*?)</tr>', head, re.S)
+            row = re.search(rf'<tr><th scope="row">{re.escape(name)}((?: [A-Z][a-z]+)*), {res}</th>(.*?)</tr>', head, re.S)
             check(row is not None, f"{path}: headline row {name} {res}")
             if not row or best is None:
                 continue
-            cells = row.group(1)
+            want_v = cp.variant_suffix(best, name) if pair.get("variant_in_name") else ""
+            check(row.group(1).strip() == want_v, f"{path}: headline {name} {res} variant {row.group(1)!r}, want {want_v!r}")
+            if want_v:
+                lead_t = text(page[page.find('<p class="lead">'):page.find("</p>", page.find('<p class="lead">'))])
+                if f"At {res}," in lead_t:
+                    check(f"the cheapest {name} is {name} {want_v} at " in lead_t, f"{path}: lead does not name {name} {want_v} at {res}")
+            cells = row.group(2)
             check(f"<b>{rate_money(best['usd_per_second'])}/s</b>" in cells, f"{path}: {name} {res} $/s")
             price_cell = re.search(r'data-label="Cheapest \$/s">(.*?)</td>', cells, re.S).group(1)
             check(f"{rate_money(best['usd_per_second'])}/s on {best['platform']} (" in text(price_cell),
@@ -266,14 +272,14 @@ for pair in cp.PAIRS:
                 continue
             name = db["models"][s]["name"]
             on_sale = is_sale(best)
-            row = re.search(rf'<tr><th scope="row">{re.escape(name)}, {res}</th>(.*?)</tr>', head, re.S)
+            row = re.search(rf'<tr><th scope="row">{re.escape(name)}((?: [A-Z][a-z]+)*), {res}</th>(.*?)</tr>', head, re.S)
             if not row:
                 continue
-            price_cell = text(re.search(r'data-label="Cheapest \$/s">(.*?)</td>', row.group(1), re.S).group(1))
+            price_cell = text(re.search(r'data-label="Cheapest \$/s">(.*?)</td>', row.group(2), re.S).group(1))
             has = re.search(r"; (regular \$[\d.]+/s on |cheapest without a sale: \$[\d.]+/s on |no regular price in our data)", price_cell)
             check(bool(has) == on_sale, f"{path}: {name} {res} sale price {'without' if on_sale else 'with'} a regular price: {price_cell[:160]}")
             for secs in pair["seconds"]:
-                cell = text(re.search(rf'data-label="{secs}s clip" class="num">(.*?)</td>', row.group(1), re.S).group(1))
+                cell = text(re.search(rf'data-label="{secs}s clip" class="num">(.*?)</td>', row.group(2), re.S).group(1))
                 has = re.search(r"(regular|cheapest without a sale:) \$[\d.]+ on ", cell)
                 check(bool(has) == on_sale, f"{path}: {name} {res} {secs}s total sale price without a regular price")
             if on_sale and lead and same:

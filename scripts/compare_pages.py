@@ -22,6 +22,7 @@ Rules
 """
 import datetime
 import math
+import re
 
 import timefmt
 
@@ -87,6 +88,25 @@ PAIRS = [
         "resolutions": ("480p",) + RESOLUTIONS,
         "seconds": SECONDS,
         "caps": {"wan-3-0": 30, "wan-3-0-prime": 30},
+    },
+    {
+        "path": "/compare/seedance-2-5-vs-veo-3-1/",
+        "a": "seedance-2-5",
+        "b": "veo-3-1",
+        "title": "Seedance 2.5 vs Veo 3.1: Cost Comparison",
+        "h1": "Seedance 2.5 vs Veo 3.1: cost comparison",
+        "description": ("Seedance 2.5 and Veo 3.1 price per second at 720p and 1080p, with 5s to 30s "
+                        "clip totals, on the platforms that sell both. Rebuilt daily."),
+        # The lead runs in reverse table order and skips a resolution one model lacks, so it opens with 720p.
+        "resolutions": RESOLUTIONS,
+        "seconds": SECONDS,
+        "caps": {"seedance-2-5": 30, "veo-3-1": 8},
+        "variant_in_name": True,
+        # The middle sentence is built from prices.json by res_gap_note(), as on the Kling vs Veo page.
+        "note": ("This page compares 720p and 1080p. ",
+                 {"gap": "veo-3-1", "res": "1080p", "other": "seedance-2-5",
+                  "platform_short": {"Google Gemini API": "Gemini API"}},
+                 " Veo 3.1 makes clips of up to 8 seconds, so its 10s, 15s and 30s totals need more than one clip."),
     },
 ]
 
@@ -255,6 +275,26 @@ def note_text(pair, all_rows, current, models):
     if not n or isinstance(n, str):
         return n or ""
     return "".join(x if isinstance(x, str) else res_gap_note(all_rows, current, x, models) for x in n)
+
+
+# Words in a row's variant that name a cheaper or different tier of the model.
+VARIANT_WORDS = ("lite", "fast", "turbo", "max", "pro", "plus", "mini", "flash")
+
+
+def variant_suffix(r, model_name):
+    """'Lite' for grok_imagine_1_5_lite, 'Max Turbo' for MiniMax H3 Max Turbo; '' when the variant
+    names no tier word beyond the model's own name."""
+    have = set(re.split(r"[^a-z0-9.]+", model_name.lower()))
+    words = []
+    for w in re.split(r"[^a-z0-9.]+", str(r.get("variant") or "").lower()):
+        if w in VARIANT_WORDS and w not in have and w.title() not in words:
+            words.append(w.title())
+    return " ".join(words)
+
+
+def display_name(r, model_name, on=True):
+    v = variant_suffix(r, model_name) if on else ""
+    return f"{model_name} {v}" if v else model_name
 
 
 def plan_short(tier):
@@ -500,6 +540,9 @@ def render_pair(g, pair):
     plan_text, adjs_of, regular_text, deals_of = lab.plan_text, lab.adjs_of, lab.regular_text, lab.deals_of
     seller, seller_html, seller_short = lab.seller, lab.seller_html, lab.seller_short
 
+    # Name a cheaper variant (Veo 3.1 Lite) in the headline rows and lead when the pair opts in.
+    vname = lambda r, s: display_name(r, name[s], pair.get("variant_in_name", False))
+
     # Headline: cheapest per model per resolution, anywhere.
     hrows = []
     for res in pair["resolutions"]:
@@ -509,7 +552,7 @@ def render_pair(g, pair):
                 hrows.append(f'<tr><th scope="row">{e(name[s])}, {e(res)}</th><td data-label="Cheapest $/s" colspan="{1 + len(pair["seconds"])}">No {e(res)} price in our data.</td></tr>')
                 continue
             hrows.append(
-                f'<tr><th scope="row">{e(name[s])}, {e(res)}</th>'
+                f'<tr><th scope="row">{e(vname(r, s))}, {e(res)}</th>'
                 f'<td data-label="Cheapest $/s"><b>{rate_money(r["usd_per_second"])}/s</b> {seller_html(r, regular=True)}{g["deal_badges"](r)}'
                 f'<div class="small">Resolution {e(res)} · audio {e(g["shown_audio"](r))} · checked {e(r["checked"])} · {g["source_link"](r)}</div></td>'
                 + "".join(total_cell(r, secs, f"{secs}s clip") for secs in pair["seconds"]) + "</tr>"
@@ -558,8 +601,10 @@ def render_pair(g, pair):
         if not ra or not rb:
             return ""
         secs = 10 if 10 in pair["seconds"] else pair["seconds"][0]
-        return (f"At {res}, the cheapest {name[A]} is {rate_money(ra['usd_per_second'])}/s {seller(ra)} "
-                f"and the cheapest {name[B]} is {rate_money(rb['usd_per_second'])}/s {seller(rb)}, "
+        va = f" {vname(ra, A)} at" if vname(ra, A) != name[A] else ""
+        vb = f" {vname(rb, B)} at" if vname(rb, B) != name[B] else ""
+        return (f"At {res}, the cheapest {name[A]} is{va} {rate_money(ra['usd_per_second'])}/s {seller(ra)} "
+                f"and the cheapest {name[B]} is{vb} {rate_money(rb['usd_per_second'])}/s {seller(rb)}, "
                 f"so a {secs}-second clip costs {clip_cost(ra, secs, ra['platform'])} "
                 f"vs {clip_cost(rb, secs, rb['platform'])}. ")
     lead = "".join(pick_text(res) for res in reversed(pair["resolutions"])) + f"Prices last checked {run}."
