@@ -76,6 +76,18 @@ PAIRS = [
                   "platform_short": {"Google Gemini API": "Gemini API"}},
                  " Veo 3.1 makes clips of up to 8 seconds, so its 10s, 15s and 30s totals need more than one clip."),
     },
+    {
+        "path": "/compare/wan-3-0-vs-wan-3-0-prime/",
+        "a": "wan-3-0",
+        "b": "wan-3-0-prime",
+        "title": "Wan 3.0 vs Wan 3.0 Prime: Price Difference",
+        "h1": "Wan 3.0 vs Wan 3.0 Prime: price difference",
+        "description": ("Wan 3.0 and Wan 3.0 Prime price per second at 480p, 720p and 1080p, with 5s to 30s "
+                        "clip totals, on the platforms that sell both. Rebuilt daily."),
+        "resolutions": ("480p",) + RESOLUTIONS,
+        "seconds": SECONDS,
+        "caps": {"wan-3-0": 30, "wan-3-0-prime": 30},
+    },
 ]
 
 
