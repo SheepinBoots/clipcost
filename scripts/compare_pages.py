@@ -70,10 +70,11 @@ PAIRS = [
         "resolutions": ("720p", "4K"),
         "seconds": SECONDS,
         "caps": {"kling-3-0": 15, "veo-3-1": 8},
-        "note": ("This page compares 720p and 4K. No platform that sells both models has a 1080p-only Veo 3.1 price: "
-                 "fal and the Google Gemini API price Veo 3.1 Standard as one 720p/1080p rate, and the only "
-                 "1080p-only Veo 3.1 rows are Veo 3.1 Fast and Lite on the Google Gemini API, which does not sell "
-                 "Kling 3.0. Veo 3.1 makes clips of up to 8 seconds, so its 10s, 15s and 30s totals need more than one clip."),
+        # The middle sentence is built from prices.json by res_gap_note(), so it stays true when rows change.
+        "note": ("This page compares 720p and 4K. ",
+                 {"gap": "veo-3-1", "res": "1080p", "other": "kling-3-0",
+                  "platform_short": {"Google Gemini API": "Gemini API"}},
+                 " Veo 3.1 makes clips of up to 8 seconds, so its 10s, 15s and 30s totals need more than one clip."),
     },
 ]
 
@@ -184,6 +185,64 @@ def page_rows(rows, pair):
             out.append((order[res], r))
     out.sort(key=lambda x: (x[0], x[1]["usd_per_second"], x[1]["platform"]))
     return plats, [r for _, r in out]
+
+
+def _clauses(items):
+    """'A'; 'A, and B'; 'A, B, and C' (independent clauses, so the comma stays before 'and')."""
+    items = list(items)
+    if len(items) < 2:
+        return "".join(items)
+    return ", ".join(items[:-1]) + ", and " + items[-1]
+
+
+def res_gap_note(all_rows, current, spec, models):
+    """One sentence on whether a model has a current price at exactly spec['res'], from the data.
+
+    No current row: says so, names platforms whose rows at that resolution were discontinued (with the date)
+    and platforms that only sell a combined rate such as 720p/1080p. Current rows: names their platforms."""
+    slug, res = spec["gap"], spec["res"]
+    short = spec.get("platform_short", {})
+    nm = models[slug]["name"]
+    want = res.lower()
+    cur = [r for r in current if r["model"] == slug]
+    exact = [r for r in cur if str(r.get("resolution") or "").strip().lower() == want]
+    if exact:
+        plats = sorted({r["platform"] for r in exact})
+        other = spec.get("other")
+        both = sorted({p for p in plats if other and any(r["model"] == other and r["platform"] == p for r in current)})
+        tail = ""
+        if other and not both:
+            tail = f", which {'does' if len(plats) == 1 else 'do'} not sell {models[other]['name']}"
+        elif other:
+            tail = f"; {and_list(both)} also {'sells' if len(both) == 1 else 'sell'} {models[other]['name']}"
+        return f"Our data has current {res}-only {nm} prices on {and_list(plats)}{tail}."
+    ids = {id(r) for r in current}
+    gone = {}
+    for r in all_rows:
+        if (r["model"] == slug and id(r) not in ids and r.get("discontinued_on")
+                and str(r.get("resolution") or "").strip().lower() == want):
+            gone.setdefault((r["discontinued_on"], r["platform"]), []).append(r)
+    clauses = []
+    for (day, plat), rs in sorted(gone.items()):
+        p = short.get(plat, plat)
+        clauses.append(f"the {p} {res} {'row was' if len(rs) == 1 else 'rows were'} discontinued {day_text(day)}")
+    combined = {}
+    for r in cur:
+        v = str(r.get("resolution") or "").strip()
+        if "/" in v and want in [x.strip().lower() for x in v.split("/")]:
+            combined.setdefault(v, set()).add(short.get(r["platform"], r["platform"]))
+    for v, plats in sorted(combined.items()):
+        clauses.append(f"{and_list(sorted(plats))} {'lists' if len(plats) == 1 else 'list'} one rate for {v}")
+    head = f"Our data has no current {res}-only {nm} price"
+    return head + ("; " + _clauses(clauses) if clauses else "") + "."
+
+
+def note_text(pair, all_rows, current, models):
+    """A pair's note: a plain string, or a tuple of strings and res_gap_note() specs."""
+    n = pair.get("note")
+    if not n or isinstance(n, str):
+        return n or ""
+    return "".join(x if isinstance(x, str) else res_gap_note(all_rows, current, x, models) for x in n)
 
 
 def plan_short(tier):
@@ -424,6 +483,7 @@ def render_pair(g, pair):
         return (f'<td data-label="{label}" class="num">{two(total, 2)}'
                 + (f'<br><span class="small">{e(seller_short(r))}</span>' if who else "") + f'{reg_html}{more}</td>')
 
+    note = note_text(pair, g["db"]["rows"], rows, models)
     lab = Labels(g, rows, TODAY)
     plan_text, adjs_of, regular_text, deals_of = lab.plan_text, lab.adjs_of, lab.regular_text, lab.deals_of
     seller, seller_html, seller_short = lab.seller, lab.seller_html, lab.seller_short
@@ -532,7 +592,7 @@ def render_pair(g, pair):
 <p class="lead">{e(lead)}</p>
 <p id="same-seller">{e(same_line)}</p>
 <p class="small">{e(pair["description"])}</p>
-{f'<p>{e(pair["note"])}</p>' + chr(10) if pair.get("note") else ""}{g["partner_lines_html"](pair["path"])}
+{f'<p>{e(note)}</p>' + chr(10) if note else ""}{g["partner_lines_html"](pair["path"])}
 <h2 id="cheapest">Cheapest price at {and_list(pair["resolutions"])}</h2>
 <p class="small">The lowest price per second for each model at each resolution, on any platform we track, and what a {", ".join(f"{s}s" for s in pair["seconds"])} clip costs at that rate.</p>
 {headline}

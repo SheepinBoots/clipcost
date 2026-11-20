@@ -127,6 +127,25 @@ def is_sale(r):
     return False
 
 cur = [r for r in db["rows"] if live(r, today)]
+
+# res_gap_note: built from the data, and the approved wording for today's Veo 3.1 1080p rows.
+_m = {"v": {"name": "Veo 3.1"}, "k": {"name": "Kling 3.0"}}
+_spec = {"gap": "v", "res": "1080p", "other": "k", "platform_short": {"Google Gemini API": "Gemini API"}}
+_gone = [{"model": "v", "platform": "Google Gemini API", "resolution": "1080p", "discontinued_on": "2026-10-22"},
+         {"model": "v", "platform": "Google Gemini API", "resolution": "1080p", "discontinued_on": "2026-10-22"}]
+_comb = [{"model": "v", "platform": "fal", "resolution": "720p/1080p"}]
+check(cp.res_gap_note(_gone + _comb, _comb, _spec, _m) == "Our data has no current 1080p-only Veo 3.1 price; the Gemini API "
+      "1080p rows were discontinued Oct 22, 2026, and fal lists one rate for 720p/1080p.", "res_gap_note: gone + combined")
+check(cp.res_gap_note(_comb, _comb, _spec, _m) == "Our data has no current 1080p-only Veo 3.1 price; fal lists one rate for 720p/1080p.",
+      "res_gap_note: combined only")
+check(cp.res_gap_note([], [], _spec, _m) == "Our data has no current 1080p-only Veo 3.1 price.", "res_gap_note: nothing")
+_new = [{"model": "v", "platform": "fal", "resolution": "1080p"}]
+check(cp.res_gap_note(_new, _new, _spec, _m) == "Our data has current 1080p-only Veo 3.1 prices on fal, which does not sell Kling 3.0.",
+      "res_gap_note: a current row")
+_kv = next(p for p in cp.PAIRS if p["path"] == "/compare/kling-3-0-vs-veo-3-1/")
+check("Our data has no current 1080p-only Veo 3.1 price; the Gemini API 1080p rows were discontinued Oct 22, 2026, "
+      "and fal lists one rate for 720p/1080p." in cp.note_text(_kv, db["rows"], cur, db["models"]),
+      "kling-veo note: approved 1080p wording not rendered from today's data")
 sitemap = open(os.path.join(DIST, "sitemap.xml"), encoding="utf-8").read()
 llms = open(os.path.join(DIST, "llms.txt"), encoding="utf-8").read()
 for pair in cp.PAIRS:
@@ -268,7 +287,7 @@ for pair in cp.PAIRS:
                         check(m.group(2) is not None and re.match(r"(regular|cheapest without a sale:) \$", m.group(2)) is not None,
                               f"{path}: {label} 10s total {tot} on a sale price without a regular price")
     if pair.get("note"):
-        check(pair["note"] in body, f"{path}: note not shown")
+        check(cp.note_text(pair, db["rows"], cur, db["models"]) in body, f"{path}: note not shown")
     # No invented rows: a model with no price at a resolution says so.
     for res in pair["resolutions"]:
         for s in (A, B):
