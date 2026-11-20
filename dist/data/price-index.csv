@@ -1,0 +1,161 @@
+date,tier,models_priced,median_usd_per_second,cheapest_usd_per_second,cheapest_model,cheapest_platform,cheapest_resolution,cheapest_row_id,cheapest_status,catalog
+2026-10-20,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,9ce06c4
+2026-10-20,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,9ce06c4
+2026-10-20,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,9ce06c4
+2026-10-20,1080p,8,0.096,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,9ce06c4
+2026-10-20,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,9ce06c4
+2026-10-21,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,4bcf01b
+2026-10-21,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,4bcf01b
+2026-10-21,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,4bcf01b
+2026-10-21,1080p,8,0.096,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,4bcf01b
+2026-10-21,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,4bcf01b
+2026-10-22,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,8ebe214
+2026-10-22,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,8ebe214
+2026-10-22,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,8ebe214
+2026-10-22,1080p,8,0.096,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,8ebe214
+2026-10-22,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,8ebe214
+2026-10-23,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,52d9d99
+2026-10-23,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,52d9d99
+2026-10-23,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,52d9d99
+2026-10-23,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,52d9d99
+2026-10-23,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,52d9d99
+2026-10-24,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,0bc087d
+2026-10-24,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,0bc087d
+2026-10-24,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,0bc087d
+2026-10-24,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,0bc087d
+2026-10-24,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,0bc087d
+2026-10-25,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,87e0388
+2026-10-25,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,87e0388
+2026-10-25,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,87e0388
+2026-10-25,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,87e0388
+2026-10-25,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,87e0388
+2026-10-26,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,91dbfc3
+2026-10-26,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,91dbfc3
+2026-10-26,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,91dbfc3
+2026-10-26,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,91dbfc3
+2026-10-26,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,91dbfc3
+2026-10-27,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,4026b8c
+2026-10-27,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,4026b8c
+2026-10-27,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,4026b8c
+2026-10-27,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,4026b8c
+2026-10-27,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,4026b8c
+2026-10-28,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,f30b338
+2026-10-28,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,f30b338
+2026-10-28,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,f30b338
+2026-10-28,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,f30b338
+2026-10-28,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,f30b338
+2026-10-29,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,c333bd1
+2026-10-29,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,c333bd1
+2026-10-29,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,c333bd1
+2026-10-29,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,c333bd1
+2026-10-29,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,c333bd1
+2026-10-30,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,84ec4a1
+2026-10-30,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,84ec4a1
+2026-10-30,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,84ec4a1
+2026-10-30,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,84ec4a1
+2026-10-30,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,84ec4a1
+2026-10-31,any,9,0.0272,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,91d36d2
+2026-10-31,480p,5,0.02,0.01625,MiniMax Hailuo / H3,fal,480p,r186,promo,91d36d2
+2026-10-31,720p,7,0.056,0.02222,Veo 3.1,Krea,720p,r146,estimate,91d36d2
+2026-10-31,1080p,7,0.112,0.052,MiniMax Hailuo / H3,fal,1080p,r188,promo,91d36d2
+2026-10-31,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,91d36d2
+2026-11-01,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,3ab0452
+2026-11-01,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,3ab0452
+2026-11-01,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,3ab0452
+2026-11-01,1080p,7,0.15,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,3ab0452
+2026-11-01,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,3ab0452
+2026-11-02,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,8d6ecc8
+2026-11-02,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,8d6ecc8
+2026-11-02,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,8d6ecc8
+2026-11-02,1080p,7,0.15,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,8d6ecc8
+2026-11-02,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,8d6ecc8
+2026-11-03,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,29ef2ea
+2026-11-03,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,29ef2ea
+2026-11-03,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,29ef2ea
+2026-11-03,1080p,7,0.15,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,29ef2ea
+2026-11-03,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,29ef2ea
+2026-11-04,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,7f68076
+2026-11-04,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,7f68076
+2026-11-04,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,7f68076
+2026-11-04,1080p,7,0.15,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,7f68076
+2026-11-04,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,7f68076
+2026-11-05,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,f3260aa
+2026-11-05,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,f3260aa
+2026-11-05,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,f3260aa
+2026-11-05,1080p,7,0.15,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,f3260aa
+2026-11-05,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,f3260aa
+2026-11-06,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,c66e0a8
+2026-11-06,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,c66e0a8
+2026-11-06,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,c66e0a8
+2026-11-06,1080p,7,0.15,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,c66e0a8
+2026-11-06,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,c66e0a8
+2026-11-07,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,8d57737
+2026-11-07,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,8d57737
+2026-11-07,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,8d57737
+2026-11-07,1080p,7,0.15,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,8d57737
+2026-11-07,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,8d57737
+2026-11-08,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,064a488
+2026-11-08,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,064a488
+2026-11-08,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,064a488
+2026-11-08,1080p,7,0.15,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,064a488
+2026-11-08,4k,2,0.2706,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,064a488
+2026-11-09,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,1462d01
+2026-11-09,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,1462d01
+2026-11-09,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,1462d01
+2026-11-09,1080p,7,0.104,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,1462d01
+2026-11-09,4k,3,0.209,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,1462d01
+2026-11-10,any,9,0.0408,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,9905eb5
+2026-11-10,480p,5,0.025,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,9905eb5
+2026-11-10,720p,7,0.05775,0.02222,Veo 3.1,Krea,720p,r146,estimate,9905eb5
+2026-11-10,1080p,7,0.104,0.056,MiniMax Hailuo / H3,fal,1080p,r196,promo,9905eb5
+2026-11-10,4k,3,0.209,0.198,Kling 3.0,Higgsfield,4K,r119,estimate,9905eb5
+2026-11-11,any,9,0.0325,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,e039475
+2026-11-11,480p,5,0.02167,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,e039475
+2026-11-11,720p,7,0.03792,0.02222,Veo 3.1,Krea,720p,r146,estimate,e039475
+2026-11-11,1080p,7,0.104,0.03792,Kling 3.0,Higgsfield,1080p,r115,estimate,e039475
+2026-11-11,4k,3,0.209,0.13,Kling 3.0,Higgsfield,4K,r119,estimate,e039475
+2026-11-12,any,9,0.0325,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,46e180d
+2026-11-12,480p,5,0.02167,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,46e180d
+2026-11-12,720p,7,0.03792,0.02222,Veo 3.1,Krea,720p,r146,estimate,46e180d
+2026-11-12,1080p,7,0.104,0.03792,Kling 3.0,Higgsfield,1080p,r115,estimate,46e180d
+2026-11-12,4k,3,0.209,0.13,Kling 3.0,Higgsfield,4K,r119,estimate,46e180d
+2026-11-13,any,9,0.0325,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,2609e8e
+2026-11-13,480p,5,0.02167,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,2609e8e
+2026-11-13,720p,7,0.03792,0.02222,Veo 3.1,Krea,720p,r146,estimate,2609e8e
+2026-11-13,1080p,7,0.104,0.03792,Kling 3.0,Higgsfield,1080p,r115,estimate,2609e8e
+2026-11-13,4k,3,0.209,0.13,Kling 3.0,Higgsfield,4K,r119,estimate,2609e8e
+2026-11-14,any,9,0.0325,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,89cd7bd
+2026-11-14,480p,5,0.02167,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,89cd7bd
+2026-11-14,720p,7,0.03792,0.02222,Veo 3.1,Krea,720p,r146,estimate,89cd7bd
+2026-11-14,1080p,7,0.104,0.03792,Kling 3.0,Higgsfield,1080p,r115,estimate,89cd7bd
+2026-11-14,4k,3,0.209,0.13,Kling 3.0,Higgsfield,4K,r119,estimate,89cd7bd
+2026-11-15,any,9,0.0325,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,30c70a0
+2026-11-15,480p,5,0.02167,0.0175,MiniMax Hailuo / H3,fal,480p,r194,promo,30c70a0
+2026-11-15,720p,7,0.03792,0.02222,Veo 3.1,Krea,720p,r146,estimate,30c70a0
+2026-11-15,1080p,7,0.104,0.03792,Kling 3.0,Higgsfield,1080p,r115,estimate,30c70a0
+2026-11-15,4k,3,0.209,0.13,Kling 3.0,Higgsfield,4K,r119,estimate,30c70a0
+2026-11-16,any,9,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,a42bea3
+2026-11-16,480p,5,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,a42bea3
+2026-11-16,720p,7,0.03,0.02222,Veo 3.1,Krea,720p,r146,estimate,a42bea3
+2026-11-16,1080p,7,0.1,0.02916,Kling 3.0,Higgsfield,1080p,r115,estimate,a42bea3
+2026-11-16,4k,3,0.209,0.1,Kling 3.0,Higgsfield,4K,r119,estimate,a42bea3
+2026-11-17,any,9,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,2c59d4e
+2026-11-17,480p,5,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,2c59d4e
+2026-11-17,720p,7,0.03,0.02222,Veo 3.1,Krea,720p,r146,estimate,2c59d4e
+2026-11-17,1080p,7,0.1,0.02916,Kling 3.0,Higgsfield,1080p,r115,estimate,2c59d4e
+2026-11-17,4k,3,0.209,0.1,Kling 3.0,Higgsfield,4K,r119,estimate,2c59d4e
+2026-11-18,any,9,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,b1b5661
+2026-11-18,480p,5,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,b1b5661
+2026-11-18,720p,7,0.03,0.02222,Veo 3.1,Krea,720p,r146,estimate,b1b5661
+2026-11-18,1080p,7,0.1,0.02916,Kling 3.0,Higgsfield,1080p,r115,estimate,b1b5661
+2026-11-18,4k,3,0.209,0.1,Kling 3.0,Higgsfield,4K,r119,estimate,b1b5661
+2026-11-19,any,9,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,bd68cf6
+2026-11-19,480p,5,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,bd68cf6
+2026-11-19,720p,7,0.03,0.02222,Veo 3.1,Krea,720p,r146,estimate,bd68cf6
+2026-11-19,1080p,7,0.1,0.02916,Kling 3.0,Higgsfield,1080p,r115,estimate,bd68cf6
+2026-11-19,4k,3,0.209,0.1,Kling 3.0,Higgsfield,4K,r119,estimate,bd68cf6
+2026-11-20,any,9,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,current
+2026-11-20,480p,5,0.025,0.01666,Wan 3.0,Higgsfield,480p,r096,verified,current
+2026-11-20,720p,7,0.03,0.02222,Veo 3.1,Krea,720p,r146,estimate,current
+2026-11-20,1080p,7,0.1,0.02916,Kling 3.0,Higgsfield,1080p,r115,estimate,current
+2026-11-20,4k,3,0.209,0.1,Kling 3.0,Higgsfield,4K,r119,estimate,current
