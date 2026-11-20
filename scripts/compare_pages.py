@@ -319,6 +319,81 @@ def _css(ids):
     )
 
 
+class Labels:
+    """Seller, plan, deal and regular-price text for rows, shared by /compare/ and /cost/ pages.
+
+    `rows` is the pool searched for "cheapest without a sale" when a sale row has no regular price.
+    """
+
+    def __init__(self, g, rows, today):
+        self.g, self.rows, self.today = g, rows, today
+        self.e, self.rate_money, self.two = g["e"], g["rate_money"], g["_money_places"]
+        self._adj = {}
+
+    def plan_text(self, r):
+        return self.g["shown_tier"](r)
+
+    def adjs_of(self, r):
+        """Deal adjustments for a row, with the deal's pre-sale plan price added."""
+        g = self.g
+        if id(r) not in self._adj:
+            out = []
+            for adj in g["dealmod"].row_adjustments(r, g["LIVE_DEALS"], g["plans"], self.today):
+                adj = dict(adj)
+                deal = g["DEAL_BY_ID"].get(adj["deal_id"]) or {}
+                pair_ = g["dealmod"]._pair_for_row(deal, r) if deal else None
+                adj["price_before"] = (pair_ or {}).get("price_before")
+                full = g["plans"].get((pair_ or {}).get("full_plan_id") or "") or {}
+                adj["plan_before"] = full.get("plan")
+                out.append(adj)
+            self._adj[id(r)] = out
+        return self._adj[id(r)]
+
+    def regular_text(self, r, secs=None):
+        """'' for a row not on sale; else its regular price, or the cheapest non-sale row, from the data."""
+        two, rate_money = self.two, self.rate_money
+        info = regular_for(r, self.adjs_of(r), self.rows, self.adjs_of)
+        if info is None:
+            return ""
+        if info["kind"] == "regular":
+            amt = two(info["usd"] * secs, 2) if secs else f"{rate_money(info['usd'])}/s"
+            plan = plan_short(info.get("plan_before") or self.plan_text(r))  # no separate full-price plan: same plan
+            where = r["platform"] + (f", {plan}" if plan else "")
+            before = f" at ${info['price_before']:g}/mo" if info.get("price_before") and not secs else ""
+            return f"regular {amt} on {where}{before}"
+        if info["kind"] == "nosale":
+            x = info["row"]
+            amt = two(x["usd_per_second"] * secs, 2) if secs else f"{rate_money(x['usd_per_second'])}/s"
+            p = plan_short(self.plan_text(x))
+            return f"cheapest without a sale: {amt} on {x['platform']}" + (f" ({p})" if p else "")
+        return "no regular price in our data"
+
+    def deals_of(self, r):
+        names = []
+        for adj in self.adjs_of(r):
+            if adj["type"] == "unlimited_window":
+                names.append("unlimited window on sale")
+            else:
+                names.append(deal_name(self.g["DEAL_BY_ID"][adj["deal_id"]].get("title")))
+        return names
+
+    def seller(self, r):
+        return seller_text(r, self.plan_text(r), self.deals_of(r), self.g["rate_label"](r), self.regular_text(r))
+
+    def seller_html(self, r, regular=False):
+        """'on <a>Higgsfield</a> (Ultra annual, Black Friday price, ...)' with the vendor link.
+        regular=True (headline) adds the regular price of a sale row."""
+        g, e = self.g, self.e
+        bits = seller_bits(r, self.plan_text(r), self.deals_of(r), g["rate_label"](r))
+        reg = self.regular_text(r) if regular else ""
+        return (f'on {g["plat_link"](r["platform"], r["source_url"])} <span class="small">({e(", ".join(bits))}'
+                + (f'; <span class="regular">{e(reg)}</span>' if reg else "") + ')</span>')
+
+    def seller_short(self, r):
+        p = plan_short(self.plan_text(r))
+        return r["platform"] + (f", {p}" if p else "")
+
+
 def render_pair(g, pair):
     e, root, rate_money = g["e"], g["root"], g["rate_money"]
     models, rows, TODAY, LAST = g["models"], g["rows"], g["TODAY"], g["LAST"]
@@ -349,67 +424,9 @@ def render_pair(g, pair):
         return (f'<td data-label="{label}" class="num">{two(total, 2)}'
                 + (f'<br><span class="small">{e(seller_short(r))}</span>' if who else "") + f'{reg_html}{more}</td>')
 
-    def plan_text(r):
-        return g["shown_tier"](r)
-
-    adj_cache = {}
-
-    def adjs_of(r):
-        """Deal adjustments for a row, with the deal's pre-sale plan price added."""
-        if id(r) not in adj_cache:
-            out = []
-            for adj in g["dealmod"].row_adjustments(r, g["LIVE_DEALS"], g["plans"], TODAY):
-                adj = dict(adj)
-                deal = g["DEAL_BY_ID"].get(adj["deal_id"]) or {}
-                pair_ = g["dealmod"]._pair_for_row(deal, r) if deal else None
-                adj["price_before"] = (pair_ or {}).get("price_before")
-                full = g["plans"].get((pair_ or {}).get("full_plan_id") or "") or {}
-                adj["plan_before"] = full.get("plan")
-                out.append(adj)
-            adj_cache[id(r)] = out
-        return adj_cache[id(r)]
-
-    def regular_text(r, secs=None):
-        """'' for a row not on sale; else its regular price, or the cheapest non-sale row, from the data."""
-        info = regular_for(r, adjs_of(r), rows, adjs_of)
-        if info is None:
-            return ""
-        if info["kind"] == "regular":
-            amt = two(info["usd"] * secs, 2) if secs else f"{rate_money(info['usd'])}/s"
-            plan = plan_short(info.get("plan_before") or plan_text(r))  # no separate full-price plan: same plan
-            where = r["platform"] + (f", {plan}" if plan else "")
-            before = f" at ${info['price_before']:g}/mo" if info.get("price_before") and not secs else ""
-            return f"regular {amt} on {where}{before}"
-        if info["kind"] == "nosale":
-            x = info["row"]
-            amt = two(x["usd_per_second"] * secs, 2) if secs else f"{rate_money(x['usd_per_second'])}/s"
-            p = plan_short(plan_text(x))
-            return f"cheapest without a sale: {amt} on {x['platform']}" + (f" ({p})" if p else "")
-        return "no regular price in our data"
-
-    def deals_of(r):
-        names = []
-        for adj in adjs_of(r):
-            if adj["type"] == "unlimited_window":
-                names.append("unlimited window on sale")
-            else:
-                names.append(deal_name(g["DEAL_BY_ID"][adj["deal_id"]].get("title")))
-        return names
-
-    def seller(r):
-        return seller_text(r, plan_text(r), deals_of(r), g["rate_label"](r), regular_text(r))
-
-    def seller_html(r, regular=False):
-        """'on <a>Higgsfield</a> (Ultra annual, Black Friday price, ...)' with the vendor link.
-        regular=True (headline) adds the regular price of a sale row."""
-        bits = seller_bits(r, plan_text(r), deals_of(r), g["rate_label"](r))
-        reg = regular_text(r) if regular else ""
-        return (f'on {g["plat_link"](r["platform"], r["source_url"])} <span class="small">({e(", ".join(bits))}'
-                + (f'; <span class="regular">{e(reg)}</span>' if reg else "") + ')</span>')
-
-    def seller_short(r):
-        p = plan_short(plan_text(r))
-        return r["platform"] + (f", {p}" if p else "")
+    lab = Labels(g, rows, TODAY)
+    plan_text, adjs_of, regular_text, deals_of = lab.plan_text, lab.adjs_of, lab.regular_text, lab.deals_of
+    seller, seller_html, seller_short = lab.seller, lab.seller_html, lab.seller_short
 
     # Headline: cheapest per model per resolution, anywhere.
     hrows = []
