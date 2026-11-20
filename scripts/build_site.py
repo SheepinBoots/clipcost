@@ -1879,7 +1879,6 @@ home = f"""<h1>{e(AGENT_H1)}</h1>
 <p class="small">The lowest $/s for each model at any resolution, including temporary promos (labelled). Low-res tiers are usually the cheapest, so check the resolution.</p>
 {home_guides_html()}
 {crosslink_html(True, True)}
-{news_box_inline()}
 <h2>All prices</h2>
 <div class="filters">
 <select id="fModel" aria-label="Model"><option value="">All models</option>{opts([(s, m["name"]) for s, m in models.items()])}</select>
@@ -1891,6 +1890,7 @@ home = f"""<h1>{e(AGENT_H1)}</h1>
 <span class="small" id="count"></span></div>
 {wide_table(THEAD + "<tbody>" + "".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"])) + "</tbody>", ' id="prices"')}
 <p class="small"><span class="tag verified">published rate</span> = the vendor states this dollars per second, or states an API credit count and a credit price (Runway credits are $0.01). <span class="tag verified">from credit plan</span> = plan price ÷ credits × credits per clip ÷ seconds, using a credit count the vendor stated exactly. It is not a list price per second. <span class="tag estimate">estimated from credit plan</span> = the same credit-plan math when the vendor marks the count with "~", "roughly", or "estimated". <span class="tag estimate">estimated rate</span> = an API price the vendor calls approximate. <span class="tag promo">promo</span> = a temporary discount, with the end date when the vendor gave one. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. Of {len(rows)} live rows: {n_published} published rates, {n_plan} from a credit plan, {n_plan_est} estimated from a credit plan, {n_api_est} estimated API rates, {n_promo} promos.</p>
+{news_box_inline()}
 {news_box()}
 {retired_table(retired_rows)}
 <script>
@@ -4658,7 +4658,8 @@ def audit_site():
         errors.append("agent section must stay above the price table")
     if news_at < 0 or prices_at < 0 or not prices_at < news_at:
         errors.append("newsletter signup must stay under the price table")
-    elif "<section" in home_html[prices_at:news_at]:
+    elif "<section" in home_html[prices_at:news_at].replace(INLINE_NEWS_MARK, "", 1):
+        # Only the mid-page signup may sit there (after the table and its legend, Emmanuel 2026-11-20).
         errors.append("a section was inserted between the price table and the newsletter")
     deals_html = open(os.path.join(DIST, "deals", "index.html"), encoding="utf-8").read()
     live_at = deals_html.find('id="liveDeals"')

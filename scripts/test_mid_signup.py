@@ -82,10 +82,11 @@ for slug, m in db["models"].items():
     if "<h2>Live deals for this model</h2>" in html:
         check(before.rstrip().endswith("</div>") and "Live deals for this model" in before, f"{path}: mid signup should follow the live deals section")
 
-# Home: between the guides block and "All prices".
+# Home: after the All prices table and its legend note, before the end signup (moved one section down).
 html = read("/")
 before, after = common("/", html)
-check(next_tag(after).startswith("<h2>All prices</h2>"), "/: mid signup must sit right above All prices")
+check(next_tag(after).startswith('<section class="news" id="newsletter">'), "/: mid signup must sit right above the end signup")
+check('id="prices"' in before and before.rstrip().endswith("promos.</p>"), "/: mid signup must follow the price table and its legend")
 check('data-sponsor="home"' in before, "/: sponsor box should stay above the mid signup")
 
 # New data pages: sponsor box like the model pages, partner line right after it, then the mid signup at a section boundary.
