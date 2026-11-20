@@ -16,6 +16,7 @@ import json, re, sys, os, subprocess, datetime, argparse
 import requests
 from bs4 import BeautifulSoup
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import timefmt
 import deals as dealmod
 import weekly_report
 
@@ -364,9 +365,9 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--apply", action="store_true"); ap.add_argument("--only")
     a = ap.parse_args()
     db = json.load(open(DATA))
-    today = datetime.date.today().isoformat()
+    today = timefmt.us_today().isoformat()
     only = set(a.only.split(",")) if a.only else None
-    texts, report = {}, {"run": datetime.datetime.now().isoformat(timespec="seconds"), "sources": {}, "findings": []}
+    texts, report = {}, {"run": timefmt.now_utc_iso(), "sources": {}, "findings": []}
     for sid, src in db["sources"].items():
         if only and sid not in only: continue
         if src["fetch"] == "manual":

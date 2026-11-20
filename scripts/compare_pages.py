@@ -190,13 +190,14 @@ def day_text(day):
     return f"{d.strftime('%b')} {d.day}, {d.year}"
 
 
-def run_text(run_iso, last):
+def run_text(run_iso, last, now=None):
     """The daily check time, ET first with PT in brackets, when the run was on the catalog date.
 
-    check_report.json's run is box-local Pacific time without an offset."""
-    if not run_iso or not last or not str(run_iso).startswith(last):
+    check_report.json's run is ISO 8601 with an offset (Z from update_prices). Older stamps have none;
+    timefmt.run_instant places them and never returns a time in the future. Otherwise the date only."""
+    t = timefmt.run_instant(run_iso, now)
+    if t is None or not last or t.astimezone(timefmt.PT).date().isoformat() != last:
         return day_text(last) if last else ""
-    t = datetime.datetime.fromisoformat(run_iso).replace(tzinfo=timefmt.PT)
     return timefmt.et_pt(t)
 
 

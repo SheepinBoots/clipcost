@@ -9,6 +9,7 @@ import weekly_report
 import analytics
 import compare_pages
 import cost_pages
+import timefmt
 import platform_pages
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
@@ -84,7 +85,7 @@ db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 changes = json.load(open(os.path.join(ROOT, "data", "changes.json")))
 sponsors = json.load(open(SPONSORS_PATH))
 models, plans, sources = db["models"], db["plans"], db["sources"]
-today = datetime.date.today()
+today = timefmt.us_today()  # US Pacific date, also on a UTC CI runner
 TODAY = today.isoformat()
 MONTH = today.strftime("%b %Y")
 TITLE_LIMIT = 60

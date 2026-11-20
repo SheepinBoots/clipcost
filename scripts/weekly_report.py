@@ -35,6 +35,9 @@ import os
 import sys
 from decimal import Decimal, ROUND_HALF_UP
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import timefmt  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PATH = os.path.join(ROOT, "data", "price_changes.jsonl")
 SCHEMA = 1
@@ -927,7 +930,7 @@ def report_jsonld(report, canonical):
 
 
 def status_payload(as_of=None, path=None):
-    as_of = parse_date(as_of) if as_of else datetime.date.today()
+    as_of = parse_date(as_of) if as_of else timefmt.us_today()
     events = load(path)
     result = assign(events, as_of)
     monday, friday = week_bounds(as_of)
