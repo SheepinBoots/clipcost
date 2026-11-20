@@ -1201,5 +1201,13 @@
   "source_url": "https://higgsfield.ai/pricing",
   "type": "price",
   "plan": "hf-ultra-annual"
+ },
+ {
+  "date": "2026-11-20",
+  "type": "deal_ended",
+  "deal": "krea-bf-seedance-75",
+  "vendor": "Krea",
+  "source_url": "https://www.krea.ai/pricing",
+  "text": "Black Friday: Seedance 2.5 up to 75% off on Krea ended 2026-11-19."
  }
 ]
