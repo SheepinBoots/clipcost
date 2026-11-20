@@ -9677,7 +9677,7 @@
    "reason": "official API page lists per-second rates, but input video changes the billed duration, so no single $/s is in the table"
   }
  ],
- "last_full_check": "2026-11-18",
+ "last_full_check": "2026-11-19",
  "variation_schema": {
   "audio": "with, without, or not stated. A separate price for each is a separate row.",
   "input": "not stated, or a list of t2v, i2v, ref2v, v2v, extend, lip-sync when the page names that mode for this price.",

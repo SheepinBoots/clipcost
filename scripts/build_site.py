@@ -3014,7 +3014,7 @@ for deal in holiday_live:
                 "Monthly billing $/s",
                 "Annual billing $/s",
                 "Before is monthly billing. After is annual billing under the Black Friday sale. "
-                "The official sale record ends at 2026-11-20T00:00:00Z (November 19, 2026, 7:00 PM ET (4:00 PM PT)). "
+                "The official sale record ends at 2026-11-23T00:00:00Z (November 22, 2026, 7:00 PM ET (4:00 PM PT)). "
                 "Vendors sometimes extend sales.",
             ))
         else:
@@ -3099,7 +3099,7 @@ status_bits = []
 if not titled:
     status_bits.append("No live deal is titled Black Friday or Cyber Monday.")
 if any("black friday" in ((d.get("title") or "") + " " + (d.get("notes") or "")).lower() for d in holiday_live):
-    status_bits.append("Higgsfield Black Friday 64% off ends Nov 19, 2026, 7:00 PM ET (4:00 PM PT).")
+    status_bits.append("Higgsfield Black Friday 63% off ends Nov 22, 2026, 7:00 PM ET (4:00 PM PT).")
 # Description only lists Black Friday plan prices that map to catalog plans, so it
 # stays under 160 characters when extra tiers (Ultra 6K/9K) are also recorded.
 bf_priced = [

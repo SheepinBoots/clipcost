@@ -80,12 +80,15 @@ def main():
     # Annual checkout price / credits, not 20% off the row.
     # The Black Friday window starts 2026-11-16, so this deal is upcoming on the frozen TODAY.
     plus_deal = by_id(doc["deals"], "hf-plus-annual")
-    if plus_deal.get("price_after") != 33 or plus_deal.get("end") != "2026-11-19" or plus_deal.get("ends_at") != "2026-11-20T00:00:00Z":
-        raise SystemExit("hf-plus-annual should be the Black Friday $33/mo price ending 2026-11-20T00:00:00Z")
+    if plus_deal.get("price_after") != 33 or plus_deal.get("end") != "2026-11-22" or plus_deal.get("ends_at") != "2026-11-23T00:00:00Z":
+        raise SystemExit("hf-plus-annual should be the Black Friday $33/mo price ending 2026-11-23T00:00:00Z")
     if deals.is_current(plus_deal, TODAY) or not deals.is_upcoming(plus_deal, TODAY):
         raise SystemExit("hf-plus-annual should be upcoming on the frozen Oct 20 test date")
-    if not deals.is_current(plus_deal, "2026-11-17") or not deals.is_current(plus_deal, "2026-11-19") or deals.is_current(plus_deal, "2026-11-20"):
-        raise SystemExit("hf-plus-annual should be live on Nov 17 and Nov 19 and archived after that date")
+    if (not deals.is_current(plus_deal, "2026-11-17")
+            or not deals.is_current(plus_deal, "2026-11-20")
+            or not deals.is_current(plus_deal, "2026-11-22")
+            or deals.is_current(plus_deal, "2026-11-23")):
+        raise SystemExit("hf-plus-annual should be live through Nov 22 and archived after that date")
     plus = next(r for r in db["rows"] if r["id"] == "r080")
     adj = deals.adjustment(plus_deal, plus, plans)
     close(adj["usd"], 33 / 1200 * 7.5 / 5)
