@@ -117,6 +117,10 @@ VidFare compares AI video generation prices in dollars per second of finished vi
 - [Kling 3.0 cost per second: where it’s cheapest](https://vidfare.com/guides/cheapest-kling-3-0/): Every Kling 3.0 route we track, cheapest first: from $0.025/s on Higgsfield, against $0.084/s on the official Kling API at 720p.
 - [Higgsfield promo code and current deals](https://vidfare.com/guides/higgsfield-promo-code/): No public Higgsfield promo code on its official pages or accounts. The current deals, each with its source, stated end date, and last check.
 
+## Comparisons
+
+- [Kling 3.0 vs Seedance 2.5 Prices Compared](https://vidfare.com/compare/kling-3-0-vs-seedance-2-5/): Kling 3.0 720p from $0.025/s (Higgsfield); Seedance 2.5 720p from $0.231/s (Replicate); Kling 3.0 1080p from $0.0292/s (Higgsfield); Seedance 2.5 1080p from $0.521/s (Magnific). 5s to 30s clip totals on the 4 platforms that sell both.
+
 ## Data
 
 - [Price data](https://vidfare.com/data/): how to read prices.json, share a calculator link, and credit VidFare.
