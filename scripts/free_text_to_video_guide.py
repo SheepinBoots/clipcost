@@ -484,7 +484,7 @@ def render(g):
 <p>{e(a_cost)}</p>
 {paid_table}
 <p>Rows are in price order. A plan rate assumes you use what you pay for; an API rate is billed per second of output. The with-audio row is listed because it is the cheapest text-to-video row in the catalog whose vendor page states audio. Affiliate links never change this price order.</p>
-<p>Related: <a href="{e(cheapest_href)}">cheapest rate we track for each model</a> · <a href="{e(best_href)}">best AI video generator by value</a> · <a href="{e(grok_guide)}">Grok Imagine video cost</a> · <a href="{e(wan_cheap)}">cheapest Wan 3.0</a> · <a href="{e(budget_href)}">project budget calculator</a>.</p>
+<p>Related: <a href="{e(root("/guides/free-ai-video-generator-no-sign-up/"))}">free AI video generators, no sign-up</a> · <a href="{e(cheapest_href)}">cheapest rate we track for each model</a> · <a href="{e(best_href)}">best AI video generator by value</a> · <a href="{e(grok_guide)}">Grok Imagine video cost</a> · <a href="{e(wan_cheap)}">cheapest Wan 3.0</a> · <a href="{e(budget_href)}">project budget calculator</a>.</p>
 
 <h2>What is confirmed, and what is not?</h2>
 <p>{e(a_unknown)}</p>

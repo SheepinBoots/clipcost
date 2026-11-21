@@ -219,6 +219,7 @@ def render(g):
             ("Kling AI pricing and credits", "/guides/kling-ai-pricing/", g["kling_pricing_blurb"]()),
             ("Runway pricing per second", "/guides/runway-pricing/", g["runway_pricing_blurb"]()),
             ("Free AI video generators: what you get", "/guides/free-ai-video-generators/", g["free_ai_video_blurb"]()),
+            ("Which free AI video generators work with no sign-up?", "/guides/free-ai-video-generator-no-sign-up/", g["no_signup_blurb"]()),
             ("What is the best AI video generator when you count quality and cost?", "/guides/best-ai-video-generator/", g["best_ai_video_blurb"]()),
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/", g["free_image_to_video_blurb"]()),
             ("Which free AI tools turn text into video?", "/guides/free-text-to-video-ai/", g["free_text_to_video_blurb"]()),
