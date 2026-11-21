@@ -264,7 +264,7 @@ def render(g):
 <li><b>Seedance in a consumer app.</b> Dreamina’s image-to-video page, with free or trial credits that can vary. {dreamina_i2v} · {dreamina_plans}. <a href="{e(seedance_href)}">Seedance 2.5 model page</a>.</li>
 <li><b>If you only wanted a watermark-free $0 plan.</b> Pika Free has no watermark and 0 monthly credits, so it is not a published free I2V allotment. {pika_src}.</li>
 </ul>
-<p>Related: <a href="{e(free_href)}">free AI video generators: what you get</a> · <a href="{e(wan_href)}">Wan 3.0 model page</a> · <a href="{e(kling_href)}">Kling 3.0 model page</a> · <a href="{e(grok_model)}">Grok Imagine model page</a>.</p>
+<p>Related: <a href="{e(free_href)}">free AI video generators: what you get</a> · <a href="{e(root("/guides/free-ai-video-generator-no-sign-up/"))}">free AI video generators, no sign-up</a> · <a href="{e(wan_href)}">Wan 3.0 model page</a> · <a href="{e(kling_href)}">Kling 3.0 model page</a> · <a href="{e(grok_model)}">Grok Imagine model page</a>.</p>
 
 <h2>What is confirmed, and what is not?</h2>
 <p>{e(a_unknown)}</p>

@@ -61,6 +61,7 @@ GUIDE_LINKS = [
     ("/guides/kling-ai-pricing/", "Kling AI pricing"),
     ("/guides/runway-pricing/", "Runway pricing"),
     ("/guides/free-ai-video-generators/", "Free AI video generators"),
+    ("/guides/free-ai-video-generator-no-sign-up/", "No sign-up"),
     ("/guides/best-ai-video-generator/", "Best AI video generator"),
     ("/guides/free-image-to-video-ai/", "Free image to video"),
     ("/guides/free-text-to-video-ai/", "Free text to video"),
@@ -1548,6 +1549,7 @@ GUIDE_CRUMBS = {
     "/guides/kling-ai-pricing/": "Kling AI pricing",
     "/guides/runway-pricing/": "Runway pricing",
     "/guides/free-ai-video-generators/": "Free AI video generators",
+    "/guides/free-ai-video-generator-no-sign-up/": "No sign-up",
     "/guides/best-ai-video-generator/": "Best AI video generator",
     "/guides/free-image-to-video-ai/": "Free image to video",
     "/guides/free-text-to-video-ai/": "Free text to video",
@@ -1610,6 +1612,7 @@ def guide_page(path, title, desc, body, faqs):
             ("Kling AI pricing and credits", "/guides/kling-ai-pricing/"),
             ("Runway pricing per second", "/guides/runway-pricing/"),
             ("Free AI video generators: what you get", "/guides/free-ai-video-generators/"),
+            ("Which free AI video generators work with no sign-up?", "/guides/free-ai-video-generator-no-sign-up/"),
             ("What is the best AI video generator when you count quality and cost?", "/guides/best-ai-video-generator/"),
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/"),
             ("Which free AI tools turn text into video?", "/guides/free-text-to-video-ai/"),
@@ -1680,6 +1683,10 @@ def free_ai_video_blurb():
     import free_ai_video_guide
     return free_ai_video_guide.blurb(globals())
 
+def no_signup_blurb():
+    import free_no_signup_guide
+    return free_no_signup_guide.blurb(globals())
+
 def best_ai_video_blurb():
     import best_ai_video_guide
     return best_ai_video_guide.blurb(globals())
@@ -1719,6 +1726,7 @@ def home_guides_html():
         "/guides/is-higgsfield-worth-it/": hf_blurb,
         "/guides/ai-video-project-budget/": budget_blurb,
         "/guides/free-ai-video-generators/": free_ai_video_blurb,
+        "/guides/free-ai-video-generator-no-sign-up/": no_signup_blurb,
         "/guides/best-ai-video-generator/": best_ai_video_blurb,
         "/guides/free-image-to-video-ai/": free_image_to_video_blurb,
         "/guides/free-text-to-video-ai/": free_text_to_video_blurb,
@@ -2238,6 +2246,10 @@ for slug, m in models.items():
         deals_html += (
             f'<p class="small">What the official free tier actually includes: '
             f'<a href="{root("/guides/free-ai-video-generators/")}">Free AI video generators: what you get</a></p>'
+        )
+        deals_html += (
+            f'<p class="small">Whether you can generate without an account: '
+            f'<a href="{root("/guides/free-ai-video-generator-no-sign-up/")}">Free AI video generators, no sign-up</a></p>'
         )
         deals_html += (
             f'<p class="small">Quality scores and cost compared: '
@@ -3574,6 +3586,7 @@ def write_llms():
         f"- [Kling AI pricing and credits]({SITE_URL}/guides/kling-ai-pricing/): {kling_pricing_blurb()}",
         f"- [Runway pricing per second]({SITE_URL}/guides/runway-pricing/): {runway_pricing_blurb()}",
         f"- [Free AI video generators: what you get]({SITE_URL}/guides/free-ai-video-generators/): {free_ai_video_blurb()}",
+        f"- [Free AI video generators, no sign-up]({SITE_URL}/guides/free-ai-video-generator-no-sign-up/): {no_signup_blurb()}",
         f"- [Best AI video generator by value]({SITE_URL}/guides/best-ai-video-generator/): {best_ai_video_blurb()}",
         f"- [Free image to video AI]({SITE_URL}/guides/free-image-to-video-ai/): {free_image_to_video_blurb()}",
         f"- [Free text to video AI]({SITE_URL}/guides/free-text-to-video-ai/): {free_text_to_video_blurb()}",
@@ -3702,6 +3715,8 @@ import runway_pricing_guide
 runway_pricing_guide.render(globals())
 import free_ai_video_guide
 free_ai_video_guide.render(globals())
+import free_no_signup_guide
+free_no_signup_guide.render(globals())
 import best_ai_video_guide
 best_ai_video_guide.render(globals())
 import free_image_to_video_guide
