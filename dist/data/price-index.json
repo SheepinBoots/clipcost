@@ -1663,6 +1663,57 @@
   },
   {
    "date": "2026-11-21",
+   "catalog": "5d10f7b",
+   "tiers": {
+    "any": {
+     "models_priced": 9,
+     "median_usd_per_second": 0.025,
+     "cheapest_usd_per_second": 0.01666,
+     "cheapest_model": "wan-3-0",
+     "cheapest_platform": "Higgsfield",
+     "cheapest_resolution": "480p",
+     "cheapest_row_id": "r096"
+    },
+    "480p": {
+     "models_priced": 5,
+     "median_usd_per_second": 0.025,
+     "cheapest_usd_per_second": 0.01666,
+     "cheapest_model": "wan-3-0",
+     "cheapest_platform": "Higgsfield",
+     "cheapest_resolution": "480p",
+     "cheapest_row_id": "r096"
+    },
+    "720p": {
+     "models_priced": 7,
+     "median_usd_per_second": 0.03,
+     "cheapest_usd_per_second": 0.02222,
+     "cheapest_model": "veo-3-1",
+     "cheapest_platform": "Krea",
+     "cheapest_resolution": "720p",
+     "cheapest_row_id": "r146"
+    },
+    "1080p": {
+     "models_priced": 7,
+     "median_usd_per_second": 0.1,
+     "cheapest_usd_per_second": 0.02916,
+     "cheapest_model": "kling-3-0",
+     "cheapest_platform": "Higgsfield",
+     "cheapest_resolution": "1080p",
+     "cheapest_row_id": "r115"
+    },
+    "4k": {
+     "models_priced": 3,
+     "median_usd_per_second": 0.209,
+     "cheapest_usd_per_second": 0.1,
+     "cheapest_model": "kling-3-0",
+     "cheapest_platform": "Higgsfield",
+     "cheapest_resolution": "4K",
+     "cheapest_row_id": "r119"
+    }
+   }
+  },
+  {
+   "date": "2026-11-22",
    "catalog": "current",
    "tiers": {
     "any": {
@@ -4676,6 +4727,96 @@
   },
   {
    "date": "2026-11-21",
+   "model": "gemini-omni-flash",
+   "model_name": "Gemini Omni Flash 1.1",
+   "usd_per_second": 0.07,
+   "platform": "Google Gemini API",
+   "resolution": "720p",
+   "row_id": "r199",
+   "status": "estimate"
+  },
+  {
+   "date": "2026-11-22",
+   "model": "wan-3-0-prime",
+   "model_name": "Wan 3.0 Prime",
+   "usd_per_second": 0.025,
+   "platform": "Higgsfield",
+   "resolution": "480p",
+   "row_id": "r081",
+   "status": "verified"
+  },
+  {
+   "date": "2026-11-22",
+   "model": "wan-3-0",
+   "model_name": "Wan 3.0",
+   "usd_per_second": 0.01666,
+   "platform": "Higgsfield",
+   "resolution": "480p",
+   "row_id": "r096",
+   "status": "verified"
+  },
+  {
+   "date": "2026-11-22",
+   "model": "kling-3-0",
+   "model_name": "Kling 3.0",
+   "usd_per_second": 0.025,
+   "platform": "Higgsfield",
+   "resolution": "720p",
+   "row_id": "r111",
+   "status": "estimate"
+  },
+  {
+   "date": "2026-11-22",
+   "model": "seedance-2-5",
+   "model_name": "Seedance 2.5",
+   "usd_per_second": 0.1028,
+   "platform": "Replicate",
+   "resolution": "480p",
+   "row_id": "r202",
+   "status": "verified"
+  },
+  {
+   "date": "2026-11-22",
+   "model": "veo-3-1",
+   "model_name": "Veo 3.1",
+   "usd_per_second": 0.02222,
+   "platform": "Krea",
+   "resolution": "720p",
+   "row_id": "r146",
+   "status": "estimate"
+  },
+  {
+   "date": "2026-11-22",
+   "model": "minimax-hailuo",
+   "model_name": "MiniMax Hailuo / H3",
+   "usd_per_second": 0.01667,
+   "platform": "Higgsfield",
+   "resolution": "768p",
+   "row_id": "r132",
+   "status": "estimate"
+  },
+  {
+   "date": "2026-11-22",
+   "model": "grok-imagine",
+   "model_name": "Grok Imagine Video 1.5",
+   "usd_per_second": 0.02,
+   "platform": "Runway API",
+   "resolution": "480p",
+   "row_id": "r055",
+   "status": "verified"
+  },
+  {
+   "date": "2026-11-22",
+   "model": "runway-gen-4",
+   "model_name": "Runway Gen-4.x",
+   "usd_per_second": 0.05,
+   "platform": "Runway API",
+   "resolution": "—",
+   "row_id": "r047",
+   "status": "verified"
+  },
+  {
+   "date": "2026-11-22",
    "model": "gemini-omni-flash",
    "model_name": "Gemini Omni Flash 1.1",
    "usd_per_second": 0.07,

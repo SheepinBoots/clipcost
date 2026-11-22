@@ -4970,7 +4970,10 @@ def audit_site():
         errors.append("Runway page dropped the gen4_turbo price")
     if "0.09375" not in runway or "Runway Gen-4.5" not in runway:
         errors.append("Runway page dropped the Krea Gen-4.5 deal price")
-    if "not a cut on gen4_turbo" not in runway:
+    # That sentence is the live Krea yearly deal's "different option" line. Once the deal's
+    # end date has passed, the line is gone and gen4_turbo is no longer sitting next to it.
+    krea_yearly = DEAL_BY_ID.get("krea-yearly-40")
+    if krea_yearly and dealmod.is_current(krea_yearly, TODAY) and "not a cut on gen4_turbo" not in runway:
         errors.append("Runway page still presents the Krea deal as the gen4_turbo price")
     if "estimated from credit plan" not in runway or "published rate" not in runway:
         errors.append("Runway page does not separate the published rate from the credit-plan estimate")

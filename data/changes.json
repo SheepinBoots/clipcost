@@ -1248,5 +1248,21 @@
   "source_url": "https://www.krea.ai/pricing",
   "type": "price",
   "plan": "krea-pro-yearly"
+ },
+ {
+  "date": "2026-11-22",
+  "type": "deal_ended",
+  "deal": "fal-flux3-50",
+  "vendor": "fal",
+  "source_url": "https://fal.ai/flux-3-max",
+  "text": "FLUX 3 Max 50% off until November 21 ended 2026-11-21. The ended rate was $0.085 per second at 720p, pay-per-use, no plan tier, list $0.17 per second at 720p, audio not stated as a separate rate."
+ },
+ {
+  "date": "2026-11-22",
+  "type": "notice",
+  "platform": "fal",
+  "deal": "fal-flux3-40",
+  "source_url": "https://fal.ai/flux-3-max",
+  "text": "FLUX 3 Max 40% off until December 7 (fal-flux3-40): $0.102 per second at 720p, pay-per-use, no plan tier, list $0.17 per second at 720p. Text-to-video and image-to-video are the same price. Audio is not stated as a separate rate; the page says audio generation is on by default. The page gives December 7 as a date only, with no clock time and no time zone. Checked Nov 22, 2026, 3:21 AM ET (12:21 AM PT)."
  }
 ]

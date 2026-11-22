@@ -105,6 +105,94 @@ def main():
         raise SystemExit("the Krea yearly sale must not apply to the monthly row")
     if kdeal.get("ends_at") != "2026-11-22T08:00:00Z" or not deals.is_current(kdeal, "2026-11-21") or deals.is_current(kdeal, "2026-11-22"):
         raise SystemExit("the Krea yearly sale ends Nov 22, 2026, 3:00 AM ET (12:00 AM PT)")
+    flux50 = by_id(doc["deals"], "fal-flux3-50")
+    if flux50.get("status") != "ended" or flux50.get("percent") != 50 or flux50.get("end") != "2026-11-21":
+        raise SystemExit("fal-flux3-50 should stay the ended 50% record through November 21")
+    if flux50.get("math") != "none" or flux50.get("show_on_rows") is not False or flux50.get("ends_at"):
+        raise SystemExit("fal-flux3-50 should stay off the catalog and keep its date-only end")
+    if "$0.085" not in flux50.get("notes", "") or "720p" not in flux50.get("notes", ""):
+        raise SystemExit("fal-flux3-50 should keep the historical $0.085 per second at 720p")
+    if deals.is_current(flux50, "2026-11-08") or deals.is_current(flux50, "2026-11-21"):
+        raise SystemExit("fal-flux3-50 is marked ended, so it is not live on its old check date")
+    flux40 = by_id(doc["deals"], "fal-flux3-40")
+    if flux40.get("status") != "live" or flux40.get("type") != "percent_off" or flux40.get("percent") != 40:
+        raise SystemExit("fal-flux3-40 percent, type, or status")
+    if flux40.get("end") != "2026-12-07" or flux40.get("end_is_estimate") or flux40.get("ends_at") or flux40.get("start"):
+        raise SystemExit("fal-flux3-40 end should be December 7 with no clock, zone, or invented start")
+    if flux40.get("verified_date") != "2026-11-22" or flux40.get("source_url") != "https://fal.ai/flux-3-max":
+        raise SystemExit("fal-flux3-40 source or verified date")
+    if flux40.get("source_quote") != "FLUX 3 Max is 40% off until December 7":
+        raise SystemExit("fal-flux3-40 quote should be the visible heading")
+    if flux40.get("math") != "none" or flux40.get("show_on_rows") is not False or flux40.get("models") or flux40.get("plans"):
+        raise SystemExit("fal-flux3-40 should not become a catalog $/s row")
+    if flux40.get("conditions", {}).get("max_resolution") != "720p":
+        raise SystemExit("fal-flux3-40 should be capped at 720p")
+    if len(flux40.get("title") or "") > 60:
+        raise SystemExit("fal-flux3-40 title is over 60 characters")
+    if not deals.is_current(flux40, "2026-11-22") or not deals.is_current(flux40, "2026-12-07") or deals.is_current(flux40, "2026-12-08"):
+        raise SystemExit("fal-flux3-40 should be live through December 7 and archived the next day")
+    if any(deals.adjustment(flux40, row, plans) for row in db["rows"]):
+        raise SystemExit("fal-flux3-40 matched a catalog row")
+    if any(deals.adjustment(flux50, row, plans) for row in db["rows"]):
+        raise SystemExit("fal-flux3-50 matched a catalog row")
+    notes = flux40.get("notes") or ""
+    for needle in (
+        "$0.102 per second",
+        "$0.17 per second at 720p",
+        "no plan tier",
+        "no clock time",
+        "audio generation is on by default",
+        "pricingInfoOverride",
+        "not the current deal",
+    ):
+        if needle not in notes:
+            raise SystemExit(f"fal-flux3-40 notes missing {needle}")
+    if "Caracas" in notes or "Sora" in notes or "sora" in notes:
+        raise SystemExit("fal-flux3-40 notes name Caracas or Sora")
+    changes = json.load(open(os.path.join(ROOT, "data", "changes.json"), encoding="utf-8"))
+    ended_log = [item for item in changes if item.get("type") == "deal_ended" and item.get("deal") == "fal-flux3-50"]
+    if not ended_log or ended_log[-1].get("date") != "2026-11-22" or "$0.085 per second at 720p" not in ended_log[-1].get("text", ""):
+        raise SystemExit("changes log missing the ended fal-flux3-50 rate")
+    notices = [item for item in changes if item.get("date") == "2026-11-22" and item.get("deal") == "fal-flux3-40"]
+    if len(notices) != 1 or "$0.102 per second at 720p" not in notices[0].get("text", "") or "no clock time" not in notices[0].get("text", ""):
+        raise SystemExit("changes log missing the fal-flux3-40 notice")
+    if "UTC" in notices[0].get("text", "") or "Caracas" in notices[0].get("text", ""):
+        raise SystemExit("the changes notice should not put a zone on December 7")
+    deals_page = os.path.join(ROOT, "dist", "deals", "index.html")
+    home_page = os.path.join(ROOT, "dist", "index.html")
+    bf_page = os.path.join(ROOT, "dist", "deals", "black-friday", "index.html")
+    changes_page = os.path.join(ROOT, "dist", "changes", "index.html")
+    if not all(os.path.isfile(path) for path in (deals_page, home_page, bf_page, changes_page)):
+        raise SystemExit("build the site before checking the flux deal pages")
+    deals_html = open(deals_page, encoding="utf-8").read()
+    live_html, _, archive_html = deals_html.partition('id="archive"')
+    if 'id="fal-flux3-40"' not in live_html or "FLUX 3 Max 40% off until December 7" not in live_html:
+        raise SystemExit("live deals page is missing fal-flux3-40")
+    if 'id="fal-flux3-50"' in live_html or 'id="fal-flux3-50"' not in archive_html:
+        raise SystemExit("fal-flux3-50 should be in past deals, not the live list")
+    if "$0.102 per second" not in live_html or "capped at 720p" not in live_html:
+        raise SystemExit("live fal-flux3-40 card is missing the 720p rate")
+    if "pricingInfoOverride" not in archive_html and "pricingInfoOverride" not in live_html:
+        raise SystemExit("deal notes should record the leftover pricingInfoOverride script")
+    home_html = open(home_page, encoding="utf-8").read()
+    start = home_html.find('id="ending"')
+    end = home_html.find("</section>", start) if start >= 0 else -1
+    if start < 0 or end < 0:
+        raise SystemExit("homepage is missing the deals ending this week section")
+    ending = home_html[start:end]
+    if "fal-flux3-50" in ending or "50% off until November 21" in ending:
+        raise SystemExit("homepage ending strip still shows the ended 50% FLUX deal")
+    if "fal-flux3-40" in ending:
+        raise SystemExit("December 7 is outside the 7-day homepage strip")
+    bf_html = open(bf_page, encoding="utf-8").read()
+    other = bf_html.split("Other live deals with an end date", 1)[-1].split("<h2>", 1)[0]
+    if 'href="/deals/#fal-flux3-40"' not in other or "2026-12-07" not in other:
+        raise SystemExit("Black Friday table is missing fal-flux3-40")
+    if "fal-flux3-50" in other:
+        raise SystemExit("Black Friday live table still lists fal-flux3-50")
+    changes_html = open(changes_page, encoding="utf-8").read()
+    if "FLUX 3 Max 40% off until December 7" not in changes_html or "ended 2026-11-21" not in changes_html:
+        raise SystemExit("changes page is missing the FLUX 3 Max update")
     # Blended 12-month price for a first-N-months code.
     close(deals.blended_price(50, 100, 3), 87.5)
     synthetic = {

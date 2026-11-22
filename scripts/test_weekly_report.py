@@ -171,7 +171,12 @@ def main():
         "promo_started:deal:hf-seedance-unlimited-7d:2026-10-30",
         "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
-    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end, krea_end, wan_api_end} | nov15_ends | {"promo_ended:deal:krea-bf-seedance-75:2026-11-19"}
+    flux50_end = "promo_ended:deal:fal-flux3-50:2026-11-21"
+    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end, krea_end, wan_api_end} | nov15_ends | {"promo_ended:deal:krea-bf-seedance-75:2026-11-19", flux50_end}
+    flux50 = next(event for event in log if event["id"] == flux50_end)
+    assert flux50["date"] == "2026-11-22" and flux50["ended"] == "2026-11-21"
+    assert flux50["end_is_estimate"] is False and flux50["checked"] == "2026-11-22"
+    assert flux50["deal_id"] == "fal-flux3-50" and flux50["vendor"] == "fal"
     flux = next(event for event in log if event["id"] == flux_end)
     assert flux["date"] == "2026-11-08" and flux["ended"] == "2026-11-07"
     assert flux["end_is_estimate"] is False and flux["checked"] == "2026-11-08"
