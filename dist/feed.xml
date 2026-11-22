@@ -5,7 +5,31 @@
     <title>VidFare</title>
     <link>https://vidfare.com/</link>
     <description>Price changes, weekly reports, and live deals.</description>
-    <lastBuildDate>Fri, 20 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 22 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>FLUX 3 Max 40% off until December 7</title>
+      <link>https://vidfare.com/deals/#fal-flux3-40</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#fal-flux3-40</guid>
+      <pubDate>Sun, 22 Nov 2026 00:00:00 GMT</pubDate>
+      <description>FLUX 3 Max is 40% off until December 7 Ends 2026-12-07.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>FLUX 3 Max 40% off until December 7 (fal-flux3-40): $0.102 per second at 720p, pay-per-use, no plan tier, list $0.17 per second at 720p. Text-to-video and image-to-video are the same price. Audio is not stated as a separate rate; the page says audio generation is on by default. The page gives December 7 as a date only, with no clock time and no time zone. Checked Nov 22, 2026, 3:21 AM ET (12:21 AM PT).</title>
+      <link>https://vidfare.com/changes/#change-7ad77833d0b94ade</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-7ad77833d0b94ade</guid>
+      <pubDate>Sun, 22 Nov 2026 00:00:00 GMT</pubDate>
+      <description>FLUX 3 Max 40% off until December 7 (fal-flux3-40): $0.102 per second at 720p, pay-per-use, no plan tier, list $0.17 per second at 720p. Text-to-video and image-to-video are the same price. Audio is not stated as a separate rate; the page says audio generation is on by default. The page gives December 7 as a date only, with no clock time and no time zone. Checked Nov 22, 2026, 3:21 AM ET (12:21 AM PT).</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>FLUX 3 Max 50% off until November 21 ended 2026-11-21. The ended rate was $0.085 per second at 720p, pay-per-use, no plan tier, list $0.17 per second at 720p, audio not stated as a separate rate.</title>
+      <link>https://vidfare.com/changes/#change-2103a8a0d5d9fb4f</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-2103a8a0d5d9fb4f</guid>
+      <pubDate>Sun, 22 Nov 2026 00:00:00 GMT</pubDate>
+      <description>FLUX 3 Max 50% off until November 21 ended 2026-11-21. The ended rate was $0.085 per second at 720p, pay-per-use, no plan tier, list $0.17 per second at 720p, audio not stated as a separate rate.</description>
+      <category>price change</category>
+    </item>
     <item>
       <title>AI video price changes, week of Nov 16, 2026</title>
       <link>https://vidfare.com/reports/2026-w47/</link>
@@ -13,14 +37,6 @@
       <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
       <description>This report covers Nov 14 to Nov 20, 2026. Counted changes: 3 per-second price changes, 0 promos started, and 13 promos ended.</description>
       <category>report</category>
-    </item>
-    <item>
-      <title>Black Friday: Krea yearly plans 25% off, Pro $28 to $21/mo</title>
-      <link>https://vidfare.com/deals/#krea-yearly-40</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#krea-yearly-40</guid>
-      <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Krea's page data: yearly amounts Basic $63, Pro $252, Max $504 with coupon S7vd5tcX; without the coupon $84, $336 and $672; promo phase "black-friday", deadline 1795334400000 (Nov 22, 2026, 3:00 AM ET (12:00 AM PT)). Ends 2026-11-21.</description>
-      <category>deal</category>
     </item>
     <item>
       <title>MiniMax Hailuo / H3 on Krea (MiniMax H3 Max, 480p): $0.04545 → $0.04861/s</title>
@@ -725,14 +741,6 @@
       <pubDate>Wed, 11 Nov 2026 00:00:00 GMT</pubDate>
       <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.235 → $0.175/s</description>
       <category>price change</category>
-    </item>
-    <item>
-      <title>FLUX 3 Max 50% off until November 21</title>
-      <link>https://vidfare.com/deals/#fal-flux3-50</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#fal-flux3-50</guid>
-      <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
-      <description>FLUX 3 Max is 50% off until November 21 Ends 2026-11-21.</description>
-      <category>deal</category>
     </item>
     <item>
       <title>FLUX 3 Max 75% off until November 7 ended 2026-11-07.</title>

@@ -13,6 +13,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import compare_pages as cp
+import timefmt
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
@@ -105,6 +106,8 @@ check(cp.run_text("2026-11-19T08:00:44", "2026-11-20") == "Nov 20, 2026", "old r
 # ---------- built pages ----------
 db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 today = db["last_full_check"]
+# Deal overlays follow the site build date, which can be a day past the catalog check.
+deal_today = timefmt.us_today().isoformat()
 _deals = json.load(open(os.path.join(ROOT, "data", "deals.json")))
 _deals = _deals["deals"] if isinstance(_deals, dict) else _deals
 
@@ -117,9 +120,9 @@ def is_sale(r):
     for d in _deals:
         if d.get("status") != "live" or d.get("type") != "plan_sale" or d.get("math") != "plan_price":
             continue
-        if (d.get("conditions") or {}).get("standing") or (d.get("end") and d["end"] < today):
+        if (d.get("conditions") or {}).get("standing") or (d.get("end") and d["end"] < deal_today):
             continue
-        if d.get("start") and d["start"] > today:
+        if d.get("start") and d["start"] > deal_today:
             continue
         for pr in d.get("price_pairs") or [d]:
             if r.get("plan") and r["plan"] == pr.get("deal_plan_id") and (pr.get("price_after") or 0) < (pr.get("price_before") or 0):

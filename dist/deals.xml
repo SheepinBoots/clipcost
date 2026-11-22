@@ -5,21 +5,7 @@
   <link>https://vidfare.com/deals/</link>
   <atom:link href="https://vidfare.com/deals.xml" rel="self" type="application/rss+xml"/>
   <description>Live AI video deals from vendor pages and official accounts.</description>
-  <lastBuildDate>Sat, 21 Nov 2026 16:08:50 GMT</lastBuildDate>
-  <item>
-    <title>Black Friday: Krea yearly plans 25% off, Pro $28 to $21/mo</title>
-    <link>https://vidfare.com/deals/#krea-yearly-40</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#krea-yearly-40</guid>
-    <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
-    <description>Krea&#x27;s page data: yearly amounts Basic $63, Pro $252, Max $504 with coupon S7vd5tcX; without the coupon $84, $336 and $672; promo phase &quot;black-friday&quot;, deadline 1795334400000 (Nov 22, 2026, 3:00 AM ET (12:00 AM PT)). Ends 2026-11-21.</description>
-  </item>
-  <item>
-    <title>FLUX 3 Max 50% off until November 21</title>
-    <link>https://vidfare.com/deals/#fal-flux3-50</link>
-    <guid isPermaLink="true">https://vidfare.com/deals/#fal-flux3-50</guid>
-    <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
-    <description>FLUX 3 Max is 50% off until November 21 Ends 2026-11-21.</description>
-  </item>
+  <lastBuildDate>Sun, 22 Nov 2026 08:29:32 GMT</lastBuildDate>
   <item>
     <title>Black Friday: Plus annual billing, $59 to $33/mo</title>
     <link>https://vidfare.com/deals/#hf-plus-annual</link>
@@ -89,6 +75,13 @@
     <guid isPermaLink="true">https://vidfare.com/deals/#runway-api-kling4-20</guid>
     <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
     <description>Build with Kling 4.0 on Runway Dev. ... Get 20% off Kling 4 through November 30. Ends 2026-11-30.</description>
+  </item>
+  <item>
+    <title>FLUX 3 Max 40% off until December 7</title>
+    <link>https://vidfare.com/deals/#fal-flux3-40</link>
+    <guid isPermaLink="true">https://vidfare.com/deals/#fal-flux3-40</guid>
+    <pubDate>Sun, 22 Nov 2026 00:00:00 GMT</pubDate>
+    <description>FLUX 3 Max is 40% off until December 7 Ends 2026-12-07.</description>
   </item>
   <item>
     <title>MiniMax H3 Lite and Highspeed 50% off on Replicate until Dec 31</title>

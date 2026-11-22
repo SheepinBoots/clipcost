@@ -15,6 +15,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import platform_pages as pp
+import timefmt
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
@@ -54,7 +55,9 @@ db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 today = db["last_full_check"]
 deals = json.load(open(os.path.join(ROOT, "data", "deals.json")))
 deals = deals["deals"] if isinstance(deals, dict) else deals
-live_deals = {d["id"] for d in deals if d.get("status") == "live" and not (d.get("end") and d["end"] < today)}
+# Sale badges follow the site build date (US Pacific), which can be later than the catalog check.
+deal_today = timefmt.us_today().isoformat()
+live_deals = {d["id"] for d in deals if d.get("status") == "live" and not (d.get("end") and d["end"] < deal_today)}
 
 
 def live(r):
