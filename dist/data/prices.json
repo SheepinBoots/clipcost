@@ -187,7 +187,7 @@
      "expect": 270
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "hf-plus-annual": {
@@ -207,7 +207,7 @@
      "expect": 1200
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "hf-plus-monthly": {
@@ -223,7 +223,7 @@
      "expect": 59
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "hf-ultra-annual": {
@@ -243,7 +243,7 @@
      "expect": 3000
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "hf-ultra-monthly": {
@@ -259,7 +259,7 @@
      "expect": 129
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing"
   },
   "krea-basic-yearly": {
@@ -325,7 +325,7 @@
      "expect": 20000
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing"
   },
   "krea-pro-yearly": {
@@ -388,7 +388,7 @@
      "expect": 240000
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing"
   },
   "mag-premium-plus": {
@@ -409,7 +409,7 @@
      "expect": 600000
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing"
   },
   "mag-pro": {
@@ -430,7 +430,7 @@
      "expect": 1500000
     }
    ],
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing"
   }
  },
@@ -479,7 +479,7 @@
    ],
    "note": "Standard self-serve rate on the model page: 480p $0.0510 per second. The same page states 720p $0.1050 and 1080p $0.2100. Total price = selected rate × output duration in seconds, for clips of 2–30s. The API pricing page lists Wan 3.0 Prime from $0.051/s. The page does not state a discount.",
    "id": "r001",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -545,7 +545,7 @@
    ],
    "note": "Standard self-serve rate on the model page: 720p $0.1050 per second. The same page states 480p $0.0510 and 1080p $0.2100. Total price = selected rate × output duration in seconds, for clips of 2–30s. The page does not state a discount.",
    "id": "r002",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -611,7 +611,7 @@
    ],
    "note": "Standard self-serve rate on the model page: 1080p $0.2100 per second. The same page states 480p $0.0510 and 720p $0.1050. Total price = selected rate × output duration in seconds, for clips of 2–30s. The page does not state a discount.",
    "id": "r003",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -653,7 +653,7 @@
    ],
    "note": "Undiscounted list price; 'from' = cheapest mode.",
    "id": "r004",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://open.higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -703,7 +703,7 @@
    ],
    "note": "Low end of the model page range Wan 3.0 Text to Video $0.0375–$0.15/sec, 480p–1080p, 2–30s. The API pricing page lists Wan 3.0 from $0.038/s. The page does not state a discount.",
    "id": "r005",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -757,7 +757,7 @@
    ],
    "note": "High end of the model page range Wan 3.0 Text to Video $0.0375–$0.15/sec, 480p–1080p, 2–30s. The API pricing page lists Wan 3.0 from $0.038/s and does not restate a 1080p rate. The page does not state a discount.",
    "id": "r006",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://open.higgsfield.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -799,7 +799,7 @@
    ],
    "note": "'From' price; resolution of cheapest mode not stated on the list.",
    "id": "r007",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://open.higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -837,7 +837,7 @@
    ],
    "note": "'From' price; resolution of cheapest mode not stated on the list.",
    "id": "r008",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://open.higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -883,7 +883,7 @@
    ],
    "note": "",
    "id": "r009",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -931,7 +931,7 @@
    ],
    "note": "",
    "id": "r010",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -979,7 +979,7 @@
    ],
    "note": "",
    "id": "r011",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1027,7 +1027,7 @@
    ],
    "note": "",
    "id": "r012",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1075,7 +1075,7 @@
    ],
    "note": "",
    "id": "r013",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1123,7 +1123,7 @@
    ],
    "note": "",
    "id": "r014",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/alibaba/wan-3.0-prime/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1171,7 +1171,7 @@
    ],
    "note": "",
    "id": "r015",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video",
    "variation": {
     "audio": "without",
@@ -1223,7 +1223,7 @@
    ],
    "note": "",
    "id": "r016",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/fal-ai/kling-video/v3/pro/text-to-video",
    "variation": {
     "audio": "with",
@@ -1284,7 +1284,7 @@
    ],
    "note": "fal says 'roughly': billed by tokens (16:9, 24fps).",
    "id": "r017",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -1340,7 +1340,7 @@
    ],
    "note": "fal says 'roughly': billed by tokens.",
    "id": "r018",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -1392,7 +1392,7 @@
    ],
    "note": "fal says 'roughly': billed by tokens.",
    "id": "r019",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/bytedance/seedance-2.5/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1440,7 +1440,7 @@
    ],
    "note": "",
    "id": "r020",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/fal-ai/veo3.1",
    "variation": {
     "audio": "without",
@@ -1486,7 +1486,7 @@
    ],
    "note": "",
    "id": "r021",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/fal-ai/veo3.1",
    "variation": {
     "audio": "with",
@@ -1532,7 +1532,7 @@
    ],
    "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated). 480p list rate (the model page's default tier during the promo is 768p).",
    "id": "r022",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1580,7 +1580,7 @@
    ],
    "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r023",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1632,7 +1632,7 @@
    ],
    "note": "Grok Imagine Video 1.5. The older Grok Imagine Video (v1) is $0.05/s at 480p and is not this model.",
    "id": "r024",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -1680,7 +1680,7 @@
    ],
    "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r179",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1728,7 +1728,7 @@
    ],
    "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r180",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/minimax/h3-max/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1776,7 +1776,7 @@
    ],
    "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r184",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1824,7 +1824,7 @@
    ],
    "note": "Standard rate, in effect since November 16, 2026. The official model page still prints that historical schedule (no clock time is stated).",
    "id": "r185",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/minimax/h3-max-turbo/text-to-video",
    "variation": {
     "audio": "not stated",
@@ -1876,7 +1876,7 @@
    ],
    "note": "Grok Imagine Video 1.5.",
    "id": "r189",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -1928,7 +1928,7 @@
    ],
    "note": "Grok Imagine Video 1.5.",
    "id": "r190",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/xai/grok-imagine-video/v1.5/text-to-video",
    "variation": {
     "audio": "with",
@@ -1980,7 +1980,7 @@
    ],
    "note": "",
    "id": "r025",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://replicate.com/alibaba/wan-3",
    "variation": {
     "audio": "not stated",
@@ -2033,7 +2033,7 @@
    ],
    "note": "",
    "id": "r026",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://replicate.com/alibaba/wan-3",
    "variation": {
     "audio": "not stated",
@@ -2086,7 +2086,7 @@
    ],
    "note": "",
    "id": "r027",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://replicate.com/alibaba/wan-3",
    "variation": {
     "audio": "not stated",
@@ -2131,7 +2131,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r028",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2173,7 +2173,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r029",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2215,7 +2215,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r030",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2257,7 +2257,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r031",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2299,7 +2299,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r032",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2341,7 +2341,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r033",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2383,7 +2383,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r034",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "without",
@@ -2425,7 +2425,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r035",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "with",
@@ -2467,7 +2467,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r036",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "without",
@@ -2509,7 +2509,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r037",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "with",
@@ -2551,7 +2551,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r038",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2605,7 +2605,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r039",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2668,7 +2668,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r040",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2731,7 +2731,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r041",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2782,7 +2782,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r042",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "with",
@@ -2824,7 +2824,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r043",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "without",
@@ -2866,7 +2866,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r044",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "with",
@@ -2908,7 +2908,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r045",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "without",
@@ -2950,7 +2950,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r046",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -2992,7 +2992,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r047",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3046,7 +3046,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r048",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3109,7 +3109,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r049",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3160,7 +3160,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r050",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3202,7 +3202,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r051",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3252,7 +3252,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r052",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3307,7 +3307,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r053",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3362,7 +3362,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r054",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3417,7 +3417,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r055",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3472,7 +3472,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r056",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3527,7 +3527,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r057",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3586,7 +3586,7 @@
    ],
    "note": "Runway credits are $0.01 each.",
    "id": "r058",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -3633,7 +3633,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r059",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "without",
@@ -3671,7 +3671,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r060",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "without",
@@ -3709,7 +3709,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r061",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "without",
@@ -3747,7 +3747,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r062",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "with",
@@ -3785,7 +3785,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r063",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "with",
@@ -3823,7 +3823,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r064",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "with",
@@ -3861,7 +3861,7 @@
    ],
    "note": "Official Kling resource-package rate.",
    "id": "r065",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://kling.ai/document-api/pricing/base/video.md",
    "variation": {
     "audio": "with",
@@ -4141,7 +4141,7 @@
    ],
    "note": "Token-billed; Google states 'approximately $0.10 per second' of 720p. Effective December 3, 2026, requests to gemini-omni-1.1-flash route to gemini-omni-1.2-flash and are billed at 1.2 rates.",
    "id": "r072",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
    "variation": {
     "audio": "not stated",
@@ -4187,7 +4187,7 @@
    ],
    "note": "Token-billed; Google states an effective price of approximately $0.07 per second of 720p ($12.00 per 1M video tokens, 5,792 tokens per second).",
    "id": "r199",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
    "variation": {
     "audio": "not stated",
@@ -4233,7 +4233,7 @@
    ],
    "note": "Token-billed; Google states $0.104/s for 1080p with upsampling at 8,688 tokens/s. Gemini Omni 1.1 Flash has no stated 1080p per-second rate on this page.",
    "id": "r200",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
    "variation": {
     "audio": "not stated",
@@ -4279,7 +4279,7 @@
    ],
    "note": "Token-billed; Google states $0.209/s for 4K with upsampling at 17,376 tokens/s. Gemini Omni 1.1 Flash has no stated 4K per-second rate on this page.",
    "id": "r201",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://ai.google.dev/gemini-api/docs/pricing",
    "variation": {
     "audio": "not stated",
@@ -4321,7 +4321,7 @@
    ],
    "note": "Atlas labels these '(estimated)': billed on actual video tokens.",
    "id": "r073",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.atlascloud.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4365,7 +4365,7 @@
    ],
    "note": "Atlas labels these '(estimated)': billed on actual video tokens.",
    "id": "r074",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.atlascloud.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4409,7 +4409,7 @@
    ],
    "note": "Atlas labels these '(estimated)': billed on actual video tokens.",
    "id": "r075",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.atlascloud.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4449,7 +4449,7 @@
    ],
    "note": "",
    "id": "r076",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.atlascloud.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4489,7 +4489,7 @@
    ],
    "note": "",
    "id": "r077",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.atlascloud.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4519,22 +4519,22 @@
    "resolution": "480p",
    "audio": null,
    "clip_seconds": 5,
-   "credits_per_clip": 7.5,
-   "usd_per_clip": 0.5278,
-   "usd_per_second": 0.10556,
+   "credits_per_clip": 6.25,
+   "usd_per_clip": 0.4398,
+   "usd_per_second": 0.08796,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 7.5 credits/clip (5s) → $0.528/clip → $0.1056/s",
+   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 6.25 credits/clip (5s) → $0.440/clip → $0.0880/s",
    "checks": [
     {
      "needle": "Wan 3.0 Prime 480p {N} credits/5s",
-     "expect": 7.5
+     "expect": 6.25
     }
    ],
    "note": "",
    "id": "r078",
-   "checked": "2026-11-20",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4560,6 +4560,922 @@
    "plan": "hf-plus-annual",
    "plan_name": "Plus (annual)",
    "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 6.25,
+   "usd_per_clip": 0.1718,
+   "usd_per_second": 0.03436,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 6.25 credits/clip (5s) → $0.172/clip → $0.0344/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 480p {N} credits/5s",
+     "expect": 6.25
+    }
+   ],
+   "note": "",
+   "id": "r079",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-plus-monthly",
+   "plan_name": "Plus (monthly)",
+   "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 6.25,
+   "usd_per_clip": 0.3073,
+   "usd_per_second": 0.06146,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 6.25 credits/clip (5s) → $0.307/clip → $0.0615/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 480p {N} credits/5s",
+     "expect": 6.25
+    }
+   ],
+   "note": "",
+   "id": "r080",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-plus-monthly-first"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-ultra-annual",
+   "plan_name": "Ultra (annual)",
+   "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 6.25,
+   "usd_per_clip": 0.1042,
+   "usd_per_second": 0.02084,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 6.25 credits/clip (5s) → $0.104/clip → $0.0208/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 480p {N} credits/5s",
+     "expect": 6.25
+    }
+   ],
+   "note": "",
+   "id": "r081",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-ultra-monthly",
+   "plan_name": "Ultra (monthly)",
+   "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 6.25,
+   "usd_per_clip": 0.2688,
+   "usd_per_second": 0.05376,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 6.25 credits/clip (5s) → $0.269/clip → $0.0538/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 480p {N} credits/5s",
+     "expect": 6.25
+    }
+   ],
+   "note": "",
+   "id": "r082",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-ultra-monthly-first"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-starter",
+   "plan_name": "Starter",
+   "resolution": "720p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 13.75,
+   "usd_per_clip": 0.9676,
+   "usd_per_second": 0.19352,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 13.75 credits/clip (5s) → $0.968/clip → $0.1935/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "expect": 13.75
+    }
+   ],
+   "note": "",
+   "id": "r083",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-plus-annual",
+   "plan_name": "Plus (annual)",
+   "resolution": "720p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 13.75,
+   "usd_per_clip": 0.3781,
+   "usd_per_second": 0.07562,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 13.75 credits/clip (5s) → $0.378/clip → $0.0756/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "expect": 13.75
+    }
+   ],
+   "note": "",
+   "id": "r084",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-plus-monthly",
+   "plan_name": "Plus (monthly)",
+   "resolution": "720p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 13.75,
+   "usd_per_clip": 0.676,
+   "usd_per_second": 0.1352,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 13.75 credits/clip (5s) → $0.676/clip → $0.1352/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "expect": 13.75
+    }
+   ],
+   "note": "",
+   "id": "r085",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-plus-monthly-first"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-ultra-annual",
+   "plan_name": "Ultra (annual)",
+   "resolution": "720p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 13.75,
+   "usd_per_clip": 0.2292,
+   "usd_per_second": 0.04584,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 13.75 credits/clip (5s) → $0.229/clip → $0.0458/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "expect": 13.75
+    }
+   ],
+   "note": "",
+   "id": "r086",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-ultra-monthly",
+   "plan_name": "Ultra (monthly)",
+   "resolution": "720p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 13.75,
+   "usd_per_clip": 0.5912,
+   "usd_per_second": 0.11824,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 13.75 credits/clip (5s) → $0.591/clip → $0.1182/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "expect": 13.75
+    }
+   ],
+   "note": "",
+   "id": "r087",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-ultra-monthly-first"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-starter",
+   "plan_name": "Starter",
+   "resolution": "1080p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 27.5,
+   "usd_per_clip": 1.9352,
+   "usd_per_second": 0.38704,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 27.5 credits/clip (5s) → $1.935/clip → $0.3870/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
+     "expect": 27.5
+    }
+   ],
+   "note": "",
+   "id": "r088",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-plus-annual",
+   "plan_name": "Plus (annual)",
+   "resolution": "1080p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 27.5,
+   "usd_per_clip": 0.7562,
+   "usd_per_second": 0.15124,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 27.5 credits/clip (5s) → $0.756/clip → $0.1512/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
+     "expect": 27.5
+    }
+   ],
+   "note": "",
+   "id": "r089",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-plus-monthly",
+   "plan_name": "Plus (monthly)",
+   "resolution": "1080p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 27.5,
+   "usd_per_clip": 1.3521,
+   "usd_per_second": 0.27042,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 27.5 credits/clip (5s) → $1.352/clip → $0.2704/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
+     "expect": 27.5
+    }
+   ],
+   "note": "",
+   "id": "r090",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-plus-monthly-first"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-ultra-annual",
+   "plan_name": "Ultra (annual)",
+   "resolution": "1080p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 27.5,
+   "usd_per_clip": 0.4583,
+   "usd_per_second": 0.09166,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 27.5 credits/clip (5s) → $0.458/clip → $0.0917/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
+     "expect": 27.5
+    }
+   ],
+   "note": "",
+   "id": "r091",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
+  },
+  {
+   "model": "wan-3-0-prime",
+   "variant": "Wan 3.0 Prime",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-ultra-monthly",
+   "plan_name": "Ultra (monthly)",
+   "resolution": "1080p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 27.5,
+   "usd_per_clip": 1.1825,
+   "usd_per_second": 0.2365,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 27.5 credits/clip (5s) → $1.183/clip → $0.2365/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
+     "expect": 27.5
+    }
+   ],
+   "note": "",
+   "id": "r092",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-ultra-monthly-first"
+   ]
+  },
+  {
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-starter",
+   "plan_name": "Starter",
+   "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 3.75,
+   "usd_per_clip": 0.2639,
+   "usd_per_second": 0.05278,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 3.75 credits/clip (5s) → $0.264/clip → $0.0528/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 480p {N} credits/5s",
+     "expect": 3.75
+    }
+   ],
+   "note": "",
+   "id": "r093",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-plus-annual",
+   "plan_name": "Plus (annual)",
+   "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 3.75,
+   "usd_per_clip": 0.1031,
+   "usd_per_second": 0.02062,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 3.75 credits/clip (5s) → $0.103/clip → $0.0206/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 480p {N} credits/5s",
+     "expect": 3.75
+    }
+   ],
+   "note": "",
+   "id": "r094",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-plus-annual"
+   ]
+  },
+  {
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-plus-monthly",
+   "plan_name": "Plus (monthly)",
+   "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 3.75,
+   "usd_per_clip": 0.1843,
+   "usd_per_second": 0.03686,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 3.75 credits/clip (5s) → $0.184/clip → $0.0369/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 480p {N} credits/5s",
+     "expect": 3.75
+    }
+   ],
+   "note": "",
+   "id": "r095",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-plus-annual",
+    "hf-plus-monthly-first"
+   ]
+  },
+  {
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-ultra-annual",
+   "plan_name": "Ultra (annual)",
+   "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 3.75,
+   "usd_per_clip": 0.0625,
+   "usd_per_second": 0.0125,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 3.75 credits/clip (5s) → $0.062/clip → $0.0125/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 480p {N} credits/5s",
+     "expect": 3.75
+    }
+   ],
+   "note": "",
+   "id": "r096",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-ultra-annual"
+   ]
+  },
+  {
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-ultra-monthly",
+   "plan_name": "Ultra (monthly)",
+   "resolution": "480p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 3.75,
+   "usd_per_clip": 0.1613,
+   "usd_per_second": 0.03226,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 3.75 credits/clip (5s) → $0.161/clip → $0.0323/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 480p {N} credits/5s",
+     "expect": 3.75
+    }
+   ],
+   "note": "",
+   "id": "r097",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   },
+   "deal_ids": [
+    "hf-ultra-annual",
+    "hf-ultra-monthly-first"
+   ]
+  },
+  {
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-starter",
+   "plan_name": "Starter",
+   "resolution": "720p",
+   "audio": null,
+   "clip_seconds": 5,
+   "credits_per_clip": 7.5,
+   "usd_per_clip": 0.5277,
+   "usd_per_second": 0.10554,
+   "status": "verified",
+   "promo_until": null,
+   "source": "hf_plans",
+   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 7.5 credits/clip (5s) → $0.528/clip → $0.1055/s",
+   "checks": [
+    {
+     "needle": "Wan 3.0 720p {N} credits/5s",
+     "expect": 7.5
+    }
+   ],
+   "note": "",
+   "id": "r098",
+   "checked": "2026-11-22",
+   "source_url": "https://higgsfield.ai/pricing",
+   "variation": {
+    "audio": "not stated",
+    "input": "not stated",
+    "duration": {
+     "min_seconds": "not stated",
+     "max_seconds": "not stated",
+     "allowed_seconds": "not stated",
+     "priced_seconds": 5,
+     "rate_by_length": "not stated"
+    },
+    "audio_changes_price": "not stated",
+    "length_changes_price": "not stated",
+    "input_changes_price": "not stated",
+    "modifiers": "not stated"
+   }
+  },
+  {
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
+   "platform": "Higgsfield",
+   "kind": "plan",
+   "plan": "hf-plus-annual",
+   "plan_name": "Plus (annual)",
+   "resolution": "720p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 7.5,
@@ -4571,13 +5487,13 @@
    "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 7.5 credits/clip (5s) → $0.206/clip → $0.0412/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 480p {N} credits/5s",
+     "needle": "Wan 3.0 720p {N} credits/5s",
      "expect": 7.5
     }
    ],
    "note": "",
-   "id": "r079",
-   "checked": "2026-11-20",
+   "id": "r099",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4599,31 +5515,31 @@
    ]
   },
   {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
    "platform": "Higgsfield",
    "kind": "plan",
    "plan": "hf-plus-monthly",
    "plan_name": "Plus (monthly)",
-   "resolution": "480p",
+   "resolution": "720p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 7.5,
    "usd_per_clip": 0.3687,
-   "usd_per_second": 0.07375,
+   "usd_per_second": 0.07374,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
    "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 7.5 credits/clip (5s) → $0.369/clip → $0.0737/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 480p {N} credits/5s",
+     "needle": "Wan 3.0 720p {N} credits/5s",
      "expect": 7.5
     }
    ],
    "note": "",
-   "id": "r080",
-   "checked": "2026-11-20",
+   "id": "r100",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4646,13 +5562,13 @@
    ]
   },
   {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
    "platform": "Higgsfield",
    "kind": "plan",
    "plan": "hf-ultra-annual",
    "plan_name": "Ultra (annual)",
-   "resolution": "480p",
+   "resolution": "720p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 7.5,
@@ -4664,13 +5580,13 @@
    "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 7.5 credits/clip (5s) → $0.125/clip → $0.0250/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 480p {N} credits/5s",
+     "needle": "Wan 3.0 720p {N} credits/5s",
      "expect": 7.5
     }
    ],
    "note": "",
-   "id": "r081",
-   "checked": "2026-11-20",
+   "id": "r101",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4692,13 +5608,13 @@
    ]
   },
   {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
    "platform": "Higgsfield",
    "kind": "plan",
    "plan": "hf-ultra-monthly",
    "plan_name": "Ultra (monthly)",
-   "resolution": "480p",
+   "resolution": "720p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 7.5,
@@ -4707,16 +5623,16 @@
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 7.5 credits/clip (5s) → $0.322/clip → $0.0645/s",
+   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 7.5 credits/clip (5s) → $0.323/clip → $0.0645/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 480p {N} credits/5s",
+     "needle": "Wan 3.0 720p {N} credits/5s",
      "expect": 7.5
     }
    ],
    "note": "",
-   "id": "r082",
-   "checked": "2026-11-20",
+   "id": "r102",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4739,31 +5655,31 @@
    ]
   },
   {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
    "platform": "Higgsfield",
    "kind": "plan",
    "plan": "hf-starter",
    "plan_name": "Starter",
-   "resolution": "720p",
+   "resolution": "1080p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 15,
    "usd_per_clip": 1.0556,
-   "usd_per_second": 0.21111,
+   "usd_per_second": 0.21112,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 15.0 credits/clip (5s) → $1.056/clip → $0.2111/s",
+   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 15 credits/clip (5s) → $1.056/clip → $0.2111/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "needle": "Wan 3.0 1080p {N} credits/5s",
      "expect": 15
     }
    ],
    "note": "",
-   "id": "r083",
-   "checked": "2026-11-20",
+   "id": "r103",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4782,13 +5698,13 @@
    }
   },
   {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
    "platform": "Higgsfield",
    "kind": "plan",
    "plan": "hf-plus-annual",
    "plan_name": "Plus (annual)",
-   "resolution": "720p",
+   "resolution": "1080p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 15,
@@ -4797,16 +5713,16 @@
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 15.0 credits/clip (5s) → $0.412/clip → $0.0825/s",
+   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 15 credits/clip (5s) → $0.412/clip → $0.0825/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "needle": "Wan 3.0 1080p {N} credits/5s",
      "expect": 15
     }
    ],
    "note": "",
-   "id": "r084",
-   "checked": "2026-11-20",
+   "id": "r104",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4828,13 +5744,13 @@
    ]
   },
   {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
    "platform": "Higgsfield",
    "kind": "plan",
    "plan": "hf-plus-monthly",
    "plan_name": "Plus (monthly)",
-   "resolution": "720p",
+   "resolution": "1080p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 15,
@@ -4843,16 +5759,16 @@
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 15.0 credits/clip (5s) → $0.737/clip → $0.1475/s",
+   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 15 credits/clip (5s) → $0.738/clip → $0.1475/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "needle": "Wan 3.0 1080p {N} credits/5s",
      "expect": 15
     }
    ],
    "note": "",
-   "id": "r085",
-   "checked": "2026-11-20",
+   "id": "r105",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4875,13 +5791,13 @@
    ]
   },
   {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
    "platform": "Higgsfield",
    "kind": "plan",
    "plan": "hf-ultra-annual",
    "plan_name": "Ultra (annual)",
-   "resolution": "720p",
+   "resolution": "1080p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 15,
@@ -4890,16 +5806,16 @@
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 15.0 credits/clip (5s) → $0.250/clip → $0.0500/s",
+   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 15 credits/clip (5s) → $0.250/clip → $0.0500/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "needle": "Wan 3.0 1080p {N} credits/5s",
      "expect": 15
     }
    ],
    "note": "",
-   "id": "r086",
-   "checked": "2026-11-20",
+   "id": "r106",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -4921,13 +5837,13 @@
    ]
   },
   {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
+   "model": "wan-3-0",
+   "variant": "Wan 3.0",
    "platform": "Higgsfield",
    "kind": "plan",
    "plan": "hf-ultra-monthly",
    "plan_name": "Ultra (monthly)",
-   "resolution": "720p",
+   "resolution": "1080p",
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 15,
@@ -4936,932 +5852,16 @@
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 15.0 credits/clip (5s) → $0.645/clip → $0.1290/s",
+   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 15 credits/clip (5s) → $0.645/clip → $0.1290/s",
    "checks": [
     {
-     "needle": "Wan 3.0 Prime 720p {N} credits/5s",
+     "needle": "Wan 3.0 1080p {N} credits/5s",
      "expect": 15
     }
    ],
    "note": "",
-   "id": "r087",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-ultra-annual",
-    "hf-ultra-monthly-first"
-   ]
-  },
-  {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-starter",
-   "plan_name": "Starter",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 30,
-   "usd_per_clip": 2.1111,
-   "usd_per_second": 0.42222,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 30.0 credits/clip (5s) → $2.111/clip → $0.4222/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
-     "expect": 30
-    }
-   ],
-   "note": "",
-   "id": "r088",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-plus-annual",
-   "plan_name": "Plus (annual)",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 30,
-   "usd_per_clip": 0.825,
-   "usd_per_second": 0.165,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 30.0 credits/clip (5s) → $0.825/clip → $0.1650/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
-     "expect": 30
-    }
-   ],
-   "note": "",
-   "id": "r089",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-plus-annual"
-   ]
-  },
-  {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-plus-monthly",
-   "plan_name": "Plus (monthly)",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 30,
-   "usd_per_clip": 1.475,
-   "usd_per_second": 0.295,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 30.0 credits/clip (5s) → $1.475/clip → $0.2950/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
-     "expect": 30
-    }
-   ],
-   "note": "",
-   "id": "r090",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-plus-annual",
-    "hf-plus-monthly-first"
-   ]
-  },
-  {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-ultra-annual",
-   "plan_name": "Ultra (annual)",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 30,
-   "usd_per_clip": 0.5,
-   "usd_per_second": 0.1,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 30.0 credits/clip (5s) → $0.500/clip → $0.1000/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
-     "expect": 30
-    }
-   ],
-   "note": "",
-   "id": "r091",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-ultra-annual"
-   ]
-  },
-  {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-ultra-monthly",
-   "plan_name": "Ultra (monthly)",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 30,
-   "usd_per_clip": 1.29,
-   "usd_per_second": 0.258,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 30.0 credits/clip (5s) → $1.290/clip → $0.2580/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
-     "expect": 30
-    }
-   ],
-   "note": "",
-   "id": "r092",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-ultra-annual",
-    "hf-ultra-monthly-first"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-starter",
-   "plan_name": "Starter",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 5,
-   "usd_per_clip": 0.3519,
-   "usd_per_second": 0.07037,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 5.0 credits/clip (5s) → $0.352/clip → $0.0704/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 480p {N} credits/5s",
-     "expect": 5
-    }
-   ],
-   "note": "",
-   "id": "r093",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-plus-annual",
-   "plan_name": "Plus (annual)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 5,
-   "usd_per_clip": 0.1375,
-   "usd_per_second": 0.0275,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 5.0 credits/clip (5s) → $0.138/clip → $0.0275/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 480p {N} credits/5s",
-     "expect": 5
-    }
-   ],
-   "note": "",
-   "id": "r094",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-plus-annual"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-plus-monthly",
-   "plan_name": "Plus (monthly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 5,
-   "usd_per_clip": 0.2458,
-   "usd_per_second": 0.04917,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 5.0 credits/clip (5s) → $0.246/clip → $0.0492/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 480p {N} credits/5s",
-     "expect": 5
-    }
-   ],
-   "note": "",
-   "id": "r095",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-plus-annual",
-    "hf-plus-monthly-first"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-ultra-annual",
-   "plan_name": "Ultra (annual)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 5,
-   "usd_per_clip": 0.0833,
-   "usd_per_second": 0.01666,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 5.0 credits/clip (5s) → $0.083/clip → $0.0167/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 480p {N} credits/5s",
-     "expect": 5
-    }
-   ],
-   "note": "",
-   "id": "r096",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-ultra-annual"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-ultra-monthly",
-   "plan_name": "Ultra (monthly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 5,
-   "usd_per_clip": 0.215,
-   "usd_per_second": 0.043,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 5.0 credits/clip (5s) → $0.215/clip → $0.0430/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 480p {N} credits/5s",
-     "expect": 5
-    }
-   ],
-   "note": "",
-   "id": "r097",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-ultra-annual",
-    "hf-ultra-monthly-first"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-starter",
-   "plan_name": "Starter",
-   "resolution": "720p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 8.75,
-   "usd_per_clip": 0.6157,
-   "usd_per_second": 0.12315,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 8.8 credits/clip (5s) → $0.616/clip → $0.1231/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 720p {N} credits/5s",
-     "expect": 8.75
-    }
-   ],
-   "note": "",
-   "id": "r098",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-plus-annual",
-   "plan_name": "Plus (annual)",
-   "resolution": "720p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 8.75,
-   "usd_per_clip": 0.2406,
-   "usd_per_second": 0.04812,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 8.8 credits/clip (5s) → $0.241/clip → $0.0481/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 720p {N} credits/5s",
-     "expect": 8.75
-    }
-   ],
-   "note": "",
-   "id": "r099",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-plus-annual"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-plus-monthly",
-   "plan_name": "Plus (monthly)",
-   "resolution": "720p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 8.75,
-   "usd_per_clip": 0.4302,
-   "usd_per_second": 0.08604,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 8.8 credits/clip (5s) → $0.430/clip → $0.0860/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 720p {N} credits/5s",
-     "expect": 8.75
-    }
-   ],
-   "note": "",
-   "id": "r100",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-plus-annual",
-    "hf-plus-monthly-first"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-ultra-annual",
-   "plan_name": "Ultra (annual)",
-   "resolution": "720p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 8.75,
-   "usd_per_clip": 0.1458,
-   "usd_per_second": 0.02916,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 8.8 credits/clip (5s) → $0.146/clip → $0.0292/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 720p {N} credits/5s",
-     "expect": 8.75
-    }
-   ],
-   "note": "",
-   "id": "r101",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-ultra-annual"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-ultra-monthly",
-   "plan_name": "Ultra (monthly)",
-   "resolution": "720p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 8.75,
-   "usd_per_clip": 0.3762,
-   "usd_per_second": 0.07525,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 8.8 credits/clip (5s) → $0.376/clip → $0.0752/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 720p {N} credits/5s",
-     "expect": 8.75
-    }
-   ],
-   "note": "",
-   "id": "r102",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-ultra-annual",
-    "hf-ultra-monthly-first"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-starter",
-   "plan_name": "Starter",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 17.5,
-   "usd_per_clip": 1.2315,
-   "usd_per_second": 0.2463,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$19/mo ÷ 270 credits = $0.07037/credit; 17.5 credits/clip (5s) → $1.231/clip → $0.2463/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 1080p {N} credits/5s",
-     "expect": 17.5
-    }
-   ],
-   "note": "",
-   "id": "r103",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-plus-annual",
-   "plan_name": "Plus (annual)",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 17.5,
-   "usd_per_clip": 0.4813,
-   "usd_per_second": 0.09626,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$33/mo ÷ 1,200 credits = $0.02750/credit; 17.5 credits/clip (5s) → $0.481/clip → $0.0963/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 1080p {N} credits/5s",
-     "expect": 17.5
-    }
-   ],
-   "note": "",
-   "id": "r104",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-plus-annual"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-plus-monthly",
-   "plan_name": "Plus (monthly)",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 17.5,
-   "usd_per_clip": 0.8604,
-   "usd_per_second": 0.17208,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$59/mo ÷ 1,200 credits = $0.04917/credit; 17.5 credits/clip (5s) → $0.860/clip → $0.1721/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 1080p {N} credits/5s",
-     "expect": 17.5
-    }
-   ],
-   "note": "",
-   "id": "r105",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-plus-annual",
-    "hf-plus-monthly-first"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-ultra-annual",
-   "plan_name": "Ultra (annual)",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 17.5,
-   "usd_per_clip": 0.2917,
-   "usd_per_second": 0.05834,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$50/mo ÷ 3,000 credits = $0.01667/credit; 17.5 credits/clip (5s) → $0.292/clip → $0.0583/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 1080p {N} credits/5s",
-     "expect": 17.5
-    }
-   ],
-   "note": "",
-   "id": "r106",
-   "checked": "2026-11-20",
-   "source_url": "https://higgsfield.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   },
-   "deal_ids": [
-    "hf-ultra-annual"
-   ]
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Higgsfield",
-   "kind": "plan",
-   "plan": "hf-ultra-monthly",
-   "plan_name": "Ultra (monthly)",
-   "resolution": "1080p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 17.5,
-   "usd_per_clip": 0.7525,
-   "usd_per_second": 0.1505,
-   "status": "verified",
-   "promo_until": null,
-   "source": "hf_plans",
-   "math": "$129/mo ÷ 3,000 credits = $0.04300/credit; 17.5 credits/clip (5s) → $0.752/clip → $0.1505/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 1080p {N} credits/5s",
-     "expect": 17.5
-    }
-   ],
-   "note": "",
    "id": "r107",
-   "checked": "2026-11-20",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5908,7 +5908,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r108",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5951,7 +5951,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r109",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -5997,7 +5997,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r110",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6044,7 +6044,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r111",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6090,7 +6090,7 @@
    ],
    "note": "Higgsfield labels it ~7 credits/5s; its yearly counts (Plus 1,920 clips for 14,400 credits) imply 7.5 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r112",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6137,7 +6137,7 @@
    ],
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r113",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6183,7 +6183,7 @@
    ],
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r114",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6230,7 +6230,7 @@
    ],
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r115",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6276,7 +6276,7 @@
    ],
    "note": "Higgsfield labels it ~8 credits/5s; its yearly counts (Plus 1,645 clips for 14,400 credits) imply 8.75 credits, used here. Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r116",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6323,7 +6323,7 @@
    ],
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r117",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6369,7 +6369,7 @@
    ],
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r118",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6416,7 +6416,7 @@
    ],
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r119",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6462,7 +6462,7 @@
    ],
    "note": "Plus/Ultra also include 7-day unlimited Kling 3.0 (per pricing page); unused credits do not roll over per plan terms.",
    "id": "r120",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6509,7 +6509,7 @@
    ],
    "note": "",
    "id": "r121",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6555,7 +6555,7 @@
    ],
    "note": "",
    "id": "r122",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6602,7 +6602,7 @@
    ],
    "note": "",
    "id": "r123",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6648,7 +6648,7 @@
    ],
    "note": "",
    "id": "r124",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6695,7 +6695,7 @@
    ],
    "note": "",
    "id": "r125",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6741,7 +6741,7 @@
    ],
    "note": "",
    "id": "r126",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6788,7 +6788,7 @@
    ],
    "note": "",
    "id": "r127",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6834,7 +6834,7 @@
    ],
    "note": "",
    "id": "r128",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6881,7 +6881,7 @@
    ],
    "note": "",
    "id": "r129",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6924,7 +6924,7 @@
    ],
    "note": "",
    "id": "r130",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -6970,7 +6970,7 @@
    ],
    "note": "",
    "id": "r131",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7017,7 +7017,7 @@
    ],
    "note": "",
    "id": "r132",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7063,7 +7063,7 @@
    ],
    "note": "",
    "id": "r133",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://higgsfield.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7153,7 +7153,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r135",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7282,7 +7282,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r138",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7411,7 +7411,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r141",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "without",
@@ -7540,7 +7540,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r144",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "without",
@@ -7669,7 +7669,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r147",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7798,7 +7798,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r150",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -7927,7 +7927,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r153",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -8056,7 +8056,7 @@
    ],
    "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
    "id": "r156",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.krea.ai/pricing",
    "variation": {
     "audio": "not stated",
@@ -8142,7 +8142,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r158",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8185,7 +8185,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r159",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8228,7 +8228,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r160",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8271,7 +8271,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r161",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8314,7 +8314,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r162",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8357,7 +8357,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r163",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8400,7 +8400,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r164",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8443,7 +8443,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r165",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8486,7 +8486,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r166",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8529,7 +8529,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r167",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8572,7 +8572,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r168",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8615,7 +8615,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r169",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8658,7 +8658,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r170",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "with",
@@ -8701,7 +8701,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r171",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "with",
@@ -8744,7 +8744,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r172",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "with",
@@ -8787,7 +8787,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r173",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8830,7 +8830,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r174",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8873,7 +8873,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r175",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8916,7 +8916,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r176",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -8959,7 +8959,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r177",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -9002,7 +9002,7 @@
    ],
    "note": "Annual billing; credits granted per year, valid 1 year.",
    "id": "r178",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://www.magnific.com/pricing",
    "variation": {
     "audio": "not stated",
@@ -9048,7 +9048,7 @@
    ],
    "note": "fal states the 4K rate in the same sentence as the 720p/1080p rates.",
    "id": "r197",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/fal-ai/veo3.1",
    "variation": {
     "audio": "without",
@@ -9098,7 +9098,7 @@
    ],
    "note": "fal states the 4K rate in the same sentence as the 720p/1080p rates.",
    "id": "r198",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://fal.ai/models/fal-ai/veo3.1",
    "variation": {
     "audio": "with",
@@ -9144,7 +9144,7 @@
    ],
    "note": "Official billed-by-property rate: model variant is non_video_in (no video input). The vendor page lists $0.1028 per second of output video.",
    "id": "r202",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://replicate.com/bytedance/seedance-2.5",
    "variation": {
     "audio": "not stated",
@@ -9190,7 +9190,7 @@
    ],
    "note": "Official billed-by-property rate: model variant is video_in (with video input). The vendor page lists $0.4304 per second of output video.",
    "id": "r203",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://replicate.com/bytedance/seedance-2.5",
    "variation": {
     "audio": "not stated",
@@ -9236,7 +9236,7 @@
    ],
    "note": "Official billed-by-property rate: model variant is non_video_in (no video input). The vendor page lists $0.2312 per second of output video.",
    "id": "r204",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://replicate.com/bytedance/seedance-2.5",
    "variation": {
     "audio": "not stated",
@@ -9282,7 +9282,7 @@
    ],
    "note": "Official billed-by-property rate: model variant is video_in (with video input). The vendor page lists $0.9676 per second of output video.",
    "id": "r205",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://replicate.com/bytedance/seedance-2.5",
    "variation": {
     "audio": "not stated",
@@ -9324,7 +9324,7 @@
    ],
    "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
    "id": "r206",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9374,7 +9374,7 @@
    ],
    "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
    "id": "r207",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9424,7 +9424,7 @@
    ],
    "note": "Official grok-imagine-video-1.5 list price. Duration 1 to 15 seconds. Image input is $0.01 per image. Preset-voice audio input is free. Native 1080p.",
    "id": "r208",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9474,7 +9474,7 @@
    ],
    "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image.",
    "id": "r209",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9524,7 +9524,7 @@
    ],
    "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image.",
    "id": "r210",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9574,7 +9574,7 @@
    ],
    "note": "Official grok-imagine-video-1.5-lite list price. Duration 1 to 15 seconds. Image input is $0.01 per image. 1080p is upscaled from 720p.",
    "id": "r211",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.x.ai/developers/pricing",
    "variation": {
     "audio": "not stated",
@@ -9628,7 +9628,7 @@
    ],
    "note": "Runway credits are $0.01 each. Lite 1080p is 14 credits per second. An image-to-video start frame adds 1 credit.",
    "id": "r212",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "source_url": "https://docs.dev.runwayml.com/guides/pricing/",
    "variation": {
     "audio": "not stated",
@@ -9682,7 +9682,7 @@
    "reason": "official API page lists per-second rates, but input video changes the billed duration, so no single $/s is in the table"
   }
  ],
- "last_full_check": "2026-11-21",
+ "last_full_check": "2026-11-22",
  "variation_schema": {
   "audio": "with, without, or not stated. A separate price for each is a separate row.",
   "input": "not stated, or a list of t2v, i2v, ref2v, v2v, extend, lip-sync when the page names that mode for this price.",
@@ -9719,7 +9719,7 @@
       "expect": 200
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://one.google.com/about/google-ai-plans/"
    },
    "gflow-pro": {
@@ -9740,7 +9740,7 @@
       "expect": 1000
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://one.google.com/about/google-ai-plans/"
    },
    "gflow-pro-annual": {
@@ -9761,7 +9761,7 @@
       "expect": 1000
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "usd_year": 199.99,
     "credits_note": "Google states Flow credits per month for Pro. The $199.99 yearly price is divided by 12."
@@ -9784,7 +9784,7 @@
       "expect": 10000
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "help_name": "Google AI Ultra $100"
    },
@@ -9806,7 +9806,7 @@
       "expect": 25000
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "help_name": "Google AI Ultra $200"
    }
@@ -9815,7 +9815,7 @@
    "credits_day": 50,
    "source": "gflow_credits",
    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "checks": [
     {
      "needle": "With or without a subscription, you receive {N} Google Flow credits per day",
@@ -9834,7 +9834,7 @@
   "plan_credits_check": {
    "source": "gflow_credits",
    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-   "checked": "2026-11-21",
+   "checked": "2026-11-22",
    "checks": [
     {
      "needle": "Google AI Plus subscribers receive an extra {N} Google Flow credits each month",
@@ -9885,7 +9885,7 @@
       "phrase": true
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en"
    },
    {
@@ -9909,7 +9909,7 @@
       "expect": 0
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en"
    },
    {
@@ -9938,7 +9938,7 @@
       "expect": 10
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Google's table gives no resolution for Veo 3.1 Fast."
@@ -9962,7 +9962,7 @@
       "expect": 100
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Google's table gives no resolution for Veo 3.1 Quality."
@@ -9989,7 +9989,7 @@
       "expect": 2
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "credits_per_second": {
      "up_to_10s": 1,
@@ -10019,7 +10019,7 @@
       "expect": 6
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "credits_per_second": {
      "up_to_10s": 3,
@@ -10064,7 +10064,7 @@
       "expect": 15
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Does not include edits to uploaded and generated videos."
@@ -10106,7 +10106,7 @@
       "expect": 7
      }
     ],
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Does not include edits to uploaded and generated videos."
@@ -10120,7 +10120,7 @@
     "quote": "On December 5, 2026, Veo 3.1 Fast, Veo 3.1 Quality, and Omni Flash 1.1 will be retired. Until then, you can generate with these models at standard credit rates while transitioning your workflows to Omni Flash 1.2 or Veo 3.1 Lite.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "checks": [
      {
       "needle": "On December 5, 2026, Veo 3.1 Fast, Veo 3.1 Quality, and Omni Flash 1.1 will be retired. Until then, you can generate with these models at standard credit rates while transitioning your workflows to Omni Flash 1.2 or Veo 3.1 Lite.",
@@ -10134,7 +10134,7 @@
     "quote": "On November 5, 2026, Veo Extend was retired. To extend a video, you must be a Google AI Plus, Pro, or Ultra subscriber and use Omni Flash 1.2.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "checks": [
      {
       "needle": "On November 5, 2026, Veo Extend was retired. To extend a video, you must be a Google AI Plus, Pro, or Ultra subscriber and use Omni Flash 1.2.",
@@ -10147,7 +10147,7 @@
     "quote": "The Google Flow/AI credit costs below are per generation, not per request. Some product features will create multiple generations per request. For example, in Google Flow, you can make a single request that may generate 2 videos.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "checks": [
      {
       "needle": "The Google Flow/AI credit costs below are per generation, not per request. Some product features will create multiple generations per request. For example, in Google Flow, you can make a single request that may generate 2 videos.",
@@ -10160,7 +10160,7 @@
     "quote": "Google Flow credits for your Google AI Plus, Pro, or Ultra plan refresh at the start of your billing cycle. Unused monthly Google Flow credits do not roll over to the next month.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "checks": [
      {
       "needle": "Google Flow credits for your Google AI Plus, Pro, or Ultra plan refresh at the start of your billing cycle. Unused monthly Google Flow credits do not roll over to the next month.",
@@ -10173,7 +10173,7 @@
     "quote": "Your daily credit refresh is triggered by your first generation. For example, if you use your Google Flow credits for the first time on August 12, your next 50 Google Flow credits will become available on August 13. If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "checks": [
      {
       "needle": "Your daily credit refresh is triggered by your first generation. For example, if you use your Google Flow credits for the first time on August 12, your next 50 Google Flow credits will become available on August 13. If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over.",
@@ -10186,7 +10186,7 @@
     "quote": "During peak hours, roughly 2 PM to 5 PM UTC, you may not be able to generate videos without a subscription.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "checks": [
      {
       "needle": "During peak hours, roughly 2 PM to 5 PM UTC, you may not be able to generate videos without a subscription.",
@@ -10199,7 +10199,7 @@
     "quote": "Limits are subject to change at any time. To find the latest costs, at the top right of your prompt box, click Settings.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "checks": [
      {
       "needle": "Limits are subject to change at any time. To find the latest costs, at the top right of your prompt box, click",
@@ -10212,7 +10212,7 @@
     "quote": "In supported regions (except Japan), Plus, Pro, and Ultra subscribers can purchase AI credits.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-21",
+    "checked": "2026-11-22",
     "checks": [
      {
       "needle": "In supported regions (except Japan), Plus, Pro, and Ultra subscribers can purchase AI credits.",

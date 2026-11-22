@@ -91,8 +91,8 @@ def main():
         raise SystemExit("hf-plus-annual should be live through Nov 22 and archived after that date")
     plus = next(r for r in db["rows"] if r["id"] == "r080")
     adj = deals.adjustment(plus_deal, plus, plans)
-    close(adj["usd"], 33 / 1200 * 7.5 / 5)
-    close(adj["usd"], 0.04125)
+    close(adj["usd"], 33 / 1200 * 6.25 / 5)
+    close(adj["usd"], 0.034375)
     # Krea's Black Friday yearly coupon: the yearly row is the $21 sale price against the $28 regular
     # yearly price, and the monthly row is not touched by the deal.
     kdeal = by_id(live, "krea-yearly-40")
@@ -203,9 +203,9 @@ def main():
                        "new_users_only": True, "max_resolution": None, "web_only": False},
     }
     adj = deals.adjustment(synthetic, plus, plans)
-    close(adj["usd"], 29.5 / 1200 * 7.5 / 5)
+    close(adj["usd"], 29.5 / 1200 * 6.25 / 5)
     blended = deals.blended_price(29.5, 59, 3)
-    close(adj["blended_usd"], blended / 1200 * 7.5 / 5)
+    close(adj["blended_usd"], blended / 1200 * 6.25 / 5)
     # Bonus credits: price / (credits + bonus) * credits per second.
     bonus = {
         "id": "bonus", "vendor": "Higgsfield", "type": "bonus_credits", "math": "bonus",
@@ -214,7 +214,7 @@ def main():
     }
     # Force a match via models + plan name.
     adj = deals.adjustment(bonus, plus, plans)
-    close(adj["usd"], 59 / (1200 + 300) * 7.5 / 5)
+    close(adj["usd"], 59 / (1200 + 300) * 6.25 / 5)
     # Unlimited is break-even seconds, never $0. The Wan window is archived after the page check.
     starter = next(r for r in db["rows"] if r["id"] == "r078")
     wan_un = next(d for d in doc["deals"] if d["id"] == "hf-wan3-unlimited-7d")

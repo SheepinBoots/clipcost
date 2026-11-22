@@ -80,8 +80,8 @@ def main():
     starter = got["costs"][1]["priced"]
     if len(starter) != 1:
         raise SystemExit(f"hf-starter 5s 480p should price one row, got {len(starter)}")
-    rate = (19 / 270) * 5 / 5
-    clip = (19 / 270) * 5
+    rate = (19 / 270) * 3.75 / 5
+    clip = (19 / 270) * 3.75
     if abs(starter[0]["usd_per_second"] - rate) > 1e-12 or abs(starter[0]["total_usd"] - clip) > 1e-12:
         raise SystemExit(f"starter clip cost does not match the calculator formula: {starter[0]}")
     missing = got["costs"][2]
