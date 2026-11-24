@@ -33,7 +33,7 @@ GROK_APP = "https://apps.apple.com/us/app/id6670324846"
 META_AI = "https://ai.meta.com/meta-ai/"
 AA_T2V = "https://artificialanalysis.ai/video/leaderboard/text-to-video"
 
-CATALOG_PAID = ("r096", "r209", "r146", "r023", "r025", "r024")
+CATALOG_PAID = ("r096", "r209", "r127", "r023", "r025", "r024")
 
 
 def _src(g, url, text="source"):
@@ -258,10 +258,10 @@ def render(g):
         "Billed per second of output, for 1 to 15 seconds, so no credits go unused. Retries are billed too.",
     ))
     paid_bits.append(catalog_cells(
-        "r146",
-        "Krea plan · Basic (yearly), $5 a month for 5,000 units",
-        "Veo 3.1 Lite, 4-second clip. Input type not stated.",
-        "Assumes every unit you pay for is used. Krea publishes approximate clip counts, so units per clip are derived.",
+        "r127",
+        "Higgsfield plan · Ultra (annual)",
+        "Veo 3.1 Fast, 4-second clip at 720p. Input type not stated.",
+        "Assumes every credit you pay for is used. About 16 credits per 4-second clip, from Higgsfield’s pricing page.",
     ))
 
     flow = (g.get("db") or {}).get("flow") or {}

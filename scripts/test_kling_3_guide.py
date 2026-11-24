@@ -81,7 +81,7 @@ def main():
         amts = [float(a) for a in re.findall(r'<span class="amt">\$([0-9.]+)/s</span>', first.group(0))]
         if amts != sorted(amts):
             errors.append(f"per-platform table is not in price order: {amts}")
-        for platform in ("Higgsfield", "Magnific", "Krea", "Higgsfield API", "Kling API", "Runway API", "fal"):
+        for platform in ("Higgsfield", "Magnific", "Higgsfield API", "Kling API", "Runway API", "fal"):
             if platform not in first.group(0):
                 errors.append(f"per-platform table is missing {platform}")
     else:

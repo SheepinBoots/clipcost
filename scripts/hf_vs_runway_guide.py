@@ -27,10 +27,10 @@ VS_KLING = "/guides/higgsfield-vs-kling/"
 FAL_GUIDE = "/guides/fal-ai-pricing/"
 BEST = "/guides/best-ai-video-generator/"
 
-ROWS_OVERALL = ("r096", "r055", "r146", "r047", "r045")
+ROWS_OVERALL = ("r096", "r055", "r127", "r047", "r045")
 ROWS_RUNWAY = ("r047", "r046", "r055", "r034", "r045", "r050", "r039")
-ROWS_KREA_RW = ("r155", "r157", "r156", "r046")
-ROWS_VEO = ("r146", "r127", "r045")
+ROWS_KREA_RW = ("r046", "r047")
+ROWS_VEO = ("r127", "r045")
 
 
 def _src(g, url, text="source"):
@@ -104,6 +104,7 @@ def render(g):
     to_max = src(HELP_UNLIMITED_TO_MAX, "Unlimited plan is switching to Max")
     krea_src = src(KREA_PLANS, "Krea’s pricing page")
     rw_guide = root(RUNWAY_GUIDE)
+    krea_plat = root("/platforms/krea/")
     hf_price = root(HF_PRICING)
     hf_worth = root(HF_WORTH)
     alts = root(ALTS)
@@ -119,8 +120,6 @@ def render(g):
     r055 = row_by("r055")
     r047 = row_by("r047")
     r046 = row_by("r046")
-    r146 = row_by("r146")
-    r155 = row_by("r155")
     r045 = row_by("r045")
     r127 = row_by("r127")
 
@@ -192,36 +191,33 @@ def render(g):
         f"{_ua} a month billed annually for {_uc} credits{_sale}."
     )
     a_krea = (
-        f"Krea’s cheapest catalog estimate for Runway Gen-4.5 is "
-        f"{rate_money(r155['usd_per_second'])}/s on Basic (yearly), using Krea’s published "
-        f"approximate clip count and a 2-second unit. The official Runway API for Gen-4.5 "
-        f"is {rate_money(r046['usd_per_second'])}/s. Those are the same model family, but "
-        f"Krea’s figure is an estimate and does not state resolution or audio. Runway "
-        f"Gen-4 Turbo on the official API, at {rate_money(r047['usd_per_second'])}/s, is a "
-        f"different variant and is cheaper than that Krea Gen-4.5 estimate (resolution not stated; it assumes Krea’s approximate clip count). For Veo 3.1, "
-        f"Krea Lite at {rate_money(r146['usd_per_second'])}/s is below Runway API’s cheapest "
-        f"Veo 3.1 row at {rate_money(r045['usd_per_second'])}/s and below Higgsfield’s "
-        f"cheapest Veo 3.1 Fast row at {rate_money(r127['usd_per_second'])}/s."
+        f"Krea does not publish a per-second or per-model video price or a clip length, "
+        f"so VidFare does not compute a cost per second for Krea, including for Runway Gen-4.5 "
+        f"or Veo 3.1. The official Runway API for Gen-4.5 is {rate_money(r046['usd_per_second'])}/s. "
+        f"Runway Gen-4 Turbo on the official API is {rate_money(r047['usd_per_second'])}/s, a different variant. "
+        f"For Veo 3.1, the cheapest catalog rate is Higgsfield’s Veo 3.1 Fast row at "
+        f"{rate_money(r127['usd_per_second'])}/s on Ultra (annual), at 720p, from a published credit figure. "
+        f"Runway API’s cheapest Veo 3.1 row is {rate_money(r045['usd_per_second'])}/s."
     )
     a_best = (
         "Higgsfield Ultra (annual) is best for the lowest catalog rate we track on Wan 3.0 "
         "and several other non-Runway models, if you use every paid credit. It is not for "
         "a Gen-4 or Gen-4.5 price we can show, because those Higgsfield rows do not exist "
         "in the catalog. Runway API is best for official Gen-4 Turbo or Gen-4.5 rates, and "
-        "for Grok Imagine 1.5 Lite at 480p. It is not the cheapest catalog route for Veo 3.1 "
-        "Lite, where Krea is lower. Krea Basic (yearly) is best for the lowest Gen-4.5 "
-        "estimate we track, and for Veo 3.1 Lite. It is not a substitute for official "
-        "Runway Gen-4 Turbo. No line is given for a Higgsfield Gen-4 rate."
+        "for Grok Imagine 1.5 Lite at 480p. It is not the cheapest catalog route for Veo 3.1, "
+        "where Higgsfield Ultra (annual) Veo 3.1 Fast is lower. Krea is not in the per-second "
+        "ranking, because Krea does not publish a per-second or per-model video price. "
+        "No line is given for a Higgsfield Gen-4 rate."
     )
     a_unknown = (
         f"Confirmed {checked_pt(CHECKED)} on Runway’s public pricing page: Free, Standard, "
         f"Pro, and Max prices and monthly credits, and the 125 one-time Free credits. "
-        f"Confirmed the same day in the catalog: Runway API rates, Krea Gen-4.5 and Veo 3.1 "
-        f"Lite estimates, and Higgsfield’s cheapest Wan 3.0 and Veo 3.1 Fast rows. "
+        f"Confirmed the same day in the catalog: Runway API rates, and Higgsfield’s cheapest "
+        f"Wan 3.0 and Veo 3.1 Fast rows. Krea plan prices are listed on the Krea plans page, not as per-second rates. "
         f"Confirmed {checked_pt(UNLIMITED_CHECKED)} in Runway’s help center: Unlimited is "
         f"a legacy plan not sold to new buyers, and eligible monthly Unlimited plans move "
         f"to Max after November 30, 2026. Unknown: a Higgsfield plan or API rate for "
-        f"Runway Gen-4 or Gen-4.5; resolution and audio on the Krea Gen-4.5 rows; and "
+        f"Runway Gen-4 or Gen-4.5; and "
         f"which models Unlimited Mode covers on Pro or Max at a given moment."
     )
 
@@ -298,8 +294,8 @@ def render(g):
 <p>{e(a_best)}</p>
 <ul>
 <li><b>Higgsfield Ultra (annual).</b> Best for: the lowest catalog rate we track on Wan 3.0 and several other non-Runway models, if you use every paid credit. Not for: a Gen-4 or Gen-4.5 price we can show. {hf_src}.</li>
-<li><b>Runway API.</b> Best for: official Gen-4 Turbo or Gen-4.5 rates, and Grok Imagine 1.5 Lite at 480p. Not for: the lowest Veo 3.1 Lite catalog rate. {rw_api}.</li>
-<li><b>Krea Basic (yearly).</b> Best for: the lowest Gen-4.5 estimate we track, and Veo 3.1 Lite. Not for: replacing official Runway Gen-4 Turbo, which is a cheaper, different variant. {krea_src}.</li>
+<li><b>Runway API.</b> Best for: official Gen-4 Turbo or Gen-4.5 rates, and Grok Imagine 1.5 Lite at 480p. Not for: the lowest catalog Veo 3.1 rate, which is Higgsfield Ultra (annual) Veo 3.1 Fast. {rw_api}.</li>
+<li><b>Krea plans.</b> Best for: Krea’s own plan prices and unit allowances. Not for: a per-second catalog rate — Krea does not publish one, so VidFare does not compute one. {krea_src}. Related: <a href="{e(krea_plat)}">Krea AI video plan prices</a>.</li>
 </ul>
 <p>No line given for a Higgsfield Gen-4 rate, because that row is not in the catalog.</p>
 

@@ -84,7 +84,7 @@ def billing_tier_text(html):
                 lines.append(line)
     return collapse(" ".join(lines)) if lines else ""
 
-KREA_PLANS = {"creator_basic": "Basic", "creator_pro": "Pro"}
+KREA_PLANS = {"free": "Free", "creator_basic": "Basic", "creator_pro": "Pro", "creator_max_2": "Max"}
 
 def krea_plan_text(html):
     """Read Krea's plan prices and units from the SvelteKit data in the page.
@@ -121,7 +121,11 @@ def krea_plan_text(html):
                 lines.append(f"Krea USD {name} yearly without coupon ${fmt(oyr)}/year")
         u = re.search(r'planId:"' + pid + r'",computeUnits:(\d+)', html)
         if u:
-            lines.append(f"Krea USD {name} {int(u.group(1)):,} units / month")
+            period = "day" if pid == "free" else "month"
+            lines.append(f"Krea USD {name} {int(u.group(1)):,} units / {period}")
+        # Only when a USD free amount was present, so a euro-only page stays empty of $.
+        if pid == "free" and mon is not None:
+            lines.append("Krea USD Free $0/month")
     return collapse(" ".join(lines)) if lines else ""
 
 def fetch(src):

@@ -47,7 +47,7 @@ META_AI = "https://www.meta.ai/"
 META_ABOUT = "https://ai.meta.com/meta-ai/"
 
 # Catalog row ids for the cheapest paid step we track (prices.json, last full check 2026-11-14).
-ROW_VEO = "r146"          # Krea Veo 3.1 Lite Basic yearly 720p estimate $0.02222/s
+ROW_VEO = "r127"          # Higgsfield Ultra annual Veo 3.1 Fast 720p estimate $0.06/s
 ROW_KLING = "r111"        # Higgsfield Ultra annual Kling 3.0 720p estimate $0.0325/s
 ROW_WAN = "r096"          # Higgsfield Ultra annual Wan 3.0 480p verified $0.02167/s
 ROW_HAILUO = "r023"       # fal MiniMax H3 Max Turbo 480p standard $0.025/s (r194 promo ended Nov 15)
@@ -171,7 +171,7 @@ def render(g):
     missing = [
         name
         for name, r in (
-            ("r146", veo),
+            ("r127", veo),
             ("r111", kling),
             ("r096", wan),
             ("r023", hailuo),
@@ -479,8 +479,8 @@ def render(g):
         "As soon as you need more clips than the free cap, a commercial license, "
         "or (on most tools except Pika) a watermark-free export, the free tier "
         "stops being a complete substitute. After that, the cheapest paid step "
-        "is often not the vendor’s first consumer plan. In our catalog, a Krea "
-        "yearly estimate for Veo 3.1 Lite at 720p is "
+        "is often not the vendor’s first consumer plan. In our catalog, a Higgsfield "
+        "yearly plan estimate for Veo 3.1 Fast at 720p is "
         f"{g['rate_money'](veo['usd_per_second'])}/s, "
         "a Higgsfield yearly plan estimate for Kling 3.0 at 720p is "
         f"{g['rate_money'](kling['usd_per_second'])}/s, "

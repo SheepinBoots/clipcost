@@ -51,7 +51,7 @@ def main():
         " ET (",
         "Key takeaways",
         "What to do next",
-        "r146",
+        "r127",
         "r111",
         "r209",
         "Last checked 2026-",
@@ -124,8 +124,8 @@ def main():
         errors.append("guides index count text is missing")
 
     aff = "https://higgsfield.ai/pricing?fpr=emmanuel-bbfe0e"
-    if raw.count(aff) != 2:
-        errors.append(f"expected 2 Higgsfield affiliate pricing links, found " + str(raw.count(aff)))
+    if raw.count(aff) != 3:
+        errors.append(f"expected 3 Higgsfield affiliate pricing links, found " + str(raw.count(aff)))
     if 'data-vf-affiliate="1"' not in raw or 'data-vf-vendor="higgsfield"' not in raw:
         errors.append("Higgsfield affiliate link is missing data-vf-affiliate / data-vf-vendor tracking")
     if 'rel="sponsored nofollow noopener"' not in raw:

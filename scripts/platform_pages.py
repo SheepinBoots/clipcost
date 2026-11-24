@@ -25,15 +25,16 @@ PLATFORM_PAGES = [
     {
         "path": "/platforms/krea/",
         "platform": "Krea",
-        "title": "Krea AI Video Prices by Model and Plan",
-        "h1": "Krea AI video prices by model and plan",
-        "description": ("Every Krea video model we track, priced per second and per 10-second clip on each "
-                        "Krea plan, estimated from Krea's compute units. Rebuilt daily."),
+        "title": "Krea AI Video Plan Prices",
+        "h1": "Krea AI video plan prices",
+        "description": ("These are Krea's own plan figures. Krea does not publish a per-second or per-model "
+                        "video price, so VidFare does not compute a cost per second."),
+        "statement": ("These are Krea's own plan figures. Krea does not publish a per-second or per-model "
+                      "video price or a clip length, so VidFare does not compute a cost per second for Krea."),
         "seconds": 10,
-        # Krea's own word for its plan currency.
         "unit": "compute units",
-        "gap_note": ("Krea also sells Basic on monthly billing and a Max plan. Our price data has no rows for "
-                     "them yet, so they are not priced here."),
+        "plan_only": True,
+        "plan_ids": ("krea-free", "krea-basic-yearly", "krea-pro-yearly", "krea-max-yearly"),
     },
     {
         "path": "/platforms/magnific/",
@@ -130,7 +131,153 @@ def vendor_link(vendor, root):
     return "".join(f' · <a class="small" href="{root(p["path"])}">{p["title"]}</a>' for p in hits)
 
 
+def render_plan_only_page(g, page):
+    """A platform page that lists the vendor's own plan prices, with no $/s ranking."""
+    e, root = g["e"], g["root"]
+    TODAY, LAST = g["TODAY"], g["LAST"]
+    plat = page["platform"]
+    statement = page["statement"]
+    plan_ids = page["plan_ids"]
+    plans = g["plans"]
+    missing = [pid for pid in plan_ids if pid not in plans]
+    if missing:
+        raise SystemExit(f"{page['path']} missing plan records: {', '.join(missing)}")
+    plist = [(pid, plans[pid]) for pid in plan_ids]
+    old = min((p.get("checked") or "2000-01-01") for _, p in plist)
+    stale = cp.is_stale([{"checked": old}], TODAY, cp.STALE_DAYS)
+    run = cp.run_text(g.get("CHECK_RUN"), LAST)
+    unit = page["unit"]
+
+    def units_label(p):
+        if p.get("units_label"):
+            return p["units_label"]
+        if p.get("credits_month"):
+            return f"{p['credits_month']:,} {unit} a month"
+        return "not listed"
+
+    def seedance_label(p):
+        n = p.get("seedance_videos")
+        if n is None:
+            return "not listed"
+        return f"about {n:,} Seedance 2.5 videos"
+
+    def price_html(pid, p):
+        deal, live = sale_state(g, p)
+        amount = f"${mo(p['usd_month'])}/mo"
+        if p.get("usd_month") == 0:
+            return f"<b>$0</b>"
+        if p.get("sale") and live:
+            reg = p["sale"]["regular"]["usd_month"]
+            when = e(g["when_label"](deal)) if deal else e(p["sale"]["ends_at"])
+            return (f"<b>{amount}</b> <span class=\"small\">billed yearly, {e(cp.deal_name((deal or {}).get('title') or 'sale'))}, "
+                    f"{when}; <span class=\"regular\">regular ${mo(reg)}/mo billed yearly</span></span>")
+        if p.get("sale"):
+            when = e(g["when_label"](deal) if deal else p["sale"]["ends_at"])
+            return (f"{amount} <span class=\"small\">sale price; the sale was due to end {when}. "
+                    f"This row keeps it until our daily check confirms the regular price on {e(plat)}.</span>")
+        billing = p.get("billing") or ""
+        extra = f' <span class="small">{e(billing)}</span>' if billing and billing != "free" else ""
+        return f"<b>{amount}</b>{extra}"
+
+    trs = ""
+    sale_notes = []
+    card_notes = []
+    for pid, p in plist:
+        deal, live = sale_state(g, p)
+        if p.get("sale") and live and p["sale"].get("note"):
+            sale_notes.append(p["sale"]["note"])
+        if p.get("card_note"):
+            card_notes.append(p["card_note"])
+        trs += (
+            f'<tr><th scope="row">{e(p["plan"])}</th>'
+            f'<td data-label="Price">{price_html(pid, p)}</td>'
+            f'<td data-label="Units">{e(units_label(p))}</td>'
+            f'<td data-label="Krea Seedance 2.5 estimate">{e(seedance_label(p))}</td>'
+            f'<td data-label="Checked" class="small">{e(p.get("checked") or "")}<br>{g["source_link"](p)}</td></tr>'
+        )
+    plan_table = cp._table(
+        "<thead><tr><th scope=\"col\">Plan</th><th scope=\"col\">Price</th><th scope=\"col\">Units</th>"
+        "<th scope=\"col\">Krea's Seedance 2.5 estimate</th><th scope=\"col\">Checked</th></tr></thead>"
+        f"<tbody>{trs}</tbody>",
+        "plat-plans",
+    )
+    lead = (
+        f"{statement} The four lines below are Krea's Free, Basic, Pro, and Max (60,000 units) plans, "
+        f"read from Krea's pricing page. Sale prices are the amounts Krea bills for yearly plans; when the "
+        f"sale ends, the next daily check moves each plan to the regular yearly price only if Krea's page shows it. "
+        f"Prices last checked {run}."
+    )
+    faqs = [
+        ("Does Krea publish a price per second of video?",
+         "No. These are Krea's own plan figures. Krea does not publish a per-second or per-model video price or a clip length, so VidFare does not compute a cost per second for Krea."),
+        ("What do the sale and regular prices mean?",
+         "Yearly Basic, Pro, and Max lines show the billed sale price and the regular yearly price Krea lists without the coupon. The sale end comes from our deals file, which follows the deadline on Krea's page. After that time, the daily check keeps the sale price until Krea's page shows the regular amount."),
+        ("Why doesn't Max's plan card match the billed price?",
+         (plist[-1][1].get("card_note") or "The Max 60,000-unit plan is billed at the yearly amount in Krea's checkout data.")),
+    ]
+    faq_html = g["faq_html"](faqs)
+    note_bits = []
+    for n in card_notes:
+        note_bits.append(f"<p>{e(n)}</p>")
+    for n in sale_notes:
+        if n and n not in card_notes:
+            note_bits.append(f'<p class="small">{e(n)}</p>')
+    notes = f'<h2 id="notes">How to read these figures</h2>\n' + "\n".join(note_bits) if note_bits else ""
+    stale_html = ""
+    if stale:
+        stale_html = (
+            f'<p class="disclose"><b>Stale data:</b> at least one price on this page was last checked '
+            f'{e(cp.day_text(old)) if old else "never"}, more than {cp.STALE_DAYS} days ago. Check {e(plat)} before you buy. '
+            f"This page is hidden from search until the prices are re-checked.</p>"
+        )
+    plans_heading = f'<h2 id="plans">{e(plat)} plans: {len(plist)} lines</h2>'
+    section1 = (
+        f"{plans_heading}\n"
+        f'<p class="small">One line per plan, from Krea\'s pricing page. Units and Seedance 2.5 video counts are Krea\'s own figures, not a VidFare cost per second.</p>\n'
+        f"{plan_table}"
+    )
+    body = f"""<p class="small"><a href="{root("/")}">Prices</a> › Platforms › {e(page["h1"])}</p>
+<h1>{e(page["h1"])}</h1>
+{g["byline_html"]()}
+{stale_html}
+<p class="lead">{e(lead)}</p>
+<p class="small">{e(page["description"])}</p>
+{g["page_sponsor_html"](page["path"])}
+{g["partner_lines_html"](page["path"])}
+{g["news_box_inline"]()}
+{section1}
+{notes}
+<p class="small">Krea also sells monthly billing and other Max unit packs. Those are not priced as extra lines here. See a plan on <a href="{root("/calculator/")}">the credit calculator</a> for the plan price and units only — the calculator does not compute a Krea cost per second.</p>
+{g["data_links_html"](page["path"])}
+{faq_html}
+{g["news_box"]()}"""
+    ld = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": page["h1"],
+        "description": page["description"],
+        "url": g["SITE_URL"] + page["path"],
+        "dateModified": LAST,
+        "about": [{"@type": "Organization", "name": plat}],
+        "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
+        "text": statement,
+    }
+    ld_blocks = [ld, g["guide_faq_ld"](page["path"], faqs)]
+    head = (
+        cp._css(("#plat-plans",))
+        + "<style>#plat-plans tbody th,#plat-plans thead th{white-space:normal;min-width:120px}</style>"
+        + g["ld_join"](*ld_blocks, g["breadcrumb_ld"]([("Prices", "/"), (page["h1"], page["path"])]))
+    )
+    g["page"](page["path"], title_of(page), page["description"], body, "", head,
+              robots="noindex,follow" if stale else "index,follow")
+    if not stale:
+        g["SITEMAP_LASTMOD"][page["path"]] = LAST
+    return {"est": False, "gaps": {}, "path": page["path"], "stale": stale, "oldest": old, "rows": [], "ranked": [],
+            "models": [], "plans": [pid for pid, _ in plist], "cheapest": [], "statement": statement}
+
 def render_page(g, page):
+    if page.get("plan_only"):
+        return render_plan_only_page(g, page)
     e, root, rate_money = g["e"], g["root"], g["rate_money"]
     models, TODAY, LAST = g["models"], g["TODAY"], g["LAST"]
     two = g["_money_places"]
@@ -367,7 +514,14 @@ def llms_lines(g):
     lines = []
     rm = g["rate_money"]
     for page, built in zip(PLATFORM_PAGES, g.get("PLATFORM_PAGES", [])):
-        if built["stale"] or not built["ranked"]:
+        if built["stale"]:
+            continue
+        if page.get("plan_only"):
+            n = len(built.get("plans") or [])
+            lines.append(f"- [{page['title']}]({g['SITE_URL']}{page['path']}): {n} Krea plans, "
+                         f"Krea's own plan prices and unit allowances. VidFare does not compute a cost per second for Krea.")
+            continue
+        if not built["ranked"]:
             continue
         r, reg, _ = built["cheapest"][0]
         plan = cp.plan_short(g["shown_tier"](r))

@@ -26,12 +26,12 @@ FAL_GUIDE = "/guides/fal-ai-pricing/"
 WAN_GUIDE = "/guides/cheapest-wan-3-0/"
 
 # Cheapest catalog row per platform, plus same-model comparisons.
-PLAT_CHEAP = ("r096", "r055", "r209", "r146", "r023", "r178", "r025", "r005", "r076", "r199", "r059")
-WAN_ROWS = ("r096", "r025", "r005", "r009", "r028", "r137")
-PRIME_ROWS = ("r081", "r134", "r001", "r012", "r031")
-VEO_ROWS = ("r146", "r127", "r045", "r020")
-KLING_ROWS = ("r111", "r140", "r007", "r059", "r034", "r015")
-HAILUO_ROWS = ("r132", "r023", "r152", "r178", "r076", "r050")
+PLAT_CHEAP = ("r096", "r055", "r209", "r127", "r023", "r178", "r025", "r005", "r076", "r199", "r059")
+WAN_ROWS = ("r096", "r025", "r005", "r009", "r028")
+PRIME_ROWS = ("r081", "r001", "r012", "r031")
+VEO_ROWS = ("r127", "r045", "r020")
+KLING_ROWS = ("r111", "r007", "r059", "r034", "r015")
+HAILUO_ROWS = ("r132", "r023", "r178", "r076", "r050")
 SEED_ROWS = ("r202", "r008", "r169", "r073", "r039", "r017")
 
 
@@ -57,7 +57,7 @@ def checked_pt(date):
 def blurb(g):
     return (
         "Higgsfield alternatives ranked by cost per second, with the models "
-        "where Krea or Replicate is cheaper, and a short OpenArt comparison."
+        "where another catalog route is cheaper, and a short OpenArt comparison."
     )
 
 
@@ -100,6 +100,7 @@ def render(g):
     vs_kling = root(VS_KLING)
     vs_runway = root(VS_RUNWAY)
     fal_href = root(FAL_GUIDE)
+    krea_plat = root("/platforms/krea/")
     wan_href = root(WAN_GUIDE)
     wan_model = root("/models/wan-3-0/")
     veo_model = root("/models/veo-3-1/")
@@ -109,7 +110,6 @@ def render(g):
     calc_wan = root("/calculator/?model=wan-3-0&seconds=5")
 
     r096 = row_by("r096")
-    r146 = row_by("r146")
     r202 = row_by("r202")
     r127 = row_by("r127")
     r008 = row_by("r008")
@@ -160,9 +160,9 @@ def render(g):
         f"Higgsfield still has the lowest catalog rate we track: "
         f"{rate_money(r096['usd_per_second'])}/s for Wan 3.0 at 480p on Ultra (annual), "
         f"audio not stated, from a credit plan, if you use every credit you pay for. "
-        f"That is not true for every model. Krea’s Basic (yearly) estimate for Veo 3.1 Lite "
-        f"is {rate_money(r146['usd_per_second'])}/s at 720p, under Higgsfield’s cheapest "
-        f"Veo 3.1 Fast row at {rate_money(r127['usd_per_second'])}/s. Replicate’s Seedance 2.5 "
+        f"The cheapest catalog Veo 3.1 rate is Higgsfield’s Veo 3.1 Fast row at "
+        f"{rate_money(r127['usd_per_second'])}/s at 720p on Ultra (annual). "
+        f"Krea does not publish a per-second or per-model video price, so it is not in this ranking. Replicate’s Seedance 2.5 "
         f"rate is {rate_money(r202['usd_per_second'])}/s at 480p with no video input, under "
         f"Higgsfield API’s “from” {rate_money(r008['usd_per_second'])}/s, whose cheapest-mode "
         f"resolution is not stated. Affiliate links never change this price order."
@@ -180,8 +180,8 @@ def render(g):
         "Best-for lines are given only where a catalog row or a vendor page supports them. "
         "Higgsfield Ultra (annual) is best for the lowest catalog rate we track on Wan 3.0, "
         "Wan 3.0 Prime, Kling 3.0, and Hailuo 2.3, if you use every paid credit. It is not "
-        "for Veo 3.1 Lite, where Krea is cheaper, or for Seedance 2.5 on a Higgsfield plan, "
-        "because that plan rate is not in the catalog. Krea Basic (yearly) is best for Veo 3.1 "
+        "for a Krea per-second price, which Krea does not publish, or for Seedance 2.5 on a Higgsfield plan, "
+        "because that plan rate is not in the catalog. Higgsfield Ultra (annual) is also best for Veo 3.1 Fast, "
         "Lite cost in the catalog. Replicate is best for Seedance 2.5 at 480p with no video "
         "input among the rows we can compare. No line is given for OpenArt cost per second, "
         "because credits per clip were not published on the public pricing page we read."
@@ -249,7 +249,7 @@ def render(g):
 <h2>Key takeaways</h2>
 <ul>
 <li><b>Lowest catalog rate is still Higgsfield.</b> Wan 3.0 at 480p on Ultra (annual) is {rate_money(r096['usd_per_second'])}/s, from a credit plan, if you use every paid credit. Audio is not stated. {e(r096['id'])}.</li>
-<li><b>Krea is cheaper for Veo 3.1 Lite.</b> Basic (yearly) estimates {rate_money(r146['usd_per_second'])}/s at 720p, against Higgsfield Veo 3.1 Fast at {rate_money(r127['usd_per_second'])}/s. Both are estimates from published clip or credit figures.</li>
+<li><b>Higgsfield is the cheapest catalog Veo 3.1 rate.</b> Ultra (annual) estimates {rate_money(r127['usd_per_second'])}/s for Veo 3.1 Fast at 720p, from Higgsfield’s published credit figure. Krea does not publish a per-second or per-model video price, so VidFare does not compute one. See <a href="{e(krea_plat)}">Krea AI video plan prices</a>.</li>
 <li><b>Replicate is cheaper for Seedance 2.5 at 480p.</b> {rate_money(r202['usd_per_second'])}/s with no video input, against Higgsfield API’s “from” {rate_money(r008['usd_per_second'])}/s, whose cheapest-mode resolution is not stated.</li>
 <li><b>OpenArt $/s is unknown.</b> Plan prices were verified Nov 17, 2026. Credits per clip are not on the public pricing page, so no per-second figure is shown.</li>
 <li><b>Affiliate links never change this price order.</b></li>
@@ -303,8 +303,8 @@ def render(g):
 <h2>Which option is best for each use?</h2>
 <p>{e(a_best)}</p>
 <ul>
-<li><b>Higgsfield Ultra (annual).</b> Best for: the lowest catalog rate we track on Wan 3.0, Wan 3.0 Prime, Kling 3.0, and Hailuo 2.3, if you use every paid credit. Not for: Veo 3.1 Lite, where Krea is cheaper; Seedance 2.5 on a plan rate we can show; or pay-as-you-go without a monthly plan. {hf_src}. Related: <a href="{e(hf_price)}">Higgsfield pricing</a>.</li>
-<li><b>Krea Basic (yearly).</b> Best for: Veo 3.1 Lite cost in the catalog. Not for: Wan 3.0, where Higgsfield is cheaper. {krea_src}.</li>
+<li><b>Higgsfield Ultra (annual).</b> Best for: the lowest catalog rate we track on Wan 3.0, Wan 3.0 Prime, Kling 3.0, Hailuo 2.3, and Veo 3.1 Fast, if you use every paid credit. Not for: Seedance 2.5 on a plan rate we can show, or pay-as-you-go without a monthly plan. {hf_src}. Related: <a href="{e(hf_price)}">Higgsfield pricing</a>.</li>
+<li><b>Krea plans.</b> Best for: Krea’s own plan prices and unit allowances, including a Free plan with 100 units a day. Not for: a per-second catalog rate — Krea does not publish one, so VidFare does not compute one. {krea_src}. Related: <a href="{e(krea_plat)}">Krea AI video plan prices</a>.</li>
 <li><b>Replicate.</b> Best for: Seedance 2.5 at 480p with no video input, among the rows we can compare. Not for: Wan 3.0, where Higgsfield’s plan rate is lower.</li>
 </ul>
 <p>No line given for OpenArt cost per second, or for a Higgsfield plan rate on Seedance 2.5, Gemini Omni Flash, or Runway Gen-4, because those per-second figures are not in the catalog or were not published on the pages we could verify.</p>

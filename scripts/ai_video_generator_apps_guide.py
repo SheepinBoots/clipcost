@@ -358,7 +358,7 @@ def render(g):
 )}
 </tbody></table></div>"""
 
-    r146 = _row_by_id(g, "r146")
+    r127 = _row_by_id(g, "r127")
     r111 = _row_by_id(g, "r111")
     r209 = _row_by_id(g, "r209")
     r059 = _row_by_id(g, "r059")
@@ -378,20 +378,20 @@ def render(g):
             f"catalog row {e(r['id'])}, checked {e(__import__('timefmt').day_label(r['checked']))}."
         )
 
-    krea_audio = shown_audio(r146)
-    krea_audio_txt = "with audio" if krea_audio == "with" else ("without audio" if krea_audio == "without" else "not stated")
+    veo_audio = shown_audio(r127)
+    veo_audio_txt = "with audio" if veo_audio == "with" else ("without audio" if veo_audio == "without" else "not stated")
 
     paid_bits = [
         (
-            float(r146["usd_per_second"]),
+            float(r127["usd_per_second"]),
             trow(
-                "Krea · Basic (yearly), $5 a month for 5,000 units",
-                "Veo 3.1 Lite, 4-second clip",
-                e(shown_resolution(r146)),
-                e(krea_audio_txt),
-                f"{e(rate_money(r146['usd_per_second']))}/s {e(rate_label(r146))}",
-                "Assumes every unit you pay for is used. Krea publishes approximate clip counts, so units per clip are derived.",
-                cat_source(r146),
+                "Higgsfield · Ultra (annual)",
+                "Veo 3.1 Fast, 4-second clip",
+                e(shown_resolution(r127)),
+                e(veo_audio_txt),
+                f"{e(rate_money(r127['usd_per_second']))}/s {e(rate_label(r127))}",
+                "Assumes every credit you pay for is used. About 16 credits per 4-second clip, from Higgsfield’s pricing page.",
+                cat_source(r127),
             ),
         ),
         (

@@ -74,14 +74,34 @@ def main():
     assert [up.check(text, c)[0] for c in lite["checks"] if not c.get("phrase")] == ["ok", "ok"]
     # Krea's plan cards come in several A/B layouts. The embedded SvelteKit plan data
     # is read instead, and only amounts marked currency="usd" are emitted.
-    krea_html = ('(function(a,b,c,d,e,f,g,h){a.amount=9;a.currency="usd";b.amount=63;b.currency="usd";'
-                 'c.amount=9;c.currency="usd";d.amount=84;d.currency="usd";e.amount=35;e.currency="usd";'
-                 'f.amount=252;f.currency="usd";g.amount=35;g.currency="usd";h.amount=336;h.currency="usd";'
-                 'return {plansAndPrices:{creator_basic:{monthly:a,yearly:b,yearlyDiscountPercent:40,originalMonthly:c,originalYearly:d},'
-                 'creator_pro:{monthly:e,yearly:f,yearlyDiscountPercent:50,originalMonthly:g,originalYearly:h}},'
-                 'planCards:[{planId:"creator_basic",computeUnits:5000,name:"Basic"},{planId:"creator_pro",computeUnits:20000,name:"Pro"}]}}')
+    krea_html = (
+        '(function(a,b,c,d,e,f,g,h,q,m,n,o,p){'
+        'a.amount=0;a.currency="usd";'
+        'b.amount=0;b.currency="usd";'
+        'c.amount=9;c.currency="usd";'
+        'd.amount=63;d.currency="usd";'
+        'e.amount=9;e.currency="usd";'
+        'f.amount=84;f.currency="usd";'
+        'g.amount=35;g.currency="usd";'
+        'h.amount=252;h.currency="usd";'
+        'q.amount=336;q.currency="usd";'
+        'm.amount=105;m.currency="usd";'
+        'n.amount=756;n.currency="usd";'
+        'o.amount=105;o.currency="usd";'
+        'p.amount=1008;p.currency="usd";'
+        'return {plansAndPrices:{'
+        'free:{monthly:a,yearly:b,yearlyDiscountPercent:0,originalMonthly:a,originalYearly:b},'
+        'creator_basic:{monthly:c,yearly:d,yearlyDiscountPercent:40,originalMonthly:e,originalYearly:f},'
+        'creator_pro:{monthly:g,yearly:h,yearlyDiscountPercent:50,originalMonthly:g,originalYearly:q},'
+        'creator_max_2:{monthly:m,yearly:n,yearlyDiscountPercent:70,originalMonthly:o,originalYearly:p}'
+        '},planCards:['
+        '{planId:"free",computeUnits:100,name:"Free"},'
+        '{planId:"creator_basic",computeUnits:5000,name:"Basic"},'
+        '{planId:"creator_pro",computeUnits:20000,name:"Pro"},'
+        '{planId:"creator_max_2",computeUnits:60000,name:"Max 2"}]}})'
+    )
     krea_text = up.krea_plan_text(krea_html)
-    for pid in ("krea-basic-yearly", "krea-pro-monthly", "krea-pro-yearly"):
+    for pid in ("krea-free", "krea-basic-yearly", "krea-pro-monthly", "krea-pro-yearly", "krea-max-yearly"):
         for c in db["plans"][pid]["checks"]:
             if c["needle"].startswith("Krea USD"):
                 assert up.check(krea_text, c)[0] == "ok", (pid, c, krea_text)
@@ -121,7 +141,7 @@ def main():
     finally:
         up.weekly_report.append_event = real_append
     # The Krea yearly plans in the catalog carry a sale block that ends at Krea's own deadline.
-    for pid, month in (("krea-basic-yearly", 7), ("krea-pro-yearly", 28)):
+    for pid, month in (("krea-basic-yearly", 7), ("krea-pro-yearly", 28), ("krea-max-yearly", 84)):
         sale = db["plans"][pid]["sale"]
         assert sale["ends_at"] == "2026-11-26T08:00:00Z" and sale["regular"]["usd_month"] == month
     print("ok")
