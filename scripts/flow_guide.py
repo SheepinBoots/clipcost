@@ -397,7 +397,7 @@ def render(g):
     gotcha_html = (
         "<ul>" + "".join(gotchas) + "</ul>"
         f'<p class="small">Quotes from {help_link("Manage your Google Flow credits")} (Google Flow Help), checked {e(oldest if oldest == updated else updated)}. '
-        "Google’s stated peak hours, 2 PM to 5 PM UTC, are " + FLOW_PEAK + ".</p>"
+        "Google’s stated peak hours are " + FLOW_PEAK + " (Google gives them as 2 PM to 5 PM UTC).</p>"
     )
 
     # ---------- FAQ (plain text; also FAQPage JSON-LD) ----------
