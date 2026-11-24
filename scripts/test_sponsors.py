@@ -169,12 +169,18 @@ def main():
     home_parsed = slot_ok(home, "home", "index.html")
     model_parsed = slot_ok(model, "model:wan-3-0", "models/wan-3-0/index.html")
 
-    check('data-sponsor="deals"' not in deals, "deals page has a sponsor slot; the house ad must not appear there")
-    check(LABEL not in deals and HEADING not in deals, "deals page shows the house ad")
+    # Hubs (Emmanuel 2026-11-24): /deals/ (while its featured slot is empty), /calculator/, /guides/ and the other
+    # hubs carry the data-page sponsor box with the house fallback, after the lead and above the first section.
+    for hub in ("deals", "deals/black-friday", "calculator", "guides", "changes", "models", "reports", "data"):
+        html = read(os.path.join(hub, "index.html"))
+        sid = "page:" + hub.replace("/", "-")
+        check(html.count('data-sponsor="') == 1 and f'data-sponsor="{sid}"' in html, f"/{hub}/ should have one sponsor box {sid}")
+        main = html[html.find("<main"):]
+        check("<h2" not in main or main.find(f'data-sponsor="{sid}"') < main.find("<h2"), f"/{hub}/ sponsor box should sit above the first section")
 
     guides_root = os.path.join(DIST, "guides")
     index_guides = read(os.path.join("guides", "index.html"))
-    check('data-sponsor="' not in index_guides, "/guides/ index has a sponsor slot; it must not")
+    check(index_guides.count('data-sponsor="') == 1, "/guides/ index should have only the hub sponsor box")
     check('data-vf-sponsor="house-guide-' not in index_guides, "/guides/ index has a guide sponsor tracking attribute")
     guide_pages = []
     for name in sorted(os.listdir(guides_root)):
@@ -309,7 +315,7 @@ def main():
         for item in errors:
             print("-", item)
         return 1
-    print("ok sponsors: house open-spot ad on home, models, and every guide, deals empty, price order unchanged")
+    print("ok sponsors: house open-spot ad on home, models, every guide and the hubs, price order unchanged")
     return 0
 
 
