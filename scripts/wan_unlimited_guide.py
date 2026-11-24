@@ -155,13 +155,15 @@ def render(g):
     def plat(rid):
         return rows_by_id[rid]["platform"]
 
-    api_head = "<thead><tr><th>Model</th><th>Resolution</th><th>Cheapest API in the catalog</th><th>Checked</th></tr></thead>"
+    shown_tier, shown_audio = g["shown_tier"], g["shown_audio"]
+    api_head = "<thead><tr><th>Model</th><th>Tier</th><th>Resolution</th><th>Audio</th><th>Cheapest API in the catalog</th><th>Checked</th></tr></thead>"
     api_rows = []
     for (model, res), rid in CHEAP_API.items():
         name = "Wan 3.0 Prime" if model == "wan-3-0-prime" else "Wan 3.0"
+        r = rows_by_id[rid]
         api_rows.append(
             "<tr>"
-            f"<td>{e(name)}</td><td>{e(res)}</td>"
+            f"<td>{e(name)}</td><td>{e(shown_tier(r))}</td><td>{e(res)}</td><td>{e(shown_audio(r))}</td>"
             f"<td><b>{e(rate(rid))}/s</b> on {e(plat(rid))}</td>"
             f"<td>{e(checked(rid))}. {src_row(rid)}</td>"
             "</tr>"

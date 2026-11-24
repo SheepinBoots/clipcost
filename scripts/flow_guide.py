@@ -61,6 +61,9 @@ def render(g):
     e = g["e"]
     root = g["root"]
     rate_money = g["rate_money"]
+    shown_tier = g["shown_tier"]
+    shown_resolution = g["shown_resolution"]
+    shown_audio = g["shown_audio"]
     cost_money = g["cost_money"]
     tag = g["tag"]
     outbound = g["outbound"]
@@ -343,14 +346,16 @@ def render(g):
             f'<td><a href="{root(f"/models/{r["model"]}/")}">{e(models[r["model"]]["name"])}</a></td>'
             f"<td>{e(r['platform'])}</td>"
             f"<td>{e(r['variant'])}</td>"
-            f"<td>{e(r['resolution'])}</td>"
+            f"<td>{e(shown_tier(r))}</td>"
+            f"<td>{e(shown_resolution(r))}</td>"
+            f"<td>{e(shown_audio(r))}</td>"
             f'<td class="num">{rate_money(r["usd_per_second"])}</td>'
             f"<td>{tag(r)}</td>"
             f'<td><a href="{e(href)}" rel="{rel}" target="_blank">source</a> · {e(r["checked"])}</td>'
             "</tr>"
         )
     api_table = (
-        '<div class="tblwrap fit"><table><thead><tr><th>Model</th><th>Where</th><th>Variant</th><th>Res</th>'
+        '<div class="tblwrap fit"><table><thead><tr><th>Model</th><th>Where</th><th>Variant</th><th>Tier</th><th>Res</th><th>Audio</th>'
         "<th>$/s</th><th>Status</th><th>Source</th></tr></thead><tbody>" + "".join(api_html_rows) + "</tbody></table></div>"
     )
 
