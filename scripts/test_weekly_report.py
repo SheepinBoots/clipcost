@@ -372,7 +372,7 @@ def main():
     assert "vidfare.goatcounter.com" in html
     assert "week of Oct 26, 2026" in html
     assert "/reports/2026-w44/" in html
-    assert "newsletter" not in html.lower()
+    assert html.count('<section class="news" id="newsletter">') == 1  # one signup on the reports index (Emmanuel 2026-11-24)
     assert '"@type": "CollectionPage"' in html
     assert wr.INDEX_DESCRIPTION in html.split('application/ld+json">', 1)[1]
     week = os.path.join(preview, "reports", "2026-w44", "index.html")
@@ -387,7 +387,7 @@ def main():
     assert 'rel="canonical" href="https://vidfare.com/reports/2026-w44/"' in week_html
     assert 'name="robots" content="index,follow"' in week_html
     assert "vidfare.goatcounter.com" in week_html
-    assert "newsletter" not in week_html.lower()
+    assert week_html.count('<section class="news" id="newsletter">') == 1  # one signup per weekly report
     assert '"@type": "Article"' in week_html
     assert wr.report_description(wr.assign(wr.load(), "2026-10-30")["reports"][0]) in week_html
     assert "https://x.com/higgsfield/status/2115929160447393797" in week_html
@@ -401,7 +401,7 @@ def main():
     assert "Kling 4.0 limited-time launch discount (amount shown at checkout)" in dist_html
     assert "6 promos started" in dist_html
     assert "2 promos ended" in dist_html
-    assert "newsletter" not in dist_html.lower()
+    assert dist_html.count('<section class="news" id="newsletter">') == 1
     assert "vidfare.goatcounter.com" in dist_html
     print("ok", week)
 

@@ -673,6 +673,10 @@ def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
         SITEMAP_LASTMOD["/reports/"] = weekly_report.index_content_date(result, events, as_of) or LAST
     index_body = weekly_report.render_index_body(result, events, href_fn=root, public_log=public_log)
     index_body = index_body.replace("</p>", "</p>" + PRICE_INDEX_NOTE, 1)
+    index_body += news_box(
+        "Get the weekly report by email",
+        f"{BRAND} Weekly sends each report every Friday: price changes, new models and deals that started or ended. Free, unsubscribe anytime.",
+    )
     page("/reports/", f"{weekly_report.INDEX_H1} | {BRAND}", weekly_report.INDEX_DESCRIPTION,
          index_body,
          "/reports/", ld_script(weekly_report.index_jsonld(SITE_URL + "/reports/")),
@@ -687,6 +691,10 @@ def write_report_pages(dest, as_of, reports_nav=None, public_log=False):
             SITEMAP_LASTMOD[path] = modified
         body = weekly_report.render_report_body(
             report, events, prior, link_fn=lambda url: outbound(url))
+        body += news_box(
+            "Get the weekly report by email",
+            f"{BRAND} Weekly sends this report every Friday: price changes, new models and deals that started or ended. Free, unsubscribe anytime.",
+        )
         linked = weekly_report.report_jsonld(report, SITE_URL + path)
         linked["dateModified"] = modified
         page(path, f"{headline} | {BRAND}", description, body, "/reports/",
