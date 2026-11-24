@@ -630,7 +630,25 @@ def with_affiliate_note(body):
     end += len("</h1>")
     return body[:end] + note + body[end:]
 
+HUB_SPONSOR_PATHS = ("/deals/", "/deals/black-friday/", "/calculator/", "/guides/", "/changes/", "/models/", "/reports/", "/data/")
+
+def insert_hub_sponsor(path, body):
+    """The data-page sponsor box (house fallback) on the hubs: after the lead, above the first section.
+    /deals/ keeps its featured deals slot when that is filled, and gets this box only when it is empty."""
+    if path not in HUB_SPONSOR_PATHS or 'data-sponsor="' in body:
+        return body
+    box = page_sponsor_html(path)
+    if not box:
+        return body
+    m = re.search(r'<p class="lead">.*?</p>', body, re.S)
+    if not m:
+        m = re.search(r"</h1>(\s*<p class=\"small\">.*?</p>)?", body, re.S)
+    if not m:
+        return body
+    return body[:m.end()] + "\n" + box + body[m.end():]
+
 def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None, robots="index,follow", canonical=True, before_count=""):
+    body = insert_hub_sponsor(path, body)
     body = with_affiliate_note(body)
     canon = SITE_URL + path
     show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
@@ -4395,7 +4413,7 @@ def audit_site():
         if rel == "index.html":
             ids = ["home"]
         elif rel == "deals/index.html":
-            ids = ["deals"]
+            ids = ["deals"] if sponsor_filled(sponsor_record("deals")) else ["page:deals"]
         else:
             ids = []
             prefix = "models/"
@@ -4410,6 +4428,8 @@ def audit_site():
                     ids = ["guide:" + rest]
             page_path = "/" + rel[:-len("index.html")] if rel.endswith("/index.html") else ""
             if page_path == "/price-index/" or re.match(r"^/(compare|cost|platforms)/[a-z0-9-]+/$", page_path):
+                ids = [page_sponsor_slot_id(page_path)]
+            if page_path in HUB_SPONSOR_PATHS and page_path != "/deals/":
                 ids = [page_sponsor_slot_id(page_path)]
         return [slot for slot in ids if sponsor_filled(sponsor_record(slot))]
 
