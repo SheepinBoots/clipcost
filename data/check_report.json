@@ -1,13 +1,13 @@
 {
- "run": "2026-11-24T21:01:17Z",
+ "run": "2026-11-24T23:56:40Z",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 15275
+   "chars": 15078
   },
   "hf_api": {
    "status": "fetched",
-   "chars": 5259
+   "chars": 5238
   },
   "hf_api_wan": {
    "status": "fetched",
@@ -67,7 +67,7 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 20897
+   "chars": 20458
   },
   "magnific": {
    "status": "fetched",
@@ -92,7 +92,7 @@
   },
   "gflow_credits": {
    "status": "fetched",
-   "chars": 8662
+   "chars": 8664
   },
   "google_ai_plans": {
    "status": "fetched",
@@ -101,292 +101,16 @@
  },
  "findings": [
   {
-   "kind": "row",
-   "id": "r134",
+   "kind": "plan",
+   "id": "krea-free",
    "source": "krea",
    "status": "missing",
-   "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
-   "old": 198,
+   "needle": "Krea USD Free ${N}/month",
+   "old": 0,
    "new": null,
-   "model": "wan-3-0-prime",
+   "model": null,
    "platform": "Krea",
-   "variant": "Wan 3.0 Prime"
-  },
-  {
-   "kind": "row",
-   "id": "r135",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
-   "old": 198,
-   "new": null,
-   "model": "wan-3-0-prime",
-   "platform": "Krea",
-   "variant": "Wan 3.0 Prime"
-  },
-  {
-   "kind": "row",
-   "id": "r136",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
-   "old": 198,
-   "new": null,
-   "model": "wan-3-0-prime",
-   "platform": "Krea",
-   "variant": "Wan 3.0 Prime"
-  },
-  {
-   "kind": "row",
-   "id": "r137",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
-   "old": 180,
-   "new": null,
-   "model": "wan-3-0",
-   "platform": "Krea",
-   "variant": "Wan 3.0"
-  },
-  {
-   "kind": "row",
-   "id": "r138",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
-   "old": 180,
-   "new": null,
-   "model": "wan-3-0",
-   "platform": "Krea",
-   "variant": "Wan 3.0"
-  },
-  {
-   "kind": "row",
-   "id": "r139",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
-   "old": 180,
-   "new": null,
-   "model": "wan-3-0",
-   "platform": "Krea",
-   "variant": "Wan 3.0"
-  },
-  {
-   "kind": "row",
-   "id": "r140",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
-   "old": 107,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Krea",
-   "variant": "Kling 3.0 Standard"
-  },
-  {
-   "kind": "row",
-   "id": "r141",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
-   "old": 107,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Krea",
-   "variant": "Kling 3.0 Standard"
-  },
-  {
-   "kind": "row",
-   "id": "r142",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
-   "old": 107,
-   "new": null,
-   "model": "kling-3-0",
-   "platform": "Krea",
-   "variant": "Kling 3.0 Standard"
-  },
-  {
-   "kind": "row",
-   "id": "r143",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
-   "old": 84,
-   "new": null,
-   "model": "veo-3-1",
-   "platform": "Krea",
-   "variant": "Veo 3.1 Fast"
-  },
-  {
-   "kind": "row",
-   "id": "r144",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
-   "old": 84,
-   "new": null,
-   "model": "veo-3-1",
-   "platform": "Krea",
-   "variant": "Veo 3.1 Fast"
-  },
-  {
-   "kind": "row",
-   "id": "r145",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
-   "old": 84,
-   "new": null,
-   "model": "veo-3-1",
-   "platform": "Krea",
-   "variant": "Veo 3.1 Fast"
-  },
-  {
-   "kind": "row",
-   "id": "r146",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
-   "old": 225,
-   "new": null,
-   "model": "veo-3-1",
-   "platform": "Krea",
-   "variant": "Veo 3.1 Lite"
-  },
-  {
-   "kind": "row",
-   "id": "r147",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
-   "old": 225,
-   "new": null,
-   "model": "veo-3-1",
-   "platform": "Krea",
-   "variant": "Veo 3.1 Lite"
-  },
-  {
-   "kind": "row",
-   "id": "r148",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
-   "old": 225,
-   "new": null,
-   "model": "veo-3-1",
-   "platform": "Krea",
-   "variant": "Veo 3.1 Lite"
-  },
-  {
-   "kind": "row",
-   "id": "r149",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
-   "old": 96,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "Krea",
-   "variant": "Hailuo 2.3"
-  },
-  {
-   "kind": "row",
-   "id": "r150",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
-   "old": 96,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "Krea",
-   "variant": "Hailuo 2.3"
-  },
-  {
-   "kind": "row",
-   "id": "r151",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
-   "old": 96,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "Krea",
-   "variant": "Hailuo 2.3"
-  },
-  {
-   "kind": "row",
-   "id": "r152",
-   "source": "krea",
-   "status": "missing",
-   "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-   "old": 144,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "Krea",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r153",
-   "source": "krea",
-   "status": "missing",
-   "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-   "old": 144,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "Krea",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r154",
-   "source": "krea",
-   "status": "missing",
-   "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-   "old": 144,
-   "new": null,
-   "model": "minimax-hailuo",
-   "platform": "Krea",
-   "variant": "MiniMax H3 Max"
-  },
-  {
-   "kind": "row",
-   "id": "r155",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
-   "old": 112,
-   "new": null,
-   "model": "runway-gen-4",
-   "platform": "Krea",
-   "variant": "Runway Gen-4.5"
-  },
-  {
-   "kind": "row",
-   "id": "r156",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
-   "old": 112,
-   "new": null,
-   "model": "runway-gen-4",
-   "platform": "Krea",
-   "variant": "Runway Gen-4.5"
-  },
-  {
-   "kind": "row",
-   "id": "r157",
-   "source": "krea",
-   "status": "missing",
-   "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
-   "old": 112,
-   "new": null,
-   "model": "runway-gen-4",
-   "platform": "Krea",
-   "variant": "Runway Gen-4.5"
+   "variant": "Free"
   },
   {
    "kind": "plan",
@@ -453,11 +177,39 @@
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 2 : 5 6 :"
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 0 : 0 1 :"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "3 9 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": ",008 3,000 credits / month 1,500 images Nano Banana Pro 200 videos Seedance 2.5 Unlimited models for 7 days Unlimited Nano Banana Pro 2K Unlimited Seedream 5.0 Pro 2K Un"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "s to advanced AI features Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 2 : 5 6 :"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "4 4 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
@@ -467,42 +219,42 @@
    "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 3 : 0 1 :"
+   "snippet": "1,500 images Nano Banana Pro 200 videos Seedance 2.5 ~$100 gift card* for games Unlimited models for 7 days Unlimited Nano Banana Pro 2K Unlimited Seedream 5.0 Pro 2K Un"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "3 4 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+   "snippet": "ceive a $100 USD games gift card. Limit one per person. Terms apply. Learn more Unlimited models and Free Generations on plans are accessible only via higgsfield.ai and"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 08 Hours 01 Minutes 37 Seconds Final hours, up to 75% off Black Friday"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "arket Expiring in 01 Days 08 Hours 01 Minutes 37 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 10 Hours 56 Minutes 43 Seconds Final hours, up to 75% off Black Friday"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "arket Expiring in 01 Days 10 Hours 56 Minutes 43 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 11 Hours 01 Minutes 33 Seconds Final hours, up to 75% off Black Friday"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "arket Expiring in 01 Days 11 Hours 01 Minutes 33 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
   }
  ],
  "deal_scan": {
@@ -543,12 +295,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 8
+  "candidates": 12
  },
  "counts": {
-  "ok": 410,
+  "ok": 414,
   "changed": 1,
-  "missing": 28,
+  "missing": 5,
   "skipped": 6
  }
 }
