@@ -407,6 +407,21 @@ def links_html(slug, root, nl=False):
     return f'<p class="small">Compare: {links}.</p>' + ("\n" if nl else "")
 
 
+def data_faqs(g, first_q, lead, run, old, extra=()):
+    """Visible FAQ for a data page and the matching FAQPage questions, built from text already on the page."""
+    tail = f"Prices last checked {run}."
+    a1 = lead[: -len(tail)].strip() if lead.endswith(tail) else lead
+    faqs = [(first_q, a1)] if a1 else []
+    faqs += list(extra)
+    age = f"Prices last checked {run}."
+    if old:
+        age += f" The oldest row check on this page is {day_text(old)}."
+    age += (f" If any row goes more than {STALE_DAYS} days without a check, the page shows a notice "
+            "and is hidden from search until it is re-checked.")
+    faqs.append(("How old are these prices?", age))
+    return faqs
+
+
 # ---------- page ----------
 
 def _table(inner, tid):
@@ -643,6 +658,10 @@ def render_pair(g, pair):
 <li>This page rebuilds with every daily price check. If any row on it goes more than {STALE_DAYS} days without a check, the page shows a notice and is hidden from search until it is re-checked. Oldest check on this page: {e(day_text(old)) if old else "none"}.</li>
 </ul>"""
 
+    both = (f"{plat_list} sell both {name[A]} and {name[B]}. {same_text}".strip() if plats
+            else f"No platform we track sells both {name[A]} and {name[B]}.")
+    faqs = data_faqs(g, f"Which is cheaper per second, {name[A]} or {name[B]}?", lead, run, old,
+                     [(f"Which platforms sell both {name[A]} and {name[B]}?", both)])
     body = f"""<p class="small"><a href="{root("/")}">Prices</a> › Compare › {e(pair["h1"])}</p>
 <h1>{e(pair["h1"])}</h1>
 {g["byline_html"]()}
@@ -660,6 +679,7 @@ def render_pair(g, pair):
 <p>{e(plat_list)} sell both {e(name[A])} and {e(name[B])}. {e(same_text)} {unlisted and e(f"{unlisted} rows on these platforms name a tier but not a resolution, so they are shown as not listed.") or ""}</p>
 {ptable}
 <p class="small">See every price on the <a href="{root("/models/" + A + "/")}">{e(name[A])}</a> and <a href="{root("/models/" + B + "/")}">{e(name[B])}</a> pages, or check a credit plan in the <a href="{root("/calculator/")}">credit calculator</a>.</p>
+{g["faq_html"](faqs)}
 {method}
 {g["news_box"]()}"""
 
@@ -679,7 +699,7 @@ def render_pair(g, pair):
     fit = ("<style>@media(min-width:601px){#cmp-platforms tbody th,#cmp-platforms thead th,#cmp-platforms .tag"
            "{white-space:normal}#cmp-platforms tbody th{min-width:160px}}</style>")
     import schema_ld
-    ld_blocks = [ld] + [x for x in [schema_ld.offer_list(g, pair["path"], pair["h1"] + " – prices per second", shown)] if x]
+    ld_blocks = [ld, g["guide_faq_ld"](pair["path"], faqs)] + [x for x in [schema_ld.offer_list(g, pair["path"], pair["h1"] + " – prices per second", shown)] if x]
     head = _css(("#cmp-headline", "#cmp-platforms")) + fit + g["ld_join"](
         *ld_blocks, g["breadcrumb_ld"]([("Prices", "/"), (pair["h1"], pair["path"])]))
     g["page"](pair["path"], title_of(pair), pair["description"], body, "", head,

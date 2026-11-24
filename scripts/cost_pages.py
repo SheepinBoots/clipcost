@@ -33,6 +33,7 @@ COST_PAGES = [
         "path": "/cost/10-second/",
         "title": "How Much a 10-Second AI Video Costs",
         "h1": "How much a 10-second AI video costs",
+        "faq_q": "How much does a 10-second AI video cost?",
         "description": ("What one 10-second AI video clip costs on the cheapest platform for each of 9 models, "
                         "ranked at 480p, 720p and 1080p. Rebuilt daily from our price data."),
         "seconds": 10,
@@ -42,6 +43,7 @@ COST_PAGES = [
         "path": "/cost/1080p/",
         "title": "1080p AI Video Cost by Model and Platform",
         "h1": "1080p AI video cost by model and platform",
+        "faq_q": "How much does 1080p AI video cost per second?",
         "description": ("The cheapest 1080p price per second and per 10-second clip for 9 AI video models, "
                         "plus each model's 1080p price on every platform. Rebuilt daily."),
         "seconds": 10,
@@ -57,6 +59,7 @@ COST_PAGES = [
         "path": "/cost/30-second/",
         "title": "How Much a 30-Second AI Video Costs",
         "h1": "How much a 30-second AI video costs",
+        "faq_q": "How much does a 30-second AI video cost?",
         "description": ("What a 30-second AI video costs on the cheapest platform for each of 9 models at 480p, 720p "
                         "and 1080p; multi-clip models ranked apart. Rebuilt daily."),
         "seconds": 30,
@@ -317,6 +320,7 @@ def render_page(g, page):
 <li>Rows are ordered by the clip total only. Affiliate links never change the order.</li>
 <li>This page rebuilds with every daily price check. If any row on it goes more than {cp.STALE_DAYS} days without a check, the page shows a notice and is hidden from search until it is re-checked. Oldest check on this page: {e(cp.day_text(old)) if old else "none"}.</li>
 </ul>"""
+    faqs = cp.data_faqs(g, page["faq_q"], lead, run, old)
     body = f"""<p class="small"><a href="{root("/")}">Prices</a> › Cost › {e(page["h1"])}</p>
 <h1>{e(page["h1"])}</h1>
 {g["byline_html"]()}
@@ -328,6 +332,7 @@ def render_page(g, page):
 {chr(10).join(sections[:1] + [g["news_box_inline"]()] + sections[1:])}
 {foot}
 <p class="small">See every price on the model pages, or check a credit plan in the <a href="{root("/calculator/")}">credit calculator</a>.</p>
+{g["faq_html"](faqs)}
 {method}
 {g["news_box"]()}"""
     ld = {
@@ -344,7 +349,7 @@ def render_page(g, page):
     # so the 1080p table fits the desktop column instead of scrolling sideways. The clip column gets room only on
     # wide screens; at 1024px the minimum width pushed the table 29px past its column.
     import schema_ld
-    ld_blocks = [ld] + [x for x in [schema_ld.offer_list(g, page["path"], page["h1"] + " – prices per second", shown)] if x]
+    ld_blocks = [ld, g["guide_faq_ld"](page["path"], faqs)] + [x for x in [schema_ld.offer_list(g, page["path"], page["h1"] + " – prices per second", shown)] if x]
     head = cp._css(tuple(tids)) + "<style>" + ",".join(f"{t} tbody th" for t in tids) + "{white-space:normal;min-width:180px}@media(min-width:1100px){" + ",".join(f"{t} td:nth-child(3)" for t in tids if not t.startswith("#cost-p")) + "{min-width:150px}}</style>" + g["ld_join"](*ld_blocks, g["breadcrumb_ld"]([("Prices", "/"), (page["h1"], page["path"])]))
     g["page"](page["path"], title_of(page), page["description"], body, "", head,
               robots="noindex,follow" if stale else "index,follow")

@@ -310,6 +310,7 @@ def render_page(g, page):
     else:
         lead = f"Our price data has no current {plat} video rows. Prices last checked {run}."
     foot = ("<ul class=\"small\">" + "".join(f"<li>{e(n)}</li>" for n in notes) + "</ul>") if notes else ""
+    faqs = cp.data_faqs(g, f"How much does AI video cost on {plat}?", lead, run, old)
     body = f"""<p class="small"><a href="{root("/")}">Prices</a> › Platforms › {e(page["h1"])}</p>
 <h1>{e(page["h1"])}</h1>
 {g["byline_html"]()}
@@ -322,6 +323,7 @@ def render_page(g, page):
 {foot}
 {sections[2]}
 <p class="small">See every platform on the model pages, or check a {e(plat)} plan in the <a href="{root("/calculator/")}">credit calculator</a>.</p>
+{g["faq_html"](faqs)}
 {g["news_box"]()}"""
     ld = {
         "@context": "https://schema.org",
@@ -334,7 +336,7 @@ def render_page(g, page):
         "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
     }
     import schema_ld
-    ld_blocks = [ld] + [x for x in [schema_ld.offer_list(g, page["path"], page["h1"] + " – prices per second", rs)] if x]
+    ld_blocks = [ld, g["guide_faq_ld"](page["path"], faqs)] + [x for x in [schema_ld.offer_list(g, page["path"], page["h1"] + " – prices per second", rs)] if x]
     head = (cp._css(tuple(tids)) + "<style>" + ",".join(f"{t} tbody th" for t in tids) + "{white-space:normal;min-width:160px}"
             # Column headings wrap too, so the units table (one column per plan) fits at 1024px and up.
             + ",".join(f"{t} thead th" for t in tids) + "{white-space:normal}"
