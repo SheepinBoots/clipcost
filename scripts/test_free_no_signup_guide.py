@@ -71,7 +71,7 @@ def main():
         "50 credits",
         "125",
         "SeeDance V1",
-        "$0.0125",
+        "$0.0113",  # r096, Higgsfield Ultra annual Wan 3.0 480p (half-up of $0.01125)
         "$0.02",
         "$0.20",
         "$0.30",
@@ -172,7 +172,7 @@ def main():
 
     paid = raw.split('id="paid-no-signup"', 1)[-1].split("</table>", 1)[0]
     paid_text = html.unescape(re.sub(r"<[^>]+>", " ", paid))
-    for earlier, later in (("$0.0125", "$0.02"), ("$0.02", "$0.20"), ("$0.20", "$0.30")):
+    for earlier, later in (("$0.0113", "$0.02"), ("$0.02", "$0.20"), ("$0.20", "$0.30")):
         if paid_text.find(earlier) < 0 or paid_text.find(earlier) > paid_text.find(later):
             errors.append(f"paid table is not in price order: {earlier} before {later}")
 

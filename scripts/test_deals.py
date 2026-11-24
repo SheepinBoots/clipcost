@@ -78,21 +78,31 @@ def main():
         if deals.adjustment(dict(kling25, status="live"), row, plans) is not None:
             raise SystemExit(f"Kling 2.5 unlimited matched {row['id']}")
     # Annual checkout price / credits, not 20% off the row.
-    # The Black Friday window starts 2026-11-16, so this deal is upcoming on the frozen TODAY.
+    # The Black Friday "up to 69% off" phase on Higgsfield's sale record runs
+    # 2026-11-24T00:00:00Z to 2026-11-25T00:00:00Z; the earlier 63% phase ended 2026-11-23T00:00:00Z.
     plus_deal = by_id(doc["deals"], "hf-plus-annual")
-    if plus_deal.get("price_after") != 33 or plus_deal.get("end") != "2026-11-22" or plus_deal.get("ends_at") != "2026-11-23T00:00:00Z":
-        raise SystemExit("hf-plus-annual should be the Black Friday $33/mo price ending 2026-11-23T00:00:00Z")
-    if deals.is_current(plus_deal, TODAY) or not deals.is_upcoming(plus_deal, TODAY):
-        raise SystemExit("hf-plus-annual should be upcoming on the frozen Oct 20 test date")
-    if (not deals.is_current(plus_deal, "2026-11-17")
-            or not deals.is_current(plus_deal, "2026-11-20")
-            or not deals.is_current(plus_deal, "2026-11-22")
-            or deals.is_current(plus_deal, "2026-11-23")):
-        raise SystemExit("hf-plus-annual should be live through Nov 22 and archived after that date")
-    plus = next(r for r in db["rows"] if r["id"] == "r080")
-    adj = deals.adjustment(plus_deal, plus, plans)
-    close(adj["usd"], 33 / 1200 * 6.25 / 5)
-    close(adj["usd"], 0.034375)
+    if plus_deal.get("status") == "live":
+        if plus_deal.get("price_after") != 30 or plus_deal.get("end") != "2026-11-24" or plus_deal.get("ends_at") != "2026-11-25T00:00:00Z":
+            raise SystemExit("hf-plus-annual should be the Black Friday $30/mo price ending 2026-11-25T00:00:00Z")
+        if deals.is_current(plus_deal, TODAY) or not deals.is_upcoming(plus_deal, TODAY):
+            raise SystemExit("hf-plus-annual should be upcoming on the frozen Oct 20 test date")
+        if (not deals.is_current(plus_deal, "2026-11-23")
+                or not deals.is_current(plus_deal, "2026-11-24")
+                or deals.is_current(plus_deal, "2026-11-25")):
+            raise SystemExit("hf-plus-annual should be live through Nov 24 and archived after that date")
+        plus = next(r for r in db["rows"] if r["id"] == "r080")
+        adj = deals.adjustment(plus_deal, plus, plans)
+        close(adj["usd"], 30 / 1200 * 6.25 / 5)
+        close(adj["usd"], 0.03125)
+    if [p.get("ends_at") for p in plus_deal.get("phases") or []] != ["2026-11-23T00:00:00Z"]:
+        raise SystemExit("hf-plus-annual should record the ended 63% phase")
+    # ends_at is exact: a deal whose end date is today but whose ends_at has passed is over.
+    import datetime as _dt
+    probe = {"id": "probe", "status": "live", "end": "2026-11-24", "ends_at": "2026-11-25T00:00:00Z"}
+    before = _dt.datetime(2026, 11, 24, 23, 59, tzinfo=_dt.timezone.utc)
+    after = _dt.datetime(2026, 11, 25, 0, 0, 1, tzinfo=_dt.timezone.utc)
+    if deals.ends_at_passed(probe, now=before) or not deals.ends_at_passed(probe, now=after):
+        raise SystemExit("ends_at_passed should flip exactly at ends_at")
     # Krea's Black Friday yearly coupon: the yearly row is the $21 sale price against the $28 regular
     # yearly price, and the monthly row is not touched by the deal.
     kdeal = by_id(live, "krea-yearly-40")
@@ -103,8 +113,8 @@ def main():
     monthly = next(r for r in db["rows"] if r.get("plan") == "krea-pro-monthly" and r["model"] == "wan-3-0-prime")
     if deals.adjustment(kdeal, monthly, plans) is not None:
         raise SystemExit("the Krea yearly sale must not apply to the monthly row")
-    if kdeal.get("ends_at") != "2026-11-22T08:00:00Z" or not deals.is_current(kdeal, "2026-11-21") or deals.is_current(kdeal, "2026-11-22"):
-        raise SystemExit("the Krea yearly sale ends Nov 22, 2026, 3:00 AM ET (12:00 AM PT)")
+    if kdeal.get("ends_at") != "2026-11-26T08:00:00Z" or not deals.is_current(kdeal, "2026-11-25") or deals.is_current(kdeal, "2026-11-26"):
+        raise SystemExit("the Krea yearly sale ends Nov 26, 2026, 3:00 AM ET (12:00 AM PT)")
     flux50 = by_id(doc["deals"], "fal-flux3-50")
     if flux50.get("status") != "ended" or flux50.get("percent") != 50 or flux50.get("end") != "2026-11-21":
         raise SystemExit("fal-flux3-50 should stay the ended 50% record through November 21")
@@ -119,7 +129,7 @@ def main():
         raise SystemExit("fal-flux3-40 percent, type, or status")
     if flux40.get("end") != "2026-12-07" or flux40.get("end_is_estimate") or flux40.get("ends_at") or flux40.get("start"):
         raise SystemExit("fal-flux3-40 end should be December 7 with no clock, zone, or invented start")
-    if flux40.get("verified_date") != "2026-11-22" or flux40.get("source_url") != "https://fal.ai/flux-3-max":
+    if flux40.get("verified_date") not in ("2026-11-22", "2026-11-24") or flux40.get("source_url") != "https://fal.ai/flux-3-max":
         raise SystemExit("fal-flux3-40 source or verified date")
     if flux40.get("source_quote") != "FLUX 3 Max is 40% off until December 7":
         raise SystemExit("fal-flux3-40 quote should be the visible heading")
@@ -231,7 +241,9 @@ def main():
     if deals.is_current(window, "2026-10-21"):
         raise SystemExit("window should archive after the end date")
     unlimited = by_id(doc["deals"], "runway-kling4-unlimited-3d")
-    if unlimited.get("math") != "none" or unlimited.get("show_on_rows") is not False or unlimited.get("end") is not None:
+    # While live it has no end date; once archived, the archive date is marked as an estimate.
+    bad_end = unlimited.get("end") is not None and not (unlimited.get("status") == "ended" and unlimited.get("end_is_estimate"))
+    if unlimited.get("math") != "none" or unlimited.get("show_on_rows") is not False or bad_end:
         raise SystemExit("runway-kling4-unlimited-3d should not invent a rate or an end date")
     if any(deals.adjustment(unlimited, row, plans) for row in db["rows"]):
         raise SystemExit("runway-kling4-unlimited-3d matched a catalog row")

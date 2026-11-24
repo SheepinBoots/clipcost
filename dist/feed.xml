@@ -5,14 +5,398 @@
     <title>VidFare</title>
     <link>https://vidfare.com/</link>
     <description>Price changes, weekly reports, and live deals.</description>
-    <lastBuildDate>Sun, 22 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 24 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Annual billing saves 20%</title>
+      <link>https://vidfare.com/deals/#runway-annual-20</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#runway-annual-20</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Annual saves 20% (Standard $15 → $12, Pro $35 → $28, Max $95 → $76). No end date given.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: up to 62% off Magnific annual plans, plus gift credits</title>
+      <link>https://vidfare.com/deals/#mag-bf-annual-62</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#mag-bf-annual-62</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday Up to 62% off and gift credits on annual plans. Business plans are also on sale - up to 40% off from 3 seats. Offer ends Dec 1 - 08:00 CET Ends 2026-11-30.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Krea yearly plans 25% off, Pro $28 to $21/mo</title>
+      <link>https://vidfare.com/deals/#krea-yearly-40</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#krea-yearly-40</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Krea's page data: yearly amounts Basic $63, Pro $252, Max $504 with coupon S7vd5tcX; without the coupon $84, $336 and $672; promo phase "black-friday", deadline 1795680000000 (Nov 26, 2026, 3:00 AM ET (12:00 AM PT)). Ends 2026-11-25.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday final hours: Seedance 2.5 up to 75% off on Krea</title>
+      <link>https://vidfare.com/deals/#krea-bf-seedance-75-final</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#krea-bf-seedance-75-final</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Seedance 2.5 up to 75% off. Final hours, up to 75% off. Black Friday model prices: Seedance 2.5 -75% (Max), -60% (Pro). Ends 2026-11-25.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Seedance 2.5 unlimited for 30 days on Business Scale (annual)</title>
+      <link>https://vidfare.com/deals/#hf-seedance-business-30d</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-seedance-business-30d</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Scale $80 /seat/mo, yearly. 30-day unlimited with business verification. Unlimited Seedance 2.5 Special 25s, 720p. No end date given.</description>
+      <category>deal</category>
+    </item>
     <item>
       <title>FLUX 3 Max 40% off until December 7</title>
       <link>https://vidfare.com/deals/#fal-flux3-40</link>
       <guid isPermaLink="true">https://vidfare.com/deals/#fal-flux3-40</guid>
-      <pubDate>Sun, 22 Nov 2026 00:00:00 GMT</pubDate>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
       <description>FLUX 3 Max is 40% off until December 7 Ends 2026-12-07.</description>
       <category>deal</category>
+    </item>
+    <item>
+      <title>Veo 3.1 on Higgsfield (Veo 3.1 Fast, 720p): $0.11 → $0.10/s</title>
+      <link>https://vidfare.com/changes/#change-fc914dd74ed3e650</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-fc914dd74ed3e650</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Veo 3.1 on Higgsfield (Veo 3.1 Fast, 720p): $0.11 → $0.10/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Veo 3.1 on Higgsfield (Veo 3.1, 720p): $0.275 → $0.25/s</title>
+      <link>https://vidfare.com/changes/#change-f9814d10b376bf4e</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-f9814d10b376bf4e</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Veo 3.1 on Higgsfield (Veo 3.1, 720p): $0.275 → $0.25/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>MiniMax Hailuo / H3 on Higgsfield (Hailuo 2.3, 768p): $0.0275 → $0.025/s</title>
+      <link>https://vidfare.com/changes/#change-f776f82c0be4f62f</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-f776f82c0be4f62f</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>MiniMax Hailuo / H3 on Higgsfield (Hailuo 2.3, 768p): $0.0275 → $0.025/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>MiniMax Hailuo / H3 on Higgsfield (Hailuo 2.3, 768p): $0.01667 → $0.015/s</title>
+      <link>https://vidfare.com/changes/#change-f70cb53960da3a63</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-f70cb53960da3a63</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>MiniMax Hailuo / H3 on Higgsfield (Hailuo 2.3, 768p): $0.01667 → $0.015/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 1080p): $0.04812 → $0.04375/s</title>
+      <link>https://vidfare.com/changes/#change-f1ddcfd26fadb767</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-f1ddcfd26fadb767</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 1080p): $0.04812 → $0.04375/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 480p): $0.02062 → $0.01875/s</title>
+      <link>https://vidfare.com/changes/#change-e354b233874ceb2b</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-e354b233874ceb2b</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 480p): $0.02062 → $0.01875/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 720p): $0.04584 → $0.04125/s</title>
+      <link>https://vidfare.com/changes/#change-c55d002483b0273d</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-c55d002483b0273d</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 720p): $0.04584 → $0.04125/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.09166 → $0.0825/s</title>
+      <link>https://vidfare.com/changes/#change-c4d9dacb32eb7712</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-c4d9dacb32eb7712</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.09166 → $0.0825/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 720p): $0.07562 → $0.06875/s</title>
+      <link>https://vidfare.com/changes/#change-beb11ec3d8cb3dee</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-beb11ec3d8cb3dee</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 720p): $0.07562 → $0.06875/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 480p): $0.03436 → $0.03125/s</title>
+      <link>https://vidfare.com/changes/#change-b4ce84aee39ed5a4</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-b4ce84aee39ed5a4</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 480p): $0.03436 → $0.03125/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 1080p): $0.05 → $0.045/s</title>
+      <link>https://vidfare.com/changes/#change-b3c1c614a0f12f10</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-b3c1c614a0f12f10</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 1080p): $0.05 → $0.045/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Krea's yearly Black Friday coupon is still live: Basic $63/yr, Pro $252/yr. Krea's page moved the deadline to Nov 26, 2026, 3:00 AM ET (12:00 AM PT), so the Nov 22 'ended' entry was removed.</title>
+      <link>https://vidfare.com/changes/#change-b395f318c8f730fb</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-b395f318c8f730fb</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Krea's yearly Black Friday coupon is still live: Basic $63/yr, Pro $252/yr. Krea's page moved the deadline to Nov 26, 2026, 3:00 AM ET (12:00 AM PT), so the Nov 22 'ended' entry was removed.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 1080p): $0.02916 → $0.02625/s</title>
+      <link>https://vidfare.com/changes/#change-aa11d3223b6aaf9c</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-aa11d3223b6aaf9c</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 1080p): $0.02916 → $0.02625/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 480p): $0.0125 → $0.01125/s</title>
+      <link>https://vidfare.com/changes/#change-8e09dbec7ff1aa9f</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-8e09dbec7ff1aa9f</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 480p): $0.0125 → $0.01125/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 4K): $0.10 → $0.09/s</title>
+      <link>https://vidfare.com/changes/#change-773ccf9e989b9929</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-773ccf9e989b9929</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 4K): $0.10 → $0.09/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Higgsfield started a new Black Friday phase, up to 69% off, ending Nov 24, 2026, 7:00 PM ET (4:00 PM PT): Plus annual $30/mo (was $33), Ultra 3K annual $45/mo (was $50); first month on monthly billing Plus $40, Ultra $75.</title>
+      <link>https://vidfare.com/changes/#change-72c367bd078d2d29</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-72c367bd078d2d29</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Higgsfield started a new Black Friday phase, up to 69% off, ending Nov 24, 2026, 7:00 PM ET (4:00 PM PT): Plus annual $30/mo (was $33), Ultra 3K annual $45/mo (was $50); first month on monthly billing Plus $40, Ultra $75.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 720p): $0.04124 → $0.0375/s</title>
+      <link>https://vidfare.com/changes/#change-6efab4ba8ccc3123</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-6efab4ba8ccc3123</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 720p): $0.04124 → $0.0375/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 4K): $0.165 → $0.15/s</title>
+      <link>https://vidfare.com/changes/#change-697e11291968ca52</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-697e11291968ca52</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 4K): $0.165 → $0.15/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Veo 3.1 on Higgsfield (Veo 3.1 Fast, 720p): $0.06667 → $0.06/s</title>
+      <link>https://vidfare.com/changes/#change-3e6cfa898d94a129</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-3e6cfa898d94a129</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Veo 3.1 on Higgsfield (Veo 3.1 Fast, 720p): $0.06667 → $0.06/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Kling 3.0 on Higgsfield (Kling 3.0, 720p): $0.025 → $0.0225/s</title>
+      <link>https://vidfare.com/changes/#change-3d1540c25fe2d8ef</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-3d1540c25fe2d8ef</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Kling 3.0 on Higgsfield (Kling 3.0, 720p): $0.025 → $0.0225/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 720p): $0.04124 → $0.0375/s</title>
+      <link>https://vidfare.com/changes/#change-3a7c43a792a171cf</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-3a7c43a792a171cf</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 720p): $0.04124 → $0.0375/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.15124 → $0.1375/s</title>
+      <link>https://vidfare.com/changes/#change-38b1b6c0ca06a780</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-38b1b6c0ca06a780</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 1080p): $0.15124 → $0.1375/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 720p): $0.025 → $0.0225/s</title>
+      <link>https://vidfare.com/changes/#change-281189583a168f77</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-281189583a168f77</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 720p): $0.025 → $0.0225/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 on Higgsfield (Wan 3.0, 1080p): $0.0825 → $0.075/s</title>
+      <link>https://vidfare.com/changes/#change-211352d86104d269</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-211352d86104d269</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 on Higgsfield (Wan 3.0, 1080p): $0.0825 → $0.075/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Veo 3.1 on Higgsfield (Veo 3.1, 720p): $0.16667 → $0.15/s</title>
+      <link>https://vidfare.com/changes/#change-1dcf581983956060</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-1dcf581983956060</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Veo 3.1 on Higgsfield (Veo 3.1, 720p): $0.16667 → $0.15/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 480p): $0.02084 → $0.01875/s</title>
+      <link>https://vidfare.com/changes/#change-16ce608b992ad730</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-16ce608b992ad730</guid>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Wan 3.0 Prime on Higgsfield (Wan 3.0 Prime, 480p): $0.02084 → $0.01875/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra monthly first month, $129 to $75</title>
+      <link>https://vidfare.com/deals/#hf-ultra-monthly-first</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-monthly-first</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Ultra, 3,000 credits per month: $75 for the first month on monthly billing, then $129/mo. Ends 2026-11-24.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra annual billing, $129 to $45/mo</title>
+      <link>https://vidfare.com/deals/#hf-ultra-annual</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-annual</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Ultra $129 $45 /mo, billed yearly. −65%. Save $1,008. 3,000 credits / month. ~$100 gift card* Ends 2026-11-24.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra 9K monthly first month, $375 to $199</title>
+      <link>https://vidfare.com/deals/#hf-ultra-9k-monthly-first</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-9k-monthly-first</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Ultra, 9,000 credits per month: $199 for the first month on monthly billing, then $375/mo. Ends 2026-11-24.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra 9K annual billing, $387 to $117/mo</title>
+      <link>https://vidfare.com/deals/#hf-ultra-9k-annual</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-9k-annual</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Ultra, 9,000 credits per month: $117/mo billed annually ($1,404 per year) (list price $387/mo). Ends 2026-11-24.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra 6K monthly first month, $250 to $140</title>
+      <link>https://vidfare.com/deals/#hf-ultra-6k-monthly-first</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-6k-monthly-first</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Ultra, 6,000 credits per month: $140 for the first month on monthly billing, then $250/mo. Ends 2026-11-24.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra 6K annual billing, $258 to $83/mo</title>
+      <link>https://vidfare.com/deals/#hf-ultra-6k-annual</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-6k-annual</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Ultra, 6,000 credits per month: $83/mo billed annually ($996 per year) (list price $258/mo). Ends 2026-11-24.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Plus monthly first month, $59 to $40</title>
+      <link>https://vidfare.com/deals/#hf-plus-monthly-first</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-monthly-first</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Plus: $40 for the first month on monthly billing, then $59/mo. 1,200 credits per month. Ends 2026-11-24.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Plus annual billing, $59 to $30/mo</title>
+      <link>https://vidfare.com/deals/#hf-plus-annual</link>
+      <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-annual</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Plus $59 $30 /mo, billed yearly. −50%. Save $348. 1,200 credits / month. Ends 2026-11-24.</description>
+      <category>deal</category>
+    </item>
+    <item>
+      <title>Black Friday: Plus monthly first month, $59 to $47 ended 2026-11-22.</title>
+      <link>https://vidfare.com/changes/#change-f8c1fcd7811bca25</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-f8c1fcd7811bca25</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday: Plus monthly first month, $59 to $47 ended 2026-11-22.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra 6K annual billing, $258 to $97/mo ended 2026-11-22.</title>
+      <link>https://vidfare.com/changes/#change-de1ec48d2374af52</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-de1ec48d2374af52</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday: Ultra 6K annual billing, $258 to $97/mo ended 2026-11-22.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra 6K monthly first month, $250 to $150 ended 2026-11-22.</title>
+      <link>https://vidfare.com/changes/#change-a9ea1d2962ebd843</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-a9ea1d2962ebd843</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday: Ultra 6K monthly first month, $250 to $150 ended 2026-11-22.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Black Friday: Plus annual billing, $59 to $33/mo ended 2026-11-22.</title>
+      <link>https://vidfare.com/changes/#change-a2b3b8a93d7117b6</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-a2b3b8a93d7117b6</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday: Plus annual billing, $59 to $33/mo ended 2026-11-22.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra monthly first month, $129 to $79 ended 2026-11-22.</title>
+      <link>https://vidfare.com/changes/#change-8a38befee15e01f4</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-8a38befee15e01f4</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday: Ultra monthly first month, $129 to $79 ended 2026-11-22.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra 9K monthly first month, $375 to $209 ended 2026-11-22.</title>
+      <link>https://vidfare.com/changes/#change-644d8df2c905c915</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-644d8df2c905c915</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday: Ultra 9K monthly first month, $375 to $209 ended 2026-11-22.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Seedance 2.5 on Atlas Cloud (Seedance 2.5 T2V, 1080p): $0.5914 → $0.74367/s</title>
+      <link>https://vidfare.com/changes/#change-1fb400f96e4592c0</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-1fb400f96e4592c0</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Seedance 2.5 on Atlas Cloud (Seedance 2.5 T2V, 1080p): $0.5914 → $0.74367/s</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra 9K annual billing, $387 to $139/mo ended 2026-11-22.</title>
+      <link>https://vidfare.com/changes/#change-13f785b8dbc94e50</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-13f785b8dbc94e50</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday: Ultra 9K annual billing, $387 to $139/mo ended 2026-11-22.</description>
+      <category>price change</category>
+    </item>
+    <item>
+      <title>Black Friday: Ultra annual billing, $129 to $50/mo ended 2026-11-22.</title>
+      <link>https://vidfare.com/changes/#change-09dcc81a28c374aa</link>
+      <guid isPermaLink="true">https://vidfare.com/changes/#change-09dcc81a28c374aa</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Black Friday: Ultra annual billing, $129 to $50/mo ended 2026-11-22.</description>
+      <category>price change</category>
     </item>
     <item>
       <title>FLUX 3 Max 40% off until December 7 (fal-flux3-40): $0.102 per second at 720p, pay-per-use, no plan tier, list $0.17 per second at 720p. Text-to-video and image-to-video are the same price. Audio is not stated as a separate rate; the page says audio generation is on by default. The page gives December 7 as a date only, with no clock time and no time zone. Checked Nov 22, 2026, 3:21 AM ET (12:21 AM PT).</title>
@@ -69,78 +453,6 @@
       <pubDate>Fri, 20 Nov 2026 00:00:00 GMT</pubDate>
       <description>MiniMax Hailuo / H3 on Krea (MiniMax H3 Max, 480p): $0.02727 → $0.02917/s</description>
       <category>price change</category>
-    </item>
-    <item>
-      <title>Black Friday: Ultra monthly first month, $129 to $79</title>
-      <link>https://vidfare.com/deals/#hf-ultra-monthly-first</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-monthly-first</guid>
-      <pubDate>Tue, 17 Nov 2026 00:00:00 GMT</pubDate>
-      <description>$129 $79 billed monthly, renews at $129. 40% OFF. 3,000 credits / month. Ends 2026-11-22.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Black Friday: Ultra 9K monthly first month, $375 to $209</title>
-      <link>https://vidfare.com/deals/#hf-ultra-9k-monthly-first</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-9k-monthly-first</guid>
-      <pubDate>Tue, 17 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Ultra 9K −45% $375 $209 billed monthly, renews at $375. 45% OFF. 9,000 credits / month. Ends 2026-11-22.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Black Friday: Ultra 6K monthly first month, $250 to $150</title>
-      <link>https://vidfare.com/deals/#hf-ultra-6k-monthly-first</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-6k-monthly-first</guid>
-      <pubDate>Tue, 17 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Ultra 6K $250 $150 billed monthly, renews at $250. 6,000 credits / month. Ends 2026-11-22.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Seedance 2.5 unlimited for 30 days on Business Scale (annual)</title>
-      <link>https://vidfare.com/deals/#hf-seedance-business-30d</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-seedance-business-30d</guid>
-      <pubDate>Tue, 17 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Scale $80 /seat/mo, yearly. 30-day unlimited with business verification. Unlimited Seedance 2.5 Special 25s, 720p. No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Black Friday: Plus monthly first month, $59 to $47</title>
-      <link>https://vidfare.com/deals/#hf-plus-monthly-first</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-monthly-first</guid>
-      <pubDate>Tue, 17 Nov 2026 00:00:00 GMT</pubDate>
-      <description>$59 $47 billed monthly, renews at $59. 20% OFF. 1,200 credits / month. Ends 2026-11-22.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Black Friday: Ultra annual billing, $129 to $50/mo</title>
-      <link>https://vidfare.com/deals/#hf-ultra-annual</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-annual</guid>
-      <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Ultra $129 $50 /mo, billed yearly. −60%. Save $948. 3,000 credits / month. Ends 2026-11-22.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Black Friday: Ultra 9K annual billing, $387 to $139/mo</title>
-      <link>https://vidfare.com/deals/#hf-ultra-9k-annual</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-9k-annual</guid>
-      <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Ultra 9K −63% $387 $139 /mo, billed yearly. −63%. Save $2,832. 9,000 credits / month. Ends 2026-11-22.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Black Friday: Ultra 6K annual billing, $258 to $97/mo</title>
-      <link>https://vidfare.com/deals/#hf-ultra-6k-annual</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-ultra-6k-annual</guid>
-      <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Ultra 6K $258 $97 /mo, billed yearly. −62%. Save $1,836. 6,000 credits / month. Ends 2026-11-22.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Black Friday: Plus annual billing, $59 to $33/mo</title>
-      <link>https://vidfare.com/deals/#hf-plus-annual</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#hf-plus-annual</guid>
-      <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
-      <description>Plus $59 $33 /mo, billed yearly. −45%. Save $312. 1,200 credits / month. Ends 2026-11-22.</description>
-      <category>deal</category>
     </item>
     <item>
       <title>Ultra 9K monthly first month, $375 to $209 ended 2026-11-15.</title>
@@ -999,35 +1311,11 @@
       <category>price change</category>
     </item>
     <item>
-      <title>Kling 4 unlimited for 3 days on new Max or Team plans</title>
-      <link>https://vidfare.com/deals/#runway-kling4-unlimited-3d</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#runway-kling4-unlimited-3d</guid>
-      <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
-      <description>Sign up for a new Max or Team plan to get 3 days of unlimited access. No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
       <title>Kling 4 25% off on all Runway plans</title>
       <link>https://vidfare.com/deals/#runway-kling4-25</link>
       <guid isPermaLink="true">https://vidfare.com/deals/#runway-kling4-25</guid>
       <pubDate>Wed, 21 Oct 2026 00:00:00 GMT</pubDate>
       <description>Plus 25% off Kling 4 on all plans. Ends 2026-11-30.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Annual billing saves 20%</title>
-      <link>https://vidfare.com/deals/#runway-annual-20</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#runway-annual-20</guid>
-      <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
-      <description>Annual saves 20% (Standard $15 → $12, Pro $35 → $28, Max $95 → $76). No end date given.</description>
-      <category>deal</category>
-    </item>
-    <item>
-      <title>Unlimited Krea 3 for 14 days with Pro or Max annual</title>
-      <link>https://vidfare.com/deals/#krea3-unlimited-14d</link>
-      <guid isPermaLink="true">https://vidfare.com/deals/#krea3-unlimited-14d</guid>
-      <pubDate>Tue, 20 Oct 2026 00:00:00 GMT</pubDate>
-      <description>Unlimited Krea 3 for 14 days with a qualifying Pro or Max annual purchase. No end date given.</description>
       <category>deal</category>
     </item>
     <item>

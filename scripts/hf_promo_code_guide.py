@@ -12,16 +12,13 @@ PATH = "/guides/higgsfield-promo-code/"
 LABEL = "Higgsfield promo codes"
 PHRASE = "Higgsfield promo code and current deals"
 QUESTION = "Is there a Higgsfield promo code right now?"
-CHECKED = "2026-11-19"
-CHECKED_WHEN = "Nov 19, 2026, 7:20 PM ET (4:20 PM PT)"
-RECHECK_WHEN = "Nov 19, 2026, 7:20 PM ET (4:20 PM PT)"
-COUNTDOWN_READ = (
-    "2 days, 23 hours, 41 minutes at 7:20 PM ET (4:20 PM PT) on Nov 19, 2026"
-)
-# As the pricing page's embedded sale record (source "sale_11_11", phase "pre_black_friday_63") states it.
-BF_ENDS_UTC = "2026-11-23T00:00:00Z"
-from timefmt import et_pt  # noqa: E402
-BF_ENDS_LOCAL = et_pt(BF_ENDS_UTC)  # Nov 22, 2026, 7:00 PM ET (4:00 PM PT)
+CHECKED = "2026-11-24"
+CHECKED_WHEN = "Nov 24, 2026, 3:26 PM ET (12:26 PM PT)"
+RECHECK_WHEN = CHECKED_WHEN
+# Help center, changelog, and X posts were last read on this earlier check.
+EARLIER_WHEN = "Nov 19, 2026, 7:20 PM ET (4:20 PM PT)"
+from timefmt import et_pt  # noqa: E402,F401
+import deal_copy  # noqa: E402
 KLING4_ENDS_UTC = "2026-10-29T00:00:00Z"
 KLING4_ENDS_LOCAL = "Oct 28, 2026, 8:00 PM ET (5:00 PM PT)"
 
@@ -39,40 +36,22 @@ X_GENJUTSU = "https://x.com/higgsfield_ai/status/2109681164806177267"
 # Current entries. Each one: title, what you get, code, end as stated, source, last checked.
 CURRENT = [
     {
-        "id": "bf-annual",
-        "title": "Black Friday sale: annual plans",
-        "offer": "Plus $33/mo billed yearly (was $59, card says −45%, “Save $312”). Ultra 3K $50/mo billed yearly (was $129, −60%, “Save $948”). Ultra 6K $97/mo billed yearly (card shows $258 crossed out, −62%, “Save $1,836”). Ultra 9K $139/mo billed yearly (was $387, −63%, “Save $2,832”). Starter stays $19/mo.",
-        "code": "No code. The price is on the plan card.",
-        "ends": "Ends " + BF_ENDS_UTC + " (" + BF_ENDS_LOCAL + "), the end time in the sale record embedded in the pricing page. The page itself shows only a countdown, which read " + COUNTDOWN_READ + ", matching that time. Vendors sometimes extend sales.",
-        "source": (PRICING, "Higgsfield pricing page"),
-        "checked": RECHECK_WHEN,
-    },
-    {
-        "id": "monthly-first",
-        "title": "First month off on monthly plans",
-        "offer": "Plus $47 for the first month, “renews at $59” (20% off). Ultra 3K $79, “renews at $129” (40% off). Ultra 6K $150, “renews at $250” (40% off). Ultra 9K $209, “renews at $375” (45% off).",
-        "code": "No code. The price is on the plan card.",
-        "ends": "The official sale record ends at " + BF_ENDS_UTC + " (" + BF_ENDS_LOCAL + "). The monthly cards print the renewal list price but do not print a separate calendar end.",
-        "source": (PRICING, "Higgsfield pricing page, Monthly tab"),
-        "checked": RECHECK_WHEN,
-    },
-    {
         "id": "business-monthly",
         "title": "Business plans, monthly",
-        "offer": "Team $55 per seat a month (was $79, 30% off, 5 seats shown). Scale $120 per seat a month (was $215, 45% off). The Business tab banner says “Up to 63% OFF.” Billed yearly, the plan data the pricing page loads lists Team at $45 per seat a month (43% off) and Scale at $80 a month (63% off).",
+        "offer": "Monthly billing: Team $55 per seat a month (list $79), Scale $119.99 per seat a month (list $215). Annual billing: Team $45 per seat a month, billed $539.98 yearly, and Scale $80 per seat a month, billed $960.02 yearly (list $79 and $215).",
         "code": "No code. The price is on the plan card.",
         "ends": "End date not stated.",
-        "source": (PRICING, "Higgsfield pricing page, Business plans tab"),
+        "source": ("https://higgsfield.ai/pricing.md", "Higgsfield pricing.md, Business plans"),
         "checked": RECHECK_WHEN,
     },
     {
         "id": "referral",
         "title": "Discount through a referral link",
-        "offer": "Higgsfield’s affiliate program terms say “anyone who signs up through your link gets up to 50% off for three hours.” Whether that combines with the Black Friday prices is not stated. VidFare’s Higgsfield links are referral links of this kind.",
+        "offer": "Higgsfield’s affiliate program terms say “anyone who signs up through your link gets up to 50% off for three hours.” Whether that combines with a sale price on the plan cards is not stated. VidFare’s Higgsfield links are referral links of this kind.",
         "code": "No code. It applies through the link.",
         "ends": "End date not stated. The changelog entry gives the “Terms as of August 24, 2026.”",
         "source": (CHANGELOG, "Higgsfield changelog, Aug 24, 2026 (Affiliate Program)"),
-        "checked": CHECKED_WHEN,
+        "checked": EARLIER_WHEN,
     },
 ]
 
@@ -83,28 +62,28 @@ EXPIRED = [
         "status": "Expired",
         "ends": "Ended. The first-month offers ended Nov 15, 2026 in our deal record; the public sale record ended at 2026-11-15T00:00:00Z (Nov 14, 2026, 7:00 PM ET (4:00 PM PT)).",
         "source": (BLOG_1111, "Higgsfield 11.11 deals blog post"),
-        "checked": CHECKED_WHEN,
+        "checked": EARLIER_WHEN,
     },
     {
         "title": "Wan 3.0 on the API, 60% off",
         "status": "Expired",
         "ends": "“until October 31, 2026,” as the Oct 13, 2026 changelog entry states.",
         "source": (CHANGELOG, "Higgsfield changelog, Oct 13, 2026"),
-        "checked": CHECKED_WHEN,
+        "checked": EARLIER_WHEN,
     },
     {
         "title": "Genjutsu API, 50% off",
         "status": "Expired",
         "ends": "“through Oct 31 2026,” as the official post states.",
         "source": (X_GENJUTSU, "@higgsfield_ai post"),
-        "checked": CHECKED_WHEN,
+        "checked": EARLIER_WHEN,
     },
     {
         "title": "Free 72-hour Higgsfield MCP trial",
         "status": "Not confirmed current",
         "ends": "End date not stated. Posted Nov 10–11, 2026; after 72 hours the post says it renews to Ultra with 40% off the first month unless you cancel. The MCP page did not show the trial on Nov 17, 2026.",
         "source": (X_MCP_TRIAL, "@higgsfield post, Nov 11, 2026"),
-        "checked": CHECKED_WHEN,
+        "checked": EARLIER_WHEN,
     },
     {
         "title": "Kling 4.0 launch discount",
@@ -145,7 +124,7 @@ def blurb(g):
 def description(g):
     text = (
         f"Higgsfield promo code: no public code found. Current deals from Higgsfield’s own "
-        f"pages, each with its source and stated end date. Last checked {_pretty(CHECKED)}."
+        f"pages, each with its source and stated end date. Last checked {_pretty(max(CHECKED, g['LAST']))}."
     )
     if len(text) > 160:
         raise SystemExit(f"{PATH} meta description is over 160 characters: {len(text)}")
@@ -173,33 +152,62 @@ def render(g):
     deals_href = root("/deals/")
     calc_href = root("/calculator/?model=kling-3-0&seconds=10")
 
+    st = deal_copy.hf_bf(g)
+    money = deal_copy.money
+    bf_end = st["end"] or "end not stated"
     # Kling 3.0 at 720p, audio not stated, as a per-second example of each plan price.
     r109 = _row(g, "r109")  # Plus annual
     r111 = _row(g, "r111")  # Ultra annual
     r110 = _row(g, "r110")  # Plus monthly, list
     r112 = _row(g, "r112")  # Ultra monthly, list
-    for r, usd in ((r109, 33), (r111, 50), (r110, 59), (r112, 129)):
-        plan = (g["db"].get("plans") or {}).get(r.get("plan")) or {}
-        if plan and float(plan.get("usd_month") or 0) != float(usd):
-            raise SystemExit(f"{PATH} copy assumes {r['plan']} is ${usd}/mo; catalog says {plan.get('usd_month')}")
     credits_clip = 7.5
-    six_k = 97.0 / 6000 * credits_clip / 5
-    nine_k = 139.0 / 9000 * credits_clip / 5
-    plus_first = 47.0 / 1200 * credits_clip / 5
-    ultra_first = 79.0 / 3000 * credits_clip / 5
+    current = list(CURRENT)
+    expired = list(EXPIRED)
+    if st["live"]:
+        annual_ids = [i for i in ("hf-plus-annual", "hf-ultra-annual", "hf-ultra-6k-annual", "hf-ultra-9k-annual") if i in st["live_ids"]]
+        monthly_ids = [i for i in ("hf-plus-monthly-first", "hf-ultra-monthly-first", "hf-ultra-6k-monthly-first", "hf-ultra-9k-monthly-first") if i in st["live_ids"]]
+        bf_rows = []
+        if annual_ids:
+            bf_rows.append({
+                "id": "bf-annual", "title": "Black Friday sale: annual plans",
+                "offer": " ".join(st["deals"][i]["source_quote"] for i in annual_ids),
+                "code": "No code. The price is on the plan card.",
+                "ends": f"Ends {st['ends_at']} ({bf_end}), the end time in the sale record on the pricing page. Vendors sometimes extend sales.",
+                "source": (PRICING, "Higgsfield pricing page"), "checked": st["verified"],
+            })
+        if monthly_ids:
+            bf_rows.append({
+                "id": "monthly-first", "title": "First month off on monthly plans",
+                "offer": " ".join(st["deals"][i]["source_quote"] for i in monthly_ids),
+                "code": "No code. The price is on the plan card.",
+                "ends": f"Ends with the sale record, {bf_end}.",
+                "source": (PRICING, "Higgsfield pricing page, Monthly tab"), "checked": st["verified"],
+            })
+        current = bf_rows + current
+    else:
+        expired = [{
+            "title": "Black Friday sale (annual and first-month prices)",
+            "status": "Expired",
+            "ends": "Ended " + bf_end + ", from the sale record on Higgsfield’s pricing page. " + " ".join(p + "." for p in deal_copy.hf_phases_text(st)),
+            "source": (PRICING, "Higgsfield pricing page"),
+            "checked": st["verified"],
+        }] + expired
 
     def example(entry_id):
         if entry_id == "bf-annual":
             return (
                 f"Plus annual {e(rate_money(r109['usd_per_second']))}/s (catalog row r109); "
-                f"Ultra 3K annual {e(rate_money(r111['usd_per_second']))}/s (row r111); "
-                f"Ultra 6K annual {e(rate_money(six_k))}/s, computed from the $97 card and 6,000 credits; Ultra 9K annual {e(rate_money(nine_k))}/s, computed from the $139 card and 9,000 credits. Neither is a catalog row."
+                f"Ultra 3K annual {e(rate_money(r111['usd_per_second']))}/s (row r111)."
             )
         if entry_id == "monthly-first":
-            return (
-                f"First month only: Plus {e(rate_money(plus_first))}/s, Ultra 3K {e(rate_money(ultra_first))}/s, computed, not catalog rows. "
-                f"After it renews: Plus {e(rate_money(r110['usd_per_second']))}/s (row r110), Ultra 3K {e(rate_money(r112['usd_per_second']))}/s (row r112)."
-            )
+            pf = deal_copy.price_after(st, "hf-plus-monthly-first")
+            uf = deal_copy.price_after(st, "hf-ultra-monthly-first")
+            first = ""
+            if pf and uf:
+                first = (f"First month only: Plus {e(rate_money(pf / 1200 * credits_clip / 5))}/s, "
+                         f"Ultra 3K {e(rate_money(uf / 3000 * credits_clip / 5))}/s, computed, not catalog rows. ")
+            return first + (f"After it renews: Plus {e(rate_money(r110['usd_per_second']))}/s (row r110), "
+                            f"Ultra 3K {e(rate_money(r112['usd_per_second']))}/s (row r112).")
         if entry_id == "referral":
             return "Not computed. The terms say “up to 50%” without a per-plan price."
         return "Not computed. The seat price and per-seat credits do not map to one clip rate."
@@ -208,7 +216,7 @@ def render(g):
         return "<tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>"
 
     cur_rows = []
-    for d in CURRENT:
+    for d in current:
         url, label = d["source"]
         cur_rows.append(trow(
             f"<b>{e(d['title'])}</b>",
@@ -232,7 +240,7 @@ def render(g):
 <tbody>{''.join(cur_rows)}</tbody></table></div>"""
 
     old_rows = []
-    for d in EXPIRED:
+    for d in expired:
         url, label = d["source"]
         old_rows.append(trow(
             f"<b>{e(d['title'])}</b>",
@@ -251,27 +259,27 @@ def render(g):
 </tr></thead>
 <tbody>{''.join(old_rows)}</tbody></table></div>"""
 
+    prices_sentence = deal_copy.hf_prices_sentence(g)
+    sale_sentence = deal_copy.hf_sale_sentence(st)
+    if st["live"]:
+        sale_bit = (f"The current discount needs no code: Higgsfield’s Black Friday prices are on the plan cards, "
+                    f"with Plus at {money(deal_copy.price_after(st, 'hf-plus-annual'))} a month and Ultra 3K at {money(deal_copy.price_after(st, 'hf-ultra-annual'))} a month, billed yearly, until {bf_end}.")
+        a_discount = ("Not a code. The Black Friday sale is applied on the pricing page itself. " + sale_sentence +
+                      " Prices exclude VAT and local taxes, which are added at checkout.")
+        a_end = (f"The sale record on Higgsfield’s pricing page ends at {st['ends_at']}, which is {st['end_long']}. "
+                 "The page itself shows only a countdown, and vendors sometimes extend sales, so check the pricing page before you buy.")
+    else:
+        sale_bit = f"Higgsfield’s Black Friday sale has ended (last phase ended {bf_end}). " + prices_sentence
+        a_discount = ("No. There was no code: the Black Friday sale was applied on the pricing page itself, and it has ended. "
+                      + sale_sentence + " " + prices_sentence)
+        a_end = sale_sentence
     a_q = (
-        "No. We found no public Higgsfield promo code on Higgsfield’s pricing page, help center, "
-        "changelog, or its official X accounts @higgsfield_ai and @higgsfield, checked Nov 19, 2026, "
-        "7:20 PM ET (4:20 PM PT). The current discount needs no code: Higgsfield’s Black Friday prices are on "
-        "the plan cards, with Plus at $33 a month and Ultra 3K at $50 a month, billed yearly, Ultra "
-        "6K at $97, and Ultra 9K at $139. Higgsfield’s help center says promo codes are announced on its official social "
+        f"No. We found no public Higgsfield promo code on Higgsfield’s pricing page, help center, "
+        f"changelog, or its official X accounts @higgsfield_ai and @higgsfield (pricing page re-read {CHECKED_WHEN}). "
+        + sale_bit +
+        " Higgsfield’s help center says promo codes are announced on its official social "
         "channels first, handed out at Discord community events, or issued case by case by Support. "
         "This page lists no code until one appears on an official channel."
-    )
-    a_discount = (
-        "Not a code. The Black Friday sale is applied on the pricing page itself: up to 63% off, with "
-        "Plus annual at $33 a month (was $59), Ultra 3K annual at $50 (was $129), Ultra 6K annual "
-        "at $97, and Ultra 9K annual at $139 (was $387). Monthly plans show a first-month price instead: Plus $47, then $59; Ultra 3K $79, then "
-        "$129. Prices exclude VAT and local taxes, which are added at checkout."
-    )
-    a_end = (
-        "The sale record embedded in Higgsfield’s pricing page ends at 2026-11-23T00:00:00Z, which is "
-        "Nov 22, 2026, 7:00 PM ET (4:00 PM PT). The page itself prints no date, only a "
-        "countdown, which read 2 days, 23 hours, 41 minutes at 7:20 PM ET (4:20 PM PT) on Nov 19, 2026, matching that time. "
-        "The record is labelled as a pre-Black Friday phase (pre_black_friday_63), and vendors sometimes extend sales, so "
-        "check the pricing page before you buy."
     )
     a_how = (
         "Sign in, click your avatar, choose Manage Account, open Promocode in the left sidebar, select "
@@ -290,12 +298,13 @@ def render(g):
         "No. Higgsfield’s help center says a promo price applies to the first payment or the period "
         "stated in the offer, and the plan then renews at the standard price. Its Nov 11, 2026 "
         "changelog says a sale discount covers the first year of an annual plan or the first month of "
-        "a monthly one. The monthly cards say so directly, for example Plus at $47 “renews at $59.” "
+        "a monthly one. The monthly first-month offers said so directly (“renews at $59” on Plus). "
         "For annual plans the sources disagree: the plan data the pricing page loads lists the annual "
         "discount as lasting “forever,” with a renewal price equal to the sale price. What an annual "
         "plan renews at after its first year is not confirmed."
     )
     a_old = (
+        ("" if st["live"] else "The Black Friday sale ended " + bf_end + ". ") +
         "The 11.11 sale ended, with its first-month offers ending Nov 15, 2026. The Kling 4.0 launch "
         "discount ended at 2026-10-29T00:00:00Z (Oct 28, 2026, 8:00 PM ET (5:00 PM PT)). The Wan 3.0 API 60% off "
         "ended October 31, 2026, and the Genjutsu API 50% off ended Oct 31, 2026. A free 72-hour MCP "
@@ -318,29 +327,32 @@ def render(g):
                 raise SystemExit(f"{PATH} FAQ text contains {bad}")
 
     lead = (
-        f"There is no public Higgsfield promo code on Higgsfield’s own pages or official accounts right "
-        f"now. The current discount needs no code: Black Friday prices are on the plan cards on "
-        f"{pricing}, with Plus at $33 a month and Ultra 3K at $50 a month, billed yearly. The sale "
-        f"record on that page ends Nov 22, 2026, 7:00 PM ET (4:00 PM PT) (2026-11-23T00:00:00Z), unless Higgsfield "
-        f"extends it. Every deal below has its source, its end date exactly as "
+        f"There is no public Higgsfield promo code on Higgsfield’s own pages or official accounts. "
+        f"{e(sale_bit)} Source: {pricing}. Every deal below has its source, its end date exactly as "
         f"the source states it, and when we last checked it, {e(CHECKED_WHEN)}."
     )
+    if st["live"]:
+        tk_sale = (f"<li><b>No code needed for the sale.</b> {e(sale_sentence)}</li>"
+                   f"<li><b>Ends {e(bf_end)}.</b> From the sale record in the pricing page. Vendors sometimes extend sales.</li>")
+        tk_rate = f"<li><b>Per second.</b> At the sale price, Kling 3.0 at 720p works out to {e(rate_money(r111['usd_per_second']))}/s on Ultra 3K annual if you use every credit.</li>"
+    else:
+        tk_sale = f"<li><b>The Black Friday sale has ended.</b> {e(sale_sentence)}</li><li><b>Current prices.</b> {e(prices_sentence)}</li>"
+        tk_rate = f"<li><b>Per second.</b> At the current Ultra 3K annual price, Kling 3.0 at 720p works out to {e(rate_money(r111['usd_per_second']))}/s if you use every credit.</li>"
 
     takeaways = f"""<div class="card" id="takeaways">
 <h2>Key takeaways</h2>
 <ul>
 <li><b>No public code.</b> None on Higgsfield’s pricing page, help center, changelog, {x_ai}, or {x_hf}, checked {e(CHECKED_WHEN)}.</li>
-<li><b>No code needed for the sale.</b> Plus $33/mo, Ultra 3K $50/mo, Ultra 6K $97/mo, Ultra 9K $139/mo, billed yearly, before tax.</li>
-<li><b>Ends Nov 22, 7:00 PM ET (4:00 PM PT).</b> That is 2026-11-23T00:00:00Z, from the sale record in the pricing page; the visible countdown matches. Vendors sometimes extend sales.</li>
+{tk_sale}
 <li><b>Renewals.</b> Monthly sale prices cover the first month, then renew at the standard price. For annual plans, the help center says standard price after the first year, but the plan data lists the discount as “forever,” so that is not confirmed.</li>
-<li><b>Per second.</b> At the sale price, Kling 3.0 at 720p works out to {e(rate_money(r111['usd_per_second']))}/s on Ultra 3K annual if you use every credit.</li>
+{tk_rate}
 </ul>
 </div>"""
 
     next_steps = f"""<div class="card" id="next-steps">
 <h2>What to do next</h2>
 <ul>
-<li><b>Check the vendor page.</b> Sale prices and countdowns change without notice. Confirm the price on {pricing} before you buy.</li>
+<li><b>Check the vendor page.</b> Prices and sales change without notice. Confirm the price on {pricing} before you buy.</li>
 <li><b>Try the calculator.</b> See what a plan costs per clip when you do not use every credit: <a href="{e(calc_href)}">credit calculator for a 10-second Kling 3.0 clip</a>.</li>
 <li><b>Open the model page.</b> Compare the sale rate with every other route on the <a href="{e(root('/models/kling-3-0/'))}">Kling 3.0 model page</a>, or see <a href="{e(kling_href)}">where Kling 3.0 is cheapest</a>.</li>
 </ul>
@@ -359,7 +371,7 @@ def render(g):
 <h2>Current Higgsfield deals</h2>
 <p>Only deals from Higgsfield’s own pages or official accounts. Each per-second example is Kling 3.0 at 720p, audio not stated, and assumes every credit you pay for is used, at about 7.5 credits per 5-second clip (Higgsfield labels it ~7). Prices exclude VAT and local taxes, which Higgsfield adds at checkout.</p>
 {current_table}
-<p class="small">The Ultra 6K annual card shows $258 crossed out, while 12 × ($258 − $97) would be $1,932, not the “Save $1,836” on the same card; the monthly 6K list price is $250, and 12 × ($250 − $97) is $1,836. Both the crossed-out price and the Save figure are copied as shown. Per-second rates for every model on the sale are in <a href="{e(bf_href)}">Higgsfield Black Friday 2026: what you save per second</a>.</p>
+<p class="small">Per-second rates for every Higgsfield plan are in <a href="{e(bf_href)}">Higgsfield Black Friday 2026: what you save per second</a> and <a href="{e(pricing_href)}">Higgsfield pricing explained</a>.</p>
 
 <h2>Is there a Higgsfield AI discount code for Black Friday?</h2>
 <p>{e(a_discount)}</p>
@@ -384,7 +396,7 @@ def render(g):
 <p>Higgsfield links on this page are affiliate links (parameter <code>fpr=emmanuel-bbfe0e</code>) and use <code>rel="sponsored nofollow"</code>. If you buy through one, VidFare may earn a commission, at no extra cost to you. That never decides which deals are listed or their order. Every live deal we track, from every vendor, is on the <a href="{e(deals_href)}">deals page</a>.</p>
 
 <h2>What is confirmed, and what is not?</h2>
-<p><b>Confirmed {e(CHECKED_WHEN)}:</b> the annual and monthly plan card prices above, the Business monthly seat prices, the Ultra 9K prices, the sale end time and the Kling 4.0 launch end time in the page’s embedded records (re-read {e(RECHECK_WHEN)}), the countdown reading, the help center’s promocode steps and renewal rule, the changelog entries, and the official X posts linked here. <b>Unknown:</b> whether the sale is extended past its stated end; what an annual plan renews at after the first year; the Business annual prices as shown on the cards (we read them from the plan data only); the tax-inclusive checkout total; whether the referral discount combines with the sale; whether the MCP trial is still offered; and any code shared privately on Discord or by Support.</p>
+<p><b>Confirmed {e(CHECKED_WHEN)}:</b> the plan prices and sale status above, the Business seat prices on pricing.md, and the sale end time in the page’s embedded sale record. The help center’s promocode steps and renewal rule, the changelog entries, and the official X posts linked here were read on earlier checks, as dated in the tables. <b>Unknown:</b> whether Higgsfield runs another sale phase; what an annual plan renews at after the first year; the Business annual prices as shown on the cards (we read them from the plan data only); the tax-inclusive checkout total; whether the referral discount combines with the sale; whether the MCP trial is still offered; and any code shared privately on Discord or by Support.</p>
 {next_steps}
 {g["how_block"]()}
 """

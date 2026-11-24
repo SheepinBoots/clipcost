@@ -18,12 +18,15 @@ PAGE = os.path.join(ROOT, "dist", "guides", "higgsfield-pricing", "index.html")
 
 
 def rate_money(v):
-    x = float(v)
-    if x < 0.10:
-        s = f"{x:.4f}".rstrip("0").rstrip(".")
-    else:
-        s = f"{x:.3f}".rstrip("0").rstrip(".")
-    return "$" + s
+    # Same half-up rounding as build_site.rate_money (4 places under $0.10, else 3).
+    from decimal import Decimal, ROUND_HALF_UP
+    d = Decimal(str(v))
+    places = 3 if abs(d) >= Decimal("0.1") else 4
+    text = f"{abs(d.quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)):.{places}f}"
+    whole, frac = text.split(".")
+    frac = frac.rstrip("0").ljust(2, "0")
+    return f"{'-' if d < 0 else ''}${whole}.{frac}"
+
 
 
 def main():
@@ -63,21 +66,10 @@ def main():
     # Official sale and plan figures that must appear.
     for needle in (
         "$19",
-        "$35",
         "$59",
-        "$47",
-        "$65",
         "$129",
         "$79",
-        "$33",
-        "$50",
-        "$90",
-        "$97",
-        "$139",
         "Black Friday",
-        "$110",
-        "$150",
-        "$209",
         "$250",
         "$258",
         "$375",
@@ -89,9 +81,6 @@ def main():
         "9,000",
         "11.11",
         "Nov 14, 2026, 7:00 PM ET (4:00 PM PT)",
-        "11.11 sale ends on Nov 15",
-        "November 22, 2026, 7:00 PM ET (4:00 PM PT)",
-        "2026-11-23T00:00:00Z",
         "only on higgsfield.ai",
         "Affiliate links never change this price order",
         "Confirmed",
@@ -110,6 +99,26 @@ def main():
     ):
         if needle.lower() not in text.lower():
             errors.append(f"guide needle missing: {needle}")
+
+    # Sale figures come from the deal records in deals.json.
+    import deal_copy
+    st = deal_copy.hf_bf({})
+    if st["live"]:
+        for i in st["live_ids"]:
+            v = deal_copy.price_after(st, i)
+            if v is not None and f"${v:g}" not in text:
+                errors.append(f"live deal {i} price ${v:g} missing")
+        if st["end"] not in text:
+            errors.append(f"live sale end {st['end']} missing")
+        if "sale has ended" in text.lower():
+            errors.append("says the Black Friday sale has ended while its deal is live")
+    else:
+        if "Black Friday sale has ended" not in text:
+            errors.append("ended Black Friday sale is not described as ended")
+        if "live until" in text or "is live on its pricing page" in text:
+            errors.append("ended Black Friday sale still described as live")
+    if "right now" in text.lower() and "Nov 19" in text:
+        errors.append("stale Nov 19 prices presented as current")
 
     for question in (
         hf_pricing_guide.QUESTION,

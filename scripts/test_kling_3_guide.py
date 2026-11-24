@@ -19,13 +19,15 @@ PAGE = os.path.join(ROOT, "dist", "guides", "cheapest-kling-3-0", "index.html")
 
 
 def rate_money(v):
-    places = 3 if abs(Decimal(str(v))) >= Decimal("0.1") else 4
-    n = Decimal(str(v)).quantize(Decimal("1").scaleb(-places), rounding=ROUND_HALF_UP)
-    whole, frac = f"{abs(n):.{places}f}".split(".")
-    frac = frac.rstrip("0")
-    if len(frac) < 2:
-        frac = frac.ljust(2, "0")
-    return f"${whole}.{frac}"
+    # Same half-up rounding as build_site.rate_money (4 places under $0.10, else 3).
+    from decimal import Decimal, ROUND_HALF_UP
+    d = Decimal(str(v))
+    places = 3 if abs(d) >= Decimal("0.1") else 4
+    text = f"{abs(d.quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)):.{places}f}"
+    whole, frac = text.split(".")
+    frac = frac.rstrip("0").ljust(2, "0")
+    return f"{'-' if d < 0 else ''}${whole}.{frac}"
+
 
 
 def main():

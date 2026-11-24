@@ -30,6 +30,8 @@ WS_WANP = "https://wavespeed.ai/models/alibaba/wan-3.0-prime/text-to-video"
 WS_SEED = "https://wavespeed.ai/models/bytedance/seedance-2.5/text-to-video"
 WS_H3 = "https://wavespeed.ai/models/wavespeed-ai/minimax-h3/text-to-video"
 RW_PRICING = "https://runware.ai/pricing"
+# Runware Wan 3.0 pages re-read after the Wan sale ended (sales data endsAt 2026-11-23).
+RW_CHECKED_WHEN = "Nov 24, 2026, 3:22 PM ET (12:22 PM PT)"
 RW_WAN = "https://runware.ai/wan-3-0"
 RW_H3 = "https://runware.ai/minimax-h3"
 ALTS = "/guides/higgsfield-alternatives/"
@@ -82,7 +84,7 @@ def blurb(g):
 def description(g):
     text = (
         "fal AI pricing versus Replicate, WaveSpeed, and Runware for the same "
-        "models, in dollars per second. Last checked Nov 17, 2026."
+        "models, in dollars per second. Last checked Nov 24, 2026."
     )
     if len(text) > 160:
         raise SystemExit(f"{PATH} meta description is over 160 characters: {len(text)}")
@@ -210,11 +212,12 @@ def render(g):
         )
 
     live_note = f"Read {e(CHECKED_WHEN)}. Not a catalog row."
+    rw_note = f"Read {e(RW_CHECKED_WHEN)}. Not a catalog row."
     wan_live = manual_table("wan-live-table", [
         ("WaveSpeed", "Wan 3.0", "API list", "480p", "optional (default on in the form; the published table does not change the rate)", "$0.05", "published list rate", f"{ws_wan}. 720p is $0.10/s and 1080p is $0.20/s on the same table. {live_note}"),
         ("WaveSpeed", "Wan 3.0 Prime", "API list", "480p", "not stated as a price change on the table", "$0.075", "published list rate", f"{ws_wanp}. 720p is $0.15/s and 1080p is $0.30/s. {live_note}"),
-        ("Runware", "Wan 3.0", "API sale, through November 23, 2026", "480p", "same rate for every stated input type", "$0.015", "promo; list $0.05/s", f"{rw_wan}. Sale is 70% off. List rates are $0.05, $0.10, and $0.20/s at 480p, 720p, and 1080p. Sale 720p is $0.03/s and 1080p is $0.06/s. {live_note}"),
-        ("Runware", "Wan 3.0 Prime", "API sale, through November 23, 2026", "480p", "same rate for every stated input type", "$0.034", "promo; list $0.068/s", f"{rw_wan}. Sale is 50% off. List rates are $0.068, $0.14, and $0.28/s. Sale 720p is $0.07/s and 1080p is $0.14/s. {live_note}"),
+        ("Runware", "Wan 3.0", "API list", "480p", "same rate for every stated input type", "$0.05", "published list rate", f"{rw_wan}. 720p is $0.10/s and 1080p is $0.20/s. The 70% off sale ($0.015/s at 480p) ended November 23, 2026, per Runware’s own sale data. {rw_note}"),
+        ("Runware", "Wan 3.0 Prime", "API list", "480p", "same rate for every stated input type", "$0.068", "published list rate", f"{rw_wan}. 720p is $0.14/s and 1080p is $0.28/s. The 50% off sale ended November 23, 2026. {rw_note}"),
     ])
     seed_live = manual_table("seed-live-table", [
         ("WaveSpeed", "Seedance 2.5", "API list, no reference video", "480p", "not stated as a separate audio price on the table", "$0.18", "published list rate", f"{ws_seed}. 720p is $0.36/s, 1080p is $0.90/s, and 4K is $1.80/s, billed linearly from 4 to 30 seconds. A reference-video path uses a lower per-second rate ($0.11/s at 480p) on both the normalized input and the output. {live_note}"),
@@ -233,10 +236,9 @@ def render(g):
         f"video input ({rate_money(r202['usd_per_second'])}/s versus fal’s token-billed "
         f"estimate of {rate_money(r017['usd_per_second'])}/s, which includes audio). "
         f"WaveSpeed’s published list for Wan 3.0 at 480p is $0.05/s, the same as fal. "
-        f"Runware is running a sale through November 23, 2026: Wan 3.0 at 480p is $0.015/s "
-        f"(list $0.05/s), which is below fal’s {rate_money(r009['usd_per_second'])}/s while "
-        f"the sale lasts. After the sale, Runware’s published list matches fal at 480p, "
-        f"720p, and 1080p. A price we could not verify at a stated resolution is marked "
+        f"Runware’s Wan 3.0 sale ($0.015/s at 480p) ended November 23, 2026; its published "
+        f"list is now $0.05/s at 480p, $0.10/s at 720p, and $0.20/s at 1080p, the same as fal. "
+        f"A price we could not verify at a stated resolution is marked "
         f"unknown."
     )
     a_how = (
@@ -251,9 +253,8 @@ def render(g):
     a_best = (
         "Replicate is best for Wan 3.0 at 480p and for Seedance 2.5 at 480p with no video "
         "input, among the catalog rows we can compare, and those Replicate rates were also "
-        "on the vendor pages today. Runware’s Wan 3.0 sale is best for the lowest verified "
-        "480p Wan 3.0 API rate we could read today, through November 23, 2026. It is not "
-        "for a post-sale rate below fal, because the published list then matches fal. "
+        "on the vendor pages when read. Runware’s Wan 3.0 sale ended November 23, 2026, and "
+        "its published list now matches fal, so it is no longer the lowest 480p Wan 3.0 rate. "
         "fal remains a useful default when you already use its endpoint, but it is not the "
         "cheapest verified option for those two models. No line is given for Runware "
         "Seedance 2.5, or for WaveSpeed or Runware Kling 3.0, because those $/s figures "
@@ -265,8 +266,8 @@ def render(g):
         f"and 1080p, and Seedance 2.5 at $0.1028/s (480p, no video input) and $0.2312/s "
         f"(720p, no video input). Confirmed today on WaveSpeed model pages: the Wan 3.0, "
         f"Wan 3.0 Prime, Seedance 2.5, Seedance 2.5 Flash, and MiniMax H3 list tables "
-        f"quoted above. Confirmed today on Runware: the Wan 3.0 and Wan 3.0 Prime sale and "
-        f"list rates through November 23, 2026, and MiniMax H3 at $0.08/s (768p) and "
+        f"quoted above. Confirmed {RW_CHECKED_WHEN} on Runware: the Wan 3.0 and Wan 3.0 "
+        f"Prime list rates (the sale ended November 23, 2026), and MiniMax H3 at $0.08/s (768p) and "
         f"$0.13/s (1440p). WaveSpeed also states that eligible new accounts get $1 in "
         f"free credits, with no credit card required to start, on {ws_src}. Unknown: a "
         f"Runware Seedance 2.5 or Kling 3.0 rate at a stated resolution; a WaveSpeed "
@@ -314,7 +315,7 @@ def render(g):
 <ul>
 <li><b>Replicate undercuts fal on two catalog models we can compare like for like.</b> Wan 3.0 at 480p is {rate_money(r025['usd_per_second'])}/s versus fal’s {rate_money(r009['usd_per_second'])}/s. Seedance 2.5 at 480p with no video input is {rate_money(r202['usd_per_second'])}/s versus fal’s token-billed estimate of {rate_money(r017['usd_per_second'])}/s.</li>
 <li><b>WaveSpeed’s Wan 3.0 list at 480p matches fal</b> at $0.05/s. Seedance 2.5 list at 480p, with no reference video, is $0.18/s, between Replicate and fal.</li>
-<li><b>Runware’s Wan 3.0 sale is $0.015/s at 480p through November 23, 2026</b> (list $0.05/s). After the sale, the published list matches fal at 480p, 720p, and 1080p.</li>
+<li><b>Runware’s Wan 3.0 sale ended November 23, 2026</b> (it was $0.015/s at 480p). Runware’s published list now matches fal at 480p, 720p, and 1080p ($0.05, $0.10, and $0.20/s).</li>
 <li><b>Unverified rates stay unknown.</b> Runware Seedance 2.5, and Kling 3.0 on WaveSpeed or Runware, have no verified $/s at a stated resolution on this page.</li>
 </ul>
 </div>"""
@@ -348,7 +349,7 @@ def render(g):
 
 <h2>Wan 3.0 Prime</h2>
 {catalog_table(PRIME_ROWS, "prime-catalog-table")}
-<p>WaveSpeed’s list and Runware’s sale for Prime are in the live table above. fal’s catalog row is {rate_money(r012['usd_per_second'])}/s at 480p, from {src(FAL_WANP, "fal’s Wan 3.0 Prime page")}.</p>
+<p>WaveSpeed’s and Runware’s Prime lists are in the live table above. fal’s catalog row is {rate_money(r012['usd_per_second'])}/s at 480p, from {src(FAL_WANP, "fal’s Wan 3.0 Prime page")}.</p>
 
 <h2>Seedance 2.5</h2>
 <p>The Replicate catalog row is the no-video-input rate at 480p. fal’s catalog row is a token-billed estimate at 480p with audio. They are the closest same-model comparison we can show, and the billing methods differ.</p>
@@ -376,8 +377,8 @@ def render(g):
 <h2>Which API is best for each use?</h2>
 <p>{e(a_best)}</p>
 <ul>
-<li><b>Replicate.</b> Best for: Wan 3.0 at 480p, and Seedance 2.5 at 480p with no video input, among the verified like-for-like rows. Not for: a post-sale Wan 3.0 rate as low as Runware’s current 70% off sale. {rep_wan} · {rep_seed}.</li>
-<li><b>Runware, through November 23, 2026.</b> Best for: the lowest verified Wan 3.0 API rate we could read today ($0.015/s at 480p). Not for: assuming that sale rate lasts after November 23, or for a verified Seedance 2.5 $/s. {rw_wan}.</li>
+<li><b>Replicate.</b> Best for: Wan 3.0 at 480p, and Seedance 2.5 at 480p with no video input, among the verified like-for-like rows. Not for: rates above 1080p, which are not compared here. {rep_wan} · {rep_seed}.</li>
+<li><b>Runware.</b> Best for: a published Wan 3.0 list that matches fal, now that its sale ended November 23, 2026, and MiniMax H3 at $0.08/s (768p). Not for: a verified Seedance 2.5 $/s. {rw_wan}.</li>
 <li><b>WaveSpeed.</b> Best for: a published Wan 3.0 list that matches fal at 480p, 720p, and 1080p, and a published Seedance 2.5 list at 480p ($0.18/s) between Replicate and fal. Not for: a verified Kling 3.0 rate. {ws_wan} · {ws_seed}.</li>
 <li><b>fal.</b> Best for: staying on one endpoint you already use, with catalog coverage across Wan, Seedance, Kling, Veo, MiniMax, and Grok. Not for: the lowest verified Wan 3.0 or Seedance 2.5 rate in this comparison. {fal_wan}.</li>
 </ul>

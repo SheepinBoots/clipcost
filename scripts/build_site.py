@@ -3088,8 +3088,8 @@ for deal in holiday_live:
                 "Monthly billing $/s",
                 "Annual billing $/s",
                 "Before is monthly billing. After is annual billing under the Black Friday sale. "
-                "The official sale record ends at 2026-11-23T00:00:00Z (November 22, 2026, 7:00 PM ET (4:00 PM PT)). "
-                "Vendors sometimes extend sales.",
+                + (f"The official sale record ends at {deal['ends_at']} ({_deal_end_label(deal)}). " if deal.get("ends_at") else "")
+                + "Vendors sometimes extend sales.",
             ))
         else:
             holiday_html.append("<p><b>Per second, from the price catalog</b></p>")
@@ -3172,8 +3172,13 @@ else:
 status_bits = []
 if not titled:
     status_bits.append("No live deal is titled Black Friday or Cyber Monday.")
-if any("black friday" in ((d.get("title") or "") + " " + (d.get("notes") or "")).lower() for d in holiday_live):
-    status_bits.append("Higgsfield Black Friday 63% off ends Nov 22, 2026, 7:00 PM ET (4:00 PM PT).")
+_hf_bf_live = [
+    d for d in holiday_live
+    if d.get("vendor") == "Higgsfield" and "black friday" in (d.get("title") or "").lower() and d.get("ends_at")
+]
+if _hf_bf_live:
+    _hf_end = min(_hf_bf_live, key=lambda d: d["ends_at"])
+    status_bits.append(f"Higgsfield Black Friday sale ends {dealmod.format_end_display(_hf_end, short=True)}.")
 # Description only lists Black Friday plan prices that map to catalog plans, so it
 # stays under 160 characters when extra tiers (Ultra 6K/9K) are also recorded.
 bf_priced = [
@@ -3191,6 +3196,14 @@ if bf_priced:
         bits.append(f"{plan_name} ${deal['price_before']:g} to ${deal['price_after']:g}/mo")
     status_bits.append(", ".join(bits) + ", monthly vs annual.")
 bf_desc = " ".join(status_bits)
+if not bf_desc:
+    # No Higgsfield sale line and no priced plan: describe the live holiday deals instead.
+    _vendors = sorted({d.get("vendor") for d in holiday_live if d.get("vendor")})
+    if _vendors:
+        bf_desc = (f"{len(holiday_live)} live AI video Black Friday deals ({', '.join(_vendors)}), "
+                   f"each with its source and end date. Last updated {BF_CONTENT_DATE}.")
+    if not bf_desc or len(bf_desc) > 160:
+        bf_desc = f"Live AI video Black Friday and holiday deals, each with its source and end date. Last updated {BF_CONTENT_DATE}."
 if len(bf_desc) > 160:
     raise SystemExit(f"black friday description is {len(bf_desc)} characters")
 bf_faqs = [
@@ -3234,7 +3247,7 @@ bf_body = (
     "<h1>AI video Black Friday and holiday deals</h1>"
     f'<p class="lead">{e(lead)}</p>'
     f"<p>{e(updated_line)}</p>"
-    f'<p>How the current Higgsfield Black Friday prices convert to dollars per second: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>. Every current plan, including list vs sale: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a>.</p>'
+    f'<p>How Higgsfield’s Black Friday prices converted to dollars per second, and whether the sale is still on: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a>. Every current plan price: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a>.</p>'
     "<h2>Holiday-sale wording in the current deals</h2>"
     + "".join(holiday_html)
     + "<h2>Other live deals with an end date</h2>"

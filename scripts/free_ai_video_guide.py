@@ -5,6 +5,9 @@ vendor pages on 2026-11-15. Catalog paid-step rates come from data/prices.json
 and were last fully checked 2026-11-14. This page never names Sora.
 """
 from decimal import Decimal, ROUND_HALF_UP
+import datetime
+
+import deal_copy
 
 PATH = "/guides/free-ai-video-generators/"
 LABEL = "Free AI video generators"
@@ -14,10 +17,12 @@ CHECKED = "2026-11-15"
 CHECKED_WHEN = (
     "Nov 15, 2026, 9:24–9:32 AM ET (6:24–6:32 AM PT)"
 )
+CHECKED_DAY = "Nov 15, 2026"
 SIGNUP_CHECKED = "2026-11-16"
 SIGNUP_CHECKED_WHEN = (
     "Nov 16, 2026, 8:24 AM ET (5:24 AM PT)"
 )
+SIGNUP_CHECKED_DAY = "Nov 16, 2026"
 
 # Official pages opened on CHECKED.
 FLOW_CREDITS = "https://support.google.com/flow/answer/16526234?hl=en"
@@ -92,10 +97,32 @@ def blurb(g):
     )
 
 
+PAID_ROWS = (ROW_VEO, ROW_KLING, ROW_WAN, ROW_HAILUO, ROW_GROK, ROW_RUNWAY, ROW_SEEDANCE, ROW_OMNI)
+
+
+def _row_dates(g):
+    out = []
+    for rid in PAID_ROWS:
+        r = row_by_id(g["rows"], rid)
+        if r and r.get("checked"):
+            out.append(r["checked"])
+    return out
+
+
+def last_checked(g):
+    """Newest real check date behind this page (vendor reads, catalog rows, last full check)."""
+    return max([CHECKED, SIGNUP_CHECKED, g["LAST"]] + _row_dates(g))
+
+
+def _day(iso):
+    d = datetime.date.fromisoformat(iso)
+    return f"{d.strftime('%b')} {d.day}, {d.year}"
+
+
 def description(g):
     text = (
         "Which free AI video generators work with no sign-up, which need an "
-        "account but no card, and what you actually get. Last checked Nov 16, 2026."
+        f"account but no card, and what you actually get. Last checked {_day(last_checked(g))}."
     )
     if len(text) > 160:
         raise SystemExit(f"{PATH} meta description is over 160 characters: {len(text)}")
@@ -109,14 +136,19 @@ def render(g):
     outbound = g["outbound"]
     rows = g["rows"]
 
-    dates = [CHECKED, SIGNUP_CHECKED, LAST]
-    for rid in (
-        ROW_VEO, ROW_KLING, ROW_WAN, ROW_HAILUO, ROW_GROK, ROW_RUNWAY, ROW_SEEDANCE, ROW_OMNI
-    ):
-        r = row_by_id(rows, rid)
-        if r and r.get("checked"):
-            dates.append(r["checked"])
-    g["SITEMAP_LASTMOD"][PATH] = max(dates)
+    row_dates = _row_dates(g)
+    g["SITEMAP_LASTMOD"][PATH] = last_checked(g)
+    if row_dates:
+        lo, hi = min(row_dates), max(row_dates)
+        rows_checked = f"rows last stored as checked {hi}" if lo == hi else f"rows last stored as checked between {lo} and {hi}"
+    else:
+        rows_checked = "row check dates not stored"
+    hf_state = deal_copy.hf_bf(g)
+    if hf_state["live"]:
+        hf_sale = (f' Higgsfield’s Black Friday sale is live on that page until {e(hf_state["end"])}, per the '
+                   f'<a href="{e(root("/deals/"))}">deals page</a>; the catalog row above already uses the plan price on record.')
+    else:
+        hf_sale = ""
 
     def src(url, text="source"):
         return _src(g, url, text)
@@ -252,7 +284,7 @@ def render(g):
             f'No. The FAQ says Free plan exports have no watermark. {pika_src}.',
             f'No. Commercial license is not included on Free. {pika_src}.',
             "Image+audio jobs are listed on Free. Whether a given video model writes a soundtrack depends on that model; the Free plan card does not add a single audio rule.",
-            "Sign-up is offered (START FREE / Login). The Free plan is listed at $0 with credit packs available. Whether a card is required just to open that $0 plan is not stated on the pricing page today. Buying a pack is a paid step.",
+            f"Sign-up is offered (START FREE / Login). The Free plan is listed at $0 with credit packs available. Whether a card is required just to open that $0 plan is not stated on the pricing page as of {SIGNUP_CHECKED_DAY}. Buying a pack is a paid step.",
             f'Pika is not a row in our catalog. Official first paid plan is Starter at $10/month or $8/month billed yearly, with 600 credits a month. On Starter, a 5-second Seedance 2.5 clip at 720p is listed at 122 credits, about $2.03, or about $0.407/s, if you use the month’s credits on that clip size. {pika_src}. The cheapest Seedance 2.5 row we track is {e(paid_phrase(g, seedance))}. {row_src(seedance)}.',
         ]),
         tr([
@@ -289,13 +321,13 @@ def render(g):
             f'Not included. Commercial use is listed as not included on Free and included on paid plans. {hf_src}.',
             "Unknown on Free.",
             "Sign-in is offered from the pricing page. Whether a card is required for Free is not stated.",
-            e(paid_phrase(g, wan)) + f' is the cheapest Higgsfield catalog row we track. {row_src(wan)}. Official first paid Starter is listed at $19/month for 270 credits a month. A Black Friday sale (up to 60% off) was on the same page today; this guide does not treat the animated sale digits as a verified price. {hf_src}.',
+            e(paid_phrase(g, wan)) + f' is the cheapest Higgsfield catalog row we track. {row_src(wan)}. Official first paid Starter is listed at $19/month for 270 credits a month.' + hf_sale + f' {hf_src}.',
         ]),
         tr([
             "Hailuo (MiniMax)",
-            f'Free users who sign in can generate video. Downloads include a watermark. There are no recurring monthly credits. New accounts registered on or after June 18, 2025 get a one-time welcome package of free credits that expire three days after they are granted, one package per user. The terms do not state the amount. {hailuo_terms_src}. The public pricing table did not load today; the homepage CTA says new users receive free credits, from {hailuo_plans_src}.',
+            f'Free users who sign in can generate video. Downloads include a watermark. There are no recurring monthly credits. New accounts registered on or after June 18, 2025 get a one-time welcome package of free credits that expire three days after they are granted, one package per user. The terms do not state the amount. {hailuo_terms_src}. The public pricing table did not load on {CHECKED_DAY}; the homepage CTA says new users receive free credits, from {hailuo_plans_src}.',
             "Unknown. The official terms do not publish the welcome-credit amount or the credits a Hailuo clip costs on Free, so this site does not invent a clip count.",
-            "Unknown on Free. The pricing table did not load today.",
+            f"Unknown on Free. The pricing table did not load on {CHECKED_DAY}.",
             "Unknown on Free.",
             f'Yes. Free-user downloads include a watermark. {hailuo_terms_src}.',
             "Not stated for free users. The terms grant commercial-use language for content generated and downloaded on a paid plan, and do not say the same for Free.",
@@ -372,12 +404,23 @@ def render(g):
         "one-time credits. Pika’s Free plan includes all models and no watermark, "
         "but 0 monthly credits. Wan’s Free plan uses daily check-in credits whose "
         "amount is not published. Kling Basic, Higgsfield Free, and Hailuo Free "
-        "also omit a usable clip count on the public pages we could read today."
+        f"also omit a usable clip count on the public pages we could read on {CHECKED_DAY}."
+    )
+
+    a_intro = (
+        "Usually a small daily or one-time allowance, often with a watermark and "
+        "without a commercial license, and on several $0 plans no published clip "
+        f"count at all. Of the official pages read {CHECKED_DAY}, only Google Flow "
+        "publishes enough to count clips: about five Veo 3.1 Lite clips a day at "
+        "720p if every credit goes to Lite. Krea Free gives 100 units a day with no "
+        "card, Runway gives 125 one-time credits, and Pika Free has no watermark but "
+        "0 monthly credits. Once you need more clips, commercial rights, or "
+        "watermark-free exports, a paid per-second rate is the cheaper route."
     )
 
     q_nosignup = "Which free AI video generator works with no sign-up?"
     a_nosignup = (
-        "None of the official free video tiers we opened today publish a way to "
+        f"None of the official free video tiers we opened on {SIGNUP_CHECKED_DAY} publish a way to "
         "generate video with no account at all. The only plan that clearly says "
         "no credit card is required is Krea Free, which still requires you to "
         "sign up: the pricing page lists “Sign up for free” and “No credit card "
@@ -398,7 +441,7 @@ def render(g):
     q_best = "Which free option is best for each use?"
     a_best = (
         "If you need a free AI video generator with no sign-up, none of the official "
-        "tiers we checked today qualify. If you can create an account but do not "
+        f"tiers we checked on {SIGNUP_CHECKED_DAY} qualify. If you can create an account but do not "
         "want to enter a card, Krea Free is the only one that says “No credit card "
         "required.” "
         "For a repeating daily allowance you can count: Google Flow, at about five "
@@ -450,7 +493,7 @@ def render(g):
 
     q_unknown = "What is confirmed, and what is not?"
     a_unknown = (
-        "Confirmed today on official pages: Flow’s 50 daily credits and Lite and "
+        f"Confirmed {CHECKED_DAY} on official pages: Flow’s 50 daily credits and Lite and "
         "Omni Flash 1.2 credit costs; Krea Free at 100 units a day with no card; "
         "Runway Free at 125 one-time credits; Dreamina’s free daily credits and "
         "the US 120-credit figure on a Dreamina guide; Kling’s $0 Basic plan with "
@@ -475,7 +518,7 @@ def render(g):
     )
 
     faqs = [
-        (QUESTION, a_table),
+        (QUESTION, a_intro),
         (q_table, a_table),
         (q_nosignup, a_nosignup),
         (q_best, a_best),
@@ -505,9 +548,10 @@ def render(g):
 <p class="small">Last checked {e(LAST)}. Official free-tier allotments were read {e(CHECKED_WHEN)}. Sign-up and card rules were re-checked {e(SIGNUP_CHECKED_WHEN)}. Catalog paid-step rows use the date on each row. Affiliate links never change this price order. Every dollar-per-second figure below states its usage assumption, tier, resolution, and audio.</p>
 
 <h2>{e(QUESTION)}</h2>
-<p>{e(a_table)}</p>
+<p>{e(a_intro)}</p>
 
 <h2>{e(q_table)}</h2>
+<p>{e(a_table)}</p>
 <p>One row per tool. “Clips that equals” is filled only when the official page publishes both the free allotment and the credits (or seconds) a named clip costs. Paid-step rates are the cheapest matching row in our catalog, except where we have no catalog row and quote the official first paid plan instead.</p>
 {table}
 <p class="small">Sources and check time {e(CHECKED_WHEN)}: {flow_src} · {plans_src} · {krea_src} · {runway_src} · {dreamina_plans_src} · {dreamina_free_src} · {dreamina_price_src} · {kling_src} · {hf_src} · {pika_src} · {hailuo_terms_src} · {hailuo_plans_src} · {xai_src} · {grok_src} · {wan_src} · {luma_src} · {meta_src} · {meta_about_src}. Catalog rows are dated on each paid-step cell.</p>
@@ -515,7 +559,7 @@ def render(g):
 <h2 id="no-signup">{e(q_nosignup)}</h2>
 <p>{e(a_nosignup)} These sign-up and card facts were read {e(SIGNUP_CHECKED_WHEN)}.</p>
 <ul>
-<li><b>No account / no sign-up.</b> None confirmed. No official free video tier we opened today published a way to generate video without creating or signing into an account. {e(SIGNUP_CHECKED_WHEN)}.</li>
+<li><b>No account / no sign-up.</b> None confirmed. No official free video tier we opened on {e(SIGNUP_CHECKED_DAY)} published a way to generate video without creating or signing into an account. {e(SIGNUP_CHECKED_WHEN)}.</li>
 <li><b>Account, no card.</b> Confirmed: Krea Free, “Sign up for free” and “No credit card required,” 100 units a day. {krea_src}. <a href="{e(flow_href)}">Google Flow</a>’s free daily credits require a Google account; the help page does not say a card is required for the 50-credit no-plan allowance.</li>
 <li><b>Account required; card unknown or paid.</b> Sign-up or sign-in is offered, and a card is not clearly required or waived on the public page, for Runway Free ({runway_src}), Pika Free ({pika_src}), Dreamina ({dreamina_plans_src}), Wan Free ({wan_src}), Kling Basic ({kling_src}), Higgsfield Free ({hf_src}), and Hailuo ({hailuo_terms_src} · {hailuo_plans_src}). Pika credit packs and Luma’s first listed plan are paid. Whether Grok Imagine video works with no account is unknown ({grok_src}; {xai_src} returned 403). Meta AI video limits are unknown ({meta_src} returned 403; {meta_about_src}).</li>
 </ul>
@@ -539,7 +583,7 @@ def render(g):
 
 <h2>{e(q_unknown)}</h2>
 <p>{e(a_unknown)}</p>
-<p><b>Confirmed {e(CHECKED_WHEN)} on official pages:</b> the free-tier allotment facts in the table, each with its source link. <b>Confirmed {e(SIGNUP_CHECKED_WHEN)}:</b> the no-account, account-no-card, and card-unknown groupings above. <b>Confirmed in the catalog (rows last stored as checked 2026-11-15):</b> the paid-step $/s figures, each with its vendor URL, usage assumption, tier, resolution, and audio. The fal MiniMax H3 Max Turbo promo at $0.0175/s ended November 15, 2026; the paid-step cell now uses the standard rate.</p>
+<p><b>Confirmed {e(CHECKED_WHEN)} on official pages:</b> the free-tier allotment facts in the table, each with its source link. <b>Confirmed {e(SIGNUP_CHECKED_WHEN)}:</b> the no-account, account-no-card, and card-unknown groupings above. <b>Confirmed in the catalog ({e(rows_checked)}):</b> the paid-step $/s figures, each with its vendor URL, usage assumption, tier, resolution, and audio. The fal MiniMax H3 Max Turbo promo at $0.0175/s ended November 15, 2026; the paid-step cell now uses the standard rate.</p>
 <p class="small">Affiliate links never change this price order.</p>
 {g["how_block"]()}
 """

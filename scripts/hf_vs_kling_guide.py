@@ -74,7 +74,13 @@ def description(g):
     return text
 
 
+import deal_copy  # noqa: E402
+
+
 def render(g):
+    _pa = deal_copy.money(deal_copy.plan_month(g, "hf-plus-annual"))
+    _ua = deal_copy.money(deal_copy.plan_month(g, "hf-ultra-annual"))
+    _sale = " (Black Friday sale price until " + deal_copy.hf_bf(g)["end"] + ")" if deal_copy.hf_bf(g)["live"] else ""
     e, root, LAST = g["e"], g["root"], g["LAST"]
     rate_money = g["rate_money"]
     shown_tier = g["shown_tier"]
@@ -179,8 +185,8 @@ def render(g):
         f"credits a month. Those membership figures were not re-opened today; see "
         f"Kling AI pricing and credits for the full tables. Higgsfield’s catalog plans, "
         f"checked {checked_pt(CHECKED)}, are Starter $19 a month for 270 credits, Plus "
-        f"$59 monthly or $33 a month billed annually for 1,200 credits, and Ultra $129 "
-        f"monthly or $50 a month billed annually for 3,000 credits."
+        f"$59 monthly or {_pa} a month billed annually for 1,200 credits, and Ultra $129 "
+        f"monthly or {_ua} a month billed annually for 3,000 credits{_sale}."
     )
     a_best = (
         "Higgsfield Ultra (annual) is best for the lowest Kling 3.0 catalog rate we can "

@@ -126,7 +126,13 @@ def description(g):
     return text
 
 
+import deal_copy  # noqa: E402
+
+
 def render(g):
+    _pa = deal_copy.money(deal_copy.plan_month(g, "hf-plus-annual"))
+    _ua = deal_copy.money(deal_copy.plan_month(g, "hf-ultra-annual"))
+    _sale = " (Black Friday sale price until " + deal_copy.hf_bf(g)["end"] + ")" if deal_copy.hf_bf(g)["live"] else ""
     e, root, LAST = g["e"], g["root"], g["LAST"]
     rate_money, cost_money = g["rate_money"], g["cost_money"]
     shown_resolution, rate_label = g["shown_resolution"], g["rate_label"]
@@ -262,7 +268,7 @@ def render(g):
     a_q = (
         f"The cheapest Kling 3.0 rate we track is {rate_money(r111['usd_per_second'])} per second "
         f"on Higgsfield Ultra (annual) at 720p, audio not stated. That is an estimate from the "
-        f"credit plan: $50 a month for 3,000 credits, about 7.5 credits per 5-second clip, and it "
+        f"credit plan: {_ua} a month for 3,000 credits, about 7.5 credits per 5-second clip, and it "
         f"assumes you use every credit you pay for. With no credits to use up, the cheapest "
         f"pay-as-you-go rate is {rate_money(HF_API_STD_720)} per second for Kling 3.0 Standard at "
         f"720p on the Higgsfield API, audio not stated. The official Kling API charges "
@@ -309,9 +315,11 @@ def render(g):
         f"by credit plans on Higgsfield, Magnific and Krea if you use every credit. It is cheaper than "
         f"fal Pro ({rate_money(r015['usd_per_second'])}) and Runway’s Pro variants. The official Kling "
         "app sells monthly credits, but Kling does not publish how many credits a Kling 3.0 clip uses, "
-        "so this page cannot turn an app plan into a cost per second. Higgsfield’s annual plan rows "
-        "use its current sale prices. Higgsfield’s pricing page gives the sale an end of "
-        "2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)), unless it is extended."
+        "so this page cannot turn an app plan into a cost per second. "
+        + ("Higgsfield’s annual plan rows use its current Black Friday sale prices, which its pricing page "
+           f"says end {deal_copy.hf_bf(g)['end']}, unless the sale is extended."
+           if deal_copy.hf_bf(g)["live"] else
+           "Higgsfield’s annual plan rows use its current plan prices; its Black Friday sale has ended.")
     )
     a_unknown = (
         "Unknown, and not guessed: how many credits a Kling 3.0 clip uses in the official Kling app, "
@@ -380,7 +388,7 @@ def render(g):
 <h2>Kling 3.0 cost per second, cheapest route on each platform</h2>
 <p>One row per platform: the lowest Kling 3.0 rate we track there, cheapest first. One Higgsfield API mode read today (Pro at 1080p) is included and labelled as not a catalog row. A credit-plan rate is plan price ÷ credits × credits per clip ÷ seconds, and it assumes every credit you pay for is used. Unused credits make the real cost higher.</p>
 {platform_table}
-<p class="small">{PLATFORM_ORDER_NOTE} Higgsfield links can be affiliate links. Higgsfield’s annual plan rows use the sale prices on {hf_plans} ($33 a month for Plus, $50 for Ultra 3K, billed yearly), read {e(CHECKED_WHEN)}. The sale record on that page ends 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)) unless Higgsfield extends it; see <a href="{e(hf_bf)}">Higgsfield Black Friday</a>.</p>
+<p class="small">{PLATFORM_ORDER_NOTE} Higgsfield links can be affiliate links. Higgsfield’s annual plan rows use the prices on {hf_plans} ({_pa} a month for Plus, {_ua} for Ultra 3K, billed yearly{e(_sale)}), from the catalog plan records; see <a href="{e(hf_bf)}">Higgsfield Black Friday</a>.</p>
 
 <h2>What does Kling 3.0 cost per second?</h2>
 <p>{e(a_rate)}</p>

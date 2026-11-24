@@ -132,6 +132,31 @@ def main():
         "price:2026-11-20:r152:0.02597:0.02778",
         "price:2026-11-20:r153:0.04545:0.04861",
         "price:2026-11-20:r154:0.02727:0.02917",
+        "price:2026-11-23:r075:0.5914:0.74367",
+        "price:2026-11-24:r079:0.03436:0.03125",
+        "price:2026-11-24:r081:0.02084:0.01875",
+        "price:2026-11-24:r084:0.07562:0.06875",
+        "price:2026-11-24:r086:0.04584:0.04125",
+        "price:2026-11-24:r089:0.15124:0.1375",
+        "price:2026-11-24:r091:0.09166:0.0825",
+        "price:2026-11-24:r094:0.02062:0.01875",
+        "price:2026-11-24:r096:0.0125:0.01125",
+        "price:2026-11-24:r099:0.04124:0.0375",
+        "price:2026-11-24:r101:0.025:0.0225",
+        "price:2026-11-24:r104:0.0825:0.075",
+        "price:2026-11-24:r106:0.05:0.045",
+        "price:2026-11-24:r109:0.04124:0.0375",
+        "price:2026-11-24:r111:0.025:0.0225",
+        "price:2026-11-24:r113:0.04812:0.04375",
+        "price:2026-11-24:r115:0.02916:0.02625",
+        "price:2026-11-24:r117:0.165:0.15",
+        "price:2026-11-24:r119:0.1:0.09",
+        "price:2026-11-24:r121:0.275:0.25",
+        "price:2026-11-24:r123:0.16667:0.15",
+        "price:2026-11-24:r125:0.11:0.1",
+        "price:2026-11-24:r127:0.06667:0.06",
+        "price:2026-11-24:r130:0.0275:0.025",
+        "price:2026-11-24:r132:0.01667:0.015",
     }
     assert {event["id"] for event in log if event["kind"] == "price"} == price_ids
     assert any(event["kind"] == "note" and "a4f84a1" in event["text"] for event in log)
@@ -172,7 +197,11 @@ def main():
         "promo_started:deal:hf-kling4-launch:2026-10-21",
     }
     flux50_end = "promo_ended:deal:fal-flux3-50:2026-11-21"
-    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end, krea_end, wan_api_end} | nov15_ends | {"promo_ended:deal:krea-bf-seedance-75:2026-11-19", flux50_end}
+    # The 63% phase of Higgsfield's Black Friday sale ended 2026-11-23T00:00:00Z (logged by the Nov 22 run).
+    hf_bf63_ends = {f"promo_ended:deal:{i}:2026-11-22" for i in (
+        "hf-plus-annual", "hf-ultra-annual", "hf-plus-monthly-first", "hf-ultra-monthly-first",
+        "hf-ultra-6k-annual", "hf-ultra-9k-annual", "hf-ultra-6k-monthly-first", "hf-ultra-9k-monthly-first")}
+    assert promo_ids == week_ids | {future_start} | nov1_ends | {hailuo_end, flux_end, krea_end, wan_api_end} | nov15_ends | {"promo_ended:deal:krea-bf-seedance-75:2026-11-19", flux50_end} | hf_bf63_ends
     flux50 = next(event for event in log if event["id"] == flux50_end)
     assert flux50["date"] == "2026-11-22" and flux50["ended"] == "2026-11-21"
     assert flux50["end_is_estimate"] is False and flux50["checked"] == "2026-11-22"

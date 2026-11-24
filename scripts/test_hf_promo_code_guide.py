@@ -56,8 +56,28 @@ def main():
     if 'id="prices"' not in raw or 'id="expired-deals"' not in raw:
         errors.append("current or ended deals table missing")
     cur = re.search(r'id="prices".*?</table>', raw, re.S).group(0)
-    if cur.count("<tr>") - 1 != len(guide.CURRENT):
-        errors.append("current table row count does not match CURRENT")
+    # Black Friday rows come from deals.json: listed as current only while the deal is live.
+    import deal_copy
+    st = deal_copy.hf_bf({})
+    bf_rows = 0
+    if st["live"]:
+        bf_rows += any(i.endswith("-annual") for i in st["live_ids"])
+        bf_rows += any(i.endswith("-monthly-first") for i in st["live_ids"])
+    if cur.count("<tr>") - 1 != len(guide.CURRENT) + bf_rows:
+        errors.append("current table row count does not match CURRENT plus the live Black Friday rows")
+    old_tbl = re.search(r'id="expired-deals".*?</table>', raw, re.S).group(0)
+    if st["live"]:
+        for i in st["live_ids"]:
+            v = deal_copy.price_after(st, i)
+            if v is not None and f"${v:g}" not in cur:
+                errors.append(f"live deal {i} price ${v:g} missing from the current table")
+        if st["end"] and st["end"] not in text:
+            errors.append(f"live sale end {st['end']} missing")
+    else:
+        if "Black Friday" in cur:
+            errors.append("the ended Black Friday sale is listed as current")
+        if "Black Friday" not in old_tbl or (st["end"] and st["end"] not in old_tbl):
+            errors.append("the ended Black Friday sale is not in the expired table with its end")
     if "11.11" in cur:
         errors.append("the ended 11.11 sale is listed as current")
     old = re.search(r'id="expired-deals".*?</table>', raw, re.S).group(0)
@@ -72,15 +92,9 @@ def main():
     for needle in (
         "No public code",
         "no public Higgsfield promo code",
-        "$33",
-        "$50",
-        "$97",
         "End date not stated",
-        "$139",
-        "2026-11-23T00:00:00Z",
         "7:00 PM ET (4:00 PM PT)",
         "7:00 PM ET (4:00 PM PT)",
-        "sometimes extend",
         "PT",
         "Last checked",
         "Affiliate disclosure",

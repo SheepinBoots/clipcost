@@ -123,7 +123,7 @@ def main():
     # The Krea yearly plans in the catalog carry a sale block that ends at Krea's own deadline.
     for pid, month in (("krea-basic-yearly", 7), ("krea-pro-yearly", 28)):
         sale = db["plans"][pid]["sale"]
-        assert sale["ends_at"] == "2026-11-22T08:00:00Z" and sale["regular"]["usd_month"] == month
+        assert sale["ends_at"] == "2026-11-26T08:00:00Z" and sale["regular"]["usd_month"] == month
     print("ok")
 
 

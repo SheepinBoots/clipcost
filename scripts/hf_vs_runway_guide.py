@@ -76,7 +76,13 @@ def description(g):
     return text
 
 
+import deal_copy  # noqa: E402
+
+
 def render(g):
+    _pa = deal_copy.money(deal_copy.plan_month(g, "hf-plus-annual"))
+    _ua = deal_copy.money(deal_copy.plan_month(g, "hf-ultra-annual"))
+    _sale = " (Black Friday sale price until " + deal_copy.hf_bf(g)["end"] + ")" if deal_copy.hf_bf(g)["live"] else ""
     e, root, LAST = g["e"], g["root"], g["LAST"]
     rate_money = g["rate_money"]
     shown_tier = g["shown_tier"]
@@ -184,8 +190,8 @@ def render(g):
         f"Unlimited plans stay unchanged through November 30, 2026, then monthly plans "
         f"move to Max at $95 a month. Higgsfield’s catalog plans, checked the same day "
         f"as the Runway cards, are Starter $19 a month for 270 credits, Plus $59 monthly "
-        f"or $33 a month billed annually for 1,200 credits, and Ultra $129 monthly or "
-        f"$50 a month billed annually for 3,000 credits."
+        f"or {_pa} a month billed annually for 1,200 credits, and Ultra $129 monthly or "
+        f"{_ua} a month billed annually for 3,000 credits{_sale}."
     )
     a_krea = (
         f"Krea’s cheapest catalog estimate for Runway Gen-4.5 is "

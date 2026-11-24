@@ -65,12 +65,43 @@ def conditions(deal):
     return base
 
 
+def ends_at_passed(deal, today=None, now=None):
+    """True when the deal's exact official end (ends_at, UTC) is already past.
+
+    Only applies when evaluating the present: a build for an earlier "today"
+    (tests, backfills) keeps using the date-only end field.
+    """
+    import datetime
+    import os
+    ends_at = deal.get("ends_at")
+    if not ends_at:
+        return False
+    if now is None and os.environ.get("VIDFARE_NOW"):
+        # Test hook: evaluate deal ends against a fixed instant (ISO 8601, e.g. 2026-11-25T00:00:01Z).
+        now = datetime.datetime.fromisoformat(os.environ["VIDFARE_NOW"].replace("Z", "+00:00"))
+    if now is None:
+        if today is not None:
+            from timefmt import us_today
+            if str(today) < us_today().isoformat():
+                return False
+        now = datetime.datetime.now(datetime.timezone.utc)
+    try:
+        end = datetime.datetime.fromisoformat(str(ends_at).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if end.tzinfo is None:
+        end = end.replace(tzinfo=datetime.timezone.utc)
+    return now >= end
+
+
 def effective_status(deal, today):
-    """Live deals past their end date are archived. A future start is not live yet."""
+    """Live deals past their end date (or exact ends_at) are archived. A future start is not live yet."""
     status = deal.get("status") or "unconfirmed"
     end = deal.get("end")
     start = deal.get("start")
     if status == "live" and end and end < today:
+        return "ended"
+    if status == "live" and ends_at_passed(deal, today):
         return "ended"
     if status == "live" and start and start > today:
         return "upcoming"
@@ -89,7 +120,8 @@ def expire_deals(doc, today, log):
     """Move live deals whose end date has passed to the archive. Keep the record."""
     moved = []
     for deal in doc.get("deals", []):
-        if deal.get("status") == "live" and deal.get("end") and deal["end"] < today:
+        past_end = bool(deal.get("end") and deal["end"] < today)
+        if deal.get("status") == "live" and (past_end or ends_at_passed(deal, today)):
             deal["status"] = "ended"
             moved.append(deal)
             log.append({

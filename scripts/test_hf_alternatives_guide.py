@@ -86,7 +86,7 @@ def main():
     print("ok higgsfield alternatives guide")
 
 
-NEEDLES = ['Key takeaways', 'What to do next', 'unknown', 'Affiliate links never change this price order', ' ET (', 'OpenArt', 'Krea', 'Replicate', 'r096', 'r146', 'r202', '$0.0167', '$0.0222', '$0.1028', '/guides/higgsfield-pricing/', '/guides/is-higgsfield-worth-it/', '/guides/higgsfield-vs-kling/', '/guides/higgsfield-vs-runway/', '/guides/fal-ai-pricing/', '/guides/best-ai-video-generator/', '/guides/free-ai-video-generators/', 'id="takeaways"', 'id="next-steps"', 'id="newsletter"', 'id="platform-cheap-table"', 'https://openart.ai/pricing']
+NEEDLES = ['Key takeaways', 'What to do next', 'unknown', 'Affiliate links never change this price order', ' ET (', 'OpenArt', 'Krea', 'Replicate', 'r096', 'r146', 'r202', '$0.015', '$0.0222', '$0.1028', '/guides/higgsfield-pricing/', '/guides/is-higgsfield-worth-it/', '/guides/higgsfield-vs-kling/', '/guides/higgsfield-vs-runway/', '/guides/fal-ai-pricing/', '/guides/best-ai-video-generator/', '/guides/free-ai-video-generators/', 'id="takeaways"', 'id="next-steps"', 'id="newsletter"', 'id="platform-cheap-table"', 'https://openart.ai/pricing']
 QUESTIONS = ['Which Higgsfield alternatives are cheaper per second?', 'How does this page rank Higgsfield alternatives?', 'Which option is best for each use?', 'What free Higgsfield alternatives are there?', 'How does Higgsfield compare with OpenArt on price?', 'What is confirmed, and what is not?']
 RELS = ['guides/index.html', 'index.html', 'guides/higgsfield-pricing/index.html', 'guides/is-higgsfield-worth-it/index.html', 'models/wan-3-0/index.html', 'models/kling-3-0/index.html', 'models/veo-3-1/index.html', 'models/minimax-hailuo/index.html', 'models/seedance-2-5/index.html']
 

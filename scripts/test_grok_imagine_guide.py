@@ -19,12 +19,15 @@ MODEL = "grok-imagine"
 
 
 def rate_money(v):
-    x = float(v)
-    if x < 0.10:
-        s = f"{x:.4f}".rstrip("0").rstrip(".")
-    else:
-        s = f"{x:.3f}".rstrip("0").rstrip(".")
-    return "$" + s
+    # Same half-up rounding as build_site.rate_money (4 places under $0.10, else 3).
+    from decimal import Decimal, ROUND_HALF_UP
+    d = Decimal(str(v))
+    places = 3 if abs(d) >= Decimal("0.1") else 4
+    text = f"{abs(d.quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)):.{places}f}"
+    whole, frac = text.split(".")
+    frac = frac.rstrip("0").ljust(2, "0")
+    return f"{'-' if d < 0 else ''}${whole}.{frac}"
+
 
 
 def main():

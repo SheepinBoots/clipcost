@@ -66,7 +66,13 @@ def description(g):
     return text
 
 
+import deal_copy  # noqa: E402
+
+
 def render(g):
+    _pa = deal_copy.money(deal_copy.plan_month(g, "hf-plus-annual"))
+    _ua = deal_copy.money(deal_copy.plan_month(g, "hf-ultra-annual"))
+    _sale = " (Black Friday sale price until " + deal_copy.hf_bf(g)["end"] + ")" if deal_copy.hf_bf(g)["live"] else ""
     e, root, LAST = g["e"], g["root"], g["LAST"]
     rate_money, rate_label = g["rate_money"], g["rate_label"]
     shown_resolution, shown_audio = g["shown_resolution"], g["shown_audio"]
@@ -239,9 +245,9 @@ def render(g):
     paid_bits = []
     paid_bits.append(catalog_cells(
         "r096",
-        "Higgsfield plan · Ultra (annual), $50 a month for 3,000 credits",
+        f"Higgsfield plan · Ultra (annual), {_ua} a month for 3,000 credits",
         "Wan 3.0, 5-second clip. Input type not stated.",
-        "Assumes every credit you pay for is used. 5 credits per clip.",
+        "Assumes every credit you pay for is used. 3.75 credits per clip.",
     ))
     paid_bits.append(catalog_cells(
         "r209",
