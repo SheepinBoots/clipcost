@@ -69,7 +69,7 @@ def next_tag(after):
     return rest[:160]
 
 
-# Model pages: after the live deals section (or the sponsor/partner block), before guide links and "All <model> prices".
+# Model pages: below the price table and its note (Emmanuel 2026-11-24), above the data-page links and the end signup.
 import json
 db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 for slug, m in db["models"].items():
@@ -77,11 +77,9 @@ for slug, m in db["models"].items():
     html = read(path)
     before, after = common(path, html)
     rest = next_tag(after)
-    check(rest.startswith('<p class="small">') or rest.startswith("<h2>"), f"{path}: mid signup should be followed by the guide links or a heading: {rest[:80]}")
-    check(f"<h2>All {m['name']} prices</h2>" in after, f"{path}: mid signup must sit above the price table")
+    check(rest.startswith('<p class="small">') or rest.startswith("<section") or rest.startswith("<h2>"), f"{path}: mid signup should be followed by the data-page links: {rest[:80]}")
+    check(f"<h2>All {m['name']} prices</h2>" in before and before.rfind("</table>") > before.find(f"<h2>All {m['name']} prices</h2>"), f"{path}: mid signup must sit below the price table")
     check('data-sponsor="model:' + slug + '"' in before, f"{path}: sponsor box should stay above the mid signup")
-    if "<h2>Live deals for this model</h2>" in html:
-        check(before.rstrip().endswith("</div>") and "Live deals for this model" in before, f"{path}: mid signup should follow the live deals section")
 
 # Home: no mid signup (Emmanuel 2026-11-20); one end signup under the price table, sponsor box unchanged.
 html = read("/")
