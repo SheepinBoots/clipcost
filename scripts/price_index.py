@@ -555,6 +555,7 @@ def render(g):
 <h2 id="cite">Cite this</h2>
 <p><code>{e(cite_text)}</code></p>
 <p>Downloads, rebuilt with the page: {g["json_link"](CSV_PATH, "price-index.csv")} · {g["json_link"](JSON_PATH, "price-index.json")}. The full catalog is on <a href="{root("/data/")}">Price data</a>.</p>
+{g["data_links_html"]()}
 {g["news_box"]()}"""
 
     ld = {

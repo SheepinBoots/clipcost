@@ -679,6 +679,7 @@ def render_pair(g, pair):
 <p>{e(plat_list)} sell both {e(name[A])} and {e(name[B])}. {e(same_text)} {unlisted and e(f"{unlisted} rows on these platforms name a tier but not a resolution, so they are shown as not listed.") or ""}</p>
 {ptable}
 <p class="small">See every price on the <a href="{root("/models/" + A + "/")}">{e(name[A])}</a> and <a href="{root("/models/" + B + "/")}">{e(name[B])}</a> pages, or check a credit plan in the <a href="{root("/calculator/")}">credit calculator</a>.</p>
+{g["data_links_html"](pair["path"])}
 {g["faq_html"](faqs)}
 {method}
 {g["news_box"]()}"""

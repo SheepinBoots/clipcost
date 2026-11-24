@@ -550,6 +550,18 @@ def ld_script(obj):
 def ld_join(*objs):
     return "".join(ld_script(obj) for obj in objs)
 
+def data_links_html(current=None):
+    """Visible links to every compare, cost and platform page, minus the current one."""
+    import compare_pages as _cp, cost_pages as _co, platform_pages as _pl
+    groups = [("Compare", _cp.PAIRS), ("Clip cost", _co.COST_PAGES), ("Platform prices", _pl.PLATFORM_PAGES)]
+    lines = []
+    for label, pages in groups:
+        hits = [p for p in pages if p["path"] != current]
+        if hits:
+            links = " · ".join(f'<a href="{root(p["path"])}">{e(p["title"])}</a>' for p in hits)
+            lines.append(f'<p class="small">{label}: {links}.</p>')
+    return '<div class="datalinks">' + "".join(lines) + "</div>" if lines else ""
+
 def breadcrumb_ld(crumbs):
     """crumbs are (visible name, site path) in order, matching the on-page trail."""
     return {
@@ -1909,6 +1921,7 @@ home = f"""<h1>{e(AGENT_H1)}</h1>
 <span class="small" id="count"></span></div>
 {wide_table(THEAD + "<tbody>" + "".join(row_html(r) for r in sorted(rows, key=lambda r: r["usd_per_second"])) + "</tbody>", ' id="prices"')}
 <p class="small"><span class="tag verified">published rate</span> = the vendor states this dollars per second, or states an API credit count and a credit price (Runway credits are $0.01). <span class="tag verified">from credit plan</span> = plan price ÷ credits × credits per clip ÷ seconds, using a credit count the vendor stated exactly. It is not a list price per second. <span class="tag estimate">estimated from credit plan</span> = the same credit-plan math when the vendor marks the count with "~", "roughly", or "estimated". <span class="tag estimate">estimated rate</span> = an API price the vendor calls approximate. <span class="tag promo">promo</span> = a temporary discount, with the end date when the vendor gave one. <span class="tag discontinued">discontinued</span> = the vendor has shut the endpoint down; the last recorded rate is not a current price. Of {len(rows)} live rows: {n_published} published rates, {n_plan} from a credit plan, {n_plan_est} estimated from a credit plan, {n_api_est} estimated API rates, {n_promo} promos.</p>
+{data_links_html()}
 {news_box()}
 {retired_table(retired_rows)}
 <script>
