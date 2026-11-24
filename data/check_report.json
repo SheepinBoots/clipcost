@@ -1,9 +1,9 @@
 {
- "run": "2026-11-24T20:56:43Z",
+ "run": "2026-11-24T21:01:17Z",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 15838
+   "chars": 15275
   },
   "hf_api": {
    "status": "fetched",
@@ -67,7 +67,7 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 20285
+   "chars": 20897
   },
   "magnific": {
    "status": "fetched",
@@ -92,7 +92,7 @@
   },
   "gflow_credits": {
    "status": "fetched",
-   "chars": 8663
+   "chars": 8662
   },
   "google_ai_plans": {
    "status": "fetched",
@@ -453,70 +453,56 @@
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 3 : 0 1 :"
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 2 : 5 6 :"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "4 4 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 3 : 0 1 :"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "3 4 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 3 : 3 4 :"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "5 9 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 10 Hours 56 Minutes 43 Seconds Final hours, up to 75% off Black Friday"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "arket Expiring in 01 Days 10 Hours 56 Minutes 43 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 11 Hours 01 Minutes 33 Seconds Final hours, up to 75% off Black Friday"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "arket Expiring in 01 Days 11 Hours 01 Minutes 33 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 11 Hours 34 Minutes 57 Seconds Final hours, up to 75% off Black Friday"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "arket Expiring in 01 Days 11 Hours 34 Minutes 57 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "ffers Individual Teams monthly Annual Up to 63% Premium Extra 50% off For creatives exploring AI tools and stock content $20 $7 .25 /month Billed ann"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "ffers Individual Teams monthly Annual Up to 62% Premium Extra 50% off For creatives exploring AI tools and stock content CA$27 CA$10 /month Billed an"
   }
  ],
  "deal_scan": {
@@ -557,7 +543,7 @@
     "snippets": 0
    }
   ],
-  "candidates": 10
+  "candidates": 8
  },
  "counts": {
   "ok": 410,
