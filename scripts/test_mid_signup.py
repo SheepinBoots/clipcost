@@ -2,9 +2,10 @@
 """Mid-page signup and sponsor box on model pages, /compare/, /cost/, /platforms/ and /price-index/ (home has only the end signup).
 
 Run after the build: python3 scripts/build_site.py && python3 scripts/test_mid_signup.py
-- one mid signup (newsletter-signup-inline) and one end signup (newsletter-signup) per page,
+- data pages: one mid signup (newsletter-signup-inline) and one end signup (newsletter-signup),
   both the Kit form 10170819, unique input ids, the end box loads the reCAPTCHA helper and ck.5.js
 - the mid box sits at the chosen section boundary, never inside a table, list or section
+- model pages: end signup only, after the #94 rule dropped the mid box (no full section between the two)
 - the new data pages carry the model-page sponsor box (house fallback) and the PixelDojo line after it
 """
 import os
@@ -69,17 +70,35 @@ def next_tag(after):
     return rest[:160]
 
 
-# Model pages: below the price table and its note (Emmanuel 2026-11-24), above the data-page links and the end signup.
+# Model pages: mid signup is omitted under the #94 rule. After #90 it sat
+# directly above the short data-page link lines, with no full section between
+# it and the end signup, so only the end signup remains.
 import json
 db = json.load(open(os.path.join(ROOT, "data", "prices.json")))
 for slug, m in db["models"].items():
     path = f"/models/{slug}/"
     html = read(path)
-    before, after = common(path, html)
-    rest = next_tag(after)
-    check(rest.startswith('<p class="small">') or rest.startswith("<section") or rest.startswith("<h2>"), f"{path}: mid signup should be followed by the data-page links: {rest[:80]}")
-    check(f"<h2>All {m['name']} prices</h2>" in before and before.rfind("</table>") > before.find(f"<h2>All {m['name']} prices</h2>"), f"{path}: mid signup must sit below the price table")
-    check('data-sponsor="model:' + slug + '"' in before, f"{path}: sponsor box should stay above the mid signup")
+    main = main_of(html)
+    check(MID not in main and 'data-vf-event="newsletter-signup-inline"' not in html, f"{path}: mid signup should be omitted (no full section between mid and end)")
+    check(main.count(END) == 1, f"{path}: {main.count(END)} end signups, want 1")
+    forms = re.findall(r"<form\b[^>]*>", main)
+    check(len(forms) == 1, f"{path}: {len(forms)} forms, want 1 (end signup only)")
+    check(all('data-sv-form="10170819"' in f and 'action="https://app.kit.com/forms/10170819/subscriptions"' in f for f in forms),
+          f"{path}: end form is not Kit form 10170819")
+    check(all('data-vf-event="newsletter-signup-inline"' not in f and 'data-vf-event="newsletter-signup"' in f for f in forms),
+          f"{path}: end form marking")
+    ids = re.findall(r'\bid="([^"]+)"', html)
+    dup = sorted({i for i in ids if ids.count(i) > 1})
+    check(not dup, f"{path}: duplicate ids {dup}")
+    check(html.count("ck.5.js") == 1 and html.count("api.js?render=") == 1, f"{path}: ck.5.js / reCAPTCHA helper should load once")
+    check(html.find("api.js?render=") < html.find("ck.5.js"), f"{path}: reCAPTCHA helper must run before ck.5.js")
+    check(main.count("protected by reCAPTCHA") == 1, f"{path}: the end form needs the reCAPTCHA notice")
+    check("You&#x27;re in!" in html or "You're in!" in html or "You&#39;re in!" in html, f"{path}: success copy missing")
+    check(f"<h2>All {m['name']} prices</h2>" in main and main.rfind("</table>") > main.find(f"<h2>All {m['name']} prices</h2>"), f"{path}: price table missing")
+    check('data-sponsor="model:' + slug + '"' in main, f"{path}: sponsor box missing")
+    check(main.find(f"<h2>All {m['name']} prices</h2>") < main.find(END), f"{path}: end signup must sit below the price table")
+    check('<p class="small">Compare:' in main or '<p class="small">Clip cost:' in main, f"{path}: data-page link lines missing")
+    check(main.find("</table>") < main.find(END), f"{path}: end signup must sit below the table")
 
 # Home: no mid signup (Emmanuel 2026-11-20); one end signup under the price table, sponsor box unchanged.
 html = read("/")
@@ -113,4 +132,4 @@ for path, nxt in pages:
 if errors:
     print("\n".join(errors))
     sys.exit(1)
-print(f"mid signup ok ({len(db['models'])} model pages, {len(pages)} data pages; home has none)")
+print(f"mid signup ok ({len(db['models'])} model pages end-only, {len(pages)} data pages with mid+end; home has none)")
