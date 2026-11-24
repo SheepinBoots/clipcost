@@ -650,6 +650,7 @@ def insert_hub_sponsor(path, body):
 def page(path, title, desc, body, active="", extra_head="", dest=None, reports_nav=None, robots="index,follow", canonical=True, before_count=""):
     body = insert_hub_sponsor(path, body)
     body = with_affiliate_note(body)
+    body = prune_close_mid_signup(body)
     canon = SITE_URL + path
     show_reports = REPORTS_ENABLED if reports_nav is None else reports_nav
     navs = [("/", "Prices"), ("/deals/", "Deals"), ("/calculator/", "Credit calculator"), ("/guides/", "Guides"), ("/changes/", "Price changes"), ("/data/", "Data")]
@@ -1238,6 +1239,52 @@ def news_box(heading=None, blurb=None):
 <script src="https://f.convertkit.com/ckjs/ck.5.js"></script></section>"""
 
 INLINE_NEWS_MARK = '<section class="news news-inline" id="newsletter-inline">'
+END_NEWS_MARK = '<section class="news" id="newsletter">'
+
+def _signup_section_end(html, mark_at):
+    """Index just after the </section> that closes the signup starting at mark_at."""
+    open_at = mark_at if html.startswith("<section", mark_at) else html.rfind("<section", 0, mark_at + 1)
+    if open_at == -1:
+        return None
+    close = html.find("</section>", open_at)
+    if close == -1:
+        return None
+    return close + len("</section>")
+
+def _has_full_section(between):
+    """True when a heading plus a table, list, FAQ, or comparable prose block sits in this HTML."""
+    if re.search(r"<h2\b", between) is None:
+        return False
+    if re.search(r"<table\b", between):
+        return True
+    if re.search(r'<div class="(?:tblwrap|widewrap|cards|dealgrid|faq)\b', between):
+        return True
+    if re.search(r"<(?:ul|ol)\b", between):
+        return True
+    # Prose sections (h2 plus body copy) count; the short Compare/Clip cost/Platform
+    # link lines on model pages are <p class="small"> only and do not.
+    if re.search(r"<p\b(?![^>]*class=\"small\")", between):
+        return True
+    return False
+
+def prune_close_mid_signup(body):
+    """Keep the mid signup only when a full section sits between it and the end signup."""
+    mid = body.find(INLINE_NEWS_MARK)
+    end = body.find(END_NEWS_MARK)
+    if mid == -1 or end == -1 or end <= mid:
+        return body
+    mid_end = _signup_section_end(body, mid)
+    if mid_end is None or mid_end > end:
+        return body
+    if _has_full_section(body[mid_end:end]):
+        return body
+    start = mid if body.startswith("<section", mid) else body.rfind("<section", 0, mid + 1)
+    if start == -1:
+        start = mid
+    if start > 0 and body[start - 1] == "\n":
+        start -= 1
+    return body[:start] + body[mid_end:]
+
 GUIDE_INLINE_PLACEMENTS = []  # (path, kind) kind is price-table, first-table, or first-section
 _PRICE_TABLE_RE = re.compile(
     r"\$|per second|\bprices?\b|\bcredits?\b|\bcost\b|\brates?\b|\busd\b|"
