@@ -182,15 +182,9 @@ CLIPS = {
   ("veo-3-1","Veo 3.1 Fast","720p",16,4,"Google Veo 3.1 Fast 720p ~{N} credits/4s",True,None),
   ("minimax-hailuo","Hailuo 2.3","768p",6,6,"Minimax Hailuo 2.3 768p ~{N} credits/6s",True,None),
  ],
- "Krea":[  # units per clip derived = Pro units (20,000) / Krea's approx clip count in the Pro column
-  ("wan-3-0-prime","Wan 3.0 Prime","480p",20000/198,2,"Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",True,None,198),
-  ("wan-3-0","Wan 3.0","480p",20000/180,2,"Wan 3.0 2s, 480p ~{X} videos ~{N} videos",True,None,180),
-  ("kling-3-0","Kling 3.0 Standard","—",20000/107,3,"Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",True,False,107),
-  ("veo-3-1","Veo 3.1 Fast","720p",20000/84,4,"Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",True,False,84),
-  ("veo-3-1","Veo 3.1 Lite","720p",20000/225,4,"Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",True,None,225),
-  ("minimax-hailuo","Hailuo 2.3","768p",20000/96,6,"Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",True,None,96),
-  ("minimax-hailuo","MiniMax H3 Max","480p",20000/144,5,"MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",True,None,144),
-  ("runway-gen-4","Runway Gen-4.5","—",20000/112,2,"Runway Gen-4.5 2s ~{X} videos ~{N} videos",True,None,112),
+ "Krea":[
+  # Krea $/s rows were removed Nov 24, 2026. Krea does not publish a per-second
+  # or per-model video price, so this generator must not emit derived Krea rates.
  ],
  "Magnific":[
   ("kling-3-0","Kling 3.0 Pro","1080p",450,5,"Kling 3.0 Pro 1080p {N} credits/5s",False,None),
@@ -203,7 +197,7 @@ CLIPS = {
  ],
 }
 PLAN_KEYS={"Higgsfield":["hf-starter","hf-plus-annual","hf-plus-monthly","hf-ultra-annual","hf-ultra-monthly"],
-           "Krea":["krea-basic-yearly","krea-pro-monthly","krea-pro-yearly"],
+           "Krea":["krea-free","krea-basic-yearly","krea-pro-monthly","krea-pro-yearly","krea-max-yearly"],
            "Magnific":["mag-premium","mag-premium-plus","mag-pro"]}
 CLIP_SRC={"Higgsfield":"hf_plans","Krea":"krea","Magnific":"magnific"}
 

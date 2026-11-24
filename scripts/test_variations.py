@@ -63,10 +63,7 @@ assert ROWS[p480]["usd_per_second"] == 0.051
 assert any("capped at 15 seconds" in m["label"] for m in ROWS["r048"]["variation"]["modifiers"])
 assert any("1 credit per second of input video" in m["label"] for m in ROWS["r057"]["variation"]["modifiers"])
 
-# Krea Kling is audio off at 3s. Magnific Veo is with audio at 4s.
-krea = next(r["id"] for r in DB["rows"] if r.get("plan") == "krea-pro-monthly" and r["variant"] == "Kling 3.0 Standard")
-check("krea kling audio off 3s", one(krea, audio="without", seconds=3), "match", ROWS[krea]["usd_per_second"])
-check("krea kling audio on is the other price", one(krea, audio="with"), "not_offered")
+# Magnific Veo is with audio at 4s. Higgsfield Wan audio is not stated.
 check("hf wan audio unknown", one(hf, audio="with"), "unknown", ROWS[hf]["usd_per_second"])
 mag = next(r["id"] for r in DB["rows"] if r.get("plan") == "mag-pro" and r["variant"] == "Veo 3.1 4K w/audio")
 check("magnific veo with audio 4s", one(mag, audio="with", seconds=4), "match", ROWS[mag]["usd_per_second"])

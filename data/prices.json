@@ -264,10 +264,33 @@
    "checked": "2026-11-24",
    "source_url": "https://higgsfield.ai/pricing"
   },
+  "krea-free": {
+   "platform": "Krea",
+   "plan": "Free",
+   "usd_month": 0,
+   "billing": "free",
+   "units_period": "day",
+   "units": 100,
+   "units_label": "100 units/day",
+   "source": "krea",
+   "calculator": false,
+   "checks": [
+    {
+     "needle": "Krea USD Free ${N}/month",
+     "expect": 0
+    },
+    {
+     "needle": "Krea USD Free {N} units / day",
+     "expect": 100
+    }
+   ],
+   "checked": "2026-11-24",
+   "source_url": "https://www.krea.ai/pricing"
+  },
   "krea-basic-yearly": {
    "platform": "Krea",
    "plan": "Basic (yearly)",
-   "usd_month": 5,
+   "usd_month": 5.25,
    "billing": "yearly",
    "credits_month": 5000,
    "source": "krea",
@@ -294,7 +317,7 @@
    "sale": {
     "deal_id": "krea-yearly-40",
     "ends_at": "2026-11-26T08:00:00Z",
-    "note": "Black Friday coupon S7vd5tcX (page deadline 1795680000000 = Nov 26, 2026, 3:00 AM ET (12:00 AM PT), re-read Nov 24) (page deadline 1795680000000 = Nov 26, 2026, 3:00 AM ET (12:00 AM PT), re-read Nov 24) on Krea's yearly plans. Krea bills $63/yr ($5.25/mo; the card rounds to $5). Without the coupon Krea lists $84/yr ($7/mo).",
+    "note": "Black Friday coupon S7vd5tcX (page deadline 1795680000000 = Nov 26, 2026, 3:00 AM ET (12:00 AM PT), re-read Nov 24, 2026, 3:17 PM PT from krea.ai/pricing USD plansAndPrices amounts). Krea bills $63/yr ($5.25/mo; the plan card shows $5). Without the coupon Krea lists $84/yr ($7/mo).",
     "regular": {
      "usd_month": 7,
      "checks": [
@@ -308,7 +331,8 @@
       }
      ]
     }
-   }
+   },
+   "seedance_videos": 16
   },
   "krea-pro-monthly": {
    "platform": "Krea",
@@ -356,7 +380,7 @@
    "sale": {
     "deal_id": "krea-yearly-40",
     "ends_at": "2026-11-26T08:00:00Z",
-    "note": "Black Friday coupon S7vd5tcX (page deadline 1795680000000 = Nov 26, 2026, 3:00 AM ET (12:00 AM PT), re-read Nov 24) (page deadline 1795680000000 = Nov 26, 2026, 3:00 AM ET (12:00 AM PT), re-read Nov 24) on Krea's yearly plans: $252/yr ($21/mo). Without the coupon Krea lists $336/yr ($28/mo).",
+    "note": "Black Friday coupon S7vd5tcX (page deadline 1795680000000 = Nov 26, 2026, 3:00 AM ET (12:00 AM PT), re-read Nov 24, 2026, 3:17 PM PT from krea.ai/pricing USD plansAndPrices amounts). Krea bills $252/yr ($21/mo). Without the coupon Krea lists $336/yr ($28/mo).",
     "regular": {
      "usd_month": 28,
      "checks": [
@@ -367,6 +391,51 @@
       {
        "needle": "Krea USD Pro {N} units / month",
        "expect": 20000
+      }
+     ]
+    }
+   },
+   "seedance_videos": 65
+  },
+  "krea-max-yearly": {
+   "platform": "Krea",
+   "plan": "Max (yearly, 60,000 units)",
+   "usd_month": 63,
+   "billing": "yearly",
+   "credits_month": 60000,
+   "seedance_videos": 197,
+   "source": "krea",
+   "checks": [
+    {
+     "needle": "Krea USD Max yearly ${N}/year",
+     "expect": 756
+    },
+    {
+     "needle": "Krea USD Max yearly without coupon ${N}/year",
+     "expect": 1008
+    },
+    {
+     "needle": "Krea USD Max {N} units / month",
+     "expect": 60000
+    }
+   ],
+   "checked": "2026-11-24",
+   "source_url": "https://www.krea.ai/pricing",
+   "card_note": "Krea's plan card shows Max at $42/mo with $140 struck through, but checkout bills $63/mo ($756/yr) for the 60,000-unit plan. $42/mo is the billed yearly sale for the 40,000-unit Max plan.",
+   "sale": {
+    "deal_id": "krea-yearly-40",
+    "ends_at": "2026-11-26T08:00:00Z",
+    "note": "Black Friday coupon S7vd5tcX (page deadline 1795680000000 = Nov 26, 2026, 3:00 AM ET (12:00 AM PT), re-read Nov 24, 2026, 3:17 PM PT from krea.ai/pricing USD plansAndPrices amounts). For the 60,000-unit Max plan Krea bills $756/yr ($63/mo). Without the coupon Krea lists $1,008/yr ($84/mo). The plan card shows $42/mo with $140 struck through; that $42 is the billed yearly sale for the 40,000-unit Max plan ($504/yr).",
+    "regular": {
+     "usd_month": 84,
+     "checks": [
+      {
+       "needle": "Krea USD Max yearly ${N}/year",
+       "expect": 1008
+      },
+      {
+       "needle": "Krea USD Max {N} units / month",
+       "expect": 60000
       }
      ]
     }
@@ -6911,1038 +6980,6 @@
      "max_seconds": "not stated",
      "allowed_seconds": "not stated",
      "priced_seconds": 6,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-basic-yearly",
-   "plan_name": "Basic (yearly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 101.01010101010101,
-   "usd_per_clip": 0.101,
-   "usd_per_second": 0.05051,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~198 clips on Pro (20,000 units) → ~101 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~101.0 units/clip (2s) → $0.101/clip → $0.0505/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
-     "expect": 198
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r134",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-monthly",
-   "plan_name": "Pro (monthly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 101.01010101010101,
-   "usd_per_clip": 0.1768,
-   "usd_per_second": 0.08838,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~198 clips on Pro (20,000 units) → ~101 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~101.0 units/clip (2s) → $0.177/clip → $0.0884/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
-     "expect": 198
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r135",
-   "checked": "2026-11-22",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0-prime",
-   "variant": "Wan 3.0 Prime",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-yearly",
-   "plan_name": "Pro (yearly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 101.01010101010101,
-   "usd_per_clip": 0.1061,
-   "usd_per_second": 0.05303,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~198 clips on Pro (20,000 units) → ~101 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~101.0 units/clip (2s) → $0.106/clip → $0.0530/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
-     "expect": 198
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r136",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-basic-yearly",
-   "plan_name": "Basic (yearly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 111.11111111111111,
-   "usd_per_clip": 0.1111,
-   "usd_per_second": 0.05556,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~180 clips on Pro (20,000 units) → ~111 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~111.1 units/clip (2s) → $0.111/clip → $0.0556/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
-     "expect": 180
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r137",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-monthly",
-   "plan_name": "Pro (monthly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 111.11111111111111,
-   "usd_per_clip": 0.1944,
-   "usd_per_second": 0.09722,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~180 clips on Pro (20,000 units) → ~111 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~111.1 units/clip (2s) → $0.194/clip → $0.0972/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
-     "expect": 180
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r138",
-   "checked": "2026-11-22",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "wan-3-0",
-   "variant": "Wan 3.0",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-yearly",
-   "plan_name": "Pro (yearly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 111.11111111111111,
-   "usd_per_clip": 0.1167,
-   "usd_per_second": 0.05833,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~180 clips on Pro (20,000 units) → ~111 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~111.1 units/clip (2s) → $0.117/clip → $0.0583/s",
-   "checks": [
-    {
-     "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
-     "expect": 180
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r139",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "kling-3-0",
-   "variant": "Kling 3.0 Standard",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-basic-yearly",
-   "plan_name": "Basic (yearly)",
-   "resolution": "—",
-   "audio": false,
-   "clip_seconds": 3,
-   "credits_per_clip": 186.9158878504673,
-   "usd_per_clip": 0.1869,
-   "usd_per_second": 0.06231,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~107 clips on Pro (20,000 units) → ~187 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~186.9 units/clip (3s) → $0.187/clip → $0.0623/s",
-   "checks": [
-    {
-     "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
-     "expect": 107
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r140",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "without",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 3,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "kling-3-0",
-   "variant": "Kling 3.0 Standard",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-monthly",
-   "plan_name": "Pro (monthly)",
-   "resolution": "—",
-   "audio": false,
-   "clip_seconds": 3,
-   "credits_per_clip": 186.9158878504673,
-   "usd_per_clip": 0.3271,
-   "usd_per_second": 0.10903,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~107 clips on Pro (20,000 units) → ~187 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~186.9 units/clip (3s) → $0.327/clip → $0.1090/s",
-   "checks": [
-    {
-     "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
-     "expect": 107
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r141",
-   "checked": "2026-11-22",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "without",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 3,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "kling-3-0",
-   "variant": "Kling 3.0 Standard",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-yearly",
-   "plan_name": "Pro (yearly)",
-   "resolution": "—",
-   "audio": false,
-   "clip_seconds": 3,
-   "credits_per_clip": 186.9158878504673,
-   "usd_per_clip": 0.1963,
-   "usd_per_second": 0.06542,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~107 clips on Pro (20,000 units) → ~187 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~186.9 units/clip (3s) → $0.196/clip → $0.0654/s",
-   "checks": [
-    {
-     "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
-     "expect": 107
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r142",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "without",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 3,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "veo-3-1",
-   "variant": "Veo 3.1 Fast",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-basic-yearly",
-   "plan_name": "Basic (yearly)",
-   "resolution": "720p",
-   "audio": false,
-   "clip_seconds": 4,
-   "credits_per_clip": 238.0952380952381,
-   "usd_per_clip": 0.2381,
-   "usd_per_second": 0.05952,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~84 clips on Pro (20,000 units) → ~238 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~238.1 units/clip (4s) → $0.238/clip → $0.0595/s",
-   "checks": [
-    {
-     "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
-     "expect": 84
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r143",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "without",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 4,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "veo-3-1",
-   "variant": "Veo 3.1 Fast",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-monthly",
-   "plan_name": "Pro (monthly)",
-   "resolution": "720p",
-   "audio": false,
-   "clip_seconds": 4,
-   "credits_per_clip": 238.0952380952381,
-   "usd_per_clip": 0.4167,
-   "usd_per_second": 0.10417,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~84 clips on Pro (20,000 units) → ~238 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~238.1 units/clip (4s) → $0.417/clip → $0.1042/s",
-   "checks": [
-    {
-     "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
-     "expect": 84
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r144",
-   "checked": "2026-11-22",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "without",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 4,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "veo-3-1",
-   "variant": "Veo 3.1 Fast",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-yearly",
-   "plan_name": "Pro (yearly)",
-   "resolution": "720p",
-   "audio": false,
-   "clip_seconds": 4,
-   "credits_per_clip": 238.0952380952381,
-   "usd_per_clip": 0.25,
-   "usd_per_second": 0.0625,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~84 clips on Pro (20,000 units) → ~238 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~238.1 units/clip (4s) → $0.250/clip → $0.0625/s",
-   "checks": [
-    {
-     "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
-     "expect": 84
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r145",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "without",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 4,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "veo-3-1",
-   "variant": "Veo 3.1 Lite",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-basic-yearly",
-   "plan_name": "Basic (yearly)",
-   "resolution": "720p",
-   "audio": null,
-   "clip_seconds": 4,
-   "credits_per_clip": 88.88888888888889,
-   "usd_per_clip": 0.0889,
-   "usd_per_second": 0.02222,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~225 clips on Pro (20,000 units) → ~89 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~88.9 units/clip (4s) → $0.089/clip → $0.0222/s",
-   "checks": [
-    {
-     "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
-     "expect": 225
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r146",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 4,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "veo-3-1",
-   "variant": "Veo 3.1 Lite",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-monthly",
-   "plan_name": "Pro (monthly)",
-   "resolution": "720p",
-   "audio": null,
-   "clip_seconds": 4,
-   "credits_per_clip": 88.88888888888889,
-   "usd_per_clip": 0.1556,
-   "usd_per_second": 0.03889,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~225 clips on Pro (20,000 units) → ~89 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~88.9 units/clip (4s) → $0.156/clip → $0.0389/s",
-   "checks": [
-    {
-     "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
-     "expect": 225
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r147",
-   "checked": "2026-11-22",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 4,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "veo-3-1",
-   "variant": "Veo 3.1 Lite",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-yearly",
-   "plan_name": "Pro (yearly)",
-   "resolution": "720p",
-   "audio": null,
-   "clip_seconds": 4,
-   "credits_per_clip": 88.88888888888889,
-   "usd_per_clip": 0.0933,
-   "usd_per_second": 0.02333,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~225 clips on Pro (20,000 units) → ~89 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~88.9 units/clip (4s) → $0.093/clip → $0.0233/s",
-   "checks": [
-    {
-     "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
-     "expect": 225
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r148",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 4,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "minimax-hailuo",
-   "variant": "Hailuo 2.3",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-basic-yearly",
-   "plan_name": "Basic (yearly)",
-   "resolution": "768p",
-   "audio": null,
-   "clip_seconds": 6,
-   "credits_per_clip": 208.33333333333334,
-   "usd_per_clip": 0.2083,
-   "usd_per_second": 0.03472,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~96 clips on Pro (20,000 units) → ~208 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~208.3 units/clip (6s) → $0.208/clip → $0.0347/s",
-   "checks": [
-    {
-     "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
-     "expect": 96
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r149",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 6,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "minimax-hailuo",
-   "variant": "Hailuo 2.3",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-monthly",
-   "plan_name": "Pro (monthly)",
-   "resolution": "768p",
-   "audio": null,
-   "clip_seconds": 6,
-   "credits_per_clip": 208.33333333333334,
-   "usd_per_clip": 0.3646,
-   "usd_per_second": 0.06076,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~96 clips on Pro (20,000 units) → ~208 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~208.3 units/clip (6s) → $0.365/clip → $0.0608/s",
-   "checks": [
-    {
-     "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
-     "expect": 96
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r150",
-   "checked": "2026-11-22",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 6,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "minimax-hailuo",
-   "variant": "Hailuo 2.3",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-yearly",
-   "plan_name": "Pro (yearly)",
-   "resolution": "768p",
-   "audio": null,
-   "clip_seconds": 6,
-   "credits_per_clip": 208.33333333333334,
-   "usd_per_clip": 0.2188,
-   "usd_per_second": 0.03646,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~96 clips on Pro (20,000 units) → ~208 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~208.3 units/clip (6s) → $0.219/clip → $0.0365/s",
-   "checks": [
-    {
-     "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
-     "expect": 96
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r151",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 6,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "minimax-hailuo",
-   "variant": "MiniMax H3 Max",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-basic-yearly",
-   "plan_name": "Basic (yearly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 138.88888888888889,
-   "usd_per_clip": 0.1389,
-   "usd_per_second": 0.02778,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~144 clips on Pro (20,000 units) → ~139 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~138.9 units/clip (5s) → $0.139/clip → $0.0278/s",
-   "checks": [
-    {
-     "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-     "expect": 144
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r152",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "minimax-hailuo",
-   "variant": "MiniMax H3 Max",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-monthly",
-   "plan_name": "Pro (monthly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 138.88888888888889,
-   "usd_per_clip": 0.2431,
-   "usd_per_second": 0.04861,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~144 clips on Pro (20,000 units) → ~139 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~138.9 units/clip (5s) → $0.243/clip → $0.0486/s",
-   "checks": [
-    {
-     "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-     "expect": 144
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r153",
-   "checked": "2026-11-22",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "minimax-hailuo",
-   "variant": "MiniMax H3 Max",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-yearly",
-   "plan_name": "Pro (yearly)",
-   "resolution": "480p",
-   "audio": null,
-   "clip_seconds": 5,
-   "credits_per_clip": 138.88888888888889,
-   "usd_per_clip": 0.1458,
-   "usd_per_second": 0.02917,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~144 clips on Pro (20,000 units) → ~139 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~138.9 units/clip (5s) → $0.146/clip → $0.0292/s",
-   "checks": [
-    {
-     "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
-     "expect": 144
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r154",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 5,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "runway-gen-4",
-   "variant": "Runway Gen-4.5",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-basic-yearly",
-   "plan_name": "Basic (yearly)",
-   "resolution": "—",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 178.57142857142858,
-   "usd_per_clip": 0.1786,
-   "usd_per_second": 0.08929,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~112 clips on Pro (20,000 units) → ~179 units/clip. $5/mo ÷ 5,000 units = $0.00100/unit; ~178.6 units/clip (2s) → $0.179/clip → $0.0893/s",
-   "checks": [
-    {
-     "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
-     "expect": 112
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r155",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "runway-gen-4",
-   "variant": "Runway Gen-4.5",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-monthly",
-   "plan_name": "Pro (monthly)",
-   "resolution": "—",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 178.57142857142858,
-   "usd_per_clip": 0.3125,
-   "usd_per_second": 0.15625,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~112 clips on Pro (20,000 units) → ~179 units/clip. $35/mo ÷ 20,000 units = $0.00175/unit; ~178.6 units/clip (2s) → $0.313/clip → $0.1563/s",
-   "checks": [
-    {
-     "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
-     "expect": 112
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r156",
-   "checked": "2026-11-22",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
-     "rate_by_length": "not stated"
-    },
-    "audio_changes_price": "not stated",
-    "length_changes_price": "not stated",
-    "input_changes_price": "not stated",
-    "modifiers": "not stated"
-   }
-  },
-  {
-   "model": "runway-gen-4",
-   "variant": "Runway Gen-4.5",
-   "platform": "Krea",
-   "kind": "plan",
-   "plan": "krea-pro-yearly",
-   "plan_name": "Pro (yearly)",
-   "resolution": "—",
-   "audio": null,
-   "clip_seconds": 2,
-   "credits_per_clip": 178.57142857142858,
-   "usd_per_clip": 0.1875,
-   "usd_per_second": 0.09375,
-   "status": "estimate",
-   "promo_until": null,
-   "source": "krea",
-   "math": "Krea says ~112 clips on Pro (20,000 units) → ~179 units/clip. $21/mo ÷ 20,000 units = $0.00105/unit; ~178.6 units/clip (2s) → $0.188/clip → $0.0938/s",
-   "checks": [
-    {
-     "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
-     "expect": 112
-    }
-   ],
-   "note": "Krea publishes only approximate clip counts ('~'); per-clip units are derived.",
-   "id": "r157",
-   "checked": "2026-11-21",
-   "source_url": "https://www.krea.ai/pricing",
-   "variation": {
-    "audio": "not stated",
-    "input": "not stated",
-    "duration": {
-     "min_seconds": "not stated",
-     "max_seconds": "not stated",
-     "allowed_seconds": "not stated",
-     "priced_seconds": 2,
      "rate_by_length": "not stated"
     },
     "audio_changes_price": "not stated",

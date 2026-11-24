@@ -114,7 +114,7 @@ def blurb(g):
 
 def description(g):
     text = (
-        "Kling 3.0 cost per second on Kling, Higgsfield, fal, Runway, Krea and "
+        "Kling 3.0 cost per second on Kling, Higgsfield, fal, Runway and "
         f"Magnific, cheapest first, with audio and resolution. Last checked {g['LAST']}."
     )
     if len(text) > 160:
@@ -308,7 +308,7 @@ def render(g):
     a_direct = (
         f"Not on price. The official Kling API ({rate_money(r059['usd_per_second'])} per second at "
         f"720p without audio) is undercut by the Higgsfield API at {rate_money(HF_API_STD_720)}, and "
-        f"by credit plans on Higgsfield, Magnific and Krea if you use every credit. It is cheaper than "
+        f"by credit plans on Higgsfield and Magnific if you use every credit. It is cheaper than "
         f"fal Pro ({rate_money(r015['usd_per_second'])}) and Runway’s Pro variants. The official Kling "
         "app sells monthly credits, but Kling does not publish how many credits a Kling 3.0 clip uses, "
         "so this page cannot turn an app plan into a cost per second. "
@@ -321,7 +321,7 @@ def render(g):
         "Unknown, and not guessed: how many credits a Kling 3.0 clip uses in the official Kling app, "
         "so no app-plan cost per second is shown; whether Higgsfield’s plan rates and Higgsfield API "
         "rates include native audio; which settings give the top of the Higgsfield API price range "
-        "($0.1071 for Standard image-to-video, $0.1443 for Pro); Krea’s Kling 3.0 resolution; "
+        "($0.1071 for Standard image-to-video, $0.1443 for Pro); Krea’s missing per-second Kling price; "
         "Higgsfield’s annual price after its Black Friday sale ends; and a Replicate Kling 3.0 rate, "
         "since none is in our catalog."
     )
@@ -398,7 +398,7 @@ def render(g):
 
 <h2>Is Kling direct cheaper than Higgsfield or fal?</h2>
 <p>{e(a_direct)}</p>
-<p>Kling AI video comes from Kuaishou. Kling sells Kling 3.0 two ways: monthly credits in the Kling app ({kling_plans}) and per-second resource packages on the API ({kling_api_src}), which lists 720p, 1080p, and 4K with or without native audio, plus Kling 3.0 Turbo with native audio. Higgsfield, fal, Runway, Krea, and Magnific resell the same model. Kling’s app plans, first-month prices, and credit packs are in <a href="{e(kling_guide)}">Kling AI pricing and credits</a>, and Higgsfield’s credit math is in <a href="{e(hf_pricing)}">Higgsfield pricing explained</a> and <a href="{e(hf_worth)}">is Higgsfield worth it?</a>. Official iPhone and Android apps are compared in <a href="{e(apps_href)}">AI video generator apps</a>.</p>
+<p>Kling AI video comes from Kuaishou. Kling sells Kling 3.0 two ways: monthly credits in the Kling app ({kling_plans}) and per-second resource packages on the API ({kling_api_src}), which lists 720p, 1080p, and 4K with or without native audio, plus Kling 3.0 Turbo with native audio. Higgsfield, fal, Runway, and Magnific resell the same model. Krea also offers Kling, but does not publish a per-second or per-model video price. Kling’s app plans, first-month prices, and credit packs are in <a href="{e(kling_guide)}">Kling AI pricing and credits</a>, and Higgsfield’s credit math is in <a href="{e(hf_pricing)}">Higgsfield pricing explained</a> and <a href="{e(hf_worth)}">is Higgsfield worth it?</a>. Official iPhone and Android apps are compared in <a href="{e(apps_href)}">AI video generator apps</a>.</p>
 <p>If Higgsfield’s annual sale price ends and Ultra bills at its $129 monthly list price, the same 720p Kling 3.0 math is {e(rate_money(r112['usd_per_second']))}/s (catalog row r112, Ultra monthly), still below the official API’s {e(rate_money(r059['usd_per_second']))}/s if you use every credit.</p>
 
 <h2>Every Kling 3.0 price we track</h2>

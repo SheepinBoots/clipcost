@@ -90,6 +90,57 @@ for page in pp.PLATFORM_PAGES:
     check(f'<link rel="canonical" href="{SITE}{path}">' in raw, f"{path}: canonical")
     check("sora" not in raw.lower(), f"{path}: names Sora")
     check("caracas" not in raw.lower(), f"{path}: Caracas time")
+    if page.get("plan_only"):
+        statement = page["statement"]
+        check(statement in body and statement in text(raw), f"{path}: visible statement")
+        check("cost per second" in body.lower() or "per-second" in body.lower(), f"{path}: no $/s wording")
+        check("$ / sec" not in main and "plat-cheapest" not in main, f"{path}: no $/s ranking tables")
+        # Four plan lines, billed figures, sale end, regular yearly prices, units, Seedance estimates, source and date.
+        tb = main[main.find('id="plat-plans"'):]
+        tb = tb[:tb.find("</table>")] if 'id="plat-plans"' in main else ""
+        tbt = text(tb)
+        check("4 lines" in body, f"{path}: plan count in heading")
+        for pid in page["plan_ids"]:
+            plan = db["plans"][pid]
+            check(plan["plan"] in tbt, f"{path}: missing plan {pid}")
+            check(plan.get("checked", "") in tbt, f"{path}: {pid} checked date")
+            check("source" in tb.lower(), f"{path}: {pid} source")
+        check("$0" in tbt and "100 units/day" in tbt, f"{path}: Free plan")
+        check("$5.25/mo" in tbt and "5,000" in tbt and "about 16 Seedance 2.5 videos" in tbt, f"{path}: Basic billed figures")
+        check("$21/mo" in tbt and "20,000" in tbt and "about 65 Seedance 2.5 videos" in tbt, f"{path}: Pro billed figures")
+        check("$63/mo" in tbt and "60,000" in tbt and "about 197 Seedance 2.5 videos" in tbt, f"{path}: Max 60k billed figures")
+        check("regular $7/mo" in tbt and "regular $28/mo" in tbt and "regular $84/mo" in tbt, f"{path}: regular yearly prices")
+        check("3:00 AM ET (12:00 AM PT)" in tbt or "3:00 AM ET (12:00 AM PT)" in body, f"{path}: sale end ET-first")
+        check("plan card shows Max at $42" in body and "$63/mo" in body, f"{path}: Max card vs checkout note")
+        # No Offer $/s schema; statement mirrored in JSON-LD.
+        lds = [json.loads(b) for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', raw, re.S)]
+        check(all(json.dumps(d) and True for d in lds), f"{path}: JSON-LD parses")
+        wp = [d for d in lds if d.get("@type") == "WebPage"]
+        check(wp and wp[0]["name"] == page["h1"] and wp[0]["description"] == page["description"], f"{path}: JSON-LD WebPage")
+        check(any(statement in json.dumps(d) for d in lds), f"{path}: statement in JSON-LD")
+        offers = [d for d in lds if d.get("@type") in ("Offer", "AggregateOffer") or (isinstance(d.get("@graph"), list) and any(x.get("@type") in ("Offer", "AggregateOffer") for x in d.get("@graph") or []))]
+        # offer_list should be absent; walk nested
+        def walk(o):
+            if isinstance(o, dict):
+                if o.get("@type") in ("Offer", "AggregateOffer") and ("pricePerUnit" in o or "price" in o) and "/s" in json.dumps(o):
+                    return True
+                return any(walk(v) for v in o.values())
+            if isinstance(o, list):
+                return any(walk(v) for v in o)
+            return False
+        check(not any(walk(d) for d in lds), f"{path}: no Offer $/s schema")
+        check((f"<loc>{SITE}{path}</loc>" in sitemap), f"{path}: sitemap")
+        check((f"]({SITE}{path})" in llms), f"{path}: llms.txt")
+        check(html.escape(page["description"], quote=True) in main and f"<h1>{html.escape(page['h1'])}</h1>" in main, f"{path}: visible h1/description")
+        # Calculator still links; model pages do not, because there are no Krea $/s rows.
+        link = f'<a href="{path}">{page["title"]}</a>'
+        line = re.search(r'<p class="small">Platform prices: (.*?)</p>', calc)
+        check(bool(line and link in line.group(1)), f"{path}: calculator link")
+        for slug in db["models"]:
+            mp = read(f"models/{slug}/index.html")
+            line = re.search(r'<p class="small">Platform prices: (.*?)</p>', mp)
+            check(not (line and link in (line.group(1) if line else "")), f"{path}: model page {slug} should not list a Krea $/s platform link")
+        continue
     every = [r for r in db["rows"] if r["platform"] == plat and r["model"] in db["models"] and live(r)]
     # Plans with no card, or a card older than 7 days, are shown as not priced and their rows are left out.
     gaps = {r["plan"] for r in every if r["plan"] not in db["plans"] or

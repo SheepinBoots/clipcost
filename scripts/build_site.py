@@ -2538,22 +2538,35 @@ def calc_rows_html(plan_id):
             f'<td class="num">{calc_lab("$/clip", price_cell)}</td>'
             f'<td class="num"><span class="amt">{per_sec}</span><div class="assume">{e(rate_label(r))}</div></td></tr>'
         )
+    if not bits and plan.get("platform") == "Krea":
+        bits.append(
+            f'<tr><td colspan="9">Krea does not publish a per-second or per-model video price, so this calculator does not compute a cost per second for Krea. See <a href="{root("/platforms/krea/")}">Krea AI video plan prices</a>.</td></tr>'
+        )
     per = price / credits
     note = (plan.get("credits_note") or "") + f" Billing: {plan['billing']}. Checked {plan['checked']}."
+    if plan.get("platform") == "Krea":
+        per_txt = "—"
+        note += " VidFare does not compute a cost per second for Krea."
+    else:
+        per_txt = f"${per:.5f}"
     return {
         "price": f"${price:g}/mo",
         "credits": grouped_int(credits),
-        "per": f"${per:.5f}",
+        "per": per_txt,
         "note": note,
         "link": calc_source_html(plan),
         "rows": "".join(bits),
         "notes": calc_notes_html(assumption_text(r) for r in chosen),
     }
 
+def calc_plan_ok(p):
+    """Plans with no monthly units, or marked calculator=false, stay off the calculator."""
+    return p.get("calculator") is not False and isinstance(p.get("credits_month"), (int, float)) and p["credits_month"] > 0
+
 plan_opts = ""
 default_plan_id = None
-for plat in sorted({p["platform"] for p in plans.values()}):
-    keys = [k for k, p in plans.items() if p["platform"] == plat]
+for plat in sorted({p["platform"] for p in plans.values() if calc_plan_ok(p)}):
+    keys = [k for k, p in plans.items() if p["platform"] == plat and calc_plan_ok(p)]
     if default_plan_id is None and keys:
         default_plan_id = keys[0]
     plan_opts += f'<optgroup label="{e(plat)}">' + "".join(f'<option value="{k}">{e(plans[k]["plan"])}: ${plans[k]["usd_month"]:g}/mo</option>' for k in keys) + "</optgroup>"
@@ -2605,7 +2618,7 @@ calc = f"""<h1>AI video credit calculator</h1>
 <script>
 const BASE={json.dumps(BASE)};const AFF={json.dumps(AFF)};const MODELS={json.dumps({k:v["name"] for k,v in models.items()})};
 const DEALMAP={json.dumps(CALC_DEALS)};
-const EMBED={json.dumps({"plans": plans, "rows": [r for r in db["rows"] if r.get("plan")]}, separators=(",", ":"))};
+const EMBED={json.dumps({"plans": {k: v for k, v in plans.items() if calc_plan_ok(v)}, "rows": [r for r in db["rows"] if r.get("plan")]}, separators=(",", ":"))};
 let render=()=>{{}};
 function start(d){{
  const $=id=>document.getElementById(id);
@@ -2689,8 +2702,9 @@ function start(d){{
   const map=$('applyDeals').checked?DEALMAP[k]:null;
   const price=map&&map.price!=null?map.price:p.usd_month;
   const credits=p.credits_month+(map&&map.bonus_credits?map.bonus_credits:0);
-  const per=price/credits;
-  $('kPrice').textContent='$'+price+'/mo';$('kCred').textContent=credits.toLocaleString();$('kPer').textContent='$'+per.toFixed(5);
+  const per=credits?price/credits:null;
+  const isKrea=(p.platform||'')==='Krea';
+  $('kPrice').textContent='$'+price+'/mo';$('kCred').textContent=(credits||0).toLocaleString();$('kPer').textContent=(!credits||isKrea)?'—':'$'+per.toFixed(5);
   let note=(p.credits_note||'')+' Billing: '+p.billing+'. Checked '+p.checked+'.';
   if(map&&map.notes&&map.notes.length) note+=' '+map.notes.join(' ');
   $('pNote').textContent=note;
@@ -2748,6 +2762,7 @@ function start(d){{
    const dealNote=extra?`<div class="meta also">${{extra.replace(/<\\/?div[^>]*>/g,'')}}</div>`:'';
    const origin=r.kind==='plan'?(r.status==='estimate'?'estimated from credit plan':'from credit plan'):(r.status==='estimate'?'estimated rate':'published rate');
    return `<tr><td><a href="${{BASE}}/models/${{r.model}}/">${{esc(r.variant)}}</a>${{fn}}<div class="meta">Input: ${{esc(inputOf(r))}}</div><div class="meta">Length: ${{esc(lengthOf(r))}}</div>${{also?'<div class="meta also">Also: '+esc(also)+'</div>':''}}${{dealNote}}${{mark}}</td><td>${{lab('Plan tier',esc(tierOf(r)))}}</td><td>${{lab('Resolution',esc(resOf(r)))}}</td><td>${{lab('Audio',esc(audioOf(r)))}}</td><td class="num">${{lab('Clip',r.clip_seconds+'s')}}</td><td>${{lab('Credits/clip',cred)}}</td><td class="num">${{lab('Clips',clips.toLocaleString())}}</td><td class="num">${{lab('$/clip',priceCell)}}</td><td class="num"><span class="amt">${{perSec}}</span><div class="assume">${{esc(origin)}}</div></td></tr>`}}).join('');
+  if(!shown.length&&isKrea){{$('ct').querySelector('tbody').innerHTML='<tr><td colspan="9">Krea does not publish a per-second or per-model video price, so this calculator does not compute a cost per second for Krea. See <a href="'+BASE+'/platforms/krea/">Krea AI video plan prices</a>.</td></tr>';}}
   const noteSeen=[];
   shown.forEach(({{r}})=>{{const t=assumptionOf(r); if(t&&noteSeen.indexOf(t)<0) noteSeen.push(t);}});
   $('calcNotes').innerHTML=noteSeen.map(t=>(t.indexOf('Estimate')===0?'†':'*')+' '+esc(t)).join(' ');
@@ -5085,13 +5100,12 @@ def audit_site():
     runway = open(os.path.join(DIST, "models", "runway-gen-4", "index.html"), encoding="utf-8").read()
     if "gen4_turbo" not in runway or "$0.05" not in runway:
         errors.append("Runway page dropped the gen4_turbo price")
-    if "0.09375" not in runway or "Runway Gen-4.5" not in runway:
-        errors.append("Runway page dropped the Krea Gen-4.5 deal price")
-    # That sentence is the live Krea yearly deal's "different option" line. Once the deal's
-    # end date has passed, the line is gone and gen4_turbo is no longer sitting next to it.
-    krea_yearly = DEAL_BY_ID.get("krea-yearly-40")
-    if krea_yearly and dealmod.is_current(krea_yearly, TODAY) and "not a cut on gen4_turbo" not in runway:
-        errors.append("Runway page still presents the Krea deal as the gen4_turbo price")
+    # Krea no longer has a published per-second price, so this page must not show
+    # the withdrawn Krea Gen-4.5 $/s estimate or treat the yearly sale as a Gen-4 rate.
+    if "0.09375" in runway:
+        errors.append("Runway page still shows the withdrawn Krea Gen-4.5 $/s estimate")
+    if "not a cut on gen4_turbo" in runway:
+        errors.append("Runway page still refers to the withdrawn Krea Gen-4.5 $/s deal")
     if "estimated from credit plan" not in runway or "published rate" not in runway:
         errors.append("Runway page does not separate the published rate from the credit-plan estimate")
     cheap = open(os.path.join(DIST, "guides", "cheapest-ai-video-generator", "index.html"), encoding="utf-8").read()

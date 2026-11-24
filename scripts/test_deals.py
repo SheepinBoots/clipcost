@@ -103,16 +103,21 @@ def main():
     after = _dt.datetime(2026, 11, 25, 0, 0, 1, tzinfo=_dt.timezone.utc)
     if deals.ends_at_passed(probe, now=before) or not deals.ends_at_passed(probe, now=after):
         raise SystemExit("ends_at_passed should flip exactly at ends_at")
-    # Krea's Black Friday yearly coupon: the yearly row is the $21 sale price against the $28 regular
-    # yearly price, and the monthly row is not touched by the deal.
+    # Krea's yearly coupon: billed sale prices against regular yearly prices. There are
+    # no Krea catalog $/s rows, so the deal does not adjust a per-second rate.
     kdeal = by_id(live, "krea-yearly-40")
-    krea = next(r for r in db["rows"] if r.get("plan") == "krea-pro-yearly" and r["model"] == "wan-3-0-prime")
-    adj = deals.adjustment(kdeal, krea, plans)
-    close(adj["usd"], 21 / 20000 * krea["credits_per_clip"] / krea["clip_seconds"])
-    close(adj["list_usd"], 28 / 20000 * krea["credits_per_clip"] / krea["clip_seconds"])
-    monthly = next(r for r in db["rows"] if r.get("plan") == "krea-pro-monthly" and r["model"] == "wan-3-0-prime")
-    if deals.adjustment(kdeal, monthly, plans) is not None:
-        raise SystemExit("the Krea yearly sale must not apply to the monthly row")
+    if any(r.get("platform") == "Krea" for r in db["rows"]):
+        raise SystemExit("Krea must not have catalog $/s rows")
+    if any(deals.adjustment(kdeal, row, plans) for row in db["rows"]):
+        raise SystemExit("the Krea yearly sale must not adjust a catalog $/s row")
+    if (plans["krea-basic-yearly"]["usd_month"] != 5.25
+            or plans["krea-pro-yearly"]["usd_month"] != 21
+            or plans["krea-max-yearly"]["usd_month"] != 63):
+        raise SystemExit("Krea yearly sale prices should be the billed $5.25, $21, and $63 monthly amounts")
+    if (plans["krea-basic-yearly"]["sale"]["regular"]["usd_month"] != 7
+            or plans["krea-pro-yearly"]["sale"]["regular"]["usd_month"] != 28
+            or plans["krea-max-yearly"]["sale"]["regular"]["usd_month"] != 84):
+        raise SystemExit("Krea regular yearly prices should be the billed $7, $28, and $84 monthly amounts")
     if kdeal.get("ends_at") != "2026-11-26T08:00:00Z" or not deals.is_current(kdeal, "2026-11-25") or deals.is_current(kdeal, "2026-11-26"):
         raise SystemExit("the Krea yearly sale ends Nov 26, 2026, 3:00 AM ET (12:00 AM PT)")
     flux50 = by_id(doc["deals"], "fal-flux3-50")
