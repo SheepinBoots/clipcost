@@ -339,7 +339,6 @@ def render(g):
 <p>{e(a_check)}</p>
 <h2>{e(q_math)}</h2>
 <p>{e(a_math)}</p>
-{g["faq_html"](faqs)}
 <p>Related: <a href="{root("/guides/higgsfield-pricing/")}">Higgsfield pricing explained</a> · <a href="{root("/guides/is-higgsfield-worth-it/")}">Is Higgsfield worth it?</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a> · <a href="{root("/deals/black-friday/")}">Black Friday and holiday deals</a> · <a href="{root("/calculator/")}">credit calculator</a>.</p>
 """
 
