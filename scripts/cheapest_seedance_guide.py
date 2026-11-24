@@ -136,6 +136,8 @@ def render(g):
     rate_money, rate_label = g["rate_money"], g["rate_label"]
     plat_link, outbound = g["plat_link"], g["outbound"]
     shown_resolution = g["shown_resolution"]
+    shown_tier = g["shown_tier"]
+    shown_audio = g["shown_audio"]
     assumption_html = g["assumption_html"]
     tag, deal_badges = g["tag"], g["deal_badges"]
     models = g["models"]
@@ -201,7 +203,9 @@ def render(g):
             f"<td>{plat_link(r['platform'], r['source_url'])}{plan}</td>"
             f"<td>{e(r['variant'])}</td>"
             f"<td>{e(kind_label(r))}</td>"
+            f"<td>{e(shown_tier(r))}</td>"
             f"<td>{e(shown_resolution(r))}</td>"
+            f"<td>{e(shown_audio(r))}</td>"
             f'<td class="num">{rate_money(r["usd_per_second"])}{assumption_html(r)}</td>'
             f"<td>{status_cell(r)}</td>"
             f"<td>{source_toggle(r)}</td>"
@@ -210,7 +214,7 @@ def render(g):
 
     head = (
         "<thead><tr><th>Where</th><th>Variant</th><th>Type</th>"
-        "<th>Res</th><th>$/s</th><th>Status</th><th>Source</th></tr></thead>"
+        "<th>Tier</th><th>Res</th><th>Audio</th><th>$/s</th><th>Status</th><th>Source</th></tr></thead>"
     )
 
     def table_for(res_rows, empty="No catalog row at this resolution."):

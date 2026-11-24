@@ -136,6 +136,8 @@ def render(g):
     rate_money = g["rate_money"]
     plat_link, outbound = g["plat_link"], g["outbound"]
     shown_resolution = g["shown_resolution"]
+    shown_tier = g["shown_tier"]
+    shown_audio = g["shown_audio"]
     assumption_html = g["assumption_html"]
     tag, deal_badges = g["tag"], g["deal_badges"]
     name = g["models"][MODEL]["name"]
@@ -181,7 +183,9 @@ def render(g):
             f"<td>{plat_link(r['platform'], r['source_url'])}</td>"
             f"<td>{e(r['variant'])}</td>"
             f"<td>{e(kind_label(r))}</td>"
+            f"<td>{e(shown_tier(r))}</td>"
             f"<td>{e(shown_resolution(r))}</td>"
+            f"<td>{e(shown_audio(r))}</td>"
             f'<td class="num">{rate_money(r["usd_per_second"])}{assumption_html(r)}</td>'
             f"<td>{status_cell(r)}</td>"
             f"<td>{source_toggle(r)}</td>"
@@ -190,7 +194,7 @@ def render(g):
 
     head = (
         "<thead><tr><th>Where</th><th>Variant</th><th>Type</th>"
-        "<th>Res</th><th>$/s</th><th>Status</th><th>Source</th></tr></thead>"
+        "<th>Tier</th><th>Res</th><th>Audio</th><th>$/s</th><th>Status</th><th>Source</th></tr></thead>"
     )
 
     def table_for(rs, empty="No catalog row in this group."):
@@ -217,12 +221,12 @@ def render(g):
                 for sec in EXAMPLE_SECONDS
             )
             example_rows.append(
-                f"<tr><td>{e(label)}</td><td>{e(res)}</td>"
+                f"<tr><td>{e(label)}</td><td>not listed</td><td>{e(res)}</td><td>not stated</td>"
                 f'<td class="num">{rate_money(usd)}/s</td>{cells}</tr>'
             )
     example_table = (
         '<div class="tblwrap fit"><table><thead><tr>'
-        "<th>Official model</th><th>Res</th><th>$/s</th>"
+        "<th>Official model</th><th>Tier</th><th>Res</th><th>Audio</th><th>$/s</th>"
         + "".join(f"<th>{s}s clip</th>" for s in EXAMPLE_SECONDS)
         + "</tr></thead><tbody>"
         + "".join(example_rows)
