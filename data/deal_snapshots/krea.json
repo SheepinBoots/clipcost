@@ -1,15 +1,15 @@
 {
  "id": "krea",
  "url": "https://www.krea.ai/pricing",
- "saved": "2026-11-22",
+ "saved": "2026-11-23",
  "snippets": [
   {
-   "sha": "742f902e433b313c",
-   "text": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 10 Hours 51 Minutes 26 Seconds Final hours, up to 75% off Limited time"
+   "sha": "677585f7a3ab110f",
+   "text": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 05 Hours 39 Minutes 16 Seconds Final hours, up to 75% off Black Friday \u00c2\u00b7 The b"
   },
   {
-   "sha": "501b89b7f9a7f377",
-   "text": "arket Expiring in 01 Days 10 Hours 51 Minutes 26 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
+   "sha": "ef789c7b98e25283",
+   "text": "on the market Expiring in 05 Hours 39 Minutes 16 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
   },
   {
    "sha": "f0c945cb91a762c9",
@@ -56,8 +56,8 @@
    "text": "roles and permissions Fine-grained controls for model access Commercial license Unlimited relaxed generations Custom Terms of Service SAML Single Sign-On (SSO) Priority"
   },
   {
-   "sha": "c8cc97cb53a77134",
-   "text": "n SOC 2 Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Final hours, up to 75% off L"
+   "sha": "375488ae32419462",
+   "text": "n SOC 2 Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Final hours, up to 75% off B"
   },
   {
    "sha": "edbcb30267627815",
@@ -84,16 +84,20 @@
    "text": "nce 2.5 -75% Kling 4.0 -50% Krea 3 -50% GPT Image 2.6 -45% Nano Banana Pro -65% Unlimited LoRA training (2,000 images) Bulk discounts on compute unit packs Unlimited rel"
   },
   {
-   "sha": "247d14334dae006a",
-   "text": "-time models Access to 3D models Access to lipsync models Image concurrency 4 8 Unlimited Video concurrency 2 4 8 Max images per LoRA 50 50 2000 Access to Krea Nodes Acc"
+   "sha": "d28a321265a78c45",
+   "text": "tion Generation counts. Settings are shown when relevant. Image concurrency 4 8 Unlimited Krea 3 ~277 images ~1,111 images ~2,222 images Krea 2 Large 277 images 1,111 im"
   },
   {
    "sha": "02c72af056d9569f",
    "text": "e Units Buy extra compute Discounts on extra compute Discounts on compute units Unlimited on selected models Rollovers on compute units High priority queues Unlimited Lo"
   },
   {
-   "sha": "d08ae282fae02ba7",
-   "text": "s to 3D models Limited Access to lipsync models Limited Image concurrency 1 4 8 Unlimited Unlimited Unlimited Video concurrency 2 4 8 Unlimited Unlimited Max images per"
+   "sha": "5836e0c012f8b4bb",
+   "text": "on Generation counts. Settings are shown when relevant. Video concurrency 2 4 8 Unlimited Unlimited Seedance 2.5 5s, 720p, no video reference ~5 videos ~23 videos ~46 vi"
+  },
+  {
+   "sha": "11df5995f2b2b26b",
+   "text": "on Generation counts. Settings are shown when relevant. Image concurrency 1 4 8 Unlimited Unlimited Unlimited Krea 3 ~5 images/day ~277 images ~1,111 images ~2,222 image"
   }
  ]
 }

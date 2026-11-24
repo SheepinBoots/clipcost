@@ -1272,5 +1272,81 @@
   "vendor": "Krea",
   "source_url": "https://www.krea.ai/pricing",
   "text": "Black Friday: Krea yearly plans 25% off, Pro $28 to $21/mo ended 2026-11-21."
+ },
+ {
+  "date": "2026-11-23",
+  "row": "r075",
+  "model": "seedance-2-5",
+  "platform": "Atlas Cloud",
+  "variant": "Seedance 2.5 T2V",
+  "resolution": "1080p",
+  "old_usd_per_second": 0.5914,
+  "new_usd_per_second": 0.74367,
+  "source_url": "https://www.atlascloud.ai/pricing",
+  "type": "price"
+ },
+ {
+  "date": "2026-11-23",
+  "type": "deal_ended",
+  "deal": "hf-plus-annual",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Black Friday: Plus annual billing, $59 to $33/mo ended 2026-11-22."
+ },
+ {
+  "date": "2026-11-23",
+  "type": "deal_ended",
+  "deal": "hf-ultra-annual",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Black Friday: Ultra annual billing, $129 to $50/mo ended 2026-11-22."
+ },
+ {
+  "date": "2026-11-23",
+  "type": "deal_ended",
+  "deal": "hf-plus-monthly-first",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Black Friday: Plus monthly first month, $59 to $47 ended 2026-11-22."
+ },
+ {
+  "date": "2026-11-23",
+  "type": "deal_ended",
+  "deal": "hf-ultra-monthly-first",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Black Friday: Ultra monthly first month, $129 to $79 ended 2026-11-22."
+ },
+ {
+  "date": "2026-11-23",
+  "type": "deal_ended",
+  "deal": "hf-ultra-6k-annual",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Black Friday: Ultra 6K annual billing, $258 to $97/mo ended 2026-11-22."
+ },
+ {
+  "date": "2026-11-23",
+  "type": "deal_ended",
+  "deal": "hf-ultra-9k-annual",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Black Friday: Ultra 9K annual billing, $387 to $139/mo ended 2026-11-22."
+ },
+ {
+  "date": "2026-11-23",
+  "type": "deal_ended",
+  "deal": "hf-ultra-6k-monthly-first",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Black Friday: Ultra 6K monthly first month, $250 to $150 ended 2026-11-22."
+ },
+ {
+  "date": "2026-11-23",
+  "type": "deal_ended",
+  "deal": "hf-ultra-9k-monthly-first",
+  "vendor": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Black Friday: Ultra 9K monthly first month, $375 to $209 ended 2026-11-22."
  }
 ]

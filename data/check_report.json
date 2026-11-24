@@ -1,9 +1,9 @@
 {
- "run": "2026-11-22T21:06:23Z",
+ "run": "2026-11-24T02:19:00Z",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 18528
+   "chars": 15913
   },
   "hf_api": {
    "status": "fetched",
@@ -15,27 +15,27 @@
   },
   "fal_wan3": {
    "status": "fetched",
-   "chars": 3054
+   "chars": 3041
   },
   "fal_wan3p": {
    "status": "fetched",
-   "chars": 3451
+   "chars": 3438
   },
   "fal_kling3": {
    "status": "fetched",
-   "chars": 3497
+   "chars": 3484
   },
   "fal_seed25": {
    "status": "fetched",
-   "chars": 10235
+   "chars": 10222
   },
   "fal_veo31": {
    "status": "fetched",
-   "chars": 13201
+   "chars": 13188
   },
   "fal_pricing": {
    "status": "fetched",
-   "chars": 7810
+   "chars": 7818
   },
   "rep_wan3": {
    "status": "fetched",
@@ -47,11 +47,11 @@
   },
   "runway": {
    "status": "fetched",
-   "chars": 28029
+   "chars": 30058
   },
   "xai_imagine": {
    "status": "fetched",
-   "chars": 13111
+   "chars": 13080
   },
   "kling_api": {
    "status": "fetched",
@@ -59,19 +59,19 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 108559
+   "chars": 108970
   },
   "atlas": {
    "status": "fetched",
-   "chars": 2559315
+   "chars": 2555994
   },
   "krea": {
    "status": "fetched",
-   "chars": 34968
+   "chars": 20261
   },
   "magnific": {
    "status": "fetched",
-   "chars": 9586
+   "chars": 10177
   },
   "kling_app": {
    "status": "manual",
@@ -80,15 +80,15 @@
   },
   "fal_h3max": {
    "status": "fetched",
-   "chars": 7418
+   "chars": 7405
   },
   "fal_h3turbo": {
    "status": "fetched",
-   "chars": 7899
+   "chars": 7886
   },
   "fal_grok15": {
    "status": "fetched",
-   "chars": 3387
+   "chars": 3374
   },
   "gflow_credits": {
    "status": "fetched",
@@ -100,6 +100,415 @@
   }
  },
  "findings": [
+  {
+   "kind": "row",
+   "id": "r075",
+   "source": "atlas",
+   "status": "changed",
+   "needle": "{\"resolution\":\"720p-sr\",\"video\":\"0.2193479028\",\"unit\":\"second\"},{\"resolution\":\"1080p\",\"video\":\"{N}\",\"unit\":\"second\"}",
+   "old": 0.591364559916,
+   "new": 0.7436286,
+   "model": "seedance-2-5",
+   "platform": "Atlas Cloud",
+   "variant": "Seedance 2.5 T2V",
+   "applied": true
+  },
+  {
+   "kind": "row",
+   "id": "r134",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
+   "old": 198,
+   "new": null,
+   "model": "wan-3-0-prime",
+   "platform": "Krea",
+   "variant": "Wan 3.0 Prime"
+  },
+  {
+   "kind": "row",
+   "id": "r135",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
+   "old": 198,
+   "new": null,
+   "model": "wan-3-0-prime",
+   "platform": "Krea",
+   "variant": "Wan 3.0 Prime"
+  },
+  {
+   "kind": "row",
+   "id": "r136",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Wan 3.0 Prime 2s, 480p ~{X} videos ~{N} videos",
+   "old": 198,
+   "new": null,
+   "model": "wan-3-0-prime",
+   "platform": "Krea",
+   "variant": "Wan 3.0 Prime"
+  },
+  {
+   "kind": "row",
+   "id": "r137",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
+   "old": 180,
+   "new": null,
+   "model": "wan-3-0",
+   "platform": "Krea",
+   "variant": "Wan 3.0"
+  },
+  {
+   "kind": "row",
+   "id": "r138",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
+   "old": 180,
+   "new": null,
+   "model": "wan-3-0",
+   "platform": "Krea",
+   "variant": "Wan 3.0"
+  },
+  {
+   "kind": "row",
+   "id": "r139",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Wan 3.0 2s, 480p ~{X} videos ~{N} videos",
+   "old": 180,
+   "new": null,
+   "model": "wan-3-0",
+   "platform": "Krea",
+   "variant": "Wan 3.0"
+  },
+  {
+   "kind": "row",
+   "id": "r140",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
+   "old": 107,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Krea",
+   "variant": "Kling 3.0 Standard"
+  },
+  {
+   "kind": "row",
+   "id": "r141",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
+   "old": 107,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Krea",
+   "variant": "Kling 3.0 Standard"
+  },
+  {
+   "kind": "row",
+   "id": "r142",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Kling 3.0 3s, standard mode, audio off ~{X} videos ~{N} videos",
+   "old": 107,
+   "new": null,
+   "model": "kling-3-0",
+   "platform": "Krea",
+   "variant": "Kling 3.0 Standard"
+  },
+  {
+   "kind": "row",
+   "id": "r143",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
+   "old": 84,
+   "new": null,
+   "model": "veo-3-1",
+   "platform": "Krea",
+   "variant": "Veo 3.1 Fast"
+  },
+  {
+   "kind": "row",
+   "id": "r144",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
+   "old": 84,
+   "new": null,
+   "model": "veo-3-1",
+   "platform": "Krea",
+   "variant": "Veo 3.1 Fast"
+  },
+  {
+   "kind": "row",
+   "id": "r145",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Veo 3.1 Fast 4s, 720p, audio off ~{X} videos ~{N} videos",
+   "old": 84,
+   "new": null,
+   "model": "veo-3-1",
+   "platform": "Krea",
+   "variant": "Veo 3.1 Fast"
+  },
+  {
+   "kind": "row",
+   "id": "r146",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
+   "old": 225,
+   "new": null,
+   "model": "veo-3-1",
+   "platform": "Krea",
+   "variant": "Veo 3.1 Lite"
+  },
+  {
+   "kind": "row",
+   "id": "r147",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
+   "old": 225,
+   "new": null,
+   "model": "veo-3-1",
+   "platform": "Krea",
+   "variant": "Veo 3.1 Lite"
+  },
+  {
+   "kind": "row",
+   "id": "r148",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Veo 3.1 Lite 4s, 720p ~{X} videos ~{N} videos",
+   "old": 225,
+   "new": null,
+   "model": "veo-3-1",
+   "platform": "Krea",
+   "variant": "Veo 3.1 Lite"
+  },
+  {
+   "kind": "row",
+   "id": "r149",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
+   "old": 96,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Krea",
+   "variant": "Hailuo 2.3"
+  },
+  {
+   "kind": "row",
+   "id": "r150",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
+   "old": 96,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Krea",
+   "variant": "Hailuo 2.3"
+  },
+  {
+   "kind": "row",
+   "id": "r151",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Hailuo 2.3 6s, 768p ~{X} videos ~{N} videos",
+   "old": 96,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Krea",
+   "variant": "Hailuo 2.3"
+  },
+  {
+   "kind": "row",
+   "id": "r152",
+   "source": "krea",
+   "status": "missing",
+   "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
+   "old": 144,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Krea",
+   "variant": "MiniMax H3 Max"
+  },
+  {
+   "kind": "row",
+   "id": "r153",
+   "source": "krea",
+   "status": "missing",
+   "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
+   "old": 144,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Krea",
+   "variant": "MiniMax H3 Max"
+  },
+  {
+   "kind": "row",
+   "id": "r154",
+   "source": "krea",
+   "status": "missing",
+   "needle": "MiniMax H3 Max 5s, 480p, no reference images, no reference video ~{X} videos ~{N} videos",
+   "old": 144,
+   "new": null,
+   "model": "minimax-hailuo",
+   "platform": "Krea",
+   "variant": "MiniMax H3 Max"
+  },
+  {
+   "kind": "row",
+   "id": "r155",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
+   "old": 112,
+   "new": null,
+   "model": "runway-gen-4",
+   "platform": "Krea",
+   "variant": "Runway Gen-4.5"
+  },
+  {
+   "kind": "row",
+   "id": "r156",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
+   "old": 112,
+   "new": null,
+   "model": "runway-gen-4",
+   "platform": "Krea",
+   "variant": "Runway Gen-4.5"
+  },
+  {
+   "kind": "row",
+   "id": "r157",
+   "source": "krea",
+   "status": "missing",
+   "needle": "Runway Gen-4.5 2s ~{X} videos ~{N} videos",
+   "old": 112,
+   "new": null,
+   "model": "runway-gen-4",
+   "platform": "Krea",
+   "variant": "Runway Gen-4.5"
+  },
+  {
+   "kind": "plan",
+   "id": "hf-plus-annual",
+   "source": "hf_plans",
+   "status": "changed",
+   "needle": "Plus ${N}/month",
+   "old": 33,
+   "new": 30.0,
+   "model": null,
+   "platform": "Higgsfield",
+   "variant": "Plus (annual)"
+  },
+  {
+   "kind": "plan",
+   "id": "hf-plus-monthly",
+   "source": "hf_plans",
+   "status": "missing",
+   "needle": "${N} $33",
+   "old": 59,
+   "new": null,
+   "model": null,
+   "platform": "Higgsfield",
+   "variant": "Plus (monthly)"
+  },
+  {
+   "kind": "plan",
+   "id": "hf-ultra-annual",
+   "source": "hf_plans",
+   "status": "changed",
+   "needle": "Ultra BEST VALUE ${N}/month",
+   "old": 50,
+   "new": 45.0,
+   "model": null,
+   "platform": "Higgsfield",
+   "variant": "Ultra (annual)"
+  },
+  {
+   "kind": "plan",
+   "id": "hf-ultra-monthly",
+   "source": "hf_plans",
+   "status": "missing",
+   "needle": "${N} $50",
+   "old": 129,
+   "new": null,
+   "model": null,
+   "platform": "Higgsfield",
+   "variant": "Ultra (monthly)"
+  },
+  {
+   "kind": "plan",
+   "id": "mag-premium",
+   "source": "magnific",
+   "status": "changed",
+   "needle": "stock content ${X} ${N} /month",
+   "old": 14.5,
+   "new": 7.25,
+   "model": null,
+   "platform": "Magnific",
+   "variant": "Premium (annual)"
+  },
+  {
+   "kind": "plan",
+   "id": "mag-premium",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Premium assets {N} credits /year",
+   "old": 240000,
+   "new": null,
+   "model": null,
+   "platform": "Magnific",
+   "variant": "Premium (annual)"
+  },
+  {
+   "kind": "plan",
+   "id": "mag-premium-plus",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Relax mode generations {N} credits /year",
+   "old": 600000,
+   "new": null,
+   "model": null,
+   "platform": "Magnific",
+   "variant": "Premium+ (annual)"
+  },
+  {
+   "kind": "plan",
+   "id": "mag-pro",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "content production ${X} ${N} /month",
+   "old": 82.5,
+   "new": null,
+   "model": null,
+   "platform": "Magnific",
+   "variant": "Pro (annual)"
+  },
+  {
+   "kind": "plan",
+   "id": "mag-pro",
+   "source": "magnific",
+   "status": "missing",
+   "needle": "Everything in Plus , and: {N} credits /year",
+   "old": 1500000,
+   "new": null,
+   "model": null,
+   "platform": "Magnific",
+   "variant": "Pro (annual)"
+  },
   {
    "kind": "plan",
    "id": "krea-basic-yearly",
@@ -146,20 +555,132 @@
   },
   {
    "kind": "deal",
-   "id": "krea-yearly-40",
+   "id": "hf-plus-annual",
    "status": "deal_ended",
-   "end": "2026-11-21"
+   "end": "2026-11-22"
+  },
+  {
+   "kind": "deal",
+   "id": "hf-ultra-annual",
+   "status": "deal_ended",
+   "end": "2026-11-22"
+  },
+  {
+   "kind": "deal",
+   "id": "hf-plus-monthly-first",
+   "status": "deal_ended",
+   "end": "2026-11-22"
+  },
+  {
+   "kind": "deal",
+   "id": "hf-ultra-monthly-first",
+   "status": "deal_ended",
+   "end": "2026-11-22"
+  },
+  {
+   "kind": "deal",
+   "id": "hf-ultra-6k-annual",
+   "status": "deal_ended",
+   "end": "2026-11-22"
+  },
+  {
+   "kind": "deal",
+   "id": "hf-ultra-9k-annual",
+   "status": "deal_ended",
+   "end": "2026-11-22"
+  },
+  {
+   "kind": "deal",
+   "id": "hf-ultra-6k-monthly-first",
+   "status": "deal_ended",
+   "end": "2026-11-22"
+  },
+  {
+   "kind": "deal",
+   "id": "hf-ultra-9k-monthly-first",
+   "status": "deal_ended",
+   "end": "2026-11-22"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 % OFF $100 6,506 CARDS LEFT 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4"
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 2 1 : 3 9 :"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "1 6 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "69% OFF Starter For first-time AI creators $19 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 /mo, billed yearly Get Plus −50% Save $348 Unlimited & free gens work only on higgsfield.ai 1,200 credits / month 600 images Nano Ba"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "V2 & Cinema 5,000 free gens Included in plan Up to 45% OFF credit packs Unlimited paid parallel generations All Seedance models All models & features Early acces"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 /mo, billed yearly Get Ultra −65% Save $1,008 Unlimited & free gens work only on higgsfield.ai 3,000 credits / month 1,500 images Nano"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "V2 & Cinema 10,000 free gens Included in plan Up to 45% OFF credit packs Unlimited paid parallel generations All Seedance models All models & features Early acces"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "Premium quality Compare features See in details what plan suits you best Annual 69% OFF Free Free Limited use Starter $19/month Billed annually Get Plan Plus $30/month"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 63% OFF Get started Black Friday 63% off BLACK FRIDAY 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 % OFF BLACK FRIDAY 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 % OFF $100 6,506 CARDS LEFT 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "s 02 02 hours 51 51 min 28 28 sec All plans Don’t miss your chance to get up to 63% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
@@ -169,119 +690,147 @@
    "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 % OFF $100 7,193 CARDS LEFT 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5"
+   "snippet": "63% OFF Starter For first-time AI creators $19 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
   },
   {
    "kind": "deal_candidate",
    "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "8 hours 05 05 min 05 06 06 05 sec All plans Don’t miss your chance to get up to 63% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+   "snippet": "3 free gens Soul V2 & Cinema 300 free gens Included in plan Credit top-ups with discount Parallel generations 2 videos & 4 images Seedance 2.0 Fast & 2.0 Mini access Ac"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 /mo, billed yearly Get Plus −45% Save $312 Unlimited & free gens work only on higgsfield.ai 1,200 credits / month 600 images Nano Ba"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "V2 & Cinema 5,000 free gens Included in plan Credit top-ups with discount Unlimited paid parallel generations All Seedance models All models & features Early acces"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 /mo, billed yearly Get Ultra −60% Save $948 Unlimited & free gens work only on higgsfield.ai 3,000 credits / month 1,500 images Nano"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "V2 & Cinema 10,000 free gens Included in plan Credit top-ups with discount Unlimited paid parallel generations All Seedance models All models & features Early acces"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "Premium quality Compare features See in details what plan suits you best Annual 63% OFF Free Free Limited use Starter $19/month Billed annually Get Plan Plus $33/month"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 05 Hours 39 Minutes 16 Seconds Final hours, up to 75% off Black Friday Â· The b"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "on the market Expiring in 05 Hours 39 Minutes 16 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "n SOC 2 Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Final hours, up to 75% off B"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "tion Generation counts. Settings are shown when relevant. Image concurrency 4 8 Unlimited Krea 3 ~277 images ~1,111 images ~2,222 images Krea 2 Large 277 images 1,111 im"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "on Generation counts. Settings are shown when relevant. Video concurrency 2 4 8 Unlimited Unlimited Seedance 2.5 5s, 720p, no video reference ~5 videos ~23 videos ~46 vi"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "on Generation counts. Settings are shown when relevant. Image concurrency 1 4 8 Unlimited Unlimited Unlimited Krea 3 ~5 images/day ~277 images ~1,111 images ~2,222 image"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 10 Hours 51 Minutes 26 Seconds Final hours, up to 75% off Limited time"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "arket Expiring in 01 Days 10 Hours 51 Minutes 26 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
   },
   {
    "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "n SOC 2 Slack connect Custom compute packages Audit logs SOON Image concurrency Unlimited Video concurrency Unlimited Images per LoRA Custom Final hours, up to 75% off L"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "-time models Access to 3D models Access to lipsync models Image concurrency 4 8 Unlimited Video concurrency 2 4 8 Max images per LoRA 50 50 2000 Access to Krea Nodes Acc"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "s to 3D models Limited Access to lipsync models Limited Image concurrency 1 4 8 Unlimited Unlimited Unlimited Video concurrency 2 4 8 Unlimited Unlimited Max images per"
+  },
+  {
+   "kind": "deal_candidate",
    "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "3 NEW Krea Agent NEW All image models All video models All 3D & lipsync models Unlimited LoRA training (2,000 images) Image upscaling up to 22K Krea Nodes App Builder E"
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "subscribers : creatives, enterprises, agencies, and studios Black Friday Up to 62% off and gift credits on annual plans. Business plans are also on sale - up to 40% o"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "to see your discount before checkout. Redeem Find the best plan for you Tell us what you make and ho"
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "ff from 3 seats. Offer ends Dec 1 - 08:00 CET Black Friday Up to 62% off and gift credits on annual plans. Offer ends Dec 1 - 08:00 CET See individual o"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "match your workflow Add features Monthly Yearly Save up to 70% Recommended Max 70% off 40,000 units / month ~1,607 Nano Banana 2.1 generations ~131 Seedance 2.5 video"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "nce 2.5 -75% Kling 4.0 -50% Krea 3 -50% GPT Image 2.6 -45% Nano Banana Pro -65% Unlimited LoRA training (2,000 images) Bulk discounts on compute unit packs Unlimited rel"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 16 Hours 05 Minutes 04 Seconds Final hours, up to 75% off Limited time"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "arket Expiring in 01 Days 16 Hours 05 Minutes 04 Seconds Pick your plan Monthly 25% off Yearly 70% off Model Licensing Looking for API? Free 100 units / day $0 /month"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "Get Free No difference compared to monthly Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "$5 /month Get Basic Save $48 compared to monthly Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "nce 2.5 -60% Kling 4.0 -20% Krea 3 -25% GPT Image 2.6 -20% Nano Banana Pro -45% Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW Kre"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "nce 2.5 -75% Kling 4.0 -50% Krea 3 -50% GPT Image 2.6 -45% Nano Banana Pro -65% Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW Kre"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "a Agent NEW All image models All video models All 3D & lipsync models Unlimited LoRA training (2,000 images) Image upscaling up to 22K Krea Nodes App Builder E"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "conds Free 100 units / day $0 /month Get Free No difference compared to monthly Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "to see your discount before checkout. Redeem Compute top-ups One-time packs, added to your balance r"
+   "vendor": "Magnific",
+   "url": "https://www.magnific.com/pricing",
+   "snippet": "ffers Individual Teams monthly Annual Up to 63% Premium Extra 50% off For creatives exploring AI tools and stock content $20 $7 .25 /month Billed ann"
   }
  ],
  "deal_scan": {
@@ -291,21 +840,21 @@
     "vendor": "Higgsfield",
     "url": "https://higgsfield.ai/pricing",
     "status": "fetched",
-    "snippets": 25
+    "snippets": 22
    },
    {
     "id": "krea",
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 23
+    "snippets": 24
    },
    {
     "id": "magnific",
     "vendor": "Magnific",
     "url": "https://www.magnific.com/pricing",
     "status": "fetched",
-    "snippets": 0
+    "snippets": 3
    },
    {
     "id": "runway_plans",
@@ -322,12 +871,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 19
+  "candidates": 33
  },
  "counts": {
-  "ok": 439,
-  "changed": 0,
-  "missing": 0,
+  "ok": 405,
+  "changed": 4,
+  "missing": 30,
   "skipped": 6
  }
 }
