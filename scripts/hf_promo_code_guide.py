@@ -11,7 +11,8 @@ model.
 PATH = "/guides/higgsfield-promo-code/"
 LABEL = "Higgsfield promo codes"
 PHRASE = "Higgsfield promo code and current deals"
-QUESTION = "Is there a Higgsfield promo code right now?"
+import timefmt as _tf
+QUESTION = "Is there a Higgsfield promo code in " + _tf.us_today().strftime("%B %Y") + "?"
 CHECKED = "2026-11-24"
 CHECKED_WHEN = "Nov 24, 2026, 3:26 PM ET (12:26 PM PT)"
 RECHECK_WHEN = CHECKED_WHEN

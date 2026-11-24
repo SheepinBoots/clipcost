@@ -84,3 +84,60 @@ def run_instant(run, now=None):
         if cand <= now:
             return cand
     return None
+
+
+_MONTHS = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+
+
+def utc_clock(hour, minute=0, on=None):
+    """A fixed UTC wall time (e.g. a cron at 15:17 UTC) as '10:17 AM ET (7:17 AM PT)' on the date `on`
+    (default: today in US Pacific). The ET and PT clocks follow daylight saving for that date."""
+    import datetime as _dt
+    day = on or us_today()
+    t = _dt.datetime(day.year, day.month, day.day, hour, minute, tzinfo=timezone.utc)
+    return et_clock(t)
+
+
+def utc_span(h1, h2, on=None):
+    """A UTC hour range such as Google's '2–5 pm UTC' as '9 AM–12 PM ET (6–9 AM PT)' on the date `on`."""
+    import datetime as _dt
+    day = on or us_today()
+    a = _dt.datetime(day.year, day.month, day.day, h1, tzinfo=timezone.utc)
+    b = _dt.datetime(day.year, day.month, day.day, h2, tzinfo=timezone.utc)
+
+    def hr(t):
+        return (t.strftime("%I").lstrip("0") or "12") + (t.strftime(":%M") if t.minute else "") + " " + t.strftime("%p")
+
+    def span(x, y):
+        if x.strftime("%p") == y.strftime("%p"):
+            return hr(x).rsplit(" ", 1)[0] + "–" + hr(y)
+        return hr(x) + "–" + hr(y)
+    return f"{span(a.astimezone(ET), b.astimezone(ET))} ET ({span(a.astimezone(PT), b.astimezone(PT))} PT)"
+
+
+def day_label(date):
+    """A date-only label ('2026-11-23' -> 'Nov 23, 2026'). Dates carry no clock, so no zone is attached."""
+    if not date:
+        return "date not stated"
+    parts = str(date).split("-")
+    try:
+        return f"{_MONTHS[int(parts[1]) - 1]} {int(parts[2])}, {parts[0]}"
+    except (ValueError, IndexError):
+        return str(date)
+
+
+def normalize_utc_mentions(text, year=None):
+    """Rewrite our own 'Nov 15 00:00 UTC (Nov 14, 4 pm PT)' style mentions as ET first with PT in brackets.
+
+    Only the UTC-first clock pattern is rewritten; quoted vendor text keeps its own words elsewhere."""
+    import re as _re
+    import datetime as _dt
+    if not text or "UTC" not in text:
+        return text
+    pat = _re.compile(r"\b(" + "|".join(_MONTHS) + r")[a-z]* (\d{1,2})(?:, (\d{4}))? (\d{1,2}):(\d{2}) UTC(?: \([^)]*\))?")
+
+    def sub(m):
+        y = int(m.group(3) or year or us_today().year)
+        t = _dt.datetime(y, _MONTHS.index(m.group(1)[:3]) + 1, int(m.group(2)), int(m.group(4)), int(m.group(5)), tzinfo=timezone.utc)
+        return et_pt(t)
+    return pat.sub(sub, text)

@@ -259,7 +259,7 @@ def render_page(g, page):
                 slug, r, total, n, _cap = multi[0]
                 reg = lab.regular_text(r, secs)
                 out += (f"Among models that need more than one clip, the cheapest is {vname(r, slug)} at {two(total, 2)} on {r['platform']}"
-                        + (f" ({reg})" if reg else "") + f" for {n} clips. ")
+                        + (f" ({reg})" if reg else "") + f" for {n} clips ({secs} seconds at {res}). ")
             return out
         slug, r, total, n, _cap = ranked[0]
         reg = lab.regular_text(r, secs)
@@ -343,7 +343,9 @@ def render_page(g, page):
     # Row headers carry long variant names (e.g. "gemini-omni-1.2-flash (1080p with upsampling)"); let them wrap
     # so the 1080p table fits the desktop column instead of scrolling sideways. The clip column gets room only on
     # wide screens; at 1024px the minimum width pushed the table 29px past its column.
-    head = cp._css(tuple(tids)) + "<style>" + ",".join(f"{t} tbody th" for t in tids) + "{white-space:normal;min-width:180px}@media(min-width:1100px){" + ",".join(f"{t} td:nth-child(3)" for t in tids if not t.startswith("#cost-p")) + "{min-width:150px}}</style>" + g["ld_join"](ld, g["breadcrumb_ld"]([("Prices", "/"), (page["h1"], page["path"])]))
+    import schema_ld
+    ld_blocks = [ld] + [x for x in [schema_ld.offer_list(g, page["path"], page["h1"] + " – prices per second", shown)] if x]
+    head = cp._css(tuple(tids)) + "<style>" + ",".join(f"{t} tbody th" for t in tids) + "{white-space:normal;min-width:180px}@media(min-width:1100px){" + ",".join(f"{t} td:nth-child(3)" for t in tids if not t.startswith("#cost-p")) + "{min-width:150px}}</style>" + g["ld_join"](*ld_blocks, g["breadcrumb_ld"]([("Prices", "/"), (page["h1"], page["path"])]))
     g["page"](page["path"], title_of(page), page["description"], body, "", head,
               robots="noindex,follow" if stale else "index,follow")
     if not stale:

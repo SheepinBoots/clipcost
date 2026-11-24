@@ -4,7 +4,7 @@
  "description": "Median and cheapest price per second across 9 AI video models, by resolution, rebuilt daily from VidFare's checked prices. CSV and JSON downloads.",
  "currency": "USD",
  "unit": "US dollars per second of finished video",
- "last_full_check": "2026-11-23",
+ "last_full_check": "2026-11-24",
  "min_models_per_tier": 5,
  "tiers": {
   "any": "Any resolution",

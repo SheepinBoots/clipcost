@@ -62,16 +62,9 @@ def _row_by_id(g, rid):
 
 
 def checked_pt(date):
-    if not date:
-        return "date not stated"
-    parts = str(date).split("-")
-    if len(parts) != 3:
-        return f"{date} PT"
-    months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-    try:
-        return f"{months[int(parts[1]) - 1]} {int(parts[2])}, {parts[0]} PT"
-    except (ValueError, IndexError):
-        return f"{date} PT"
+    """Date-only check label, e.g. 'Nov 23, 2026'. A date carries no clock, so no zone."""
+    from timefmt import day_label
+    return day_label(date)
 
 
 def blurb(g):
@@ -222,7 +215,7 @@ def render(g):
     seed_live = manual_table("seed-live-table", [
         ("WaveSpeed", "Seedance 2.5", "API list, no reference video", "480p", "not stated as a separate audio price on the table", "$0.18", "published list rate", f"{ws_seed}. 720p is $0.36/s, 1080p is $0.90/s, and 4K is $1.80/s, billed linearly from 4 to 30 seconds. A reference-video path uses a lower per-second rate ($0.11/s at 480p) on both the normalized input and the output. {live_note}"),
         ("WaveSpeed", "Seedance 2.5 Flash", "API list, no reference video", "480p", "not stated as a separate audio price on the table", "$0.12", "published list rate", f"{src(WS_SEED.replace('seedance-2.5/', 'seedance-2.5-flash/'), 'WaveSpeed’s Seedance 2.5 Flash page')}. 720p is $0.24/s, 1080p is $0.60/s, and 4K is $1.20/s. {live_note}"),
-        ("Runware", "Seedance 2.5", "API", "unknown", "unknown", "unknown", "not verified today", f"The Runware Seedance 2.5 model page loaded, but it did not publish a dollars-per-second rate at a stated resolution in the HTML we could read. {live_note}"),
+        ("Runware", "Seedance 2.5", "API", "unknown", "unknown", "unknown", "not verified on Nov 17, 2026", f"The Runware Seedance 2.5 model page loaded, but it did not publish a dollars-per-second rate at a stated resolution in the HTML we could read. {live_note}"),
     ])
     h3_live = manual_table("h3-live-table", [
         ("WaveSpeed", "MiniMax H3", "API list", "480p", "native stereo audio is described on the page; the table is by resolution", "$0.04", "published list rate", f"{ws_h3}. 540p is $0.06/s, 768p is $0.08/s, and 1080p is $0.16/s. This is labelled MiniMax H3, not H3 Max Turbo. {live_note}"),
@@ -245,7 +238,7 @@ def render(g):
         "This page compares pay-as-you-go API rates for the same model, at the same "
         "resolution when the vendor stated it. Catalog rows are used where they exist. "
         "WaveSpeed and Runware are not in the catalog, so their figures were read from "
-        "official pages today and are labelled as such. A sale rate is shown next to its "
+        "official pages on Nov 17, 2026 and are labelled as such. A sale rate is shown next to its "
         "list rate and end date. Token-billed or estimated rows stay labelled as estimates. "
         "Variants with different names, such as MiniMax H3 and MiniMax H3 Max Turbo, are "
         "not treated as one price."
@@ -258,13 +251,13 @@ def render(g):
         "fal remains a useful default when you already use its endpoint, but it is not the "
         "cheapest verified option for those two models. No line is given for Runware "
         "Seedance 2.5, or for WaveSpeed or Runware Kling 3.0, because those $/s figures "
-        "at a stated resolution were not verified today."
+        "at a stated resolution were not verified on Nov 17, 2026."
     )
     a_unknown = (
         f"Confirmed {checked_pt(CHECKED)} in the catalog, and re-checked on the Replicate "
-        f"model pages today: Wan 3.0 at $0.035, $0.07, and $0.14 per second at 480p, 720p, "
+        f"model pages on Nov 17, 2026: Wan 3.0 at $0.035, $0.07, and $0.14 per second at 480p, 720p, "
         f"and 1080p, and Seedance 2.5 at $0.1028/s (480p, no video input) and $0.2312/s "
-        f"(720p, no video input). Confirmed today on WaveSpeed model pages: the Wan 3.0, "
+        f"(720p, no video input). Confirmed Nov 17, 2026 on WaveSpeed model pages: the Wan 3.0, "
         f"Wan 3.0 Prime, Seedance 2.5, Seedance 2.5 Flash, and MiniMax H3 list tables "
         f"quoted above. Confirmed {RW_CHECKED_WHEN} on Runware: the Wan 3.0 and Wan 3.0 "
         f"Prime list rates (the sale ended November 23, 2026), and MiniMax H3 at $0.08/s (768p) and "
@@ -272,7 +265,7 @@ def render(g):
         f"free credits, with no credit card required to start, on {ws_src}. Unknown: a "
         f"Runware Seedance 2.5 or Kling 3.0 rate at a stated resolution; a WaveSpeed "
         f"Kling 3.0 rate (the pricing starting table lists Kling 4.0, not 3.0); a "
-        f"WaveSpeed or Runware Veo 3.1 rate we could verify today; and whether MiniMax H3 "
+        f"WaveSpeed or Runware Veo 3.1 rate we could verify on Nov 17, 2026; and whether MiniMax H3 "
         f"on WaveSpeed or Runware is billed as the same product as fal’s H3 Max Turbo."
     )
 
@@ -323,7 +316,7 @@ def render(g):
     next_steps = f"""<div class="card" id="next-steps">
 <h2>What to do next</h2>
 <ul>
-<li><b>Check the vendor page.</b> Confirm today’s API rate on {fal_src}, {rep_wan}, {ws_src}, or {rw_wan} before you send traffic.</li>
+<li><b>Check the vendor page.</b> Confirm the current API rate on {fal_src}, {rep_wan}, {ws_src}, or {rw_wan} before you send traffic.</li>
 <li><b>Try the calculator.</b> Put your clip length into the <a href="{e(calc)}">credit calculator for Wan 3.0 at 5 seconds</a>.</li>
 <li><b>Open the model page.</b> Every current catalog rate, with its source and date: <a href="{e(wan_model)}">Wan 3.0</a> · <a href="{e(prime_model)}">Wan 3.0 Prime</a> · <a href="{e(seed_model)}">Seedance 2.5</a> · <a href="{e(hailuo_model)}">MiniMax Hailuo</a> · <a href="{e(kling_model)}">Kling 3.0</a> · <a href="{e(veo_model)}">Veo 3.1</a> · <a href="{e(grok_model)}">Grok Imagine</a>.</li>
 </ul>
@@ -342,10 +335,10 @@ def render(g):
 <p>{e(a_how)}</p>
 
 <h2>Wan 3.0 at 480p</h2>
-<p>Catalog rows first, lowest $/s first, then today’s official WaveSpeed and Runware figures, which are not catalog rows.</p>
+<p>Catalog rows first, lowest $/s first, then the official WaveSpeed and Runware figures, which are not catalog rows.</p>
 {catalog_table(WAN_ROWS, "wan-catalog-table")}
 {wan_live}
-<p>Replicate also publishes $0.07/s at 720p and $0.14/s at 1080p on {rep_wan}, matching a doubling and quadrupling of the 480p rate. Those 720p and 1080p figures are not separate catalog rows today.</p>
+<p>Replicate also publishes $0.07/s at 720p and $0.14/s at 1080p on {rep_wan}, matching a doubling and quadrupling of the 480p rate. Those 720p and 1080p figures are not separate catalog rows.</p>
 
 <h2>Wan 3.0 Prime</h2>
 {catalog_table(PRIME_ROWS, "prime-catalog-table")}
@@ -365,7 +358,7 @@ def render(g):
 <p>fal’s Kling 3.0 catalog rows are the Pro tier. The official Kling API 720p row is included so you can see a published direct rate. WaveSpeed’s starting table lists Kling 4.0, not Kling 3.0, and Runware’s Kling 3.0 Standard page did not publish a $/s at a stated resolution in the HTML we could read, so those two are unknown here.</p>
 {catalog_table(KLING_ROWS, "kling-catalog-table")}
 {catalog_table(VEO_ROWS, "veo-catalog-table")}
-<p>fal’s Veo 3.1 Standard catalog row is {rate_money(r020['usd_per_second'])}/s without audio, from {src(FAL_VEO, "fal’s Veo 3.1 page")}. A WaveSpeed or Runware Veo 3.1 rate was not verified today.</p>
+<p>fal’s Veo 3.1 Standard catalog row is {rate_money(r020['usd_per_second'])}/s without audio, from {src(FAL_VEO, "fal’s Veo 3.1 page")}. A WaveSpeed or Runware Veo 3.1 rate was not verified on Nov 17, 2026.</p>
 
 <h2>Grok Imagine Video 1.5</h2>
 <p>fal’s catalog row is the 1.5 model at 480p with audio. The cheaper official xAI and Runway API rows are Grok Imagine 1.5 Lite, a different variant, at 480p with audio not stated.</p>

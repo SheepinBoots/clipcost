@@ -85,7 +85,7 @@ OFFICIAL_SPECS = {
     "wan-3-0-prime": (
         "2–30 seconds on the Higgsfield API model page",
         "480p, 720p, or 1080p on the Higgsfield API model page",
-        "Unknown. Catalog rows mark audio as not stated. The model is not on the Artificial Analysis boards we opened today.",
+        "Unknown. Catalog rows mark audio as not stated. The model is not on the Artificial Analysis boards we opened Nov 16, 2026.",
         "hf_prime",
     ),
     "kling-3-0": (
@@ -222,7 +222,7 @@ def render(g):
     def row_src(r):
         href, rel = outbound(r["source_url"])
         link = f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>'
-        return f'{link}, catalog row {e(r["id"])}, checked {e(r.get("checked") or "date not stated")} PT'
+        return f'{link}, catalog row {e(r["id"])}, checked {e(__import__("timefmt").day_label(r.get("checked")))}'
 
     t2v_src = src(AA_T2V, "Artificial Analysis AA-Video-T2V v2.1 leaderboard")
     i2v_src = src(AA_I2V, "Artificial Analysis AA-Video-I2V v2.1 leaderboard")
@@ -314,7 +314,7 @@ def render(g):
         else:
             quality = (
                 "Unknown. This model was not listed on the AA-Video-T2V v2.1 or "
-                f"AA-Video-I2V v2.1 boards we opened today. {t2v_src} · {i2v_src}."
+                f"AA-Video-I2V v2.1 boards we opened Nov 16, 2026. {t2v_src} · {i2v_src}."
             )
         length, res, audio, sk = OFFICIAL_SPECS[slug]
         official = src_map[sk]
@@ -387,7 +387,7 @@ def render(g):
     a_quality = (
         "Artificial Analysis’s AA-Video-T2V v2.1 board ranks models on generating "
         "video with audio from a text prompt, using Elo from pairwise human "
-        "preference votes. The page was opened today without signing in. Scores "
+        "preference votes. The page was opened Nov 16, 2026 without signing in. Scores "
         "below are copied from that board, including the 95% interval, rank range, "
         "and sample count. Models that are not listed are marked unknown. We do "
         "not invent Elo numbers. A separate image-to-video board, AA-Video-I2V v2.1, "
@@ -433,12 +433,12 @@ def render(g):
         "Veo 3.1 is mixed: some official and catalog rows are labeled with audio, some without. "
         "For Wan 3.0, Wan 3.0 Prime, Seedance 2.5 on the cheapest catalog row, Gemini Omni Flash, MiniMax Hailuo, Runway Gen-4, and Grok Imagine, "
         "the official pages used for that table do not state a single yes-or-no audio rule. "
-        "Those vendor audio pages were not all re-opened today."
+        "Those vendor audio pages were not all re-opened on Nov 16, 2026."
     )
     q_longest = "Which of the models we cover can make the longest clip?"
     a_longest = (
         f"The official length table on this page, last read {CHECKED_WHEN}, lists a 30-second maximum for Wan 3.0, Wan 3.0 Prime, and Seedance 2.5. "
-        "Those three vendor pages were not re-opened today. "
+        "Those three vendor pages were not re-opened on Nov 16, 2026. "
         f"We re-checked two shorter official caps on {POLICY_CHECKED_WHEN}: "
         "Grok Imagine is up to 15 seconds on the official product page, and Google Flow Help lists Veo 3.1 Lite and Fast at 4, 6, or 8 seconds, "
         "and Veo 3.1 Quality at 8 seconds. "
@@ -495,7 +495,7 @@ def render(g):
 <li><b>A close high-Elo alternative.</b> MiniMax H3 (768p) and Gemini Omni Flash 1.2 overlap the top group’s intervals on the text-to-video board. The standard fal rate for H3 Max Turbo is {e(paid_phrase(g, hailuo))}. {row_src(hailuo)}. Omni Flash 1.2 is {e(paid_phrase(g, omni))}. {row_src(omni)}. {gemini_src}.</li>
 <li><b>A lower-cost draft.</b> Grok Imagine 1.5 sits lower on the text-to-video board (Elo 1051 ±13, range 15–17), and the Lite variant is lower still (Elo 987 ±13). The cheapest catalog row is {e(paid_phrase(g, grok))}. {row_src(grok)}. See <a href="{e(grok_href)}">how much a Grok Imagine video costs</a>.</li>
 <li><b>If you only care about price.</b> Do not use this page as a price-only ranking. Use <a href="{e(cheap_href)}">the cheapest AI video generator by model</a> instead. Veo 3.1 Lite, for example, is inexpensive in the catalog at {e(paid_phrase(g, veo))}, but its text-to-video Elo is 949 ±14, well below the top group. {row_src(veo)}.</li>
-<li><b>No public quality score.</b> <a href="{e(model_hrefs['runway-gen-4'])}">Runway Gen-4</a> and <a href="{e(model_hrefs['wan-3-0-prime'])}">Wan 3.0 Prime</a> were not on the Artificial Analysis boards we opened today, so their quality is unknown here. Their catalog rates are still listed in the table. See <a href="{e(runway_href)}">Runway pricing per second</a>.</li>
+<li><b>No public quality score.</b> <a href="{e(model_hrefs['runway-gen-4'])}">Runway Gen-4</a> and <a href="{e(model_hrefs['wan-3-0-prime'])}">Wan 3.0 Prime</a> were not on the Artificial Analysis boards we opened Nov 16, 2026, so their quality is unknown here. Their catalog rates are still listed in the table. See <a href="{e(runway_href)}">Runway pricing per second</a>.</li>
 </ul>
 <p>Related: <a href="{e(kling_href)}">Kling AI pricing and credits</a> · <a href="{e(hf_href)}">Higgsfield pricing explained</a> · <a href="{e(flow_href)}">Google Flow credits calculator</a> · <a href="{e(free_href)}">free AI video generators: what you get</a> · <a href="{e(budget_href)}">project budget calculator</a> · <a href="{e(calc_href)}">credit calculator</a>.</p>
 

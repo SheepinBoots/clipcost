@@ -120,7 +120,7 @@ def render(g):
 {row(
     "Krea",
     "Yes, with a free account. The image-to-video page says generating needs a free Krea account.",
-    "Free-plan models today: MiniMax H3 (up to 15s, start and end frame), Hailuo 2.3 Fast (up to 10s, start frame), and LTX-2 19B (up to 10s, start frame). A free account’s 100 daily compute units cover about two 5-second LTX-2 19B clips at 512p; one Hailuo 2.3 Fast or MiniMax H3 clip costs more than that. MiniMax H3 is on the free plan only during the current MiniMax promotion, with no end date published on that page. Seedance 2.5, Veo 3.1, Wan 3.0, and Kling 3.0 / 4.0 are marked paid-plan in Krea.",
+    "Free-plan models, read Nov 16, 2026: MiniMax H3 (up to 15s, start and end frame), Hailuo 2.3 Fast (up to 10s, start frame), and LTX-2 19B (up to 10s, start frame). A free account’s 100 daily compute units cover about two 5-second LTX-2 19B clips at 512p; one Hailuo 2.3 Fast or MiniMax H3 clip costs more than that. MiniMax H3 is on the free plan only during the current MiniMax promotion, with no end date published on that page. Seedance 2.5, Veo 3.1, Wan 3.0, and Kling 3.0 / 4.0 are marked paid-plan in Krea.",
     "Hailuo 2.3 Fast: up to 1080p. LTX-2 19B: up to 768p, with the worked free example at 512p. MiniMax H3: not stated on that row.",
     "Unknown. A watermark FAQ is on the page, but the answer was not expanded in this check.",
     f"{krea_i2v}, opened {e(CHECKED_WHEN)}. No credit card is required on the $0 plan, from {krea_plans}.",
@@ -130,7 +130,7 @@ def render(g):
     "Yes. Official help says you can animate images and add start and end frames or ingredients to a video prompt.",
     "50 Flow credits a day with or without a paid Google AI plan, shared across the account. Veo 3.1 Lite: frames-to-video (first, or first and last) at 4, 6, or 8 seconds; ingredients/references-to-video at 8 seconds only. All users can access Omni Flash models; Omni can generate or edit from text, frames, or ingredients, including a 360p option at one-third the credit cost of 720p. A Google account is required. Peak-hour video limits for people without a paid plan still apply.",
     "Veo 3.1 Lite is described as a 720p baseline. Omni Flash offers 360p and 720p. Higher paid lengths or upscales are not assumed here.",
-    "Unknown on the help pages opened today.",
+    "Unknown on the help pages opened Nov 16, 2026.",
     f"{flow_create} · {flow_models} · {flow_credits}, opened {e(CHECKED_WHEN)}.",
 )}
 {row(
@@ -162,7 +162,7 @@ def render(g):
     "Unknown. The homepage has a Create Video box with reference slots and a sign-up offer of welcome credits. It does not clearly label a free image-to-video allotment.",
     "Unknown amount. Terms still say new accounts can get a one-time welcome package that expires after three days. There are no recurring monthly credits on Free.",
     "The homepage control showed 2K and 5s in this check; whether that is a free-tier cap is unknown.",
-    "Yes for free downloads, from the terms (last updated July 14, 2025, and not re-dated today).",
+    "Yes for free downloads, from the terms (last updated July 14, 2025, and not re-dated as of Nov 16, 2026).",
     f"{hailuo_home} · {hailuo_terms}, opened {e(CHECKED_WHEN)}.",
 )}
 {row(
@@ -178,7 +178,7 @@ def render(g):
 </div>"""
 
     a_q = (
-        "The clearest published free image-to-video path today is Krea’s free "
+        "The clearest published free image-to-video path, as of Nov 16, 2026, is Krea’s free "
         "account: you upload a photo, sign in, and generate with the models "
         "marked Free plan, using 100 compute units a day and no credit card. "
         "Google Flow also officially lets you animate images with frames or "
@@ -215,7 +215,7 @@ def render(g):
         "promotion; Dreamina’s free I2V credit amount, resolution cap, and "
         "whether the 30-second and 180-second figures apply on the free tier; "
         "Pika, Wan, Hailuo, Runway, Kling, Higgsfield, and Grok Imagine free "
-        "image-to-video clip caps; Meta AI (not verified for video I2V today); "
+        "image-to-video clip caps; Meta AI (not verified for video I2V on Nov 16, 2026); "
         "and Luma, which has image-to-video on paid plans only."
     )
 

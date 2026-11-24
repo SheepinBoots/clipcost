@@ -111,7 +111,7 @@ def main():
     for question in (
         kling_pricing_guide.QUESTION,
         kling_pricing_guide.PHRASE,
-        "What do official Kling plans cost right now?",
+        "What do official Kling plans cost in " + __import__("timefmt").us_today().strftime("%B %Y") + "?",
         "What do official Kling credits buy per second or per clip?",
         "What does the official Kling API charge for Kling 3.0?",
         "When is pay-as-you-go or a plan elsewhere cheaper?",

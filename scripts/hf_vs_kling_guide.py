@@ -45,16 +45,9 @@ def _row_by_id(g, rid):
 
 
 def checked_pt(date):
-    if not date:
-        return "date not stated"
-    parts = str(date).split("-")
-    if len(parts) != 3:
-        return f"{date} PT"
-    months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-    try:
-        return f"{months[int(parts[1]) - 1]} {int(parts[2])}, {parts[0]} PT"
-    except (ValueError, IndexError):
-        return f"{date} PT"
+    """Date-only check label, e.g. 'Nov 23, 2026'. A date carries no clock, so no zone."""
+    from timefmt import day_label
+    return day_label(date)
 
 
 def blurb(g):
@@ -80,6 +73,11 @@ import deal_copy  # noqa: E402
 def render(g):
     _pa = deal_copy.money(deal_copy.plan_month(g, "hf-plus-annual"))
     _ua = deal_copy.money(deal_copy.plan_month(g, "hf-ultra-annual"))
+    _P = g["plans"]
+    _sm, _sc = deal_copy.money(_P["hf-starter"]["usd_month"]), f'{_P["hf-starter"]["credits_month"]:,}'
+    _pm, _pc = deal_copy.money(_P["hf-plus-monthly"]["usd_month"]), f'{_P["hf-plus-annual"]["credits_month"]:,}'
+    _um, _uc = deal_copy.money(_P["hf-ultra-monthly"]["usd_month"]), f'{_P["hf-ultra-annual"]["credits_month"]:,}'
+    _hf_checked = max(_P[k]["checked"] for k in ("hf-starter", "hf-plus-monthly", "hf-plus-annual", "hf-ultra-monthly", "hf-ultra-annual"))
     _sale = " (Black Friday sale price until " + deal_copy.hf_bf(g)["end"] + ")" if deal_copy.hf_bf(g)["live"] else ""
     e, root, LAST = g["e"], g["root"], g["LAST"]
     rate_money = g["rate_money"]
@@ -182,11 +180,11 @@ def render(g):
         f"Standard was $6.99 for the first month, then $8.80 a month (list $10), with 660 "
         f"credits a month. Yearly Standard was $79.20 (list $120) and grants 660 credits "
         f"each month for 12 months. Premier lets you pick 8,000, 18,000, 28,000, or 38,000 "
-        f"credits a month. Those membership figures were not re-opened today; see "
+        f"credits a month. Those membership figures were not re-opened on Nov 17, 2026; see "
         f"Kling AI pricing and credits for the full tables. Higgsfield’s catalog plans, "
-        f"checked {checked_pt(CHECKED)}, are Starter $19 a month for 270 credits, Plus "
-        f"$59 monthly or {_pa} a month billed annually for 1,200 credits, and Ultra $129 "
-        f"monthly or {_ua} a month billed annually for 3,000 credits{_sale}."
+        f"checked {checked_pt(_hf_checked)}, are Starter {_sm} a month for {_sc} credits, Plus "
+        f"{_pm} monthly or {_pa} a month billed annually for {_pc} credits, and Ultra {_um} "
+        f"monthly or {_ua} a month billed annually for {_uc} credits{_sale}."
     )
     a_best = (
         "Higgsfield Ultra (annual) is best for the lowest Kling 3.0 catalog rate we can "
@@ -249,7 +247,7 @@ def render(g):
     next_steps = f"""<div class="card" id="next-steps">
 <h2>What to do next</h2>
 <ul>
-<li><b>Check the vendor page.</b> Confirm today’s rates on {hf_src}, {kling_plans}, or {kling_api} before you buy.</li>
+<li><b>Check the vendor page.</b> Confirm the current rates on {hf_src}, {kling_plans}, or {kling_api} before you buy.</li>
 <li><b>Try the calculator.</b> Put your clip length into the <a href="{e(calc)}">credit calculator for Kling 3.0 at 5 seconds</a>.</li>
 <li><b>Open the model page.</b> Every current Kling 3.0 rate, with its source and date: <a href="{e(kling_model)}">Kling 3.0</a>.</li>
 </ul>

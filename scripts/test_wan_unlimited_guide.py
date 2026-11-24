@@ -44,7 +44,7 @@ def main():
         errors.append("canonical")
     if "sora" in text.lower():
         errors.append("names Sora")
-    if "No vendor we track sells Wan 3.0 as unlimited today" not in text:
+    if ", no vendor we track sells Wan 3.0 as unlimited." not in text or "unlimited today" in text:
         errors.append("missing the no-live-unlimited lead")
     live = [
         d for d in doc["deals"]

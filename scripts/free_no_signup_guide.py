@@ -226,7 +226,7 @@ def render(g):
 {trow(
     model_link("wan-3-0"),
     "Not re-confirmed. The membership page we fetched did not include plan text, so this check does not say whether a clip generates before login.",
-    "The Nov 15, 2026 check on the free-generators guide said the $0 plan asks you to log in for a daily bonus of an unpublished amount. That figure was not on the page we could read today.",
+    "The Nov 15, 2026 check on the free-generators guide said the $0 plan asks you to log in for a daily bonus of an unpublished amount. That figure was not on the page we could read on Nov 20, 2026.",
     f"{wan_plans}, read {when}; plan text was not in the response. Earlier record: <a href=\"{e(free_href)}\">free AI video generators: what you get</a> · <a href=\"{e(wan_guide)}\">cheapest Wan 3.0</a>.",
 )}
 {trow(
@@ -238,7 +238,7 @@ def render(g):
 {trow(
     model_link("kling-3-0"),
     "Not re-confirmed. The membership page we fetched was an app shell and did not include plan names, prices, or a sign-in prompt.",
-    "The Nov 15, 2026 check on the free-generators guide said Basic is $0, sign-in is offered, and a limited-time gift does not state an amount. That text was not in today’s response.",
+    "The Nov 15, 2026 check on the free-generators guide said Basic is $0, sign-in is offered, and a limited-time gift does not state an amount. That text was not in the Nov 20, 2026 response.",
     f"{kling_src}, read {when}; plan text was not in the response. <a href=\"{e(kling_guide)}\">Kling AI pricing and credits</a>.",
 )}
 {trow(
@@ -255,7 +255,7 @@ def render(g):
 )}
 {trow(
     model_link("gemini-omni-flash"),
-    "Yes, on the same Google Flow account as Veo 3.1. The catalog name is Gemini Omni Flash 1.1. The Flow help page read today prices Omni Flash 1.2 and says Omni Flash 1.1 will be retired on December 5, 2026. Those are not the same version.",
+    "Yes, on the same Google Flow account as Veo 3.1. The catalog name is Gemini Omni Flash 1.1. The Flow help page read Nov 20, 2026 prices Omni Flash 1.2 and says Omni Flash 1.1 will be retired on December 5, 2026. Those are not the same version.",
     "Omni Flash 1.2 is 1 credit per second at 360p and 3 credits per second at 720p, for clips up to 10 seconds, for all users. Fifty daily credits are about 50 seconds at 360p, or 16 seconds at 720p (48 credits), if every credit goes to that one model.",
     f"{flow_credits} · {flow_start}, read {when}.",
 )}
@@ -274,7 +274,7 @@ def render(g):
 {trow(
     model_link("grok-imagine"),
     "Unknown on the consumer site. grok.com/imagine loaded, and the text we could read did not state a no-account video path. x.ai/grok returned 403. The API rate in the paid table needs an API account.",
-    "No free video allowance was published on the pages we could read today.",
+    "No free video allowance was published on the pages we could read on Nov 20, 2026.",
     f"{grok_imagine}, read {when}. {xai_grok} returned 403. <a href=\"{e(grok_guide)}\">how much a Grok Imagine video costs</a>.",
 )}
 </tbody></table></div>"""
@@ -338,7 +338,7 @@ def render(g):
         href, rel = g["outbound"](r["source_url"])
         source = (
             f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>, '
-            f"catalog row {e(r['id'])}, checked {e(r['checked'])} PT."
+            f"catalog row {e(r['id'])}, checked {e(__import__('timefmt').day_label(r['checked']))}."
         )
         extra = assumption_text(r)
         if r.get("math"):
@@ -452,21 +452,21 @@ def render(g):
         f"for HD at 720p and {rate_money(DEEPAI_HOLLYWOOD)} per second for Hollywood mode at 2K. "
         "Vheer’s home page says generations are unlimited with no signup, while its pricing page "
         "lists a Free plan of 50 credits a month, so what applies to video without an account is not clear. "
-        "None of the nine catalog models has a no-account path on a seller page that loaded today. "
+        "None of the nine catalog models has a no-account path on a seller page that loaded on Nov 20, 2026. "
         "Wan’s and Kling’s plan pages did not include plan text, so those three model rows "
         "(Wan 3.0, Wan 3.0 Prime, and Kling 3.0) are not re-confirmed. We did not run a generation."
     )
     a_catalog = (
         "Where the seller page loaded, yes. Google Flow, which serves Veo 3.1 and the Omni Flash "
         "line, requires age 18 or older and a supported region, and its 50 daily credits are shared "
-        "across your account. The catalog model is Gemini Omni Flash 1.1; the Flow page read today "
+        "across your account. The catalog model is Gemini Omni Flash 1.1; the Flow page read Nov 20, 2026 "
         "prices Omni Flash 1.2 and says Omni Flash 1.1 retires on December 5, 2026. Dreamina, the "
         "consumer seller for Seedance 2.5, ties free credits to the credits in your account and shows "
         "Sign in. Hailuo’s terms give free users video generation upon logging in. Runway’s pricing "
         "page describes a Free plan with a one-time deposit of 125 credits. Higgsfield says every new "
         "account starts on the free plan, which has no monthly credits. Grok Imagine’s consumer page "
         "did not state a no-account video path, and x.ai/grok returned 403. Wan 3.0, Wan 3.0 Prime, "
-        "and Kling 3.0 are separate catalog models whose plan pages did not include plan text today."
+        "and Kling 3.0 are separate catalog models whose plan pages did not include plan text on Nov 20, 2026."
     )
     a_paid = (
         f"Yes. DeepAI’s video page says people with no account can buy video pay-per-call at "

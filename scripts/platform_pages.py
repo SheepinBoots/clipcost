@@ -333,12 +333,14 @@ def render_page(g, page):
         "about": [{"@type": "Organization", "name": plat}] + [{"@type": "Thing", "name": models[s]["name"]} for s in slugs],
         "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
     }
+    import schema_ld
+    ld_blocks = [ld] + [x for x in [schema_ld.offer_list(g, page["path"], page["h1"] + " – prices per second", rs)] if x]
     head = (cp._css(tuple(tids)) + "<style>" + ",".join(f"{t} tbody th" for t in tids) + "{white-space:normal;min-width:160px}"
             # Column headings wrap too, so the units table (one column per plan) fits at 1024px and up.
             + ",".join(f"{t} thead th" for t in tids) + "{white-space:normal}"
             # The clip column gets room only on wide screens, as on /cost/ pages.
             "@media(min-width:1100px){#plat-cheapest td:nth-child(3),#plat-plans td:nth-child(3){min-width:150px}}</style>"
-            + g["ld_join"](ld, g["breadcrumb_ld"]([("Prices", "/"), (page["h1"], page["path"])])))
+            + g["ld_join"](*ld_blocks, g["breadcrumb_ld"]([("Prices", "/"), (page["h1"], page["path"])])))
     g["page"](page["path"], title_of(page), page["description"], body, "", head,
               robots="noindex,follow" if stale else "index,follow")
     if not stale:

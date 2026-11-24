@@ -47,16 +47,9 @@ def _row_by_id(g, rid):
 
 
 def checked_pt(date):
-    if not date:
-        return "date not stated"
-    parts = str(date).split("-")
-    if len(parts) != 3:
-        return f"{date} PT"
-    months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-    try:
-        return f"{months[int(parts[1]) - 1]} {int(parts[2])}, {parts[0]} PT"
-    except (ValueError, IndexError):
-        return f"{date} PT"
+    """Date-only check label, e.g. 'Nov 23, 2026'. A date carries no clock, so no zone."""
+    from timefmt import day_label
+    return day_label(date)
 
 
 def blurb(g):
@@ -82,6 +75,11 @@ import deal_copy  # noqa: E402
 def render(g):
     _pa = deal_copy.money(deal_copy.plan_month(g, "hf-plus-annual"))
     _ua = deal_copy.money(deal_copy.plan_month(g, "hf-ultra-annual"))
+    _P = g["plans"]
+    _sm, _sc = deal_copy.money(_P["hf-starter"]["usd_month"]), f'{_P["hf-starter"]["credits_month"]:,}'
+    _pm, _pc = deal_copy.money(_P["hf-plus-monthly"]["usd_month"]), f'{_P["hf-plus-annual"]["credits_month"]:,}'
+    _um, _uc = deal_copy.money(_P["hf-ultra-monthly"]["usd_month"]), f'{_P["hf-ultra-annual"]["credits_month"]:,}'
+    _hf_checked = max(_P[k]["checked"] for k in ("hf-starter", "hf-plus-monthly", "hf-plus-annual", "hf-ultra-monthly", "hf-ultra-annual"))
     _sale = " (Black Friday sale price until " + deal_copy.hf_bf(g)["end"] + ")" if deal_copy.hf_bf(g)["live"] else ""
     e, root, LAST = g["e"], g["root"], g["LAST"]
     rate_money = g["rate_money"]
@@ -188,10 +186,10 @@ def render(g):
         f"credit rollover. There is no plan named Unlimited for new buyers on that page. "
         f"{to_max}, last fully read {checked_pt(UNLIMITED_CHECKED)}, says eligible legacy "
         f"Unlimited plans stay unchanged through November 30, 2026, then monthly plans "
-        f"move to Max at $95 a month. Higgsfield’s catalog plans, checked the same day "
-        f"as the Runway cards, are Starter $19 a month for 270 credits, Plus $59 monthly "
-        f"or {_pa} a month billed annually for 1,200 credits, and Ultra $129 monthly or "
-        f"{_ua} a month billed annually for 3,000 credits{_sale}."
+        f"move to Max at $95 a month. Higgsfield’s catalog plans, "
+        f"checked {checked_pt(_hf_checked)}, are Starter {_sm} a month for {_sc} credits, Plus {_pm} monthly "
+        f"or {_pa} a month billed annually for {_pc} credits, and Ultra {_um} monthly or "
+        f"{_ua} a month billed annually for {_uc} credits{_sale}."
     )
     a_krea = (
         f"Krea’s cheapest catalog estimate for Runway Gen-4.5 is "
@@ -200,7 +198,7 @@ def render(g):
         f"is {rate_money(r046['usd_per_second'])}/s. Those are the same model family, but "
         f"Krea’s figure is an estimate and does not state resolution or audio. Runway "
         f"Gen-4 Turbo on the official API, at {rate_money(r047['usd_per_second'])}/s, is a "
-        f"different variant and is cheaper than that Krea Gen-4.5 estimate. For Veo 3.1, "
+        f"different variant and is cheaper than that Krea Gen-4.5 estimate (resolution not stated; it assumes Krea’s approximate clip count). For Veo 3.1, "
         f"Krea Lite at {rate_money(r146['usd_per_second'])}/s is below Runway API’s cheapest "
         f"Veo 3.1 row at {rate_money(r045['usd_per_second'])}/s and below Higgsfield’s "
         f"cheapest Veo 3.1 Fast row at {rate_money(r127['usd_per_second'])}/s."
@@ -264,7 +262,7 @@ def render(g):
     next_steps = f"""<div class="card" id="next-steps">
 <h2>What to do next</h2>
 <ul>
-<li><b>Check the vendor page.</b> Confirm today’s plan or API rate on {rw_src}, {rw_api}, or {hf_src} before you buy.</li>
+<li><b>Check the vendor page.</b> Confirm the current plan or API rate on {rw_src}, {rw_api}, or {hf_src} before you buy.</li>
 <li><b>Try the calculator.</b> Put your clip length into the <a href="{e(calc)}">credit calculator for Runway Gen-4 at 5 seconds</a>.</li>
 <li><b>Open the model page.</b> Every current rate, with its source and date: <a href="{e(rw_model)}">Runway Gen-4</a> · <a href="{e(wan_model)}">Wan 3.0</a> · <a href="{e(veo_model)}">Veo 3.1</a>.</li>
 </ul>

@@ -678,8 +678,10 @@ def render_pair(g, pair):
     # the stacked layout from _css unchanged.
     fit = ("<style>@media(min-width:601px){#cmp-platforms tbody th,#cmp-platforms thead th,#cmp-platforms .tag"
            "{white-space:normal}#cmp-platforms tbody th{min-width:160px}}</style>")
+    import schema_ld
+    ld_blocks = [ld] + [x for x in [schema_ld.offer_list(g, pair["path"], pair["h1"] + " – prices per second", shown)] if x]
     head = _css(("#cmp-headline", "#cmp-platforms")) + fit + g["ld_join"](
-        ld, g["breadcrumb_ld"]([("Prices", "/"), (pair["h1"], pair["path"])]))
+        *ld_blocks, g["breadcrumb_ld"]([("Prices", "/"), (pair["h1"], pair["path"])]))
     g["page"](pair["path"], title_of(pair), pair["description"], body, "", head,
               robots="noindex,follow" if stale else "index,follow")
     if not stale:

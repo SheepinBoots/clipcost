@@ -49,16 +49,9 @@ def _row_by_id(g, rid):
 
 
 def checked_pt(date):
-    if not date:
-        return "date not stated"
-    parts = str(date).split("-")
-    if len(parts) != 3:
-        return f"{date} PT"
-    months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-    try:
-        return f"{months[int(parts[1]) - 1]} {int(parts[2])}, {parts[0]} PT"
-    except (ValueError, IndexError):
-        return f"{date} PT"
+    """Date-only check label, e.g. 'Nov 23, 2026'. A date carries no clock, so no zone."""
+    from timefmt import day_label
+    return day_label(date)
 
 
 def blurb(g):
@@ -199,11 +192,11 @@ def render(g):
         "in that set, is unknown. Official pages that do publish a countable free text-to-video "
         "allowance are covered in our free-tier guides: Google Flow (50 credits a day) and "
         "Krea Free (100 compute units a day, no card). Kling lists a $0 Basic plan but does "
-        "not publish credits per clip. OpenArt’s public pricing page, read today, did not "
+        "not publish credits per clip. OpenArt’s public pricing page, read Nov 17, 2026, did not "
         "publish a free-plan credit allotment, so that figure is unknown."
     )
     a_openart = (
-        "OpenArt’s public pricing page, read today, lists four individual plans per seat: "
+        "OpenArt’s public pricing page, read Nov 17, 2026, lists four individual plans per seat: "
         "Starter $14 a month for 4,000 credits, Plus $34 for 12,000, Pro $56 for 24,000, "
         "and Wonder $240 for 106,000. The same page’s structured data lists annual billed "
         "rates of $13, $27, $44, and $175 a month. The visible cards also show a first-year "
@@ -212,13 +205,14 @@ def render(g):
         "the then-current list price. Credits per clip for Wan, Kling, Veo, or Hailuo are "
         "not on that public page, so an OpenArt dollars-per-second figure is unknown and is "
         "not shown. Starter has no commercial-use right in the structured data; Plus and "
-        "higher do. Higgsfield’s catalog Starter is $19 a month for 270 credits, checked "
-        f"{checked_pt(CHECKED)}."
+        f"higher do. Higgsfield’s catalog Starter is ${g['plans']['hf-starter']['usd_month']:,} a month for "
+        f"{g['plans']['hf-starter']['credits_month']:,} credits, checked {checked_pt(g['plans']['hf-starter']['checked'])}."
     )
     a_unknown = (
-        "Confirmed today from the catalog (last full check 2026-11-17): the platform and "
+        f"Confirmed from the catalog (last full check {g['LAST']}): the platform and "
         "same-model rows in the tables, including Higgsfield Ultra (annual) plan math at "
-        "$50/month for 3,000 credits. Confirmed today on OpenArt’s pricing page: the monthly "
+        f"${g['plans']['hf-ultra-annual']['usd_month']:,}/month for {g['plans']['hf-ultra-annual']['credits_month']:,} credits "
+        f"(checked {checked_pt(g['plans']['hf-ultra-annual']['checked'])}). Confirmed Nov 17, 2026 on OpenArt’s pricing page: the monthly "
         "and annual list prices, first-year promotional annual card prices, credit allotments, "
         "and the first-period promo rule. Unknown: OpenArt credits per clip, so no OpenArt "
         "$/s; Higgsfield Free complimentary generations and the “selected” free models; "
@@ -257,7 +251,7 @@ def render(g):
 <li><b>Lowest catalog rate is still Higgsfield.</b> Wan 3.0 at 480p on Ultra (annual) is {rate_money(r096['usd_per_second'])}/s, from a credit plan, if you use every paid credit. Audio is not stated. {e(r096['id'])}.</li>
 <li><b>Krea is cheaper for Veo 3.1 Lite.</b> Basic (yearly) estimates {rate_money(r146['usd_per_second'])}/s at 720p, against Higgsfield Veo 3.1 Fast at {rate_money(r127['usd_per_second'])}/s. Both are estimates from published clip or credit figures.</li>
 <li><b>Replicate is cheaper for Seedance 2.5 at 480p.</b> {rate_money(r202['usd_per_second'])}/s with no video input, against Higgsfield API’s “from” {rate_money(r008['usd_per_second'])}/s, whose cheapest-mode resolution is not stated.</li>
-<li><b>OpenArt $/s is unknown.</b> Plan prices are verified today. Credits per clip are not on the public pricing page, so no per-second figure is shown.</li>
+<li><b>OpenArt $/s is unknown.</b> Plan prices were verified Nov 17, 2026. Credits per clip are not on the public pricing page, so no per-second figure is shown.</li>
 <li><b>Affiliate links never change this price order.</b></li>
 </ul>
 </div>"""
@@ -265,7 +259,7 @@ def render(g):
     next_steps = f"""<div class="card" id="next-steps">
 <h2>What to do next</h2>
 <ul>
-<li><b>Check the vendor page.</b> Confirm today’s plan or API rate on {hf_src}, {krea_src}, or the source link in each row before you buy.</li>
+<li><b>Check the vendor page.</b> Confirm the current plan or API rate on {hf_src}, {krea_src}, or the source link in each row before you buy.</li>
 <li><b>Try the calculator.</b> Put your clip length into the <a href="{e(calc_wan)}">credit calculator for Wan 3.0 at 5 seconds</a>.</li>
 <li><b>Open the model page.</b> Every current rate, with its source and date: <a href="{e(wan_model)}">Wan 3.0</a> · <a href="{e(veo_model)}">Veo 3.1</a> · <a href="{e(kling_model)}">Kling 3.0</a> · <a href="{e(hailuo_model)}">MiniMax Hailuo</a> · <a href="{e(seed_model)}">Seedance 2.5</a>.</li>
 </ul>

@@ -53,17 +53,9 @@ def _src(g, url, text="source"):
 
 
 def checked_pt(date):
-    if not date:
-        return "date not stated"
-    parts = str(date).split("-")
-    if len(parts) != 3:
-        return f"{date} PT"
-    year, month, day = parts
-    months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-    try:
-        return f"{months[int(month) - 1]} {int(day)}, {year} PT"
-    except (ValueError, IndexError):
-        return f"{date} PT"
+    """Date-only check label, e.g. 'Nov 23, 2026'. A date carries no clock, so no zone."""
+    from timefmt import day_label
+    return day_label(date)
 
 
 def _model_rows(g):
@@ -335,7 +327,7 @@ def render(g):
 {table_for(other_rows, "No other catalog rows.")}
 <p>Krea's pricing page lists approximate counts only, including “Grok Imagine 1.5 1s, 480p” at about 84 / 337 / 675 videos across plan columns. Those counts are tildes, so this catalog does not turn them into dollars per second ({src(KREA, "Krea pricing")}, checked {checked_pt("2026-11-12")}).</p>
 <p>Magnific lists “Grok Unlimited” at 70 credits per image, and names Grok Imagine in a footer list of tools. That published credit figure is per image, not per second of video, so it is not ranked here ({src(MAG, "Magnific pricing")}, checked {checked_pt("2026-11-12")}).</p>
-<p>Higgsfield's API pricing page and plan page, as fetched today, did not publish a Grok Imagine Video 1.5 dollars-per-second or credits-per-clip figure ({src(HF_API, "Higgsfield API pricing")} and {src(HF_PLANS, "Higgsfield pricing")}, checked {checked_pt("2026-11-12")}).</p>
+<p>Higgsfield's API pricing page and plan page, as fetched Nov 12, 2026, did not publish a Grok Imagine Video 1.5 dollars-per-second or credits-per-clip figure ({src(HF_API, "Higgsfield API pricing")} and {src(HF_PLANS, "Higgsfield pricing")}, checked {checked_pt("2026-11-12")}).</p>
 
 <h2>{e(q4)}</h2>
 <p>{e(a4)}</p>
@@ -349,13 +341,13 @@ def render(g):
 
 <h2>Hidden costs</h2>
 <p><b>Input media.</b> Official 1.5 and lite charge $0.01 per input image. 1.5 also charges for video input; preset-voice audio input is free. Runway adds 1 credit ($0.01) per image or audio reference on 1.5, and 1 credit for an image-to-video start frame on lite. fal's text-to-video page says no per-image charges apply on that endpoint.</p>
-<p><b>Failed generations.</b> The official pricing, FAQ, and vendor pages checked today do not state a single refund rule for a failed Grok Imagine video. Treat that cost as unknown.</p>
-<p><b>Plan pool and 720p fallback.</b> A high-quality video uses more of the weekly pool than a chat message, but the amount is not published. After the 720p cap for your tier, 720p output falls back to 480p. Extra credits expire after one year unless otherwise stated, and can only be bought on the web today.</p>
+<p><b>Failed generations.</b> The official pricing, FAQ, and vendor pages checked Nov 12, 2026 do not state a single refund rule for a failed Grok Imagine video. Treat that cost as unknown.</p>
+<p><b>Plan pool and 720p fallback.</b> A high-quality video uses more of the weekly pool than a chat message, but the amount is not published. After the 720p cap for your tier, 720p output falls back to 480p. Extra credits expire after one year unless otherwise stated, and could only be bought on the web as of Nov 12, 2026.</p>
 <p><b>Older official model.</b> grok-imagine-video (without 1.5) is a separate official model at {rate_money(0.05)}/s at 480p and {rate_money(0.07)}/s at 720p, with $0.01 per second of video input and $0.002 per input image, and no 1080p rate on the pricing table ({src(XAI_V1, "grok-imagine-video model page")} and {src(XAI_PRICING, "API pricing")}, checked {checked_pt("2026-11-12")}). It is not this catalog model and is not mixed into the 1.5 tables.</p>
 
 <h2>What is confirmed, and what is not</h2>
 <p><b>Confirmed {checked_pt("2026-11-12")} on official xAI pages:</b> the 1.5 and 1.5-lite output rates and image-input fee; 1–15 second duration; lite 1080p upscaled from 720p; preset-voice audio input free on 1.5; batch video at standard rates; plan prices and the feature grid for video generation (not on Free or Plus; included from Premium up); weekly shared usage pool replacing per-product daily limits; Extra Usage Credits from $5, one-year expiry unless otherwise stated, priced at standard rates; 720p fallback after an unstated per-tier cap; API usage on paid plans billed separately; existing SuperGrok and X Premium plans continue unless changed.</p>
-<p><b>Confirmed on vendor pages today, matching or adding to the catalog:</b> fal 1.5 output rates and 5-second examples; Runway 1.5 and lite credit rates, including lite 1080p at 14 credits/s; Atlas standard T2V rates matching the official list; Replicate's $0.08/s I2V billing with no resolution breakdown; Krea's approximate 1.5 counts; Magnific's per-image Grok credit line.</p>
+<p><b>Confirmed on vendor pages Nov 12, 2026, matching or adding to the catalog:</b> fal 1.5 output rates and 5-second examples; Runway 1.5 and lite credit rates, including lite 1080p at 14 credits/s; Atlas standard T2V rates matching the official list; Replicate's $0.08/s I2V billing with no resolution breakdown; Krea's approximate 1.5 counts; Magnific's per-image Grok credit line.</p>
 <p><b>Unknown:</b> how many credits or dollars one Imagine video uses on a paid plan; the size of each plan's weekly pool and of the 720p cap; whether a US-regional 1.1× token premium applies to Imagine video; a failed-generation refund rule; a Higgsfield 1.5 video rate; a Replicate resolution breakdown; Krea or Magnific video dollars-per-second. Invented figures are not shown for those gaps.</p>
 <h2>{e(q5)}</h2>
 <p>{e(a5)}</p>

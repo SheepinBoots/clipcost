@@ -5,6 +5,7 @@ from data/deals.json (the `windows` list on each unlimited_window deal) and
 data/prices.json (plan prices and per-second API rows). Nothing here hard-codes
 a price. Break-even seconds are plan price / API dollars per second.
 """
+import timefmt  # noqa: E402
 import math
 
 PATH = "/guides/seedance-2-5-unlimited/"
@@ -185,7 +186,7 @@ def render(g):
         if ends:
             short += f" The sale that carries the individual-plan windows ends {ends[0]}."
     else:
-        short = f"No live unlimited {name} offer is in our deal data right now."
+        short = f"No live unlimited {name} offer is in our deal data as of {__import__("timefmt").day_label(g["TODAY"])}."
     if runway_gone:
         short += f" Runway's unlimited {name} ended {runway_gone['end']}{' (the date we saw it gone)' if runway_gone.get('end_is_estimate') else ''}."
     limits_html = "<ul>" + "".join(f"<li>{e(x)}</li>" for x in lims if x) + "</ul>" if ws else ""
@@ -320,7 +321,7 @@ def render(g):
     gone_rows = []
     for d in gone:
         when = (d.get("end") or "date not stated") + (" (seen gone)" if d.get("end_is_estimate") else "")
-        note = (d.get("notes") or "")
+        note = timefmt.normalize_utc_mentions(d.get("notes") or "", (d.get("verified_date") or "2026")[:4])
         last = note.rsplit("Checked ", 1)
         why = ("Checked " + last[1]) if len(last) == 2 and last[1][:10] == d.get("verified_date") else note
         gone_rows.append(
@@ -385,7 +386,7 @@ def render(g):
     faqs.append((
         "Is there an unlimited Wan 3.0 plan?",
         ("Yes, see the deals page." if wan_gone else
-         "Not in our deal data right now. The last Wan 3.0 unlimited window we tracked has ended, and Higgsfield's pricing page lists Wan 3.0 at credit rates."),
+         "Not in our deal data as of " + __import__("timefmt").day_label(g["TODAY"]) + ". The last Wan 3.0 unlimited window we tracked has ended, and Higgsfield's pricing page lists Wan 3.0 at credit rates."),
     ))
     how = (
         formula + " Offers come from the vendor's own pricing page, with the date we checked it and the words it used. "
@@ -433,7 +434,7 @@ def render(g):
             f"from {cost_money(ws[0]['checkout'])}. Break-even seconds vs API $/s."
         )
     else:
-        desc = f"No live unlimited {name} offer right now. Expired offers and break-even seconds vs the API $/s."
+        desc = f"No live unlimited {name} offer as of {__import__('timefmt').day_label(g['TODAY'])}. Expired offers and break-even seconds vs the API $/s."
     if len(desc) > 160:
         raise SystemExit(f"{PATH} description is {len(desc)} characters")
     g["guide_page"](PATH, title, desc, body, faqs)

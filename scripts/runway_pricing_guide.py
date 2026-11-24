@@ -104,16 +104,9 @@ def _src(g, url, text="source"):
 
 
 def checked_pt(date):
-    if not date:
-        return "date not stated"
-    parts = str(date).split("-")
-    if len(parts) != 3:
-        return f"{date} PT"
-    months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-    try:
-        return f"{months[int(parts[1]) - 1]} {int(parts[2])}, {parts[0]} PT"
-    except (ValueError, IndexError):
-        return f"{date} PT"
+    """Date-only check label, e.g. 'Nov 23, 2026'. A date carries no clock, so no zone."""
+    from timefmt import day_label
+    return day_label(date)
 
 
 def usd(v, places=2):
@@ -409,7 +402,7 @@ def render(g):
         "</tr></thead><tbody>" + "".join(cmp_body) + "</tbody></table></div>"
     )
 
-    q_plans = "What do official Runway plans cost right now?"
+    q_plans = "What do official Runway plans cost in " + __import__("timefmt").us_today().strftime("%B %Y") + "?"
     a_plans = (
         f"On {checked_pt(CHECKED)}, the public pricing page listed Free, Standard, Pro, and Max "
         "for individuals, plus a Team plan and an Enterprise tab. There is no plan named Unlimited "
@@ -464,8 +457,8 @@ def render(g):
     )
     q_cheaper = "When is a route elsewhere cheaper?"
     a_cheaper = (
-        f"For Runway's own Gen-4.5, the cheapest catalog row is a Krea yearly credit-plan estimate, "
-        f"which undercuts the official API's {rate_money(api_gen45['usd_per_second'])}/s. "
+        f"For Runway's own Gen-4.5, the cheapest catalog row is a Krea yearly credit-plan estimate "
+        f"(resolution not stated; it assumes Krea’s approximate clip count and every credit used), which undercuts the official API's {rate_money(api_gen45['usd_per_second'])}/s. "
         f"Gen-4 Turbo's cheapest catalog row is the official Runway API at "
         f"{rate_money(api_turbo['usd_per_second'])}/s; we do not track a cheaper Turbo route. "
         "For models Runway also resells, including Kling 3.0, Wan 3.0, Seedance 2.5, Veo 3.1, "
@@ -482,7 +475,7 @@ def render(g):
         "Veo 3.1, the $0.01 API credit price, and the help-center description of the legacy "
         "Unlimited plan, Explore Mode, the November 30, 2026 move to Max, and Unlimited Mode on "
         "Pro and Max. Confirmed in the catalog (rows checked 2026-11-14, and the official API "
-        "document re-read today): every Runway API $/s row in the API table. Unknown: the public "
+        "document re-read Nov 15, 2026): every Runway API $/s row in the API table. Unknown: the public "
         "dollar price of consumer credit packs (the page says the minimum purchase is 1,000 credits "
         "but does not list a price); which models the Free plan includes; a Seedance 2.5 credit "
         "rate on the consumer compare table (the table lists Seedance 2.0 variants; Pro and Max "
@@ -583,7 +576,7 @@ def render(g):
 <h2>{e(q_unknown)}</h2>
 <p>{e(a_unknown)}</p>
 <p><b>Confirmed {e(checked_pt(CHECKED))} on official Runway pages:</b> the plan prices, credits, consumer clip rates, official API rates, the $0.01 API credit price, and the help-center account of the legacy Unlimited plan, Explore Mode, the November 30, 2026 move to Max, and Unlimited Mode on Pro and Max.</p>
-<p><b>Confirmed in the catalog:</b> every Runway API $/s row in the API table, each with its vendor URL. Those rows were last stored as checked 2026-11-14 and matched the official API document again today.</p>
+<p><b>Confirmed in the catalog:</b> every Runway API $/s row in the API table, each with its vendor URL. Those rows were last stored as checked 2026-11-14 and matched the official API document again on Nov 15, 2026.</p>
 <p class="small">Affiliate links never change this price order.</p>
 {g["how_block"]()}
 """

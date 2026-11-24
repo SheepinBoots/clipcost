@@ -47,6 +47,7 @@ def render(g):
     cheap_card = g["cheap_card"]
     higgsfield_plan_rows = g["higgsfield_plan_rows"]
     BRAND = g["BRAND"]
+    MONTH = g["MONTH"]
     LAST = g["LAST"]
     page_title = g["page_title"]
     SITE_URL = g["SITE_URL"]
@@ -208,17 +209,17 @@ def render(g):
         entries = [
             ("What is the cheapest way to use Wan 3.0?", "/guides/cheapest-wan-3-0/", g["wan_blurb"]()),
             ("Is Wan 3.0 unlimited really unlimited?", "/guides/wan-3-0-unlimited/", g["wan_unlimited_blurb"]()),
-            ("What is the cheapest AI video generator right now?", "/guides/cheapest-ai-video-generator/", g["cheapest_blurb"]()),
+            ("What is the cheapest AI video generator in " + __import__("timefmt").us_today().strftime("%B %Y") + "?", "/guides/cheapest-ai-video-generator/", g["cheapest_blurb"]()),
             ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/", g["hf_blurb"]()),
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/", project_cost_sentence(3)),
             ("Is there a truly unlimited Seedance 2.5 plan?", "/guides/seedance-2-5-unlimited/", g["seedance_unlimited_blurb"]()),
             ("What is the cheapest way to use Seedance 2.5?", "/guides/cheapest-seedance-2-5/", g["cheapest_seedance_blurb"]()),
-            ("Higgsfield Black Friday 2026: what you save per second", "/guides/higgsfield-black-friday/", g["hf_black_friday_blurb"]()),
+            ("What does the Higgsfield Black Friday 2026 sale save per second?", "/guides/higgsfield-black-friday/", g["hf_black_friday_blurb"]()),
             ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/", g["grok_imagine_blurb"]()),
-            ("Higgsfield pricing explained", "/guides/higgsfield-pricing/", g["hf_pricing_blurb"]()),
-            ("Kling AI pricing and credits", "/guides/kling-ai-pricing/", g["kling_pricing_blurb"]()),
-            ("Runway pricing per second", "/guides/runway-pricing/", g["runway_pricing_blurb"]()),
-            ("Free AI video generators: what you get", "/guides/free-ai-video-generators/", g["free_ai_video_blurb"]()),
+            ("How does Higgsfield pricing work?", "/guides/higgsfield-pricing/", g["hf_pricing_blurb"]()),
+            ("How do Kling AI pricing and credits work?", "/guides/kling-ai-pricing/", g["kling_pricing_blurb"]()),
+            ("What does Runway cost per second?", "/guides/runway-pricing/", g["runway_pricing_blurb"]()),
+            ("What do free AI video generators give you?", "/guides/free-ai-video-generators/", g["free_ai_video_blurb"]()),
             ("Which free AI video generators work with no sign-up?", "/guides/free-ai-video-generator-no-sign-up/", g["no_signup_blurb"]()),
             ("What is the best AI video generator when you count quality and cost?", "/guides/best-ai-video-generator/", g["best_ai_video_blurb"]()),
             ("Which tools let you animate a photo for free?", "/guides/free-image-to-video-ai/", g["free_image_to_video_blurb"]()),
@@ -228,8 +229,8 @@ def render(g):
             ("Is Kling cheaper on Higgsfield or on the official site?", "/guides/higgsfield-vs-kling/", g["hf_vs_kling_blurb"]()),
             ("Is Runway cheaper than Higgsfield per second?", "/guides/higgsfield-vs-runway/", g["hf_vs_runway_blurb"]()),
             ("How does fal pricing compare with Replicate, WaveSpeed, and Runware?", "/guides/fal-ai-pricing/", g["fal_pricing_blurb"]()),
-            ("Where is Kling 3.0 cheapest right now?", "/guides/cheapest-kling-3-0/", g["kling_3_blurb"]()),
-            ("Is there a Higgsfield promo code right now?", "/guides/higgsfield-promo-code/", g["hf_promo_code_blurb"]()),
+            ("Where is Kling 3.0 cheapest in " + __import__("timefmt").us_today().strftime("%B %Y") + "?", "/guides/cheapest-kling-3-0/", g["kling_3_blurb"]()),
+            ("Is there a Higgsfield promo code in " + __import__("timefmt").us_today().strftime("%B %Y") + "?", "/guides/higgsfield-promo-code/", g["hf_promo_code_blurb"]()),
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
@@ -371,7 +372,7 @@ def render(g):
             second = f"Without promos, the lowest rate is {rate_clause(alt)}."
         else:
             second = "Each model below is that homepage pick: the lowest live dollars per second. A promo or an estimate is labelled on the row that wins."
-        q = "What is the cheapest AI video generator right now?"
+        q = "What is the cheapest AI video generator in " + __import__("timefmt").us_today().strftime("%B %Y") + "?"
         q_each = "What is the cheapest option for each model?"
         answer = f"The lowest rate we track is {rate_clause(best_row)}. {second}"
         lead = answer
@@ -418,7 +419,7 @@ def render(g):
             ("How do we calculate this?", HOW_PLAIN),
         ]
         body = f"""{crumb("Cheapest by model")}
-<h1>Cheapest AI video generator right now, by model</h1>
+<h1>Cheapest AI video generator by model, {MONTH}</h1>
 <p class="lead">{e(lead)}</p>
 {checked_line()}
 <div class="cards">{cheap_card("Lowest rate we track", best_row, alt)}</div>
@@ -436,7 +437,7 @@ def render(g):
 {tick_script()}"""
         guide_page(
             "/guides/cheapest-ai-video-generator/",
-            f"Cheapest AI video generator right now, by model | {BRAND}",
+            f"Cheapest AI video generator by model, {MONTH} | {BRAND}",
             (
                 f"The lowest rate we track is {rate_money(best_row['usd_per_second'])}/s for "
                 f"{models[best_row['model']]['name']} on {best_row['platform']}. "

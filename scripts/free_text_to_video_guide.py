@@ -67,6 +67,8 @@ def description(g):
 
 
 import deal_copy  # noqa: E402
+from timefmt import utc_span as _utc_span  # noqa: E402
+FLOW_PEAK = _utc_span(14, 17)  # Google Flow's 2–5 PM UTC peak hours, ET first
 
 
 def render(g):
@@ -139,10 +141,10 @@ def render(g):
 {trow(
     "Google Flow (Omni Flash 1.2, Veo 3.1 Lite)",
     "Yes. The models help page lists Text to Video “without a Google AI subscription” on Omni Flash 1.2, and Text to Video on Veo 3.1 Lite, which all users can use.",
-    "50 Flow credits a day with or without a paid Google AI plan. Unused daily credits do not roll over, and the refresh is triggered by your first generation. Veo 3.1 Lite: 10 credits per 4, 6, or 8 second clip for non-Ultra users, so about 5 clips a day if every credit goes to Lite. Omni Flash 1.2: 3 to 10 seconds per clip without a paid plan, at 1 credit per second in 360p (about 50 seconds a day) or 3 credits per second in 720p (about 16 seconds a day, 48 credits). During peak hours, roughly 2 PM to 5 PM UTC, people without a paid plan may not be able to generate video. Credits are tied to your Google account.",
+    "50 Flow credits a day with or without a paid Google AI plan. Unused daily credits do not roll over, and the refresh is triggered by your first generation. Veo 3.1 Lite: 10 credits per 4, 6, or 8 second clip for non-Ultra users, so about 5 clips a day if every credit goes to Lite. Omni Flash 1.2: 3 to 10 seconds per clip without a paid plan, at 1 credit per second in 360p (about 50 seconds a day) or 3 credits per second in 720p (about 16 seconds a day, 48 credits). During peak hours, roughly " + FLOW_PEAK + ", people without a paid plan may not be able to generate video. Credits are tied to your Google account.",
     "Veo 3.1 Lite: 720p. Omni Flash 1.2: 360p or 720p. Upscaling to 1080p needs a Plus, Pro, or Ultra plan.",
     "Not stated for free clips. The models page lists custom voices as an Omni Flash feature, with regional limits. Neither help page says whether a free clip includes a soundtrack.",
-    "Unknown on the help pages read today.",
+    "Unknown on the help pages read Nov 17, 2026.",
     f"{flow_models} · {flow_credits} · {flow_create}, read {e(CHECKED_WHEN)}.",
 )}
 {trow(
@@ -165,12 +167,12 @@ def render(g):
 )}
 {trow(
     "Grok Imagine",
-    "Unknown. The product page says Grok is “free to try on the web and in the apps” and lists text-to-video up to 15 seconds at 720p. The plan grid read Nov 12, 2026 PT listed video generation as not included on Free.",
+    "Unknown. The product page says Grok is “free to try on the web and in the apps” and lists text-to-video up to 15 seconds at 720p. The plan grid read Nov 12, 2026 listed video generation as not included on Free.",
     "No free clip or credit allowance is published.",
     "720p for text-to-video on the product page. A separate Imagine blurb says up to 2K. Which applies to a free trial is not stated.",
     "Not stated for a free trial. The App Store listing says Grok can create short videos with sound.",
     "Unknown.",
-    f"{xai_grok} · {grok_app}, read {e(CHECKED_WHEN)}. {xai_pricing}, read Nov 12, 2026 PT, in <a href=\"{e(grok_guide)}\">how much a Grok Imagine video costs</a>.",
+    f"{xai_grok} · {grok_app}, read {e(CHECKED_WHEN)}. {xai_pricing}, read Nov 12, 2026, in <a href=\"{e(grok_guide)}\">how much a Grok Imagine video costs</a>.",
 )}
 {trow(
     "Pika",
@@ -227,7 +229,7 @@ def render(g):
         href, rel = g["outbound"](r["source_url"])
         source = (
             f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>, '
-            f"catalog row {e(rid)}, checked {e(r['checked'])} PT."
+            f"catalog row {e(rid)}, checked {e(__import__('timefmt').day_label(r['checked']))}."
         )
         return (
             float(r["usd_per_second"]),
@@ -283,7 +285,7 @@ def render(g):
             "not stated",
             f"{e(rate_money(pro_rate))}/s from credit plan",
             f"{e(g['cost_money'](pro['usd_month']))} ÷ {e(str(int(pro['credits_month'])))} credits × 10 credits ÷ 8 seconds. Assumes every monthly credit goes to 8-second Lite clips. The 50 daily credits are not counted.",
-            f"{google_plans}, checked {e(pro['checked'])} PT · {flow_credits}, read 2026-11-17. Not a catalog row; figured from the Flow plan data in prices.json.",
+            f"{google_plans}, checked {e(__import__('timefmt').day_label(pro['checked']))} · {flow_credits}, read 2026-11-17. Not a catalog row; figured from the Flow plan data in prices.json.",
         ),
     ))
     paid_bits.append(catalog_cells(
@@ -301,7 +303,7 @@ def render(g):
             "not stated",
             f"{e(rate_money(plus_rate))}/s from credit plan",
             f"{e(g['cost_money'](plus['usd_month']))} ÷ {e(str(int(plus['credits_month'])))} credits × 10 credits ÷ 8 seconds. Assumes every monthly credit goes to 8-second Lite clips. The 50 daily credits are not counted.",
-            f"{google_plans}, checked {e(plus['checked'])} PT · {flow_credits}, read 2026-11-17. Not a catalog row; figured from the Flow plan data in prices.json.",
+            f"{google_plans}, checked {e(__import__('timefmt').day_label(plus['checked']))} · {flow_credits}, read 2026-11-17. Not a catalog row; figured from the Flow plan data in prices.json.",
         ),
     ))
     pika_pack_rate = 10.0 / 60.0 / 5.0
@@ -347,7 +349,7 @@ def render(g):
 
     a_q = (
         "Google Flow and Krea are the two free tiers that clearly publish "
-        "text-to-video today. Google Flow’s help pages list Text to Video for "
+        "text-to-video as of Nov 17, 2026. Google Flow’s help pages list Text to Video for "
         "people without a paid Google AI plan on both Omni Flash 1.2 (3 to 10 "
         "seconds) and Veo 3.1 Lite (4, 6, or 8 seconds at 720p), paid for from "
         "50 credits a day. Krea says a free account can open its Video Tool, "
@@ -425,7 +427,7 @@ def render(g):
 
     lead = (
         f'<a href="{e(flow_calc)}">Google Flow</a> and Krea are the two free tiers that clearly publish '
-        f"text-to-video today. Flow gives 50 credits a day, about five Veo 3.1 "
+        f"text-to-video as of Nov 17, 2026. Flow gives 50 credits a day, about five Veo 3.1 "
         f"Lite clips at 720p if every credit goes to Lite. "
         f"Krea gives 100 compute units a day with no credit card and no "
         f"watermark, for personal use, from {krea_video}. Official pages were "
@@ -452,7 +454,7 @@ def render(g):
     next_steps = f"""<div class="card" id="next-steps">
 <h2>What to do next</h2>
 <ul>
-<li><b>Check the vendor page.</b> Free allowances change without notice. Confirm today’s Google Flow numbers on the help page cited under Sources below, or {krea_plans} before you plan around them.</li>
+<li><b>Check the vendor page.</b> Free allowances change without notice. Confirm the current Google Flow numbers on the help page cited under Sources below, or {krea_plans} before you plan around them.</li>
 <li><b>Try the calculator.</b> Put your clip length into the <a href="{e(calc_veo)}">credit calculator for Veo 3.1 at 8 seconds</a>, or the <a href="{e(flow_calc)}">Google Flow credits calculator</a>, to see what the paid step costs you.</li>
 <li><b>Open the model page.</b> Every current rate, with its source and date: <a href="{e(veo_href)}">Veo 3.1</a> · <a href="{e(omni_href)}">Gemini Omni Flash</a> · <a href="{e(wan_href)}">Wan 3.0</a> · <a href="{e(grok_model)}">Grok Imagine</a>.</li>
 </ul>
@@ -478,7 +480,7 @@ def render(g):
 <h2>Which free text-to-video option is best for each use?</h2>
 <p>{e(a_best)}</p>
 <ul>
-<li><b>Google Flow.</b> Best for: a daily allowance you can count (50 credits, about five Veo 3.1 Lite clips), and the highest published text-to-video score we could confirm on a free allowance: Gemini Omni Flash 1.2 at Elo 1151 ±14 (rank range 3–9, 5,634 samples) on {aa_t2v}. Not for: a top score from Lite, since Veo 3.1 Lite is Elo 949 ±14 (rank range 26–30) on the same board; generating between roughly 2 PM and 5 PM UTC without a paid plan; or clips longer than 10 seconds. Related: <a href="{e(flow_calc)}">Google Flow credits calculator</a> · <a href="{e(veo_href)}">Veo 3.1</a> · <a href="{e(omni_href)}">Gemini Omni Flash</a>.</li>
+<li><b>Google Flow.</b> Best for: a daily allowance you can count (50 credits, about five Veo 3.1 Lite clips), and the highest published text-to-video score we could confirm on a free allowance: Gemini Omni Flash 1.2 at Elo 1151 ±14 (rank range 3–9, 5,634 samples) on {aa_t2v}. Not for: a top score from Lite, since Veo 3.1 Lite is Elo 949 ±14 (rank range 26–30) on the same board; generating between roughly {FLOW_PEAK} without a paid plan; or clips longer than 10 seconds. Related: <a href="{e(flow_calc)}">Google Flow credits calculator</a> · <a href="{e(veo_href)}">Veo 3.1</a> · <a href="{e(omni_href)}">Gemini Omni Flash</a>.</li>
 <li><b>Krea Free.</b> Best for: no credit card and no watermark, both stated by Krea. Not for: commercial work, since Krea says videos made on the free plan are for personal use, or for Seedance 2.5 and Veo 3.1, which need Pro or higher. {krea_video} · {krea_plans}. MiniMax H3 (768p) is Elo 1159 ±13 (rank range 2–7) on the same board, and Krea’s image-to-video page marks MiniMax H3 as Free plan during the current MiniMax promotion; whether it accepts a text-only prompt on Free is unknown. Related: <a href="{e(hailuo_href)}">MiniMax Hailuo model page</a>.</li>
 <li><b>Dreamina.</b> Best for: the Seedance family in a consumer app with daily credits, as Dreamina states. Not for: planning a clip count ahead of time, since credits per clip are not published, or a clean file from the free example, which Dreamina’s own guide says had a watermark and no audio track. {dreamina_t2v} · {dreamina_plans}. Related: <a href="{e(seedance_href)}">Seedance 2.5 model page</a>.</li>
 <li><b>Pika.</b> Best for: a watermark-free export on a $0 plan once you buy a pack; Pika H3 Flex is Elo 1124 ±14 (rank range 11–15) on the same board. Not for: free clips, since Free has 0 monthly credits and no commercial license. {pika_src}.</li>
@@ -494,7 +496,7 @@ def render(g):
 
 <h2>What is confirmed, and what is not?</h2>
 <p>{e(a_unknown)}</p>
-<p><b>Confirmed {e(CHECKED_WHEN)} on official pages:</b> Flow’s Text to Video support without a paid Google AI plan, its 50 daily credits, and the Lite and Omni Flash 1.2 credit costs; Krea’s free text-to-video path, 100 units a day, no card, no watermark, and personal-use rule; Dreamina’s free daily credits and the 120-a-day US figure on a Dreamina guide; Pika Free’s 0 monthly credits, no watermark, and 60-credits-per-$1 packs; Runway’s 125 one-time credits; Hailuo’s watermarked free downloads and three-day welcome credits; Luma’s lack of a public free plan. <b>Confirmed {e(CHECKED_WHEN)} on Artificial Analysis:</b> the Elo figures, intervals, and rank ranges quoted above. <b>Carried from earlier checks, with their dates:</b> the Wan, Kling, and Higgsfield rows (Nov 15, 2026), the Grok plan grid (Nov 12, 2026 PT), and the catalog rows (2026-11-16).</p>
+<p><b>Confirmed {e(CHECKED_WHEN)} on official pages:</b> Flow’s Text to Video support without a paid Google AI plan, its 50 daily credits, and the Lite and Omni Flash 1.2 credit costs; Krea’s free text-to-video path, 100 units a day, no card, no watermark, and personal-use rule; Dreamina’s free daily credits and the 120-a-day US figure on a Dreamina guide; Pika Free’s 0 monthly credits, no watermark, and 60-credits-per-$1 packs; Runway’s 125 one-time credits; Hailuo’s watermarked free downloads and three-day welcome credits; Luma’s lack of a public free plan. <b>Confirmed {e(CHECKED_WHEN)} on Artificial Analysis:</b> the Elo figures, intervals, and rank ranges quoted above. <b>Carried from earlier checks, with their dates:</b> the Wan, Kling, and Higgsfield rows (Nov 15, 2026), the Grok plan grid (Nov 12, 2026), and the catalog rows (2026-11-16).</p>
 <p class="small">Affiliate links never change this price order.</p>
 {next_steps}
 {g["how_block"]()}

@@ -10,7 +10,8 @@ labelled that way. This page never names the banned model.
 PATH = "/guides/cheapest-kling-3-0/"
 LABEL = "Kling 3.0 cost"
 PHRASE = "Kling 3.0 cost per second: where it’s cheapest"
-QUESTION = "Where is Kling 3.0 cheapest right now?"
+import timefmt as _tf
+QUESTION = "Where is Kling 3.0 cheapest in " + _tf.us_today().strftime("%B %Y") + "?"
 CHECKED = "2026-11-17"
 CHECKED_WHEN = "Nov 17, 2026, 4:04–4:15 PM ET (1:04–1:15 PM PT)"
 MODEL = "kling-3-0"
@@ -42,14 +43,9 @@ def _src(g, url, text="source"):
 
 
 def checked_pt(date):
-    if not date:
-        return "date not stated"
-    parts = str(date).split("-")
-    months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-    try:
-        return f"{months[int(parts[1]) - 1]} {int(parts[2])}, {parts[0]} PT"
-    except (ValueError, IndexError):
-        return f"{date} PT"
+    """Date-only check label, e.g. 'Nov 23, 2026'. A date carries no clock, so no zone."""
+    from timefmt import day_label
+    return day_label(date)
 
 
 def kling_rows(g):
@@ -370,7 +366,7 @@ def render(g):
     next_steps = f"""<div class="card" id="next-steps">
 <h2>What to do next</h2>
 <ul>
-<li><b>Check the vendor page.</b> Prices and sale prices change without notice. Confirm today’s figure on {kling_api_src}, {hf_plans}, or {fal_pro} before you buy.</li>
+<li><b>Check the vendor page.</b> Prices and sale prices change without notice. Confirm the current figure on {kling_api_src}, {hf_plans}, or {fal_pro} before you buy.</li>
 <li><b>Try the calculator.</b> Put your clip length into the <a href="{e(calc_href)}">credit calculator for a 10-second Kling 3.0 clip</a> to see what your plan really costs when you do not use every credit.</li>
 <li><b>Open the model page.</b> Every current Kling 3.0 rate, with its source and date, is on the <a href="{e(model_href)}">Kling 3.0 model page</a>.</li>
 </ul>
@@ -386,7 +382,7 @@ def render(g):
 <p>{e(a_q)}</p>
 
 <h2>Kling 3.0 cost per second, cheapest route on each platform</h2>
-<p>One row per platform: the lowest Kling 3.0 rate we track there, cheapest first. One Higgsfield API mode read today (Pro at 1080p) is included and labelled as not a catalog row. A credit-plan rate is plan price ÷ credits × credits per clip ÷ seconds, and it assumes every credit you pay for is used. Unused credits make the real cost higher.</p>
+<p>One row per platform: the lowest Kling 3.0 rate we track there, cheapest first. One Higgsfield API mode read Nov 17, 2026 (Pro at 1080p) is included and labelled as not a catalog row. A credit-plan rate is plan price ÷ credits × credits per clip ÷ seconds, and it assumes every credit you pay for is used. Unused credits make the real cost higher.</p>
 {platform_table}
 <p class="small">{PLATFORM_ORDER_NOTE} Higgsfield links can be affiliate links. Higgsfield’s annual plan rows use the prices on {hf_plans} ({_pa} a month for Plus, {_ua} for Ultra 3K, billed yearly{e(_sale)}), from the catalog plan records; see <a href="{e(hf_bf)}">Higgsfield Black Friday</a>.</p>
 

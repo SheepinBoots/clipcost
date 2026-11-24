@@ -94,7 +94,7 @@ def blurb(g):
             f"{'s' if len(live) != 1 else ''} "
             "are in the deals file. Read the caps before treating any of them as $0/s."
         )
-    bit = f" The cheapest Wan 3.0 plan rate in the catalog today is {rate}/s at 480p on Ultra annual." if rate else ""
+    bit = f" The cheapest Wan 3.0 plan rate in the catalog, as of {__import__('timefmt').day_label(g['LAST'])}, is {rate}/s at 480p on Ultra annual." if rate else ""
     return (
         "No vendor we track currently sells Wan 3.0 or Wan 3.0 Prime as unlimited. "
         "Higgsfield's 7-day window ended in October (the Oct 20 end is an estimate)."
@@ -135,8 +135,8 @@ def render(g):
     g["SITEMAP_LASTMOD"][PATH] = as_of
 
     desc = (
-        "No vendor we track sells Wan 3.0 as unlimited today. "
-        "Higgsfield's 7-day window ended in October, with 30-second and 1080p caps. "
+        "As of " + __import__("timefmt").day_label(g["TODAY"]) + ", no vendor we track sells Wan 3.0 as unlimited. "
+        "Higgsfield's 7-day window ended in October (30s, 1080p caps). "
         "Here is the per-second math."
     )
     if len(desc) > 160:
@@ -183,7 +183,7 @@ def render(g):
 
     faqs = [
         (
-            "Is there an unlimited Wan 3.0 plan right now?",
+            "Is there an unlimited Wan 3.0 plan in " + __import__("timefmt").us_today().strftime("%B %Y") + "?",
             "Not among the vendors in our price catalog and deals file. "
             "On Nov 12, 2026, Higgsfield's pricing page listed Wan 3.0 and Wan 3.0 Prime only at credit rates. "
             "Alibaba's Wan membership page sells credit plans, not an unlimited plan. "
@@ -194,13 +194,13 @@ def render(g):
             "Higgsfield's Oct 13, 2026 changelog, with terms as of that date, offered a free week of Wan 3.0 and Wan 3.0 Prime on individual plans from Pro and above, monthly or annual. "
             "Clips were up to 30 seconds at up to 1080p, in a shared queue, so speed depended on load. "
             "An upgrade from Basic or Starter started the 7 days from that moment. "
-            "The window is not on the pricing page today. The recorded end date, Oct 20, 2026, is an estimate from a check the next day.",
+            "The window was not on the pricing page at the last check. The recorded end date, Oct 20, 2026, is an estimate from a check the next day.",
         ),
         (
             "How would a break-even against the API work?",
             "Break-even seconds are the amount you pay for the window, divided by the cheapest Wan 3.0 API dollars per second at the same resolution in the price catalog. "
             "Higgsfield's week was a bonus on an existing Pro-or-higher plan, not a separately priced unlimited plan, and it has ended, so this page does not invent a checkout figure or a $0/s rate for it. "
-            "The cheapest Wan 3.0 API rates in the catalog today are $0.035/s at 480p, $0.07/s at 720p, and $0.14/s at 1080p on Replicate.",
+            "The cheapest Wan 3.0 API rates in the catalog, as of the last full check, are $0.035/s at 480p, $0.07/s at 720p, and $0.14/s at 1080p on Replicate.",
         ),
         (
             "Does Alibaba sell unlimited Wan 3.0?",
@@ -222,7 +222,7 @@ def render(g):
 <p>Checked 2026-11-12 on the vendors' own pages linked below. Prices exclude VAT and local taxes, which are added at checkout. Always confirm the price on the vendor's page before you buy.</p>
 
 <h2>What is confirmed, and what is not</h2>
-<p>Confirmed: none of the vendors in our catalog currently sell Wan 3.0 or Wan 3.0 Prime as an unlimited plan or an unlimited window. Higgsfield's pricing page today lists those two models only in the credit-rate compare table. The visible Plus and Ultra cards say “Unlimited models for 7 days” and name image models; they do not name Wan 3.0. Alibaba's official membership plans run on credits. The last Wan 3.0 unlimited window we recorded, on Higgsfield, has ended.</p>
+<p>Confirmed: none of the vendors in our catalog currently sell Wan 3.0 or Wan 3.0 Prime as an unlimited plan or an unlimited window. Higgsfield's pricing page, at the last check, listed those two models only in the credit-rate compare table. The visible Plus and Ultra cards say “Unlimited models for 7 days” and name image models; they do not name Wan 3.0. Alibaba's official membership plans run on credits. The last Wan 3.0 unlimited window we recorded, on Higgsfield, has ended.</p>
 <p>Not announced: a new Wan 3.0 or Wan 3.0 Prime unlimited sale on Higgsfield, on create.wan.video, or on the other vendor pages checked for this guide. Unknown: whether Higgsfield currently sells a paid Unlimited Models Marketplace bundle for Wan 3.0, because that catalog is inside an account and was not visible on the public pricing page. The Oct 20, 2026 end date for the last Higgsfield window is an estimate; Higgsfield's changelog did not print a calendar end time for the week.</p>
 
 <h2>Higgsfield's 7-day window, now ended</h2>
@@ -258,10 +258,10 @@ def render(g):
 <li>{_src(g, FAL_WAN, "fal Wan 3.0")} and {_src(g, REP_WAN, "Replicate alibaba/wan-3")}: pay-as-you-go API pages, not unlimited plans. Replicate is the cheapest Wan 3.0 API in our catalog, at the rates in the table below (checked {e(checked('r025'))}).</li>
 </ul>
 
-<h2>What you actually pay per second today</h2>
+<h2>What you actually pay per second now</h2>
 <p>With no live unlimited window, Wan 3.0 and Wan 3.0 Prime cost the catalog rates below. Credit-plan figures assume every paid credit is used; unused credits make the real cost higher. Affiliate links never change this price order.</p>
 {api_table}
-<p>{e(plan_bits[0])} {e(plan_bits[1])} See the <a href="{e(g['root']('/guides/cheapest-wan-3-0/'))}">cheapest Wan 3.0 guide</a>, the <a href="{e(g['root']('/models/wan-3-0/'))}">Wan 3.0</a> and <a href="{e(g['root']('/models/wan-3-0-prime/'))}">Wan 3.0 Prime</a> model pages, and <a href="{e(g['root']('/guides/seedance-2-5-unlimited/'))}">unlimited Seedance 2.5 plans compared</a> for the windows Higgsfield is actually selling this week.</p>
+<p>{e(plan_bits[0])} {e(plan_bits[1])} See the <a href="{e(g['root']('/guides/cheapest-wan-3-0/'))}">cheapest Wan 3.0 guide</a>, the <a href="{e(g['root']('/models/wan-3-0/'))}">Wan 3.0</a> and <a href="{e(g['root']('/models/wan-3-0-prime/'))}">Wan 3.0 Prime</a> model pages, and <a href="{e(g['root']('/guides/seedance-2-5-unlimited/'))}">unlimited Seedance 2.5 plans compared</a> for the windows Higgsfield is actually selling.</p>
 {g['faq_html'](faqs)}
 <div class="disclose">Some Higgsfield links on this page are affiliate links. <a class="tap" href="{e(g['root']('/about/#disclosure'))}">Disclosure</a>.</div>
 """

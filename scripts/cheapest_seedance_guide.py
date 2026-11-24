@@ -87,19 +87,9 @@ def cheapest_at(g, res, kind=None, published_only=False):
 
 
 def checked_pt(date):
-    """Turn an ISO date (YYYY-MM-DD) into a short PT label."""
-    if not date:
-        return "date not stated"
-    parts = str(date).split("-")
-    if len(parts) != 3:
-        return f"{date} PT"
-    year, month, day = parts
-    months = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
-    try:
-        label = f"{months[int(month) - 1]} {int(day)}, {year} PT"
-    except (ValueError, IndexError):
-        return f"{date} PT"
-    return label
+    """Date-only check label, e.g. 'Nov 23, 2026'. A date carries no clock, so no zone."""
+    from timefmt import day_label
+    return day_label(date)
 
 
 def blurb(g):
@@ -237,7 +227,7 @@ def render(g):
     elif best.get("note"):
         mode_note = " " + best["note"].rstrip(".") + "."
     lead = (
-        f"The cheapest published {name} rate in the catalog today is {best_rate}/s "
+        f"The cheapest published {name} rate in the catalog, as of {__import__('timefmt').day_label(g['LAST'])}, is {best_rate}/s "
         f"on {best['platform']} ({shown_resolution(best)}, {best['variant']}), "
         f"checked {checked_pt(best.get('checked'))}."
         + mode_note +
@@ -311,7 +301,7 @@ def render(g):
             f'<div class="tblwrap fit"><table>{unl_head}<tbody>{"".join(unl_rows)}</tbody></table></div>'
         )
     else:
-        unl_table = "<p>No live unlimited Seedance 2.5 window is in the deal data today.</p>"
+        unl_table = "<p>No live unlimited Seedance 2.5 window is in the deal data as of " + __import__("timefmt").day_label(g["TODAY"]) + ".</p>"
 
     # Higgsfield plan credits remain unverified for $/s
     hf_gap = None
@@ -395,7 +385,7 @@ def render(g):
         )
     else:
         a4 = (
-            "No live unlimited Seedance 2.5 window is in the deal data today. "
+            "No live unlimited Seedance 2.5 window is in the deal data as of " + __import__("timefmt").day_label(g["TODAY"]) + ". "
             f"See the {name} unlimited guide for ended windows and the method."
         )
     q5 = "How do we calculate this?"
@@ -413,7 +403,7 @@ def render(g):
         gap_bits.append(
             f"{hf_gap.get('item')}: {hf_gap.get('reason')} "
             f"({src(HF_PLANS, 'Higgsfield pricing')}, catalog note). "
-            "The Plus card rendered on Nov 12, 2026 PT lists 1,200 credits per month and 80 Seedance 2.5 videos, still without clip length or resolution."
+            "The Plus card rendered on Nov 12, 2026 lists 1,200 credits per month and 80 Seedance 2.5 videos, still without clip length or resolution."
         )
     gap_bits.append(
         f"Krea's pricing page lists approximate Seedance 2.5 video counts (including “Seedance 2.5 5s, 720p, no video reference” and marketing lines such as “~16 Seedance 2.5 videos” on the $9 plan). "
@@ -438,7 +428,7 @@ def render(g):
     hidden = [
         (
             "Failed generations",
-            "The vendor pages checked today do not state a single, clear refund or no-charge policy for failed Seedance 2.5 generations. Treat that cost as unknown. A failed job that still bills raises every rate below.",
+            "The vendor pages checked Nov 12, 2026 do not state a single, clear refund or no-charge policy for failed Seedance 2.5 generations. Treat that cost as unknown. A failed job that still bills raises every rate below.",
         ),
         (
             "Runway minimum and input video",
@@ -447,7 +437,7 @@ def render(g):
         ),
         (
             "Magnific credits expire",
-            f"Magnific annual plans grant credits per year (“Credits valid for 1 year, no monthly resets”). The catalog $/s figures assume those credits are used in full. Leftover credits raise the effective rate. Prices exclude VAT and local taxes. The page says you can top up credits anytime; it does not state a minimum top-up on the pricing page checked today. "
+            f"Magnific annual plans grant credits per year (“Credits valid for 1 year, no monthly resets”). The catalog $/s figures assume those credits are used in full. Leftover credits raise the effective rate. Prices exclude VAT and local taxes. The page says you can top up credits anytime; it does not state a minimum top-up on the pricing page checked Nov 12, 2026. "
             f"({src(MAG, 'Magnific pricing')}, checked {checked_pt('2026-11-12')}).",
         ),
         (
@@ -459,7 +449,7 @@ def render(g):
         ),
         (
             "Higgsfield API funds and list price",
-            f"Higgsfield API's Seedance 2.5 list price is “from” $0.118/s. Concurrent generation limits count only funds added in the past 28 days. The pricing page checked today does not state a minimum top-up or a failed-generation refund rule. "
+            f"Higgsfield API's Seedance 2.5 list price is “from” $0.118/s. Concurrent generation limits count only funds added in the past 28 days. The pricing page checked Nov 12, 2026 does not state a minimum top-up or a failed-generation refund rule. "
             f"({src(HF_API, 'Higgsfield API pricing')}, checked {checked_pt('2026-11-12')}).",
         ),
     ]
@@ -509,8 +499,8 @@ def render(g):
 {hidden_html}
 
 <h2>What is confirmed, and what is not</h2>
-<p><b>Confirmed today (Nov 12, 2026 PT) on the vendors' own pages, and matching the catalog rows used above:</b> Replicate's four published per-second rates of $0.1028 (non_video_in, 480p), $0.4304 (video_in, 480p), $0.2312 (non_video_in, 720p), and $0.9676 (video_in, 720p), which the tables show with the site's usual rounding; Higgsfield API's list price from $0.118/s for five modes up to 1080p; Magnific Draft 480p at 800 credits/4s, 720p at 1,760 credits/4s, and 1080p at 4,400 credits/4s, with annual plan prices of $14.50 / $33.75 / $82.50 per month billed yearly and credits valid for one year; Runway's 20 / 30 / 68 credits per second of output at 480p / 720p / 1080p and $0.01 per credit; fal's roughly $0.2205 / $0.4730 / $1.164 per second estimates; Atlas's standard $0.1397 / $0.3005 / $0.5914 per second estimates at 480p / 720p / 1080p; and the live unlimited windows already stored in the deal data (the 11.11 Individual windows have ended; Business Scale annual still showed 30 days of unlimited Seedance 2.5, and Scale monthly 7 days, with no stated end date on those cards, when rechecked Nov 17, 2026, 7:16 PM ET (4:16 PM PT)).</p>
-<p><b>Confirmed on a vendor page today, but not a catalog row:</b> Atlas estimated SR and ESR modes cited above; Krea's approximate Seedance 2.5 video counts; Higgsfield Plus listing 80 Seedance 2.5 videos on 1,200 credits without a clip length or resolution; Runway's 80-credit minimum, input-video add-on credits, and draft preview billing; fal's and Atlas's token formulas; Magnific credit validity and VAT exclusion.</p>
+<p><b>Confirmed Nov 12, 2026 on the vendors' own pages, and matching the catalog rows used above:</b> Replicate's four published per-second rates of $0.1028 (non_video_in, 480p), $0.4304 (video_in, 480p), $0.2312 (non_video_in, 720p), and $0.9676 (video_in, 720p), which the tables show with the site's usual rounding; Higgsfield API's list price from $0.118/s for five modes up to 1080p; Magnific Draft 480p at 800 credits/4s, 720p at 1,760 credits/4s, and 1080p at 4,400 credits/4s, with annual plan prices of $14.50 / $33.75 / $82.50 per month billed yearly and credits valid for one year; Runway's 20 / 30 / 68 credits per second of output at 480p / 720p / 1080p and $0.01 per credit; fal's roughly $0.2205 / $0.4730 / $1.164 per second estimates; Atlas's standard $0.1397 / $0.3005 / $0.5914 per second estimates at 480p / 720p / 1080p; and the live unlimited windows already stored in the deal data (the 11.11 Individual windows have ended; Business Scale annual still showed 30 days of unlimited Seedance 2.5, and Scale monthly 7 days, with no stated end date on those cards, when rechecked Nov 17, 2026, 7:16 PM ET (4:16 PM PT)).</p>
+<p><b>Confirmed on a vendor page Nov 12, 2026, but not a catalog row:</b> Atlas estimated SR and ESR modes cited above; Krea's approximate Seedance 2.5 video counts; Higgsfield Plus listing 80 Seedance 2.5 videos on 1,200 credits without a clip length or resolution; Runway's 80-credit minimum, input-video add-on credits, and draft preview billing; fal's and Atlas's token formulas; Magnific credit validity and VAT exclusion.</p>
 <p><b>Unknown:</b> a uniform failed-generation refund rule; minimum top-ups on Higgsfield API, fal, Atlas, Replicate, and Magnific (top-ups are offered on Magnific, but no minimum was stated on the pricing page); whether Higgsfield API's cheapest “from” mode is 480p; a Replicate 1080p rate; a Krea or Higgsfield plan dollars-per-second figure for Seedance 2.5; a public ByteDance self-serve rate. Invented figures are not shown for those gaps.</p>
 <ul class="small">{"".join(f"<li>{bit}</li>" for bit in gap_bits)}</ul>
 

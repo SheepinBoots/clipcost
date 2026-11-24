@@ -531,8 +531,8 @@ def render(g):
 <li><b>Median and cheapest.</b> The median is the middle of the per-model prices in a tier (the mean of the two middle ones when the count is even). The cheapest is the lowest of them.</li>
 <li><b>Resolution tiers.</b> 480p, 720p, 1080p and 4K use the exact resolution on the row. MiniMax Hailuo's 768p, 2K, and rows priced per mode count only under any resolution. A tier is shown when at least {MIN_MODELS} models have a price.</li>
 <li><b>Order.</b> Only $/s sets the order. Affiliate and partner links never change it.</li>
-<li><b>History.</b> Each earlier day uses the last copy of prices.json saved on or before that day, Eastern time, so it shows what {BRAND} published then. Nothing is filled in between saved copies. A move can come from a vendor price change, a newly added row, or a correction. Vendor price changes are listed on <a href="{root("/changes/")}">Price changes</a> and counted in the last column of the model table (the 7 days before today, and since the start).{latest_saved}</li>
-<li><b>Check dates.</b> Last full check {day_text(LAST)}. Today's per-model prices were checked {check_range}.</li>
+<li><b>History.</b> Each earlier day uses the last copy of prices.json saved on or before that day, Eastern time, so it shows what {BRAND} published then. Nothing is filled in between saved copies. A move can come from a vendor price change, a newly added row, or a correction. Vendor price changes are listed on <a href="{root("/changes/")}">Price changes</a> and counted in the last column of the model table (the 7 days before {day_text(TODAY)}, and since the start).{latest_saved}</li>
+<li><b>Check dates.</b> Last full check {day_text(LAST)}. The per-model prices for {day_text(TODAY)} were checked {check_range}.</li>
 </ul>"""
 
     cite_text = f'{BRAND}. "{H1}." {SITE_URL}{PATH} (prices checked {day_text(LAST)}).'

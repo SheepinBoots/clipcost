@@ -10,6 +10,7 @@ import analytics
 import compare_pages
 import cost_pages
 import timefmt
+import schema_ld
 import platform_pages
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
@@ -1500,7 +1501,7 @@ HOW_PLAIN = (
     f"A credit-plan figure is plan price ÷ credits × credits per clip ÷ seconds, and it {CREDIT_USE}. "
     'When the vendor marks that count with "~", "roughly", or "estimated", the row is labelled estimated from credit plan and is not a list price. '
     "A promo shows its end date when the vendor gave one. "
-    f"The full method is on the about page ({SITE_URL}/about/)."
+    "The full method is on the about page."
 )
 BUDGET_HOW = (
     HOW_PLAIN
@@ -1512,8 +1513,8 @@ BUDGET_HOW = (
 def how_block(text=None):
     plain = HOW_PLAIN if text is None else text
     html_text = e(plain).replace(
-        e(SITE_URL + "/about/"),
-        f'<a href="{root("/about/")}">{e(SITE_URL + "/about/")}</a>',
+        "on the about page.",
+        f'on the <a href="{root("/about/")}">about page</a>.',
     )
     return f"<h2>How do we calculate this?</h2><p>{html_text}</p>"
 
@@ -1600,7 +1601,7 @@ def guide_page(path, title, desc, body, faqs):
         blocks.append(item_list_ld("Guides", [
             ("What is the cheapest way to use Wan 3.0?", "/guides/cheapest-wan-3-0/"),
             ("Is Wan 3.0 unlimited really unlimited?", "/guides/wan-3-0-unlimited/"),
-            ("What is the cheapest AI video generator right now?", "/guides/cheapest-ai-video-generator/"),
+            ("What is the cheapest AI video generator in " + __import__("timefmt").us_today().strftime("%B %Y") + "?", "/guides/cheapest-ai-video-generator/"),
             ("Is Higgsfield worth it?", "/guides/is-higgsfield-worth-it/"),
             ("How much does a 3-minute AI video cost?", "/guides/ai-video-project-budget/"),
             ("How many Google Flow credits does a Veo 3.1 or Omni Flash video cost?", "/guides/google-flow-credits-calculator/"),
@@ -1621,8 +1622,8 @@ def guide_page(path, title, desc, body, faqs):
             ("Is Kling cheaper on Higgsfield or on the official site?", "/guides/higgsfield-vs-kling/"),
             ("Is Runway cheaper than Higgsfield per second?", "/guides/higgsfield-vs-runway/"),
             ("How does fal pricing compare with Replicate, WaveSpeed, and Runware?", "/guides/fal-ai-pricing/"),
-            ("Where is Kling 3.0 cheapest right now?", "/guides/cheapest-kling-3-0/"),
-            ("Is there a Higgsfield promo code right now?", "/guides/higgsfield-promo-code/"),
+            ("Where is Kling 3.0 cheapest in " + __import__("timefmt").us_today().strftime("%B %Y") + "?", "/guides/cheapest-kling-3-0/"),
+            ("Is there a Higgsfield promo code in " + __import__("timefmt").us_today().strftime("%B %Y") + "?", "/guides/higgsfield-promo-code/"),
         ]))
     elif path in GUIDE_CRUMBS:
         blocks.append(breadcrumb_ld([("Guides", "/guides/"), (GUIDE_CRUMBS[path], path)]))
@@ -1797,7 +1798,7 @@ def ending_strip():
             f'<h3>{e(deal["title"])}</h3><div class="when"><span class="ends">{e(ends_fallback(deal))}</span></div>'
             f'<div class="sub">{e(deal["vendor"])}</div></a>'
         )
-    return f'<section class="strip" id="ending"><h2>Deals ending this week</h2><div class="dealgrid">{cards_html}</div><p class="small"><a href="{root("/deals/")}">All deals</a></p></section>'
+    return f'<section class="strip" id="ending"><h2>Deals ending by {timefmt.day_label((today + datetime.timedelta(days=7)).isoformat())}</h2><div class="dealgrid">{cards_html}</div><p class="small"><a href="{root("/deals/")}">All deals</a></p></section>'
 
 HOLIDAY_NEEDLES = ("black friday", "cyber monday", "cyber week", "cyber weekend", "holiday sale", "11.11")
 
@@ -1885,7 +1886,7 @@ home = f"""<h1>{e(AGENT_H1)}</h1>
 <p class="lead">{len(rows)} prices for {len(models)} video models on {len(platforms)} platforms, from Higgsfield plans to the fal, Runway and Kling APIs. Everything is converted to <b>dollars per second of video</b>, and the math is shown for credit plans. Checked {LAST}. The table below stays for people.</p>
 {sponsor_slot("home")}
 {ending_strip()}
-<h2>Cheapest way to run each model today</h2><div class="cards">{cards}</div>
+<h2>Cheapest way to run each model, as of {timefmt.day_label(LAST)}</h2><div class="cards">{cards}</div>
 <p class="small">The lowest $/s for each model at any resolution, including temporary promos (labelled). Low-res tiers are usually the cheapest, so check the resolution.</p>
 {home_guides_html()}
 {crosslink_html(True, True)}
@@ -2110,7 +2111,7 @@ def deal_card(deal, archive=False, rowset=None):
     attrs = ' data-archive="1"' if archive else " " + deal_attrs(deal)
     pct = f' <span class="tag deal">−{deal["percent"]:g}%</span>' if deal.get("percent") is not None else ""
     quote = f'<blockquote class="small">“{e(deal.get("source_quote") or "")}”</blockquote>' if deal.get("source_quote") else ""
-    note = f'<p class="small">{linkify_note(deal["notes"], deal.get("vendor") or "")}</p>' if deal.get("notes") else ""
+    note = f'<p class="small">{linkify_note(timefmt.normalize_utc_mentions(deal["notes"], (deal.get("verified_date") or TODAY)[:4]), deal.get("vendor") or "")}</p>' if deal.get("notes") else ""
     cond = f'<p class="small">{e(" · ".join(bits))}</p>' if bits else ""
     season = f' <span class="tag">2025</span>' if deal.get("season") == "2025" else ""
     return (
@@ -2344,7 +2345,7 @@ for slug, m in models.items():
 <h1>{e(m['name'])} price per second ({MONTH})</h1>
 {byline_html()}
 <p class="lead">{model_spread(m, rs)}</p>
-{cross_html}<div class="cards"><div class="card"><h3>Cheapest today</h3><div class="big">{money(c['usd_per_second'])}<span class="small">/s</span></div>{assumption_html(c)}{card_math}<div class="sub">{e(c['platform'])} · {e(c['variant'])} · {e(spec_phrase(c))} {tag(c)}</div>{checked_source(c)}<div class="sub">≈ {clip5} for a 5s clip</div>{deal_price_line(rs)}</div>
+{cross_html}<div class="cards"><div class="card"><h3>Cheapest as of {timefmt.day_label(LAST)}</h3><div class="big">{money(c['usd_per_second'])}<span class="small">/s</span></div>{assumption_html(c)}{card_math}<div class="sub">{e(c['platform'])} · {e(c['variant'])} · {e(spec_phrase(c))} {tag(c)}</div>{checked_source(c)}<div class="sub">≈ {clip5} for a 5s clip</div>{deal_price_line(rs)}</div>
 <div class="card"><h3>Cheapest by resolution</h3><ul class="small" style="padding-left:18px;margin:6px 0">{resl}</ul></div></div>
 {summary}
 {sponsor_slot("model:" + slug)}
@@ -2359,7 +2360,7 @@ for slug, m in models.items():
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {faq_html(faqs)}
 {tick_script()}
-{ld_join(faq_ld(slug, faqs), breadcrumb_ld([("Prices", "/"), (m["name"], f"/models/{slug}/")]))}"""
+{ld_join(*[x for x in (faq_ld(slug, faqs), schema_ld.offer_list(globals(), f"/models/{slug}/", m["name"] + " – prices per second", sorted(rs, key=lambda r: r["usd_per_second"]), "money")) if x], breadcrumb_ld([("Prices", "/"), (m["name"], f"/models/{slug}/")]))}"""
     page(f"/models/{slug}/", page_title(f"{m['name']} Price Per Second"),
          f"{m['name']} costs from {money(c['usd_per_second'])}/s ({c['platform']}, {c['variant']}, {rate_label(c)}). Compare {len(rs)} sourced prices across APIs and credit plans.", body)
 
@@ -2500,7 +2501,7 @@ calc = f"""<h1>AI video credit calculator</h1>
 <div class="field"><label class="small" for="secs">Clip length (seconds)</label><input id="secs" type="number" min="1" step="1" placeholder="Any" style="width:100px"></div>
 <div class="field"><label class="small" for="audioPick">Audio</label><select id="audioPick"><option value="">Any</option><option value="with">with audio</option><option value="without">without audio</option></select></div>
 <div class="field"><label class="small" for="inputPick">Input</label><select id="inputPick"><option value="">Any</option><option value="t2v">text-to-video</option><option value="i2v">image-to-video</option><option value="ref2v">reference</option><option value="v2v">video-to-video</option><option value="extend">extend</option><option value="lip-sync">lip-sync</option></select></div>
-<label class="chk" for="applyDeals"><input type="checkbox" id="applyDeals"> apply today's deals</label>
+<label class="chk" for="applyDeals"><input type="checkbox" id="applyDeals"> apply current deals</label>
 <p class="small" id="calcMsg"></p>
 <div id="dealBox" hidden>
 <label class="small" for="windowSecs">Seconds you'll make during an unlimited window</label><br>
@@ -2718,7 +2719,7 @@ page("/changes/", f"AI Video Price Changes Log ({MONTH}) | {BRAND}",
 # ---------- Newsletter ----------
 if NEWSLETTER_ENABLED:
     page("/newsletter/", f"{BRAND} Weekly: AI video price drops & new models", "One short email a week: AI video price changes, new models and the cheapest way to run them.",
-         f"""<h1>{BRAND} Weekly</h1><p class="lead">One short email every Friday: which AI video prices changed, which new models launched, and the cheapest way to run each one right now. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
+         f"""<h1>{BRAND} Weekly</h1><p class="lead">One short email every Friday: which AI video prices changed, which new models launched, and the cheapest way to run each one that week. Written from the same data as this site.</p>{news_box()}""", "/newsletter/")
 else:
     page("/newsletter/", f"Newsletter coming soon | {BRAND}",
          "The VidFare newsletter is not open yet.",
@@ -2756,7 +2757,7 @@ page("/about/", f"About {BRAND}: methodology & affiliate disclosure", f"How {BRA
 <li>Prices exclude VAT/sales tax and change often. Always confirm on the vendor's page before paying.</li>
 <li><b>Deals</b> are a separate list. A discounted $/s uses the vendor's stated rate or the checkout plan price ÷ credits. A code that lasts the first N months also shows a 12-month blended rate. Unlimited windows show how many seconds of video cover the plan price. They are not listed at $0/s. A deal on one variant is labelled with that variant, so it is not read as a discount on a different row.</li></ul>
 <h2>How we source and check prices</h2>
-<p>Each row keeps the vendor page it came from and the date that page last matched its check. The daily job is <code>scripts/update_prices.py --apply</code>. GitHub Actions runs it at 15:17 UTC every day, and again at 13:30 UTC on Fridays, then rebuilds the site from the data files.</p>
+<p>Each row keeps the vendor page it came from and the date that page last matched its check. The daily job is <code>scripts/update_prices.py --apply</code>. GitHub Actions runs it every day at {timefmt.utc_clock(15, 17)}, and again on Fridays at {timefmt.utc_clock(13, 30)}, then rebuilds the site from the data files.</p>
 <ul>
 <li>A source marked static is downloaded and read as page text. Some of those pages also keep a price in a script payload, and the check reads that payload when the row is set up for it.</li>
 <li>A source marked render is opened in Chrome and read after the page loads. Higgsfield plans are one of these.</li>
@@ -2784,7 +2785,7 @@ live_sorted = sorted(LIVE_DEALS, key=deal_sort)
 upcoming_sorted = sorted(UPCOMING_DEALS, key=lambda d: (d.get("start") or "", d.get("vendor") or "", d.get("title") or ""))
 vendors = sorted({d["vendor"] for d in live_sorted + upcoming_sorted})
 types = sorted({d["type"] for d in live_sorted + upcoming_sorted})
-live_html = "".join(deal_card(d) for d in live_sorted) or "<p>No live deals right now.</p>"
+live_html = "".join(deal_card(d) for d in live_sorted) or f"<p>No live deals as of {timefmt.day_label(TODAY)}.</p>"
 upcoming_html = ""
 if upcoming_sorted:
     upcoming_html = (
@@ -3210,7 +3211,7 @@ bf_faqs = [
     (
         "How are prices checked?",
         "Each price and deal is copied from the vendor's own pricing page or an official post. "
-        "The page keeps that source link and the date it was checked. A daily check runs at 15:17 UTC. "
+        "The page keeps that source link and the date it was checked. A daily check runs at " + timefmt.utc_clock(15, 17) + ". "
         "This page only shows offers that are in the deals file or the price catalog.",
     ),
     (
@@ -3424,7 +3425,7 @@ ad_desc = (
     "Home banner, model page box, and the deals featured spot. Rates on request."
 )
 ad_spots = """<li><b>Home banner.</b> Under the intro on the homepage, above the price table.</li>
-<li><b>Model page box.</b> On each model page, after the cheapest-today summary and before the price table.</li>
+<li><b>Model page box.</b> On each model page, after the cheapest-price summary and before the price table.</li>
 <li><b>Deals featured spot.</b> At the top of the deals page, separate from the real deals.</li>"""
 if NEWSLETTER_ENABLED:
     ad_spots += """
@@ -3871,7 +3872,7 @@ data_body = f"""<h1>Price data</h1>
 <p class="lead">The prices on {BRAND} are a public JSON file. You can read it from a script or an AI agent. You do not need an account or a key.</p>
 <h2>The file</h2>
 <p>{json_link("/data/prices.json", "https://vidfare.com/data/prices.json")}</p>
-<p>CORS is already open, so a browser page on another site can fetch it. The daily price check reads the vendor pages and updates this file. <code>last_full_check</code> is the date of the last check that fetched every source. Right now that date is {e(checked_on)}.</p>
+<p>CORS is already open, so a browser page on another site can fetch it. The daily price check reads the vendor pages and updates this file. <code>last_full_check</code> is the date of the last check that fetched every source. In the file published on {e(timefmt.day_label(TODAY))}, that date is {e(checked_on)}.</p>
 <h2>What is in the file</h2>
 <table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody>{_field_table(list(db.keys()))}</tbody></table>
 <h2>Each price row</h2>
@@ -4024,6 +4025,22 @@ if report_paths:
 urls += ["/models/"] + [f"/models/{s}/" for s in models]
 open(os.path.join(DIST, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     "".join(f"  <url><loc>{SITE_URL}{u}</loc><lastmod>{SITEMAP_LASTMOD.get(u) or LAST}</lastmod></url>\n" for u in urls) + "</urlset>\n")
+def stamp_page_dates(paths):
+    """WebPage JSON-LD with datePublished and dateModified on every page in the sitemap."""
+    import html as _h
+    for u in paths:
+        fp = os.path.join(DIST, u.lstrip("/"), "index.html")
+        if not os.path.isfile(fp):
+            continue
+        src = open(fp, encoding="utf-8").read()
+        tm = re.search(r"<title>(.*?)</title>", src, re.S)
+        dm = re.search(r'<meta name="description" content="([^"]*)"', src)
+        title = _h.unescape(tm.group(1)) if tm else BRAND
+        desc = _h.unescape(dm.group(1)) if dm else ""
+        new = schema_ld.stamp_dates(globals(), u, src, title, desc)
+        if new != src:
+            open(fp, "w", encoding="utf-8").write(new)
+stamp_page_dates(urls)
 def check_sponsor_renderer():
     live = render_sponsor(
         "home",

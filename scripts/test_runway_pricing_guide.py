@@ -109,7 +109,7 @@ def main():
     for question in (
         runway_pricing_guide.QUESTION,
         runway_pricing_guide.PHRASE,
-        "What do official Runway plans cost right now?",
+        "What do official Runway plans cost in " + __import__("timefmt").us_today().strftime("%B %Y") + "?",
         "What do credits buy per second, and what does that cost on each plan?",
         "What does the official Runway API charge?",
         "What does Unlimited's relaxed mode actually mean?",

@@ -3,6 +3,9 @@
 Imported by scripts/build_site.py. US store listings and official pages
 were read on 2026-11-17. This page never names Sora.
 """
+from timefmt import utc_span as _utc_span  # noqa: E402
+FLOW_PEAK = _utc_span(14, 17)  # Google Flow's 2–5 PM UTC peak hours, ET first
+
 
 PATH = "/guides/ai-video-generator-apps/"
 LABEL = "AI video generator apps"
@@ -286,8 +289,8 @@ def render(g):
     "Standard plan (monthly) $10.00 · Pro plan (monthly) $37.00 · Premier plan (monthly) $92.00 · 660 Credits $10.00",
     "not stated on the listing",
     "not stated on the listing",
-    "Standard: list $10.00 a month, $6.99 for the first month, then $8.80 a month, with 660 credits a month. Read Nov 14, 2026 PT in <a href=\"" + e(kling_guide) + "\">Kling AI pricing and credits</a>; the page did not load on Nov 17, 2026.",
-    f"{ios_kling}, read 2026-11-17. {kling_plans}, read Nov 14, 2026 PT.",
+    "Standard: list $10.00 a month, $6.99 for the first month, then $8.80 a month, with 660 credits a month. Read Nov 14, 2026 in <a href=\"" + e(kling_guide) + "\">Kling AI pricing and credits</a>; the page did not load on Nov 17, 2026.",
+    f"{ios_kling}, read 2026-11-17. {kling_plans}, read Nov 14, 2026.",
 )}
 {trow(
     "Runway",
@@ -326,7 +329,7 @@ def render(g):
     "SuperGrok Lite $10.00 · SuperGrok $30.00 · SuperGrok Plus $100.00 · SuperGrok Heavy $300.00 · Extra Usage Credits 5 USD $5.00. The billing period is not stated on the listing.",
     "not stated on the listing",
     "not stated on the listing",
-    "Not re-read on Nov 17, 2026. The plan grid read Nov 12, 2026 PT is in <a href=\"" + e(grok_guide) + "\">how much a Grok Imagine video costs</a>.",
+    "Not re-read on Nov 17, 2026. The plan grid read Nov 12, 2026 is in <a href=\"" + e(grok_guide) + "\">how much a Grok Imagine video costs</a>.",
     f"{ios_grok}, read 2026-11-17.",
 )}
 {trow(
@@ -343,7 +346,7 @@ def render(g):
     "not stated on the listing",
     "not stated on the listing",
     "Google AI Plus: $4.99 a month with 200 extra Flow credits a month. Google AI Pro: $19.99 a month with 1,000.",
-    f"{ios_gemini}, read 2026-11-17. {google_plans}, checked 2026-11-16 PT · {flow_credits}, read 2026-11-17.",
+    f"{ios_gemini}, read 2026-11-17. {google_plans}, checked Nov 16, 2026 · {flow_credits}, read 2026-11-17.",
 )}
 {trow(
     "Google Flow",
@@ -372,7 +375,7 @@ def render(g):
         href, rel = g["outbound"](r["source_url"])
         return (
             f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>, '
-            f"catalog row {e(r['id'])}, checked {e(r['checked'])} PT."
+            f"catalog row {e(r['id'])}, checked {e(__import__('timefmt').day_label(r['checked']))}."
         )
 
     krea_audio = shown_audio(r146)
@@ -400,7 +403,7 @@ def render(g):
                 "not stated",
                 f"{e(rate_money(pro_rate))}/s from credit plan",
                 f"{e(g['cost_money'](pro['usd_month']))} ÷ {e(str(int(pro['credits_month'])))} credits × 10 credits ÷ 8 seconds. Assumes every monthly credit goes to 8-second Lite clips. The 50 daily credits are not counted.",
-                f"{google_plans}, checked {e(pro['checked'])} PT · {flow_credits}, read 2026-11-17. Not a catalog row; figured from the Flow plan data in prices.json.",
+                f"{google_plans}, checked {e(__import__('timefmt').day_label(pro['checked']))} · {flow_credits}, read 2026-11-17. Not a catalog row; figured from the Flow plan data in prices.json.",
             ),
         ),
         (
@@ -461,7 +464,7 @@ def render(g):
             "unknown",
             "Unknown",
             f"Credits per clip in the app are not published on a page we could read, so no plan figure is given. Cheapest catalog route for Kling 3.0: {e(rate_money(r111['usd_per_second']))}/s {e(rate_label(r111))} · {hf_ultra} · {e(shown_resolution(r111))} · audio {e(shown_audio(r111))}, if every credit is used. The official API is {e(rate_money(r059['usd_per_second']))}/s at {e(shown_resolution(r059))} without audio and {e(rate_money(r062['usd_per_second']))}/s with audio.",
-            f"{cat_source(r111)} · {kling_api}, checked {e(r059['checked'])} PT.",
+            f"{cat_source(r111)} · {kling_api}, checked {e(__import__('timefmt').day_label(r059['checked']))}.",
         )
         + trow(
             "Grok · any in-app plan",
@@ -469,7 +472,7 @@ def render(g):
             "unknown",
             "unknown",
             "Unknown",
-            f"Paid plans draw on a shared weekly usage pool, and the pages read Nov 12, 2026 PT do not say how much one video uses. Cheapest catalog route: {e(rate_money(r209['usd_per_second']))}/s {e(rate_label(r209))} · xAI API · Grok Imagine Video 1.5 Lite · {e(shown_resolution(r209))} · audio {e(shown_audio(r209))}, billed per second of output.",
+            f"Paid plans draw on a shared weekly usage pool, and the pages read Nov 12, 2026 do not say how much one video uses. Cheapest catalog route: {e(rate_money(r209['usd_per_second']))}/s {e(rate_label(r209))} · xAI API · Grok Imagine Video 1.5 Lite · {e(shown_resolution(r209))} · audio {e(shown_audio(r209))}, billed per second of output.",
             cat_source(r209),
         )
         + trow(
@@ -500,7 +503,7 @@ def render(g):
 
     a_q = (
         "Of the 13 tools this guide covers, ten have an official iPhone app in "
-        "the US App Store today and eight have an official Android listing on "
+        "the US App Store on Nov 17, 2026 and eight have an official Android listing on "
         "Google Play. Kling AI, Runway, Dreamina, Grok, Google Flow, Google "
         "Gemini, and Meta AI are on both stores. Pika and Krea are on iPhone "
         "only, and Luma is confirmed on iPhone only. Hailuo is confirmed on "
@@ -528,7 +531,7 @@ def render(g):
         "is in the item name. Runway’s Standard is $14.99 a month in the app "
         "and $15 on the web. Kling’s Standard plan (monthly) is $10.00 in the "
         "app, which matches the web list price; the web page read Nov 14, 2026 "
-        "PT showed $8.80 a month after a $6.99 first month. Pika’s 1,500-credit "
+        "showed $8.80 a month after a $6.99 first month. Pika’s 1,500-credit "
         "pack is $34.99 in the App Store, about $0.0233 per credit; on the "
         "web, packs are 60 credits per $1, about $0.0167 per credit."
     )
@@ -581,7 +584,7 @@ def render(g):
 
     lead = (
         f"Ten of the 13 tools this guide covers have an official iPhone app in "
-        f"the US App Store today, and eight have an official Android listing on "
+        f"the US App Store on Nov 17, 2026, and eight have an official Android listing on "
         f"Google Play. Kling AI, Runway, Dreamina, Grok, Google Flow, Google "
         f"Gemini, and Meta AI are on both stores; Pika and Krea are iPhone only; "
         f"and we found no app published by Higgsfield or Wan. Store listings and "
@@ -652,7 +655,7 @@ def render(g):
 <h2>Which app is best for each use?</h2>
 <p>{e(a_best)}</p>
 <ul>
-<li><b>Google Flow.</b> Best for: a free daily allowance on a phone: 50 credits a day, shared across your account on any device, with no in-app purchases listed. Gemini Omni Flash 1.2, one of its models, is Elo 1151 ±14 (rank range 3–9) on {aa_t2v}. Not for: Frames to Video with Omni Flash 1.2, which Google says is currently only available at Google Flow on the web, or generating between roughly 2 PM and 5 PM UTC without a paid plan. Related: <a href="{e(flow_calc)}">Google Flow credits calculator</a> · <a href="{e(free_t2v)}">free text to video AI</a>.</li>
+<li><b>Google Flow.</b> Best for: a free daily allowance on a phone: 50 credits a day, shared across your account on any device, with no in-app purchases listed. Gemini Omni Flash 1.2, one of its models, is Elo 1151 ±14 (rank range 3–9) on {aa_t2v}. Not for: Frames to Video with Omni Flash 1.2, which Google says is currently only available at Google Flow on the web, or generating between roughly {FLOW_PEAK} without a paid plan. Related: <a href="{e(flow_calc)}">Google Flow credits calculator</a> · <a href="{e(free_t2v)}">free text to video AI</a>.</li>
 <li><b>Runway.</b> Best for: several model families in one official app on both stores; the listing names Seedance 2.5, Kling 3 Pro, and Gen-4.5. Not for: the lowest cost per second: on Standard, Gen-4.5 works out to $0.288/s if you use every credit, resolution and audio not stated. {runway_src}. Related: <a href="{e(runway_guide)}">Runway pricing per second</a>.</li>
 <li><b>Kling AI.</b> Best for: Kling itself on both stores; the listing states clips up to 15 seconds in native 1080p or 4K. Not for: the top of the text-to-video board: Kling 3.0 1080p (Pro) is the fixed Elo 1000 reference point at rank 23, and Wan 3.0 leads at Elo 1174 ±13 (rank range 1–2). {aa_t2v}. Related: <a href="{e(kling_guide)}">Kling AI pricing and credits</a> · <a href="{e(kling_model)}">Kling 3.0 model page</a>.</li>
 <li><b>Grok.</b> Best for: the most-rated app in this guide, at 4.9 from 1,615,809 US App Store ratings, with text-to-video up to 15 seconds at 720p on the product page. Not for: a free video allowance you can count, since none is published, or the top of the quality board: Grok Imagine Video 1.5 is Elo 1051 ±13 (rank range 16–18). {xai_grok}. Related: <a href="{e(grok_guide)}">how much a Grok Imagine video costs</a>.</li>
@@ -667,7 +670,7 @@ def render(g):
 
 <h2>What is confirmed, and what is not?</h2>
 <p>{e(a_unknown)}</p>
-<p><b>Confirmed {e(CHECKED_WHEN)} on store listings:</b> each seller or developer name, rating, minimum iOS version, and App Store in-app item list in the tables above; the in-app purchases mark on each Google Play listing; Flow’s lack of listed in-app purchases. iPhone ratings and seller names were also checked against Apple’s public lookup later on Nov 17, 2026. <b>Confirmed {e(CHECKED_WHEN)} on official pages:</b> Runway, Pika, Luma, and Krea web prices; Flow’s daily credits and credit costs; Hailuo’s plan terms. <b>Confirmed {e(CHECKED_WHEN)} on Artificial Analysis:</b> the Elo figures and rank ranges quoted above. <b>Carried from earlier checks, with their dates:</b> Kling web prices (Nov 14, 2026 PT), Dreamina Basic (Nov 15, 2026), the Grok plan grid (Nov 12, 2026 PT), and the catalog rows (2026-11-16).</p>
+<p><b>Confirmed {e(CHECKED_WHEN)} on store listings:</b> each seller or developer name, rating, minimum iOS version, and App Store in-app item list in the tables above; the in-app purchases mark on each Google Play listing; Flow’s lack of listed in-app purchases. iPhone ratings and seller names were also checked against Apple’s public lookup later on Nov 17, 2026. <b>Confirmed {e(CHECKED_WHEN)} on official pages:</b> Runway, Pika, Luma, and Krea web prices; Flow’s daily credits and credit costs; Hailuo’s plan terms. <b>Confirmed {e(CHECKED_WHEN)} on Artificial Analysis:</b> the Elo figures and rank ranges quoted above. <b>Carried from earlier checks, with their dates:</b> Kling web prices (Nov 14, 2026), Dreamina Basic (Nov 15, 2026), the Grok plan grid (Nov 12, 2026), and the catalog rows (2026-11-16).</p>
 <p class="small">Affiliate links never change this price order.</p>
 {next_steps}
 {g["how_block"]()}

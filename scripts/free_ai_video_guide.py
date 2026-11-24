@@ -8,6 +8,8 @@ from decimal import Decimal, ROUND_HALF_UP
 import datetime
 
 import deal_copy
+from timefmt import utc_span as _utc_span  # noqa: E402
+FLOW_PEAK = _utc_span(14, 17)  # Google Flow's 2–5 PM UTC peak hours, ET first
 
 PATH = "/guides/free-ai-video-generators/"
 LABEL = "Free AI video generators"
@@ -156,7 +158,7 @@ def render(g):
     def row_src(r):
         href, rel = outbound(r["source_url"])
         link = f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>'
-        return f'{link}, catalog row {e(r["id"])}, checked {e(r.get("checked") or "date not stated")} PT'
+        return f'{link}, catalog row {e(r["id"])}, checked {e(__import__("timefmt").day_label(r.get("checked")))}'
 
     veo = row_by_id(rows, ROW_VEO)
     kling = row_by_id(rows, ROW_KLING)
@@ -230,7 +232,7 @@ def render(g):
         tr([
             f'<a href="{e(flow_href)}">Google Flow</a> (Veo 3.1 Lite, Omni Flash 1.2)',
             f'50 Flow credits each day, with or without a paid Google AI plan. Unused daily credits do not roll over. Refresh is triggered by the first generation of the day.',
-            f'About 5 Veo 3.1 Lite clips a day, if every credit goes to Lite: Lite is 10 credits per 4s, 6s, or 8s clip at 720p for non-Ultra users. Or about 50s of Omni Flash 1.2 at 360p (1 credit/s), or about 16s at 720p (3 credits/s, 48 credits). During about 2–5 PM UTC, people without a paid plan may be unable to generate video.',
+            f'About 5 Veo 3.1 Lite clips a day, if every credit goes to Lite: Lite is 10 credits per 4s, 6s, or 8s clip at 720p for non-Ultra users. Or about 50s of Omni Flash 1.2 at 360p (1 credit/s), or about 16s at 720p (3 credits/s, 48 credits). During about {FLOW_PEAK}, people without a paid plan may be unable to generate video.',
             f'Veo 3.1 Lite: 4s, 6s, or 8s. Omni Flash 1.2: up to 10s for all users.',
             f'Veo 3.1 Lite: 720p. Omni Flash 1.2: 360p or 720p.',
             "Unknown. The help article does not say.",
@@ -464,7 +466,7 @@ def render(g):
         "a paid-plan right — Pika Free, Kling Basic, and Higgsfield Free do not "
         "include it. Queues and caps: Higgsfield Free and Wan Free allow one "
         "generation at a time; Flow may block video for people without a paid "
-        "plan around 2–5 PM UTC. Allotments can be one-time, not daily: Runway’s "
+        "plan around " + FLOW_PEAK + ". Allotments can be one-time, not daily: Runway’s "
         "125 credits do not refill, and Hailuo’s welcome credits expire after "
         "three days. Daily credits often do not roll over, as Flow’s help page "
         "states. A $0 plan with 0 monthly credits, such as Pika Free or "

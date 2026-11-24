@@ -8,6 +8,8 @@ module does not hard-code a price, a credit amount, or a date.
 """
 import json
 from decimal import Decimal, ROUND_FLOOR
+from timefmt import utc_span as _utc_span  # noqa: E402
+FLOW_PEAK = _utc_span(14, 17)  # Google Flow's 2–5 PM UTC peak hours, ET first
 
 PATH = "/guides/google-flow-credits-calculator/"
 PHRASE = "Google Flow Credits Calculator: Veo 3.1 & Omni Flash"
@@ -166,8 +168,8 @@ def render(g):
         clips = floor_int(pro["credits_month"] / cr)
         key_lines.append(
             f"On {pro['plan']} ({cost_money(pro['usd_month'])} a month, {num(pro['credits_month'])} Flow credits), "
-            f"an {secs}-second Veo 3.1 Lite clip costs {num(cr)} credits. That is {num(clips)} clips a month, "
-            f"or about {rate_money(rate)} per second of video."
+            f"an {secs}-second Veo 3.1 Lite clip costs {num(cr)} credits. That is {num(clips)} {secs}-second clips a month, "
+            f"or about {rate_money(rate)} per second of video if every credit is used."
         )
     if pro and omni720:
         rate, cr, secs = usd_per_second(omni720, pro)
@@ -395,7 +397,7 @@ def render(g):
     gotcha_html = (
         "<ul>" + "".join(gotchas) + "</ul>"
         f'<p class="small">Quotes from {help_link("Manage your Google Flow credits")} (Google Flow Help), checked {e(oldest if oldest == updated else updated)}. '
-        "Peak hours of 2 PM to 5 PM UTC are 6 AM to 9 AM Pacific while the US is on standard time.</p>"
+        "Google’s stated peak hours, 2 PM to 5 PM UTC, are " + FLOW_PEAK + ".</p>"
     )
 
     # ---------- FAQ (plain text; also FAQPage JSON-LD) ----------
@@ -441,8 +443,8 @@ def render(g):
     ))
     faqs.append((
         "How is this different from the VidFare credit calculator?",
-        f"This page only covers Google Flow credits on Google AI plans. The credit calculator ({SITE_URL}/calculator/) covers Higgsfield, Krea, and Magnific plans, "
-        f"and the project budget calculator ({SITE_URL}/guides/ai-video-project-budget/) prices a finished video from dollars per second.",
+        f"This page only covers Google Flow credits on Google AI plans. The credit calculator covers Higgsfield, Krea, and Magnific plans, "
+        f"and the project budget calculator prices a finished video from dollars per second.",
     ))
     how = (
         "Plan prices and monthly Flow credits come from Google's plans page. Credits per video come from Google Flow Help. "
@@ -491,10 +493,10 @@ def render(g):
     faqs.append(("How do we calculate this?", how))
 
     faq_html = "".join(f"<h2>{e(q)}</h2><p>{e(a)}</p>" for q, a in faqs if q != q_veo)
-    faq_html = faq_html.replace(e(f"{SITE_URL}/calculator/"), f'<a href="{root("/calculator/")}">{e(SITE_URL + "/calculator/")}</a>', 1)
+    faq_html = faq_html.replace("The credit calculator covers", f'The <a href="{root("/calculator/")}">credit calculator</a> covers', 1)
     faq_html = faq_html.replace(
-        e(f"{SITE_URL}/guides/ai-video-project-budget/"),
-        f'<a href="{root("/guides/ai-video-project-budget/")}">{e(SITE_URL + "/guides/ai-video-project-budget/")}</a>', 1,
+        "the project budget calculator prices",
+        f'the <a href="{root("/guides/ai-video-project-budget/")}">project budget calculator</a> prices', 1,
     )
 
     key_html = "".join(f"<li>{e(x)}</li>" for x in key_lines)
@@ -515,7 +517,7 @@ def render(g):
 <h2>Key numbers</h2>
 <ul>{key_html}</ul>
 <h2>Flow credits per video</h2>
-<p>Google's own table, for the models Flow sells today. Costs are per generated video.</p>
+<p>Google's own table, for the models Flow sells, as read on the check date below. Costs are per generated video.</p>
 {cost_table}
 <h2>Google AI plans and Flow credits</h2>
 <p>Every account gets {daily} Flow credits a day. Paid plans add monthly credits. {e("Google's help page names the Ultra plans Google AI Ultra $100 and Google AI Ultra $200.")}</p>
