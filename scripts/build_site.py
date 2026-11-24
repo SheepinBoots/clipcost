@@ -2358,12 +2358,11 @@ for slug, m in models.items():
 {summary}
 {sponsor_slot("model:" + slug)}
 {partner_lines_html("/models/" + slug + "/")}
-{deals_html[:deals_split]}
-{news_box_inline()}
-{deals_html[deals_split:]}
+{deals_html}
 <h2>All {e(m['name'])} prices</h2>
 {wide_table(THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x=') + "<tbody>" + "".join(row_html(r) for r in rs) + "</tbody>")}
 <p class="small">A row labelled estimated from credit plan is not a list price. Plan rows assume you use every credit you pay for. Unused credits make the real cost per second higher. Use the <a href="{root(f"/calculator/?model={slug}")}">credit calculator for {e(m["name"])}</a> to check a plan. Deal badges use the vendor's checkout price or stated rate. An unlimited window is a break-even second count, not $0/s.{flow_note}</p>
+{news_box_inline()}
 {compare_pages.links_html(slug, root, nl=True)}{cost_pages.links_html(slug, root, nl=True)}{platform_pages.links_html(slug, root, rows, nl=True)}{news_box()}
 {retired_table([r for r in retired_rows if r["model"] == slug], THEAD.replace(' data-k="model"','').replace(' data-k=',' data-x='))}
 {faq_html(faqs)}
