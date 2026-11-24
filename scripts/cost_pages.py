@@ -332,6 +332,7 @@ def render_page(g, page):
 {chr(10).join(sections[:1] + [g["news_box_inline"]()] + sections[1:])}
 {foot}
 <p class="small">See every price on the model pages, or check a credit plan in the <a href="{root("/calculator/")}">credit calculator</a>.</p>
+{g["data_links_html"](page["path"])}
 {g["faq_html"](faqs)}
 {method}
 {g["news_box"]()}"""

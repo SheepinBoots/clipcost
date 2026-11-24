@@ -323,6 +323,7 @@ def render_page(g, page):
 {foot}
 {sections[2]}
 <p class="small">See every platform on the model pages, or check a {e(plat)} plan in the <a href="{root("/calculator/")}">credit calculator</a>.</p>
+{g["data_links_html"](page["path"])}
 {g["faq_html"](faqs)}
 {g["news_box"]()}"""
     ld = {

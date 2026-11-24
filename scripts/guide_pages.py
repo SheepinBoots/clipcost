@@ -250,6 +250,7 @@ def render(g):
             f"{checked_line()}"
             + "".join(blocks)
             + how_block()
+            + g["data_links_html"]()
         )
         guide_page(
             "/guides/",
