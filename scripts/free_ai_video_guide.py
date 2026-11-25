@@ -8,6 +8,7 @@ from decimal import Decimal, ROUND_HALF_UP
 import datetime
 
 import deal_copy
+import guide_tables
 from timefmt import utc_span as _utc_span  # noqa: E402
 FLOW_PEAK = _utc_span(14, 17)  # Google Flow's 2–5 PM UTC peak hours, ET first
 
@@ -78,17 +79,18 @@ def row_by_id(rows, rid):
 
 
 def paid_phrase(g, r):
-    """Short paid-step cell: rate, status, platform, variant, res, audio."""
+    """Short paid-step cell: rate, status, seller, plan, tier, variant, res, audio."""
     rate_money = g["rate_money"]
     rate = rate_money(r["usd_per_second"]) + "/s"
     status = g["rate_label"](r)
     plat = r.get("platform") or "not stated"
+    plan = guide_tables.plan_label(r)
+    tier = g["shown_tier"](r)
     variant = r.get("variant") or r.get("model") or "model not stated"
     res = g["shown_resolution"](r)
     audio = g["audio_phrase"](r)
-    kind = "plan" if r.get("kind") == "plan" else "API"
     return (
-        f"{rate} {status} · {plat} {kind} · {variant} · {res} · {audio}"
+        f"{rate} {status} · {plat} · plan: {plan} · tier: {tier} · {variant} · {res} · {audio}"
     )
 
 
@@ -160,30 +162,42 @@ def render(g):
         link = f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>'
         return f'{link}, catalog row {e(r["id"])}, checked {e(__import__("timefmt").day_label(r.get("checked")))}'
 
-    veo = row_by_id(rows, ROW_VEO)
-    kling = row_by_id(rows, ROW_KLING)
-    wan = row_by_id(rows, ROW_WAN)
-    hailuo = row_by_id(rows, ROW_HAILUO)
-    grok = row_by_id(rows, ROW_GROK)
-    runway = row_by_id(rows, ROW_RUNWAY)
-    seedance = row_by_id(rows, ROW_SEEDANCE)
-    omni = row_by_id(rows, ROW_OMNI)
+    def pick_model(slug, fallback_id=None):
+        rs = guide_tables.active_rows(g, model=slug)
+        if fallback_id:
+            exact = [r for r in rs if r["id"] == fallback_id]
+            if exact:
+                return exact[0]
+        return rs[0] if rs else row_by_id(rows, fallback_id)
+
+    paid_picks = guide_tables.cheapest_by_model(g)
+    by_slug = {r["model"]: r for r in paid_picks}
+    veo = by_slug.get("veo-3-1") or pick_model("veo-3-1", ROW_VEO)
+    kling = by_slug.get("kling-3-0") or pick_model("kling-3-0", ROW_KLING)
+    wan = by_slug.get("wan-3-0") or pick_model("wan-3-0", ROW_WAN)
+    hailuo_best = by_slug.get("minimax-hailuo") or pick_model("minimax-hailuo", ROW_HAILUO)
+    hailuo = pick_model("minimax-hailuo", ROW_HAILUO)
+    grok = by_slug.get("grok-imagine") or pick_model("grok-imagine", ROW_GROK)
+    runway = by_slug.get("runway-gen-4") or pick_model("runway-gen-4", ROW_RUNWAY)
+    seedance = by_slug.get("seedance-2-5") or pick_model("seedance-2-5", ROW_SEEDANCE)
+    omni = by_slug.get("gemini-omni-flash") or pick_model("gemini-omni-flash", ROW_OMNI)
     missing = [
         name
         for name, r in (
-            ("r127", veo),
-            ("r111", kling),
-            ("r096", wan),
-            ("r023", hailuo),
-            ("r055", grok),
-            ("r047", runway),
-            ("r202", seedance),
-            ("r199", omni),
+            ("veo-3-1", veo),
+            ("kling-3-0", kling),
+            ("wan-3-0", wan),
+            ("minimax-hailuo", hailuo),
+            ("grok-imagine", grok),
+            ("runway-gen-4", runway),
+            ("seedance-2-5", seedance),
+            ("gemini-omni-flash", omni),
         )
         if r is None
     ]
     if missing:
         raise SystemExit(f"{PATH} missing catalog rows: {', '.join(missing)}")
+    paid_table = guide_tables.price_table(g, paid_picks, table_id="prices", include_model=True, min_width=1180)
 
     flow_src = src(FLOW_CREDITS, "Google Flow credit help")
     plans_src = src(GOOGLE_AI_PLANS, "Google AI plans")
@@ -323,7 +337,7 @@ def render(g):
             f'Not included. Commercial use is listed as not included on Free and included on paid plans. {hf_src}.',
             "Unknown on Free.",
             "Sign-in is offered from the pricing page. Whether a card is required for Free is not stated.",
-            e(paid_phrase(g, wan)) + f' is the cheapest Higgsfield catalog row we track. {row_src(wan)}. Official first paid Starter is listed at $19/month for 270 credits a month.' + hf_sale + f' {hf_src}.',
+            e(paid_phrase(g, wan)) + f' is the cheapest Higgsfield catalog row we track. {row_src(wan)}. Official first paid Starter is listed at {deal_copy.money(deal_copy.plan_month(g, "hf-starter"))}/month for {int((g.get("plans") or {}).get("hf-starter", {}).get("credits_month") or 270):,} credits a month.' + hf_sale + f' {hf_src}.',
         ]),
         tr([
             "Hailuo (MiniMax)",
@@ -359,7 +373,7 @@ def render(g):
             "Commercial use is listed on Plus, not on a free plan.",
             "Paid model cards on the same page list audio where the model includes it. That does not create a free allowance.",
             "Sign-in is offered. There is no published free allotment to start without paying.",
-            "Luma video models are not separate rows in this catalog, so there is no Luma $/s figure here. Plus at $30/month for 10,000 credits is the official first paid step, from {luma_src}.",
+            f"Luma video models are not separate rows in this catalog, so there is no Luma $/s figure here. Plus at $30/month for 10,000 credits is the official first paid step, from {luma_src}.",
         ]),
         tr([
             "Meta AI",
@@ -519,8 +533,22 @@ def render(g):
         "without an account is unknown."
     )
 
+    q_paid_table = "What is the cheapest paid step per second for each covered model?"
+    cheapest_all = paid_picks[0]
+    cheapest_all_name = g["models"][cheapest_all["model"]]["name"]
+    a_paid_table = (
+        f"Every paid-step rate in the table below comes from data/prices.json ({rows_checked}). "
+        f"The lowest rate we track across the nine covered models is {g['rate_money'](cheapest_all['usd_per_second'])}/s "
+        f"for {cheapest_all_name} on {cheapest_all['platform']} ({guide_tables.plan_label(cheapest_all)}, "
+        f"tier {g['shown_tier'](cheapest_all)}, {g['shown_resolution'](cheapest_all)}, "
+        f"{guide_tables.audio_label(g, cheapest_all)}), {g['rate_label'](cheapest_all)}, "
+        f"checked {__import__('timefmt').day_label(cheapest_all.get('checked'))}. "
+        "Credit-plan figures assume every credit you pay for is used."
+    )
+
     faqs = [
         (QUESTION, a_intro),
+        (q_paid_table, a_paid_table),
         (q_table, a_table),
         (q_nosignup, a_nosignup),
         (q_best, a_best),
@@ -547,7 +575,22 @@ def render(g):
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Free AI video generators</p>
 <h1>{e(PHRASE)}</h1>
 <p class="lead">{lead}</p>
-<p class="small">Last checked {e(LAST)}. Official free-tier allotments were read {e(CHECKED_WHEN)}. Sign-up and card rules were re-checked {e(SIGNUP_CHECKED_WHEN)}. Catalog paid-step rows use the date on each row. Affiliate links never change this price order. Every dollar-per-second figure below states its usage assumption, tier, resolution, and audio.</p>
+<p class="small">Last checked {e(LAST)}. Official free-tier allotments were read {e(CHECKED_WHEN)}. Sign-up and card rules were re-checked {e(SIGNUP_CHECKED_WHEN)}. Catalog paid-step rows use the date on each row. Affiliate links never change this price order. Every dollar-per-second figure below states its seller, plan, tier, resolution, audio, usage assumption, and source.</p>
+
+<div class="card" id="takeaways">
+<h2>Key takeaways</h2>
+<ul>
+<li><b>No account at all.</b> None of the official free video tiers checked {e(SIGNUP_CHECKED_DAY)} published a no-account path.</li>
+<li><b>Free account, no card.</b> Krea Free gives 100 units/day with no credit card required ({krea_src}).</li>
+<li><b>Countable daily clips.</b> Google Flow gives 50 daily credits, about 5 Veo 3.1 Lite 720p clips/day if every credit goes to Lite ({flow_src}).</li>
+<li><b>Cheapest paid step we track.</b> {e(g["rate_money"](cheapest_all["usd_per_second"]))}/s for {e(cheapest_all_name)} on {e(cheapest_all["platform"])} ({e(guide_tables.plan_label(cheapest_all))}, {e(g["shown_resolution"](cheapest_all))}, {e(guide_tables.audio_label(g, cheapest_all))}), checked {e(__import__("timefmt").day_label(cheapest_all.get("checked")))}.</li>
+</ul>
+</div>
+
+<h2>{e(q_paid_table)}</h2>
+<p>{e(a_paid_table)}</p>
+{paid_table}
+<p class="small">All {len(paid_picks)} rows come from data/prices.json, sorted by dollars per second only. Affiliate links never change this price order.</p>
 
 <h2>{e(QUESTION)}</h2>
 <p>{e(a_intro)}</p>

@@ -66,14 +66,14 @@ def main():
         trs = re.findall(r"<tr>(.*?)</tr>", table.group(0), re.S)[1:]
         for tr in trs:
             cells = re.findall(r"<td>(.*?)</td>", tr, re.S)
-            if len(cells) != 7:
+            if len(cells) != 9:
                 errors.append("a full-table row is missing a column")
                 continue
-            if not cells[2].strip() or not cells[3].strip():
+            if not cells[4].strip() or not cells[5].strip():
                 errors.append("a row has no resolution or audio cell")
-            if "Assumes" not in cells[5] and "Billed per second" not in cells[5]:
-                errors.append(f"a row has no usage assumption: {cells[5][:80]}")
-            if "checked" not in cells[6]:
+            if "Assumes" not in cells[7] and "Billed per second" not in cells[7]:
+                errors.append(f"a row has no usage assumption: {cells[7][:80]}")
+            if "checked" not in cells[8]:
                 errors.append("a row has no checked date")
     # Per-platform table is in price order.
     first = re.search(r'id="prices".*?</table>', raw, re.S)

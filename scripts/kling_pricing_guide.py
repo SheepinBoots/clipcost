@@ -1,3 +1,4 @@
+import guide_tables
 """Guide: Kling AI pricing and credits.
 
 Imported by scripts/build_site.py. Official membership prices were read from
@@ -56,19 +57,16 @@ CREDIT_PACKS = [
     (79200, 16800, 1200.00, 1.25),
 ]
 
-# Official API resource-package rates from KLING_API, checked 2026-11-14.
-# These Kling 3.0 figures match catalog rows r059–r065.
-API_RATES = [
-    # variant, res, audio, usd_per_second, units, catalog_id or None
-    ("Kling 3.0, no native audio", "720p", False, 0.084, "0.6 Units", "r059"),
-    ("Kling 3.0, no native audio", "1080p", False, 0.112, "0.8 Units", "r060"),
-    ("Kling 3.0, no native audio", "4K", False, 0.42, "3.0 Units", "r061"),
-    ("Kling 3.0, with native audio", "720p", True, 0.126, "0.9 Units", "r062"),
-    ("Kling 3.0, with native audio", "1080p", True, 0.168, "1.2 Units", "r063"),
-    ("Kling 3.0, with native audio", "4K", True, 0.42, "3.0 Units", "r061"),
-    ("Kling 3.0 Turbo, with native audio", "720p", True, 0.112, "0.8 Units", "r064"),
-    ("Kling 3.0 Turbo, with native audio", "1080p", True, 0.14, "1.0 Unit", "r065"),
-]
+# Resource-package units printed alongside the official API dollar rates (KLING_API, checked 2026-11-14).
+API_UNITS = {
+    "r059": "0.6 Units",
+    "r060": "0.8 Units",
+    "r061": "3.0 Units",
+    "r062": "0.9 Units",
+    "r063": "1.2 Units",
+    "r064": "0.8 Units",
+    "r065": "1.0 Unit",
+}
 
 
 def _src(g, url, text="source"):
@@ -105,9 +103,11 @@ def blurb(g):
 
 def description(g):
     last = g["LAST"]
+    official = [r for r in g["rows"] if r.get("platform") == "Kling API" and r.get("id") == "r059"]
+    rate = g["rate_money"](official[0]["usd_per_second"]) if official else "$0.084"
     text = (
         "Kling Standard, Pro, Premier and Ultra+ plans, official API rates "
-        f"from $0.084/s at 720p, and cheaper catalog routes. Last checked {last}."
+        f"from {rate}/s at 720p, and cheaper catalog routes. Last checked {last}."
     )
     if len(text) > 160:
         raise SystemExit(f"{PATH} meta description is over 160 characters: {len(text)}")
@@ -126,7 +126,7 @@ def render(g):
     assumption_html = g["assumption_html"]
 
     dates = [CHECKED]
-    kling_rows = [r for r in g["rows"] if r.get("model") == "kling-3-0"]
+    kling_rows = guide_tables.active_rows(g, model="kling-3-0")
     for r in kling_rows:
         if r.get("checked"):
             dates.append(r["checked"])
@@ -141,19 +141,26 @@ def render(g):
         return f'{link}, checked {e(checked_pt(r.get("checked")))}'
 
     official = [r for r in kling_rows if r.get("platform") == "Kling API"]
-    r059 = next(r for r in official if r["id"] == "r059")
-    r062 = next(r for r in official if r["id"] == "r062")
-    cheapest = sorted(kling_rows, key=lambda r: (r["usd_per_second"], r["id"]))[0]
+    by_id = {r["id"]: r for r in official}
+    r059 = by_id["r059"]
+    r060 = by_id["r060"]
+    r061 = by_id["r061"]
+    r062 = by_id["r062"]
+    r063 = by_id["r063"]
+    r064 = by_id["r064"]
+    r065 = by_id["r065"]
+    cheapest = kling_rows[0]
     verified = [r for r in kling_rows if r.get("status") == "verified"]
-    cheapest_verified = sorted(verified, key=lambda r: (r["usd_per_second"], r["id"]))[0]
+    cheapest_verified = verified[0]
 
-    ten_no = cost_money(0.084 * 10)
-    ten_yes = cost_money(0.126 * 10)
+    ten_no = cost_money(r059["usd_per_second"] * 10)
+    ten_yes = cost_money(r062["usd_per_second"] * 10)
 
     # --- official plan tables ---
     def comma(n):
         return f"{int(n):,}"
 
+    plan_src_cell = f'<td class="small">{src(KLING_PLANS, "source")}, checked {e(checked_pt(CHECKED))}</td>'
     monthly_body = []
     for name, credits, first, then, list_p, p100_first, p100_then in MONTHLY_PLANS:
         monthly_body.append(
@@ -164,12 +171,13 @@ def render(g):
             f'<td class="num">{usd(first)}</td>'
             f'<td class="num">{usd(then)}</td>'
             f'<td class="num">{usd(p100_then)}</td>'
+            f"{plan_src_cell}"
             "</tr>"
         )
     monthly_table = (
         '<div class="tblwrap fit"><table><thead><tr>'
         "<th>Plan</th><th>Credits / month</th><th>List</th><th>First month</th>"
-        "<th>Then / month</th><th>$ / 100 credits (ongoing)</th>"
+        "<th>Then / month</th><th>$ / 100 credits (ongoing)</th><th>Source and date checked</th>"
         "</tr></thead><tbody>" + "".join(monthly_body) + "</tbody></table></div>"
     )
 
@@ -183,12 +191,13 @@ def render(g):
             f'<td class="num">{usd(yearly)}</td>'
             f'<td class="num">{usd(yearly / 12, 2)}</td>'
             f'<td class="num">{usd(p100)}</td>'
+            f"{plan_src_cell}"
             "</tr>"
         )
     yearly_table = (
         '<div class="tblwrap fit"><table><thead><tr>'
         "<th>Plan</th><th>Credits / month</th><th>List / year</th><th>Yearly price</th>"
-        "<th>Equivalent / month</th><th>$ / 100 credits</th>"
+        "<th>Equivalent / month</th><th>$ / 100 credits</th><th>Source and date checked</th>"
         "</tr></thead><tbody>" + "".join(yearly_body) + "</tbody></table></div>"
     )
 
@@ -202,76 +211,47 @@ def render(g):
             f'<td class="num">{comma(total)}</td>'
             f'<td class="num">{usd(price)}</td>'
             f'<td class="num">{usd(p100)}</td>'
+            f"{plan_src_cell}"
             "</tr>"
         )
     pack_table = (
         '<div class="tblwrap fit"><table><thead><tr>'
-        "<th>Credits in the pack</th><th>Total credits</th><th>Price</th><th>$ / 100 credits</th>"
+        "<th>Credits in the pack</th><th>Total credits</th><th>Price</th><th>$ / 100 credits</th><th>Source and date checked</th>"
         "</tr></thead><tbody>" + "".join(pack_body) + "</tbody></table></div>"
     )
 
+    api_rows = sorted(official, key=lambda r: (r["usd_per_second"], r["id"]))
     api_body = []
-    for variant, res, audio, rate, units, _rid in API_RATES:
-        audio_txt = "with audio" if audio else "without audio"
-        clip10 = cost_money(rate * 10)
+    for r in api_rows:
+        res = shown_resolution(r)
+        audio_txt = guide_tables.audio_label(g, r)
+        if r["id"] == "r061":
+            audio_txt = "with or without native audio"
+        clip10 = cost_money(r["usd_per_second"] * 10)
+        units = API_UNITS.get(r["id"], "not listed")
         api_body.append(
             "<tr>"
-            f"<td>{e(variant)}</td>"
+            f'<td>{plat_link(r["platform"], r["source_url"])}</td>'
+            f'<td>{e(guide_tables.plan_label(r))}</td>'
+            f'<td>{e(g["shown_tier"](r))}</td>'
+            f'<td>{e(r.get("variant") or "")}</td>'
             f"<td>{e(res)}</td>"
             f"<td>{e(audio_txt)}</td>"
-            f'<td class="num">{rate_money(rate)}/s</td>'
+            f'<td class="num"><span class="amt">{rate_money(r["usd_per_second"])}/s</span></td>'
             f'<td class="num">{clip10}</td>'
             f"<td>{e(units)}</td>"
+            f'<td class="small">{row_source(r)}</td>'
             "</tr>"
         )
     api_table = (
         '<div class="tblwrap fit"><table><thead><tr>'
-        "<th>Official API variant</th><th>Res</th><th>Audio</th>"
-        "<th>$/s</th><th>Per 10s</th><th>Units on the official table</th>"
+        "<th>Seller</th><th>Plan</th><th>Tier</th><th>Official API variant</th><th>Resolution</th><th>Audio</th>"
+        "<th>$ / sec</th><th>Per 10s</th><th>Units on the official table</th><th>Source and date checked</th>"
         "</tr></thead><tbody>" + "".join(api_body) + "</tbody></table></div>"
     )
 
-    # Third-party comparison: one cheapest row per platform+resolution+audio bucket,
-    # but show all catalog kling-3-0 rows sorted by $/s so price order is preserved.
-    cmp_body = []
-    for r in sorted(kling_rows, key=lambda r: (r["usd_per_second"], r["id"])):
-        platform = plat_link(r["platform"], r["source_url"])
-        res = shown_resolution(r)
-        audio = r.get("audio")
-        if audio is True:
-            audio_txt = "with audio"
-        elif audio is False:
-            audio_txt = "without audio"
-        else:
-            audio_txt = "not stated"
-        kind = "API" if r.get("kind") == "api" else "credit plan"
-        plan = r.get("plan_name") or ""
-        variant = r.get("variant") or ""
-        label = variant if not plan else f"{variant} · {plan}"
-        assume = ""
-        if assumption_html(r):
-            assume = assumption_html(r)
-        status = f'<span class="badges">{tag(r)}{deal_badges(r)}</span>'
-        cmp_body.append(
-            "<tr>"
-            f"<td>{platform}</td>"
-            f"<td>{e(label)}</td>"
-            f"<td>{e(kind)}</td>"
-            f"<td>{e(res)}</td>"
-            f"<td>{e(audio_txt)}</td>"
-            f'<td class="num">{rate_money(r["usd_per_second"])}/s</td>'
-            f"<td>{status}</td>"
-            f"<td class=\"small\">{row_source(r)}</td>"
-            "</tr>"
-        )
-        # assume is visual note; include math in source cell already via details? keep compact
-        if assume:
-            pass
-    cmp_table = (
-        '<div class="tblwrap fit"><table><thead><tr>'
-        "<th>Where</th><th>Variant / plan</th><th>Type</th><th>Res</th><th>Audio</th>"
-        "<th>$/s</th><th>Status</th><th>Source</th>"
-        "</tr></thead><tbody>" + "".join(cmp_body) + "</tbody></table></div>"
+    cmp_table = guide_tables.price_table(
+        g, kling_rows, table_id="prices", include_model=False, include_10s=True, min_width=1180
     )
 
     hf = src(KLING_PLANS, "Kling membership plans")
@@ -303,23 +283,23 @@ def render(g):
     )
     q_api = "What does the official Kling API charge for Kling 3.0?"
     a_api = (
-        f"The official API document, checked {checked_pt(CHECKED)}, prices Kling 3.0 at "
-        f"{rate_money(0.084)}/s at 720p without native audio ({ten_no} per 10 seconds) "
-        f"and {rate_money(0.126)}/s at 720p with native audio ({ten_yes} per 10 seconds). "
-        f"1080p is {rate_money(0.112)}/s without audio and {rate_money(0.168)}/s with audio. "
-        f"4K is {rate_money(0.42)}/s with or without native audio. Kling 3.0 Turbo with "
-        f"native audio is {rate_money(0.112)}/s at 720p and {rate_money(0.14)}/s at 1080p. "
+        f"The official API document, checked {checked_pt(r059.get('checked') or CHECKED)}, prices Kling 3.0 at "
+        f"{rate_money(r059['usd_per_second'])}/s at 720p without native audio ({ten_no} per 10 seconds) "
+        f"and {rate_money(r062['usd_per_second'])}/s at 720p with native audio ({ten_yes} per 10 seconds). "
+        f"1080p is {rate_money(r060['usd_per_second'])}/s without audio and {rate_money(r063['usd_per_second'])}/s with audio. "
+        f"4K is {rate_money(r061['usd_per_second'])}/s with or without native audio. Kling 3.0 Turbo with "
+        f"native audio is {rate_money(r064['usd_per_second'])}/s at 720p and {rate_money(r065['usd_per_second'])}/s at 1080p. "
         "Those dollar figures match the Kling API rows in our catalog."
     )
     q_cheaper = "When is pay-as-you-go or a plan elsewhere cheaper?"
     a_cheaper = (
         f"The cheapest Kling 3.0 rate we track is {rate_money(cheapest['usd_per_second'])}/s "
-        f"on {cheapest['platform']} ({cheapest['variant']}, {shown_resolution(cheapest)}), "
+        f"on {cheapest['platform']} ({guide_tables.plan_label(cheapest)}, tier {g['shown_tier'](cheapest)}, {shown_resolution(cheapest)}, {guide_tables.audio_label(g, cheapest)}), "
         f"{'a credit-plan estimate' if cheapest.get('status') == 'estimate' else 'a verified rate'}, "
         f"checked {checked_pt(cheapest.get('checked'))}. The cheapest verified rate is "
         f"{rate_money(cheapest_verified['usd_per_second'])}/s on {cheapest_verified['platform']} "
-        f"({cheapest_verified['variant']}, {shown_resolution(cheapest_verified)}). "
-        f"Both undercut the official API's {rate_money(0.084)}/s at 720p without audio. "
+        f"({guide_tables.plan_label(cheapest_verified)}, tier {g['shown_tier'](cheapest_verified)}, {shown_resolution(cheapest_verified)}, {guide_tables.audio_label(g, cheapest_verified)}). "
+        f"Both undercut the official API's {rate_money(r059['usd_per_second'])}/s at 720p without audio. "
         "A credit-plan rate only holds if you use the credits you pay for. Official API "
         "rates can still be cheaper than some other APIs, including fal Pro and several "
         "Runway API variants. Affiliate links never change this price order."
@@ -404,17 +384,33 @@ def render(g):
         f"Official Kling membership plans, read {e(checked_pt(CHECKED))} from "
         f"{hf}, start at {usd(6.99)} for the first month of Standard (then {usd(8.80)}/month; "
         f"list {usd(10)}/month) with 660 credits a month. The official API, from {api_src}, "
-        f"charges {rate_money(0.084)}/s at 720p without native audio ({ten_no} per 10 seconds) "
-        f"and {rate_money(0.126)}/s with native audio ({ten_yes} per 10 seconds). "
+        f"charges {rate_money(r059['usd_per_second'])}/s at 720p without native audio ({ten_no} per 10 seconds) "
+        f"and {rate_money(r062['usd_per_second'])}/s with native audio ({ten_yes} per 10 seconds). "
         f"Those API figures match our catalog. The cheapest Kling 3.0 rate we track is "
-        f"{rate_money(cheapest['usd_per_second'])}/s on {e(cheapest['platform'])}. "
+        f"{rate_money(cheapest['usd_per_second'])}/s on {e(cheapest['platform'])} "
+        f"({e(guide_tables.plan_label(cheapest))}, {e(shown_resolution(cheapest))}, {e(guide_tables.audio_label(g, cheapest))}). "
         "How many official app credits a clip uses is not published, so that conversion is not shown."
     )
+
+    takeaways = f"""<div class="card" id="takeaways">
+<h2>Key takeaways</h2>
+<ul>
+<li><b>Cheapest catalog route.</b> {e(rate_money(cheapest['usd_per_second']))}/s on {e(cheapest['platform'])} ({e(guide_tables.plan_label(cheapest))}, tier {e(g['shown_tier'](cheapest))}, {e(shown_resolution(cheapest))}, {e(guide_tables.audio_label(g, cheapest))}), checked {e(checked_pt(cheapest.get('checked')))}.</li>
+<li><b>Cheapest verified pay-as-you-go rate.</b> {e(rate_money(cheapest_verified['usd_per_second']))}/s on {e(cheapest_verified['platform'])} ({e(shown_resolution(cheapest_verified))}, {e(guide_tables.audio_label(g, cheapest_verified))}), checked {e(checked_pt(cheapest_verified.get('checked')))}.</li>
+<li><b>Official Kling API.</b> {e(rate_money(r059['usd_per_second']))}/s at 720p without audio ({e(ten_no)} per 10s) and {e(rate_money(r062['usd_per_second']))}/s with audio ({e(ten_yes)} per 10s), checked {e(checked_pt(r059.get('checked') or CHECKED))}.</li>
+<li><b>Official app plans.</b> From {usd(6.99)} first month ({usd(8.80)}/mo ongoing) for Standard (660 credits/mo), checked {e(checked_pt(CHECKED))}. Credits-per-clip is not published, so app plans are not converted to $/s.</li>
+</ul>
+</div>"""
 
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Kling AI pricing</p>
 <h1>{e(PHRASE)}</h1>
 <p class="lead">{lead}</p>
 <p class="small">Last checked {e(LAST)}. Official membership and API figures were read {e(checked_pt(CHECKED))}. Catalog rows below use the date on each row. See the <a href="{e(model_href)}">Kling 3.0 model page</a> and the <a href="{e(calc_href)}">credit calculator for a 10-second Kling 3.0 clip</a>.</p>
+{takeaways}
+
+<h2>Kling 3.0 per-second prices across sellers</h2>
+<p>Every Kling 3.0 row in data/prices.json is sorted cheapest first, split by resolution and audio, with seller, plan, tier, usage assumption, and source. Affiliate links never change this price order.</p>
+{cmp_table}
 
 <h2>{e(QUESTION)}</h2>
 <p>{e(a_plans)}</p>
@@ -442,9 +438,8 @@ def render(g):
 {api_table}
 
 <h2>Cheaper routes we track</h2>
-<p>These are the Kling 3.0 rows in our catalog, lowest $/s first. A credit-plan figure is plan price ÷ credits × credits per clip, and it assumes every credit you pay for is used. Unused credits make the real cost higher. Higgsfield links can be affiliate links; they never change this price order. Official API rows are included so you can see which third-party rates beat them. Krea also offers Kling, but does not publish a per-second or per-model video price, so it is not in this ranking; see <a href="{e(root("/platforms/krea/"))}">Krea AI video plan prices</a>.</p>
-{cmp_table}
-<p>fal also publishes Standard rates of {rate_money(0.084)}/s without audio and {rate_money(0.126)}/s with audio, matching the official 720p API, plus {rate_money(0.154)}/s with voice control, on {src("https://fal.ai/models/fal-ai/kling-video/v3/standard/text-to-video", "fal's Kling 3.0 Standard text-to-video page")}, checked {e(checked_pt(CHECKED))}. Our catalog currently stores fal's Pro rates ({rate_money(0.112)}/s off, {rate_money(0.168)}/s on, and a {rate_money(0.196)}/s voice-control modifier on the Pro row). Replicate is not in our Kling 3.0 catalog, so no Replicate rate is shown.</p>
+<p>See the <a href="#prices">dated Kling 3.0 price table at the top of this guide</a> for all {len(kling_rows)} catalog rows sorted lowest $/s first. A credit-plan figure is plan price ÷ credits × credits per clip, and it assumes every credit you pay for is used. Unused credits make the real cost higher. Higgsfield links can be affiliate links; they never change this price order. Official API rows are included so you can see which third-party rates beat them. Krea also offers Kling, but does not publish a per-second or per-model video price, so it is not in this ranking; see <a href="{e(root("/platforms/krea/"))}">Krea AI video plan prices</a>.</p>
+<p>fal also publishes Standard rates of {rate_money(r059['usd_per_second'])}/s without audio and {rate_money(r062['usd_per_second'])}/s with audio, matching the official 720p API, plus {rate_money(0.154)}/s with voice control, on {src("https://fal.ai/models/fal-ai/kling-video/v3/standard/text-to-video", "fal's Kling 3.0 Standard text-to-video page")}, checked {e(checked_pt(CHECKED))}. Our catalog stores fal's Pro rows in the opening table ({', '.join(rate_money(r['usd_per_second']) + '/s ' + guide_tables.audio_label(g, r) for r in kling_rows if r.get('platform') == 'fal')}), plus a {rate_money(0.196)}/s voice-control modifier noted on the Pro page. Replicate is not in our Kling 3.0 catalog, so no Replicate rate is shown.</p>
 <p>Related: <a href="{e(cheap_href)}">cheapest rate we track for each model</a> · <a href="{e(hf_href)}">Higgsfield pricing explained</a> · <a href="{root("/guides/runway-pricing/")}">Runway pricing per second</a> · <a href="{e(budget_href)}">project budget calculator</a> · <a href="{e(model_href)}">every Kling 3.0 row on the model page</a>.</p>
 
 <h2>{e(q_cheaper)}</h2>
@@ -455,10 +450,10 @@ def render(g):
 <p>The official unsubscription steps in those terms are: for Stripe payments, use “Manage my subscription,” then “Cancel subscription,” then go to Stripe to manage the plan; for iOS 12 and above, open Settings, tap your name, open Subscriptions, choose the KLING AI plan, and tap Cancel Subscription (or cancel it from the App Store account purchase history); for older iOS, use Settings → iTunes Store &amp; App Store → Apple ID → Subscriptions; for Google Play, open subscriptions, select the plan, and tap Cancel subscription. Source: {terms}, re-read {e(checked_pt(TERMS_CHECKED))}.</p>
 
 <h2>{e(q_vs_seedance)}</h2>
-<p>{e(a_vs_seedance)} Related: <a href="{root("/models/seedance-2-5/")}">Seedance 2.5 model page</a> · <a href="{root("/guides/cheapest-seedance-2-5/")}">cheapest Seedance 2.5 rates we track</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans</a> · <a href="{e(model_href)}">Kling 3.0 model page</a>.<!-- Future guide: /guides/is-seedance-free/ --></p>
+<p>{e(a_vs_seedance)} Related: <a href="{root("/models/seedance-2-5/")}">Seedance 2.5 model page</a> · <a href="{root("/guides/cheapest-seedance-2-5/")}">cheapest Seedance 2.5 rates we track</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans</a> · <a href="{e(model_href)}">Kling 3.0 model page</a>.</p>
 
 <h2>{e(q_free)}</h2>
-<p>{e(a_free)}<!-- Future guide: /guides/is-kling-ai-free/ --></p>
+<p>{e(a_free)}</p>
 
 <h2>{e(q_unknown)}</h2>
 <p>{e(a_unknown)}</p>

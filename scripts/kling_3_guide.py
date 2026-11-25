@@ -1,3 +1,4 @@
+import guide_tables
 """Guide: Kling 3.0 cost per second, and where it is cheapest.
 
 Imported by scripts/build_site.py. Every catalog figure is rendered from
@@ -157,7 +158,9 @@ def render(g):
             res = "lowest mode (720p on the model page)"
         variant = r.get("variant") or ""
         return trow(
-            e(_route(r)),
+            guide_tables.plat_link(g, r["platform"], r["source_url"]),
+            e(guide_tables.plan_label(r)),
+            e(g["shown_tier"](r)),
             e(variant),
             e(res),
             e(_audio_word(g, r)),
@@ -167,7 +170,9 @@ def render(g):
         )
 
     head = """<thead><tr>
-<th>Where and tier</th>
+<th>Seller</th>
+<th>Plan</th>
+<th>Tier</th>
 <th>Variant</th>
 <th>Resolution</th>
 <th>Audio</th>
@@ -190,7 +195,9 @@ def render(g):
     bits.append((
         HF_API_PRO_1080,
         trow(
-            "Higgsfield API · Kling 3.0 Pro (pay as you go API)",
+            "Higgsfield API",
+            "Pay-as-you-go API",
+            "Pro",
             "Kling 3.0 Pro, text or image to video",
             "1080p",
             "not stated",
@@ -228,14 +235,7 @@ def render(g):
     r034 = _row(g, "r034")
     r112 = _row(g, "r112")
     r111 = _row(g, "r111")
-    if cheapest["id"] != "r111":
-        raise SystemExit(f"{PATH} copy assumes r111 is the cheapest Kling 3.0 row; it is {cheapest['id']}")
-    if cheapest_api["id"] != "r007":
-        raise SystemExit(f"{PATH} copy assumes r007 is the cheapest Kling 3.0 API row; it is {cheapest_api['id']}")
-    if cheapest_audio["id"] != "r064":
-        raise SystemExit(f"{PATH} copy assumes r064 is the cheapest with-audio row; it is {cheapest_audio['id']}")
-    if mag is None or mag["id"] != "r160":
-        raise SystemExit(f"{PATH} copy assumes r160 is the cheapest non-estimate plan row")
+
 
     ten = lambda v: cost_money(float(v) * 10)
 
@@ -261,22 +261,31 @@ def render(g):
     runway_src = src(RUNWAY_API, "Runway API pricing")
     kling_plans = src(KLING_PLANS, "Kling membership plans")
 
+    cheapest_plan_usd = deal_copy.plan_month(g, cheapest.get("plan"))
+    cheapest_plan_str = (
+        f"{deal_copy.money(cheapest_plan_usd)}/mo on {cheapest['platform']} {guide_tables.plan_label(cheapest)}"
+        if cheapest_plan_usd is not None
+        else f"{cheapest['platform']} ({guide_tables.plan_label(cheapest)})"
+    )
     a_q = (
-        f"The cheapest Kling 3.0 rate we track is {rate_money(r111['usd_per_second'])} per second "
-        f"on Higgsfield Ultra (annual) at 720p, audio not stated. That is an estimate from the "
-        f"credit plan: {_ua} a month for 3,000 credits, about 7.5 credits per 5-second clip, and it "
-        f"assumes you use every credit you pay for. With no credits to use up, the cheapest "
-        f"pay-as-you-go rate is {rate_money(HF_API_STD_720)} per second for Kling 3.0 Standard at "
-        f"720p on the Higgsfield API, audio not stated. The official Kling API charges "
+        f"The cheapest Kling 3.0 rate we track is {rate_money(cheapest['usd_per_second'])} per second "
+        f"on {cheapest['platform']} ({guide_tables.plan_label(cheapest)}, tier {g['shown_tier'](cheapest)}) at "
+        f"{shown_resolution(cheapest)}, {_audio_word(g, cheapest)} ({rate_label(cheapest)}, "
+        f"checked {checked_pt(cheapest.get('checked'))}). "
+        + (f"That plan is billed at {cheapest_plan_str}, and assumes you use every credit you pay for. " if cheapest.get("kind") == "plan" else "")
+        + f"With no credits to use up, the cheapest pay-as-you-go rate is {rate_money(HF_API_STD_720)} per second for Kling 3.0 Standard at "
+        f"720p on the Higgsfield API, audio not stated ({rate_money(cheapest_api['usd_per_second'])}/s in the catalog list). The official Kling API charges "
         f"{rate_money(r059['usd_per_second'])} per second at 720p without native audio and "
         f"{rate_money(r062['usd_per_second'])} with it. The cheapest rate whose vendor page says the "
-        f"clip includes audio is {rate_money(r064['usd_per_second'])} per second for Kling 3.0 Turbo with native "
-        f"audio at 720p on the official API. Higgsfield links on this page are affiliate links, and "
-        f"they never change this price order."
+        f"clip includes audio is {rate_money(cheapest_audio['usd_per_second'])} per second for "
+        f"{cheapest_audio['variant']} on {cheapest_audio['platform']} at {shown_resolution(cheapest_audio)}. "
+        "Higgsfield links on this page are affiliate links, and they never change this price order."
     )
+    plan_rows = [r for r in rows if r.get("kind") == "plan"]
+    cheapest_plan_row = plan_rows[0] if plan_rows else cheapest
     a_rate = (
-        f"It depends on the route. Credit plans run from {rate_money(r111['usd_per_second'])} per "
-        f"second (Higgsfield Ultra annual, 720p, estimate) to more than $0.25 per second at 4K, and "
+        f"It depends on the route. Credit plans run from {rate_money(cheapest_plan_row['usd_per_second'])} per "
+        f"second ({cheapest_plan_row['platform']} {guide_tables.plan_label(cheapest_plan_row)}, {shown_resolution(cheapest_plan_row)}, {rate_label(cheapest_plan_row)}) to more than $0.25 per second at 4K, and "
         f"each assumes every credit is used. Pay-as-you-go APIs run from {rate_money(HF_API_STD_720)} "
         f"per second (Higgsfield API, Standard, 720p) through {rate_money(r059['usd_per_second'])} "
         f"(official Kling API, 720p, no audio), {rate_money(r034['usd_per_second'])} (Runway API, "
@@ -322,7 +331,7 @@ def render(g):
         "so no app-plan cost per second is shown; whether Higgsfield’s plan rates and Higgsfield API "
         "rates include native audio; which settings give the top of the Higgsfield API price range "
         "($0.1071 for Standard image-to-video, $0.1443 for Pro); Krea’s missing per-second Kling price; "
-        "Higgsfield’s annual price after its Black Friday sale ends; and a Replicate Kling 3.0 rate, "
+        + ("Higgsfield’s annual price after its Black Friday sale ends; " if deal_copy.hf_bf(g)["live"] else "Higgsfield’s Ultra 6K and 9K annual prices after its Black Friday sale ended; ") + "and a Replicate Kling 3.0 rate, "
         "since none is in our catalog."
     )
 
@@ -341,24 +350,32 @@ def render(g):
                 raise SystemExit(f"{PATH} FAQ text contains {bad}")
 
     lead = (
-        f"The cheapest Kling 3.0 rate we track is {e(rate_money(r111['usd_per_second']))}/s on "
-        f"Higgsfield Ultra (annual) at 720p, audio not stated, an estimate that assumes you use every "
-        f"credit. The cheapest pay-as-you-go rate is {e(rate_money(HF_API_STD_720))}/s for Kling 3.0 "
+        f"The cheapest Kling 3.0 rate we track is {e(rate_money(cheapest['usd_per_second']))}/s on "
+        f"{e(cheapest['platform'])} ({e(guide_tables.plan_label(cheapest))}) at {e(shown_resolution(cheapest))}, "
+        f"{e(_audio_word(g, cheapest))} ({e(rate_label(cheapest))}). "
+        f"The cheapest pay-as-you-go rate is {e(rate_money(HF_API_STD_720))}/s for Kling 3.0 "
         f"Standard at 720p on the Higgsfield API. The official Kling API is "
         f"{e(rate_money(r059['usd_per_second']))}/s at 720p without native audio and "
         f"{e(rate_money(r062['usd_per_second']))}/s with it, from {kling_api_src}. Every row below "
-        f"states its tier, resolution, audio, usage assumption, source, and the date it was checked. "
+        f"states its seller, plan, tier, resolution, audio, usage assumption, source, and check date. "
         f"For Kling’s own plans and credit packs, see "
-        f"<a href=\"{e(kling_guide)}\">Kling AI pricing and credits</a>."
+        f'<a href="{e(kling_guide)}">Kling AI pricing and credits</a>.'
     )
 
+    bf_state = deal_copy.hf_bf(g)
+    cheapest_plan_note = (
+        f"From {deal_copy.money(cheapest_plan_usd)}/mo on {cheapest['platform']} {guide_tables.plan_label(cheapest)}"
+        + (" (Black Friday sale price)." if bf_state["live"] and cheapest.get("platform") == "Higgsfield" else ".")
+        if cheapest_plan_usd is not None
+        else f"From {cheapest['platform']} ({guide_tables.plan_label(cheapest)})."
+    )
     takeaways = f"""<div class="card" id="takeaways">
 <h2>Key takeaways</h2>
 <ul>
-<li><b>Cheapest if you use every credit.</b> {e(rate_money(r111['usd_per_second']))}/s on Higgsfield Ultra (annual), 720p, audio not stated. Estimated from a $50-a-month plan at Higgsfield’s current sale price.</li>
+<li><b>Cheapest if you use every credit.</b> {e(rate_money(cheapest['usd_per_second']))}/s on {e(cheapest['platform'])} ({e(guide_tables.plan_label(cheapest))}), {e(shown_resolution(cheapest))}, {e(_audio_word(g, cheapest))}, checked {e(checked_pt(cheapest.get('checked')))}. {e(cheapest_plan_note)}</li>
 <li><b>Cheapest pay as you go.</b> {e(rate_money(HF_API_STD_720))}/s on the Higgsfield API, Kling 3.0 Standard, 720p, audio not stated. At 1080p, Higgsfield API Pro is {e(rate_money(HF_API_PRO_1080))}/s.</li>
 <li><b>Kling direct.</b> The official API is {e(rate_money(r059['usd_per_second']))}/s at 720p without audio and {e(rate_money(r062['usd_per_second']))}/s with audio. App credits per clip are not published.</li>
-<li><b>Cheapest with audio included.</b> {e(rate_money(r064['usd_per_second']))}/s for Kling 3.0 Turbo with native audio at 720p on the official API.</li>
+<li><b>Cheapest with audio included.</b> {e(rate_money(cheapest_audio['usd_per_second']))}/s for {e(cheapest_audio['variant'])} at {e(shown_resolution(cheapest_audio))} on {e(cheapest_audio['platform'])}.</li>
 <li><b>Image to video.</b> fal and the Higgsfield API list the same per-second rate for image-to-video as for text-to-video.</li>
 </ul>
 </div>"""
@@ -399,7 +416,7 @@ def render(g):
 <h2>Is Kling direct cheaper than Higgsfield or fal?</h2>
 <p>{e(a_direct)}</p>
 <p>Kling AI video comes from Kuaishou. Kling sells Kling 3.0 two ways: monthly credits in the Kling app ({kling_plans}) and per-second resource packages on the API ({kling_api_src}), which lists 720p, 1080p, and 4K with or without native audio, plus Kling 3.0 Turbo with native audio. Higgsfield, fal, Runway, and Magnific resell the same model. Krea also offers Kling, but does not publish a per-second or per-model video price. Kling’s app plans, first-month prices, and credit packs are in <a href="{e(kling_guide)}">Kling AI pricing and credits</a>, and Higgsfield’s credit math is in <a href="{e(hf_pricing)}">Higgsfield pricing explained</a> and <a href="{e(hf_worth)}">is Higgsfield worth it?</a>. Official iPhone and Android apps are compared in <a href="{e(apps_href)}">AI video generator apps</a>.</p>
-<p>If Higgsfield’s annual sale price ends and Ultra bills at its $129 monthly list price, the same 720p Kling 3.0 math is {e(rate_money(r112['usd_per_second']))}/s (catalog row r112, Ultra monthly), still below the official API’s {e(rate_money(r059['usd_per_second']))}/s if you use every credit.</p>
+<p>On Higgsfield’s Ultra monthly list price ($129/month), the same 720p Kling 3.0 math is {e(rate_money(r112['usd_per_second']))}/s (catalog row r112, Ultra monthly), still below the official API’s {e(rate_money(r059['usd_per_second']))}/s if you use every credit.</p>
 
 <h2>Every Kling 3.0 price we track</h2>
 <p>All {len(rows)} current Kling 3.0 rows in our catalog, cheapest first. Resolution says “not listed” where the vendor gives a tier name instead of a resolution.</p>

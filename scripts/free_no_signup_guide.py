@@ -1,3 +1,4 @@
+import guide_tables
 """Guide: Free AI video generators with no sign-up.
 
 Imported by scripts/build_site.py. Official pages were read on Nov 20, 2026,
@@ -319,20 +320,8 @@ def render(g):
 )}
 </tbody></table></div>"""
 
-    def seller_rate(r):
-        label = rate_label(r)
-        tier = shown_tier(r)
-        if tier and tier != "not listed":
-            return f"{e(rate_money(r['usd_per_second']))}/s on {e(r['platform'])} ({e(tier)}, {e(label)})"
-        return f"{e(rate_money(r['usd_per_second']))}/s on {e(r['platform'])} ({e(label)})"
-
     def audio_txt(r):
-        audio = shown_audio(r)
-        if audio == "with":
-            return "with audio"
-        if audio == "without":
-            return "without audio"
-        return "not stated"
+        return guide_tables.audio_label(g, r)
 
     def catalog_paid(r):
         href, rel = g["outbound"](r["source_url"])
@@ -340,30 +329,29 @@ def render(g):
             f'<a href="{e(href)}" rel="{rel}" target="_blank">source</a>, '
             f"catalog row {e(r['id'])}, checked {e(__import__('timefmt').day_label(r['checked']))}."
         )
-        extra = assumption_text(r)
-        if r.get("math"):
-            extra = (extra + " " if extra else "") + r["math"]
-        if r.get("note"):
-            extra = (extra + " " if extra else "") + r["note"]
-        if not extra:
-            extra = "Billed per second of output. Retries are billed too."
-        elif r.get("kind") == "api":
-            extra = extra.rstrip(".") + ". Billed per second of output. Retries are billed too."
+        extra = guide_tables.usage_note(g, r)
         model = (
             f'{e(g["models"][r["model"]]["name"])}, {e(r["variant"])}. '
             f'Input: {e(input_phrase(r))}.'
         )
-        needs = "Needs an account."
-        route = f'{e(r["platform"])} · {e(r.get("plan_name") or r.get("kind") or "route")}. {needs}'
+        seller = f'{guide_tables.plat_link(g, r["platform"])} <span class="small">(needs account)</span>'
+        plan = e(guide_tables.plan_label(r))
+        tier = e(shown_tier(r))
+        rate_cell = (
+            f'<span class="amt">{e(rate_money(r["usd_per_second"]))}/s</span> '
+            f'<span class="small">on {e(r["platform"])} ({e(rate_label(r))})</span>'
+        )
         return (
             float(r["usd_per_second"]),
             r["id"],
             trow(
-                route,
+                seller,
                 model,
+                plan,
+                tier,
                 e(shown_resolution(r)),
                 e(audio_txt(r)),
-                seller_rate(r),
+                rate_cell,
                 e(extra),
                 source,
             ),
@@ -372,18 +360,16 @@ def render(g):
     def published(r):
         return rate_label(r) == "published rate"
 
-    pubs = sorted((r for r in rows if published(r)), key=lambda r: (r["usd_per_second"], r["id"]))
+    active_rows = guide_tables.active_rows(g)
+    pubs = sorted((r for r in active_rows if published(r)), key=lambda r: (r["usd_per_second"], r["id"]))
     if not pubs:
         raise SystemExit(f"{PATH} has no published-rate row")
     floor = pubs[0]["usd_per_second"]
     tied = [r for r in pubs if r["usd_per_second"] == floor]
-    overall = min(rows, key=lambda r: (r["usd_per_second"], r["id"]))
+    overall = min(active_rows, key=lambda r: (r["usd_per_second"], r["id"]))
     paid_bits = []
     seen = set()
-    if overall["id"] not in {r["id"] for r in tied}:
-        paid_bits.append(catalog_paid(overall))
-        seen.add(overall["id"])
-    for r in tied:
+    for r in [overall] + tied + guide_tables.cheapest_by_model(g):
         if r["id"] not in seen:
             paid_bits.append(catalog_paid(r))
             seen.add(r["id"])
@@ -393,11 +379,13 @@ def render(g):
             usd,
             name,
             trow(
-                f"DeepAI · pay-per-call, no account. {not_catalog}",
+                f'DeepAI <span class="small">(no account; {e(not_catalog)})</span>',
                 e(name),
+                "Pay-per-call (no account)",
+                "not listed",
                 e(res),
                 "not stated",
-                f"{e(rate_money(usd))}/s on DeepAI (published rate)",
+                f'<span class="amt">{e(rate_money(usd))}/s</span> <span class="small">on DeepAI (published rate)</span>',
                 e(assumption),
                 f"{deepai}, read {when}.",
             ),
@@ -420,13 +408,15 @@ def render(g):
     if prices != sorted(prices):
         raise SystemExit(f"{PATH} paid table is not in price order")
     paid_table = f"""<div class="tblwrap" id="paid-no-signup">
-<table style="min-width:1180px;width:1180px">
+<table style="min-width:1280px;width:1280px">
 <thead><tr>
-<th>Route and seller</th>
+<th>Seller</th>
 <th>Model</th>
+<th>Plan</th>
+<th>Tier</th>
 <th>Resolution</th>
 <th>Audio</th>
-<th>Rate</th>
+<th>$ / sec</th>
 <th>Usage assumption</th>
 <th>Source and date checked</th>
 </tr></thead>
@@ -546,6 +536,11 @@ def render(g):
 <p class="small">Last checked {e(LAST)}. Official pages were read {e(CHECKED_WHEN)}. Catalog rows use the date on each row. Affiliate links never change this price order. Every dollar-per-second figure below names its seller and states its usage assumption, tier, resolution, and audio.</p>
 {takeaways}
 
+<h2>Is there a paid option with no account?</h2>
+<p>{e(a_paid)}</p>
+{paid_table}
+<p class="small">Rows are in price order from data/prices.json (plus DeepAI no-account rates). Every row shows seller, plan, tier, resolution, audio, usage assumption, and source. Affiliate links never change this price order.</p>
+
 <h2>{e(QUESTION)}</h2>
 <p>{e(a_which)}</p>
 {routes_table}
@@ -560,11 +555,6 @@ def render(g):
 <p>These products are not VidFare catalog models. They are here because people search for them next to the nine models. Each cell is the page we read, not a test generation.</p>
 {outside_table}
 <p class="small">Sources and check time {e(CHECKED_WHEN)}. Google Flow is the seller for Veo 3.1 and the Omni Flash line, so it is in the catalog table above rather than listed here as an extra model.</p>
-
-<h2>Is there a paid option with no account?</h2>
-<p>{e(a_paid)}</p>
-{paid_table}
-<p>Rows are in price order. A catalog plan rate assumes you use what you pay for. An API rate is billed per second of output. DeepAI’s no-account rates are published on its own page and are not catalog rows. Affiliate links never change this price order.</p>
 
 <h2>What is the least sign-up with a published allowance?</h2>
 <p>{e(a_least)}</p>

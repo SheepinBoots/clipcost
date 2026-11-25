@@ -6,6 +6,8 @@ rates, plans, or counts.
 """
 import json
 import flow_guide
+import guide_tables
+import timefmt
 from decimal import Decimal, ROUND_HALF_UP
 
 
@@ -373,13 +375,13 @@ def render(g):
             second = f"Without promos, the lowest rate is {rate_clause(alt)}."
         else:
             second = "Each model below is that homepage pick: the lowest live dollars per second. A promo or an estimate is labelled on the row that wins."
-        q = "What is the cheapest AI video generator in " + __import__("timefmt").us_today().strftime("%B %Y") + "?"
+        q = "What is the cheapest AI video generator in " + timefmt.us_today().strftime("%B %Y") + "?"
         q_each = "What is the cheapest option for each model?"
-        answer = f"The lowest rate we track is {rate_clause(best_row)}. {second}"
-        lead = answer
+        lead = f"The lowest rate we track is {rate_clause(best_row)}. {second}"
+        q_answer = f"Top catalog pick: {rate_clause(best_row)}. {second}"
         head = (
-            "<thead><tr><th>Model</th><th>$/s</th><th>Where</th><th>Tier</th>"
-            "<th>Res</th><th>Audio</th><th>Status</th><th>No promo</th><th>Source</th></tr></thead>"
+            "<thead><tr><th>Model</th><th>$ / sec</th><th>Seller</th><th>Plan</th><th>Tier</th>"
+            "<th>Resolution</th><th>Audio</th><th>Status</th><th>No promo</th><th>Source and date checked</th></tr></thead>"
         )
         body_rows = []
         for _usd, _i, slug, meta, picked, alt_row in picks:
@@ -389,17 +391,19 @@ def render(g):
                 without = "same"
             else:
                 without = other_short(alt_row)
+            checked_str = timefmt.day_label(picked.get("checked")) if picked.get("checked") else "not stored"
             body_rows.append(
                 f'<tr data-price-id="{e(picked["id"])}">'
                 f'<td><a href="{root(f"/models/{slug}/")}">{e(meta["name"])}</a></td>'
-                f'<td class="num">{rate_money(picked["usd_per_second"])}{assumption_html(picked)}</td>'
+                f'<td class="num"><span class="amt">{rate_money(picked["usd_per_second"])}/s</span>{assumption_html(picked)}</td>'
                 f'<td>{plat_link(picked["platform"], picked["source_url"])}</td>'
+                f'<td>{e(guide_tables.plan_label(picked))}</td>'
                 f'<td>{e(shown_tier(picked))}</td>'
                 f'<td>{e(shown_resolution(picked))}</td>'
-                f'<td>{e(audio_phrase(picked))}</td>'
+                f'<td>{e(guide_tables.audio_label(g, picked))}</td>'
                 f'<td>{status_cell(picked)}</td>'
                 f'<td>{without}</td>'
-                f'<td>{source_toggle(picked)}</td>'
+                f'<td>{source_toggle(picked)} <span class="small">checked {e(checked_str)}</span></td>'
                 "</tr>"
             )
         gap_items = db.get("unverified") or []
@@ -410,26 +414,43 @@ def render(g):
         else:
             gap_html = "<p>The price data has no separate unconfirmed-item list.</p>"
         q_each_answer = (
-            "One row per model, lowest dollars per second first. "
-            "The status label says published rate, from credit plan, or estimated from credit plan. "
-            "A promo shows its end date when the vendor gives one."
+            "One row per model from data/prices.json, lowest dollars per second first, "
+            "with seller, plan, tier, resolution, audio, usage assumption, and check date. "
+            "The status label says published rate, from credit plan, or estimated from credit plan."
         )
         faqs = [
-            (q, answer),
+            (q, q_answer),
             (q_each, q_each_answer),
             ("How do we calculate this?", HOW_PLAIN),
         ]
+        pub_rows = [r for r in rows if r.get("kind") == "api" and r.get("status") == "verified"]
+        pub_best = min(pub_rows, key=lambda r: (r["usd_per_second"], r["id"])) if pub_rows else None
+        pub_line = (
+            f'<li><b>Lowest published API rate (no credits required).</b> {e(rate_money(pub_best["usd_per_second"]))}/s for {e(models[pub_best["model"]]["name"])} on {e(pub_best["platform"])} ({e(shown_resolution(pub_best))}, {e(guide_tables.audio_label(g, pub_best))}), checked {e(timefmt.day_label(pub_best.get("checked")))}.</li>'
+            if pub_best else ""
+        )
+        takeaways = f"""<div class="card" id="takeaways">
+<h2>Key takeaways</h2>
+<ul>
+<li><b>Overall lowest tracked rate.</b> {e(rate_money(best_row["usd_per_second"]))}/s for {e(models[best_row["model"]]["name"])} on {e(best_row["platform"])} ({e(guide_tables.plan_label(best_row))}, tier {e(shown_tier(best_row))}, {e(shown_resolution(best_row))}, {e(guide_tables.audio_label(g, best_row))}), checked {e(timefmt.day_label(best_row.get("checked")))}.</li>
+{pub_line}
+<li><b>Nine covered models.</b> The table below ranks all {len(picks)} covered models cheapest first; Krea is excluded from $/s rankings because it sells units without a per-second video rate.</li>
+<li><b>Independent order.</b> Affiliate links never change this price order.</li>
+</ul>
+</div>"""
+        table_html = f'<div class="tblwrap fit" id="prices"><table>{head}<tbody>{"".join(body_rows)}</tbody></table></div>'
         body = f"""{crumb("Cheapest by model")}
 <h1>Cheapest AI video generator by model, {MONTH}</h1>
 <p class="lead">{e(lead)}</p>
 {checked_line()}
-<div class="cards">{cheap_card("Lowest rate we track", best_row, alt)}</div>
-<h2>{e(q)}</h2>
-<p>The introduction is that single row. It names the variant and whether the figure is a published rate, a credit-plan estimate, or a promo.</p>
+{takeaways}
 <h2>{e(q_each)}</h2>
 <p>{e(q_each_answer)}</p>
 <p class="small">No promo: same means that pick is not a promo. Otherwise the cell is the cheapest non-promo rate. — means there is no non-promo row.</p>
-{fit_table(head, body_rows)}
+{table_html}
+<div class="cards">{cheap_card("Lowest rate we track", best_row, alt)}</div>
+<h2>{e(q)}</h2>
+<p>{e(q_answer)}</p>
 <h2>What prices are not in this list?</h2>
 <p>These prices are not in the table. The vendor page did not give a single dollars-per-second figure the check could confirm.</p>
 {gap_html}
@@ -438,7 +459,7 @@ def render(g):
 {tick_script()}"""
         guide_page(
             "/guides/cheapest-ai-video-generator/",
-            f"Cheapest AI video generator by model, {MONTH} | {BRAND}",
+            page_title(f"Cheapest AI video generator by model, {MONTH}"),
             (
                 f"The lowest rate we track is {rate_money(best_row['usd_per_second'])}/s for "
                 f"{models[best_row['model']]['name']} on {best_row['platform']}. "

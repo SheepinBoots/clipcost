@@ -1,3 +1,4 @@
+import guide_tables
 """Guide: Higgsfield pricing explained.
 
 Imported by scripts/build_site.py. Plan prices come from data/prices.json
@@ -177,6 +178,15 @@ def render(g):
     st = deal_copy.hf_bf(g)
     money = deal_copy.money
     live = st["live"]
+    p_starter = plans.get("hf-starter") or {}
+    p_plus_m = plans.get("hf-plus-monthly") or {}
+    p_ultra_m = plans.get("hf-ultra-monthly") or {}
+    starter_m = p_starter.get("usd_month") or 19
+    starter_c = p_starter.get("credits_month") or 270
+    plus_m = p_plus_m.get("usd_month") or 59
+    plus_c = p_plus_m.get("credits_month") or 1200
+    ultra_m = p_ultra_m.get("usd_month") or 129
+    ultra_c = p_ultra_m.get("credits_month") or 3000
     pa, ua = deal_copy.plan_month(g, "hf-plus-annual"), deal_copy.plan_month(g, "hf-ultra-annual")
     if live:
         six_a = deal_copy.price_after(st, "hf-ultra-6k-annual")
@@ -189,23 +199,24 @@ def render(g):
         sale_part = (
             deal_copy.hf_sale_sentence(st) + " "
             f"Annual Ultra 6K is {money(six_a)}/mo and Ultra 9K is {money(nine_a)}/mo, billed yearly (lists $258 and $387). "
-            f"First month on monthly billing, then renewal at list: Plus {money(first['hf-plus-monthly-first'])} then $59; "
-            f"Ultra 3K {money(first['hf-ultra-monthly-first'])} then $129; Ultra 6K {money(first['hf-ultra-6k-monthly-first'])} then $250; "
+            f"First month on monthly billing, then renewal at list: Plus {money(first['hf-plus-monthly-first'])} then {money(plus_m)}; "
+            f"Ultra 3K {money(first['hf-ultra-monthly-first'])} then {money(ultra_m)}; Ultra 6K {money(first['hf-ultra-6k-monthly-first'])} then $250; "
             f"Ultra 9K {money(first['hf-ultra-9k-monthly-first'])} then $375. "
             "The visible banner is a countdown only, and vendors sometimes extend sales. "
         )
     else:
         sale_part = (
             deal_copy.hf_sale_sentence(st) + " "
-            f"Annual billing now: Plus {money(pa)}/mo and Ultra 3K {money(ua)}/mo, billed yearly; "
+            f"Annual billing in data/prices.json: Plus {money(pa)}/mo and Ultra 3K {money(ua)}/mo, billed yearly; "
             f"Ultra 6K {money(six_a)}/mo and Ultra 9K {money(nine_a)}/mo, billed yearly. "
         )
     a1 = (
         f"On the official pricing page, re-read {BF_CHECKED_WHEN}, individual monthly list prices are "
-        "Starter $19/mo (monthly or annual, same price, 270 credits), Plus $59/mo (1,200 credits), "
-        "and Ultra 3K $129/mo, Ultra 6K $250/mo, and Ultra 9K $375/mo (3,000 / 6,000 / 9,000 credits). "
+        f"Starter {money(starter_m)}/mo (monthly or annual, same price, {starter_c:,} credits), "
+        f"Plus {money(plus_m)}/mo ({plus_c:,} credits), "
+        f"and Ultra 3K {money(ultra_m)}/mo, Ultra 6K $250/mo, and Ultra 9K $375/mo ({ultra_c:,} / 6,000 / 9,000 credits). "
         + sale_part +
-        f"The 11.11 sale ended at {SALE_ENDS_UTC}, which is {SALE_ENDS_PT}. "
+        f"The 11.11 sale ended at {SALE_ENDS_PT}. "
         "Checkout totals are unknown (VAT and local taxes are calculated at checkout). "
         "Business, shown per seat: Team annual $45/seat/mo billed yearly (list $79, 1,000 credits/seat); "
         "Team monthly $55/seat (list $79); "
@@ -302,9 +313,24 @@ def render(g):
         "Credit Packs cannot be bought on the free plan. Current plan prices and which models sit in the Free column are on Higgsfield's pricing page. "
         "A short dedicated page on whether Higgsfield is free is planned."
     )
+    q_unknown = "What is confirmed, and what is not?"
+    if live:
+        _sale_st = f"live until {st['end']}"
+        _unk_sale = "annual prices after the sale ends; whether the sale is extended; "
+    else:
+        _sale_st = f"ended {st['end']}"
+        _unk_sale = "" if (six_a and nine_a) else "Ultra 6K and 9K annual prices after the sale; "
+    a_unknown = (
+        f"Confirmed {BF_CHECKED_WHEN} on Higgsfield's pricing page and pricing.md: plan prices in the table above, "
+        f"business seat prices, Black Friday sale status ({_sale_st}), and Wan 3.0 credits per clip. "
+        f"Other compare-table credits per clip were checked {checked_pt(CHECKED)}. The 11.11 sale ended at {SALE_ENDS_PT}. "
+        f"Unknown: tax-inclusive checkout totals; {_unk_sale}when the Unlimited models for 7 days window starts; "
+        "the five unnamed other unlimited models; published credit cost for Gemini Omni Flash or Runway Gen-4; "
+        "Grok Video resolution; credit-pack list prices; and failed-generation refund rules for plan credits."
+    )
     q5 = "How do we calculate this?"
     a5 = g["HOW_PLAIN"]
-    faqs = [(q1, a1), (q2, a2), (q_credits_how, a_credits_how), (q3, a3), (q_api_cost, a_api_cost), (q4, a4), (q_refund, a_refund), (q_cancel, a_cancel), (q_free, a_free), (q5, a5)]
+    faqs = [(q1, a1), (q2, a2), (q_credits_how, a_credits_how), (q3, a3), (q_api_cost, a_api_cost), (q4, a4), (q_refund, a_refund), (q_cancel, a_cancel), (q_free, a_free), (q_unknown, a_unknown), (q5, a5)]
 
     # Catalog plan table
     plan_head = (
@@ -317,12 +343,12 @@ def render(g):
         return f"{money(v)}{unit} until {st['end']}" if v is not None else "no sale"
     when = f"pricing page, {BF_CHECKED_WHEN}"
     official_plan_rows = [
-        ("Starter", "monthly", "270", "$19", "no sale", "$19", when),
-        ("Starter", "annual", "270", "$19/mo billed yearly", "no sale", "$19/mo billed yearly", when),
-        ("Plus", "monthly", "1,200", "$59", sale_cell("hf-plus-monthly-first", " first month"), "$59", when),
-        ("Plus", "annual", "1,200", "$59/mo ($708/yr)", sale_cell("hf-plus-annual"), "unknown after the sale" if live else f"{money(pa)}/mo billed yearly", when),
-        ("Ultra 3K", "monthly", "3,000", "$129", sale_cell("hf-ultra-monthly-first", " first month"), "$129", when),
-        ("Ultra 3K", "annual", "3,000", "$129/mo ($1,548/yr)", sale_cell("hf-ultra-annual"), "unknown after the sale" if live else f"{money(ua)}/mo billed yearly", when),
+        ("Starter", "monthly", f"{starter_c:,}", money(starter_m), "no sale", money(starter_m), when),
+        ("Starter", "annual", f"{starter_c:,}", f"{money(starter_m)}/mo billed yearly", "no sale", f"{money(starter_m)}/mo billed yearly", when),
+        ("Plus", "monthly", f"{plus_c:,}", money(plus_m), sale_cell("hf-plus-monthly-first", " first month"), money(plus_m), when),
+        ("Plus", "annual", f"{plus_c:,}", f"{money(plus_m)}/mo (${plus_m*12:,}/yr)", sale_cell("hf-plus-annual"), "unknown after the sale" if live else f"{money(pa)}/mo billed yearly", when),
+        ("Ultra 3K", "monthly", f"{ultra_c:,}", money(ultra_m), sale_cell("hf-ultra-monthly-first", " first month"), money(ultra_m), when),
+        ("Ultra 3K", "annual", f"{ultra_c:,}", f"{money(ultra_m)}/mo (${ultra_m*12:,}/yr)", sale_cell("hf-ultra-annual"), "unknown after the sale" if live else f"{money(ua)}/mo billed yearly", when),
         ("Ultra 6K", "monthly", "6,000", "$250", sale_cell("hf-ultra-6k-monthly-first", " first month"), "$250", when),
         ("Ultra 6K", "annual", "6,000", "$258/mo billed yearly", sale_cell("hf-ultra-6k-annual"), "unknown after the sale" if live else f"{money(six_a)}/mo billed yearly", when),
         ("Ultra 9K", "monthly", "9,000", "$375", sale_cell("hf-ultra-9k-monthly-first", " first month"), "$375", when),
@@ -359,8 +385,8 @@ def render(g):
         return r.get("variant") or "Higgsfield plan"
 
     cat_head = (
-        "<thead><tr><th>Model</th><th>Res</th><th>Plan (catalog)</th>"
-        "<th>$/s</th><th>Official  clip</th><th>10s (if linear)</th><th>Status</th><th>Source</th></tr></thead>"
+        "<thead><tr><th>Seller</th><th>Model</th><th>Variant</th><th>Plan</th><th>Tier</th><th>Resolution</th><th>Audio</th>"
+        "<th>$ / sec</th><th>Official clip</th><th>10s (if linear)</th><th>Status</th><th>Source and date checked</th></tr></thead>"
     )
     official_by = {}
     for slug, name, credits, secs, tilde, res in OFFICIAL_CREDITS:
@@ -384,63 +410,69 @@ def render(g):
     for r in sorted(hf_plan_rows, key=lambda r: (r["usd_per_second"], r["id"])):
         cat_rows_html.append(
             "<tr>"
-            f"<td>{e(models.get(r['model'], {}).get('name') or r['model'])}</td>"
-            f"<td>{e(shown_resolution(r))}</td>"
+            f'<td>{plat_link(r["platform"], r["source_url"])}</td>'
+            f'<td><a href="{root(f"/models/{r["model"]}/")}">{e(models.get(r["model"], {}).get("name") or r["model"])}</a></td>'
+            f"<td>{e(r.get('variant') or '')}</td>"
             f"<td>{e(plan_label(r))}</td>"
-            f'<td class="num">{rate_money(r["usd_per_second"])}{assumption_html(r)}</td>'
+            f'<td>{e(g["shown_tier"](r))}</td>'
+            f"<td>{e(shown_resolution(r))}</td>"
+            f"<td>{e(guide_tables.audio_label(g, r))}</td>"
+            f'<td class="num"><span class="amt">{rate_money(r["usd_per_second"])}/s</span>{assumption_html(r)}</td>'
             f"<td>{e(official_clip_text(r))}</td>"
             f'<td class="num">{ten_s_cell(r)}</td>'
             f"<td>{status_cell(r)}</td>"
-            f"<td>{source_toggle(r)}</td>"
+            f'<td>{source_toggle(r)} <span class="small">checked {e(checked_pt(r.get("checked")))}</span></td>'
             "</tr>"
         )
-    cat_table = f'<div class="tblwrap fit"><table>{cat_head}<tbody>{"".join(cat_rows_html)}</tbody></table></div>'
+    cat_table = f'<div class="tblwrap fit" id="prices"><table>{cat_head}<tbody>{"".join(cat_rows_html)}</tbody></table></div>'
 
     # Derived Seedance 2.5 / Grok (not in catalog plan rows) from official credits × catalog plan credit prices.
     def credit_price(usd, credits):
         return usd / credits
 
     tag_sale = " (sale)" if live else ""
-    derived_plans = [("Starter", 19, 270)]
+    derived_plans = [("Starter", starter_m, starter_c)]
     if pa:
-        derived_plans.append((f"Plus annual{tag_sale}", pa, 1200))
-    derived_plans.append(("Plus monthly list", 59, 1200))
+        derived_plans.append((f"Plus annual{tag_sale}", pa, plus_c))
+    derived_plans.append(("Plus monthly list", plus_m, plus_c))
     if ua:
-        derived_plans.append((f"Ultra 3K annual{tag_sale}", ua, 3000))
-    derived_plans.append(("Ultra 3K monthly list", 129, 3000))
+        derived_plans.append((f"Ultra 3K annual{tag_sale}", ua, ultra_c))
+    derived_plans.append(("Ultra 3K monthly list", ultra_m, ultra_c))
     if six_a:
         derived_plans.append((f"Ultra 6K annual{tag_sale}", six_a, 6000))
     if nine_a:
         derived_plans.append((f"Ultra 9K annual{tag_sale}", nine_a, 9000))
     derived_models = [x for x in OFFICIAL_CREDITS if x[0] in ("seedance-2-5", "grok-imagine")]
     der_head = (
-        "<thead><tr><th>Model</th><th>Official credits</th><th>Plan</th>"
-        "<th>$/credit</th><th>Official clip</th><th>$/s (if linear)</th><th>10s (if linear, 5s unit)</th></tr></thead>"
+        "<thead><tr><th>Seller</th><th>Model</th><th>Plan</th><th>Tier</th><th>Resolution</th><th>Audio</th><th>Official credits</th>"
+        "<th>$/credit</th><th>Official clip</th><th>$/s (if linear)</th><th>10s (if linear, 5s unit)</th><th>Source and date checked</th></tr></thead>"
     )
     der_rows = []
+    hf_plan_src = f'{src(HF_PRICING, "pricing page")}, checked {e(checked_pt(BF_CHECKED))}'
     for slug, name, credits, secs, tilde, res in derived_models:
         for plan_name, usd, cr in derived_plans:
             cprice = credit_price(usd, cr)
             clip = cprice * credits
             per_s = clip / secs
             ten = (cprice * credits / secs) * 10 if secs == 5 else "official unit is not 5s"
-            label = name + (f" ({res})" if res else " (resolution not stated)")
             credit_label = f"{'~' if tilde else ''}{credits:g} / {secs}s"
             ten_html = ten if isinstance(ten, str) else rate_money(ten)
             der_rows.append(
                 "<tr>"
-                f"<td>{e(label)}</td><td>{e(credit_label)}</td><td>{e(plan_name)}</td>"
+                "<td>Higgsfield</td>"
+                f"<td>{e(name)}</td><td>{e(plan_name)}</td><td>not listed</td><td>{e(res or 'not stated')}</td><td>not stated</td><td>{e(credit_label)}</td>"
                 f'<td class="num">{rate_money(cprice)}</td>'
                 f'<td class="num">{rate_money(clip)}</td>'
                 f'<td class="num">{rate_money(per_s)}</td>'
                 f'<td class="num">{ten_html}</td>'
+                f'<td class="small">{hf_plan_src}</td>'
                 "</tr>"
             )
     der_table = f'<div class="tblwrap fit"><table>{der_head}<tbody>{"".join(der_rows)}</tbody></table></div>'
 
     # PAYG comparison: cheapest catalog HF plan $/s vs cheapest verified non-HF API at same model+res.
     cmp_head = (
-        "<thead><tr><th>Model</th><th>Res</th><th>Cheapest HF plan in catalog</th>"
+        "<thead><tr><th>Model</th><th>Resolution</th><th>Audio</th><th>Cheapest HF plan in catalog</th>"
         "<th>Cheapest verified API elsewhere</th><th>Cheaper route</th></tr></thead>"
     )
     cmp_rows = []
@@ -461,7 +493,11 @@ def render(g):
             winner = "Higgsfield plan (no published API comparison at this res)"
         else:
             o = sorted(others, key=lambda r: (r["usd_per_second"], r["id"]))[0]
-            other_txt = f"{rate_money(o['usd_per_second'])}/s on {o['platform']} ({o['variant']})"
+            other_txt = (
+                f"{rate_money(o['usd_per_second'])}/s on {o['platform']} "
+                f"({o['variant']}, {guide_tables.plan_label(o)}, tier {g['shown_tier'](o)}, "
+                f"{guide_tables.audio_label(g, o)}, checked {checked_pt(o.get('checked'))})"
+            )
             if o["usd_per_second"] < hf_best["usd_per_second"]:
                 winner = f"PAYG on {o['platform']} is cheaper than this plan rate"
             elif o["usd_per_second"] > hf_best["usd_per_second"]:
@@ -472,7 +508,8 @@ def render(g):
             "<tr>"
             f"<td>{e(models.get(model, {}).get('name') or model)}</td>"
             f"<td>{e(res or '—')}</td>"
-            f'<td class="num">{rate_money(hf_best["usd_per_second"])}/s · {e(plan_label(hf_best))}</td>'
+            f"<td>{e(guide_tables.audio_label(g, hf_best))}</td>"
+            f'<td class="num">{rate_money(hf_best["usd_per_second"])}/s · {e(plan_label(hf_best))} · tier {e(g["shown_tier"](hf_best))} (checked {e(checked_pt(hf_best.get("checked")))})</td>'
             f"<td>{e(other_txt)}</td>"
             f"<td>{e(winner)}</td>"
             "</tr>"
@@ -480,15 +517,19 @@ def render(g):
     cmp_table = f'<div class="tblwrap fit"><table>{cmp_head}<tbody>{"".join(cmp_rows)}</tbody></table></div>'
 
     api_head = (
-        "<thead><tr><th>Model</th><th>Res / note</th><th>Higgsfield API $/s</th><th>Status</th><th>Source</th></tr></thead>"
+        "<thead><tr><th>Seller</th><th>Model</th><th>Plan</th><th>Tier</th><th>Resolution</th><th>Audio</th><th>Higgsfield API $/s</th><th>Status</th><th>Source and date checked</th></tr></thead>"
     )
     api_body = "".join(
         "<tr>"
+        f'<td>{plat_link(r["platform"], r["source_url"])}</td>'
         f"<td>{e(models.get(r['model'], {}).get('name') or r['model'])}</td>"
+        f'<td>{e(guide_tables.plan_label(r))}</td>'
+        f'<td>{e(g["shown_tier"](r))}</td>'
         f"<td>{e(shown_resolution(r))}</td>"
+        f"<td>{e(guide_tables.audio_label(g, r))}</td>"
         f'<td class="num">{rate_money(r["usd_per_second"])}</td>'
         f"<td>{status_cell(r)}</td>"
-        f"<td>{source_toggle(r)}</td>"
+        f'<td>{source_toggle(r)} <span class="small">checked {e(checked_pt(r.get("checked")))}</span></td>'
         "</tr>"
         for r in sorted(hf_api_rows, key=lambda r: (r["usd_per_second"], r["id"]))
     )
@@ -516,11 +557,26 @@ def render(g):
         "Unlimited bonuses apply only on higgsfield.ai. Affiliate links never change this price order."
     )
 
+    takeaways = f"""<div class="card" id="takeaways">
+<h2>Key takeaways</h2>
+<ul>
+<li><b>Lowest Higgsfield plan rate we track.</b> {e(rate_money(best_plan['usd_per_second']))}/s on {e(plan_label(best_plan))} for {e(models.get(best_plan['model'], {}).get('name') or best_plan['model'])} ({e(shown_resolution(best_plan))}, {e(guide_tables.audio_label(g, best_plan))}), checked {e(checked_pt(best_plan.get('checked')))}.</li>
+<li><b>Individual list &amp; current annual plans.</b> Starter {money(starter_m)}/mo ({starter_c:,} credits); Plus {money(plus_m)}/mo monthly ({money(pa)}/mo annual, {plus_c:,} credits); Ultra 3K {money(ultra_m)}/mo monthly ({money(ua)}/mo annual, {ultra_c:,} credits).</li>
+<li><b>Black Friday sale status.</b> {e(deal_copy.hf_sale_sentence(st))}</li>
+<li><b>Unlimited bonuses.</b> Apply only on higgsfield.ai (never MCP/CLI, Canvas, or Supercomputer) and only while the paid plan stays active.</li>
+</ul>
+</div>"""
+
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Higgsfield pricing</p>
 <h1>{e(PHRASE)}</h1>
 <p class="lead">{lead}</p>
 {g["checked_line"]()}
 <p>Related: <a href="{root("/guides/higgsfield-black-friday/")}">Higgsfield Black Friday 2026: what you save per second</a> · <a href="{root("/guides/is-higgsfield-worth-it/")}">Is Higgsfield worth it?</a> · <a href="{root("/guides/seedance-2-5-unlimited/")}">Unlimited Seedance 2.5 plans compared</a> · <a href="{root("/guides/kling-ai-pricing/")}">Kling AI pricing and credits</a> · <a href="{root("/calculator/")}">credit calculator</a>.</p>
+{takeaways}
+
+<h2>Higgsfield catalog per-second prices</h2>
+<p>Every Higgsfield plan row in data/prices.json, sorted cheapest first, split by resolution and audio, with plan, tier, usage assumption, and source. Affiliate links never change this price order.</p>
+{cat_table}
 
 <h2>{e(q1)}</h2>
 <p>{e(a1)} Sources: {src(HF_PRICING, "higgsfield.ai/pricing")} (Individual Annual / Monthly and Business tabs, re-read {checked_pt(BF_CHECKED)}), the public plans API that page loads, and {src(HELP_PLANS, "How do Higgsfield plans work?")}.</p>
@@ -531,8 +587,7 @@ def render(g):
 <p>{e(a2)} Source: the Video category of the compare table on {src(HF_PRICING, "higgsfield.ai/pricing")}, from the compare API that page loads, checked {checked_pt(CHECKED)}.</p>
 <h2>{e(q_credits_how)}</h2>
 <p>{e(a_credits_how)} Sources: {src(HELP_CREDITS, "How do credits work?")}, {src(HELP_EXPIRE, "Do my top-up credits expire, and what happens if I cancel?")}, and {src(HELP_PACKS, "How do Credit Packs work?")}, re-read {e(checked_pt(POLICY_CHECKED))}. Current sale prices for paid plans are in the plan table above and on the <a href="{root("/deals/")}">live deals page</a>; they are not repeated here.</p>
-<p>The catalog already converts those official (or official-estimate) credit figures into $/s for Starter, Plus, and Ultra 3K, using each plan’s dollars and credits and assuming every paid credit is used. Those tracked rates are below, with a 10-second total only when the official unit is 5 seconds.</p>
-{cat_table}
+<p>The catalog already converts those official (or official-estimate) credit figures into $/s for Starter, Plus, and Ultra 3K in the <a href="#prices">dated Higgsfield per-second table at the top of this guide</a>, using each plan’s dollars and credits and assuming every paid credit is used.</p>
 <p>Seedance 2.5 and Grok are on the official compare table but do not have Higgsfield plan rows in the catalog (Seedance 2.5 on plans was left out of earlier guides for the same reason; Grok Video has no stated resolution). The next table applies the same credit-use math to the official credits and to the Starter / Plus / Ultra 3K catalog plan prices, {e(derived_tail)} These derived figures are not catalog rows.</p>
 {der_table}
 <p class="small">Kling 3.0 720p and 1080p stay catalog estimates: the compare table labels them “~7” and “~8” credits/5s, while the same table’s annual video counts divide to 7.5 and about 8.75. No existing catalog dollar amount was changed.</p>
@@ -558,14 +613,13 @@ def render(g):
 <p>{e(a_cancel)} The official menu labels are “Subscription,” “Manage Subscription,” and “Cancel Subscription.” Source: {src(HELP_CANCEL, "How do I cancel my subscription?")}, re-read {e(checked_pt(POLICY_CHECKED))}. Team, Scale, and Enterprise plans are cancelled by the workspace Owner from Organization settings, per that article. Canceling and refunding are separate actions.</p>
 
 <h2>{e(q_free)}</h2>
-<p>{e(a_free)} Source: {src(HELP_FREE, "What does the Higgsfield free plan include?")}, re-read {e(checked_pt(POLICY_CHECKED))}.<!-- Future guide: /guides/is-higgsfield-free/ --></p>
+<p>{e(a_free)} Source: {src(HELP_FREE, "What does the Higgsfield free plan include?")}, re-read {e(checked_pt(POLICY_CHECKED))}.</p>
 
-<h2>What is confirmed, and what is not</h2>
-<p><b>Confirmed {e(BF_CHECKED_WHEN)} on Higgsfield’s own pricing page and pricing.md:</b> the plan prices in the table above, the business seat prices, the Black Friday sale status and the end time in its sale record ({e(sale_status)}), and the Wan 3.0 credits per clip. Other credits per clip in the compare table were checked {checked_pt(CHECKED)}. The 11.11 sale ended at {SALE_ENDS_UTC} ({SALE_ENDS_PT}). Catalog dollar-per-second rows use the plan prices last checked {LAST}. Higgsfield API “from” list prices were last checked {checked_pt(CHECKED)}.</p>
+<h2>{e(q_unknown)}</h2>
+<p>{e(a_unknown)}</p>
+<p><b>Confirmed {e(BF_CHECKED_WHEN)} on Higgsfield’s own pricing page and pricing.md:</b> the plan prices in the table above, the business seat prices, the Black Friday sale status and the end time in its sale record ({e(sale_status)}), and the Wan 3.0 credits per clip. Other credits per clip in the compare table were checked {checked_pt(CHECKED)}. The 11.11 sale ended at {SALE_ENDS_PT}. Catalog dollar-per-second rows use the plan prices last checked {LAST}. Higgsfield API “from” list prices were last checked {checked_pt(CHECKED)}.</p>
 <p><b>Unknown:</b> tax-inclusive checkout totals; {e(unknown_sale)}when the “Unlimited models for 7 days” window starts; the five unnamed “other” unlimited models on the Plus/Ultra cards; a published credit cost or Higgsfield plan $/s for Gemini Omni Flash or Runway Gen-4; the resolution of “Grok Video”; credit-pack list prices; a failed-generation refund rule for plan credits. Invented figures are not shown for those gaps.</p>
 
-<h2>{e(q5)}</h2>
-<p>{e(a5)}</p>
 {g["how_block"]()}
 """
 

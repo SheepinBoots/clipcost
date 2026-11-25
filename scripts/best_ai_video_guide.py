@@ -1,3 +1,4 @@
+import guide_tables
 """Guide: Best AI video generator by value.
 
 Imported by scripts/build_site.py. Quality scores were read from
@@ -158,11 +159,12 @@ def paid_phrase(g, r):
     rate = rate_money(r["usd_per_second"]) + "/s"
     status = g["rate_label"](r)
     plat = r.get("platform") or "not stated"
+    plan = guide_tables.plan_label(r)
+    tier = g["shown_tier"](r)
     variant = r.get("variant") or r.get("model") or "model not stated"
     res = g["shown_resolution"](r)
     audio = g["audio_phrase"](r)
-    kind = "plan" if r.get("kind") == "plan" else "API"
-    return f"{rate} {status} · {plat} {kind} · {variant} · {res} · {audio}"
+    return f"{rate} {status} · {plat} · plan: {plan} · tier: {tier} · {variant} · {res} · {audio}"
 
 
 def elo_phrase(score):
@@ -186,9 +188,10 @@ def blurb(g):
 
 
 def description(g):
+    last = __import__("timefmt").day_label(g.get("LAST") or CHECKED)
     text = (
         "Nine models compared on Artificial Analysis Elo and our cost per second, "
-        "with resolution, length, and audio. Last checked Nov 16, 2026."
+        f"with resolution, length, and audio. Last checked {last}."
     )
     if len(text) > 160:
         raise SystemExit(f"{PATH} meta description is over 160 characters: {len(text)}")
@@ -201,20 +204,46 @@ def render(g):
     outbound = g["outbound"]
     rows = g["rows"]
 
-    dates = [CHECKED, LAST]
-    ids = (
-        ROW_WAN, ROW_PRIME, ROW_KLING, ROW_SEEDANCE, ROW_VEO, ROW_OMNI,
-        ROW_HAILUO, ROW_HAILUO_PLAN, ROW_GROK, ROW_RUNWAY,
-    )
-    found = {}
-    for rid in ids:
-        r = row_by_id(rows, rid)
-        if r is None:
-            raise SystemExit(f"{PATH} missing catalog row {rid}")
-        found[rid] = r
-        if r.get("checked"):
-            dates.append(r["checked"])
+    def pick_model(slug, fallback_id=None):
+        rs = guide_tables.active_rows(g, model=slug)
+        if fallback_id:
+            exact = [r for r in rs if r["id"] == fallback_id]
+            if exact:
+                return exact[0]
+        return rs[0] if rs else row_by_id(rows, fallback_id)
+
+    paid_picks = guide_tables.cheapest_by_model(g)
+    by_slug = {r["model"]: r for r in paid_picks}
+    hailuo_h3 = pick_model("minimax-hailuo", ROW_HAILUO)
+    hailuo_plan = by_slug.get("minimax-hailuo") or pick_model("minimax-hailuo", ROW_HAILUO_PLAN)
+    cost_picks = {
+        "wan-3-0": by_slug.get("wan-3-0") or pick_model("wan-3-0", ROW_WAN),
+        "wan-3-0-prime": by_slug.get("wan-3-0-prime") or pick_model("wan-3-0-prime", ROW_PRIME),
+        "kling-3-0": by_slug.get("kling-3-0") or pick_model("kling-3-0", ROW_KLING),
+        "seedance-2-5": by_slug.get("seedance-2-5") or pick_model("seedance-2-5", ROW_SEEDANCE),
+        "veo-3-1": by_slug.get("veo-3-1") or pick_model("veo-3-1", ROW_VEO),
+        "gemini-omni-flash": by_slug.get("gemini-omni-flash") or pick_model("gemini-omni-flash", ROW_OMNI),
+        "minimax-hailuo": hailuo_h3,
+        "runway-gen-4": by_slug.get("runway-gen-4") or pick_model("runway-gen-4", ROW_RUNWAY),
+        "grok-imagine": by_slug.get("grok-imagine") or pick_model("grok-imagine", ROW_GROK),
+    }
+    found = {
+        ROW_WAN: cost_picks["wan-3-0"],
+        ROW_PRIME: cost_picks["wan-3-0-prime"],
+        ROW_KLING: cost_picks["kling-3-0"],
+        ROW_SEEDANCE: cost_picks["seedance-2-5"],
+        ROW_VEO: cost_picks["veo-3-1"],
+        ROW_OMNI: cost_picks["gemini-omni-flash"],
+        ROW_HAILUO: hailuo_h3,
+        ROW_HAILUO_PLAN: hailuo_plan,
+        ROW_GROK: cost_picks["grok-imagine"],
+        ROW_RUNWAY: cost_picks["runway-gen-4"],
+    }
+    row_dates = [r["checked"] for r in list(cost_picks.values()) + [hailuo_plan] if r and r.get("checked")]
+    dates = [CHECKED, LAST] + row_dates
     g["SITEMAP_LASTMOD"][PATH] = max(dates)
+    rows_checked = f"rows checked {max(row_dates)}" if row_dates else "row check dates not stored"
+    paid_table = guide_tables.price_table(g, paid_picks, table_id="prices", include_model=True, min_width=1180)
 
     def src(url, text="source"):
         return _src(g, url, text)
@@ -378,8 +407,9 @@ def render(g):
         "Dreamina Seedance 2.5 at 1156, and Gemini Omni Flash 1.2 at 1151 also have "
         "overlapping 95% intervals, so this site does not treat those four as a "
         "settled 1–2–3–4 finish. Wan 3.0 is also the cheapest of that high-Elo group "
-        f"in our catalog, at {rate_money(wan['usd_per_second'])}/s on a Higgsfield "
-        "Ultra annual plan at 480p, audio not stated, if you use every credit you "
+        f"in our catalog, at {rate_money(wan['usd_per_second'])}/s on {wan['platform']} "
+        f"({guide_tables.plan_label(wan)}, tier {g['shown_tier'](wan)}) at {g['shown_resolution'](wan)}, "
+        f"{guide_tables.audio_label(g, wan)}, if you use every credit you "
         "pay for. If you only want the lowest dollar figure, use the cheapest-by-model "
         "guide instead."
     )
@@ -445,8 +475,18 @@ def render(g):
         "Gemini Omni Flash is listed at up to 10 seconds for all users, and up to 15 seconds on Google AI Plus, Pro, and Ultra, from that same Nov 16 Flow-help citation. "
         "Official maximum clip lengths for Kling 3.0, MiniMax Hailuo, and Runway Gen-4 were not printed on the vendor pages used for that table."
     )
+    q_prices = "What is the cheapest per-second price for each covered model?"
+    cheapest_all = paid_picks[0]
+    a_prices = (
+        f"Every dollar-per-second figure in the table below comes from data/prices.json ({rows_checked}), "
+        f"sorted cheapest first. The lowest rate we track is {rate_money(cheapest_all['usd_per_second'])}/s "
+        f"for {names[cheapest_all['model']]} on {cheapest_all['platform']} ({guide_tables.plan_label(cheapest_all)}, "
+        f"tier {g['shown_tier'](cheapest_all)}, {g['shown_resolution'](cheapest_all)}, "
+        f"{guide_tables.audio_label(g, cheapest_all)}), {g['rate_label'](cheapest_all)}."
+    )
     faqs = [
         (QUESTION, a_best),
+        (q_prices, a_prices),
         ("How do you measure quality?", a_quality),
         ("How do you measure cost?", a_cost),
         ("Which model is best for each use?", a_use),
@@ -474,7 +514,22 @@ def render(g):
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Best AI video generator</p>
 <h1>{e(PHRASE)}</h1>
 <p class="lead">{lead}</p>
-<p class="small">Last checked {e(LAST)}. Official quality scores were read {e(CHECKED_WHEN)}. Catalog paid-step rows use the date on each row. Affiliate links never change this price order. Every dollar-per-second figure below states its usage assumption, tier, resolution, and audio.</p>
+<p class="small">Last checked {e(LAST)}. Official quality scores were read {e(CHECKED_WHEN)}. Catalog paid-step rows use the date on each row. Affiliate links never change this price order. Every dollar-per-second figure below states its seller, plan, tier, resolution, audio, usage assumption, and source.</p>
+
+<div class="card" id="takeaways">
+<h2>Key takeaways</h2>
+<ul>
+<li><b>Top T2V Elo &amp; value.</b> <a href="{e(model_hrefs['wan-3-0'])}">Wan 3.0</a> leads AA-Video-T2V v2.1 at 1174 ±13 and costs {e(rate_money(wan['usd_per_second']))}/s on {e(wan['platform'])} ({e(guide_tables.plan_label(wan))}, {e(g['shown_resolution'](wan))}, {e(guide_tables.audio_label(g, wan))}).</li>
+<li><b>Top I2V Elo.</b> <a href="{e(model_hrefs['seedance-2-5'])}">Seedance 2.5</a> leads AA-Video-I2V v2.1 at 1161 ±15, from {e(rate_money(seedance['usd_per_second']))}/s on {e(seedance['platform'])} ({e(g['shown_resolution'](seedance))}, {e(guide_tables.audio_label(g, seedance))}).</li>
+<li><b>Cheapest catalog rate overall.</b> {e(rate_money(cheapest_all['usd_per_second']))}/s for {e(names[cheapest_all['model']])} on {e(cheapest_all['platform'])} ({e(guide_tables.plan_label(cheapest_all))}, {e(g['shown_resolution'](cheapest_all))}, {e(guide_tables.audio_label(g, cheapest_all))}), checked {e(__import__("timefmt").day_label(cheapest_all.get("checked")))}.</li>
+<li><b>Unranked on quality.</b> Runway Gen-4 and Wan 3.0 Prime were absent from the AA boards opened Nov 16, 2026, so quality stays unknown.</li>
+</ul>
+</div>
+
+<h2>{e(q_prices)}</h2>
+<p>{e(a_prices)}</p>
+{paid_table}
+<p class="small">Every row above comes from data/prices.json, sorted by dollars per second. Affiliate links never change this price order.</p>
 
 <h2>{e(QUESTION)}</h2>
 <p>{e(a_best)}</p>
@@ -507,7 +562,7 @@ def render(g):
 
 <h2>What is confirmed, and what is not?</h2>
 <p>{e(a_unknown)}</p>
-<p><b>Confirmed {e(CHECKED_WHEN)} on Artificial Analysis:</b> the Elo figures, intervals, rank ranges, and sample counts in the table, from {t2v_src} and {i2v_src}. <b>Confirmed in the catalog (rows last stored as checked 2026-11-15):</b> the paid-step $/s figures, each with its vendor URL, usage assumption, tier, resolution, and audio.</p>
+<p><b>Confirmed {e(CHECKED_WHEN)} on Artificial Analysis:</b> the Elo figures, intervals, rank ranges, and sample counts in the table, from {t2v_src} and {i2v_src}. <b>Confirmed in the catalog ({e(rows_checked)}):</b> the paid-step $/s figures, each with its vendor URL, usage assumption, tier, resolution, and audio.</p>
 <p class="small">Affiliate links never change this price order.</p>
 {g["how_block"]()}
 """

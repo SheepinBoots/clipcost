@@ -6,6 +6,8 @@ were read from docs.dev.runwayml.com/guides/pricing/ the same day and match
 data/prices.json for the cataloged Runway API rows.
 """
 from decimal import Decimal, ROUND_HALF_UP
+import deal_copy
+import guide_tables
 
 PATH = "/guides/runway-pricing/"
 LABEL = "Runway pricing"
@@ -135,9 +137,13 @@ def blurb(g):
 
 def description(g):
     last = g["LAST"]
+    official = [
+        r for r in g["rows"] if r.get("platform") == "Runway API" and r.get("id") == "r047"
+    ]
+    rate = g["rate_money"](official[0]["usd_per_second"]) if official else "$0.05"
     text = (
         "Runway Standard, Pro and Max plans, Gen-4.5 at 12 credits/s, official "
-        f"API rates from $0.05/s, and cheaper catalog routes. Last checked {last}."
+        f"API rates from {rate}/s, and cheaper catalog routes. Last checked {last}."
     )
     if len(text) > 160:
         raise SystemExit(f"{PATH} meta description is over 160 characters: {len(text)}")
@@ -156,11 +162,21 @@ def render(g):
     assumption_html = g["assumption_html"]
 
     dates = [CHECKED]
-    runway_rows = [r for r in g["rows"] if r.get("platform") == "Runway API"]
-    gen4_rows = [r for r in g["rows"] if r.get("model") == "runway-gen-4"]
-    for r in runway_rows + gen4_rows:
+    runway_rows = guide_tables.active_rows(g, platform="Runway API")
+    gen4_rows = guide_tables.active_rows(g, model="runway-gen-4")
+    opening_map = {r["id"]: r for r in runway_rows + gen4_rows}
+    opening_rows = sorted(opening_map.values(), key=lambda r: (r["usd_per_second"], r["id"]))
+    for r in opening_rows:
         if r.get("checked"):
             dates.append(r["checked"])
+    api_checked_dates = sorted({r["checked"] for r in runway_rows if r.get("checked")})
+    api_checked_label = (
+        checked_pt(api_checked_dates[0])
+        if len(api_checked_dates) == 1
+        else f"{checked_pt(api_checked_dates[0])} to {checked_pt(api_checked_dates[-1])}"
+        if api_checked_dates
+        else checked_pt(CHECKED)
+    )
     g["SITEMAP_LASTMOD"][PATH] = max(dates)
 
     def src(url, text="source"):
@@ -212,6 +228,7 @@ def render(g):
             f'<td class="num">{cred_txt}</td>'
             f'<td class="num">{rate_txt}</td>'
             f"<td>{e(note)}</td>"
+            f'<td class="small">{src(RUNWAY_PLANS, "source")}, checked {e(checked_pt(CHECKED))}</td>'
             "</tr>"
         )
     # Team rows
@@ -227,16 +244,18 @@ def render(g):
             f'<td class="num">{TEAM_CREDITS:,}/mo</td>'
             f'<td class="num">{rate_txt}</td>'
             "<td>2–9 seats; unused credits roll over 1 month</td>"
+            f'<td class="small">{src(TEAM_PLAN, "source")}, checked {e(checked_pt(CHECKED))}</td>'
             "</tr>"
         )
     plan_table = (
         '<div class="tblwrap fit"><table><thead><tr>'
         "<th>Plan</th><th>Billing</th><th>List / month</th><th>Price shown</th>"
-        "<th>Credits</th><th>Effective $ / credit</th><th>Notes</th>"
+        "<th>Credits</th><th>Effective $ / credit</th><th>Notes</th><th>Source and date checked</th>"
         "</tr></thead><tbody>" + "".join(plan_body) + "</tbody></table></div>"
     )
 
     # --- consumer credits table ---
+    kling4_live = deal_copy.is_live(g, "runway-kling4-25")
     cred_body = []
     for name, credits, seconds, audio, res, promo, promo_note in CONSUMER_VIDEO:
         per_s = Decimal(credits) / Decimal(seconds)
@@ -244,10 +263,13 @@ def render(g):
         promo_txt = "—"
         if promo is not None:
             promo_s = Decimal(promo) / Decimal(seconds)
-            promo_txt = (
-                f"{promo} credits / {seconds}s "
-                f"({f'{promo_s:.2f}'.rstrip('0').rstrip('.')} credits/s). {promo_note}"
-            )
+            if kling4_live:
+                promo_txt = (
+                    f"{promo} credits / {seconds}s "
+                    f"({f'{promo_s:.2f}'.rstrip('0').rstrip('.')} credits/s). {promo_note}"
+                )
+            else:
+                promo_txt = f"Ended ({promo_note})"
         cred_body.append(
             "<tr>"
             f"<td>{e(name)}</td>"
@@ -256,12 +278,13 @@ def render(g):
             f'<td class="num">{credits} credits / {seconds}s</td>'
             f'<td class="num">{per_s_txt} credits/s</td>'
             f"<td>{e(promo_txt)}</td>"
+            f'<td class="small">{src(RUNWAY_PLANS, "source")}, checked {e(checked_pt(CHECKED))}</td>'
             "</tr>"
         )
     cred_table = (
         '<div class="tblwrap fit"><table><thead><tr>'
         "<th>Model (as labeled)</th><th>Res</th><th>Audio</th>"
-        "<th>Published clip</th><th>Credits / s</th><th>Promo, if any</th>"
+        "<th>Published clip</th><th>Credits / s</th><th>Promo, if any</th><th>Source and date checked</th>"
         "</tr></thead><tbody>" + "".join(cred_body) + "</tbody></table></div>"
     )
 
@@ -326,23 +349,24 @@ def render(g):
     api_turbo = next(r for r in runway_rows if r["id"] == "r047")
     api_gen45 = next(r for r in runway_rows if r["id"] == "r046")
 
+    opening_table = guide_tables.price_table(
+        g, opening_rows, table_id="prices", include_model=True, include_10s=True, min_width=1200
+    )
+
     # --- official API catalog table ---
     api_body = []
     for r in sorted(runway_rows, key=lambda r: (r["usd_per_second"], r["id"])):
-        audio = r.get("audio")
-        if audio is True:
-            audio_txt = "with audio"
-        elif audio is False:
-            audio_txt = "without audio"
-        else:
-            audio_txt = "not stated"
+        audio_txt = guide_tables.audio_label(g, r)
         res = shown_resolution(r)
         api_body.append(
             "<tr>"
+            f'<td>{plat_link(r["platform"], r["source_url"])}</td>'
+            f'<td>{e(guide_tables.plan_label(r))}</td>'
+            f'<td>{e(g["shown_tier"](r))}</td>'
             f"<td>{e(r.get('variant') or r['model'])}</td>"
             f"<td>{e(res)}</td>"
             f"<td>{e(audio_txt)}</td>"
-            f'<td class="num">{rate_money(r["usd_per_second"])}/s</td>'
+            f'<td class="num"><span class="amt">{rate_money(r["usd_per_second"])}/s</span></td>'
             f'<td class="num">{cost_money(Decimal(str(r["usd_per_second"])) * 10)}</td>'
             f"<td>{tag(r)}{deal_badges(r)}</td>"
             f'<td class="small">{row_source(r)}</td>'
@@ -350,8 +374,8 @@ def render(g):
         )
     api_table = (
         '<div class="tblwrap fit"><table><thead><tr>'
-        "<th>Official API variant</th><th>Res / tier</th><th>Audio</th>"
-        "<th>$/s</th><th>Per 10s</th><th>Status</th><th>Source</th>"
+        "<th>Seller</th><th>Plan</th><th>Tier</th><th>Official API variant</th><th>Resolution</th><th>Audio</th>"
+        "<th>$ / sec</th><th>Per 10s</th><th>Status</th><th>Source and date checked</th>"
         "</tr></thead><tbody>" + "".join(api_body) + "</tbody></table></div>"
     )
 
@@ -360,29 +384,22 @@ def render(g):
     cmp_body = []
     model_slugs = sorted({r["model"] for r in runway_rows}, key=lambda s: models.get(s, {}).get("name") or s)
     for slug in model_slugs:
-        all_rows = [r for r in g["rows"] if r.get("model") == slug]
+        all_rows = guide_tables.active_rows(g, model=slug)
         run_rows = [r for r in all_rows if r.get("platform") == "Runway API"]
-        cheapest = sorted(all_rows, key=lambda r: (r["usd_per_second"], r["id"]))[0]
-        cheapest_run = sorted(run_rows, key=lambda r: (r["usd_per_second"], r["id"]))[0]
+        cheapest = all_rows[0]
+        cheapest_run = run_rows[0]
         beat = cheapest["id"] != cheapest_run["id"] and cheapest["usd_per_second"] < cheapest_run["usd_per_second"]
 
         def cell(r):
             platform = plat_link(r["platform"], r["source_url"])
-            audio = r.get("audio")
-            if audio is True:
-                audio_txt = "with audio"
-            elif audio is False:
-                audio_txt = "without audio"
-            else:
-                audio_txt = "not stated"
-            kind = "API" if r.get("kind") == "api" else "credit plan"
-            plan = r.get("plan_name") or ""
+            audio_txt = guide_tables.audio_label(g, r)
+            plan = guide_tables.plan_label(r)
+            tier = g["shown_tier"](r)
             variant = r.get("variant") or ""
-            label = variant if not plan else f"{variant} · {plan}"
             return (
-                f"{platform}<br><span class=\"small\">{e(label)} · {e(kind)} · "
+                f'{platform}<br><span class="small">{e(variant)} · plan: {e(plan)} · tier: {e(tier)} · '
                 f"{e(shown_resolution(r))} · {e(audio_txt)}</span><br>"
-                f'<span class="num">{rate_money(r["usd_per_second"])}/s</span> '
+                f'<span class="num"><span class="amt">{rate_money(r["usd_per_second"])}/s</span></span> '
                 f"{tag(r)}{deal_badges(r)}<br>"
                 f'<span class="small">{row_source(r)}</span>'
             )
@@ -455,10 +472,14 @@ def render(g):
         "in the session. A dollar cost per second cannot be computed for generations in that mode, "
         "because they are not billed in credits."
     )
+    cheapest_gen4 = min(gen4_rows, key=lambda r: (r["usd_per_second"], r["id"]))
     q_cheaper = "When is a route elsewhere cheaper?"
     a_cheaper = (
-        f"For Runway's own Gen-4.5, the cheapest catalog row is a Krea yearly credit-plan estimate "
-        f"(resolution not stated; it assumes Krea’s approximate clip count and every credit used), which undercuts the official API's {rate_money(api_gen45['usd_per_second'])}/s. "
+        f"For Runway's own Gen-4, the cheapest catalog row is {rate_money(cheapest_gen4['usd_per_second'])}/s on "
+        f"{cheapest_gen4['platform']} ({guide_tables.plan_label(cheapest_gen4)}, tier {g['shown_tier'](cheapest_gen4)}, "
+        f"{shown_resolution(cheapest_gen4)}, {guide_tables.audio_label(g, cheapest_gen4)}), "
+        f"compared with the official API's {rate_money(api_gen45['usd_per_second'])}/s for Gen-4.5 "
+        f"(and {rate_money(api_turbo['usd_per_second'])}/s for Gen-4 Turbo). "
         f"Gen-4 Turbo's cheapest catalog row is the official Runway API at "
         f"{rate_money(api_turbo['usd_per_second'])}/s; we do not track a cheaper Turbo route. "
         "For models Runway also resells, including Kling 3.0, Wan 3.0, Seedance 2.5, Veo 3.1, "
@@ -474,8 +495,7 @@ def render(g):
         "credit rates, official API credit rates including Gen-4.5, Gen-4 Turbo, Aleph 2.0, and "
         "Veo 3.1, the $0.01 API credit price, and the help-center description of the legacy "
         "Unlimited plan, Explore Mode, the November 30, 2026 move to Max, and Unlimited Mode on "
-        "Pro and Max. Confirmed in the catalog (rows checked 2026-11-14, and the official API "
-        "document re-read Nov 15, 2026): every Runway API $/s row in the API table. Unknown: the public "
+        "Pro and Max. Confirmed in the catalog (Runway API rows checked {api_checked_label}): every Runway API $/s row in the API table. Unknown: the public "
         "dollar price of consumer credit packs (the page says the minimum purchase is 1,000 credits "
         "but does not list a price); which models the Free plan includes; a Seedance 2.5 credit "
         "rate on the consumer compare table (the table lists Seedance 2.0 variants; Pro and Max "
@@ -523,14 +543,31 @@ def render(g):
         f"named Unlimited for new buyers. The official API, from {api_src}, charges $0.01 per "
         f"credit, or {rate_money(api_turbo['usd_per_second'])}/s for Gen-4 Turbo and "
         f"{rate_money(api_gen45['usd_per_second'])}/s for Gen-4.5. On Max billed yearly, Gen-4.5 "
-        f"is {rate_money(max_gen45)}/s if you use the month's credits. The cheapest Gen-4.5 row "
-        f"we track is a Krea yearly estimate, below that official API rate."
+        f"is {rate_money(max_gen45)}/s if you use the month's credits. In our catalog, "
+        f"Gen-4 Turbo starts at {rate_money(api_turbo['usd_per_second'])}/s on Runway API and "
+        f"Runway Gen-4 rows start at {rate_money(cheapest_gen4['usd_per_second'])}/s on "
+        f"{cheapest_gen4['platform']} ({guide_tables.plan_label(cheapest_gen4)})."
     )
+
+    takeaways = f"""<div class="card" id="takeaways">
+<h2>Key takeaways</h2>
+<ul>
+<li><b>Cheapest official Runway API rate.</b> {e(rate_money(api_turbo['usd_per_second']))}/s for Gen-4 Turbo ({e(shown_resolution(api_turbo))}, {e(guide_tables.audio_label(g, api_turbo))}), checked {e(checked_pt(api_turbo.get('checked') or CHECKED))}.</li>
+<li><b>Official Gen-4.5 API vs consumer Max yearly.</b> {e(rate_money(api_gen45['usd_per_second']))}/s on Runway API, or {e(rate_money(max_gen45))}/s on Max billed yearly ({usd(76)}/mo, 9,500 credits) if every credit is used.</li>
+<li><b>Cheapest Runway Gen-4 catalog row.</b> {e(rate_money(cheapest_gen4['usd_per_second']))}/s on {e(cheapest_gen4['platform'])} ({e(guide_tables.plan_label(cheapest_gen4))}, tier {e(g['shown_tier'](cheapest_gen4))}, {e(shown_resolution(cheapest_gen4))}), checked {e(checked_pt(cheapest_gen4.get('checked') or CHECKED))}.</li>
+<li><b>Free plan &amp; Unlimited mode.</b> Free gives 125 one-time credits ({usd(0)}). Legacy Unlimited moved to Max ($95/mo) after Nov 30, 2026; Unlimited Mode is a non-credit mode on Pro and Max.</li>
+</ul>
+</div>"""
 
     body = f"""<p class="small"><a href="{root("/guides/")}">Guides</a> › Runway pricing</p>
 <h1>{e(PHRASE)}</h1>
 <p class="lead">{lead}</p>
 <p class="small">Last checked {e(LAST)}. Official plan, compare-table, API, and help-center figures were read {e(checked_pt(CHECKED))}. Catalog rows below use the date on each row. See the <a href="{e(model_href)}">Runway Gen-4 model page</a> and the <a href="{e(calc_href)}">credit calculator for a 10-second Runway Gen-4 clip</a>.</p>
+{takeaways}
+
+<h2>Runway Gen-4 and Runway API per-second prices</h2>
+<p>Every Runway Gen-4 and Runway API row in data/prices.json, sorted cheapest first, split by resolution and audio, with seller, plan, tier, usage assumption, and source. Affiliate links never change this price order.</p>
+{opening_table}
 
 <h2>{e(QUESTION)}</h2>
 <p>{e(a_plans)}</p>
@@ -544,14 +581,14 @@ def render(g):
 <p>{e(a_credits)} The dollar columns assume a 10-second clip is billed at the same credits-per-second rate as the published clip (5 seconds for most models, 4 seconds for Seedance 2.0, 8 seconds for Veo). If a model does not actually allow a 10-second output, that 10-second total would not apply.</p>
 <h3>Published credits per clip</h3>
 {cred_table}
-<p class="small">Kling 4.0's 25% off is the rate printed on the compare table, through November 30, 2026. Grok Imagine 1.5 is printed as 81 credits per 5 seconds (16.2 credits/s). The official API lists Grok Imagine 1.5 at 16 credits/s at 720p, plus 1 credit per image or audio reference; this guide does not treat those two figures as the same rate.</p>
+<p class="small">Kling 4.0's 25% off promo (through November 30, 2026): {'live' if kling4_live else 'ended'} per data/deals.json. Grok Imagine 1.5 is printed as 81 credits per 5 seconds (16.2 credits/s). The official API lists Grok Imagine 1.5 at 16 credits/s at 720p, plus 1 credit per image or audio reference; this guide does not treat those two figures as the same rate.</p>
 <p class="small">The Standard and Pro plan cards say 625 credits equal 104 seconds of Gen-4 Turbo, and 2,250 credits equal 375 seconds. Those second counts only match a 6 credit/s rate. The compare table on the same page lists Gen-4 Video Turbo at 25 credits per 5 seconds (5 credits/s), and the Max card's 1,900 seconds of Gen-4 Turbo with 9,500 credits also matches 5 credits/s. Dollar figures in this guide use the compare table, not those Standard and Pro second counts.</p>
 <h3>Dollar cost on each paid individual plan</h3>
 {dollar_table}
 <p>Team at {usd(TEAM_YEARLY)} per seat per month billed yearly is {usd(credit_cost(TEAM_YEARLY, TEAM_CREDITS), 4)}/credit, or {rate_money(team_gen45)}/s for Gen-4.5 and {rate_money((Decimal(25)/Decimal(5))*team_year_rate)}/s for Gen-4 Video Turbo, with the same usage assumption. Team monthly at {usd(TEAM_MONTHLY)} per seat is {usd(credit_cost(TEAM_MONTHLY, TEAM_CREDITS), 4)}/credit, the same as Max monthly and the official API.</p>
 
 <h2>{e(q_api)}</h2>
-<p>{e(a_api)} The API tab on the marketing pricing page says video starts from {usd(0.05)}/sec, which matches Gen-4 Turbo at 5 credits/s. {api_src}.</p>
+<p>{e(a_api)} The API tab on the marketing pricing page says video starts from {rate_money(api_turbo['usd_per_second'])}/sec, which matches Gen-4 Turbo at 5 credits/s. {api_src}.</p>
 {api_table}
 <p>The official API document also lists models that are not separate rows in this catalog, including Aleph 2.0 at 28 credits/s (56-credit minimum), Act-Two at 5 credits/s, and several Kling 4, Seedance 2.0, and Gemini Omni Flash 1.2 variants. Those dollar figures are $0.01 times the published credits, and they are not ranked in the catalog table above.</p>
 
@@ -576,7 +613,7 @@ def render(g):
 <h2>{e(q_unknown)}</h2>
 <p>{e(a_unknown)}</p>
 <p><b>Confirmed {e(checked_pt(CHECKED))} on official Runway pages:</b> the plan prices, credits, consumer clip rates, official API rates, the $0.01 API credit price, and the help-center account of the legacy Unlimited plan, Explore Mode, the November 30, 2026 move to Max, and Unlimited Mode on Pro and Max.</p>
-<p><b>Confirmed in the catalog:</b> every Runway API $/s row in the API table, each with its vendor URL. Those rows were last stored as checked 2026-11-14 and matched the official API document again on Nov 15, 2026.</p>
+<p><b>Confirmed in the catalog:</b> every Runway API $/s row in the API table, each with its vendor URL and check date ({e(api_checked_label)}).</p>
 <p class="small">Affiliate links never change this price order.</p>
 {g["how_block"]()}
 """
