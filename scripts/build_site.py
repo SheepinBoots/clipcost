@@ -60,6 +60,7 @@ GUIDE_LINKS = [
     ("/guides/grok-imagine-video-cost/", "Grok Imagine cost"),
     ("/guides/higgsfield-pricing/", "Higgsfield pricing"),
     ("/guides/kling-ai-pricing/", "Kling AI pricing"),
+    ("/guides/is-kling-ai-free/", "Is Kling AI free?"),
     ("/guides/runway-pricing/", "Runway pricing"),
     ("/guides/free-ai-video-generators/", "Free AI video generators"),
     ("/guides/free-ai-video-generator-no-sign-up/", "No sign-up"),
@@ -1633,6 +1634,7 @@ GUIDE_CRUMBS = {
     "/guides/grok-imagine-video-cost/": "Grok Imagine video cost",
     "/guides/higgsfield-pricing/": "Higgsfield pricing",
     "/guides/kling-ai-pricing/": "Kling AI pricing",
+    "/guides/is-kling-ai-free/": "Is Kling AI free?",
     "/guides/runway-pricing/": "Runway pricing",
     "/guides/free-ai-video-generators/": "Free AI video generators",
     "/guides/free-ai-video-generator-no-sign-up/": "No sign-up",
@@ -1696,6 +1698,7 @@ def guide_page(path, title, desc, body, faqs):
             ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/"),
             ("Higgsfield pricing explained", "/guides/higgsfield-pricing/"),
             ("Kling AI pricing and credits", "/guides/kling-ai-pricing/"),
+            ("Is Kling AI free?", "/guides/is-kling-ai-free/"),
             ("Runway pricing per second", "/guides/runway-pricing/"),
             ("Free AI video generators: what you get", "/guides/free-ai-video-generators/"),
             ("Which free AI video generators work with no sign-up?", "/guides/free-ai-video-generator-no-sign-up/"),
@@ -3698,6 +3701,7 @@ def write_llms():
         f"- [How much does a Grok Imagine video cost?]({SITE_URL}/guides/grok-imagine-video-cost/): {grok_imagine_blurb()}",
         f"- [Higgsfield pricing explained]({SITE_URL}/guides/higgsfield-pricing/): {hf_pricing_blurb()}",
         f"- [Kling AI pricing and credits]({SITE_URL}/guides/kling-ai-pricing/): {kling_pricing_blurb()}",
+        f"- [Is Kling AI free?]({SITE_URL}/guides/is-kling-ai-free/): {is_kling_free_blurb()}",
         f"- [Runway pricing per second]({SITE_URL}/guides/runway-pricing/): {runway_pricing_blurb()}",
         f"- [Free AI video generators: what you get]({SITE_URL}/guides/free-ai-video-generators/): {free_ai_video_blurb()}",
         f"- [Free AI video generators, no sign-up]({SITE_URL}/guides/free-ai-video-generator-no-sign-up/): {no_signup_blurb()}",
@@ -3773,6 +3777,9 @@ def hf_pricing_blurb():
 import kling_pricing_guide
 def kling_pricing_blurb():
     return kling_pricing_guide.blurb(globals())
+import is_kling_free_guide
+def is_kling_free_blurb():
+    return is_kling_free_guide.blurb(globals())
 import runway_pricing_guide
 def runway_pricing_blurb():
     return runway_pricing_guide.blurb(globals())
@@ -3825,6 +3832,8 @@ import hf_pricing_guide
 hf_pricing_guide.render(globals())
 import kling_pricing_guide
 kling_pricing_guide.render(globals())
+import is_kling_free_guide
+is_kling_free_guide.render(globals())
 import runway_pricing_guide
 runway_pricing_guide.render(globals())
 import free_ai_video_guide
