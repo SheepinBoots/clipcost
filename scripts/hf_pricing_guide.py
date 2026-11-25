@@ -29,7 +29,7 @@ CHECKED = "2026-11-13"
 SALE_ENDS_UTC = "2026-11-15T00:00:00Z"
 SALE_ENDS_PT = "Nov 14, 2026, 7:00 PM ET (4:00 PM PT)"
 BF_CHECKED = "2026-11-24"
-BF_CHECKED_WHEN = "Nov 24, 2026, 3:26 PM ET (12:26 PM PT)"
+BF_CHECKED_WHEN = "Nov 24, 2026, 7:25 PM ET (4:25 PM PT)"
 from timefmt import et_pt  # noqa: E402,F401
 import deal_copy  # noqa: E402
 

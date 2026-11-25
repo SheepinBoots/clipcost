@@ -1820,7 +1820,7 @@
    "tiers": {
     "any": {
      "models_priced": 9,
-     "median_usd_per_second": 0.02222,
+     "median_usd_per_second": 0.0225,
      "cheapest_usd_per_second": 0.01125,
      "cheapest_model": "wan-3-0",
      "cheapest_platform": "Higgsfield",
@@ -1838,12 +1838,12 @@
     },
     "720p": {
      "models_priced": 7,
-     "median_usd_per_second": 0.03,
-     "cheapest_usd_per_second": 0.02222,
-     "cheapest_model": "veo-3-1",
-     "cheapest_platform": "Krea",
+     "median_usd_per_second": 0.04125,
+     "cheapest_usd_per_second": 0.0225,
+     "cheapest_model": "wan-3-0",
+     "cheapest_platform": "Higgsfield",
      "cheapest_resolution": "720p",
-     "cheapest_row_id": "r146"
+     "cheapest_row_id": "r101"
     },
     "1080p": {
      "models_priced": 7,
@@ -5061,10 +5061,10 @@
    "date": "2026-11-24",
    "model": "veo-3-1",
    "model_name": "Veo 3.1",
-   "usd_per_second": 0.02222,
-   "platform": "Krea",
+   "usd_per_second": 0.06,
+   "platform": "Higgsfield",
    "resolution": "720p",
-   "row_id": "r146",
+   "row_id": "r127",
    "status": "estimate"
   },
   {

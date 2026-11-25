@@ -13,6 +13,7 @@
 <header class="top"><div class="wrap"><a class="logo" href="/">Vid<span>Fare</span></a><nav><a href="/">Prices</a><a href="/deals/">Deals</a><a href="/calculator/">Credit calculator</a><a href="/guides/">Guides</a><a href="/changes/">Price changes</a><a href="/data/" class=on>Data</a><a href="/reports/">Reports</a><a href="/about/">About</a></nav></div></header>
 <main class="wrap"><h1>Price data</h1>
 <p class="lead">The prices on VidFare are a public JSON file. You can read it from a script or an AI agent. You do not need an account or a key.</p>
+<aside class="sponsor sponsor-box sponsor-house" data-sponsor="page:data"><a class="sponsor-hit" href="/advertise/" data-vf-sponsor="house-page-data"><span class="sponsor-label">This spot is open</span><span class="sponsor-copy"><strong class="sponsor-name">Advertise on VidFare</strong><span class="sponsor-line">Reach people who are comparing AI video prices.</span></span><span class="sponsor-cta">Advertise here</span></a></aside>
 <h2>The file</h2>
 <p><a href="/data/prices.json" rel="nofollow">https://vidfare.com/data/prices.json</a></p>
 <p>CORS is already open, so a browser page on another site can fetch it. The daily price check reads the vendor pages and updates this file. <code>last_full_check</code> is the date of the last check that fetched every source. In the file published on Nov 24, 2026, that date is 2026-11-24.</p>
@@ -28,7 +29,7 @@
 <table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody><tr><td><code>min_seconds</code></td><td>Shortest clip the page allows, or not stated.</td></tr><tr><td><code>max_seconds</code></td><td>Longest clip the page allows, or not stated.</td></tr><tr><td><code>allowed_seconds</code></td><td>Clip lengths the page lists, or not stated.</td></tr><tr><td><code>priced_seconds</code></td><td>The clip length this credit price is for, or not stated.</td></tr><tr><td><code>rate_by_length</code></td><td>Per-second rates the page ties to particular lengths, or not stated.</td></tr></tbody></table>
 <h2>Models, plans, and sources</h2>
 <p>Model fields: <code>name</code>, <code>maker</code>.</p>
-<p>Plan fields: <code>platform</code>, <code>plan</code>, <code>usd_month</code>, <code>billing</code>, <code>credits_month</code>, <code>source</code>, <code>checks</code>, <code>checked</code>, <code>source_url</code>, <code>note</code>, <code>sale</code>, <code>credits_note</code>.</p>
+<p>Plan fields: <code>platform</code>, <code>plan</code>, <code>usd_month</code>, <code>billing</code>, <code>credits_month</code>, <code>source</code>, <code>checks</code>, <code>checked</code>, <code>source_url</code>, <code>note</code>, <code>units_period</code>, <code>units</code>, <code>units_label</code>, <code>calculator</code>, <code>sale</code>, <code>seedance_videos</code>, <code>card_note</code>, <code>credits_note</code>.</p>
 <p>Source fields: <code>name</code>, <code>url</code>, <code>fetch</code>, <code>ready</code>, <code>billing_json</code>, <code>next_flight</code>, <code>number_flow</code>, <code>krea_plans</code>, <code>note</code>.</p>
 <h2>Share a calculator link</h2>
 <p>Open <a href="/calculator/">/calculator/</a> with a query string. Unknown parameters are ignored. The model slug is the same one used on <a href="/models/">/models/&lt;slug&gt;/</a>.</p>

@@ -14,7 +14,7 @@ PHRASE = "Higgsfield promo code and current deals"
 import timefmt as _tf
 QUESTION = "Is there a Higgsfield promo code in " + _tf.us_today().strftime("%B %Y") + "?"
 CHECKED = "2026-11-24"
-CHECKED_WHEN = "Nov 24, 2026, 3:26 PM ET (12:26 PM PT)"
+CHECKED_WHEN = "Nov 24, 2026, 7:25 PM ET (4:25 PM PT)"
 RECHECK_WHEN = CHECKED_WHEN
 # Help center, changelog, and X posts were last read on this earlier check.
 EARLIER_WHEN = "Nov 19, 2026, 7:20 PM ET (4:20 PM PT)"

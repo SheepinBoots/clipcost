@@ -29,13 +29,13 @@
    "math": "plan_price",
    "variants": [],
    "start": "2026-11-23",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Plus $59 $30 /mo, billed yearly. −50%. Save $348. 1,200 credits / month.",
    "verified_date": "2026-11-24",
-   "notes": "Checked Nov 24, 2026, 3:26 PM ET (12:26 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_69 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-24T00:00:00Z, ends_at 2026-11-25T00:00:00Z, which is Nov 24, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-24, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-25 00:00 UTC.\" The banner reads \"BLACK FRIDAY 69% OFF\" with a countdown of about 3 h 34 min at Nov 24, 2026, 3:26 PM ET (12:26 PM PT). This follows the 63% phase (phase pre_black_friday_63), which ended 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)); the Nov 23 daily check marked that phase ended. Prices exclude VAT and local taxes. $/s uses $30 ÷ 1,200 credits.",
+   "notes": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z. Prices exclude VAT and local taxes. $/s uses $30 ÷ 1,200 credits.",
    "examples": [
     "Plus: $59 → $30/mo · Wan 3.0, Wan 3.0, 480p: $0.01875/s vs $0.03688/s (from credit plan)"
    ]
@@ -68,13 +68,13 @@
    "math": "plan_price",
    "variants": [],
    "start": "2026-11-23",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Plus: $40 for the first month on monthly billing, then $59/mo. 1,200 credits per month.",
    "verified_date": "2026-11-24",
-   "notes": "Checked Nov 24, 2026, 3:26 PM ET (12:26 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_69 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-24T00:00:00Z, ends_at 2026-11-25T00:00:00Z, which is Nov 24, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-24, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-25 00:00 UTC.\" The banner reads \"BLACK FRIDAY 69% OFF\" with a countdown of about 3 h 34 min at Nov 24, 2026, 3:26 PM ET (12:26 PM PT). This follows the 63% phase (phase pre_black_friday_63), which ended 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)); the Nov 23 daily check marked that phase ended. Prices exclude VAT and local taxes. Percent is computed from $40 vs $59; the source is pricing.md.",
+   "notes": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z. Prices exclude VAT and local taxes. Percent is computed from $40 vs $59; the source is pricing.md.",
    "examples": [
     "Plus: $59 → $40/mo · Wan 3.0, Wan 3.0, 480p: $0.025/s vs $0.03688/s (from credit plan) · 12-month blended $0.03589/s"
    ]
@@ -83,7 +83,7 @@
    "id": "hf-ultra-6k-annual",
    "vendor": "Higgsfield",
    "type": "plan_sale",
-   "title": "Black Friday: Ultra 6K annual billing, $258 to $83/mo",
+   "title": "Black Friday: Ultra 6K annual billing, $258 to $80/mo",
    "models": [],
    "plans": [
     "Ultra"
@@ -97,23 +97,23 @@
     "code": null,
     "standing": false
    },
-   "percent": 68,
+   "percent": 69,
    "bonus_credits": null,
    "price_before": 258,
-   "price_after": 83,
+   "price_after": 80,
    "price_pairs": null,
    "full_plan_id": null,
    "deal_plan_id": null,
    "math": "none",
    "variants": [],
    "start": "2026-11-23",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "Ultra, 6,000 credits per month: $83/mo billed annually ($996 per year) (list price $258/mo).",
+   "source_quote": "Ultra, 6,000 credits per month: $80/mo billed annually ($960 per year) (list price $258/mo).",
    "verified_date": "2026-11-24",
-   "notes": "Checked Nov 24, 2026, 3:26 PM ET (12:26 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_69 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-24T00:00:00Z, ends_at 2026-11-25T00:00:00Z, which is Nov 24, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-24, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-25 00:00 UTC.\" The banner reads \"BLACK FRIDAY 69% OFF\" with a countdown of about 3 h 34 min at Nov 24, 2026, 3:26 PM ET (12:26 PM PT). This follows the 63% phase (phase pre_black_friday_63), which ended 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)); the Nov 23 daily check marked that phase ended. Prices exclude VAT and local taxes. Percent is computed from $83 vs the $258 list in pricing.md.",
+   "notes": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z. The annual price fell from $83 to $80/mo in the extended phase. Prices exclude VAT and local taxes. Percent is computed from $83 vs the $258 list in pricing.md.",
    "examples": []
   },
   {
@@ -144,20 +144,20 @@
    "math": "none",
    "variants": [],
    "start": "2026-11-23",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Ultra, 6,000 credits per month: $140 for the first month on monthly billing, then $250/mo.",
    "verified_date": "2026-11-24",
-   "notes": "Checked Nov 24, 2026, 3:26 PM ET (12:26 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_69 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-24T00:00:00Z, ends_at 2026-11-25T00:00:00Z, which is Nov 24, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-24, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-25 00:00 UTC.\" The banner reads \"BLACK FRIDAY 69% OFF\" with a countdown of about 3 h 34 min at Nov 24, 2026, 3:26 PM ET (12:26 PM PT). This follows the 63% phase (phase pre_black_friday_63), which ended 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)); the Nov 23 daily check marked that phase ended. Prices exclude VAT and local taxes. Percent is computed from $140 vs $250.",
+   "notes": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z. Prices exclude VAT and local taxes. Percent is computed from $140 vs $250.",
    "examples": []
   },
   {
    "id": "hf-ultra-9k-annual",
    "vendor": "Higgsfield",
    "type": "plan_sale",
-   "title": "Black Friday: Ultra 9K annual billing, $387 to $117/mo",
+   "title": "Black Friday: Ultra 9K annual billing, $387 to $115/mo",
    "models": [],
    "plans": [
     "Ultra"
@@ -171,23 +171,23 @@
     "code": null,
     "standing": false
    },
-   "percent": 69,
+   "percent": 70,
    "bonus_credits": null,
    "price_before": 387,
-   "price_after": 117,
+   "price_after": 115,
    "price_pairs": null,
    "full_plan_id": null,
    "deal_plan_id": null,
    "math": "none",
    "variants": [],
    "start": "2026-11-23",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
-   "source_quote": "Ultra, 9,000 credits per month: $117/mo billed annually ($1,404 per year) (list price $387/mo).",
+   "source_quote": "Ultra, 9,000 credits per month: $115/mo billed annually ($1,380 per year) (list price $387/mo).",
    "verified_date": "2026-11-24",
-   "notes": "Checked Nov 24, 2026, 3:26 PM ET (12:26 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_69 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-24T00:00:00Z, ends_at 2026-11-25T00:00:00Z, which is Nov 24, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-24, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-25 00:00 UTC.\" The banner reads \"BLACK FRIDAY 69% OFF\" with a countdown of about 3 h 34 min at Nov 24, 2026, 3:26 PM ET (12:26 PM PT). This follows the 63% phase (phase pre_black_friday_63), which ended 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)); the Nov 23 daily check marked that phase ended. Prices exclude VAT and local taxes. The Ultra card's tier selector is labelled −69%.",
+   "notes": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z. The annual price fell from $117 to $115/mo in the extended phase. Prices exclude VAT and local taxes. The Ultra card's tier selector is labelled −69%.",
    "examples": []
   },
   {
@@ -218,13 +218,13 @@
    "math": "none",
    "variants": [],
    "start": "2026-11-23",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Ultra, 9,000 credits per month: $199 for the first month on monthly billing, then $375/mo.",
    "verified_date": "2026-11-24",
-   "notes": "Checked Nov 24, 2026, 3:26 PM ET (12:26 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_69 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-24T00:00:00Z, ends_at 2026-11-25T00:00:00Z, which is Nov 24, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-24, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-25 00:00 UTC.\" The banner reads \"BLACK FRIDAY 69% OFF\" with a countdown of about 3 h 34 min at Nov 24, 2026, 3:26 PM ET (12:26 PM PT). This follows the 63% phase (phase pre_black_friday_63), which ended 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)); the Nov 23 daily check marked that phase ended. Prices exclude VAT and local taxes. Percent is computed from $199 vs $375.",
+   "notes": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z. Prices exclude VAT and local taxes. Percent is computed from $199 vs $375.",
    "examples": []
   },
   {
@@ -255,13 +255,13 @@
    "math": "plan_price",
    "variants": [],
    "start": "2026-11-23",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Ultra $129 $45 /mo, billed yearly. −65%. Save $1,008. 3,000 credits / month. ~$100 gift card*",
    "verified_date": "2026-11-24",
-   "notes": "Checked Nov 24, 2026, 3:26 PM ET (12:26 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_69 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-24T00:00:00Z, ends_at 2026-11-25T00:00:00Z, which is Nov 24, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-24, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-25 00:00 UTC.\" The banner reads \"BLACK FRIDAY 69% OFF\" with a countdown of about 3 h 34 min at Nov 24, 2026, 3:26 PM ET (12:26 PM PT). This follows the 63% phase (phase pre_black_friday_63), which ended 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)); the Nov 23 daily check marked that phase ended. Prices exclude VAT and local taxes. $/s uses $45 ÷ 3,000 credits. The card still shows a ~$100 games gift card for the first 10,000 eligible new annual Ultra subscribers (from Nov 20).",
+   "notes": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z. Prices exclude VAT and local taxes. $/s uses $45 ÷ 3,000 credits. The card still shows a ~$100 games gift card for the first 10,000 eligible new annual Ultra subscribers (from Nov 20).",
    "examples": [
     "Ultra: $129 → $45/mo · Wan 3.0, Wan 3.0, 480p: $0.01125/s vs $0.03225/s (from credit plan)"
    ]
@@ -294,13 +294,13 @@
    "math": "plan_price",
    "variants": [],
    "start": "2026-11-23",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://higgsfield.ai/pricing",
    "source_quote": "Ultra, 3,000 credits per month: $75 for the first month on monthly billing, then $129/mo.",
    "verified_date": "2026-11-24",
-   "notes": "Checked Nov 24, 2026, 3:26 PM ET (12:26 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_69 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-24T00:00:00Z, ends_at 2026-11-25T00:00:00Z, which is Nov 24, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-24, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-25 00:00 UTC.\" The banner reads \"BLACK FRIDAY 69% OFF\" with a countdown of about 3 h 34 min at Nov 24, 2026, 3:26 PM ET (12:26 PM PT). This follows the 63% phase (phase pre_black_friday_63), which ended 2026-11-23T00:00:00Z (Nov 22, 2026, 7:00 PM ET (4:00 PM PT)); the Nov 23 daily check marked that phase ended. Prices exclude VAT and local taxes. Percent is computed from $75 vs $129; the source is pricing.md.",
+   "notes": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z. Prices exclude VAT and local taxes. Percent is computed from $75 vs $129; the source is pricing.md.",
    "examples": [
     "Ultra: $129 → $75/mo · Wan 3.0, Wan 3.0, 480p: $0.01875/s vs $0.03225/s (from credit plan) · 12-month blended $0.03113/s"
    ]
@@ -371,7 +371,7 @@
      "plan": "Basic",
      "deal_plan_id": "krea-basic-yearly",
      "price_before": 7,
-     "price_after": 5,
+     "price_after": 5.25,
      "percent": 25
     },
     {
@@ -383,9 +383,10 @@
     },
     {
      "plan": "Max",
-     "price_before": 56,
-     "price_after": 42,
-     "percent": 25
+     "price_before": 84,
+     "price_after": 63,
+     "percent": 25,
+     "deal_plan_id": "krea-max-yearly"
     }
    ],
    "full_plan_id": null,
@@ -397,13 +398,13 @@
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://www.krea.ai/pricing",
-   "source_quote": "Krea's page data: yearly amounts Basic $63, Pro $252, Max $504 with coupon S7vd5tcX; without the coupon $84, $336 and $672; promo phase \"black-friday\", deadline 1795680000000 (Nov 26, 2026, 3:00 AM ET (12:00 AM PT)).",
+   "source_quote": "Krea's page data: yearly amounts Basic $63, Pro $252, Max 60,000-unit plan $756 with coupon S7vd5tcX; without the coupon $84, $336 and $1,008; promo phase \"black-friday\", deadline 1795680000000 (Nov 26, 2026, 3:00 AM ET (12:00 AM PT)). The Max 60,000-unit plan card shows $42/mo with $140 struck through; that $42 is the billed yearly sale for the 40,000-unit Max plan ($504/yr).",
    "verified_date": "2026-11-24",
-   "notes": "Rechecked Nov 24, 2026, 3:22 PM ET (12:22 PM PT) from the USD plan data in krea.ai/pricing (every amount marked currency usd). The yearly coupon S7vd5tcX is still applied, and the page's promo deadline moved to 1795680000000, which is Nov 26, 2026, 3:00 AM ET (12:00 AM PT). The visible banner read \"Final hours, up to 75% off\" with about 1 day 11 hours left at that check, which matches. The Nov 22 daily check marked this deal ended on the old Nov 22 deadline; that was early, so the deal is live again. Krea's X account posted on Nov 24 that its sale \"ends Dec 2\" with no time; this record keeps the page's own deadline. Sale: Basic $63/yr ($5.25/mo; the card shows $5), Pro $252/yr ($21/mo), Max $504/yr ($42/mo). Without the coupon: Basic $84/yr ($7/mo), Pro $336/yr ($28/mo), Max $672/yr ($56/mo). After the deadline the daily check re-reads Krea and moves the yearly plans to the regular yearly price only if the page shows it. Max is not in the catalog, so Max has no $/s.",
+   "notes": "Rechecked Nov 24, 2026, 6:17 PM ET (3:17 PM PT) from the USD plan data in krea.ai/pricing (every amount marked currency usd, plansAndPrices). The yearly coupon S7vd5tcX is still applied, and the page's promo deadline is 1795680000000, Nov 26, 2026, 3:00 AM ET (12:00 AM PT). Sale billed amounts: Basic $63/yr ($5.25/mo; the card shows $5), Pro $252/yr ($21/mo), Max 60,000 units $756/yr ($63/mo). Without the coupon: Basic $84/yr ($7/mo), Pro $336/yr ($28/mo), Max 60,000 units $1,008/yr ($84/mo). The Max plan card displays $42/mo with $140 struck through; checkout bills $63/mo for the 60,000-unit plan. $42/mo ($504/yr) is the billed yearly sale for the 40,000-unit Max plan (regular $672/yr, $56/mo). After the deadline the daily check re-reads Krea and moves the yearly plans to the regular yearly price only if the page shows it. VidFare does not compute a Krea cost per second; these are plan prices only.",
    "examples": [
-    "Basic: $7 → $5/mo · Veo 3.1, Veo 3.1 Lite, 720p: $0.02222/s vs $0.03111/s (estimated from credit plan)",
-    "Pro: $28 → $21/mo · Veo 3.1, Veo 3.1 Lite, 720p: $0.02333/s vs $0.03111/s (estimated from credit plan)",
-    "Max: $56 → $42/mo"
+    "Basic: $7 → $5.25/mo",
+    "Pro: $28 → $21/mo",
+    "Max: $84 → $63/mo"
    ]
   },
   {
