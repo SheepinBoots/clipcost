@@ -33,6 +33,7 @@ GUIDE_URLS = (
     "https://vidfare.com/guides/higgsfield-pricing/",
     "https://vidfare.com/guides/kling-ai-pricing/",
     "https://vidfare.com/guides/is-kling-ai-free/",
+    "https://vidfare.com/guides/veo-3-1-pricing/",
     "https://vidfare.com/guides/runway-pricing/",
     "https://vidfare.com/guides/free-ai-video-generators/",
     "https://vidfare.com/guides/free-ai-video-generator-no-sign-up/",
