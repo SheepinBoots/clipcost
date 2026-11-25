@@ -220,6 +220,7 @@ def render(g):
             ("How much does a Grok Imagine video cost?", "/guides/grok-imagine-video-cost/", g["grok_imagine_blurb"]()),
             ("How does Higgsfield pricing work?", "/guides/higgsfield-pricing/", g["hf_pricing_blurb"]()),
             ("How do Kling AI pricing and credits work?", "/guides/kling-ai-pricing/", g["kling_pricing_blurb"]()),
+            ("Is Kling AI free?", "/guides/is-kling-ai-free/", g["is_kling_free_blurb"]()),
             ("What does Runway cost per second?", "/guides/runway-pricing/", g["runway_pricing_blurb"]()),
             ("What do free AI video generators give you?", "/guides/free-ai-video-generators/", g["free_ai_video_blurb"]()),
             ("Which free AI video generators work with no sign-up?", "/guides/free-ai-video-generator-no-sign-up/", g["no_signup_blurb"]()),
@@ -236,7 +237,7 @@ def render(g):
         ]
         if db.get("flow"):
             entries.append((flow_guide.QUESTION, flow_guide.PATH, flow_guide.blurb(g)))
-        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "Nineteen", 20: "Twenty", 21: "Twenty-one", 22: "Twenty-two", 23: "Twenty-three", 24: "Twenty-four", 25: "Twenty-five"}.get(len(entries), str(len(entries)))
+        count = {4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "Nineteen", 20: "Twenty", 21: "Twenty-one", 22: "Twenty-two", 23: "Twenty-three", 24: "Twenty-four", 25: "Twenty-five", 26: "Twenty-six", 27: "Twenty-seven"}.get(len(entries), str(len(entries)))
         blocks = []
         faqs = []
         for question, path, answer in entries:
