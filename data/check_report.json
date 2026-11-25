@@ -1,9 +1,9 @@
 {
- "run": "2026-11-25T16:24:51Z",
+ "run": "2026-11-25T23:41:29Z",
  "sources": {
   "hf_plans": {
    "status": "fetched",
-   "chars": 15370
+   "chars": 15056
   },
   "hf_api": {
    "status": "fetched",
@@ -39,15 +39,15 @@
   },
   "rep_wan3": {
    "status": "fetched",
-   "chars": 1605
+   "chars": 1612
   },
   "rep_seed25": {
    "status": "fetched",
-   "chars": 4446
+   "chars": 4451
   },
   "runway": {
    "status": "fetched",
-   "chars": 30312
+   "chars": 30378
   },
   "xai_imagine": {
    "status": "fetched",
@@ -59,7 +59,7 @@
   },
   "gemini": {
    "status": "fetched",
-   "chars": 108970
+   "chars": 108963
   },
   "atlas": {
    "status": "fetched",
@@ -67,11 +67,11 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 20434
+   "chars": 20830
   },
   "magnific": {
    "status": "fetched",
-   "chars": 10194
+   "chars": 10177
   },
   "kling_app": {
    "status": "manual",
@@ -92,86 +92,14 @@
   },
   "gflow_credits": {
    "status": "fetched",
-   "chars": 8664
+   "chars": 8663
   },
   "google_ai_plans": {
-   "status": "error",
-   "error": "ready text not found: Google AI Ultra 20x"
+   "status": "fetched",
+   "chars": 22252
   }
  },
  "findings": [
-  {
-   "kind": "plan",
-   "id": "hf-starter",
-   "source": "hf_plans",
-   "status": "changed",
-   "needle": "Starter ${N}/month",
-   "old": 19,
-   "new": 15.0,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Starter"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-starter",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "Credit discount 0 {N} 1200 3000",
-   "old": 270,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Starter"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-plus-annual",
-   "source": "hf_plans",
-   "status": "changed",
-   "needle": "Plus ${N}/month",
-   "old": 30,
-   "new": 25.0,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Plus (annual)"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-plus-annual",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "Credit discount 0 270 {N} 3000",
-   "old": 1200,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Plus (annual)"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-plus-monthly",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "${N} $30",
-   "old": 59,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Plus (monthly)"
-  },
-  {
-   "kind": "plan",
-   "id": "hf-ultra-annual",
-   "source": "hf_plans",
-   "status": "missing",
-   "needle": "Credit discount 0 270 1200 {N}",
-   "old": 3000,
-   "new": null,
-   "model": null,
-   "platform": "Higgsfield",
-   "variant": "Ultra (annual)"
-  },
   {
    "kind": "plan",
    "id": "krea-free",
@@ -188,10 +116,10 @@
    "kind": "plan",
    "id": "mag-premium",
    "source": "magnific",
-   "status": "missing",
+   "status": "changed",
    "needle": "stock content ${X} ${N} /month",
    "old": 14.5,
-   "new": null,
+   "new": 7.25,
    "model": null,
    "platform": "Magnific",
    "variant": "Premium (annual)"
@@ -207,18 +135,6 @@
    "model": null,
    "platform": "Magnific",
    "variant": "Premium (annual)"
-  },
-  {
-   "kind": "plan",
-   "id": "mag-premium-plus",
-   "source": "magnific",
-   "status": "missing",
-   "needle": "full AI access ${X} ${N} /month",
-   "old": 33.75,
-   "new": null,
-   "model": null,
-   "platform": "Magnific",
-   "variant": "Premium+ (annual)"
   },
   {
    "kind": "plan",
@@ -261,63 +177,28 @@
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 70% OFF Get started BLACK FRIDAY 70% OFF The best prices in GenAI industry 0 7 : 3 1 :"
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 70% OFF Get started BLACK FRIDAY 70% OFF The best prices in GenAI industry 0 0 : 1 6 :"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "3 2 All plans Don’t miss your chance to get up to 70% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+   "snippet": "4 3 All plans Don’t miss your chance to get up to 70% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "70% OFF Starter For first-time AI creators $15 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
+   "snippet": "70% OFF Starter For first-time AI creators $19 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "rter 200 credits / month 100 images Nano Banana Pro 11 videos Seedance 2.0 Fast Unlimited models Unlimited Seedream 5.0 Lite Unlimited Flux.2 Pro 1K Nano Banana Pro Seed"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ve $288 1,000 credits / month 500 images Nano Banana Pro 67 videos Seedance 2.5 Unlimited models for 7 days Unlimited Nano Banana Pro 2K Unlimited Seedream 5.0 Pro 2K Un"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "820 of 1,000 credits Included in plan 1,000 credits / month Credit top-ups with discount 7-day unlimited GPT Image 2.6 2K 7-day unlimited Seedream 5.0 Pro 2K All models"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "Premium quality Compare features See in details what plan suits you best Annual 70% OFF Free Free Limited use Starter $15/month Billed annually Get Plan Plus $25/month"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "videos 666 videos 2000 videos 1 concurrent generation 4 concurrent generations Unlimited concurrent generations Unlimited concurrent generations Included 1200 images 60"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ons Up to 400 generations Up to 1200 generations Credits & Usage Credits Credit discount 0 200 1000 3000 Not included Not included Not included Not included Access & Fe"
+   "snippet": "Premium quality Compare features See in details what plan suits you best Annual 70% OFF Free Free Limited use Starter $19/month Billed annually Get Plan Plus $30/month"
   },
   {
    "kind": "deal_candidate",
@@ -345,84 +226,35 @@
    "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "rter 270 credits / month 135 images Nano Banana Pro 15 videos Seedance 2.0 Fast Unlimited models Unlimited Seedream 5.0 Lite Unlimited Flux.2 Pro 1K Nano Banana Pro Seed"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ve $348 1,200 credits / month 600 images Nano Banana Pro 80 videos Seedance 2.5 Unlimited models for 7 days Unlimited Nano Banana Pro 2K Unlimited Seedream 5.0 Pro 2K Un"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "820 of 1,200 credits Included in plan 1,200 credits / month Credit top-ups with discount 7-day unlimited GPT Image 2.6 2K 7-day unlimited Seedream 5.0 Pro 2K All models"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
    "snippet": "Premium quality Compare features See in details what plan suits you best Annual 69% OFF Free Free Limited use Starter $19/month Billed annually Get Plan Plus $30/month"
   },
   {
    "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "videos 800 videos 2000 videos 1 concurrent generation 4 concurrent generations Unlimited concurrent generations Unlimited concurrent generations Included 1620 images 72"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ons Up to 480 generations Up to 1200 generations Credits & Usage Credits Credit discount 0 270 1200 3000 Not included Not included Not included Not included Access & Fe"
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 08 Hours 16 Minutes 42 Seconds Final hours, up to 75% off Black Friday Â· The b"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "on the market Expiring in 08 Hours 16 Minutes 42 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 15 Hours 31 Minutes 30 Seconds Final hours, up to 75% off Black Friday Â· The b"
   },
   {
    "kind": "deal_candidate",
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "on the market Expiring in 15 Hours 31 Minutes 30 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 08 Hours 01 Minutes 37 Seconds Final hours, up to 75% off Black Friday"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "arket Expiring in 01 Days 08 Hours 01 Minutes 37 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "ffers Individual Teams monthly Annual Up to 62% Premium Extra 50% off For creatives exploring AI tools and stock content SGD 24 SGD 9 /month Billed a"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Magnific",
-   "url": "https://www.magnific.com/pricing",
-   "snippet": "ffers Individual Teams monthly Annual Up to 63% Premium Extra 50% off For creatives exploring AI tools and stock content $20 $7 .25 /month Billed ann"
   }
  ],
  "deal_scan": {
@@ -463,12 +295,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 24
+  "candidates": 12
  },
  "counts": {
-  "ok": 397,
-  "changed": 2,
-  "missing": 11,
-  "skipped": 11
+  "ok": 414,
+  "changed": 1,
+  "missing": 5,
+  "skipped": 6
  }
 }

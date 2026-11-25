@@ -8590,7 +8590,7 @@
       "expect": 200
      }
     ],
-    "checked": "2026-11-24",
+    "checked": "2026-11-25",
     "source_url": "https://one.google.com/about/google-ai-plans/"
    },
    "gflow-pro": {
@@ -8611,7 +8611,7 @@
       "expect": 1000
      }
     ],
-    "checked": "2026-11-24",
+    "checked": "2026-11-25",
     "source_url": "https://one.google.com/about/google-ai-plans/"
    },
    "gflow-pro-annual": {
@@ -8632,7 +8632,7 @@
       "expect": 1000
      }
     ],
-    "checked": "2026-11-24",
+    "checked": "2026-11-25",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "usd_year": 199.99,
     "credits_note": "Google states Flow credits per month for Pro. The $199.99 yearly price is divided by 12."
@@ -8655,7 +8655,7 @@
       "expect": 10000
      }
     ],
-    "checked": "2026-11-24",
+    "checked": "2026-11-25",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "help_name": "Google AI Ultra $100"
    },
@@ -8677,7 +8677,7 @@
       "expect": 25000
      }
     ],
-    "checked": "2026-11-24",
+    "checked": "2026-11-25",
     "source_url": "https://one.google.com/about/google-ai-plans/",
     "help_name": "Google AI Ultra $200"
    }
