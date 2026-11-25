@@ -221,6 +221,7 @@ def render(g):
             ("How does Higgsfield pricing work?", "/guides/higgsfield-pricing/", g["hf_pricing_blurb"]()),
             ("How do Kling AI pricing and credits work?", "/guides/kling-ai-pricing/", g["kling_pricing_blurb"]()),
             ("Is Kling AI free?", "/guides/is-kling-ai-free/", g["is_kling_free_blurb"]()),
+            ("What does Veo 3.1 cost per second?", "/guides/veo-3-1-pricing/", g["veo_pricing_blurb"]()),
             ("What does Runway cost per second?", "/guides/runway-pricing/", g["runway_pricing_blurb"]()),
             ("What do free AI video generators give you?", "/guides/free-ai-video-generators/", g["free_ai_video_blurb"]()),
             ("Which free AI video generators work with no sign-up?", "/guides/free-ai-video-generator-no-sign-up/", g["no_signup_blurb"]()),
