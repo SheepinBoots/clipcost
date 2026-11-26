@@ -122,7 +122,7 @@
   "gflow_credits": {
    "name": "Google Flow Help: Manage your Google Flow credits",
    "url": "https://support.google.com/flow/answer/16526234?hl=en",
-   "fetch": "static"
+   "fetch": "render"
   },
   "google_ai_plans": {
    "name": "Google AI plans (Google One)",
@@ -8721,7 +8721,7 @@
    "reason": "official API page lists per-second rates, but input video changes the billed duration, so no single $/s is in the table"
   }
  ],
- "last_full_check": "2026-11-25",
+ "last_full_check": "2026-11-26",
  "variation_schema": {
   "audio": "with, without, or not stated. A separate price for each is a separate row.",
   "input": "not stated, or a list of t2v, i2v, ref2v, v2v, extend, lip-sync when the page names that mode for this price.",
@@ -8854,7 +8854,7 @@
    "credits_day": 50,
    "source": "gflow_credits",
    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-   "checked": "2026-11-25",
+   "checked": "2026-11-26",
    "checks": [
     {
      "needle": "With or without a subscription, you receive {N} Google Flow credits per day",
@@ -8873,7 +8873,7 @@
   "plan_credits_check": {
    "source": "gflow_credits",
    "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-   "checked": "2026-11-25",
+   "checked": "2026-11-26",
    "checks": [
     {
      "needle": "Google AI Plus subscribers receive an extra {N} Google Flow credits each month",
@@ -8924,7 +8924,7 @@
       "phrase": true
      }
     ],
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en"
    },
    {
@@ -8948,7 +8948,7 @@
       "expect": 0
      }
     ],
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en"
    },
    {
@@ -8977,7 +8977,7 @@
       "expect": 10
      }
     ],
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Google's table gives no resolution for Veo 3.1 Fast."
@@ -9001,7 +9001,7 @@
       "expect": 100
      }
     ],
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Google's table gives no resolution for Veo 3.1 Quality."
@@ -9028,7 +9028,7 @@
       "expect": 2
      }
     ],
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "credits_per_second": {
      "up_to_10s": 1,
@@ -9058,7 +9058,7 @@
       "expect": 6
      }
     ],
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "credits_per_second": {
      "up_to_10s": 3,
@@ -9103,7 +9103,7 @@
       "expect": 15
      }
     ],
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Does not include edits to uploaded and generated videos."
@@ -9145,7 +9145,7 @@
       "expect": 7
      }
     ],
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
     "retiring_on": "2026-12-05",
     "note": "Does not include edits to uploaded and generated videos."
@@ -9159,7 +9159,7 @@
     "quote": "On December 5, 2026, Veo 3.1 Fast, Veo 3.1 Quality, and Omni Flash 1.1 will be retired. Until then, you can generate with these models at standard credit rates while transitioning your workflows to Omni Flash 1.2 or Veo 3.1 Lite.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "checks": [
      {
       "needle": "On December 5, 2026, Veo 3.1 Fast, Veo 3.1 Quality, and Omni Flash 1.1 will be retired. Until then, you can generate with these models at standard credit rates while transitioning your workflows to Omni Flash 1.2 or Veo 3.1 Lite.",
@@ -9173,7 +9173,7 @@
     "quote": "On November 5, 2026, Veo Extend was retired. To extend a video, you must be a Google AI Plus, Pro, or Ultra subscriber and use Omni Flash 1.2.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "checks": [
      {
       "needle": "On November 5, 2026, Veo Extend was retired. To extend a video, you must be a Google AI Plus, Pro, or Ultra subscriber and use Omni Flash 1.2.",
@@ -9186,7 +9186,7 @@
     "quote": "The Google Flow/AI credit costs below are per generation, not per request. Some product features will create multiple generations per request. For example, in Google Flow, you can make a single request that may generate 2 videos.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "checks": [
      {
       "needle": "The Google Flow/AI credit costs below are per generation, not per request. Some product features will create multiple generations per request. For example, in Google Flow, you can make a single request that may generate 2 videos.",
@@ -9199,7 +9199,7 @@
     "quote": "Google Flow credits for your Google AI Plus, Pro, or Ultra plan refresh at the start of your billing cycle. Unused monthly Google Flow credits do not roll over to the next month.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "checks": [
      {
       "needle": "Google Flow credits for your Google AI Plus, Pro, or Ultra plan refresh at the start of your billing cycle. Unused monthly Google Flow credits do not roll over to the next month.",
@@ -9212,7 +9212,7 @@
     "quote": "Your daily credit refresh is triggered by your first generation. For example, if you use your Google Flow credits for the first time on August 12, your next 50 Google Flow credits will become available on August 13. If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "checks": [
      {
       "needle": "Your daily credit refresh is triggered by your first generation. For example, if you use your Google Flow credits for the first time on August 12, your next 50 Google Flow credits will become available on August 13. If you don’t use the full 50 Google Flow credits in a day, the unused Google Flow credits don’t roll over.",
@@ -9225,7 +9225,7 @@
     "quote": "During peak hours, roughly 2 PM to 5 PM UTC, you may not be able to generate videos without a subscription.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "checks": [
      {
       "needle": "During peak hours, roughly 2 PM to 5 PM UTC, you may not be able to generate videos without a subscription.",
@@ -9238,7 +9238,7 @@
     "quote": "Limits are subject to change at any time. To find the latest costs, at the top right of your prompt box, click Settings.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "checks": [
      {
       "needle": "Limits are subject to change at any time. To find the latest costs, at the top right of your prompt box, click",
@@ -9251,7 +9251,7 @@
     "quote": "In supported regions (except Japan), Plus, Pro, and Ultra subscribers can purchase AI credits.",
     "source": "gflow_credits",
     "source_url": "https://support.google.com/flow/answer/16526234?hl=en",
-    "checked": "2026-11-25",
+    "checked": "2026-11-26",
     "checks": [
      {
       "needle": "In supported regions (except Japan), Plus, Pro, and Ultra subscribers can purchase AI credits.",

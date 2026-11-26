@@ -1,5 +1,5 @@
 {
- "run": "2026-11-26T15:49:01Z",
+ "run": "2026-11-26T16:09:34Z",
  "sources": {
   "hf_plans": {
    "status": "fetched",
@@ -15,23 +15,23 @@
   },
   "fal_wan3": {
    "status": "fetched",
-   "chars": 3057
+   "chars": 3113
   },
   "fal_wan3p": {
    "status": "fetched",
-   "chars": 3454
+   "chars": 3510
   },
   "fal_kling3": {
    "status": "fetched",
-   "chars": 3500
+   "chars": 3556
   },
   "fal_seed25": {
    "status": "fetched",
-   "chars": 10238
+   "chars": 10294
   },
   "fal_veo31": {
    "status": "fetched",
-   "chars": 13204
+   "chars": 13260
   },
   "fal_pricing": {
    "status": "fetched",
@@ -67,7 +67,7 @@
   },
   "krea": {
    "status": "fetched",
-   "chars": 20854
+   "chars": 21466
   },
   "magnific": {
    "status": "fetched",
@@ -80,19 +80,19 @@
   },
   "fal_h3max": {
    "status": "fetched",
-   "chars": 4994
+   "chars": 5050
   },
   "fal_h3turbo": {
    "status": "fetched",
-   "chars": 7902
+   "chars": 7958
   },
   "fal_grok15": {
    "status": "fetched",
-   "chars": 3390
+   "chars": 3446
   },
   "gflow_credits": {
-   "status": "error",
-   "error": "429 Client Error: Too Many Requests for url: https://www.google.com/sorry/index?continue=https://support.google.com/flow/answer/16526234%3Fhl%3Den&hl=en&q=EhAqCbrBdsAEgAAAAAACWQDPGKyqodgGIjB0WzF44IZx_"
+   "status": "fetched",
+   "chars": 7599
   },
   "google_ai_plans": {
    "status": "fetched",
@@ -255,11 +255,25 @@
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
-   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 8 : 0 9 :"
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 7 : 4 8 :"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "3 3 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 69% OFF Get started BLACK FRIDAY 69% OFF The best prices in GenAI industry 0 8 : 0 9 :"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "snippet": "1 0 All plans Don’t miss your chance to get up to 69% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
@@ -267,55 +281,55 @@
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "69% OFF Starter For first-time AI creators $19 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "unconfirmed",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "Premium quality Compare features See in details what plan suits you best Annual 69% OFF Free Free Limited use Starter $19/month Billed annually Get Plan Plus $30/month"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 70% OFF Get started BLACK FRIDAY 70% OFF The best prices in GenAI industry 0 0 : 1 6 :"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "4 3 All plans Don’t miss your chance to get up to 70% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "70% OFF Starter For first-time AI creators $19 $ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "snippet": "Premium quality Compare features See in details what plan suits you best Annual 70% OFF Free Free Limited use Starter $19/month Billed annually Get Plan Plus $30/month"
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 15 Hours 48 Minutes 32 Seconds Final hours, up to 75% off Black Friday"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 16 Hours 09 Minutes 09 Seconds Final hours, up to 75% off Black Friday"
+   "snippet": "arket Expiring in 01 Days 15 Hours 48 Minutes 32 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
   },
   {
    "kind": "deal_candidate",
    "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "prices Black Friday Seedance 2.5 Kling 4.0 Krea 3 GPT Image 2.6 Nano Banana Pro Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "nce 2.5 -60% Kling 4.0 -20% Krea 3 -25% GPT Image 2.6 -20% Nano Banana Pro -45% Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW Kre"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "nce 2.5 -75% Kling 4.0 -50% Krea 3 -50% GPT Image 2.6 -45% Nano Banana Pro -65% Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Krea 3 NEW Kre"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "a Agent NEW All image models All video models All 3D & lipsync models Unlimited LoRA training (2,000 images) Image upscaling up to 22K Krea Nodes App Builder E"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 01 Days 16 Hours 09 Minutes 09 Seconds Final hours, up to 75% off Black Friday"
+  },
+  {
+   "kind": "deal_candidate",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "snippet": "arket Expiring in 01 Days 16 Hours 09 Minutes 09 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
@@ -325,14 +339,7 @@
    "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
-   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 08 Hours 16 Minutes 42 Seconds Final hours, up to 75% off Black Friday Â· The b"
-  },
-  {
-   "kind": "deal_candidate",
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "snippet": "on the market Expiring in 08 Hours 16 Minutes 42 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free"
+   "snippet": "3 NEW Krea Agent NEW All image models All video models All 3D & lipsync models Unlimited LoRA training (2,000 images) Image upscaling up to 22K Krea Nodes App Builder E"
   }
  ],
  "deal_scan": {
@@ -349,7 +356,7 @@
     "vendor": "Krea",
     "url": "https://www.krea.ai/pricing",
     "status": "fetched",
-    "snippets": 24
+    "snippets": 27
    },
    {
     "id": "magnific",
@@ -373,12 +380,12 @@
     "snippets": 0
    }
   ],
-  "candidates": 12
+  "candidates": 13
  },
  "counts": {
-  "ok": 380,
+  "ok": 414,
   "changed": 1,
   "missing": 5,
-  "skipped": 24
+  "skipped": 6
  }
 }
