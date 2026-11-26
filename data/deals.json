@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-11-25",
+ "updated": "2026-11-26",
  "watch": [
   {
    "id": "hf_plans",
@@ -1067,17 +1067,17 @@
     }
    ],
    "start": null,
-   "end": "2026-11-25",
+   "end": "2026-11-27",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://www.krea.ai/pricing",
    "source_kind": "pricing_page",
    "source_quote": "Krea's page data: yearly amounts Basic $63, Pro $252, Max 60,000-unit plan $756 with coupon S7vd5tcX; without the coupon $84, $336 and $1,008; promo phase \"black-friday\", deadline 1795680000000 (Nov 26, 2026, 3:00 AM ET (12:00 AM PT)). The Max 60,000-unit plan card shows $42/mo with $140 struck through; that $42 is the billed yearly sale for the 40,000-unit Max plan ($504/yr).",
-   "verified_date": "2026-11-24",
+   "verified_date": "2026-11-26",
    "link_url": "https://www.krea.ai/pricing",
    "math": "plan_price",
-   "notes": "Rechecked Nov 24, 2026, 6:17 PM ET (3:17 PM PT) from the USD plan data in krea.ai/pricing (every amount marked currency usd, plansAndPrices). The yearly coupon S7vd5tcX is still applied, and the page's promo deadline is 1795680000000, Nov 26, 2026, 3:00 AM ET (12:00 AM PT). Sale billed amounts: Basic $63/yr ($5.25/mo; the card shows $5), Pro $252/yr ($21/mo), Max 60,000 units $756/yr ($63/mo). Without the coupon: Basic $84/yr ($7/mo), Pro $336/yr ($28/mo), Max 60,000 units $1,008/yr ($84/mo). The Max plan card displays $42/mo with $140 struck through; checkout bills $63/mo for the 60,000-unit plan. $42/mo ($504/yr) is the billed yearly sale for the 40,000-unit Max plan (regular $672/yr, $56/mo). After the deadline the daily check re-reads Krea and moves the yearly plans to the regular yearly price only if the page shows it. VidFare does not compute a Krea cost per second; these are plan prices only.",
-   "ends_at": "2026-11-26T08:00:00Z"
+   "notes": "Rechecked Nov 24, 2026, 6:17 PM ET (3:17 PM PT) from the USD plan data in krea.ai/pricing (every amount marked currency usd, plansAndPrices). The yearly coupon S7vd5tcX is still applied, and the page's promo deadline is 1795680000000, Nov 26, 2026, 3:00 AM ET (12:00 AM PT). Sale billed amounts: Basic $63/yr ($5.25/mo; the card shows $5), Pro $252/yr ($21/mo), Max 60,000 units $756/yr ($63/mo). Without the coupon: Basic $84/yr ($7/mo), Pro $336/yr ($28/mo), Max 60,000 units $1,008/yr ($84/mo). The Max plan card displays $42/mo with $140 struck through; checkout bills $63/mo for the 60,000-unit plan. $42/mo ($504/yr) is the billed yearly sale for the 40,000-unit Max plan (regular $672/yr, $56/mo). After the deadline the daily check re-reads Krea and moves the yearly plans to the regular yearly price only if the page shows it. VidFare does not compute a Krea cost per second; these are plan prices only. Rechecked Nov 26, 2026, 8:30 AM PT on krea.ai/pricing. The page countdown reads 1 day 15 hours 29 minutes left, which puts the deadline at Nov 28, 2026, 3:00 AM ET (12:00 AM PT); Krea extended it from Nov 26, 12:00 AM PT. Yearly plan prices on the page are unchanged ($5.25, $21 per month for Basic and Pro). The end time comes from the on-page countdown, not a printed date.",
+   "ends_at": "2026-11-28T08:00:00Z"
   },
   {
    "id": "krea3-unlimited-14d",
@@ -1857,17 +1857,17 @@
    "price_before": null,
    "price_after": null,
    "start": null,
-   "end": "2026-11-25",
+   "end": "2026-11-27",
    "end_is_estimate": false,
    "status": "live",
    "source_url": "https://www.krea.ai/pricing",
    "source_kind": "pricing_page",
-   "source_quote": "Seedance 2.5 up to 75% off. Final hours, up to 75% off. Black Friday model prices: Seedance 2.5 -75% (Max), -60% (Pro).",
-   "verified_date": "2026-11-24",
+   "source_quote": "Seedance 2.5 up to 75% off. Final hours, up to 75% off. Black Friday model prices: Seedance 2.5 -75% (Max), -60% (Pro). Expiring in 01 Days 15 Hours 29 Minutes (checked Nov 26, 2026, 8:30 AM PT).",
+   "verified_date": "2026-11-26",
    "link_url": "https://www.krea.ai/pricing",
    "math": "none",
-   "notes": "Checked Nov 24, 2026, 3:22 PM ET (12:22 PM PT) on krea.ai/pricing. The banner says Seedance 2.5 up to 75% off with \"Final hours\" and about 1 day 11 hours left; the page's promo deadline is 1795680000000, Nov 26, 2026, 3:00 AM ET (12:00 AM PT). The plan cards list Black Friday model prices of Seedance 2.5 -60% on Pro and -75% on Max. Krea's X post of Nov 24 says the sale ends Dec 2 with no time; this record uses the page deadline. The page gives no per-second Seedance price, so VidFare does not change any $/s for this. Follows krea-bf-seedance-75, which was recorded as ending Nov 19.",
-   "ends_at": "2026-11-26T08:00:00Z"
+   "notes": "Checked Nov 24, 2026, 3:22 PM ET (12:22 PM PT) on krea.ai/pricing. The banner says Seedance 2.5 up to 75% off with \"Final hours\" and about 1 day 11 hours left; the page's promo deadline is 1795680000000, Nov 26, 2026, 3:00 AM ET (12:00 AM PT). The plan cards list Black Friday model prices of Seedance 2.5 -60% on Pro and -75% on Max. Krea's X post of Nov 24 says the sale ends Dec 2 with no time; this record uses the page deadline. The page gives no per-second Seedance price, so VidFare does not change any $/s for this. Follows krea-bf-seedance-75, which was recorded as ending Nov 19. Rechecked Nov 26, 2026, 8:30 AM PT on krea.ai/pricing. The page countdown reads 1 day 15 hours 29 minutes left, which puts the deadline at Nov 28, 2026, 3:00 AM ET (12:00 AM PT); Krea extended it from Nov 26, 12:00 AM PT. Yearly plan prices on the page are unchanged ($5.25, $21 per month for Basic and Pro). The end time comes from the on-page countdown, not a printed date.",
+   "ends_at": "2026-11-28T08:00:00Z"
   },
   {
    "id": "mag-bf-annual-62",

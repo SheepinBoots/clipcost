@@ -122,8 +122,8 @@ def main():
             or plans["krea-pro-yearly"]["sale"]["regular"]["usd_month"] != 28
             or plans["krea-max-yearly"]["sale"]["regular"]["usd_month"] != 84):
         raise SystemExit("Krea regular yearly prices should be the billed $7, $28, and $84 monthly amounts")
-    if kdeal.get("ends_at") != "2026-11-26T08:00:00Z" or not deals.is_current(kdeal, "2026-11-25") or deals.is_current(kdeal, "2026-11-26"):
-        raise SystemExit("the Krea yearly sale ends Nov 26, 2026, 3:00 AM ET (12:00 AM PT)")
+    if kdeal.get("ends_at") != "2026-11-28T08:00:00Z" or not deals.is_current(kdeal, "2026-11-27") or deals.is_current(kdeal, "2026-11-28"):
+        raise SystemExit("the Krea yearly sale ends Nov 28, 2026, 3:00 AM ET (12:00 AM PT)")
     flux50 = by_id(doc["deals"], "fal-flux3-50")
     if flux50.get("status") != "ended" or flux50.get("percent") != 50 or flux50.get("end") != "2026-11-21":
         raise SystemExit("fal-flux3-50 should stay the ended 50% record through November 21")
