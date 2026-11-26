@@ -28,8 +28,8 @@ CHECKED = "2026-11-13"
 # The live sale_11_11 record on 2026-11-17 is the Black Friday window below.
 SALE_ENDS_UTC = "2026-11-15T00:00:00Z"
 SALE_ENDS_PT = "Nov 14, 2026, 7:00 PM ET (4:00 PM PT)"
-BF_CHECKED = "2026-11-24"
-BF_CHECKED_WHEN = "Nov 24, 2026, 7:25 PM ET (4:25 PM PT)"
+BF_CHECKED = "2026-11-25"
+BF_CHECKED_WHEN = "Nov 25, 2026, 7:20 PM ET (4:20 PM PT)"
 from timefmt import et_pt  # noqa: E402,F401
 import deal_copy  # noqa: E402
 

@@ -209,7 +209,7 @@
    ],
    "checked": "2026-11-25",
    "source_url": "https://higgsfield.ai/pricing",
-   "note": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z."
+   "note": "Checked Nov 25, 2026, 7:20 PM ET (4:20 PM PT) on higgsfield.ai/pricing (rendered page), pricing.md and the public plans API the page loads (fnf-api-gw.higgsfield.ai/fnf/subscriptions/v2/plans?plan_set_key=ps_a3&with_localization=true). Black Friday phase black_friday_69_phase_2 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-26T00:00:00Z, ends_at 2026-11-27T00:00:00Z, which is Nov 26, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-26, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-27 00:00 UTC.\" The sale was extended again: the up to 70% off phase (black_friday_phase_2, recorded at the Nov 24 check; no longer visible in the page's sale record) was due to end 2026-11-26T00:00:00Z, the up to 69% phase ended 2026-11-25T00:00:00Z, and the 63% phase ended 2026-11-23T00:00:00Z."
   },
   "hf-plus-monthly": {
    "platform": "Higgsfield",
@@ -246,7 +246,7 @@
    ],
    "checked": "2026-11-25",
    "source_url": "https://higgsfield.ai/pricing",
-   "note": "Checked Nov 24, 2026, 7:25 PM ET (4:25 PM PT) on higgsfield.ai/pricing and pricing.md. Black Friday phase black_friday_phase_2 (max_discount_percent 70) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-25T00:00:00Z, ends_at 2026-11-26T00:00:00Z, which is Nov 25, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-25, US dollars) says \"Black Friday sale: up to 70% off, ends 2026-11-26 00:00 UTC.\" The sale was extended by one day: the earlier black_friday_phase_69 phase was due to end 2026-11-25T00:00:00Z (Nov 24, 2026, 7:00 PM ET (4:00 PM PT)), and the 63% phase ended 2026-11-23T00:00:00Z."
+   "note": "Checked Nov 25, 2026, 7:20 PM ET (4:20 PM PT) on higgsfield.ai/pricing (rendered page), pricing.md and the public plans API the page loads (fnf-api-gw.higgsfield.ai/fnf/subscriptions/v2/plans?plan_set_key=ps_a3&with_localization=true). Black Friday phase black_friday_69_phase_2 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-26T00:00:00Z, ends_at 2026-11-27T00:00:00Z, which is Nov 26, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-26, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-27 00:00 UTC.\" The sale was extended again: the up to 70% off phase (black_friday_phase_2, recorded at the Nov 24 check; no longer visible in the page's sale record) was due to end 2026-11-26T00:00:00Z, the up to 69% phase ended 2026-11-25T00:00:00Z, and the 63% phase ended 2026-11-23T00:00:00Z."
   },
   "hf-ultra-monthly": {
    "platform": "Higgsfield",
