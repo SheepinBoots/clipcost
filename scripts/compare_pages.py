@@ -690,7 +690,7 @@ def render_pair(g, pair):
         "name": pair["h1"],
         "description": pair["description"],
         "url": g["SITE_URL"] + pair["path"],
-        "dateModified": LAST,
+        "dateModified": __import__("schema_ld").date_modified(g, pair["path"]),
         "about": [{"@type": "Thing", "name": name[A]}, {"@type": "Thing", "name": name[B]}],
         "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
     }

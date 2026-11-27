@@ -566,7 +566,7 @@ def render(g):
         "url": SITE_URL + PATH,
         "creator": {"@type": "Organization", "@id": ORG_ID, "name": BRAND, "url": SITE_URL + "/"},
         "isAccessibleForFree": True,
-        "dateModified": LAST,
+        "dateModified": __import__("schema_ld").date_modified(g, PATH),
         "temporalCoverage": f"{start['date']}/{latest['date']}",
         "variableMeasured": [
             {"@type": "PropertyValue", "name": "Median $/s", "unitText": "USD per second of video"},

@@ -11,6 +11,7 @@ import compare_pages
 import cost_pages
 import timefmt
 import schema_ld
+import page_dates
 import platform_pages
 from decimal import Decimal, ROUND_HALF_UP
 from urllib.parse import urlparse, urlsplit, urlunsplit, parse_qsl, urlencode, quote
@@ -139,7 +140,8 @@ def current(r):
 rows = [r for r in db["rows"] if current(r)]
 retired_rows = [r for r in db["rows"] if discontinued(r)]
 LAST = db.get("last_full_check") or min(r["checked"] for r in db["rows"])
-# Per-URL sitemap dates. Pages not listed here use LAST, which is the catalog check, not the build clock.
+# First-pass per-URL sitemap dates. page_dates.apply() overwrites these from each
+# page's content hash so a catalog re-check does not bump every lastmod.
 SITEMAP_LASTMOD = {}
 deal_doc = dealmod.load()
 LIVE_DEALS = [d for d in deal_doc["deals"] if dealmod.is_current(d, TODAY)]
@@ -4164,6 +4166,7 @@ def stamp_page_dates(paths):
         if new != src:
             open(fp, "w", encoding="utf-8").write(new)
 stamp_page_dates(urls)
+page_dates.apply(globals(), urls)
 def check_sponsor_renderer():
     live = render_sponsor(
         "home",
@@ -4740,18 +4743,16 @@ def audit_site():
                 errors.append("deals offer description must stay off the markup")
     if REPORTS_ENABLED:
         published_now = weekly_report.assign(weekly_report.load(), today)
-        prior_through = None
         for report in published_now["reports"]:
-            modified = weekly_report.report_content_date(report, weekly_report.load(), prior_through)
             report_path = f"/reports/{report['id']}/"
-            if f"<loc>{SITE_URL}{report_path}</loc><lastmod>{modified}</lastmod>" not in sitemap:
+            modified = SITEMAP_LASTMOD.get(report_path)
+            if not modified or f"<loc>{SITE_URL}{report_path}</loc><lastmod>{modified}</lastmod>" not in sitemap:
                 errors.append(f"sitemap lastmod for {report_path} should be {modified}")
             report_html = open(os.path.join(DIST, report_path.strip("/"), "index.html"), encoding="utf-8").read()
-            if f'"dateModified": "{modified}"' not in report_html:
+            if not modified or f'"dateModified": "{modified}"' not in report_html:
                 errors.append(f"{report_path} dateModified should be {modified}")
-            prior_through = report["through"]
-        index_date = weekly_report.index_content_date(published_now, weekly_report.load(), today) or LAST
-        if f"<loc>{SITE_URL}/reports/</loc><lastmod>{index_date}</lastmod>" not in sitemap:
+        index_date = SITEMAP_LASTMOD.get("/reports/")
+        if not index_date or f"<loc>{SITE_URL}/reports/</loc><lastmod>{index_date}</lastmod>" not in sitemap:
             errors.append(f"sitemap lastmod for /reports/ should be {index_date}")
     bf_last = SITEMAP_LASTMOD.get("/deals/black-friday/")
     if not bf_last or f"<loc>{SITE_URL}/deals/black-friday/</loc><lastmod>{bf_last}</lastmod>" not in sitemap:

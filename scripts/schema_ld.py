@@ -6,23 +6,23 @@ markup is the same string the reader sees (rate_money without the dollar sign).
 import json
 import os
 
-_DATES = None
+import page_dates as page_dates_mod
 
 
 def page_dates(root):
     """First-published dates from data/page_dates.json (written by gen_page_dates.py)."""
-    global _DATES
-    if _DATES is None:
-        path = os.path.join(root, "data", "page_dates.json")
-        _DATES = json.load(open(path)) if os.path.exists(path) else {}
-    return _DATES
+    return {path: rec.get("published") for path, rec in page_dates_mod.load(root).items()}
 
 
 def date_published(g, path):
-    return page_dates(g["ROOT"]).get(path) or g["TODAY"]
+    return page_dates_mod.published(g["ROOT"], path, g["TODAY"])
 
 
 def date_modified(g, path):
+    """Prefer the stored content-hash lastmod; fall back to a first-pass sitemap date."""
+    stored = page_dates_mod.modified(g["ROOT"], path)
+    if stored:
+        return stored
     return g["SITEMAP_LASTMOD"].get(path) or g["LAST"]
 
 
