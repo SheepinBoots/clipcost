@@ -1,68 +1,337 @@
 {
- "/": "2026-10-20",
- "/about/": "2026-10-20",
- "/advertise/": "2026-10-28",
- "/calculator/": "2026-10-20",
- "/changes/": "2026-10-20",
- "/compare/kling-3-0-vs-seedance-2-5/": "2026-11-20",
- "/compare/kling-3-0-vs-veo-3-1/": "2026-11-20",
- "/compare/seedance-2-5-vs-veo-3-1/": "2026-11-20",
- "/compare/wan-3-0-vs-kling-3-0/": "2026-11-20",
- "/compare/wan-3-0-vs-wan-3-0-prime/": "2026-11-20",
- "/contact-us/": "2026-11-08",
- "/contact/": "2026-11-08",
- "/cost/10-second/": "2026-11-20",
- "/cost/1080p/": "2026-11-20",
- "/cost/30-second/": "2026-11-20",
- "/data/": "2026-11-05",
- "/deals/": "2026-10-20",
- "/deals/black-friday/": "2026-10-20",
- "/guides/": "2026-10-31",
- "/guides/ai-video-generator-apps/": "2026-11-17",
- "/guides/ai-video-project-budget/": "2026-10-31",
- "/guides/best-ai-video-generator/": "2026-11-16",
- "/guides/cheapest-ai-video-generator/": "2026-10-31",
- "/guides/cheapest-kling-3-0/": "2026-11-17",
- "/guides/cheapest-seedance-2-5/": "2026-11-12",
- "/guides/cheapest-wan-3-0/": "2026-10-31",
- "/guides/fal-ai-pricing/": "2026-11-17",
- "/guides/free-ai-video-generator-no-sign-up/": "2026-11-20",
- "/guides/free-ai-video-generators/": "2026-11-15",
- "/guides/free-image-to-video-ai/": "2026-11-16",
- "/guides/free-text-to-video-ai/": "2026-11-17",
- "/guides/google-flow-credits-calculator/": "2026-11-11",
- "/guides/grok-imagine-video-cost/": "2026-11-12",
- "/guides/higgsfield-alternatives/": "2026-11-17",
- "/guides/higgsfield-black-friday/": "2026-11-12",
- "/guides/higgsfield-pricing/": "2026-11-13",
- "/guides/higgsfield-promo-code/": "2026-11-17",
- "/guides/higgsfield-vs-kling/": "2026-11-17",
- "/guides/higgsfield-vs-runway/": "2026-11-17",
- "/guides/is-higgsfield-worth-it/": "2026-10-31",
- "/guides/is-kling-ai-free/": "2026-11-24",
- "/guides/veo-3-1-pricing/": "2026-11-24",
- "/guides/kling-ai-pricing/": "2026-11-14",
- "/guides/runway-pricing/": "2026-11-15",
- "/guides/seedance-2-5-unlimited/": "2026-11-11",
- "/guides/wan-3-0-unlimited/": "2026-11-12",
- "/mcp/": "2026-11-05",
- "/models/": "2026-10-30",
- "/models/gemini-omni-flash/": "2026-10-20",
- "/models/grok-imagine/": "2026-10-20",
- "/models/kling-3-0/": "2026-10-20",
- "/models/minimax-hailuo/": "2026-10-20",
- "/models/runway-gen-4/": "2026-10-20",
- "/models/seedance-2-5/": "2026-10-20",
- "/models/veo-3-1/": "2026-10-20",
- "/models/wan-3-0-prime/": "2026-10-20",
- "/models/wan-3-0/": "2026-10-20",
- "/newsletter/": "2026-10-20",
- "/platforms/krea/": "2026-11-20",
- "/platforms/magnific/": "2026-11-20",
- "/price-index/": "2026-11-20",
- "/reports/": "2026-10-30",
- "/reports/2026-w44/": "2026-10-30",
- "/reports/2026-w45/": "2026-11-06",
- "/reports/2026-w46/": "2026-11-13",
- "/reports/2026-w47/": "2026-11-20"
+ "/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "1a5e2c040ea15efeacecda037eb1478174f4c082250800cad50021bd1504bb78"
+ },
+ "/about/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "58e34e8692208b5249ec7424a09961060e878be89ee843e6d3454ed3ea7080d9"
+ },
+ "/advertise/": {
+  "published": "2026-10-28",
+  "modified": "2026-11-27",
+  "hash": "b55e85eec5e46da9c0128c2e2567a3462d475b3ffb8e620362c2eadcf9b07be5"
+ },
+ "/calculator/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "28fe5af4d38dc21fc35cf9370ba0e5b7844c15ab34e7949c287ee2156242a711"
+ },
+ "/changes/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "3ff9f66cf97b7344257a742cfa81484cdc70c41d36c480b45bd4516ec6df7544"
+ },
+ "/compare/kling-3-0-vs-seedance-2-5/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "87b35a9b12785f53e00c2e781278c1b28b491f942ad3f4d8bc4fea7f68aa1ff6"
+ },
+ "/compare/kling-3-0-vs-veo-3-1/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "a3f785457d5cc08a4eb1fe1e327d190ceb8b4a4ee0599628c22c29e4c6453610"
+ },
+ "/compare/seedance-2-5-vs-veo-3-1/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "596d491d61f4187546f8ca1d090f88a4be944f192150b02ae9baf47fd0bd5963"
+ },
+ "/compare/wan-3-0-vs-kling-3-0/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "1529fd05d32a1b58ebf76cb30f3a2eeb9458d3b57812c9366cd59f54bba11c22"
+ },
+ "/compare/wan-3-0-vs-wan-3-0-prime/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "6ff1b33c3a8d88d97bdfce3619d5e585ac2976464495378cafd11063ae921070"
+ },
+ "/contact-us/": {
+  "published": "2026-11-08",
+  "modified": "2026-11-08",
+  "hash": "6d9ced3bf3c5e48eb4c18c3b229c58854d273e0b478927c2794fb10321a5b283"
+ },
+ "/contact/": {
+  "published": "2026-11-08",
+  "modified": "2026-11-27",
+  "hash": "1e979844a3c50b5466019837dbeac493e5aece01f34e8e12bf83c6c0a6d164c8"
+ },
+ "/cost/10-second/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "025fb55f9dc591b9df2c6a4e9e3c1e07579976b96b6a9ce9548e47312e084dbc"
+ },
+ "/cost/1080p/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "61c9a853c6548d93219f5880030415fd4a467f822d064beff547336cbdbbade2"
+ },
+ "/cost/30-second/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "53def570c0e8e1eec0c9c1a9ad3810f7a8f62ccd73da94e0a583bcc82671abc7"
+ },
+ "/data/": {
+  "published": "2026-11-05",
+  "modified": "2026-11-27",
+  "hash": "e276263071fdfafbaabfb47b3c6c8dd7eaf0985ec32679410ce7855c2d52aa04"
+ },
+ "/deals/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "885045a37fa8150202f09c511cb47b447a37d932f5f39bbea99ae213dbe945a1"
+ },
+ "/deals/black-friday/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "ec260696b4263ad81969e2dc1f28eeda994a65cc63d7558e23d8b5dc8caf1df2"
+ },
+ "/guides/": {
+  "published": "2026-10-31",
+  "modified": "2026-11-27",
+  "hash": "945b2cbf41d6088280dd27006b22fbfb42da9d653327a75a3f1e6e6c10abacb0"
+ },
+ "/guides/ai-video-generator-apps/": {
+  "published": "2026-11-17",
+  "modified": "2026-11-27",
+  "hash": "1de48c792d0209194491da70c9daeeeb3024b52f01493a5d5af2b15ee47c958b"
+ },
+ "/guides/ai-video-project-budget/": {
+  "published": "2026-10-31",
+  "modified": "2026-11-27",
+  "hash": "2dade4dfd4b17b702c0deb34885abb49e37ac03aac5262a117fcba6469caf381"
+ },
+ "/guides/best-ai-video-generator/": {
+  "published": "2026-11-16",
+  "modified": "2026-11-27",
+  "hash": "80876c2cb31693cadc75a726644d3a60bd0a3fe252e5b259d00c0ff7be3228f4"
+ },
+ "/guides/cheapest-ai-video-generator/": {
+  "published": "2026-10-31",
+  "modified": "2026-11-27",
+  "hash": "1a20d213eba0085c4ac42146d790a414fdc917f48b3f042dc7cb4426c3f6a369"
+ },
+ "/guides/cheapest-kling-3-0/": {
+  "published": "2026-11-17",
+  "modified": "2026-11-27",
+  "hash": "a88665e3db80de68de2ae66781584719e1d1f766730ebd9e3ad4be48dabe87b6"
+ },
+ "/guides/cheapest-seedance-2-5/": {
+  "published": "2026-11-12",
+  "modified": "2026-11-27",
+  "hash": "9ab19e849dad7affe746c15da7ef7ffb653fe76dd6cb4afd892f72a7c5546feb"
+ },
+ "/guides/cheapest-wan-3-0/": {
+  "published": "2026-10-31",
+  "modified": "2026-11-27",
+  "hash": "e4da8a595a4f7a30f46530959fe15d9fec5991e0d6ebb5f78febe1f2d0b7df93"
+ },
+ "/guides/fal-ai-pricing/": {
+  "published": "2026-11-17",
+  "modified": "2026-11-27",
+  "hash": "1b5269dc8f4c9703c47f2420ba2184c275bc35c5a8061ccc9f0147150ebd007e"
+ },
+ "/guides/free-ai-video-generator-no-sign-up/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "17c34140ce60319672306c394b6bb5f492cd2c149cc80b3a59218ffe25589d57"
+ },
+ "/guides/free-ai-video-generators/": {
+  "published": "2026-11-15",
+  "modified": "2026-11-27",
+  "hash": "c7e3e23651828ba9173ceb7b1e1e67bb48f5dc020fba92da076baac6473317ed"
+ },
+ "/guides/free-image-to-video-ai/": {
+  "published": "2026-11-16",
+  "modified": "2026-11-27",
+  "hash": "4f8a4a28c2684341baf85ac9ffe2547b2cc544abb87f2dcafcea4e4dd8889eb0"
+ },
+ "/guides/free-text-to-video-ai/": {
+  "published": "2026-11-17",
+  "modified": "2026-11-27",
+  "hash": "928b499c3a8e05048e35d6ad693db071af088f2ea6f51a32f29e78bc5b78c651"
+ },
+ "/guides/google-flow-credits-calculator/": {
+  "published": "2026-11-11",
+  "modified": "2026-11-27",
+  "hash": "bdf86ae1a34a8d5a89452c125d9837be6815dab8df4ab69605eafeceb69b0a2d"
+ },
+ "/guides/grok-imagine-video-cost/": {
+  "published": "2026-11-12",
+  "modified": "2026-11-27",
+  "hash": "6e809facfcd6f2e6063f95e2cbb66f6b7bc05056260926365ea17987fb9cda58"
+ },
+ "/guides/higgsfield-alternatives/": {
+  "published": "2026-11-17",
+  "modified": "2026-11-27",
+  "hash": "62957454ecd2a0da74f6efe42e0be7cfd1ec03dbbe0815107b89dd73800720d1"
+ },
+ "/guides/higgsfield-black-friday/": {
+  "published": "2026-11-12",
+  "modified": "2026-11-26",
+  "hash": "3f1e10c1167fd038ed0639bad703758b2719ad45d8eab3897611474aef84b750"
+ },
+ "/guides/higgsfield-pricing/": {
+  "published": "2026-11-13",
+  "modified": "2026-11-27",
+  "hash": "b68ef3e25fb7a45d461849aab746bd62251a418b7f305142cef99e93d247a493"
+ },
+ "/guides/higgsfield-promo-code/": {
+  "published": "2026-11-17",
+  "modified": "2026-11-27",
+  "hash": "96bf4a19af3d9b3e9c20a2a4a88ad11ed8251a683a238ca326df505f8c2315d5"
+ },
+ "/guides/higgsfield-vs-kling/": {
+  "published": "2026-11-17",
+  "modified": "2026-11-27",
+  "hash": "0481a9bc142606afd1948e1d3c0cc00b7e31e02cf731d8cb3d148a2b63a5f2d3"
+ },
+ "/guides/higgsfield-vs-runway/": {
+  "published": "2026-11-17",
+  "modified": "2026-11-27",
+  "hash": "bf5eef0fc5b2c8a5511096120efd4a8abf23dcb1d813618edac72f6df57f3040"
+ },
+ "/guides/is-higgsfield-worth-it/": {
+  "published": "2026-10-31",
+  "modified": "2026-11-27",
+  "hash": "b96b8102ab3b8f93abbfd8cba5f7d3b2fe00f7533a087febf2b17acb02808ac7"
+ },
+ "/guides/is-kling-ai-free/": {
+  "published": "2026-11-24",
+  "modified": "2026-11-27",
+  "hash": "eb516ef0ff789e28e64460b3097c7dfc770488dd3f2a97484d8388159341d45e"
+ },
+ "/guides/kling-ai-pricing/": {
+  "published": "2026-11-14",
+  "modified": "2026-11-27",
+  "hash": "7289982c9b5f009de876b70140e54cb445eb67e26c1a47d139ab077fce8f5eac"
+ },
+ "/guides/runway-pricing/": {
+  "published": "2026-11-15",
+  "modified": "2026-11-27",
+  "hash": "7065cefb2cf2108776f45bf8964e87aa9810bd688c04a0d258bcc5ec948e268e"
+ },
+ "/guides/seedance-2-5-unlimited/": {
+  "published": "2026-11-11",
+  "modified": "2026-11-27",
+  "hash": "9cf419545edbd83f999cfdedee1b286e0a839f60a30c7e21e9206923c3b1a6fd"
+ },
+ "/guides/veo-3-1-pricing/": {
+  "published": "2026-11-24",
+  "modified": "2026-11-27",
+  "hash": "3aac9f697032eb3b57fb0b20673b8b8007636c25e23cc3ec85a6fe5f360e4295"
+ },
+ "/guides/wan-3-0-unlimited/": {
+  "published": "2026-11-12",
+  "modified": "2026-11-27",
+  "hash": "c359030a65bf179f34ec7e61b0ccf1e66dca11f0569e3fae68bb5803505f65c6"
+ },
+ "/mcp/": {
+  "published": "2026-11-05",
+  "modified": "2026-11-27",
+  "hash": "2acb0dd15555347085365768fca4ece5e6eb91b66e0107c976b6d4def99fbc23"
+ },
+ "/models/": {
+  "published": "2026-10-30",
+  "modified": "2026-11-27",
+  "hash": "d060942756c79beaa72bf1c6c04603ba76118cf90fac29c2582f5045656166d5"
+ },
+ "/models/gemini-omni-flash/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "e3fcddae21cbc16f37386454d1c9f8ca43b29ae2744b942f542eb7094ac9a2da"
+ },
+ "/models/grok-imagine/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "3568f0061c67c3c291aced768d44144ee203da1ed1516b03b95467188ceb0890"
+ },
+ "/models/kling-3-0/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "b8240c05c785ad265d691596cbad4d8d0cf534572d023df73f4b956fd1fce277"
+ },
+ "/models/minimax-hailuo/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "4dea7b5081dc4fcf506182dc4b84b76b3e4097e1b81cce8dbb6345adb3148b7b"
+ },
+ "/models/runway-gen-4/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "21b414a51c3b1e499af4bbbf9c652fb64536c15c233143d5a1e8cbee73745890"
+ },
+ "/models/seedance-2-5/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "5a29f424e7c63ad33138fd5cfb515b41c512938ab0d6c662590daf17c5b30f0d"
+ },
+ "/models/veo-3-1/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "9e0e8c465402a21183c28291694ab7ecc96ef3cd489607e94938fbd61634a717"
+ },
+ "/models/wan-3-0-prime/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "37ead8a8b3272c17f8fa9d1e520aa7782288c28bb33bb69a8400714dcbe68883"
+ },
+ "/models/wan-3-0/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "d73a0459eb8370313368936b1d22b0eee7d0769cf7653cd97bc1031415ae942a"
+ },
+ "/newsletter/": {
+  "published": "2026-10-20",
+  "modified": "2026-11-27",
+  "hash": "4dba80fbe7ade14e74251c30a76cf5ebcba2af73c3ae634ea9d581748a82caf7"
+ },
+ "/platforms/krea/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "a9de281abe35b31679a27f6910148b0f4d50ff34969c6a484b2efe3e8b7bc80e"
+ },
+ "/platforms/magnific/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "0f9e53f17f90f6748f1c551290de5467d73745a4197d90de8f5bc29799525c15"
+ },
+ "/price-index/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-27",
+  "hash": "a186bc1f3ec7720154c1fdd34767fed2f8470a25791cc7e72379db957c3670b0"
+ },
+ "/reports/": {
+  "published": "2026-10-30",
+  "modified": "2026-11-27",
+  "hash": "94d938deeebc160134b9ef6f404a06e5a0060d506f5892ba021a142a27ddd129"
+ },
+ "/reports/2026-w44/": {
+  "published": "2026-10-30",
+  "modified": "2026-10-30",
+  "hash": "37cddd61ae64b6a6049e9daaa9c7580f69c8e62f518d9ffc781bea6506dc558a"
+ },
+ "/reports/2026-w45/": {
+  "published": "2026-11-06",
+  "modified": "2026-11-09",
+  "hash": "2a68a9c4e7bbf2c5fa3c9f86476153dc239c99ed8f94bbcebc4bbb9040b0add5"
+ },
+ "/reports/2026-w46/": {
+  "published": "2026-11-13",
+  "modified": "2026-11-13",
+  "hash": "89fc2c2c480c4141521ca33ad8df8c6f4a28e0d8ee22b4471acc870215f607db"
+ },
+ "/reports/2026-w47/": {
+  "published": "2026-11-20",
+  "modified": "2026-11-20",
+  "hash": "4cf456f6562514e0f5dc32e1166c452329d00a371cd1a9caa9d2f13337cd3e77"
+ },
+ "/reports/2026-w48/": {
+  "published": "2026-11-27",
+  "modified": "2026-11-27",
+  "hash": "ebf346d56ac8c64217c6e592a8f191a8162b53e036f6d8a671c8c388b04c0386"
+ }
 }

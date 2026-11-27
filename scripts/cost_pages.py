@@ -342,7 +342,7 @@ def render_page(g, page):
         "name": page["h1"],
         "description": page["description"],
         "url": g["SITE_URL"] + page["path"],
-        "dateModified": LAST,
+        "dateModified": __import__("schema_ld").date_modified(g, page["path"]),
         "about": [{"@type": "Thing", "name": name[s]} for s in models],
         "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
     }

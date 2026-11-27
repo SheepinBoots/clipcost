@@ -257,7 +257,7 @@ def render_plan_only_page(g, page):
         "name": page["h1"],
         "description": page["description"],
         "url": g["SITE_URL"] + page["path"],
-        "dateModified": LAST,
+        "dateModified": __import__("schema_ld").date_modified(g, page["path"]),
         "about": [{"@type": "Organization", "name": plat}],
         "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
         "text": statement,
@@ -479,7 +479,7 @@ def render_page(g, page):
         "name": page["h1"],
         "description": page["description"],
         "url": g["SITE_URL"] + page["path"],
-        "dateModified": LAST,
+        "dateModified": __import__("schema_ld").date_modified(g, page["path"]),
         "about": [{"@type": "Organization", "name": plat}] + [{"@type": "Thing", "name": models[s]["name"]} for s in slugs],
         "publisher": {"@type": "Organization", "@id": g["ORG_ID"], "name": g["BRAND"], "url": g["SITE_URL"] + "/"},
     }
