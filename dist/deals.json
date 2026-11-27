@@ -517,6 +517,50 @@
    "examples": []
   },
   {
+   "id": "fal-seedance25-free",
+   "vendor": "fal",
+   "type": "unlimited_window",
+   "title": "Free Seedance 2.5 generations on fal through Dec 1",
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": true,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": true,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "price_before": null,
+   "price_after": null,
+   "price_pairs": null,
+   "full_plan_id": null,
+   "deal_plan_id": null,
+   "math": "none",
+   "variants": [],
+   "start": "2026-11-21",
+   "end": "2026-12-01",
+   "end_is_estimate": true,
+   "status": "live",
+   "source_url": "https://x.com/fal/status/2126013950521434184",
+   "source_quote": "Free Seedance 2.5 generations are extended through December 1.",
+   "verified_date": "2026-11-27",
+   "notes": "Checked Nov 27, 2026, 8:45 AM PT on fal's official X account. The Nov 21 post says Seedance 2.5 is free for 5 video generations for anyone who signed up in the past week or joins now (announced as a weekend offer). The Nov 26 post, 10:03 AM PT, extends it through December 1. Neither post gives a clock time or time zone, so the Dec 1 end date is an estimate and the exact cutoff is not stated. The post does not say whether the free generations apply to the web playground or the API, so this is not turned into a $/s and no price is changed.",
+   "examples": [],
+   "sources": [
+    {
+     "url": "https://x.com/fal/status/2124230539544871333",
+     "kind": "x_post",
+     "quote": "5 free video generations for anyone who signed up in the past week or joins now."
+    }
+   ]
+  },
+  {
    "id": "fal-flux3-40",
    "vendor": "fal",
    "type": "percent_off",

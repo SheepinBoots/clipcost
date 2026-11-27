@@ -5,7 +5,7 @@
   <link>https://vidfare.com/deals/</link>
   <atom:link href="https://vidfare.com/deals.xml" rel="self" type="application/rss+xml"/>
   <description>Live AI video deals from vendor pages and official accounts.</description>
-  <lastBuildDate>Fri, 27 Nov 2026 15:52:47 GMT</lastBuildDate>
+  <lastBuildDate>Fri, 27 Nov 2026 16:35:33 GMT</lastBuildDate>
   <item>
     <title>Black Friday: Plus annual billing, $59 to $30/mo</title>
     <link>https://vidfare.com/deals/#hf-plus-annual</link>
@@ -96,6 +96,13 @@
     <guid isPermaLink="true">https://vidfare.com/deals/#runway-api-kling4-20</guid>
     <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
     <description>Build with Kling 4.0 on Runway Dev. ... Get 20% off Kling 4 through November 30. Ends 2026-11-30.</description>
+  </item>
+  <item>
+    <title>Free Seedance 2.5 generations on fal through Dec 1</title>
+    <link>https://vidfare.com/deals/#fal-seedance25-free</link>
+    <guid isPermaLink="true">https://vidfare.com/deals/#fal-seedance25-free</guid>
+    <pubDate>Sat, 21 Nov 2026 00:00:00 GMT</pubDate>
+    <description>Free Seedance 2.5 generations are extended through December 1. Ends 2026-12-01 (estimated).</description>
   </item>
   <item>
     <title>FLUX 3 Max 40% off until December 7</title>

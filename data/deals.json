@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "updated": "2026-11-26",
+ "updated": "2026-11-27",
  "watch": [
   {
    "id": "hf_plans",
@@ -1956,6 +1956,46 @@
    "math": "none",
    "show_on_rows": false,
    "notes": "Checked Nov 24, 2026, 3:22 PM ET (12:22 PM PT) on magnific.com/pricing; the same banner was on the page in the Nov 23 daily check. Ends Dec 1, 08:00 CET, which is Dec 1, 2026, 2:00 AM ET (Nov 30, 2026, 11:00 PM PT). Applies to annual plans, new purchases and monthly-to-annual switches; Premium+ and Pro add gift credits (+50K and +125K). The Premium card shows an extra 50% off for the first year, then the regular annual price. Per-plan US dollar prices were not readable on this check (the page served another currency), so no plan price or $/s is changed. Catalog $/s keeps the regular annual rates."
+  },
+  {
+   "id": "fal-seedance25-free",
+   "vendor": "fal",
+   "type": "unlimited_window",
+   "title": "Free Seedance 2.5 generations on fal through Dec 1",
+   "models": [
+    "seedance-2-5"
+   ],
+   "plans": [],
+   "conditions": {
+    "new_users_only": true,
+    "annual_only": false,
+    "first_months": null,
+    "max_resolution": null,
+    "web_only": true,
+    "code": null,
+    "standing": false
+   },
+   "percent": null,
+   "bonus_credits": null,
+   "start": "2026-11-21",
+   "end": "2026-12-01",
+   "end_is_estimate": true,
+   "status": "live",
+   "source_url": "https://x.com/fal/status/2126013950521434184",
+   "source_kind": "x_post",
+   "source_quote": "Free Seedance 2.5 generations are extended through December 1.",
+   "verified_date": "2026-11-27",
+   "link_url": "https://fal.ai/",
+   "math": "none",
+   "show_on_rows": false,
+   "notes": "Checked Nov 27, 2026, 8:45 AM PT on fal's official X account. The Nov 21 post says Seedance 2.5 is free for 5 video generations for anyone who signed up in the past week or joins now (announced as a weekend offer). The Nov 26 post, 10:03 AM PT, extends it through December 1. Neither post gives a clock time or time zone, so the Dec 1 end date is an estimate and the exact cutoff is not stated. The post does not say whether the free generations apply to the web playground or the API, so this is not turned into a $/s and no price is changed.",
+   "sources": [
+    {
+     "url": "https://x.com/fal/status/2124230539544871333",
+     "kind": "x_post",
+     "quote": "5 free video generations for anyone who signed up in the past week or joins now."
+    }
+   ]
   }
  ],
  "history": [
