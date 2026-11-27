@@ -2594,16 +2594,6 @@ for plat in sorted({p["platform"] for p in plans.values() if calc_plan_ok(p)}):
     plan_opts += f'<optgroup label="{e(plat)}">' + "".join(f'<option value="{k}">{e(plans[k]["plan"])}: ${plans[k]["usd_month"]:g}/mo</option>' for k in keys) + "</optgroup>"
 calc_seed = calc_rows_html(default_plan_id)
 calc_lead = "Pick a plan to see how many clips its credits buy each month and what each clip really costs. Credit costs come from each platform's own pricing page."
-calc_ld = {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": f"{BRAND} credit-plan calculator",
-    "description": calc_lead,
-    "url": SITE_URL + "/calculator/",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
-}
 calc_res_opts = '<option value="">Any</option>' + "".join(
     f'<option value="{e(res)}">{e(res)}</option>'
     for res in dict.fromkeys(
@@ -2817,7 +2807,7 @@ fetch(BASE+'/data/prices.json').then(r=>r.json()).then(d=>{{
 </script>{compare_pages.links_html("*", root)}{cost_pages.links_html("*", root)}{platform_pages.links_html("*", root)}{news_box()}"""
 page("/calculator/", page_title("AI Video Credit Calculator"),
      "How many Wan 3.0, Kling 3.0, Veo 3.1 or Seedance 2.5 clips does your Higgsfield, Krea or Magnific plan buy? Cost per clip and per second.", calc, "/calculator/",
-     '<script>if(location.search){var k=["model","seconds","sec","resolution","res","audio","input","plan","provider","platform","used"],q=new URLSearchParams(location.search);for(var i=0;i<k.length;i++){if(q.get(k[i])){document.documentElement.classList.add("calc-hold");break}}}</script><style>html.calc-hold body{visibility:hidden}</style>' + ld_script(calc_ld))
+     '<script>if(location.search){var k=["model","seconds","sec","resolution","res","audio","input","plan","provider","platform","used"],q=new URLSearchParams(location.search);for(var i=0;i<k.length;i++){if(q.get(k[i])){document.documentElement.classList.add("calc-hold");break}}}</script><style>html.calc-hold body{visibility:hidden}</style>')
 
 # ---------- Changes ----------
 items = ""
@@ -2962,17 +2952,11 @@ document.getElementById('dType').addEventListener('input', filterDeals);
 document.addEventListener('DOMContentLoaded', filterDeals);
 filterDeals();
 </script>"""
+_OFFER_UNTIL = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$")
+
 def deals_item_list(deals):
     elements = []
     for i, deal in enumerate(deals, 1):
-        bits = [deal.get("vendor") or "", (deal.get("type") or "").replace("_", " ")]
-        if deal.get("percent") is not None:
-            bits.append(f"{deal['percent']:g}% off")
-        if deal.get("end"):
-            est = " (estimated)" if deal.get("end_is_estimate") else ""
-            bits.append(f"ends {deal['end']}{est}")
-        else:
-            bits.append("no end date given")
         item = {
             "@type": "ListItem",
             "position": i,
@@ -2985,13 +2969,18 @@ def deals_item_list(deals):
                 "@type": "Offer",
                 "name": deal.get("title") or deal["id"],
                 "url": f"{SITE_URL}/deals/#{deal['id']}",
-                "description": " · ".join(bit for bit in bits if bit),
-                "price": f"{price:g}",
+                "price": price,
                 "priceCurrency": "USD",
-                "seller": {"@type": "Organization", "name": deal.get("vendor") or ""},
             }
-            if deal.get("end"):
-                offer["priceValidUntil"] = deal["end"]
+            vendor = deal.get("vendor") or ""
+            if vendor:
+                offer["seller"] = {"@type": "Organization", "name": vendor}
+            # Date-only end (2026-11-27) is midnight UTC, which is already past on that
+            # calendar day and is not the time the card shows. Use ends_at, the
+            # timestamp printed on the card (for example 2026-11-28T00:00:00Z).
+            until = deal.get("ends_at") or ""
+            if _OFFER_UNTIL.match(str(until)):
+                offer["priceValidUntil"] = str(until)
             item["item"] = offer
         elements.append(item)
     return {
@@ -4713,10 +4702,42 @@ def audit_site():
     for loc in re.findall(r"<loc>([^<]+)</loc>", sitemap):
         if loc.split("?", 1)[0].rstrip("/").endswith(".json"):
             errors.append(f"sitemap includes a JSON URL: {loc}")
+        if "/calculator/" in loc and "?" in loc:
+            errors.append(f"sitemap includes a calculator query URL: {loc}")
     calc_html = open(os.path.join(DIST, "calculator", "index.html"), encoding="utf-8").read()
-    calc_canon = re.search(r'<link rel="canonical" href="([^"]*)"', calc_html)
-    if not calc_canon or calc_canon.group(1) != SITE_URL + "/calculator/":
-        errors.append("calculator canonical must be https://vidfare.com/calculator/")
+    calc_canons = re.findall(r'<link rel="canonical" href="([^"]*)"', calc_html)
+    if calc_canons != [SITE_URL + "/calculator/"]:
+        errors.append(f"calculator canonical must be https://vidfare.com/calculator/, got {calc_canons}")
+    if "canonical" in calc_html.split("</head>", 1)[-1]:
+        errors.append("calculator script must not rewrite the canonical link")
+    if "WebApplication" in calc_html or "SoftwareApplication" in calc_html:
+        errors.append("calculator must not use Software App JSON-LD")
+    deals_html = open(os.path.join(DIST, "deals", "index.html"), encoding="utf-8").read()
+    deals_visible = visible_page_text(deals_html)
+    for match in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', deals_html, re.S):
+        try:
+            deals_ld = json.loads(html.unescape(match.group(1)))
+        except json.JSONDecodeError as exc:
+            errors.append(f"deals JSON-LD is invalid: {exc}")
+            continue
+        if deals_ld.get("@type") != "ItemList":
+            continue
+        for el in deals_ld.get("itemListElement") or []:
+            offer = el.get("item")
+            if not isinstance(offer, dict):
+                continue
+            price = offer.get("price")
+            if isinstance(price, bool) or not isinstance(price, (int, float)):
+                errors.append(f"deals offer price must be a number: {offer.get('name')}")
+            if offer.get("priceCurrency") != "USD":
+                errors.append(f"deals offer priceCurrency must be USD: {offer.get('name')}")
+            until = offer.get("priceValidUntil")
+            if until is not None and not _OFFER_UNTIL.match(str(until)):
+                errors.append(f"deals offer priceValidUntil must be a datetime with a timezone: {until}")
+            if until and str(until) not in deals_visible:
+                errors.append(f"deals offer priceValidUntil is not on the page: {until}")
+            if offer.get("description"):
+                errors.append("deals offer description must stay off the markup")
     if REPORTS_ENABLED:
         published_now = weekly_report.assign(weekly_report.load(), today)
         prior_through = None
