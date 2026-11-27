@@ -388,7 +388,7 @@ def render(g):
     )
     a_cost = (
         "Less than most first paid plans suggest, if you can use an API or a "
-        "multi-model plan. The cheapest catalog row in the table is $0.0167 "
+        "multi-model plan. The cheapest catalog row in the table is $0.01 "
         "per second for Wan 3.0 on Higgsfield Ultra (annual) at 480p, audio "
         "not stated, but that row does not state input type. The lowest rate "
         "in our catalog whose vendor page states text-to-video input is $0.02 "
@@ -447,7 +447,7 @@ def render(g):
 <li><b>Daily credits, clip count unknown.</b> Dreamina. A Dreamina guide says 120 credits a day in the US; the cost of a clip is not published.</li>
 <li><b>Not a source of free clips.</b> Pika Free has 0 monthly credits, Runway’s 125 credits are one-time, and Luma lists no public free plan.</li>
 <li><b>Audio.</b> No vendor we read states, as a rule, whether a free clip includes sound, so audio is marked not stated or unknown on every free row.</li>
-<li><b>After the free tier.</b> The cheapest catalog row in the paid table is $0.0167/s for Wan 3.0 on Higgsfield Ultra (annual) at 480p, audio not stated, input type not stated. The lowest catalog rate whose vendor page states text-to-video input is $0.02/s (Grok Imagine Video 1.5 Lite, xAI API, 480p, audio not stated, billed per second of output).</li>
+<li><b>After the free tier.</b> The cheapest catalog row in the paid table is $0.01/s for Wan 3.0 on Higgsfield Ultra (annual) at 480p, audio not stated, input type not stated. The lowest catalog rate whose vendor page states text-to-video input is $0.02/s (Grok Imagine Video 1.5 Lite, xAI API, 480p, audio not stated, billed per second of output).</li>
 </ul>
 </div>"""
 

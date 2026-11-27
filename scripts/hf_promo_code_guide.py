@@ -13,8 +13,8 @@ LABEL = "Higgsfield promo codes"
 PHRASE = "Higgsfield promo code and current deals"
 import timefmt as _tf
 QUESTION = "Is there a Higgsfield promo code in " + _tf.us_today().strftime("%B %Y") + "?"
-CHECKED = "2026-11-25"
-CHECKED_WHEN = "Nov 25, 2026, 7:20 PM ET (4:20 PM PT)"
+CHECKED = "2026-11-26"
+CHECKED_WHEN = "Nov 26, 2026, 7:20 PM ET (4:20 PM PT)"
 RECHECK_WHEN = CHECKED_WHEN
 # Help center, changelog, and X posts were last read on this earlier check.
 EARLIER_WHEN = "Nov 19, 2026, 7:20 PM ET (4:20 PM PT)"

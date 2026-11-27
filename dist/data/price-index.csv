@@ -184,8 +184,8 @@ date,tier,models_priced,median_usd_per_second,cheapest_usd_per_second,cheapest_m
 2026-11-25,720p,7,0.04125,0.0225,Wan 3.0,Higgsfield,720p,r101,verified,3977c19
 2026-11-25,1080p,7,0.0825,0.02625,Kling 3.0,Higgsfield,1080p,r115,estimate,3977c19
 2026-11-25,4k,3,0.209,0.09,Kling 3.0,Higgsfield,4K,r119,estimate,3977c19
-2026-11-26,any,9,0.0225,0.01125,Wan 3.0,Higgsfield,480p,r096,verified,current
-2026-11-26,480p,5,0.02,0.01125,Wan 3.0,Higgsfield,480p,r096,verified,current
-2026-11-26,720p,7,0.04125,0.0225,Wan 3.0,Higgsfield,720p,r101,verified,current
-2026-11-26,1080p,7,0.0825,0.02625,Kling 3.0,Higgsfield,1080p,r115,estimate,current
-2026-11-26,4k,3,0.209,0.09,Kling 3.0,Higgsfield,4K,r119,estimate,current
+2026-11-26,any,9,0.02,0.01,Wan 3.0,Higgsfield,480p,r096,verified,current
+2026-11-26,480p,5,0.02,0.01,Wan 3.0,Higgsfield,480p,r096,verified,current
+2026-11-26,720p,7,0.03667,0.02,Wan 3.0,Higgsfield,720p,r101,verified,current
+2026-11-26,1080p,7,0.08,0.02333,Kling 3.0,Higgsfield,1080p,r115,estimate,current
+2026-11-26,4k,3,0.209,0.08,Kling 3.0,Higgsfield,4K,r119,estimate,current

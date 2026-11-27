@@ -52,7 +52,7 @@ def main():
         " ET (",
         "Key takeaways",
         "What to do next",
-        "$0.0167",
+        "$0.01",
         "$0.02",
         "r096",
         "r209",

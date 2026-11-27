@@ -209,7 +209,7 @@
    ],
    "checked": "2026-11-26",
    "source_url": "https://higgsfield.ai/pricing",
-   "note": "Checked Nov 25, 2026, 7:20 PM ET (4:20 PM PT) on higgsfield.ai/pricing (rendered page), pricing.md and the public plans API the page loads (fnf-api-gw.higgsfield.ai/fnf/subscriptions/v2/plans?plan_set_key=ps_a3&with_localization=true). Black Friday phase black_friday_69_phase_2 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-26T00:00:00Z, ends_at 2026-11-27T00:00:00Z, which is Nov 26, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-26, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-27 00:00 UTC.\" The sale was extended again: the up to 70% off phase (black_friday_phase_2, recorded at the Nov 24 check; no longer visible in the page's sale record) was due to end 2026-11-26T00:00:00Z, the up to 69% phase ended 2026-11-25T00:00:00Z, and the 63% phase ended 2026-11-23T00:00:00Z."
+   "note": "Checked Nov 26, 2026, 7:20 PM ET (4:20 PM PT) on higgsfield.ai/pricing (rendered page), pricing.md and the public plans API the page loads (fnf-api-gw.higgsfield.ai/fnf/subscriptions/v2/plans?plan_set_key=ps_a3&with_localization=true). Black Friday phase black_friday_75 (max_discount_percent 75) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-27T00:00:00Z, ends_at 2026-11-28T00:00:00Z, which is Nov 27, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-27, US dollars) says \"Black Friday sale: up to 75% off, ends 2026-11-28 00:00 UTC.\" The sale was extended again: the up to 69% phase (black_friday_69_phase_2, recorded at the Nov 25 check) was due to end 2026-11-27T00:00:00Z, the up to 70% off phase ended 2026-11-26T00:00:00Z, the up to 69% phase ended 2026-11-25T00:00:00Z, and the 63% phase ended 2026-11-23T00:00:00Z."
   },
   "hf-plus-monthly": {
    "platform": "Higgsfield",
@@ -230,14 +230,14 @@
   "hf-ultra-annual": {
    "platform": "Higgsfield",
    "plan": "Ultra (annual)",
-   "usd_month": 45,
+   "usd_month": 40,
    "billing": "annual",
    "credits_month": 3000,
    "source": "hf_plans",
    "checks": [
     {
      "needle": "Ultra BEST VALUE ${N}/month",
-     "expect": 45
+     "expect": 40
     },
     {
      "needle": "Credit discount 0 270 1200 {N}",
@@ -246,7 +246,7 @@
    ],
    "checked": "2026-11-26",
    "source_url": "https://higgsfield.ai/pricing",
-   "note": "Checked Nov 25, 2026, 7:20 PM ET (4:20 PM PT) on higgsfield.ai/pricing (rendered page), pricing.md and the public plans API the page loads (fnf-api-gw.higgsfield.ai/fnf/subscriptions/v2/plans?plan_set_key=ps_a3&with_localization=true). Black Friday phase black_friday_69_phase_2 (max_discount_percent 69) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-26T00:00:00Z, ends_at 2026-11-27T00:00:00Z, which is Nov 26, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-26, US dollars) says \"Black Friday sale: up to 69% off, ends 2026-11-27 00:00 UTC.\" The sale was extended again: the up to 70% off phase (black_friday_phase_2, recorded at the Nov 24 check; no longer visible in the page's sale record) was due to end 2026-11-26T00:00:00Z, the up to 69% phase ended 2026-11-25T00:00:00Z, and the 63% phase ended 2026-11-23T00:00:00Z."
+   "note": "Checked Nov 26, 2026, 7:20 PM ET (4:20 PM PT) on higgsfield.ai/pricing (rendered page), pricing.md and the public plans API the page loads (fnf-api-gw.higgsfield.ai/fnf/subscriptions/v2/plans?plan_set_key=ps_a3&with_localization=true). Black Friday phase black_friday_75 (max_discount_percent 75) in the sale record sale_11_11 on higgsfield.ai/pricing: starts_at 2026-11-27T00:00:00Z, ends_at 2026-11-28T00:00:00Z, which is Nov 27, 2026, 7:00 PM ET (4:00 PM PT). Higgsfield's own https://higgsfield.ai/pricing.md (Last updated 2026-11-27, US dollars) says \"Black Friday sale: up to 75% off, ends 2026-11-28 00:00 UTC.\" The sale was extended again: the up to 69% phase (black_friday_69_phase_2, recorded at the Nov 25 check) was due to end 2026-11-27T00:00:00Z, the up to 70% off phase ended 2026-11-26T00:00:00Z, the up to 69% phase ended 2026-11-25T00:00:00Z, and the 63% phase ended 2026-11-23T00:00:00Z."
   },
   "hf-ultra-monthly": {
    "platform": "Higgsfield",
@@ -257,7 +257,7 @@
    "source": "hf_plans",
    "checks": [
     {
-     "needle": "${N} $45",
+     "needle": "${N} $40",
      "expect": 129
     }
    ],
@@ -4720,12 +4720,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 6.25,
-   "usd_per_clip": 0.0938,
-   "usd_per_second": 0.01875,
+   "usd_per_clip": 0.0833,
+   "usd_per_second": 0.01667,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; 6.2 credits/clip (5s) → $0.094/clip → $0.0187/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; 6.2 credits/clip (5s) → $0.083/clip → $0.0167/s",
    "checks": [
     {
      "needle": "Wan 3.0 Prime 480p {N} credits/5s",
@@ -4935,12 +4935,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 13.75,
-   "usd_per_clip": 0.2062,
-   "usd_per_second": 0.04125,
+   "usd_per_clip": 0.1833,
+   "usd_per_second": 0.03667,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; 13.8 credits/clip (5s) → $0.206/clip → $0.0412/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; 13.8 credits/clip (5s) → $0.183/clip → $0.0367/s",
    "checks": [
     {
      "needle": "Wan 3.0 Prime 720p {N} credits/5s",
@@ -5150,12 +5150,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 27.5,
-   "usd_per_clip": 0.4125,
-   "usd_per_second": 0.0825,
+   "usd_per_clip": 0.3667,
+   "usd_per_second": 0.07333,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; 27.5 credits/clip (5s) → $0.412/clip → $0.0825/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; 27.5 credits/clip (5s) → $0.367/clip → $0.0733/s",
    "checks": [
     {
      "needle": "Wan 3.0 Prime 1080p {N} credits/5s",
@@ -5365,12 +5365,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 3.75,
-   "usd_per_clip": 0.0562,
-   "usd_per_second": 0.01125,
+   "usd_per_clip": 0.05,
+   "usd_per_second": 0.01,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; 3.8 credits/clip (5s) → $0.056/clip → $0.0112/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; 3.8 credits/clip (5s) → $0.050/clip → $0.0100/s",
    "checks": [
     {
      "needle": "Wan 3.0 480p {N} credits/5s",
@@ -5580,12 +5580,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 7.5,
-   "usd_per_clip": 0.1125,
-   "usd_per_second": 0.0225,
+   "usd_per_clip": 0.1,
+   "usd_per_second": 0.02,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; 7.5 credits/clip (5s) → $0.112/clip → $0.0225/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; 7.5 credits/clip (5s) → $0.100/clip → $0.0200/s",
    "checks": [
     {
      "needle": "Wan 3.0 720p {N} credits/5s",
@@ -5795,12 +5795,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 15,
-   "usd_per_clip": 0.225,
-   "usd_per_second": 0.045,
+   "usd_per_clip": 0.2,
+   "usd_per_second": 0.04,
    "status": "verified",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; 15.0 credits/clip (5s) → $0.225/clip → $0.0450/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; 15.0 credits/clip (5s) → $0.200/clip → $0.0400/s",
    "checks": [
     {
      "needle": "Wan 3.0 1080p {N} credits/5s",
@@ -6010,12 +6010,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 7.5,
-   "usd_per_clip": 0.1125,
-   "usd_per_second": 0.0225,
+   "usd_per_clip": 0.1,
+   "usd_per_second": 0.02,
    "status": "estimate",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; ~7.5 credits/clip (5s) → $0.112/clip → $0.0225/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; ~7.5 credits/clip (5s) → $0.100/clip → $0.0200/s",
    "checks": [
     {
      "needle": "Kling 3.0 720p ~{N} credits/5s",
@@ -6182,12 +6182,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 8.75,
-   "usd_per_clip": 0.1313,
-   "usd_per_second": 0.02625,
+   "usd_per_clip": 0.1167,
+   "usd_per_second": 0.02333,
    "status": "estimate",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; ~8.8 credits/clip (5s) → $0.131/clip → $0.0263/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; ~8.8 credits/clip (5s) → $0.117/clip → $0.0233/s",
    "checks": [
     {
      "needle": "Kling 3.0 1080p ~{N} credits/5s",
@@ -6354,12 +6354,12 @@
    "audio": null,
    "clip_seconds": 5,
    "credits_per_clip": 30,
-   "usd_per_clip": 0.45,
-   "usd_per_second": 0.09,
+   "usd_per_clip": 0.4,
+   "usd_per_second": 0.08,
    "status": "estimate",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; ~30.0 credits/clip (5s) → $0.450/clip → $0.0900/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; ~30.0 credits/clip (5s) → $0.400/clip → $0.0800/s",
    "checks": [
     {
      "needle": "Kling 3.0 4K ~{N} credits/5s",
@@ -6526,12 +6526,12 @@
    "audio": null,
    "clip_seconds": 4,
    "credits_per_clip": 40,
-   "usd_per_clip": 0.6,
-   "usd_per_second": 0.15,
+   "usd_per_clip": 0.5333,
+   "usd_per_second": 0.13333,
    "status": "estimate",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; ~40.0 credits/clip (4s) → $0.600/clip → $0.1500/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; ~40.0 credits/clip (4s) → $0.533/clip → $0.1333/s",
    "checks": [
     {
      "needle": "Google Veo 3.1 720p ~{N} credits/4s",
@@ -6698,12 +6698,12 @@
    "audio": null,
    "clip_seconds": 4,
    "credits_per_clip": 16,
-   "usd_per_clip": 0.24,
-   "usd_per_second": 0.06,
+   "usd_per_clip": 0.2133,
+   "usd_per_second": 0.05333,
    "status": "estimate",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; ~16.0 credits/clip (4s) → $0.240/clip → $0.0600/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; ~16.0 credits/clip (4s) → $0.213/clip → $0.0533/s",
    "checks": [
     {
      "needle": "Google Veo 3.1 Fast 720p ~{N} credits/4s",
@@ -6913,12 +6913,12 @@
    "audio": null,
    "clip_seconds": 6,
    "credits_per_clip": 6,
-   "usd_per_clip": 0.09,
-   "usd_per_second": 0.015,
+   "usd_per_clip": 0.08,
+   "usd_per_second": 0.01333,
    "status": "estimate",
    "promo_until": null,
    "source": "hf_plans",
-   "math": "$45/mo ÷ 3,000 credits = $0.01500/credit; ~6.0 credits/clip (6s) → $0.090/clip → $0.0150/s",
+   "math": "$40/mo ÷ 3,000 credits = $0.01333/credit; ~6.0 credits/clip (6s) → $0.080/clip → $0.0133/s",
    "checks": [
     {
      "needle": "Minimax Hailuo 2.3 768p ~{N} credits/6s",
