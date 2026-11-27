@@ -14,7 +14,7 @@
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "status": "fetched",
-   "snippets": 27
+   "snippets": 24
   },
   {
    "id": "magnific",
@@ -28,7 +28,7 @@
    "vendor": "Runway",
    "url": "https://runwayml.com/pricing",
    "status": "fetched",
-   "snippets": 8
+   "snippets": 11
   },
   {
    "id": "fal_pricing",
@@ -43,12 +43,36 @@
    "status": "unconfirmed",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
+   "sha": "6e828c5dbb8d99f5",
+   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 75% OFF Get started BLACK FRIDAY 75% OFF The best prices in GenAI industry 0 0 : 2 6 :",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "226bbde1b29d6424",
+   "snippet": "4 7 All plans Don’t miss your chance to get up to 75% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
+   "sha": "5cd7eb0a2e468599",
+   "snippet": "75% OFF Annual Secret offer expires in 00:26:47 Secret Special offer TODAY ONLY TODAY O",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Higgsfield",
+   "url": "https://higgsfield.ai/pricing",
    "sha": "cc78e034466b1e3b",
    "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 75% OFF Get started BLACK FRIDAY 75% OFF The best prices in GenAI industry 0 1 : 4 3 :",
    "seen": "2026-11-27"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "sha": "332cd7985e2d2213",
@@ -56,7 +80,7 @@
    "seen": "2026-11-27"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Higgsfield",
    "url": "https://higgsfield.ai/pricing",
    "sha": "dc057c6b6b4c8ede",
@@ -64,31 +88,47 @@
    "seen": "2026-11-27"
   },
   {
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "b2eca0393cc71a55",
-   "snippet": "ome Image Video Audio MCP Agentic Studios Community Contests Learn More Pricing 75% OFF Get started BLACK FRIDAY 75% OFF The best prices in GenAI industry 0 8 : 0 9 :",
-   "seen": "2026-11-27"
-  },
-  {
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "040bb75809378c2b",
-   "snippet": "4 3 All plans Don’t miss your chance to get up to 75% OFF. Individual Seedance 2.5 Unlimited 30 days Business plans Monthly Annual Up to",
-   "seen": "2026-11-27"
-  },
-  {
-   "status": "possible_end",
-   "vendor": "Higgsfield",
-   "url": "https://higgsfield.ai/pricing",
-   "sha": "cbe8d1ac946bb223",
-   "snippet": "75% OFF Annual Secret offer expires in 08:09:43 Secret Special offer TODAY ONLY TODAY O",
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "458aea2f14539601",
+   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 05 Hours 26 Minutes 46 Seconds Final hours, up to 75% off Black Friday Â· The b",
    "seen": "2026-11-27"
   },
   {
    "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "fad33f58a30add83",
+   "snippet": "on the market Expiring in 05 Hours 26 Minutes 46 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "5cdcb77e8a5a5a89",
+   "snippet": "GPT Image 2.6 -20% Nano Banana Pro -45% Included in plan Compute pack discounts Unlimited concurrency Access to all Seedance models Access to all models Limited model tr",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "9bea17f97cc12ed5",
+   "snippet": "GPT Image 2.6 -45% Nano Banana Pro -65% Included in plan Compute pack discounts Unlimited concurrency Access to all Seedance models Access to all models Unlimited model",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "e8b7e07b055b8a3f",
+   "snippet": "deo concurrency Unlimited Images per LoRA Custom Final hours, up to 75% off Black Friday Â· The best Seedance 2.5 price on the market Expiring in 05 Hours",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "sha": "0c6ef9e1695877c9",
@@ -96,7 +136,7 @@
    "seen": "2026-11-27"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "sha": "93ef800a422ada67",
@@ -104,7 +144,7 @@
    "seen": "2026-11-27"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "sha": "31c2880eec52507a",
@@ -112,7 +152,39 @@
    "seen": "2026-11-27"
   },
   {
-   "status": "unconfirmed",
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "e9398fb897d2eb62",
+   "snippet": "nce 2.5 -60% Kling 4.0 -20% Krea 3 -25% GPT Image 2.6 -20% Nano Banana Pro -45% Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Included in pl",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "837fa34c50711291",
+   "snippet": "an Compute pack discounts Unlimited concurrency Access to all Seedance models Access to all models Limited model tr",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "3b2393c204c92973",
+   "snippet": "nce 2.5 -75% Kling 4.0 -50% Krea 3 -50% GPT Image 2.6 -45% Nano Banana Pro -65% Unlimited 7 days Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Included in pl",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "possible_end",
+   "vendor": "Krea",
+   "url": "https://www.krea.ai/pricing",
+   "sha": "8f647b4c422420e6",
+   "snippet": "an Compute pack discounts Unlimited concurrency Access to all Seedance models Access to all models Unlimited model",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "possible_end",
    "vendor": "Krea",
    "url": "https://www.krea.ai/pricing",
    "sha": "f739f104e3c3d0cd",
@@ -120,35 +192,43 @@
    "seen": "2026-11-27"
   },
   {
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "sha": "45eeb76c6ceaed35",
-   "snippet": "s Steer style with references Mini apps Community-made tools Seedance 2.5 up to 75% off 16 Hours 09 Minutes 42 Seconds Final hours, up to 75% off Black Friday Â· The b",
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "b7979f8ec3ccb41f",
+   "snippet": "lly. Save $79/year. For curious creators trying AI video $12 $8.40 /month Extra 30% off first year 625 credits /mo 625 credits monthly = 52s of Gen-4.5, 104s of Gen-4",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "f62ade670c384d05",
+   "snippet": "y. Save $184/year. For creators leveling up their craft $28 $19.60 /month Extra 30% off first year 2250 credits /mo 2250 credits monthly = 187s of Gen-4.5, 375s of Gen",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "4cfc2c54c8ef8ab6",
+   "snippet": "nually. Save $501/year. Best value for heavy solo usage $76 $53.20 /month Extra 30% off first year 9500 credits /mo 9500 credits = 791s of Gen-4.5, 791s of Gen-4, 1900",
+   "seen": "2026-11-27"
+  },
+  {
+   "status": "unconfirmed",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "5f00bf6d97457e37",
+   "snippet": "ly Yearly -20% off Generations per year Standard $12 $8.40 /month 7,500 credits/year Get Standard",
    "seen": "2026-11-27"
   },
   {
    "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "sha": "ec11b9ca6e881876",
-   "snippet": "on the market Expiring in 16 Hours 09 Minutes 42 Seconds Pick your plan Monthly 25% off Yearly 70% off Need help choosing a plan? Model Licensing Looking for API? Free",
-   "seen": "2026-11-27"
-  },
-  {
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "sha": "d6e2fa880cc96cdf",
-   "snippet": "prices Black Friday Seedance 2.5 Kling 4.0 Krea 3 GPT Image 2.6 Nano Banana Pro Unlimited Pro & Max Nano Banana Pro Nano Banana 2.1 Nano Banana 2 offer terms Included in",
-   "seen": "2026-11-27"
-  },
-  {
-   "status": "possible_end",
-   "vendor": "Krea",
-   "url": "https://www.krea.ai/pricing",
-   "sha": "2b1381ef2d0b104a",
-   "snippet": "deo concurrency Unlimited Images per LoRA Custom Final hours, up to 75% off Black Friday Â· The best Seedance 2.5 price on the market Expiring in 16 Hours",
+   "vendor": "Runway",
+   "url": "https://runwayml.com/pricing",
+   "sha": "4bca5dbaa3f4f2b1",
+   "snippet": "ly Yearly -20% off Generations per year Standard $12 /month 7,500 credits/year Get Standard Pro $2",
    "seen": "2026-11-27"
   }
  ]
