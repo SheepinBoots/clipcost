@@ -5,6 +5,7 @@ Checks the built dist/ (run scripts/build_site.py first):
 - every HTML page that loads count.js also loads /vf-events.js with its page slug
 - outbound vendor links carry data-vf-vendor, affiliate links data-vf-affiliate
 - sponsor slot links and /advertise/ CTAs carry data-vf-sponsor / data-vf-cta
+- the sponsors box and other /advertise/ links carry data-goatcounter-click
 - newsletter forms are marked data-vf-event="newsletter-signup" or newsletter-signup-inline
 - the events script stores nothing in the browser and uses no Google Analytics
 - scripts/utm.py output and validation
@@ -56,6 +57,7 @@ def test_script_file():
     check("event: true" in js and "goatcounter.count" in js, "vf-events.js does not send goatcounter events")
     check("typeof window.goatcounter.count === 'function'" in js, "vf-events.js has no guard for a missing count.js")
     check("preventDefault" not in js, "vf-events.js must not block navigation or form submit")
+    check("data-goatcounter-click" in js, "vf-events.js does not skip built-in GoatCounter click attributes")
     for pattern in ("newsletter-signup/", "newsletter-signup-inline/", "'outbound-affiliate'", "'outbound'", "sponsor-click/", "partner-click/", "advertise-cta/", "campaign/"):
         check(pattern in js, f"vf-events.js is missing the {pattern} event")
     hosts = json.loads(re.search(r"var HOSTS = (\{.*?\});", js).group(1))
@@ -88,13 +90,29 @@ def test_pages():
             if href.startswith("http") and analytics.vendor_known(href, analytics_hosts):
                 check("data-vf-vendor=" in a, f"{rel} vendor link not marked: {a[:120]}")
             if href.rstrip("/") == "/advertise":
-                # House open-spot ads are counted as sponsor-click via data-vf-sponsor.
-                if 'data-vf-sponsor="house-' in a:
+                gc = re.search(r'data-goatcounter-click="([^"]*)"', a)
+                title = re.search(r'data-goatcounter-title="([^"]*)"', a)
+                check(gc is not None and title is not None, f"{rel} /advertise/ link missing goatcounter attrs: {a[:180]}")
+                # The open-spot box is one event. Other /advertise/ links are advertise-link-<location>.
+                if 'data-vf-sponsor="house-' in a or 'class="sponsor-hit"' in a:
+                    check(gc and gc.group(1) == "sponsor-box-click", f"{rel} sponsors box click name: {a[:180]}")
+                    check(title and title.group(1) == "Sponsors box: Advertise here", f"{rel} sponsors box click title")
                     continue
-                want = "footer-link" if m.start() > footer_at > -1 else None
-                check("data-vf-cta=" in a, f"{rel} /advertise/ link has no data-vf-cta")
-                if want:
-                    check(f'data-vf-cta="{want}"' in a, f"{rel} footer advertise link id")
+                if 'class="sponsor-open"' in a:
+                    check(gc and gc.group(1) == "advertise-link-sponsor-slot", f"{rel} sponsor-slot click name")
+                    check(title and title.group(1) == "Advertise link: sponsor slot", f"{rel} sponsor-slot click title")
+                elif m.start() > footer_at > -1:
+                    check(gc and gc.group(1) == "advertise-link-footer", f"{rel} footer advertise click name: {a[:180]}")
+                    check(title and title.group(1) == "Advertise link: footer", f"{rel} footer advertise click title")
+                    check('data-vf-cta="footer-link"' in a, f"{rel} footer advertise link id")
+                else:
+                    header_at = body.find("<header")
+                    header_end = body.find("</header>")
+                    in_header = header_at != -1 and header_end != -1 and header_at <= m.start() < header_end
+                    want = "header" if in_header else "inline"
+                    check(gc and gc.group(1) == "advertise-link-" + want, f"{rel} advertise click name: {a[:180]}")
+                    check(title and title.group(1) == "Advertise link: " + want, f"{rel} advertise click title")
+                    check("data-vf-cta=" in a, f"{rel} /advertise/ link has no data-vf-cta")
         for m in re.finditer(r"<form\b[^>]*>", body):
             f = m.group(0)
             if "kit.com/forms" in f or "data-sv-form" in f:
@@ -112,6 +130,10 @@ def test_pages():
     check('data-vf-model="kling-3-0"' in kling, "model page links lack data-vf-model")
     ad = pages.get("/advertise/", "")
     check('data-vf-cta="email"' in ad, "/advertise/ email CTA not marked")
+    check('data-goatcounter-click="advertise-link-footer"' in ad, "/advertise/ footer link not tracked")
+    contact = pages.get("/contact/", "")
+    check('data-goatcounter-click="advertise-link-inline"' in contact, "/contact/ Advertise link not tracked")
+    check('data-goatcounter-title="Advertise link: inline"' in contact, "/contact/ Advertise link title")
     check('data-vf-page="404"' in pages.get("/404.html", ""), "404 page slug")
     deals = pages.get("/deals/", "")
     check(re.search(r'class="btn"[^>]*data-vf-vendor="', deals) is not None, "deal buttons not marked")
@@ -130,8 +152,12 @@ def test_annotate_sponsor_and_layout():
            '</main><footer><a href="/advertise/">Advertise</a></footer></body></html>')
     out = analytics.annotate(doc, "/models/kling-3-0/", hosts, model="kling-3-0")
     check('data-vf-sponsor="model-kling-3-0"' in out, "sponsor slot link not marked")
+    check('data-goatcounter-click="sponsor-out-model-kling-3-0"' in out, "paid sponsor link not tracked as sponsor-out")
+    check('data-goatcounter-title="Sponsor outbound: model-kling-3-0"' in out, "paid sponsor link title")
     check('Example</a>' in out and 'data-vf-affiliate' not in out.split("Example")[0], "sponsor link marked as affiliate")
     check('data-vf-cta="sponsor-slot-home"' in out, "house sponsor link CTA id")
+    check('data-goatcounter-click="advertise-link-sponsor-slot"' in out, "empty sponsor slot click name")
+    check('data-goatcounter-title="Advertise link: sponsor slot"' in out, "empty sponsor slot click title")
     house = analytics.annotate(
         '<body><aside class="sponsor sponsor-box sponsor-house" data-sponsor="guide:demo">'
         '<a class="sponsor-hit" href="/advertise/">Advertise here</a></aside></body>',
@@ -140,14 +166,26 @@ def test_annotate_sponsor_and_layout():
         "/advertise/",
     )
     check('data-vf-sponsor="house-guide-demo"' in house, "house ad link not marked data-vf-sponsor=house-guide-...")
+    check('data-goatcounter-click="sponsor-box-click"' in house, "house ad link missing sponsor-box-click")
+    check('data-goatcounter-title="Sponsors box: Advertise here"' in house, "house ad link title")
     check("data-vf-cta" not in house, "house ad link was also marked advertise-cta")
     check('data-vf-vendor="higgsfield" data-vf-model="kling-3-0" data-vf-affiliate="1"' in out, "affiliate attrs")
     check('<a href="https://www.krea.ai/pricing" rel="nofollow noopener" data-vf-vendor="krea" data-vf-model="kling-3-0">' in out, "vendor attrs")
     check('<a href="https://twelve.tools">Twelve</a>' in out, "unknown hosts must stay unchanged")
     check('`<a href="https://krea.ai/x">`' in out, "script templates must not be changed")
     check('data-vf-cta="footer-link"' in out, "footer advertise link")
-    # Only attributes are added: removing data-vf-* gives back the input.
-    check(re.sub(r' data-vf-[a-z-]+="[^"]*"', "", out) == doc, "annotate changed more than data-vf-* attributes")
+    check('data-goatcounter-click="advertise-link-footer"' in out, "footer advertise click name")
+    check('data-goatcounter-title="Advertise link: footer"' in out, "footer advertise click title")
+    header = analytics.annotate(
+        '<body><header><a href="/advertise/">Advertise</a></header></body>',
+        "/",
+        hosts,
+        "/advertise/",
+    )
+    check('data-goatcounter-click="advertise-link-header"' in header, "header advertise click name")
+    check('data-vf-cta="header-link"' in header, "header advertise link id")
+    # Only attributes are added: removing data-vf-* and data-goatcounter-* gives back the input.
+    check(re.sub(r' data-(?:vf|goatcounter)-[a-z-]+="[^"]*"', "", out) == doc, "annotate changed more than tracking attributes")
     partner_doc = (
         '<html><body><aside class="partner-line" data-partner="pixeldojo">'
         '<a class="partner-hit" href="https://pixeldojo.ai/?a=pdnpo8l5" '
@@ -200,7 +238,7 @@ def test_docs():
     check(os.path.isfile(path), "docs/analytics.md is missing")
     if os.path.isfile(path):
         doc = open(path, encoding="utf-8").read()
-        for needle in ("newsletter-signup/", "outbound/", "outbound-affiliate/", "sponsor-click/", "partner-click/", "advertise-cta/", "campaign/", "utm_campaign", "Campaigns", "scripts/utm.py"):
+        for needle in ("newsletter-signup/", "outbound/", "outbound-affiliate/", "sponsor-click/", "sponsor-box-click", "sponsor-out-", "advertise-link-", "partner-click/", "advertise-cta/", "campaign/", "utm_campaign", "Campaigns", "scripts/utm.py"):
             check(needle in doc, f"docs/analytics.md does not mention {needle}")
         check("sora" not in doc.lower(), "docs mention Sora")
 

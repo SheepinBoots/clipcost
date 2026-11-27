@@ -4,9 +4,10 @@
  *   newsletter-signup-inline/<page>      compact mid-guide newsletter form submit
  *   outbound/<vendor>/<page>             click to a vendor or deal page
  *   outbound-affiliate/<vendor>/<page>   same, when the link is an affiliate link
- *   sponsor-click/<slot>/<page>          click inside a sponsor slot
+ *   sponsor-click/<slot>/<page>          sponsor link with no data-goatcounter-click
  *   partner-click/<partner>/<page>       click on a labelled Partner line (not a sponsor slot)
- *   advertise-cta/<cta>/<page>           click on an /advertise/ link or the advertise email
+ *   advertise-cta/<cta>/<page>           /advertise/ or mailto with no data-goatcounter-click
+ *   (count.js) sponsor-box-click, sponsor-out-<slug>, advertise-link-<location>
  *   campaign/<source>/<medium>/<campaign> landing with utm_* parameters
  * See docs/analytics.md. If count.js is blocked or not loaded, nothing happens
  * and links and forms work as normal. */
@@ -61,6 +62,9 @@
     if (ev.type === 'auxclick' && ev.button !== 1) return;
     var a = ev.target && ev.target.closest && ev.target.closest('a[href]');
     if (!a) return;
+    // count.js binds data-goatcounter-click itself. A second count() would
+    // double-count the sponsors box and the other /advertise/ links.
+    if (a.getAttribute('data-goatcounter-click')) return;
     var u;
     try { u = new URL(a.href, location.href); } catch (e) { return; }
     var partner = a.getAttribute('data-vf-partner');

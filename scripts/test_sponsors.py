@@ -126,6 +126,8 @@ def slot_ok(html, slot_id, rel_path):
     check('class="sponsor-hit"' in html, f"{rel_path} is missing the whole-box link")
     track = "house-" + slot_id.replace(":", "-")
     check(f'data-vf-sponsor="{track}"' in html, f"{rel_path} is missing data-vf-sponsor={track}")
+    check('data-goatcounter-click="sponsor-box-click"' in html, f"{rel_path} is missing sponsor-box-click")
+    check('data-goatcounter-title="Sponsors box: Advertise here"' in html, f"{rel_path} is missing the sponsors box click title")
     check("sora" not in html.lower(), f"{rel_path} names Sora")
     parsed = parse_page(html)
     check(slot_id in parsed.asides, f"{rel_path} parser missed slot {slot_id}")

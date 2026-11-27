@@ -266,6 +266,18 @@ def sponsor_track_id(slot_id, rec=None):
         return s if s.startswith("house-") else "house-" + s
     return s
 
+def sponsor_goatcounter(name, house):
+    """Built-in count.js click event for the sponsors box. House CTA is one name
+    across placements. A paid outbound link is sponsor-out-<name slug>."""
+    if house:
+        return "sponsor-box-click", "Sponsors box: Advertise here"
+    slug = analytics.slug(name) or "sponsor"
+    label = (name or "").strip() or slug
+    return "sponsor-out-" + slug, "Sponsor outbound: " + label
+
+def goatcounter_attr(event, title):
+    return f' data-goatcounter-click="{e(event)}" data-goatcounter-title="{e(title)}"'
+
 def sponsor_href(rec):
     url = (rec.get("url") or "").strip()
     if not url:
@@ -299,7 +311,10 @@ def render_sponsor(slot_id, rec, featured=False):
         bits = ['<span class="sponsor-label">Sponsor</span>']
         if featured:
             bits.append('<span class="sponsor-kicker">Featured</span>')
-        bits.append(f'<a class="sponsor-open" href="{root("/advertise/")}">{HOUSE_LINE}</a>')
+        bits.append(
+            f'<a class="sponsor-open" href="{root("/advertise/")}"'
+            f'{goatcounter_attr("advertise-link-sponsor-slot", "Advertise link: sponsor slot")}>{HOUSE_LINE}</a>'
+        )
         return f'<aside class="{cls}" data-sponsor="{e(slot_id)}">{"".join(bits)}</aside>'
 
     name = rec["name"].strip()
@@ -334,9 +349,10 @@ def render_sponsor(slot_id, rec, featured=False):
     # One anchor for the whole box. The CTA is a span, not a nested control.
     # House ads are internal /advertise/ links: no rel=sponsored, no new tab.
     extra = "" if house else f' rel="{SPONSOR_REL}" target="_blank"'
+    gc_event, gc_title = sponsor_goatcounter(name, house)
     link = (
         f'<a class="sponsor-hit" href="{e(href)}"{extra} '
-        f'data-vf-sponsor="{e(track)}">{"".join(inner)}{body}</a>'
+        f'data-vf-sponsor="{e(track)}"{goatcounter_attr(gc_event, gc_title)}>{"".join(inner)}{body}</a>'
     )
     return f'<aside class="{cls}" data-sponsor="{e(slot_id)}">{link}</aside>'
 
@@ -4217,6 +4233,14 @@ def check_sponsor_renderer():
     )
     if 'data-vf-sponsor="house-home"' not in house_box:
         raise SystemExit("house ad is missing data-vf-sponsor=house-home")
+    if 'data-goatcounter-click="sponsor-box-click"' not in house_box:
+        raise SystemExit("house ad is missing data-goatcounter-click=sponsor-box-click")
+    if 'data-goatcounter-title="Sponsors box: Advertise here"' not in house_box:
+        raise SystemExit("house ad is missing the sponsors box click title")
+    if 'data-goatcounter-click="sponsor-out-example-tool"' not in live:
+        raise SystemExit("paid sponsor link is missing data-goatcounter-click=sponsor-out-example-tool")
+    if 'data-goatcounter-title="Sponsor outbound: Example Tool"' not in live:
+        raise SystemExit("paid sponsor link is missing the outbound click title")
     if "This spot is open" not in house_box or "Advertise on VidFare" not in house_box:
         raise SystemExit("house ad is missing the open-spot label or heading")
     if "Advertise here" not in house_box or 'href="' + root("/advertise/") + '"' not in house_box:
@@ -4230,6 +4254,8 @@ def check_sponsor_renderer():
         raise SystemExit("empty sponsor markup should still describe the advertise page")
     if "sponsored" in empty:
         raise SystemExit("the house placeholder is not an outbound sponsor link")
+    if 'data-goatcounter-click="advertise-link-sponsor-slot"' not in empty:
+        raise SystemExit("empty sponsor placeholder is missing advertise-link-sponsor-slot")
     empty_rec = {"name": "", "url": "", "tagline": "", "active": False}
     if sponsor_slot("deals", featured=True, rec=empty_rec):
         raise SystemExit("an empty sponsor slot should be omitted from the page")

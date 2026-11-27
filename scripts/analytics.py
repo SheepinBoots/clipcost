@@ -11,9 +11,16 @@ Event paths (see docs/analytics.md):
   newsletter-signup/<page>
   outbound/<vendor>/<page>
   outbound-affiliate/<vendor>/<page>
-  sponsor-click/<slot>/<page>
-  advertise-cta/<cta>/<page>
+  sponsor-click/<slot>/<page>          only when the link has no data-goatcounter-click
+  advertise-cta/<cta>/<page>           only when the link has no data-goatcounter-click
   campaign/<source>/<medium>/<campaign>
+
+The sponsors box and other /advertise/ links also get GoatCounter's built-in
+click attributes (data-goatcounter-click / data-goatcounter-title). count.js
+records those. vf-events.js skips the same element so the click is not sent twice.
+  sponsor-box-click                     house sponsors-box CTA
+  sponsor-out-<slug>                    paid sponsor outbound link
+  advertise-link-<location>             other /advertise/ links (footer, header, inline, sponsor-slot)
 """
 import json
 import re
@@ -137,6 +144,8 @@ def annotate(doc, path, hosts, advertise_path="/advertise/", model=None):
     skip = _spans(_SKIP, doc)
     asides = _spans(_ASIDE, doc)
     footer_at = doc.find("<footer")
+    header_at = doc.find("<header")
+    header_end = doc.find("</header>")
     on_advertise = page_slug(path) == page_slug(advertise_path)
     out = []
     last = 0
@@ -145,11 +154,17 @@ def annotate(doc, path, hosts, advertise_path="/advertise/", model=None):
         extra = "".join(f' {k}="{v}"' for k, v in attrs.items() if v)
         return tag[:-1].rstrip("/").rstrip() + extra + (" />" if tag.endswith("/>") else ">") if extra else tag
 
+    def _gc(new, event, title):
+        new["data-goatcounter-click"] = event
+        new["data-goatcounter-title"] = title
+
     for m in sorted(list(_A.finditer(doc, start)) + list(_FORM.finditer(doc, start)), key=lambda x: x.start()):
         if _inside(m.start(), skip):
             continue
         tag = m.group(0)
-        if "data-vf-" in tag:
+        has_gc = "data-goatcounter-click" in tag
+        # render_sponsor already writes both. Adding either again would duplicate the attribute.
+        if "data-vf-" in tag or has_gc:
             continue
         attrs = {k.lower(): _unescape(v) for k, v in _ATTR.findall(tag)}
         new = {}
@@ -162,17 +177,32 @@ def annotate(doc, path, hosts, advertise_path="/advertise/", model=None):
             rel = attrs.get("rel", "")
             aside = _inside(m.start(), asides)
             in_footer = footer_at != -1 and m.start() > footer_at
+            in_header = header_at != -1 and header_end != -1 and header_at <= m.start() < header_end
+            adv = advertise_path.rstrip("/")
+            to_advertise = bool(href) and (
+                href.rstrip("/").endswith(adv) or urlsplit(href).path.rstrip("/") == adv
+            ) and not urlsplit(href).hostname
             if aside is not None:
                 slot = slug(aside.group(1)) or "unknown"
                 classes = (attrs.get("class") or "").split()
-                if "sponsor-hit" in classes and href.rstrip("/").endswith(advertise_path.rstrip("/")):
+                if "sponsor-hit" in classes and href.rstrip("/").endswith(adv):
                     new["data-vf-sponsor"] = slot if slot.startswith("house-") else "house-" + slot
-                elif href.rstrip("/").endswith(advertise_path.rstrip("/")):
+                    _gc(new, "sponsor-box-click", "Sponsors box: Advertise here")
+                elif to_advertise or href.rstrip("/").endswith(adv):
                     new["data-vf-cta"] = "sponsor-slot-" + slot
+                    _gc(new, "advertise-link-sponsor-slot", "Advertise link: sponsor slot")
                 else:
                     new["data-vf-sponsor"] = slot
-            elif href and urlsplit(href).path.rstrip("/") == advertise_path.rstrip("/") and not urlsplit(href).hostname:
-                new["data-vf-cta"] = "footer-link" if in_footer else "inline-link"
+                    _gc(new, "sponsor-out-" + slot, "Sponsor outbound: " + slot)
+            elif to_advertise:
+                if in_footer:
+                    cta, loc = "footer-link", "footer"
+                elif in_header:
+                    cta, loc = "header-link", "header"
+                else:
+                    cta, loc = "inline-link", "inline"
+                new["data-vf-cta"] = cta
+                _gc(new, "advertise-link-" + loc, "Advertise link: " + loc)
             elif href.lower().startswith("mailto:") and (on_advertise or "sponsorship" in href.lower()):
                 new["data-vf-cta"] = "email" if on_advertise else "sponsorship-email"
             elif (href.lower().startswith(("http://", "https://")) and _host(href) not in SITE_HOSTS

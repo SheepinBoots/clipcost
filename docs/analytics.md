@@ -31,9 +31,11 @@ The build writes it on the script tag (`data-vf-page`).
 | `newsletter-signup-inline/<page>` | The compact mid-page Kit form (`data-vf-event="newsletter-signup-inline"`) is submitted on `<page>`. On guides it sits after the first price table; on model pages after the live deals section (before the guide links and the price table); on /compare/ pages after the cheapest-price section; on /cost/ pages after the first ranking section; on /price-index/ after the chart. Same form and confirmation flow; a separate event so the two boxes can be compared. The build writes this attribute in the markup so `annotate()` does not relabel it as `newsletter-signup`. |
 | `outbound/<vendor>/<page>` | Click (or middle-click) on a link to a vendor or deal page that is not an affiliate link. |
 | `outbound-affiliate/<vendor>/<page>` | Same, but the link is an affiliate link: `rel="sponsored"` (outside a sponsor slot) or a referral `fpr=` parameter. Today that is the Higgsfield referral links. |
-| `sponsor-click/<slot>/<page>` | Click inside a sponsor slot (`aside[data-sponsor]`). Slot ids: `home`, `deals`, `model-<slug>`, `guide-<slug>` for a paid partner, and `house-home`, `house-model-<slug>`, `house-guide-<slug>` for the open-spot house ad. Clicks are counted by `/vf-events.js` with `goatcounter.count({path, title, event: true})`, using the link's `data-vf-sponsor` attribute. A house ad links to `/advertise/` but is still counted as `sponsor-click/house-...` when that attribute is present, so placements stay comparable. Other `/advertise/` links (footer, compact placeholders) stay `advertise-cta`. Do not also add GoatCounter's `data-goatcounter-click` attribute; that would double-count the same click. |
+| `sponsor-box-click` | Click on the open-spot sponsors box (`a.sponsor-hit` linking to `/advertise/`). The build writes `data-goatcounter-click="sponsor-box-click"` and `data-goatcounter-title="Sponsors box: Advertise here"`. count.js records it. The same link still has `data-vf-sponsor`, but `/vf-events.js` does not send a second event when `data-goatcounter-click` is set. |
 | `partner-click/<partner>/<page>` | Click on a labelled Partner line (`aside.partner-line[data-partner]`, link `data-vf-partner`). Today that is PixelDojo (`partner-click/pixeldojo/<page>`). These links also have `rel="sponsored"`, but `/vf-events.js` counts them as `partner-click` and returns before `outbound-affiliate` or `sponsor-click`, so PixelDojo clicks stay separate from the paid Sponsor box and from other affiliate links. The build writes `data-vf-partner` in the markup; `annotate()` leaves those tags alone. |
-| `advertise-cta/<cta>/<page>` | Click on a link to `/advertise/` or on the sponsorship email. `<cta>` is `footer-link`, `inline-link`, `email` (the email on /advertise/), `sponsorship-email` (on /contact/), or `sponsor-slot-<slot>` (an empty "sponsor this spot" placeholder). |
+| `sponsor-out-<slug>` | Click on a paid sponsor's outbound link in the sponsors box. `<slug>` is the sponsor name (`Example Tool` → `sponsor-out-example-tool`). Title: `Sponsor outbound: <name>`. count.js records `data-goatcounter-click`. If the link was not rendered with a name, `annotate()` falls back to `sponsor-out-<slot>`. |
+| `advertise-link-<location>` | Click on a link to `/advertise/` that is not the sponsors box CTA. `<location>` is `footer`, `header`, `inline`, or `sponsor-slot` (the empty "sponsor this spot" placeholder). Title: `Advertise link: <location>`. count.js records `data-goatcounter-click`. |
+| `advertise-cta/<cta>/<page>` | Click on a sponsorship email, or on an `/advertise/` link that has no `data-goatcounter-click`. `<cta>` is `footer-link`, `header-link`, `inline-link`, `email` (the email on /advertise/), `sponsorship-email` (on /contact/), or `sponsor-slot-<slot>`. The footer, header, inline, and placeholder links carry `data-goatcounter-click`, so this path is the mailto buttons. `/vf-events.js` returns before sending when the clicked link already has `data-goatcounter-click`, so those clicks are not counted twice. `sponsor-click/<slot>/<page>` remains for a sponsor link that has `data-vf-sponsor` and no `data-goatcounter-click`. |
 | `campaign/<source>/<medium>/<campaign>` | A page is opened with `utm_campaign` (or `campaign`) in the URL. Keeps `utm_medium`, which GoatCounter does not store. Sent again if the same tagged URL is reloaded. |
 
 The event **title** is readable text with more detail, for example
@@ -45,7 +47,7 @@ clicked link sits in a model's price row or on a model page, the model slug is i
 - `scripts/build_site.py` calls `scripts/analytics.py` `annotate()` on every page it
   writes. It only adds attributes (layout is unchanged):
   `data-vf-vendor`, `data-vf-model` (model pages), `data-vf-affiliate="1"`,
-  `data-vf-sponsor`, `data-vf-partner` (written by the partner-line markup, not by `annotate()`), `data-vf-cta`, and `data-vf-event` on newsletter forms (`newsletter-signup` on the end-of-page box, added by `annotate()`; `newsletter-signup-inline` on the compact mid-guide box, written in the markup).
+  `data-vf-sponsor`, `data-vf-partner` (written by the partner-line markup, not by `annotate()`), `data-vf-cta`, `data-goatcounter-click`, `data-goatcounter-title`, and `data-vf-event` on newsletter forms (`newsletter-signup` on the end-of-page box, added by `annotate()`; `newsletter-signup-inline` on the compact mid-guide box, written in the markup). The sponsors box attributes are written by `render_sponsor()`.
 - Vendor slugs come from the hostnames in `data/prices.json` (`platform`) and
   `data/deals.json` (`vendor`), for example `higgsfield`, `higgsfield-api`,
   `krea`, `magnific`, `fal`, `runway`, `runway-api`, `kling-api`, `replicate`,
@@ -65,7 +67,10 @@ Sign in at <https://vidfare.goatcounter.com> (box browser, owner account).
   - `newsletter-signup-inline` → compact mid-guide sign-up submits, so the two boxes can be compared after a week.
   - `outbound-affiliate` → affiliate clicks by vendor and page.
   - `outbound/` → non-affiliate vendor and deal clicks.
-  - `sponsor-click` and `advertise-cta` → sponsor and /advertise/ interest.
+  - `sponsor-box-click` → clicks on the open-spot sponsors box.
+  - `sponsor-out-` → clicks on a paid sponsor's outbound link.
+  - `advertise-link-` → other links to /advertise/ (`footer`, `header`, `inline`, `sponsor-slot`).
+  - `sponsor-click` and `advertise-cta` → sponsor and /advertise/ clicks that are not already on a `data-goatcounter-click` link. The sponsorship email is `advertise-cta`.
   - `partner-click` → labelled Partner line clicks, for example `partner-click/pixeldojo/models-wan-3-0`.
   - `campaign/` → landings per source/medium/campaign.
   Click a row to see its title and its chart over the selected date range.

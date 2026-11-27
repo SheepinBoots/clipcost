@@ -37,12 +37,14 @@ are rejected. Optional `label` defaults to "Sponsor". Optional `kind` is
 
 ## Placement and tracking
 
-The same component renders on the home page, every model page, and every
-individual `/guides/<slug>/` page (not the `/guides/` index, and not `/deals/`
-unless that slot is filled). Clicks are counted per placement as
-`sponsor-click/<slot>/<page>` with `data-vf-sponsor` set to `home`,
-`model-<slug>`, `guide-<slug>`, or the `house-` form of those ids. See
-`docs/analytics.md`.
+The same component renders on the home page, every model page, every
+individual `/guides/<slug>/` page, and the hub pages that use the house
+fallback (including `/guides/` and `/deals/` while the deals slot is empty).
+The open-spot box links to `/advertise/` and carries
+`data-goatcounter-click="sponsor-box-click"`. A paid sponsor's outbound link
+carries `data-goatcounter-click="sponsor-out-<slug>"`, where `<slug>` is the
+sponsor name. `data-vf-sponsor` is still `home`, `model-<slug>`, `guide-<slug>`,
+or the `house-` form of those ids. See `docs/analytics.md`.
 
 Sponsor and house boxes sit outside the price tables and never change price
 order. `scripts/test_sponsors.py` checks that.
