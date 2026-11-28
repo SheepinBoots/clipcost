@@ -1822,5 +1822,12 @@
   "source_url": "https://higgsfield.ai/pricing",
   "type": "price",
   "plan": "hf-ultra-annual"
+ },
+ {
+  "date": "2026-11-27",
+  "type": "notice",
+  "platform": "Higgsfield",
+  "source_url": "https://higgsfield.ai/pricing",
+  "text": "Higgsfield extended its Black Friday sale again into a new phase, \"Big Saturday\" (\"Up to 75% off premium plans\"), now ending Nov 28, 2026, 7:00 PM ET (4:00 PM PT). Prices are unchanged: Plus annual $30/mo, Ultra 3K annual $40/mo, Ultra 6K $75/mo, Ultra 9K $99/mo."
  }
 ]

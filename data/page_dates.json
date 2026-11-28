@@ -2,7 +2,7 @@
  "/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "1a5e2c040ea15efeacecda037eb1478174f4c082250800cad50021bd1504bb78"
+  "hash": "2f5f90b842879086eb344fe1db61de69e129655bee156eb25e9d6491c2178ac0"
  },
  "/about/": {
   "published": "2026-10-20",
@@ -17,37 +17,37 @@
  "/calculator/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "28fe5af4d38dc21fc35cf9370ba0e5b7844c15ab34e7949c287ee2156242a711"
+  "hash": "fecf2e488ff94d1394c8aff5df1a6ea74b0f74be1492b8da18dd6db4693d1814"
  },
  "/changes/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "3ff9f66cf97b7344257a742cfa81484cdc70c41d36c480b45bd4516ec6df7544"
+  "hash": "44b46b4e425c66098dd69fb271b0f7bae084d1726d96fdbec87fcd7e49804206"
  },
  "/compare/kling-3-0-vs-seedance-2-5/": {
   "published": "2026-11-20",
   "modified": "2026-11-27",
-  "hash": "87b35a9b12785f53e00c2e781278c1b28b491f942ad3f4d8bc4fea7f68aa1ff6"
+  "hash": "5aedeb5fd22ab3e391c4f2070189603f86144ff92533a09cc5013ac0d6e1f658"
  },
  "/compare/kling-3-0-vs-veo-3-1/": {
   "published": "2026-11-20",
   "modified": "2026-11-27",
-  "hash": "a3f785457d5cc08a4eb1fe1e327d190ceb8b4a4ee0599628c22c29e4c6453610"
+  "hash": "d8115c56d637d95c2e70ed8a088d1ccb4785c8cab027824d25603823c4f03dbc"
  },
  "/compare/seedance-2-5-vs-veo-3-1/": {
   "published": "2026-11-20",
   "modified": "2026-11-27",
-  "hash": "596d491d61f4187546f8ca1d090f88a4be944f192150b02ae9baf47fd0bd5963"
+  "hash": "2d212d8fe0afaf9a54c618719e34d3f849abc8f90786595b5c96e592e1bb8ae5"
  },
  "/compare/wan-3-0-vs-kling-3-0/": {
   "published": "2026-11-20",
   "modified": "2026-11-27",
-  "hash": "1529fd05d32a1b58ebf76cb30f3a2eeb9458d3b57812c9366cd59f54bba11c22"
+  "hash": "b93dbaef552def4bda1252caa0da43828b56347d7aaf25bfe73f30dd686b687a"
  },
  "/compare/wan-3-0-vs-wan-3-0-prime/": {
   "published": "2026-11-20",
   "modified": "2026-11-27",
-  "hash": "6ff1b33c3a8d88d97bdfce3619d5e585ac2976464495378cafd11063ae921070"
+  "hash": "e63fedc6936ca542997fc2a6fd597b0dbca78c65a66575ada2d448d0177166b3"
  },
  "/contact-us/": {
   "published": "2026-11-08",
@@ -62,17 +62,17 @@
  "/cost/10-second/": {
   "published": "2026-11-20",
   "modified": "2026-11-27",
-  "hash": "025fb55f9dc591b9df2c6a4e9e3c1e07579976b96b6a9ce9548e47312e084dbc"
+  "hash": "ced9f51f1a9e21e9339468b7ca2eb1de2cb73d9010c372f959db1a0c50c6c0c9"
  },
  "/cost/1080p/": {
   "published": "2026-11-20",
   "modified": "2026-11-27",
-  "hash": "61c9a853c6548d93219f5880030415fd4a467f822d064beff547336cbdbbade2"
+  "hash": "deb119df549e3470190b2973b77fb98b545db3d7d8770cb1784f0a0b284fb1ae"
  },
  "/cost/30-second/": {
   "published": "2026-11-20",
   "modified": "2026-11-27",
-  "hash": "53def570c0e8e1eec0c9c1a9ad3810f7a8f62ccd73da94e0a583bcc82671abc7"
+  "hash": "b7ee242b5f661c06ee678c0698e4af6603101c12f98dd756e65bf619215b9338"
  },
  "/data/": {
   "published": "2026-11-05",
@@ -82,17 +82,17 @@
  "/deals/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "885045a37fa8150202f09c511cb47b447a37d932f5f39bbea99ae213dbe945a1"
+  "hash": "f13ed6f80ca1698ef1aee39970a9a3a3195de2e375f04d9e86ef9bcbdc52df39"
  },
  "/deals/black-friday/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "ec260696b4263ad81969e2dc1f28eeda994a65cc63d7558e23d8b5dc8caf1df2"
+  "hash": "85189ff387cc6b091ce8319b004f1162953822560f659119ead59a7caefb4e50"
  },
  "/guides/": {
   "published": "2026-10-31",
   "modified": "2026-11-27",
-  "hash": "945b2cbf41d6088280dd27006b22fbfb42da9d653327a75a3f1e6e6c10abacb0"
+  "hash": "8ad26a8cf43a978cd2b728ec7ee477e9909bbd85e0631c8fa7805d68c6dfe339"
  },
  "/guides/ai-video-generator-apps/": {
   "published": "2026-11-17",
@@ -102,7 +102,7 @@
  "/guides/ai-video-project-budget/": {
   "published": "2026-10-31",
   "modified": "2026-11-27",
-  "hash": "2dade4dfd4b17b702c0deb34885abb49e37ac03aac5262a117fcba6469caf381"
+  "hash": "afac13a85c6225a40eee65e1fdefbc8f1c5cacf31d1eddc71d0161c9d5f66c75"
  },
  "/guides/best-ai-video-generator/": {
   "published": "2026-11-16",
@@ -112,12 +112,12 @@
  "/guides/cheapest-ai-video-generator/": {
   "published": "2026-10-31",
   "modified": "2026-11-27",
-  "hash": "1a20d213eba0085c4ac42146d790a414fdc917f48b3f042dc7cb4426c3f6a369"
+  "hash": "5639339f9cc9302eda53eb647427cf65e0c340a00eb40e25eeabb128b318f796"
  },
  "/guides/cheapest-kling-3-0/": {
   "published": "2026-11-17",
   "modified": "2026-11-27",
-  "hash": "a88665e3db80de68de2ae66781584719e1d1f766730ebd9e3ad4be48dabe87b6"
+  "hash": "66ae1b076243a15d60176d9fd3cb0097cb0940ed531b4ec47713c6bd291b53ce"
  },
  "/guides/cheapest-seedance-2-5/": {
   "published": "2026-11-12",
@@ -127,7 +127,7 @@
  "/guides/cheapest-wan-3-0/": {
   "published": "2026-10-31",
   "modified": "2026-11-27",
-  "hash": "e4da8a595a4f7a30f46530959fe15d9fec5991e0d6ebb5f78febe1f2d0b7df93"
+  "hash": "04f107a6042914c20d6baa47511500f761b971f808428ebda48ddae085061bb6"
  },
  "/guides/fal-ai-pricing/": {
   "published": "2026-11-17",
@@ -142,7 +142,7 @@
  "/guides/free-ai-video-generators/": {
   "published": "2026-11-15",
   "modified": "2026-11-27",
-  "hash": "c7e3e23651828ba9173ceb7b1e1e67bb48f5dc020fba92da076baac6473317ed"
+  "hash": "114f1a633569c3258f572b59e107160c713a4e1ac8db2b8f7565a5cb257a29c6"
  },
  "/guides/free-image-to-video-ai/": {
   "published": "2026-11-16",
@@ -171,38 +171,38 @@
  },
  "/guides/higgsfield-black-friday/": {
   "published": "2026-11-12",
-  "modified": "2026-11-26",
-  "hash": "3f1e10c1167fd038ed0639bad703758b2719ad45d8eab3897611474aef84b750"
+  "modified": "2026-11-27",
+  "hash": "1cd38a8b9d95d7dcc8b55f027a1c51af9430fa5628ff3c53e66842c75cc50c51"
  },
  "/guides/higgsfield-pricing/": {
   "published": "2026-11-13",
   "modified": "2026-11-27",
-  "hash": "b68ef3e25fb7a45d461849aab746bd62251a418b7f305142cef99e93d247a493"
+  "hash": "b93ed20e23f9a0ed5c161f5eb63f95f806adf29c0e442e4f6bc531adf023b685"
  },
  "/guides/higgsfield-promo-code/": {
   "published": "2026-11-17",
   "modified": "2026-11-27",
-  "hash": "96bf4a19af3d9b3e9c20a2a4a88ad11ed8251a683a238ca326df505f8c2315d5"
+  "hash": "6bd3bf704d3fd6a05b2e9ec9a642d23c9c5e72b0244a5dc0f0ed42d4ba7148ea"
  },
  "/guides/higgsfield-vs-kling/": {
   "published": "2026-11-17",
   "modified": "2026-11-27",
-  "hash": "0481a9bc142606afd1948e1d3c0cc00b7e31e02cf731d8cb3d148a2b63a5f2d3"
+  "hash": "7092ec50be10b2a978628cf97b50b3bef4ec62f000ba8b5892d2065633d5795f"
  },
  "/guides/higgsfield-vs-runway/": {
   "published": "2026-11-17",
   "modified": "2026-11-27",
-  "hash": "bf5eef0fc5b2c8a5511096120efd4a8abf23dcb1d813618edac72f6df57f3040"
+  "hash": "f9157013addec15dca1b699aee03710b3a7068db236e927cc9326b8cc45a8882"
  },
  "/guides/is-higgsfield-worth-it/": {
   "published": "2026-10-31",
   "modified": "2026-11-27",
-  "hash": "b96b8102ab3b8f93abbfd8cba5f7d3b2fe00f7533a087febf2b17acb02808ac7"
+  "hash": "328df6596b322a96c1c86608dd90157349e29ff929a1a8651cf811d7e1ad9ced"
  },
  "/guides/is-kling-ai-free/": {
   "published": "2026-11-24",
   "modified": "2026-11-27",
-  "hash": "eb516ef0ff789e28e64460b3097c7dfc770488dd3f2a97484d8388159341d45e"
+  "hash": "82059a6ad103307563b55353ebaaee9930c384c2f68bdb0e9196c03c782ccd1a"
  },
  "/guides/kling-ai-pricing/": {
   "published": "2026-11-14",
@@ -212,7 +212,7 @@
  "/guides/runway-pricing/": {
   "published": "2026-11-15",
   "modified": "2026-11-27",
-  "hash": "7065cefb2cf2108776f45bf8964e87aa9810bd688c04a0d258bcc5ec948e268e"
+  "hash": "71b0b7069d0ede0cd4b8416002f92248221e41d229bceb80d8987f3defdd21e2"
  },
  "/guides/seedance-2-5-unlimited/": {
   "published": "2026-11-11",
@@ -222,7 +222,7 @@
  "/guides/veo-3-1-pricing/": {
   "published": "2026-11-24",
   "modified": "2026-11-27",
-  "hash": "3aac9f697032eb3b57fb0b20673b8b8007636c25e23cc3ec85a6fe5f360e4295"
+  "hash": "f7838342520c17ede48d8665f90dfd44562c2460fcb7aee88b65d1e8e2fd1602"
  },
  "/guides/wan-3-0-unlimited/": {
   "published": "2026-11-12",
@@ -252,12 +252,12 @@
  "/models/kling-3-0/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "b8240c05c785ad265d691596cbad4d8d0cf534572d023df73f4b956fd1fce277"
+  "hash": "03644696828e7788af8766884360177c60f0b352847a3cb3ce1966656e6c0a81"
  },
  "/models/minimax-hailuo/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "4dea7b5081dc4fcf506182dc4b84b76b3e4097e1b81cce8dbb6345adb3148b7b"
+  "hash": "c53c1ae37f590ea55dcf4804516a1d1902b7a870a5330a3edcd27d9ba6e2c24d"
  },
  "/models/runway-gen-4/": {
   "published": "2026-10-20",
@@ -272,17 +272,17 @@
  "/models/veo-3-1/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "9e0e8c465402a21183c28291694ab7ecc96ef3cd489607e94938fbd61634a717"
+  "hash": "f106ef0ed05c0789ce74cca342d3f5a83feacb12d0d2b7c956f8887c6cf39099"
  },
  "/models/wan-3-0-prime/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "37ead8a8b3272c17f8fa9d1e520aa7782288c28bb33bb69a8400714dcbe68883"
+  "hash": "752b19b56b605d72dc5291d3a85b7d6327a99c394f3e06b5e8b2f7ddfbcab9a2"
  },
  "/models/wan-3-0/": {
   "published": "2026-10-20",
   "modified": "2026-11-27",
-  "hash": "d73a0459eb8370313368936b1d22b0eee7d0769cf7653cd97bc1031415ae942a"
+  "hash": "d8d1845c7eedb2a401caf1d9122323e1e3c2415208534b813b11bcf8db7c33be"
  },
  "/newsletter/": {
   "published": "2026-10-20",

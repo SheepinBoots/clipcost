@@ -79,27 +79,27 @@ def main():
             raise SystemExit(f"Kling 2.5 unlimited matched {row['id']}")
     # Annual checkout price / credits, not 20% off the row.
     # The Black Friday up to 69% phase (black_friday_69_phase_2) was due to end 2026-11-27T00:00:00Z but Higgsfield extended the sale again (phase black_friday_75, up to 75% off) to
-    # 2026-11-28T00:00:00Z; the up to 70% phase ended 2026-11-26T00:00:00Z, the earlier 69% phase ended 2026-11-25T00:00:00Z and the 63% phase ended 2026-11-23T00:00:00Z.
+    # 2026-11-28T00:00:00Z, then extended it again into phase big_saturday ("Up to 75% off premium plans") to 2026-11-29T00:00:00Z; the up to 70% phase ended 2026-11-26T00:00:00Z, the earlier 69% phase ended 2026-11-25T00:00:00Z and the 63% phase ended 2026-11-23T00:00:00Z.
     plus_deal = by_id(doc["deals"], "hf-plus-annual")
     if plus_deal.get("status") == "live":
-        if plus_deal.get("price_after") != 30 or plus_deal.get("end") != "2026-11-27" or plus_deal.get("ends_at") != "2026-11-28T00:00:00Z":
-            raise SystemExit("hf-plus-annual should be the Black Friday $30/mo price ending 2026-11-27T00:00:00Z")
+        if plus_deal.get("price_after") != 30 or plus_deal.get("end") != "2026-11-28" or plus_deal.get("ends_at") != "2026-11-29T00:00:00Z":
+            raise SystemExit("hf-plus-annual should be the Black Friday $30/mo price ending 2026-11-29T00:00:00Z")
         if deals.is_current(plus_deal, TODAY) or not deals.is_upcoming(plus_deal, TODAY):
             raise SystemExit("hf-plus-annual should be upcoming on the frozen Oct 20 test date")
         if (not deals.is_current(plus_deal, "2026-11-23")
-                or not deals.is_current(plus_deal, "2026-11-27")
-                or deals.is_current(plus_deal, "2026-11-28")):
-            raise SystemExit("hf-plus-annual should be live through Nov 27 and archived after that date")
+                or not deals.is_current(plus_deal, "2026-11-28")
+                or deals.is_current(plus_deal, "2026-11-29")):
+            raise SystemExit("hf-plus-annual should be live through Nov 28 and archived after that date")
         plus = next(r for r in db["rows"] if r["id"] == "r080")
         adj = deals.adjustment(plus_deal, plus, plans)
         close(adj["usd"], 30 / 1200 * 6.25 / 5)
         close(adj["usd"], 0.03125)
-    if [p.get("ends_at") for p in plus_deal.get("phases") or []] != ["2026-11-23T00:00:00Z", "2026-11-25T00:00:00Z", "2026-11-26T00:00:00Z", "2026-11-27T00:00:00Z"]:
-        raise SystemExit("hf-plus-annual should record the ended 63%, 69%, 70% and second 69% phases")
+    if [p.get("ends_at") for p in plus_deal.get("phases") or []] != ["2026-11-23T00:00:00Z", "2026-11-25T00:00:00Z", "2026-11-26T00:00:00Z", "2026-11-27T00:00:00Z", "2026-11-28T00:00:00Z"]:
+        raise SystemExit("hf-plus-annual should record the ended 63%, 69%, 70%, second 69% and first 75% phases")
     for hid, price in (("hf-ultra-annual", 40), ("hf-ultra-6k-annual", 75), ("hf-ultra-9k-annual", 99)):
         hd = by_id(doc["deals"], hid)
-        if hd.get("price_after") != price or hd.get("ends_at") != "2026-11-28T00:00:00Z" or hd.get("end") != "2026-11-27":
-            raise SystemExit(f"{hid} should be ${price}/mo annual ending 2026-11-28T00:00:00Z")
+        if hd.get("price_after") != price or hd.get("ends_at") != "2026-11-29T00:00:00Z" or hd.get("end") != "2026-11-28":
+            raise SystemExit(f"{hid} should be ${price}/mo annual ending 2026-11-29T00:00:00Z")
     # ends_at is exact: a deal whose end date is today but whose ends_at has passed is over.
     import datetime as _dt
     probe = {"id": "probe", "status": "live", "end": "2026-11-24", "ends_at": "2026-11-25T00:00:00Z"}
